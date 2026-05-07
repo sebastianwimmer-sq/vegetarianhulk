@@ -1,6 +1,6 @@
 # vegetarianhulk.de
 
-> Sebi's Founder-Site. **Lead-Funnel + Media-Kit** für [@vegetarianhulk](https://instagram.com/vegetarianhulk).
+> Sebi's Founder-Site. **Lead-Funnel + Brand-Anfrage** für [@vegetarianhulk](https://instagram.com/vegetarianhulk).
 
 **Live:** https://vegetarianhulk.de · https://vegetarianhulk.info (301) · https://vegetarianhulk.online (301)
 
@@ -36,7 +36,7 @@ vegetarianhulk/
 |---|---|---|---|
 | **L1 Bio-Anker** | `index.html` Hero + Trust-Bar | Insta-User der erste Kontakt hat | Identity erfassen, weiter zu Lead-Magnet |
 | **L2 Lead-Magnet** | `index.html` "3-Tage-Reset" | Engagierte User | Email abgeben → 3-Mail-Sequence |
-| **L3 Media-Kit** | `kooperationen.html` | Brand-Vertreter, Marken | Reichweite checken → Mailto |
+| **L3 Brand-Anfrage** | `kooperationen.html` | Brand-Vertreter, Marken | Reichweite checken → Anfrage-Form |
 
 ---
 

@@ -5,20 +5,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 :root {
-  /* === Vanille/Beige Light-Theme === */
-  --bg: #faf6ee;          /* vanilla cream — base */
-  --surface: #f3ebd8;     /* warm beige cards */
-  --surface2: #ebe0c5;    /* deeper beige hover */
-  --border: #d6c7a8;      /* warm light brown border */
-  --text: #1a1410;        /* warm dark (near-black, brown undertone) */
+  /* === Forest-Hulk Light-Theme (V6) ===
+     Vanille-Beige BG + Forest-Green Akzente (zweite Hulk-Smash-Farbe).
+     Vibe: bio · vegetarisch · grounded · earthy · premium. */
+  --bg: #f7efde;          /* warmer vanilla, slightly more golden */
+  --surface: #efe5cf;     /* warm beige cards */
+  --surface2: #e6d9bd;    /* deeper beige hover */
+  --border: #cfbf9d;      /* warm earth-brown border */
+  --text: #1a1410;        /* warm near-black */
   --text2: #5c513f;       /* mid warm brown */
   --text3: #9a8c75;       /* light muted brown */
 
-  /* Hulk-Green Akzente (Sparingly auf hellem BG!) */
-  --green1: #00ff6a;             /* bright Hulk — Buttons, Highlights */
-  --green2: #00cc55;             /* gradient end, hover */
-  --green3: rgba(0, 255, 106, 0.14); /* soft pill bg */
-  --green-deep: #008c3a;         /* darker green — for text emphasis on light bg (legibility) */
+  /* Forest-Hulk-Greens — earthy + grounded statt neon */
+  --green1: #2d6a3e;             /* Forest-Hulk Primary (dark mossy green) */
+  --green2: #1f4d2c;             /* Deeper forest, gradient end */
+  --green3: rgba(45, 106, 62, 0.12); /* soft forest pill bg */
+  --green-deep: #1a3d28;         /* very dark forest — body-text emphasis */
 
   --warm: #f5e9d4;
   --radius: 16px;
@@ -37,12 +39,12 @@ html, body {
 
 body {
   padding: 0 0 60px;
-  /* subtle warm-green halo top */
-  background-image: radial-gradient(ellipse at 50% -10%, rgba(0, 255, 106, 0.08), transparent 70%);
+  /* subtle warm forest halo top */
+  background-image: radial-gradient(ellipse at 50% -10%, rgba(45, 106, 62, 0.10), transparent 70%);
 }
 
 a { color: inherit; text-decoration: none; }
-::selection { background: var(--green1); color: var(--text); }
+::selection { background: var(--green1); color: #fff; }
 
 .page {
   max-width: 500px;
@@ -192,7 +194,7 @@ a { color: inherit; text-decoration: none; }
   justify-content: center;
   font-size: 22px;
   font-weight: 900;
-  color: var(--bg);
+  color: #fff;
   flex-shrink: 0;
 }
 .smash-card-meta { flex: 1; min-width: 0; }
@@ -245,13 +247,13 @@ a { color: inherit; text-decoration: none; }
   padding: 18px 18px;
   margin-top: 16px;
   background: linear-gradient(180deg, var(--green1) 0%, var(--green2) 100%);
-  color: #000;
+  color: #fff;
   border-radius: 18px;
   font-weight: 900;
   font-size: 16px;
   letter-spacing: -0.2px;
   cursor: pointer;
-  box-shadow: 0 12px 28px -8px rgba(0, 255, 106, 0.4);
+  box-shadow: 0 12px 28px -8px rgba(45, 106, 62, 0.35);
   transition: filter 0.15s, transform 0.12s;
 }
 .coop-cta:hover { filter: brightness(1.06); }
@@ -375,11 +377,12 @@ a { color: inherit; text-decoration: none; }
   object-position: center 30%;  /* Gesicht hochziehen */
   border: 3px solid var(--green1);
   box-shadow:
-    0 0 0 6px rgba(0, 255, 106, 0.12),
+    0 0 0 6px rgba(45, 106, 62, 0.14),
     0 24px 48px -16px rgba(26, 20, 16, 0.18),
     0 8px 20px -8px rgba(26, 20, 16, 0.10);
   background: var(--surface);
   display: block;
+  filter: saturate(0.78) contrast(1.02);
 }
 
 /* === Identity-Line (kompakte Tag-Reihe unter Hero) === */
@@ -506,7 +509,7 @@ a { color: inherit; text-decoration: none; }
 .lead-magnet-form button {
   padding: 15px 18px;
   background: linear-gradient(180deg, var(--green1) 0%, var(--green2) 100%);
-  color: #000;
+  color: #fff;
   border: none;
   border-radius: 12px;
   font-family: inherit;
@@ -514,7 +517,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 15px;
   letter-spacing: -0.2px;
   cursor: pointer;
-  box-shadow: 0 8px 20px -6px rgba(0, 255, 106, 0.4);
+  box-shadow: 0 8px 20px -6px rgba(45, 106, 62, 0.35);
   transition: filter 0.15s, transform 0.12s;
 }
 .lead-magnet-form button:hover {
@@ -698,12 +701,12 @@ a { color: inherit; text-decoration: none; }
 /* Brand-CTA Big */
 .brand-cta-big {
   background: linear-gradient(135deg, var(--green1), var(--green2));
-  color: #000;
+  color: #fff;
   border-radius: 18px;
   padding: 24px 22px;
   margin: 28px 0 0;
   text-align: center;
-  box-shadow: 0 14px 32px -8px rgba(0, 255, 106, 0.4);
+  box-shadow: 0 14px 32px -8px rgba(45, 106, 62, 0.35);
   display: block;
   transition: filter 0.15s, transform 0.12s;
 }
@@ -905,8 +908,8 @@ a { color: inherit; text-decoration: none; }
 }
 .v5-cta-primary {
   background: linear-gradient(180deg, var(--green1) 0%, var(--green2) 100%);
-  color: #000;
-  box-shadow: 0 8px 20px -6px rgba(0, 255, 106, 0.4);
+  color: #fff;
+  box-shadow: 0 8px 20px -6px rgba(45, 106, 62, 0.35);
 }
 .v5-cta-primary:hover { filter: brightness(1.06); }
 .v5-cta-primary:active { transform: scale(0.99); }
@@ -920,6 +923,114 @@ a { color: inherit; text-decoration: none; }
   border-color: var(--green1);
 }
 
+/* ============================================================
+   V6 — Brand-Anfrage-Funnel-Form (auf kooperationen.html)
+   Strukturierte Mini-Form → Submit baut formatierte Mail
+   ============================================================ */
+
+.brand-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 22px 0 12px;
+}
+.brand-form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.brand-form-row label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--text2);
+  text-transform: uppercase;
+}
+.brand-form-row .req { color: var(--green-deep); }
+
+.brand-form-row input,
+.brand-form-row textarea,
+.brand-form-2col input {
+  width: 100%;
+  padding: 12px 14px;
+  background: #ffffff;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.brand-form-row textarea {
+  min-height: 60px;
+  resize: vertical;
+  line-height: 1.5;
+}
+.brand-form-row input::placeholder,
+.brand-form-row textarea::placeholder,
+.brand-form-2col input::placeholder {
+  color: var(--text3);
+}
+.brand-form-row input:focus,
+.brand-form-row textarea:focus,
+.brand-form-2col input:focus {
+  border-color: var(--green1);
+  box-shadow: 0 0 0 3px var(--green3);
+}
+
+.brand-form-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.brand-form-2col > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.brand-form-2col label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--text2);
+  text-transform: uppercase;
+}
+
+.brand-form-submit {
+  margin-top: 8px;
+  padding: 16px 20px;
+  background: linear-gradient(180deg, var(--green1) 0%, var(--green2) 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-weight: 900;
+  font-size: 15px;
+  letter-spacing: -0.2px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px -6px rgba(45, 106, 62, 0.35);
+  transition: filter 0.15s, transform 0.12s;
+}
+.brand-form-submit:hover { filter: brightness(1.06); }
+.brand-form-submit:active { transform: scale(0.99); }
+
+.brand-form-alt {
+  text-align: center;
+  margin: 18px 0 0;
+  padding: 14px 16px;
+  border-top: 1px dashed var(--border);
+  font-size: 13px;
+  color: var(--text2);
+}
+.brand-form-alt span { margin-right: 6px; }
+.brand-form-alt a {
+  color: var(--green-deep);
+  font-weight: 800;
+}
+.brand-form-alt a:hover { text-decoration: underline; }
+
 /* === Responsive Polish === */
 @media (max-width: 380px) {
   .hero h1 { font-size: 38px; }
@@ -932,4 +1043,5 @@ a { color: inherit; text-decoration: none; }
   .hero-second { font-size: 22px; }
   .v5-h2 { font-size: 19px; }
   .v5-stat-pill { flex-basis: 100%; }
+  .brand-form-2col { grid-template-columns: 1fr; }
 }

@@ -25,7 +25,7 @@
     <a href="index.html" class="topbar-meta" style="text-decoration:none">← ZURÜCK</a>
   </header>
 
-  <!-- Hero V5 — entspannt, persönlich -->
+  <!-- Hero V5 — entspannt, persönlich, kein "MEDIA-KIT"-Begriff -->
   <section class="hero">
     <img src="hero.jpg" alt="Sebi" class="hero-photo-v3 hero-photo-small"
          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -105,30 +105,81 @@
     </p>
   </section>
 
-  <!-- 4. Lass uns reden -->
+  <!-- 4. Anfrage senden — Funnel-Form mit strukturierten Feldern -->
   <section class="v5-section">
-    <h2 class="v5-h2">Lass uns reden</h2>
+    <h2 class="v5-h2">Anfrage senden</h2>
     <p class="v5-body">
-      Mail oder DM — beides geht. Ich antworte auf jede ehrliche Anfrage binnen 48h.
+      Schreib mir kurz was deine Brand macht und wie du dir die Zusammenarbeit vorstellst — ich antworte auf jede ehrliche Anfrage binnen 48h.
     </p>
 
-    <div class="v5-dual-cta">
-      <a href="mailto:info@vegetarianhulk.de?subject=Kooperation%20%40vegetarianhulk%20%E2%80%94%20%5BBrand%20Name%5D&body=Hi%20Sebi%2C%0A%0Awir%20sind%20%5BBrand%5D%20und%20w%C3%BCrden%20gerne%20mit%20dir%20kooperieren.%0A%0AUnser%20Produkt%3A%0AUnsere%20Idee%3A%0AZeitrahmen%3A%0ABudget-Range%3A%0A%0ADanke%21" class="v5-cta v5-cta-primary">
-        <span class="v5-cta-icon">✉</span>
-        <span class="v5-cta-text">
-          <span class="v5-cta-title">Mail schreiben</span>
-          <span class="v5-cta-sub">info@vegetarianhulk.de</span>
-        </span>
-      </a>
-      <a href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener" class="v5-cta v5-cta-secondary">
-        <span class="v5-cta-icon">📩</span>
-        <span class="v5-cta-text">
-          <span class="v5-cta-title">DM auf Insta</span>
-          <span class="v5-cta-sub">@vegetarianhulk</span>
-        </span>
-      </a>
+    <form class="brand-form" onsubmit="return submitBrandInquiry(event)">
+      <div class="brand-form-row">
+        <label for="bf-brand">Brand-Name <span class="req">*</span></label>
+        <input type="text" id="bf-brand" required autocomplete="organization">
+      </div>
+      <div class="brand-form-row">
+        <label for="bf-link">Webseite oder Insta</label>
+        <input type="text" id="bf-link" placeholder="instagram.com/... oder https://...">
+      </div>
+      <div class="brand-form-row">
+        <label for="bf-what">Was macht ihr? <span class="req">*</span></label>
+        <textarea id="bf-what" required rows="2" placeholder="1-2 Sätze über euer Produkt"></textarea>
+      </div>
+      <div class="brand-form-row">
+        <label for="bf-idea">Eure Idee <span class="req">*</span></label>
+        <textarea id="bf-idea" required rows="3" placeholder="Was schwebt euch vor? Reel, Story-Set, Long-Term-Partnership ..."></textarea>
+      </div>
+      <div class="brand-form-2col">
+        <div>
+          <label for="bf-time">Zeitrahmen</label>
+          <input type="text" id="bf-time" placeholder="z.B. Q3 2026, asap">
+        </div>
+        <div>
+          <label for="bf-budget">Budget-Range</label>
+          <input type="text" id="bf-budget" placeholder="z.B. 500-1.500 €">
+        </div>
+      </div>
+      <div class="brand-form-row">
+        <label for="bf-email">Eure E-Mail <span class="req">*</span></label>
+        <input type="email" id="bf-email" required placeholder="kontakt@brand.de" autocomplete="email">
+      </div>
+      <button type="submit" class="brand-form-submit">Anfrage senden →</button>
+    </form>
+
+    <div class="brand-form-alt">
+      <span>Lieber locker per DM?</span>
+      <a href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">@vegetarianhulk auf Insta →</a>
     </div>
   </section>
+
+  <script>
+  function submitBrandInquiry(e) {
+    e.preventDefault();
+    const get = id => (document.getElementById(id).value || '').trim();
+    const brand = get('bf-brand');
+    const link = get('bf-link');
+    const what = get('bf-what');
+    const idea = get('bf-idea');
+    const time = get('bf-time');
+    const budget = get('bf-budget');
+    const email = get('bf-email');
+
+    const subject = 'Kooperation @vegetarianhulk — ' + brand;
+    const body =
+      'Hi Sebi,\n\n' +
+      'wir sind ' + brand + ' und würden gerne mit dir kooperieren.\n\n' +
+      'Webseite/Insta: ' + (link || '—') + '\n\n' +
+      'Was wir machen:\n' + what + '\n\n' +
+      'Unsere Idee:\n' + idea + '\n\n' +
+      'Zeitrahmen: ' + (time || '—') + '\n' +
+      'Budget-Range: ' + (budget || '—') + '\n\n' +
+      'Antwort bitte an: ' + email + '\n\n' +
+      'Danke!';
+
+    window.location.href = 'mailto:info@vegetarianhulk.de?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    return false;
+  }
+  </script>
 
   <!-- Footer -->
   <footer class="footer">
