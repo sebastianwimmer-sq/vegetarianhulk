@@ -359,6 +359,34 @@ a { color: inherit; text-decoration: none; }
   background: var(--surface);
   display: block;
 }
+
+/* === Hero V3 — premium look mit double-shadow ring + cinematic === */
+.hero-photo-v3 {
+  width: 168px;
+  height: 168px;
+  border-radius: 50%;
+  margin-bottom: 28px;
+  object-fit: cover;
+  object-position: center 25%;  /* Gesicht hochziehen */
+  border: 3px solid var(--green1);
+  box-shadow:
+    0 0 0 6px rgba(0, 255, 106, 0.10),
+    0 0 60px rgba(0, 255, 106, 0.28),
+    0 28px 60px -14px rgba(0, 0, 0, 0.7);
+  filter: contrast(1.05) saturate(0.95);
+  background: var(--surface);
+  display: block;
+}
+
+/* === Identity-Line (kompakte Tag-Reihe unter Hero) === */
+.identity-line {
+  margin-top: 18px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--text2);
+  text-transform: uppercase;
+}
 .hero-photo-fallback {
   width: 140px;
   height: 140px;

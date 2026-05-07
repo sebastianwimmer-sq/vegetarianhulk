@@ -97,12 +97,23 @@ Hol dir aus Instagram-Insights:
 6. (Optional) Brevo-Automation: 3-Mail-Drip an neue Subscriber
 ```
 
-### 5. 🟡 (Optional) `info@vegetarianhulk.de` Email einrichten
+### 5. ⚠️ **WICHTIG (Pre-Launch-Konsistenz):** `info@vegetarianhulk.de` Email einrichten
 
-Bei udag Catch-All-Forwarding zu info@smashtheapp.de (gleiches Pattern wie smashuniverse.info). Dann in:
-- `index.html` Submit-Handler mailto austauschen
-- `kooperationen.html` Big-CTA mailto austauschen
-- `impressum.html` Mail-Block
+Aktuell zeigt `index.html` (Lead-Magnet-Submit) + `kooperationen.html` (Big-CTA) **info@vegetarianhulk.de** als Kontakt — die Mail muss aber **noch eingerichtet werden** bei udag, sonst bouncen die Mails.
+
+**Anleitung:**
+1. udag-Dashboard → vegetarianhulk.de → E-Mail / Postfach
+2. Catch-All-Forwarding einrichten → Ziel: deine Haupt-Mail (z.B. info@smashtheapp.de oder Gmail)
+3. Test: schick dir selbst eine Mail an info@vegetarianhulk.de — landet sie bei dir, ist alles gut
+
+**Wenn du das nicht jetzt machen willst:** Find&Replace `info@vegetarianhulk.de` → `info@smashtheapp.de` in `index.html` + `kooperationen.html`. Pre-Launch-Tarn-Effekt geht dann verloren (Brand-Vertreter sieht SMASH-Domain), aber Mails kommen an.
+
+## Pre-Launch-Konvention
+
+SMASH und PEAKING sind **bewusst nicht direkt verlinkt** auf vegetarianhulk.de — Sebi-Wunsch: erst beim offiziellen Launch freischalten. Kommentare im Code mit „Pre-Launch hidden" markieren wo SMASH-Refs reaktiviert werden müssen:
+- `index.html` Footer (SMASH-Link bewusst raus)
+- `index.html` "Was ich baue"-Section (V2 hatte SMASH-Card, V3 entfernt)
+- `kooperationen.html` Hero, Pillar-4, Footer (anonymisiert zu "Habit-App im Pre-Launch")
 
 ---
 

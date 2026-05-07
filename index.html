@@ -4,13 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vegetarianhulk — Sebi.</title>
-<meta name="description" content="Sebi. 25. Vegetarisch. Christ. Bau SMASH solo. Hol dir den 3-Tage-Disziplin-Reset.">
+<meta name="description" content="Sebi. 25. Vegetarisch. Christ. Disziplin ist kein Talent — sie ist ein Ritual.">
 <meta name="theme-color" content="#0d0d0a">
 
 <meta property="og:title" content="Vegetarianhulk — Sebi.">
 <meta property="og:description" content="Disziplin ist kein Talent. Sie ist ein Ritual. Hol dir den 3-Tage-Reset.">
 <meta property="og:type" content="profile">
 <meta property="og:url" content="https://vegetarianhulk.de/">
+<meta property="og:image" content="https://vegetarianhulk.de/hero.jpg">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%2300ff6a'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23000'%3EV%3C/text%3E%3C/svg%3E">
 
@@ -25,94 +26,56 @@
     <a href="kooperationen.html" class="topbar-meta" style="text-decoration:none">FÜR BRANDS →</a>
   </header>
 
-  <!-- Hero V2 — Hook-First, Identity klein -->
+  <!-- Hero V3 — Foto prominent + Hook + minimaler Sub -->
   <section class="hero">
-    <!-- Image-Fallback: hero.jpg wenn vorhanden, sonst Placeholder.
-         Sebi: kopier hero.jpg ins Repo-Root → fertig. -->
-    <img src="hero.jpg" alt="Sebi" class="hero-photo-v2"
+    <img src="hero.jpg" alt="Sebi" class="hero-photo-v3"
          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
     <div class="hero-photo-fallback" style="display:none">FOTO<br>kommt</div>
 
-    <div class="eyebrow">Sebi · Vegetarianhulk · 25</div>
     <h1>Disziplin ist<br>kein Talent.<br><span class="italic">Sie ist ein Ritual.</span></h1>
 
-    <div class="hero-sub">
-      Ich bau <strong>SMASH</strong> — eine Habit-App, die nicht trackt sondern dich daran erinnert wer du sein willst. Solo. Ohne VC. Ohne Bullshit.
+    <div class="hero-sub" style="margin-top:24px">
+      Ich war jemand der hundertmal angefangen hat. Bis ich aufgehört hab anzufangen.
     </div>
 
-    <!-- Trust-Bar — Identity-Pills (kein gefakter Stat-Spam) -->
+    <div class="identity-line">
+      Sebi · 25 · Vegetarisch · Christ
+    </div>
+
     <div class="trust-bar">
       <span class="trust-pill">🛠️ Solo-Founder</span>
-      <span class="trust-pill">🌱 Vegetarisch</span>
-      <span class="trust-pill">✝️ Christ</span>
       <span class="trust-pill">🟢 Build-in-Public</span>
+      <span class="trust-pill">✝️ Faith</span>
     </div>
   </section>
 
-  <!-- 1. Lead-Magnet (Email-Capture) -->
+  <!-- ONE Lead-Magnet — der einzige dominante CTA -->
   <section class="lead-magnet">
     <div class="lead-magnet-eyebrow">Gratis · 3 Mails · 0 Spam</div>
-    <div class="lead-magnet-title">3 Tage. 3 Habits die meinen Tag tragen.</div>
+    <div class="lead-magnet-title">Was ich morgens mache, bevor ich aufs Handy schaue.</div>
     <p class="lead-magnet-promise">
-      Was ich morgens mache <strong>bevor</strong> ich aufs Handy schaue. Der eine Bibel-Vers, den ich seit 2 Jahren jeden Morgen lese. Wie ich Tage rette, an denen alles falsch läuft.
-    </p>
-    <p class="lead-magnet-promise" style="margin-bottom:20px">
-      Ehrlich aufgeschrieben. Nicht aus dem Coaching-Lehrbuch.
+      3 Tage. 3 Habits die meinen Tag tragen. <strong>Ehrlich aufgeschrieben — nicht aus dem Coaching-Lehrbuch.</strong>
     </p>
 
-    <!-- MVP-Form: mailto. TODO ersetzen durch Brevo-Form-Action wenn eingerichtet. -->
     <form class="lead-magnet-form" id="leadform" onsubmit="return submitLead(event)">
       <input type="email" id="lead-email" placeholder="deine@email.de" required autocomplete="email">
       <button type="submit">Schick mir den Reset →</button>
     </form>
     <p class="lead-magnet-finepr">
-      Kein Spam. Aussteigen jederzeit. Ich nutz deine Mail nur für die 3 Mails.
+      Kein Spam. Aussteigen jederzeit.
     </p>
   </section>
 
-  <!-- 2. Was ich baue -->
-  <section class="section">
-    <div class="section-head">
-      <div class="section-head-num">02</div>
-      <div class="section-head-title">Was ich baue</div>
-      <div class="section-head-line"></div>
-    </div>
-
-    <a href="https://smashtheapp.de/" target="_blank" rel="noopener" class="smash-card">
-      <div class="smash-card-icon">S</div>
-      <div class="smash-card-meta">
-        <div class="smash-card-title">SMASH — Date your best self.</div>
-        <div class="smash-card-sub">Die Habit-App die ich für mich gebaut hab.</div>
-      </div>
-      <div class="smash-card-arrow">→</div>
-    </a>
-  </section>
-
-  <!-- 3. Über mich (kompakt) -->
-  <section class="section">
-    <div class="section-head">
-      <div class="section-head-num">03</div>
-      <div class="section-head-title">Für die die mehr wollen</div>
-      <div class="section-head-line"></div>
-    </div>
-    <div class="section-body">
-      <p>Ich war jemand der hundertmal angefangen und aufgehört hat. Bis ich gemerkt hab: <strong>Disziplin ist kein Talent — sie ist Architektur.</strong></p>
-      <p>Heute bau ich SMASH. Weil mir keine Habit-App existiert hat, die als Ritual funktioniert statt als Tracker.</p>
-      <p>Wenn dich Disziplin, echtes Wachstum oder das Aufstehen-wenn-alles-rumzieht interessiert: <a href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">folg mir auf Insta</a>.</p>
-    </div>
-  </section>
-
-  <!-- 4. Brand-Bridge -->
+  <!-- Brand-Bridge subtil -->
   <div class="brand-bridge">
     <span>Du bist Brand & willst kooperieren?</span>
     <a href="kooperationen.html">→ Media-Kit</a>
   </div>
 
-  <!-- Footer -->
+  <!-- Footer (SMASH-Link bewusst raus bis Launch) -->
   <footer class="footer">
     <div class="footer-links">
       <a href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://smashtheapp.de/" target="_blank" rel="noopener">SMASH</a>
       <a href="kooperationen.html">Kooperationen</a>
       <a href="impressum.html">Impressum</a>
       <a href="datenschutz.html">Datenschutz</a>
@@ -127,12 +90,9 @@ function submitLead(e) {
   e.preventDefault();
   const email = document.getElementById('lead-email').value;
   if (!email) return false;
-  // MVP: mailto-Fallback. Sebi kriegt jede Anfrage als Mail + kann manuell antworten / Brevo-List pflegen.
-  // Future: Brevo-Form-Endpoint einsetzen, fetch() POST, success-message inline.
   const subject = encodeURIComponent('Discipline-Reset bitte');
   const body = encodeURIComponent('Hi Sebi,\n\nbitte schick mir den 3-Tage-Disziplin-Reset.\n\nMeine Mail: ' + email + '\n\nDanke!');
-  window.location.href = 'mailto:info@smashtheapp.de?subject=' + subject + '&body=' + body;
-  // optimistisches UI:
+  window.location.href = 'mailto:info@vegetarianhulk.de?subject=' + subject + '&body=' + body;
   document.getElementById('leadform').innerHTML = '<p style="text-align:center;font-weight:700;color:var(--green1);padding:14px">✓ Mail-App geöffnet. Schick die Mail ab und ich melde mich!</p>';
   return false;
 }
