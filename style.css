@@ -730,6 +730,196 @@ a { color: inherit; text-decoration: none; }
   opacity: 0.8;
 }
 
+/* ============================================================
+   V5 — Media-Kit Personalize (kooperationen.html refactor)
+   Story-driven, entspannter, weniger corporate
+   ============================================================ */
+
+/* Smaller hero-photo for kooperationen page */
+.hero-photo-small {
+  width: 110px !important;
+  height: 110px !important;
+  margin-bottom: 22px !important;
+}
+
+/* Hero second-line "Schön dass du da bist" */
+.hero-second {
+  font-size: 28px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.1;
+  color: var(--text2);
+  letter-spacing: -0.5px;
+  margin-top: -8px;
+}
+
+/* V5 Section + Typography */
+.v5-section {
+  margin: 44px 0 0;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+.v5-section:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+.v5-h2 {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: var(--text);
+  margin-bottom: 14px;
+  line-height: 1.15;
+}
+.v5-h2::before {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--green1);
+  margin-right: 10px;
+  vertical-align: middle;
+  transform: translateY(-1px);
+}
+.v5-h3 {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--text2);
+  text-transform: uppercase;
+  margin: 22px 0 10px;
+}
+.v5-body {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+.v5-body strong {
+  font-weight: 700;
+  color: var(--green-deep);
+}
+.v5-meta {
+  font-size: 12px;
+  color: var(--text3);
+  font-style: italic;
+  margin-top: 16px;
+}
+.v5-meta strong {
+  color: var(--text2);
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* V5 Stats — kompakte Pills statt Big-Cards */
+.v5-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 8px;
+}
+.v5-stat-pill {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 calc(50% - 4px);
+  min-width: 0;
+  box-shadow: 0 2px 8px -3px rgba(26, 20, 16, 0.06);
+}
+.v5-stat-num {
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: var(--green-deep);
+  line-height: 1;
+}
+.v5-stat-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--text2);
+  text-transform: uppercase;
+}
+
+/* V5 Audience Pills Row */
+.v5-pills-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0;
+}
+.v5-pill {
+  background: var(--green3);
+  border: 1px solid rgba(0, 255, 106, 0.3);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  padding: 6px 11px;
+  border-radius: 99px;
+}
+
+/* V5 Dual-CTA — Mail + Insta-DM */
+.v5-dual-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+.v5-cta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  text-decoration: none;
+  transition: filter 0.15s, transform 0.12s, border-color 0.15s;
+}
+.v5-cta-icon {
+  font-size: 22px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.v5-cta-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.v5-cta-title {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+}
+.v5-cta-sub {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.7;
+}
+.v5-cta-primary {
+  background: linear-gradient(180deg, var(--green1) 0%, var(--green2) 100%);
+  color: #000;
+  box-shadow: 0 8px 20px -6px rgba(0, 255, 106, 0.4);
+}
+.v5-cta-primary:hover { filter: brightness(1.06); }
+.v5-cta-primary:active { transform: scale(0.99); }
+.v5-cta-secondary {
+  background: #ffffff;
+  border: 1.5px solid var(--border);
+  color: var(--text);
+  box-shadow: 0 4px 12px -4px rgba(26, 20, 16, 0.06);
+}
+.v5-cta-secondary:hover {
+  border-color: var(--green1);
+}
+
 /* === Responsive Polish === */
 @media (max-width: 380px) {
   .hero h1 { font-size: 38px; }
@@ -739,4 +929,7 @@ a { color: inherit; text-decoration: none; }
   .lead-magnet-title { font-size: 19px; }
   .brand-stat-num { font-size: 24px; }
   .brand-stats { gap: 10px; }
+  .hero-second { font-size: 22px; }
+  .v5-h2 { font-size: 19px; }
+  .v5-stat-pill { flex-basis: 100%; }
 }
