@@ -2,7 +2,7 @@
    Vanille/Beige BG + Schwarze Schrift + Hulk-Green-Akzente.
    Shared across index.html, kooperationen.html, impressum.html, datenschutz.html */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
 :root {
   /* === Forest-Hulk Light-Theme (V6) ===
@@ -87,15 +87,16 @@ a { color: inherit; text-decoration: none; }
   margin-bottom: 18px;
 }
 .hero h1 {
-  font-size: 48px;
-  font-weight: 900;
-  line-height: 0.96;
-  letter-spacing: -1.5px;
+  font-family: 'Playfair Display', 'Inter', serif;
+  font-size: 54px;
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -1.8px;
   margin-bottom: 20px;
 }
 .hero h1 .italic {
   font-style: italic;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--text2);
 }
 .hero-sub {
@@ -1031,9 +1032,209 @@ a { color: inherit; text-decoration: none; }
 }
 .brand-form-alt a:hover { text-decoration: underline; }
 
+/* ============================================================
+   V7 — DNA-Section (Manifest + Werte-Pills + Bibel-Vers + Tribe)
+   + Animationen (fade-in-up, parallax-hero) + Modern-Serif
+   ============================================================ */
+
+/* DNA Section Container */
+.dna-section {
+  margin-top: 48px;
+  padding-top: 36px;
+  border-top: 1px solid var(--border);
+}
+.dna-eyebrow {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  color: var(--green-deep);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.dna-h2 {
+  font-family: 'Playfair Display', 'Inter', serif;
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -1px;
+  margin-bottom: 22px;
+  color: var(--text);
+}
+.dna-h2 .italic {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--green-deep);
+}
+
+/* Manifest-Block — 3-4 Sätze die Sebi-DNA festigen */
+.manifest-block {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 26px 24px;
+  margin: 0 0 28px;
+  position: relative;
+  box-shadow: 0 8px 24px -12px rgba(26, 20, 16, 0.10);
+}
+.manifest-block::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 24px;
+  right: 24px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--green1), transparent);
+}
+.manifest-line {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.manifest-line:last-child {
+  margin-bottom: 0;
+  font-family: 'Playfair Display', 'Inter', serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--green-deep);
+}
+
+/* Werte-Pills-Pro — 5 Werte mit Icon + Name + Desc */
+.werte-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 0 0 28px;
+}
+.werte-grid .werte-pill-full {
+  grid-column: span 2;
+}
+.werte-pill-pro {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 14px;
+  transition: border-color 0.2s, transform 0.15s;
+}
+.werte-pill-pro:hover {
+  border-color: rgba(45, 106, 62, 0.35);
+  transform: translateY(-2px);
+}
+.werte-pill-pro-icon {
+  font-size: 20px;
+  margin-bottom: 6px;
+  display: block;
+  line-height: 1;
+}
+.werte-pill-pro-name {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--green-deep);
+  margin-bottom: 3px;
+  letter-spacing: 0.3px;
+}
+.werte-pill-pro-desc {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.45;
+}
+
+/* Bibel-Vers-Quote */
+.bibel-vers {
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface2) 100%);
+  border-left: 3px solid var(--green1);
+  border-radius: 10px;
+  padding: 20px 22px;
+  margin: 0 0 28px;
+  position: relative;
+}
+.bibel-vers-icon {
+  position: absolute;
+  top: -2px;
+  right: 18px;
+  font-size: 22px;
+  opacity: 0.4;
+}
+.bibel-vers-quote {
+  font-family: 'Playfair Display', 'Inter', serif;
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.bibel-vers-source {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: var(--green-deep);
+  text-transform: uppercase;
+}
+
+/* Tribe-Quote — Anti-Coach-Bro Statement */
+.tribe-quote {
+  background: linear-gradient(135deg, var(--green1), var(--green2));
+  border-radius: 16px;
+  padding: 24px 22px;
+  margin: 0 0 8px;
+  color: #ffffff;
+  text-align: center;
+  box-shadow: 0 14px 32px -10px rgba(45, 106, 62, 0.30);
+}
+.tribe-quote-text {
+  font-family: 'Playfair Display', 'Inter', serif;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.3px;
+  margin-bottom: 6px;
+}
+.tribe-quote-sub {
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.85;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* === Animations — fade-in-up on scroll === */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: opacity, transform;
+}
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-in-up.delay-1 { transition-delay: 0.08s; }
+.fade-in-up.delay-2 { transition-delay: 0.16s; }
+.fade-in-up.delay-3 { transition-delay: 0.24s; }
+
+/* === Subtle hero-photo parallax === */
+.hero-photo-v3 {
+  transition: transform 0.1s linear;
+  will-change: transform;
+}
+
+/* === Magnetic-hover für CTAs === */
+.lead-magnet-form button:hover,
+.brand-form-submit:hover {
+  transform: translateY(-1px);
+}
+
+/* Reduced-Motion-Respect */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in-up { opacity: 1; transform: none; transition: none; }
+  .hero-photo-v3 { transition: none; }
+}
+
 /* === Responsive Polish === */
 @media (max-width: 380px) {
-  .hero h1 { font-size: 38px; }
+  .hero h1 { font-size: 40px; letter-spacing: -1.2px; }
   .page { padding: 24px 16px; }
   .hero-photo-v2,
   .hero-photo-fallback { width: 120px; height: 120px; }
@@ -1044,4 +1245,11 @@ a { color: inherit; text-decoration: none; }
   .v5-h2 { font-size: 19px; }
   .v5-stat-pill { flex-basis: 100%; }
   .brand-form-2col { grid-template-columns: 1fr; }
+  .dna-h2 { font-size: 26px; }
+  .manifest-line { font-size: 15px; }
+  .manifest-line:last-child { font-size: 16px; }
+  .bibel-vers-quote { font-size: 16px; }
+  .tribe-quote-text { font-size: 16px; }
+  .werte-grid { grid-template-columns: 1fr; }
+  .werte-grid .werte-pill-full { grid-column: span 1; }
 }
