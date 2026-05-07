@@ -343,8 +343,364 @@ a { color: inherit; text-decoration: none; }
 }
 .legal-page .back-link:hover { color: var(--green1); }
 
+/* ============================================================
+   V2 COMPONENTS — Lead-Funnel + Media-Kit
+   ============================================================ */
+
+/* === Hero V2 — bigger photo + image fallback === */
+.hero-photo-v2 {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  margin-bottom: 28px;
+  object-fit: cover;
+  border: 3px solid var(--green1);
+  box-shadow: 0 0 32px rgba(0, 255, 106, 0.2);
+  background: var(--surface);
+  display: block;
+}
+.hero-photo-fallback {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  margin-bottom: 28px;
+  background: linear-gradient(135deg, var(--surface), var(--surface2));
+  border: 2px dashed var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text3);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-align: center;
+  padding: 10px;
+}
+
+/* === Trust Bar (Stats Pills) === */
+.trust-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 24px 0 8px;
+}
+.trust-pill {
+  background: rgba(0, 255, 106, 0.08);
+  border: 1px solid rgba(0, 255, 106, 0.25);
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  padding: 7px 12px;
+  border-radius: 99px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.trust-pill .tp-num {
+  color: var(--green1);
+  font-weight: 900;
+  font-size: 12px;
+}
+
+/* === Lead Magnet Section === */
+.lead-magnet {
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface2) 100%);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px 22px;
+  margin: 28px 0 8px;
+  position: relative;
+  overflow: hidden;
+}
+.lead-magnet::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--green1), var(--green2));
+}
+.lead-magnet-eyebrow {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--green1);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.lead-magnet-title {
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  margin-bottom: 10px;
+}
+.lead-magnet-promise {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 18px;
+}
+.lead-magnet-promise strong { color: var(--green1); font-weight: 700; }
+.lead-magnet-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.lead-magnet-form input[type="email"] {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  transition: border-color 0.15s;
+  outline: none;
+}
+.lead-magnet-form input[type="email"]:focus {
+  border-color: var(--green1);
+}
+.lead-magnet-form input[type="email"]::placeholder {
+  color: var(--text3);
+}
+.lead-magnet-form button {
+  padding: 15px 18px;
+  background: linear-gradient(180deg, var(--green1) 0%, var(--green2) 100%);
+  color: #000;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-weight: 900;
+  font-size: 15px;
+  letter-spacing: -0.2px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px -6px rgba(0, 255, 106, 0.4);
+  transition: filter 0.15s, transform 0.12s;
+}
+.lead-magnet-form button:hover {
+  filter: brightness(1.06);
+}
+.lead-magnet-form button:active {
+  transform: scale(0.985);
+}
+.lead-magnet-finepr {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 12px;
+  text-align: center;
+  letter-spacing: 0.2px;
+}
+
+/* === Brand-CTA-Banner (Footer-area Bridge to /kooperationen) === */
+.brand-bridge {
+  margin: 36px 0 0;
+  padding: 16px 18px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--green1);
+  border-radius: 10px;
+  font-size: 13px;
+  color: var(--text2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.brand-bridge a {
+  color: var(--green1);
+  font-weight: 800;
+  white-space: nowrap;
+}
+.brand-bridge a:hover { text-decoration: underline; }
+
+/* ============================================================
+   /kooperationen.html — Brand-Funnel
+   ============================================================ */
+
+.brand-page .hero h1 {
+  font-size: 36px;
+  line-height: 1;
+}
+
+/* Brand Stats Grid — big numbers */
+.brand-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 24px 0 32px;
+}
+.brand-stat {
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface2) 100%);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 16px;
+  text-align: left;
+}
+.brand-stat-num {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  color: var(--green1);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.brand-stat-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--text2);
+  text-transform: uppercase;
+}
+.brand-stat-sub {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 4px;
+}
+
+/* Audience Demo Bars */
+.demo-list { display: flex; flex-direction: column; gap: 14px; margin: 16px 0 24px; }
+.demo-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.demo-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+}
+.demo-label .demo-pct { color: var(--green1); font-weight: 900; }
+.demo-bar {
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.demo-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green1), var(--green2));
+  border-radius: 99px;
+}
+
+/* Content Pillars Grid */
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 16px 0 24px;
+}
+.pillar {
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface2) 100%);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 14px;
+  transition: border-color 0.2s;
+}
+.pillar:hover { border-color: rgba(0, 255, 106, 0.3); }
+.pillar-icon {
+  font-size: 22px;
+  margin-bottom: 10px;
+  display: block;
+}
+.pillar-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--green1);
+  margin-bottom: 4px;
+  letter-spacing: 0.3px;
+}
+.pillar-desc {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+/* Case Study Cards */
+.cases-list { display: flex; flex-direction: column; gap: 12px; margin: 16px 0 24px; }
+.case-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 16px;
+}
+.case-card.placeholder-case {
+  border: 1px dashed var(--border);
+  background: transparent;
+  text-align: center;
+  color: var(--text3);
+  font-size: 13px;
+  font-style: italic;
+  padding: 32px 16px;
+}
+.case-brand {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--green1);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.case-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.case-result {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+/* Brand-CTA Big */
+.brand-cta-big {
+  background: linear-gradient(135deg, var(--green1), var(--green2));
+  color: #000;
+  border-radius: 18px;
+  padding: 24px 22px;
+  margin: 28px 0 0;
+  text-align: center;
+  box-shadow: 0 14px 32px -8px rgba(0, 255, 106, 0.4);
+  display: block;
+  transition: filter 0.15s, transform 0.12s;
+}
+.brand-cta-big:hover { filter: brightness(1.06); }
+.brand-cta-big:active { transform: scale(0.985); }
+.brand-cta-big-eyebrow {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+.brand-cta-big-title {
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+.brand-cta-big-sub {
+  font-size: 13px;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
 /* === Responsive Polish === */
 @media (max-width: 380px) {
   .hero h1 { font-size: 38px; }
   .page { padding: 24px 16px; }
+  .hero-photo-v2,
+  .hero-photo-fallback { width: 120px; height: 120px; }
+  .lead-magnet-title { font-size: 19px; }
+  .brand-stat-num { font-size: 24px; }
+  .brand-stats { gap: 10px; }
 }
