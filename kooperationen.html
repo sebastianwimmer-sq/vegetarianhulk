@@ -12,7 +12,7 @@
 <meta property="og:description" content="Discipline-driven Content für 16-34 Jährige. Vegetarisch · Faith · Build-in-Public.">
 <meta property="og:type" content="website">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%2300ff6a'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23000'%3EV%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%232d6a3e'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -189,9 +189,16 @@
       <a href="impressum.html">Impressum</a>
       <a href="datenschutz.html">Datenschutz</a>
     </div>
-    <div class="footer-meta">© 2026 · vegetarianhulk.de · Sebi</div>
+    <div class="footer-meta">© <span id="footer-year">2026</span> · vegetarianhulk.de · Sebi</div>
   </footer>
 
 </main>
+
+<script>
+(function() {
+  const y = new Date().getFullYear();
+  document.querySelectorAll('#footer-year').forEach(el => el.textContent = y);
+})();
+</script>
 </body>
 </html>

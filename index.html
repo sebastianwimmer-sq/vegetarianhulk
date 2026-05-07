@@ -139,7 +139,7 @@
       <a href="impressum.html">Impressum</a>
       <a href="datenschutz.html">Datenschutz</a>
     </div>
-    <div class="footer-meta">© 2026 · vegetarianhulk.de · Sebi · 10 Jahre vegetarisch 🌱</div>
+    <div class="footer-meta">© <span id="footer-year">2026</span> · vegetarianhulk.de · Sebi · <span id="footer-veggie-years">10</span> Jahre vegetarisch 🌱</div>
   </footer>
 
 </main>
@@ -177,6 +177,13 @@
       ticking = true;
     }
   }, { passive: true });
+})();
+
+// Footer-Year + Veggie-Years dynamisch (2026=10, 2027=11, ...)
+(function() {
+  const y = new Date().getFullYear();
+  document.querySelectorAll('#footer-year').forEach(el => el.textContent = y);
+  document.querySelectorAll('#footer-veggie-years').forEach(el => el.textContent = y - 2016);
 })();
 
 // Lead-Magnet Submit (mailto fallback bis Brevo eingebaut)

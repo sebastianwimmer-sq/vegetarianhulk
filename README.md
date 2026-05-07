@@ -1,8 +1,10 @@
-# vegetarianhulk.de
+# vegetarianhulk.de — V7
 
-> Sebi's Founder-Site. **Lead-Funnel + Brand-Anfrage** für [@vegetarianhulk](https://instagram.com/vegetarianhulk).
+> Sebi's Founder-Site. **Lead-Funnel + Brand-Anfrage + Sebi-DNA** für [@vegetarianhulk](https://instagram.com/vegetarianhulk).
 
 **Live:** https://vegetarianhulk.de · https://vegetarianhulk.info (301) · https://vegetarianhulk.online (301)
+
+**Version-State (07.05.2026):** V7 — Forest-Hulk-Theme + DNA-Section (Manifest, 5 Werte-Pills, Bibel-Vers 2.Tim 4:7, Tribe-Quote) + Modern-Serif (Playfair Display) + Animationen (fade-in-up + parallax) + Mail-Forwarding `info@vegetarianhulk.de` aktiv.
 
 Part of the **SMASH Universe** (siehe [smashtheapp.de](https://smashtheapp.de)).
 
@@ -21,11 +23,13 @@ Part of the **SMASH Universe** (siehe [smashtheapp.de](https://smashtheapp.de)).
 
 ```
 vegetarianhulk/
-├── index.html             — User-Funnel: Hero + Trust-Bar + Lead-Magnet + SMASH-Card + Brand-Bridge
-├── kooperationen.html     — Brand-Funnel: Reichweite + Audience + Pillars + Brand-Fit + CTA
+├── index.html             — User-Funnel: Hero + DNA-Section + Lead-Magnet + Brand-Bridge
+├── kooperationen.html     — Brand-Funnel: Reichweite + Audience + Pillars + Brand-Anfrage-Form
 ├── impressum.html         — TMG §5 (Anbieterkennzeichnung)
 ├── datenschutz.html       — DSGVO-Datenschutzerklärung
-├── style.css              — Shared CSS (warmer Hulk-Style + V2-Components)
+├── 404.html               — Brand-konsistente 404-Page (Forest-Hulk-Style, Playfair-Serif)
+├── hero.jpg               — Hero-Selfie (ChatGPT-Edit, Hulk-Green-BG, 1024×1024 → 241KB)
+├── style.css              — Shared CSS (Forest-Hulk-Theme, V7 DNA-Section, Animationen)
 ├── CNAME                  — Custom Domain für GitHub Pages
 └── README.md              — Diese Datei
 ```
