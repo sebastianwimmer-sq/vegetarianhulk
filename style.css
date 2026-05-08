@@ -1672,6 +1672,193 @@ body::before {
   .werte-pill-pro::after { display: none; }
 }
 
+/* ============================================================
+   V10 — Bug-Fixes + Brand-Page Interactivity (09.05.2026)
+   - Werte-Pill ::after Glow auf ALLEN Touch-Devices disabled
+     (Tap-Hover-Stuck-Bug → wirkt sonst pink/violett auf iOS)
+   - Trust-Pills + Coop-Pills + V5-Pills von neon-grün auf
+     Forest-Hulk-Palette migriert (legacy V2-Reste raus)
+   - Manifest-Top-Glow softer
+   - Werte-Pill Gradient-Border deutlicher Forest-Green
+   - Brand-Page: V5-Stat-Pills tilt-ready, Form-Focus Glow,
+     Brand-CTA Light-Sweep, Pillar-Cards 3D-ready
+   ============================================================ */
+
+/* === Bug 1: Werte-Pill ::after auf Touch komplett aus === */
+@media (hover: none) {
+  .werte-pill-pro::after { display: none !important; }
+  .werte-pill-pro:hover::after { display: none !important; }
+}
+
+/* === Bug 2: Trust-Pills + Coop-Pills + V5-Pills auf Forest-Hulk migriert === */
+.trust-pill {
+  background: rgba(45, 106, 62, 0.10);
+  border: 1px solid rgba(45, 106, 62, 0.25);
+}
+.trust-pill .tp-num { color: var(--green1); }
+.coop-pill {
+  background: var(--green3);
+  border: 1px solid rgba(45, 106, 62, 0.25);
+}
+.v5-pill {
+  background: var(--green3);
+  border: 1px solid rgba(45, 106, 62, 0.30);
+}
+.smash-card:hover {
+  border-color: rgba(45, 106, 62, 0.40);
+}
+.pillar:hover {
+  border-color: rgba(45, 106, 62, 0.40);
+}
+.v5-cta-secondary:hover {
+  border-color: var(--green1);
+}
+
+/* === Bug 3: Manifest-Top-Glow softer (war zu hart) === */
+.manifest-block::before {
+  height: 2px;
+  background: linear-gradient(90deg,
+    var(--green1) 0%,
+    rgba(45, 106, 62, 0.4) 50%,
+    transparent 100%
+  );
+  box-shadow: 0 0 8px rgba(45, 106, 62, 0.25);
+}
+
+/* === Bug 4: Werte-Pill Gradient-Border klarer Forest-Green === */
+.werte-pill-pro {
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(135deg,
+      rgba(45, 106, 62, 0.55) 0%,
+      rgba(45, 106, 62, 0.18) 50%,
+      rgba(31, 77, 44, 0.55) 100%
+    ) border-box;
+  border: 1.5px solid transparent;
+}
+
+/* === Brand-Page (kooperationen): V5-Stat-Pills tilt-ready === */
+.v5-stat-pill {
+  --tilt-rx: 0deg;
+  --tilt-ry: 0deg;
+  --tilt-y: 0px;
+  transform-style: preserve-3d;
+  transform:
+    perspective(900px)
+    rotateX(var(--tilt-rx))
+    rotateY(var(--tilt-ry))
+    translateY(var(--tilt-y));
+  will-change: transform;
+}
+.v5-stat-pill.tilting {
+  transition:
+    transform 0.08s linear,
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Brand-Stat (other layout) tilt-ready */
+.brand-stat {
+  --tilt-rx: 0deg;
+  --tilt-ry: 0deg;
+  --tilt-y: 0px;
+  transform-style: preserve-3d;
+  transform:
+    perspective(900px)
+    rotateX(var(--tilt-rx))
+    rotateY(var(--tilt-ry))
+    translateY(var(--tilt-y));
+  will-change: transform;
+}
+.brand-stat.tilting {
+  transition:
+    transform 0.08s linear,
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Pillar-Cards tilt-ready (kooperationen pillars-grid) */
+.pillar {
+  --tilt-rx: 0deg;
+  --tilt-ry: 0deg;
+  --tilt-y: 0px;
+  transform-style: preserve-3d;
+  transform:
+    perspective(900px)
+    rotateX(var(--tilt-rx))
+    rotateY(var(--tilt-ry))
+    translateY(var(--tilt-y));
+  will-change: transform;
+}
+.pillar.tilting {
+  transition:
+    transform 0.08s linear,
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .v5-stat-pill,
+  .brand-stat,
+  .pillar {
+    transform: none !important;
+    will-change: auto;
+  }
+}
+
+/* === Brand-Form Inputs: Premium-Glow on Focus === */
+.brand-form-row input:focus,
+.brand-form-row textarea:focus,
+.brand-form-2col input:focus,
+.lead-magnet-form input[type="email"]:focus {
+  border-color: var(--green1);
+  box-shadow:
+    0 0 0 4px rgba(45, 106, 62, 0.12),
+    0 4px 16px rgba(45, 106, 62, 0.18);
+  transform: translateY(-1px);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* === Brand-Form Submit + Lead-Magnet-Submit: stronger hover-glow === */
+.brand-form-submit:hover,
+.lead-magnet-form button:hover {
+  box-shadow:
+    0 12px 32px -6px rgba(45, 106, 62, 0.45),
+    0 4px 12px rgba(45, 106, 62, 0.25);
+}
+
+/* === Brand-CTA-Big: Light-Sweep (premium loop) === */
+.brand-cta-big {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.brand-cta-big::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: linear-gradient(115deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.10) 47%,
+    rgba(255, 255, 255, 0.22) 50%,
+    rgba(255, 255, 255, 0.10) 53%,
+    transparent 65%
+  );
+  animation: tribe-sweep 9s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+.brand-cta-big > * { position: relative; z-index: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .brand-cta-big::before { animation: none; }
+}
+
+/* === Hero-Photo-Small (kooperationen) auch float-ready === */
+.hero-photo-v3.hero-photo-small {
+  width: 110px;
+  height: 110px;
+}
+
 /* === Responsive Polish === */
 @media (max-width: 380px) {
   .hero h1 { font-size: 40px; letter-spacing: -1.2px; }

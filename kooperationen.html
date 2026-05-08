@@ -14,7 +14,7 @@
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%232d6a3e'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
-<link rel="stylesheet" href="style.css?v=v8">
+<link rel="stylesheet" href="style.css?v=v10">
 </head>
 <body>
 <main class="page brand-page">
@@ -27,20 +27,22 @@
 
   <!-- Hero V5 — entspannt, persönlich, kein "MEDIA-KIT"-Begriff -->
   <section class="hero">
-    <img src="hero.jpg" alt="Sebi" class="hero-photo-v3 hero-photo-small"
-         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-    <div class="hero-photo-fallback hero-photo-small" style="display:none">FOTO</div>
+    <div class="hero-photo-wrap fade-in-up">
+      <img src="hero.jpg" alt="Sebi" class="hero-photo-v3 hero-photo-small"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="hero-photo-fallback hero-photo-small" style="display:none">FOTO</div>
+    </div>
 
-    <h1>Hey <span class="italic">👋</span></h1>
-    <h2 class="hero-second">Schön dass du da bist.</h2>
+    <h1 class="fade-in-up delay-1">Hey <span class="italic">👋</span></h1>
+    <h2 class="hero-second fade-in-up delay-2">Schön dass du da bist.</h2>
 
-    <div class="hero-sub" style="margin-top:18px">
+    <div class="hero-sub fade-in-up delay-3" style="margin-top:18px">
       Ich bin <strong>Sebi (@vegetarianhulk)</strong>. Ich poste über Disziplin, Faith, vegetarisch-stark und Build-in-Public — und arbeite gerne mit Brands die ich auch privat nutzen würde.
     </div>
   </section>
 
   <!-- 1. Was ich mache -->
-  <section class="v5-section">
+  <section class="v5-section fade-in-up">
     <h2 class="v5-h2">Was ich mache</h2>
     <p class="v5-body">
       Mein Content dreht sich um vier Themen, die mein Leben tatsächlich tragen:
@@ -57,17 +59,17 @@
   </section>
 
   <!-- 2. Wer mir folgt -->
-  <section class="v5-section">
+  <section class="v5-section fade-in-up">
     <h2 class="v5-h2">Wer mir folgt</h2>
     <p class="v5-body">
       Aktuell folgen mir <strong>~2.100</strong> Menschen — hauptsächlich aus der DACH-Region. Mehr als <strong>50% meiner Aufrufe kommen von Nicht-Followern</strong> — ich erreiche aktiv über meine Bubble hinaus.
     </p>
 
     <div class="v5-stats">
-      <div class="v5-stat-pill"><span class="v5-stat-num">2.100</span><span class="v5-stat-label">Follower</span></div>
-      <div class="v5-stat-pill"><span class="v5-stat-num">~2%</span><span class="v5-stat-label">Engagement</span></div>
-      <div class="v5-stat-pill"><span class="v5-stat-num">~470</span><span class="v5-stat-label">Reichweite/Post</span></div>
-      <div class="v5-stat-pill"><span class="v5-stat-num">+38</span><span class="v5-stat-label">Neue Follower/Mo</span></div>
+      <div class="v5-stat-pill fade-in-up stag-0"><span class="v5-stat-num">2.100</span><span class="v5-stat-label">Follower</span></div>
+      <div class="v5-stat-pill fade-in-up stag-1"><span class="v5-stat-num">~2%</span><span class="v5-stat-label">Engagement</span></div>
+      <div class="v5-stat-pill fade-in-up stag-2"><span class="v5-stat-num">~470</span><span class="v5-stat-label">Reichweite/Post</span></div>
+      <div class="v5-stat-pill fade-in-up stag-3"><span class="v5-stat-num">+38</span><span class="v5-stat-label">Neue Follower/Mo</span></div>
     </div>
 
     <p class="v5-body" style="font-size:13px;color:var(--text2);line-height:1.55;margin-top:6px">
@@ -116,7 +118,7 @@
   </section>
 
   <!-- 3. Mit wem ich gerne arbeite — V7.2 entschärft (kein „wählerisch") -->
-  <section class="v5-section">
+  <section class="v5-section fade-in-up">
     <h2 class="v5-h2">Mit wem ich gerne arbeite</h2>
     <p class="v5-body">
       Ich bin offen für ehrliche Anfragen — egal ob du grad startest oder schon große Brand bist. Was zählt: passt's zu meinem Leben und meinen Themen, dann passt's auch für meine Audience.
@@ -130,7 +132,7 @@
   </section>
 
   <!-- 4. Anfrage senden — Funnel-Form mit strukturierten Feldern -->
-  <section class="v5-section">
+  <section class="v5-section fade-in-up">
     <h2 class="v5-h2">Anfrage senden</h2>
     <p class="v5-body">
       Schreib mir kurz was deine Brand macht und wie du dir die Zusammenarbeit vorstellst — ich antworte auf jede ehrliche Anfrage binnen 48h.
@@ -203,6 +205,76 @@
     window.location.href = 'mailto:info@vegetarianhulk.de?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
     return false;
   }
+  </script>
+
+  <script>
+  // V10 — Brand-Page Interactivity: fade-in-up + Tilt + Multi-Layer-Parallax
+  (function() {
+    if (!('IntersectionObserver' in window)) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+  })();
+
+  // Multi-Layer-Parallax (Hero-Layer mit unterschiedlichen Speeds)
+  (function() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const layers = [
+      { el: document.querySelector('.hero-photo-wrap'), speed: 0.10 },
+      { el: document.querySelector('.hero h1'),         speed: 0.05 },
+      { el: document.querySelector('.hero-second'),     speed: 0.04 },
+      { el: document.querySelector('.hero-sub'),        speed: 0.03 }
+    ].filter(l => l.el);
+    if (!layers.length) return;
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      window.requestAnimationFrame(() => {
+        const y = window.scrollY;
+        if (y < 800) {
+          layers.forEach(l => {
+            l.el.style.transform = `translateY(${y * l.speed}px)`;
+          });
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }, { passive: true });
+  })();
+
+  // 3D-Card-Tilt auf V5-Stat-Pills + Brand-Stats + Pillars
+  (function() {
+    if (window.matchMedia('(hover: none)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const tiltElements = document.querySelectorAll('.v5-stat-pill, .brand-stat, .pillar');
+    tiltElements.forEach(el => {
+      let rafId = null;
+      el.addEventListener('mousemove', (e) => {
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          const rect = el.getBoundingClientRect();
+          const dx = (e.clientX - rect.left) / rect.width  - 0.5;
+          const dy = (e.clientY - rect.top)  / rect.height - 0.5;
+          const maxTilt = 10;
+          el.style.setProperty('--tilt-ry', `${dx * maxTilt * 2}deg`);
+          el.style.setProperty('--tilt-rx', `${-dy * maxTilt * 2}deg`);
+          el.classList.add('tilting');
+        });
+      }, { passive: true });
+      el.addEventListener('mouseleave', () => {
+        if (rafId) cancelAnimationFrame(rafId);
+        el.style.setProperty('--tilt-ry', '0deg');
+        el.style.setProperty('--tilt-rx', '0deg');
+        el.classList.remove('tilting');
+      }, { passive: true });
+    });
+  })();
   </script>
 
   <!-- Footer -->
