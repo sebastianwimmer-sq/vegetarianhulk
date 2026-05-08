@@ -1303,6 +1303,157 @@ html { scroll-behavior: smooth; }
   .tribe-quote { animation: none; }
 }
 
+/* ============================================================
+   V8 — Modern Shadows + 3D Card-Tilt + Multi-Layer Parallax
+   (09.05.2026) — Forest-tinted depth, mouse-tracked perspective,
+   layer-speed scroll. Subtle, premium, on-brand.
+   ============================================================ */
+
+:root {
+  /* Forest-tinted Layered Shadow Tokens */
+  --shadow-pill:
+    0 1px 2px rgba(45, 106, 62, 0.06),
+    0 4px 12px -2px rgba(45, 106, 62, 0.10),
+    0 12px 28px -8px rgba(26, 61, 40, 0.08);
+  --shadow-pill-hover:
+    0 2px 4px rgba(45, 106, 62, 0.10),
+    0 8px 20px -2px rgba(45, 106, 62, 0.16),
+    0 24px 48px -12px rgba(26, 61, 40, 0.14);
+  --shadow-card:
+    0 1px 3px rgba(45, 106, 62, 0.08),
+    0 12px 32px -8px rgba(45, 106, 62, 0.12),
+    0 32px 64px -16px rgba(26, 61, 40, 0.10);
+  --shadow-card-hover:
+    0 2px 6px rgba(45, 106, 62, 0.12),
+    0 20px 48px -8px rgba(45, 106, 62, 0.18),
+    0 48px 96px -16px rgba(26, 61, 40, 0.16);
+  --shadow-tribe:
+    0 4px 12px -4px rgba(45, 106, 62, 0.22),
+    0 24px 56px -12px rgba(26, 61, 40, 0.32),
+    0 40px 80px -16px rgba(26, 61, 40, 0.18);
+}
+
+/* === Modern Shadow Upgrades on existing components === */
+.werte-pill-pro {
+  /* CSS vars für Tilt-3D */
+  --tilt-rx: 0deg;
+  --tilt-ry: 0deg;
+  --tilt-y: 0px;
+  transform-style: preserve-3d;
+  transform:
+    perspective(900px)
+    rotateX(var(--tilt-rx))
+    rotateY(var(--tilt-ry))
+    translateY(var(--tilt-y));
+  box-shadow: var(--shadow-pill);
+  will-change: transform;
+}
+.werte-pill-pro:hover {
+  border-color: rgba(45, 106, 62, 0.35);
+  --tilt-y: -2px;
+  /* :hover transform must repeat full chain to override existing rule */
+  transform:
+    perspective(900px)
+    rotateX(var(--tilt-rx))
+    rotateY(var(--tilt-ry))
+    translateY(var(--tilt-y));
+  box-shadow: var(--shadow-pill-hover);
+}
+.werte-pill-pro.tilting {
+  /* during mouse-tracking: schnelleres transform-tracking */
+  transition:
+    transform 0.08s linear,
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.manifest-block {
+  --tilt-rx: 0deg;
+  --tilt-ry: 0deg;
+  transform-style: preserve-3d;
+  transform:
+    perspective(1100px)
+    rotateX(var(--tilt-rx))
+    rotateY(var(--tilt-ry));
+  box-shadow: var(--shadow-card);
+  transition:
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.manifest-block:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+.manifest-block.tilting {
+  transition:
+    transform 0.08s linear,
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lead-magnet {
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.lead-magnet:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+.bibel-vers {
+  box-shadow:
+    0 1px 3px rgba(45, 106, 62, 0.06),
+    0 8px 24px -8px rgba(45, 106, 62, 0.14);
+  transition: box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.bibel-vers:hover {
+  box-shadow:
+    0 2px 6px rgba(45, 106, 62, 0.10),
+    0 16px 40px -8px rgba(45, 106, 62, 0.20);
+}
+
+.tribe-quote {
+  box-shadow: var(--shadow-tribe);
+}
+
+.v5-stat-pill {
+  box-shadow: var(--shadow-pill);
+}
+.v5-stat-pill:hover {
+  box-shadow: var(--shadow-pill-hover);
+}
+
+.brand-stat {
+  box-shadow: var(--shadow-pill);
+  transition:
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.brand-stat:hover {
+  box-shadow: var(--shadow-pill-hover);
+  transform: translateY(-2px);
+}
+
+.pillar {
+  box-shadow: var(--shadow-pill);
+  transition:
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s;
+}
+.pillar:hover {
+  box-shadow: var(--shadow-pill-hover);
+}
+
+/* Skip Tilt on touch + reduced-motion (perf + UX) */
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .werte-pill-pro,
+  .manifest-block {
+    transform: none !important;
+    will-change: auto;
+  }
+  .werte-pill-pro:hover {
+    transform: translateY(-2px) !important;
+  }
+}
+
 /* === Responsive Polish === */
 @media (max-width: 380px) {
   .hero h1 { font-size: 40px; letter-spacing: -1.2px; }

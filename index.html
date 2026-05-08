@@ -159,24 +159,60 @@
   document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
 })();
 
-// Subtle Hero-Photo Parallax (skip wenn reduced-motion oder mobile)
+// V8 — Multi-Layer Parallax: Hero-Layer mit unterschiedlichen Speeds
+// "Scrollt aber nicht wirklich" — Layer verschieben sich relativ zueinander
 (function() {
-  const heroPhoto = document.querySelector('.hero-photo-v3');
-  if (!heroPhoto) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const layers = [
+    { el: document.querySelector('.hero-photo-v3'),  speed: 0.06 },
+    { el: document.querySelector('.hero h1'),        speed: 0.03 },
+    { el: document.querySelector('.hero-sub'),       speed: 0.018 },
+    { el: document.querySelector('.identity-line'),  speed: 0.04 },
+    { el: document.querySelector('.trust-bar'),      speed: 0.025 }
+  ].filter(l => l.el);
+  if (!layers.length) return;
   let ticking = false;
   window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        const y = window.scrollY;
-        if (y < 600) {
-          heroPhoto.style.transform = `translateY(${y * 0.06}px)`;
-        }
-        ticking = false;
-      });
-      ticking = true;
-    }
+    if (ticking) return;
+    window.requestAnimationFrame(() => {
+      const y = window.scrollY;
+      if (y < 800) {
+        layers.forEach(l => {
+          l.el.style.transform = `translateY(${y * l.speed}px)`;
+        });
+      }
+      ticking = false;
+    });
+    ticking = true;
   }, { passive: true });
+})();
+
+// V8 — 3D Card-Tilt: Mouse-tracked Perspective auf Werte-Pills + Manifest
+(function() {
+  if (window.matchMedia('(hover: none)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const tiltElements = document.querySelectorAll('.werte-pill-pro, .manifest-block');
+  tiltElements.forEach(el => {
+    let rafId = null;
+    el.addEventListener('mousemove', (e) => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const rect = el.getBoundingClientRect();
+        const dx = (e.clientX - rect.left) / rect.width  - 0.5; // -0.5..0.5
+        const dy = (e.clientY - rect.top)  / rect.height - 0.5;
+        const maxTilt = el.classList.contains('manifest-block') ? 4 : 6;
+        el.style.setProperty('--tilt-ry', `${dx * maxTilt * 2}deg`);
+        el.style.setProperty('--tilt-rx', `${-dy * maxTilt * 2}deg`);
+        el.classList.add('tilting');
+      });
+    }, { passive: true });
+    el.addEventListener('mouseleave', () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      el.style.setProperty('--tilt-ry', '0deg');
+      el.style.setProperty('--tilt-rx', '0deg');
+      el.classList.remove('tilting');
+    }, { passive: true });
+  });
 })();
 
 // Footer-Year + Veggie-Years dynamisch (2026=10, 2027=11, ...)
