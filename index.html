@@ -15,7 +15,7 @@
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%232d6a3e'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
-<link rel="stylesheet" href="style.css?v=v10">
+<link rel="stylesheet" href="style.css?v=v11">
 </head>
 <body>
 <main class="page">
@@ -161,28 +161,33 @@
   document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
 })();
 
-// V8 — Multi-Layer Parallax: Hero-Layer mit unterschiedlichen Speeds
-// "Scrollt aber nicht wirklich" — Layer verschieben sich relativ zueinander
+// V11 — Multi-Layer Parallax + Fade-Out (Apple-Style Hero-Disappear)
+// Hero-Layer driften unterschiedlich + faden gemeinsam aus beim runter-Scrollen
 (function() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const layers = [
-    { el: document.querySelector('.hero-photo-wrap'), speed: 0.12 },
-    { el: document.querySelector('.hero h1'),         speed: 0.06 },
-    { el: document.querySelector('.hero-sub'),        speed: 0.04 },
-    { el: document.querySelector('.identity-line'),   speed: 0.08 },
-    { el: document.querySelector('.trust-bar'),       speed: 0.05 }
+    { el: document.querySelector('.hero-photo-wrap'), speed: 0.10 },
+    { el: document.querySelector('.hero h1'),         speed: 0.05 },
+    { el: document.querySelector('.hero-sub'),        speed: 0.03 },
+    { el: document.querySelector('.identity-line'),   speed: 0.025 },
+    { el: document.querySelector('.trust-bar'),       speed: 0.02 }
   ].filter(l => l.el);
   if (!layers.length) return;
+  const FADE_START = 80;   // fade-out beginnt bei 80px scrollY
+  const FADE_END   = 420;  // ab 420px scrollY komplett unsichtbar
   let ticking = false;
   window.addEventListener('scroll', () => {
     if (ticking) return;
     window.requestAnimationFrame(() => {
       const y = window.scrollY;
-      if (y < 800) {
-        layers.forEach(l => {
+      const fadeProgress = Math.max(0, Math.min(1, (y - FADE_START) / (FADE_END - FADE_START)));
+      const opacity = 1 - fadeProgress;
+      layers.forEach(l => {
+        if (y < 600) {
           l.el.style.transform = `translateY(${y * l.speed}px)`;
-        });
-      }
+        }
+        l.el.style.opacity = opacity;
+      });
       ticking = false;
     });
     ticking = true;
