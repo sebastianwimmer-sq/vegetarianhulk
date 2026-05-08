@@ -1454,6 +1454,224 @@ html { scroll-behavior: smooth; }
   }
 }
 
+/* ============================================================
+   V9 — Aurora Background + 3D-Float Hero + Stronger Effects
+   (09.05.2026) — sichtbar-Wow auf vegetarianhulk-DNA.
+   ============================================================ */
+
+/* === V9 Stronger Shadow Tokens (override V8) === */
+:root {
+  --shadow-pill:
+    0 2px 4px rgba(45, 106, 62, 0.14),
+    0 8px 20px -2px rgba(45, 106, 62, 0.22),
+    0 24px 48px -8px rgba(26, 61, 40, 0.20);
+  --shadow-pill-hover:
+    0 4px 8px rgba(45, 106, 62, 0.20),
+    0 16px 36px -2px rgba(45, 106, 62, 0.32),
+    0 40px 80px -8px rgba(26, 61, 40, 0.30);
+  --shadow-card:
+    0 2px 6px rgba(45, 106, 62, 0.16),
+    0 20px 48px -8px rgba(45, 106, 62, 0.24),
+    0 48px 96px -16px rgba(26, 61, 40, 0.22);
+  --shadow-card-hover:
+    0 4px 12px rgba(45, 106, 62, 0.22),
+    0 32px 72px -8px rgba(45, 106, 62, 0.34),
+    0 64px 128px -16px rgba(26, 61, 40, 0.32);
+  --shadow-tribe:
+    0 8px 24px -4px rgba(45, 106, 62, 0.32),
+    0 32px 80px -12px rgba(26, 61, 40, 0.42),
+    0 56px 112px -16px rgba(26, 61, 40, 0.30);
+}
+
+/* === Aurora Forest-Light Background (animated) === */
+body {
+  background-image: none; /* override existing halo */
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: -10%;
+  background:
+    radial-gradient(ellipse 60% 45% at 18% 12%, rgba(45, 106, 62, 0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 38% at 82% 22%, rgba(31, 77, 44, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 35% at 50% 68%, rgba(26, 61, 40, 0.14) 0%, transparent 65%),
+    radial-gradient(ellipse 45% 30% at 15% 85%, rgba(45, 106, 62, 0.10) 0%, transparent 60%);
+  z-index: -1;
+  pointer-events: none;
+  animation: aurora-drift 22s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+@keyframes aurora-drift {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.85; }
+  33% { transform: translate(-3%, -2%) scale(1.06); opacity: 1; }
+  66% { transform: translate(2%, 3%) scale(0.97); opacity: 0.92; }
+  100% { transform: translate(-1.5%, 1.5%) scale(1.04); opacity: 0.95; }
+}
+
+/* === Hero-Photo-Wrapper (gets JS-Parallax) === */
+.hero-photo-wrap {
+  display: block;
+  width: max-content;
+  margin: 0 0 28px;
+  perspective: 1000px;
+  will-change: transform;
+}
+.hero-photo-wrap > .hero-photo-v3,
+.hero-photo-wrap > .hero-photo-fallback {
+  margin-bottom: 0;
+}
+
+/* === Hero-Photo: 3D-Float-Loop (dauerhaft schwebend) === */
+@keyframes hero-photo-float {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  25% { translate: 0 -10px; rotate: 0.5deg; }
+  50% { translate: 0 -5px; rotate: -0.3deg; }
+  75% { translate: 0 -12px; rotate: 0.6deg; }
+}
+@keyframes hero-photo-glow-strong {
+  0%, 100% {
+    box-shadow:
+      0 0 0 8px rgba(45, 106, 62, 0.20),
+      0 0 50px rgba(45, 106, 62, 0.28),
+      0 32px 64px -16px rgba(26, 61, 40, 0.32),
+      0 12px 24px -8px rgba(26, 61, 40, 0.20);
+  }
+  50% {
+    box-shadow:
+      0 0 0 14px rgba(45, 106, 62, 0.28),
+      0 0 80px rgba(45, 106, 62, 0.40),
+      0 44px 88px -16px rgba(26, 61, 40, 0.40),
+      0 18px 36px -8px rgba(26, 61, 40, 0.28);
+  }
+}
+.hero-photo-v3 {
+  /* override V7 weaker glow + add float */
+  animation:
+    hero-photo-glow-strong 4s ease-in-out infinite,
+    hero-photo-float 7s ease-in-out infinite;
+  animation-delay: 1.2s, 1.2s;
+  /* JS-parallax greift jetzt am Wrapper (.hero-photo-wrap),
+     deshalb bleibt translate/rotate für Float frei */
+}
+
+/* === Werte-Pills: Gradient-Border-Glow (immer sichtbar, animated) === */
+.werte-pill-pro {
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(135deg,
+      rgba(45, 106, 62, 0.45) 0%,
+      rgba(45, 106, 62, 0.12) 50%,
+      rgba(31, 77, 44, 0.45) 100%
+    ) border-box;
+  border: 1.5px solid transparent;
+  position: relative;
+}
+.werte-pill-pro::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  background: linear-gradient(135deg,
+    rgba(45, 106, 62, 0) 0%,
+    rgba(45, 106, 62, 0.30) 50%,
+    rgba(45, 106, 62, 0) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(10px);
+}
+.werte-pill-pro:hover::after { opacity: 1; }
+.werte-pill-pro:hover {
+  /* Override V8 to keep gradient-border instead of plain green */
+  border-color: transparent;
+}
+
+/* === Manifest-Block: stronger top-glow accent === */
+.manifest-block::before {
+  height: 3px;
+  background: linear-gradient(90deg,
+    var(--green1) 0%,
+    var(--green2) 50%,
+    transparent 100%
+  );
+  box-shadow: 0 0 12px rgba(45, 106, 62, 0.5);
+}
+
+/* === Tribe-Quote: light-sweep effect === */
+.tribe-quote {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.tribe-quote::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.08) 47%,
+    rgba(255, 255, 255, 0.18) 50%,
+    rgba(255, 255, 255, 0.08) 53%,
+    transparent 65%
+  );
+  animation: tribe-sweep 9s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes tribe-sweep {
+  0% { transform: translateX(-30%) translateY(-30%); }
+  100% { transform: translateX(0%) translateY(0%); }
+}
+.tribe-quote-text,
+.tribe-quote-sub { position: relative; z-index: 1; }
+
+/* === Bibel-Vers: subtle inner glow on hover === */
+.bibel-vers:hover {
+  box-shadow:
+    inset 0 0 24px rgba(45, 106, 62, 0.10),
+    0 4px 12px rgba(45, 106, 62, 0.18),
+    0 24px 56px -8px rgba(45, 106, 62, 0.30);
+}
+
+/* === Lead-Magnet: animated top-stripe glow === */
+.lead-magnet::before {
+  height: 4px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--green1) 30%,
+    var(--green2) 50%,
+    var(--green1) 70%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: stripe-flow 4s linear infinite;
+}
+@keyframes stripe-flow {
+  0% { background-position: 0% 0%; }
+  100% { background-position: -200% 0%; }
+}
+
+/* === V9 Reduced-Motion Respect === */
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation: none; }
+  .hero-photo-v3 { animation: none; }
+  .tribe-quote::before { animation: none; }
+  .lead-magnet::before { animation: none; background-size: auto; }
+  .werte-pill-pro::after { display: none; }
+}
+
+/* === V9 Mobile-Polish (Aurora dezenter, Pills ohne Gradient-Border-After) === */
+@media (max-width: 380px) {
+  body::before { opacity: 0.6; }
+  .werte-pill-pro::after { display: none; }
+}
+
 /* === Responsive Polish === */
 @media (max-width: 380px) {
   .hero h1 { font-size: 40px; letter-spacing: -1.2px; }

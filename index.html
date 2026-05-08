@@ -15,7 +15,7 @@
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%232d6a3e'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
-<link rel="stylesheet" href="style.css?v=v8">
+<link rel="stylesheet" href="style.css?v=v9">
 </head>
 <body>
 <main class="page">
@@ -28,9 +28,11 @@
 
   <!-- Hero V7 — Modern-Serif H1 + 10-Jahre-Anker + erweiterte Trust-Pills -->
   <section class="hero">
-    <img src="hero.jpg" alt="Sebi" class="hero-photo-v3 fade-in-up"
-         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-    <div class="hero-photo-fallback fade-in-up" style="display:none">FOTO<br>kommt</div>
+    <div class="hero-photo-wrap fade-in-up">
+      <img src="hero.jpg" alt="Sebi" class="hero-photo-v3"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="hero-photo-fallback" style="display:none">FOTO<br>kommt</div>
+    </div>
 
     <h1 class="fade-in-up delay-1">Disziplin ist<br>kein Talent.<br><span class="italic">Sie ist ein Ritual.</span></h1>
 
@@ -164,11 +166,11 @@
 (function() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const layers = [
-    { el: document.querySelector('.hero-photo-v3'),  speed: 0.06 },
-    { el: document.querySelector('.hero h1'),        speed: 0.03 },
-    { el: document.querySelector('.hero-sub'),       speed: 0.018 },
-    { el: document.querySelector('.identity-line'),  speed: 0.04 },
-    { el: document.querySelector('.trust-bar'),      speed: 0.025 }
+    { el: document.querySelector('.hero-photo-wrap'), speed: 0.12 },
+    { el: document.querySelector('.hero h1'),         speed: 0.06 },
+    { el: document.querySelector('.hero-sub'),        speed: 0.04 },
+    { el: document.querySelector('.identity-line'),   speed: 0.08 },
+    { el: document.querySelector('.trust-bar'),       speed: 0.05 }
   ].filter(l => l.el);
   if (!layers.length) return;
   let ticking = false;
@@ -200,7 +202,7 @@
         const rect = el.getBoundingClientRect();
         const dx = (e.clientX - rect.left) / rect.width  - 0.5; // -0.5..0.5
         const dy = (e.clientY - rect.top)  / rect.height - 0.5;
-        const maxTilt = el.classList.contains('manifest-block') ? 4 : 6;
+        const maxTilt = el.classList.contains('manifest-block') ? 8 : 12;
         el.style.setProperty('--tilt-ry', `${dx * maxTilt * 2}deg`);
         el.style.setProperty('--tilt-rx', `${-dy * maxTilt * 2}deg`);
         el.classList.add('tilting');
