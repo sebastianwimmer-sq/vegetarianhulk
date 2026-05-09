@@ -2173,6 +2173,168 @@ body::before {
   .usp-stat { font-size: 22px; }
 }
 
+/* ============================================================
+   V14 — Brand-Page Polish (09.05.2026)
+   Hero-Mini-CTA + Brand-Themes-Pills + Mini-FAQ
+   ============================================================ */
+
+/* === Hero-Mini-CTA (subtle pill button im Hero) === */
+.hero-mini-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 10px 16px;
+  background: linear-gradient(180deg, var(--green1) 0%, var(--green2) 100%);
+  color: #ffffff !important;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  border-radius: 99px;
+  box-shadow:
+    0 4px 12px rgba(45, 106, 62, 0.35),
+    0 12px 28px -8px rgba(45, 106, 62, 0.30);
+  text-decoration: none !important;
+  transition:
+    filter 0.2s,
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero-mini-cta:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 20px rgba(45, 106, 62, 0.45),
+    0 20px 44px -8px rgba(45, 106, 62, 0.40);
+}
+
+/* === Brand-Themes-Pills (visuelle Liste statt Text-Wand) === */
+.brand-themes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 0;
+}
+.brand-theme-pill {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 8px 13px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.1px;
+  box-shadow: 0 1px 3px rgba(45, 106, 62, 0.06),
+              0 4px 10px -2px rgba(45, 106, 62, 0.08);
+  transition: box-shadow 0.3s, transform 0.2s, border-color 0.2s;
+}
+.brand-theme-pill:hover {
+  border-color: rgba(45, 106, 62, 0.40);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(45, 106, 62, 0.12),
+              0 10px 20px -4px rgba(45, 106, 62, 0.18);
+}
+
+.brand-anti-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0 0;
+}
+.brand-anti-pill {
+  background: rgba(180, 100, 90, 0.06);
+  border: 1px dashed rgba(180, 100, 90, 0.35);
+  border-radius: 99px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text3);
+  letter-spacing: 0.1px;
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(180, 100, 90, 0.45);
+}
+
+/* === Mini-FAQ (Accordion-Style mit native <details>) === */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 18px 0 0;
+}
+.faq-item {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0;
+  overflow: hidden;
+  transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s;
+  box-shadow: 0 1px 3px rgba(45, 106, 62, 0.05);
+}
+.faq-item:hover {
+  border-color: rgba(45, 106, 62, 0.30);
+  box-shadow: 0 2px 6px rgba(45, 106, 62, 0.10),
+              0 8px 20px -4px rgba(45, 106, 62, 0.12);
+}
+.faq-item[open] {
+  border-color: rgba(45, 106, 62, 0.45);
+  box-shadow: 0 2px 8px rgba(45, 106, 62, 0.12),
+              0 16px 32px -6px rgba(45, 106, 62, 0.18);
+}
+.faq-item summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 14px 44px 14px 16px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.1px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: '+';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--green3);
+  color: var(--green-deep);
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 22px;
+  text-align: center;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.2s;
+}
+.faq-item[open] summary::after {
+  transform: translateY(-50%) rotate(45deg);
+  background: var(--green1);
+  color: #ffffff;
+}
+.faq-body {
+  padding: 0 16px 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text2);
+  animation: faq-fade-in 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes faq-fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 380px) {
+  .brand-theme-pill { font-size: 11.5px; padding: 7px 11px; }
+  .faq-item summary { font-size: 13px; padding: 12px 38px 12px 14px; }
+}
+
 /* === Responsive Polish === */
 @media (max-width: 380px) {
   .hero h1 { font-size: 40px; letter-spacing: -1.2px; }
