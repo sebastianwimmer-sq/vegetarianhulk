@@ -2335,6 +2335,210 @@ body::before {
   .faq-item summary { font-size: 13px; padding: 12px 38px 12px 14px; }
 }
 
+/* ============================================================
+   V15 — Brand-Page Final Polish (09.05.2026)
+   - First-Brand-Bonus Highlight (Pre-Cases-Trust)
+   - Discovery-Call-CTA (Email-Termin Anker)
+   - Form-or-Divider (Trennstrich „oder")
+   - Footer-Address (Pro-Touch Anschrift)
+   ============================================================ */
+
+/* === First-Brand-Bonus === */
+.first-brand-bonus {
+  margin-top: 22px;
+  padding: 22px 22px;
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, var(--green1) 0%, var(--green2) 100%);
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow: var(--shadow-tribe);
+}
+.first-brand-bonus::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: linear-gradient(115deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.10) 47%,
+    rgba(255, 255, 255, 0.20) 50%,
+    rgba(255, 255, 255, 0.10) 53%,
+    transparent 65%
+  );
+  animation: tribe-sweep 9s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+.first-brand-bonus > * { position: relative; z-index: 1; }
+.first-brand-bonus-eyebrow {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-bottom: 10px;
+}
+.first-brand-bonus-title {
+  font-family: 'Playfair Display', 'Inter', serif;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.3px;
+  margin-bottom: 10px;
+}
+.first-brand-bonus-body {
+  font-size: 13.5px;
+  line-height: 1.6;
+  opacity: 0.95;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .first-brand-bonus::before { animation: none; }
+}
+
+/* === Discovery-Call-CTA === */
+.discovery-call-cta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 18px;
+  margin: 18px 0 0;
+  background: #ffffff;
+  border: 1.5px solid transparent;
+  border-radius: 14px;
+  background-clip: padding-box;
+  box-shadow:
+    0 1px 3px rgba(45, 106, 62, 0.06),
+    0 8px 24px -4px rgba(45, 106, 62, 0.14);
+  transition:
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s;
+  text-decoration: none !important;
+  color: var(--text);
+  position: relative;
+}
+.discovery-call-cta::before {
+  /* Forest-Gradient-Border via inset shadow */
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg,
+    rgba(45, 106, 62, 0.50) 0%,
+    rgba(45, 106, 62, 0.15) 50%,
+    rgba(31, 77, 44, 0.50) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+.discovery-call-cta:hover {
+  box-shadow:
+    0 2px 6px rgba(45, 106, 62, 0.10),
+    0 16px 40px -4px rgba(45, 106, 62, 0.24);
+  transform: translateY(-2px);
+}
+.discovery-call-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--green1), var(--green2));
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(45, 106, 62, 0.30);
+}
+.discovery-call-body {
+  flex: 1;
+  min-width: 0;
+}
+.discovery-call-title {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.2px;
+  margin-bottom: 3px;
+  line-height: 1.3;
+}
+.discovery-call-sub {
+  font-size: 12px;
+  color: var(--text2);
+  font-weight: 500;
+  line-height: 1.4;
+}
+.discovery-call-arrow {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--green1);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.discovery-call-cta:hover .discovery-call-arrow {
+  transform: translateX(4px);
+}
+
+/* === Form-or-Divider === */
+.form-or-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text3);
+  text-transform: uppercase;
+}
+.form-or-divider::before,
+.form-or-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* === Footer-Address === */
+.footer-address {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--text2);
+  padding: 14px 0;
+  border-top: 1px dashed var(--border);
+  border-bottom: 1px dashed var(--border);
+  margin: 4px 0;
+}
+.footer-address strong {
+  color: var(--text);
+  font-weight: 700;
+}
+.footer-address a {
+  color: var(--green-deep);
+  font-weight: 600;
+}
+.footer-address a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 380px) {
+  .first-brand-bonus-title { font-size: 16px; }
+  .discovery-call-title { font-size: 13.5px; }
+  .discovery-call-sub { font-size: 11.5px; }
+  .footer-address { font-size: 11.5px; }
+}
+
 /* === Responsive Polish === */
 @media (max-width: 380px) {
   .hero h1 { font-size: 40px; letter-spacing: -1.2px; }
