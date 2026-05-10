@@ -1173,7 +1173,20 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
 }
 
-/* Tribe-Quote — Anti-Coach-Bro Statement */
+/* V17 — Tribe-Line kompakt (Footer-Statement zur DNA-Section, kein eigenes Card mehr) */
+.tribe-line {
+  font-family: 'Playfair Display', 'Inter', serif;
+  font-style: italic;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text2);
+  text-align: center;
+  margin: 18px 0 8px;
+  letter-spacing: 0.1px;
+  line-height: 1.4;
+}
+
+/* Tribe-Quote — Anti-Coach-Bro Statement (V16, V17 deprecated — siehe .tribe-line oben) */
 .tribe-quote {
   background: linear-gradient(135deg, var(--green1), var(--green2));
   border-radius: 16px;
