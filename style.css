@@ -2757,3 +2757,47 @@ body::before {
     max-width: 100%;
   }
 }
+
+/* ============================================================
+   V23 — Brand-Page (kooperationen.html) Fluid Polish (11.05.)
+   V20 hatte index.html styles fluid gemacht. Brand-Page-spezifische
+   Klassen (brand-h1, brand-trust-bar, v5-h2, package-*, process-*)
+   sind hier nachgezogen mit clamp() für smooth scaling.
+   ============================================================ */
+
+.brand-h1 {
+  font-size: clamp(28px, 4.5vw, 56px);
+  letter-spacing: clamp(-1.4px, -0.1vw, -0.6px);
+  line-height: clamp(1.0, 1vw, 1.1);
+  margin-bottom: clamp(14px, 1.8vw, 24px);
+}
+
+.brand-trust-bar {
+  font-size: clamp(10px, 0.95vw, 12.5px);
+  padding: clamp(8px, 1vw, 14px) clamp(12px, 1.4vw, 20px);
+  margin-bottom: clamp(20px, 2.4vw, 32px);
+  gap: clamp(5px, 0.7vw, 8px) clamp(10px, 1.3vw, 16px);
+}
+
+.hero-photo-v3.hero-photo-small {
+  width: clamp(100px, 11vw, 150px);
+  height: clamp(100px, 11vw, 150px);
+}
+
+.v5-h2 {
+  font-size: clamp(19px, 2.5vw, 30px);
+  letter-spacing: clamp(-0.6px, -0.05vw, -0.3px);
+}
+
+.package-name { font-size: clamp(16px, 1.5vw, 19px); }
+.package-price { font-size: clamp(18px, 1.8vw, 24px); }
+.process-num {
+  width: clamp(34px, 3.5vw, 44px);
+  height: clamp(34px, 3.5vw, 44px);
+  font-size: clamp(15px, 1.4vw, 18px);
+}
+.brand-stat-num { font-size: clamp(22px, 2.6vw, 32px); }
+
+.first-brand-bonus-title { font-size: clamp(15px, 1.6vw, 20px); }
+.discovery-call-title { font-size: clamp(13px, 1.4vw, 17px); }
+.discovery-call-sub { font-size: clamp(11px, 1.1vw, 14px); }
