@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block staging variants (defense-in-depth, falls Subdomain mal gleichen Pfad serves)
+Disallow: /design/
+Disallow: /prototypes/
+
+Sitemap: https://vegetarianhulk.de/sitemap.xml
