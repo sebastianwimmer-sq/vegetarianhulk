@@ -2573,3 +2573,76 @@ body::before {
   .werte-grid { grid-template-columns: 1fr; }
   .werte-grid .werte-pill-full { grid-column: span 1; }
 }
+
+/* ============================================================
+   V18 — Full Responsive Sweep (11.05.2026)
+   Sebi-Bug-Report: Handy vs Macbook-Safari sah broken aus,
+   weil page max-width 500px = schmale Spalte auf Desktop,
+   plus kein Breakpoint zwischen 380px und Desktop.
+
+   Neue Breakpoints:
+   - max-width 480px: Mobile-Polish (iPhone 12-15 Pro Max)
+   - min-width 768px: Tablet (iPad)
+   - min-width 1100px: Desktop (Macbook-Safari)
+   ============================================================ */
+
+/* === Mobile-Standard (381-480px) === */
+@media (min-width: 381px) and (max-width: 480px) {
+  .hero h1 { font-size: 48px; letter-spacing: -1.5px; }
+  .hero-photo-v3 { width: 160px; height: 160px; }
+  .dna-h2 { font-size: 30px; }
+}
+
+/* === Tablet (≥768px) === */
+@media (min-width: 768px) {
+  .page { max-width: 720px; padding: 56px 40px; }
+  .topbar { margin-bottom: 56px; }
+
+  .hero { margin-bottom: 64px; }
+  .hero h1 { font-size: 72px; letter-spacing: -2.2px; line-height: 0.98; margin-bottom: 28px; }
+  .hero-photo-v3 { width: 220px; height: 220px; margin-bottom: 36px; }
+  .hero-sub { font-size: 17px; max-width: 520px; padding-left: 18px; }
+  .identity-line { font-size: 13px; margin-top: 24px; }
+  .trust-bar { gap: 10px; margin-top: 28px; }
+  .trust-pill { font-size: 12px; padding: 9px 14px; }
+
+  .dna-section { margin-top: 32px; }
+  .dna-h2 { font-size: 42px; letter-spacing: -1.4px; }
+  .werte-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .werte-pill-pro-name { font-size: 15px; }
+  .werte-pill-pro-desc { font-size: 12.5px; }
+
+  .bibel-vers { padding: 28px 32px; }
+  .bibel-vers-quote { font-size: 19px; line-height: 1.55; }
+
+  .lead-magnet { padding: 36px 32px; margin-top: 48px; }
+  .lead-magnet-title { font-size: 26px; line-height: 1.25; }
+  .lead-magnet-promise { font-size: 16px; }
+  .lead-magnet-form { flex-direction: row; gap: 10px; }
+  .lead-magnet-form input[type="email"] { flex: 1; }
+  .lead-magnet-form button { flex: 0 0 auto; padding-left: 24px; padding-right: 24px; white-space: nowrap; }
+
+  .footer { margin-top: 64px; padding-top: 40px; }
+}
+
+/* === Desktop (≥1100px) — Macbook-Safari Comfort === */
+@media (min-width: 1100px) {
+  .page { max-width: 900px; padding: 72px 56px; }
+
+  .hero { margin-bottom: 88px; }
+  .hero h1 { font-size: 88px; letter-spacing: -2.8px; }
+  .hero-photo-v3 { width: 260px; height: 260px; }
+  .hero-sub { font-size: 18px; max-width: 580px; }
+
+  .dna-h2 { font-size: 52px; letter-spacing: -1.8px; }
+  .werte-grid { gap: 16px; }
+  .werte-pill-pro { padding: 22px 18px; }
+
+  .lead-magnet { padding: 44px 40px; }
+  .lead-magnet-title { font-size: 30px; }
+}
+
+/* === Fallback: Lead-Form bleibt stacked auf Mobile === */
+@media (max-width: 767px) {
+  .lead-magnet-form { flex-direction: column; }
+}
