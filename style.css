@@ -2711,3 +2711,49 @@ body::before {
 .footer {
   margin-top: clamp(40px, 5vw, 72px);
 }
+
+/* ============================================================
+   V21 — Desktop Hero zweispaltig (≥1024px) (11.05.2026)
+   Apple/Stripe/Linear-Pattern für Personal-Brand-Sites:
+   Foto links + Text rechts wenn Viewport breit genug.
+   Unter 1024px bleibt Mobile-Stack (Foto oben, Text drunter).
+   ============================================================ */
+
+@media (min-width: 1024px) {
+  .hero {
+    display: grid;
+    grid-template-columns: clamp(260px, 26vw, 340px) 1fr;
+    column-gap: clamp(40px, 4vw, 72px);
+    align-items: center;
+    margin-bottom: clamp(60px, 7vw, 100px);
+  }
+
+  .hero-photo-wrap {
+    margin-bottom: 0;
+    width: 100%;
+  }
+
+  .hero-photo-v3,
+  .hero-photo-fallback {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .hero-text h1 {
+    font-size: clamp(60px, 6vw, 92px);
+    letter-spacing: clamp(-2.8px, -0.2vw, -1.6px);
+    margin-bottom: clamp(20px, 2vw, 28px);
+  }
+
+  .hero-text .hero-sub {
+    margin-top: 0 !important;
+    max-width: 100%;
+  }
+}
