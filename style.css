@@ -2801,3 +2801,53 @@ body::before {
 .first-brand-bonus-title { font-size: clamp(15px, 1.6vw, 20px); }
 .discovery-call-title { font-size: clamp(13px, 1.4vw, 17px); }
 .discovery-call-sub { font-size: clamp(11px, 1.1vw, 14px); }
+
+/* ============================================================
+   V24 — Brand-Page (kooperationen.html) Desktop zweispaltig (11.05.)
+   Pattern wie V21 auf index.html — Foto links + (trust-bar +
+   h1 + sub + mini-cta) rechts ab 1024px. Mobile bleibt stacked.
+   Foto wird auf Desktop deutlich größer (240-300px statt 100-150).
+   ============================================================ */
+
+@media (min-width: 1024px) {
+  .brand-hero {
+    display: grid;
+    grid-template-columns: clamp(220px, 22vw, 300px) 1fr;
+    column-gap: clamp(36px, 4vw, 64px);
+    align-items: center;
+    margin-bottom: clamp(56px, 6.5vw, 90px);
+  }
+
+  .brand-hero .hero-photo-wrap {
+    margin-bottom: 0;
+    width: 100%;
+  }
+
+  /* Foto auf Desktop deutlich größer als hero-photo-small mobile (war clamp 100-150px) */
+  .brand-hero .hero-photo-v3.hero-photo-small,
+  .brand-hero .hero-photo-fallback.hero-photo-small {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  .brand-hero-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .brand-hero-text .brand-trust-bar {
+    margin-bottom: clamp(20px, 2vw, 28px);
+  }
+
+  .brand-hero-text .brand-h1 {
+    font-size: clamp(40px, 4.8vw, 64px);
+    letter-spacing: clamp(-1.6px, -0.12vw, -0.8px);
+  }
+
+  .brand-hero-text .hero-sub {
+    margin-top: 0 !important;
+    max-width: 100%;
+  }
+}

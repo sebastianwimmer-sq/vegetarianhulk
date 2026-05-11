@@ -16,7 +16,7 @@
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%232d6a3e'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
-<link rel="stylesheet" href="style.css?v=v23">
+<link rel="stylesheet" href="style.css?v=v24">
 </head>
 <body>
 <main class="page brand-page">
@@ -27,34 +27,36 @@
     <a href="index.html" class="topbar-meta" style="text-decoration:none">← ZURÜCK</a>
   </header>
 
-  <!-- Hero V12 — B2B-Tonalität, Trust-Bar oben, klare Headline -->
-  <section class="hero">
-    <div class="brand-trust-bar fade-in-up">
-      <span>📍 DACH</span>
-      <span>👥 2.100 Follower</span>
-      <span>📊 50%+ Non-Follower-Reach</span>
-      <span>⚡ Antwort in 48h</span>
-    </div>
-
+  <!-- Hero V24 — Desktop zweispaltig (Foto links + Text rechts ab 1024px), Mobile bleibt stacked -->
+  <section class="hero brand-hero">
     <div class="hero-photo-wrap fade-in-up delay-1">
-      <img src="hero.jpg?v=v23" alt="Sebi" class="hero-photo-v3 hero-photo-small"
+      <img src="hero.jpg?v=v24" alt="Sebi" class="hero-photo-v3 hero-photo-small"
            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
       <div class="hero-photo-fallback hero-photo-small" style="display:none">FOTO</div>
     </div>
 
-    <h1 class="brand-h1 fade-in-up delay-2">
-      Content für Brands,<br>
-      <span class="italic">die zu meinem Leben passen.</span>
-    </h1>
+    <div class="hero-text brand-hero-text">
+      <div class="brand-trust-bar fade-in-up">
+        <span>📍 DACH</span>
+        <span>👥 2.100 Follower</span>
+        <span>📊 50%+ Non-Follower-Reach</span>
+        <span>⚡ Antwort in 48h</span>
+      </div>
 
-    <div class="hero-sub fade-in-up delay-3" style="margin-top:18px">
-      Ich bin <strong>Sebi (@vegetarianhulk)</strong> — Disziplin, Faith, vegetarisch-stark, Build-in-Public. Ehrlicher Content für Brands die ich auch privat nutzen würde. <strong>Keine Coaching-Phrasen, keine Plastik-Sprüche.</strong>
+      <h1 class="brand-h1 fade-in-up delay-2">
+        Content für Brands,<br>
+        <span class="italic">die zu meinem Leben passen.</span>
+      </h1>
+
+      <div class="hero-sub fade-in-up delay-3" style="margin-top:18px">
+        Ich bin <strong>Sebi (@vegetarianhulk)</strong> — Disziplin, Faith, vegetarisch-stark, Build-in-Public. Ehrlicher Content für Brands die ich auch privat nutzen würde. <strong>Keine Coaching-Phrasen, keine Plastik-Sprüche.</strong>
+      </div>
+
+      <a href="#anfrage" class="hero-mini-cta fade-in-up delay-3">
+        <span>📨 Direkt Anfrage senden</span>
+        <span style="font-weight:900">→</span>
+      </a>
     </div>
-
-    <a href="#anfrage" class="hero-mini-cta fade-in-up delay-3">
-      <span>📨 Direkt Anfrage senden</span>
-      <span style="font-weight:900">→</span>
-    </a>
   </section>
 
   <!-- 0.5 USP — Was mich ausmacht (research-driven, Stat-fundiert) -->
@@ -533,6 +535,6 @@
   document.querySelectorAll('#footer-year').forEach(el => el.textContent = y);
 })();
 </script>
-<script src="update-check.js?v=v23"></script>
+<script src="update-check.js?v=v24"></script>
 </body>
 </html>
