@@ -2851,3 +2851,240 @@ body::before {
     max-width: 100%;
   }
 }
+
+/* ════════════════════════════════════════════
+   HOOK-POOL · Living Doc (V26 — adapted from Claude Design)
+   ════════════════════════════════════════════ */
+.hook-pool {
+  max-width: 1100px;
+  margin: 64px auto;
+  padding: 56px 24px 64px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.hook-pool::before {
+  content: ""; position: absolute; inset: -10%;
+  z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(60% 70% at 15% 0%, rgba(45, 106, 62, 0.08), transparent 65%),
+    radial-gradient(50% 60% at 90% 30%, rgba(45, 106, 62, 0.06), transparent 70%);
+  filter: blur(20px);
+}
+
+.hp-eyebrow-row { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.hp-n {
+  font-family: 'Playfair Display', serif;
+  font-style: italic; font-weight: 400;
+  font-size: clamp(28px, 4vw, 38px);
+  color: var(--green1);
+  letter-spacing: -0.5px;
+}
+.hp-dash { flex: 0 0 64px; height: 1px; background: var(--border); }
+.hp-lbl {
+  font-size: 11px; font-weight: 800; letter-spacing: 2.4px;
+  color: var(--text2); text-transform: uppercase;
+}
+
+.hp-h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.05; letter-spacing: -0.8px;
+  color: var(--text);
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.hp-marker {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 4px 12px;
+  background: rgba(45, 106, 62, 0.12);
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
+  color: var(--green1);
+  text-transform: uppercase;
+}
+.hp-pulse {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green1);
+  box-shadow: 0 0 0 3px rgba(45, 106, 62, 0.20);
+  animation: hp-pulse 2.4s cubic-bezier(.4,0,.2,1) infinite;
+}
+@keyframes hp-pulse {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.55; }
+}
+
+.hp-sub {
+  font-size: 17px; line-height: 1.55;
+  color: var(--text2);
+  max-width: 720px;
+  margin-bottom: 44px;
+}
+.hp-sub em { color: var(--green1); font-style: italic; font-weight: 500; }
+
+/* Grid */
+.hp-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin-bottom: 40px;
+}
+@media (min-width: 720px) {
+  .hp-grid { grid-template-columns: 1fr 1fr 1fr; gap: 22px; }
+}
+
+/* Card */
+.hook-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px 22px 20px;
+  display: flex; flex-direction: column; gap: 16px;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+.hook-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--green1);
+  box-shadow: 0 14px 30px -16px rgba(45, 106, 62, 0.25);
+}
+
+.hp-tags {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.pillar-tag, .usecase-tag {
+  font-size: 10px; font-weight: 800; letter-spacing: 1.2px;
+  padding: 4px 10px; border-radius: 999px;
+  text-transform: uppercase;
+}
+.pillar-tag {
+  background: var(--green3);
+  color: var(--green1);
+  border: 1px solid rgba(45, 106, 62, 0.25);
+}
+.usecase-tag {
+  background: var(--surface2);
+  color: var(--text2);
+  border: 1px solid var(--border);
+}
+
+.hook-q {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: clamp(20px, 2.2vw, 26px);
+  line-height: 1.25; letter-spacing: -0.4px;
+  color: var(--text);
+  text-wrap: balance;
+}
+.hook-q em {
+  font-style: italic; font-weight: 600;
+  color: var(--green1);
+}
+
+.hp-foot {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px;
+  font-size: 11px;
+}
+.hp-sig { color: var(--text3); font-style: italic; }
+.hp-stamp {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-weight: 800; letter-spacing: 1px;
+  color: var(--green1);
+  text-transform: uppercase;
+}
+.hp-live-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--green1);
+  box-shadow: 0 0 0 2px rgba(45, 106, 62, 0.20);
+  animation: hp-pulse 2.4s cubic-bezier(.4,0,.2,1) infinite;
+}
+
+/* Anchor + DM-CTA */
+.hp-anchor {
+  margin-top: 40px;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, var(--green3) 0%, var(--surface) 70%);
+  border: 1px solid var(--green1);
+  border-radius: 22px;
+  display: flex; align-items: center; gap: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.hp-anchor-text { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.hp-anchor-small {
+  font-size: 10px; font-weight: 800; letter-spacing: 2.4px;
+  color: var(--green1); text-transform: uppercase;
+}
+.hp-anchor-big {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: clamp(22px, 3vw, 34px);
+  line-height: 1.15; letter-spacing: -0.4px;
+  color: var(--text);
+  text-wrap: balance;
+}
+.hp-anchor-big em {
+  font-style: italic; font-weight: 500;
+  color: var(--green1);
+}
+.hp-anchor-micro {
+  font-size: 13px; color: var(--text2); line-height: 1.45;
+  max-width: 520px; margin-top: 4px;
+}
+.hp-btn-dm {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 22px;
+  background: var(--text);
+  color: var(--bg);
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800; font-size: 12px; letter-spacing: 1.6px;
+  text-transform: uppercase; text-decoration: none;
+  box-shadow: 0 10px 24px -10px rgba(0,0,0,0.35);
+  transition: transform 0.15s, background 0.15s, color 0.15s;
+}
+.hp-btn-dm:hover {
+  transform: translateY(-2px);
+  background: var(--green1);
+  color: var(--bg);
+}
+.hp-arrow {
+  font-family: 'Playfair Display', serif;
+  font-style: italic; font-weight: 700; font-size: 16px;
+  letter-spacing: -0.4px; text-transform: none;
+}
+
+.hp-tagline {
+  margin-top: 28px;
+  padding: 14px 0;
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(17px, 2.2vw, 21px);
+  color: var(--text3);
+  border-top: 1px dashed var(--border);
+  border-bottom: 1px dashed var(--border);
+  letter-spacing: -0.2px;
+}
+.hp-tagline em {
+  font-style: normal;
+  color: var(--green1);
+  font-weight: 600;
+}
+
+/* Mobile anchor stack */
+@media (max-width: 720px) {
+  .hp-anchor { flex-direction: column; align-items: flex-start; }
+  .hp-btn-dm { width: 100%; justify-content: center; }
+}
