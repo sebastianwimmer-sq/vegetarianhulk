@@ -215,18 +215,47 @@
   document.querySelectorAll('#footer-veggie-years').forEach(el => el.textContent = y - 2016);
 })();
 
-// Lead-Magnet Submit (mailto fallback bis Brevo eingebaut)
-function submitLead(e) {
+// Lead-Magnet Submit — Worker → Brevo (mailto fallback wenn Worker 503)
+async function submitLead(e) {
   e.preventDefault();
-  const email = document.getElementById('lead-email').value;
+  const emailInput = document.getElementById('lead-email');
+  const email = (emailInput.value || '').trim().toLowerCase();
   if (!email) return false;
-  const subject = encodeURIComponent('Discipline-Reset bitte');
-  const body = encodeURIComponent('Hi Sebi,\n\nbitte schick mir den 3-Tage-Disziplin-Reset.\n\nMeine Mail: ' + email + '\n\nDanke!');
-  window.location.href = 'mailto:info@vegetarianhulk.de?subject=' + subject + '&body=' + body;
-  document.getElementById('leadform').innerHTML = '<p style="text-align:center;font-weight:700;color:var(--green-deep);padding:14px">✓ Mail-App geöffnet. Schick die Mail ab und ich melde mich!</p>';
+  const form = document.getElementById('leadform');
+  const btn = form.querySelector('button');
+  btn.disabled = true;
+  btn.textContent = 'Wird gesendet ...';
+  try {
+    const res = await fetch('https://peaking-ai-api.peaking.workers.dev/newsletter/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, brand: 'vegetarianhulk' }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.ok && data.ok) {
+      const msg = data.already
+        ? '✓ Du bist schon dabei. Check Inbox (auch Spam).'
+        : '✓ Eingetragen. Tag-1-Mail kommt gleich.';
+      form.innerHTML = '<p style="text-align:center;font-weight:700;color:var(--green-deep);padding:14px">' + msg + '</p>';
+      return false;
+    }
+    // 503 Brevo not configured → mailto fallback (smooth)
+    if (res.status === 503) {
+      const subject = encodeURIComponent('Discipline-Reset bitte');
+      const body = encodeURIComponent('Hi Sebi,\n\nbitte schick mir den 3-Tage-Disziplin-Reset.\n\nMeine Mail: ' + email + '\n\nDanke!');
+      window.location.href = 'mailto:info@vegetarianhulk.de?subject=' + subject + '&body=' + body;
+      form.innerHTML = '<p style="text-align:center;font-weight:700;color:var(--green-deep);padding:14px">✓ Mail-App geöffnet. Schick ab und ich melde mich persönlich.</p>';
+      return false;
+    }
+    throw new Error(data.error || ('Status ' + res.status));
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Schick mir den Reset →';
+    alert('Konnt nicht senden: ' + (err.message || err) + ' — bitte direkt an info@vegetarianhulk.de schreiben.');
+  }
   return false;
 }
 </script>
-<script src="update-check.js?v=v24"></script>
+<script src="update-check.js?v=v27"></script>
 </body>
 </html>
