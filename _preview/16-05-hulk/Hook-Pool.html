@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hook‑Pool · vegetarianhulk</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  /* ── Dark inversion of the warm Vegetarianhulk palette ─────── */
+  :root {
+    --dk-bg:        #0f0b08;   /* warm near-black, deeper than --ink */
+    --dk-surface:   #1a1410;   /* card base, same as --ink */
+    --dk-surface-2: #221a14;   /* hover / elevated */
+    --dk-line:      #3a2e22;   /* hairline */
+    --dk-line-2:    #5a4a38;   /* stronger divider */
+    --dk-vanilla:   #f7efde;
+    --dk-ink-warm:  #d4c7ad;   /* warm secondary text */
+    --dk-ink-mute:  #8a7a62;   /* muted brown */
+    --dk-ink-deep:  #5a4a38;   /* faintest */
+    --dk-forest:    #4ca866;   /* slightly brighter on dark for AA contrast */
+    --dk-forest-2:  #2d6a3e;
+    --dk-forest-3:  #6dd687;   /* light tint for chips, dot pulses */
+  }
+
+  body {
+    margin: 0;
+    background: var(--dk-bg);
+    color: var(--dk-vanilla);
+    font-family: var(--font-body);
+    min-height: 100vh;
+  }
+  *::selection { background: var(--dk-forest); color: var(--dk-bg); }
+
+  /* ── Tiny page header so the section reads in context ──────── */
+  .page-head {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 32px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--dk-ink-warm);
+    font-size: 14px;
+    border-bottom: 1px solid var(--dk-line);
+    padding-bottom: 20px;
+  }
+  .page-head .brand {
+    display: inline-flex; align-items: baseline; gap: 8px;
+    font-family: var(--font-display);
+    font-weight: 700; font-size: 22px; letter-spacing: -0.5px;
+    color: var(--dk-forest-3);
+    text-decoration: none;
+  }
+  .page-head .brand em { font-style: italic; font-weight: 400; color: var(--dk-vanilla); }
+  .page-head .crumb {
+    font-size: 12px; font-weight: 700; letter-spacing: 2px;
+    color: var(--dk-ink-mute); text-transform: uppercase;
+    font-family: var(--font-body);
+  }
+  .page-head .crumb .sep { color: var(--dk-line-2); margin: 0 10px; }
+  .page-head .crumb .here { color: var(--dk-forest-3); }
+
+  /* ── SECTION: HOOK-POOL ────────────────────────────────────── */
+  section.hook-pool {
+    position: relative;
+    padding: 96px 32px 120px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  /* Dark aurora wash — same recipe as light, just dimmer */
+  section.hook-pool::before {
+    content: ""; position: absolute; inset: -10%;
+    z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(60% 70% at 15% 0%, rgba(76, 168, 102, 0.10), transparent 65%),
+      radial-gradient(50% 60% at 90% 30%, rgba(45, 106, 62, 0.12), transparent 70%),
+      radial-gradient(70% 60% at 50% 100%, rgba(109, 214, 135, 0.06), transparent 70%);
+    filter: blur(20px);
+  }
+  /* Subtle vertical paper grain on the whole section */
+  section.hook-pool::after {
+    content: ""; position: absolute; inset: 0;
+    z-index: -1; opacity: 0.35; pointer-events: none; mix-blend-mode: screen;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.40 0 0 0 0 0.36 0 0 0 0 0.28 0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  .hp-wrap { max-width: 1200px; margin: 0 auto; }
+
+  /* Section header — eyebrow rule + heading + subtitle stack */
+  .hp-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 32px;
+    margin-bottom: 64px;
+  }
+  .hp-eyebrow-row {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 24px;
+  }
+  .hp-eyebrow-row .n {
+    font-family: var(--font-mono);
+    font-size: 13px; font-weight: 600; color: var(--dk-forest-3);
+    letter-spacing: 0.8px;
+  }
+  .hp-eyebrow-row .dash {
+    flex: 0 0 56px; height: 1px; background: var(--dk-forest);
+  }
+  .hp-eyebrow-row .lbl {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.8px;
+    color: var(--dk-forest-3); text-transform: uppercase;
+  }
+  .hp-head h2 {
+    font-family: var(--font-display);
+    font-size: clamp(44px, 5.5vw, 76px);
+    font-weight: 700;
+    line-height: 1.0;
+    letter-spacing: -1.6px;
+    color: var(--dk-vanilla);
+    margin: 0;
+    text-wrap: balance;
+    display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap;
+  }
+  .hp-head h2 em { font-style: italic; font-weight: 400; color: var(--dk-forest-3); }
+  .hp-head h2 .marker {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: var(--font-body);
+    font-size: 0.42em; font-weight: 800;
+    letter-spacing: 2.4px; text-transform: uppercase;
+    color: var(--dk-forest-3);
+    padding: 8px 16px;
+    border: 1.5px solid var(--dk-forest);
+    border-radius: 999px;
+    transform: translateY(-12px);
+  }
+  .hp-head h2 .marker .pulse {
+    width: 9px; height: 9px; border-radius: 50%; background: var(--dk-forest-3);
+    box-shadow: 0 0 0 3px rgba(109, 214, 135, 0.22);
+    animation: hp-pulse 2.4s var(--ease-apple) infinite;
+  }
+  @keyframes hp-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.75; }
+  }
+  .hp-head .sub {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.4;
+    color: var(--dk-ink-warm);
+    max-width: 560px;
+    text-wrap: pretty;
+    margin-top: 18px;
+  }
+  .hp-head .sub em {
+    font-style: normal;
+    font-weight: 800;
+    font-family: var(--font-body);
+    color: var(--dk-forest-3);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 14px;
+  }
+  .hp-meta {
+    display: flex; flex-direction: column; align-items: flex-end;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dk-ink-mute);
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+  .hp-meta .num {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 700;
+    font-size: 48px;
+    color: var(--dk-forest-3);
+    line-height: 1;
+    letter-spacing: -1px;
+    text-transform: none;
+  }
+  .hp-meta .num em { font-style: normal; font-weight: 400; color: var(--dk-ink-warm); font-size: 22px; }
+
+  /* ── Grid ──────────────────────────────────────────────────── */
+  .hp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 920px) {
+    .hp-grid { grid-template-columns: 1fr; gap: 16px; }
+    .hp-head { grid-template-columns: 1fr; }
+    .hp-meta { align-items: flex-start; }
+  }
+
+  /* ── Card ──────────────────────────────────────────────────── */
+  .hook-card {
+    position: relative;
+    background: var(--dk-surface);
+    border: 1px solid var(--dk-line);
+    border-radius: 22px;
+    padding: 32px 28px 26px;
+    display: flex; flex-direction: column;
+    gap: 22px;
+    min-height: 340px;
+    overflow: hidden;
+    transition:
+      transform var(--t-fast) var(--ease-apple),
+      background var(--t-fast) var(--ease-apple),
+      border-color var(--t-fast) var(--ease-apple),
+      box-shadow var(--t-med) var(--ease-apple);
+  }
+  .hook-card:hover {
+    transform: translateY(-4px);
+    background: var(--dk-surface-2);
+    border-color: var(--dk-line-2);
+    box-shadow: 0 22px 44px -22px rgba(0,0,0,0.55),
+                0 0 0 1px var(--dk-forest) inset;
+  }
+  /* Pillar accent stripe — top edge */
+  .hook-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent, var(--dk-forest));
+    opacity: 0.85;
+  }
+  /* Faint giant glyph behind hook — Playfair quote-mark */
+  .hook-card::after {
+    content: "”";
+    position: absolute;
+    right: -8px; bottom: -42px;
+    font-family: var(--font-display);
+    font-style: italic; font-weight: 700;
+    font-size: 260px;
+    line-height: 1;
+    color: var(--dk-line);
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Pillar colour map — used for accent stripe + tag pill */
+  .hook-card[data-pillar="mindset"] { --accent: var(--dk-forest); }
+  .hook-card[data-pillar="faith"]   { --accent: #c08a2a; }     /* dijon warm */
+  .hook-card[data-pillar="vegi"]    { --accent: var(--dk-forest-3); }
+  .hook-card[data-pillar="solo"]    { --accent: #c95a4a; }     /* warm rust */
+
+  /* Top row: pillar tag + use-case tag */
+  .hp-tags {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
+    position: relative; z-index: 2;
+  }
+  .pillar-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 12px 7px 10px;
+    border-radius: 8px;
+    background: color-mix(in oklab, var(--accent) 16%, transparent);
+    border: 1px solid color-mix(in oklab, var(--accent) 45%, transparent);
+    color: var(--accent);
+    font-family: var(--font-body);
+    font-size: 11px; font-weight: 800; letter-spacing: 1.8px;
+    text-transform: uppercase;
+  }
+  .pillar-tag .glyph {
+    font-family: var(--font-display);
+    font-style: italic; font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 1;
+  }
+  .usecase-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 11px;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid var(--dk-line-2);
+    color: var(--dk-ink-warm);
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .usecase-tag .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--dk-forest-3); }
+
+  /* The hook quote itself */
+  .hook-q {
+    position: relative; z-index: 2;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1.22;
+    letter-spacing: -0.4px;
+    color: var(--dk-vanilla);
+    text-wrap: balance;
+    flex: 1;
+  }
+  .hook-q .em-line {
+    font-style: normal; font-weight: 700;
+    color: var(--dk-forest-3);
+    background-image: linear-gradient(120deg, transparent 0, transparent 50%, color-mix(in oklab, var(--accent) 30%, transparent) 50%, color-mix(in oklab, var(--accent) 30%, transparent) 100%);
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    padding: 0 4px;
+    transition: background-position var(--t-med) var(--ease-apple);
+  }
+  .hook-card:hover .em-line { background-position: 0 0; }
+  .hook-q::before {
+    content: "„";
+    position: absolute;
+    top: -22px; left: -10px;
+    font-size: 64px;
+    line-height: 1;
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 700;
+    opacity: 0.55;
+  }
+
+  /* Footer row of card — signature + meta */
+  .hp-foot {
+    position: relative; z-index: 2;
+    padding-top: 18px;
+    border-top: 1px solid var(--dk-line);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
+  }
+  .hp-sig {
+    display: inline-flex; align-items: baseline; gap: 8px;
+  }
+  .hp-sig .s-mark {
+    font-family: var(--font-display);
+    font-style: italic; font-weight: 700;
+    font-size: 22px;
+    color: var(--accent);
+    transform: rotate(-6deg);
+    line-height: 1;
+  }
+  .hp-sig .s-name {
+    font-family: var(--font-body);
+    font-size: 10px; font-weight: 700; letter-spacing: 1.8px;
+    color: var(--dk-ink-mute); text-transform: uppercase;
+  }
+  .hp-stamp {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+    color: var(--dk-ink-mute);
+    text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .hp-stamp .live {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--dk-forest-3);
+    box-shadow: 0 0 0 3px rgba(109, 214, 135, 0.20);
+    animation: hp-pulse 2.4s var(--ease-apple) infinite;
+  }
+  .hp-stamp.draft { color: var(--dk-ink-mute); }
+  .hp-stamp.draft .live { background: var(--dk-ink-mute); box-shadow: 0 0 0 3px rgba(138,122,98,.12); animation: none; }
+  .hp-stamp.live-tag { color: var(--dk-forest-3); }
+
+  /* ── Anchor / DM-CTA below the grid ────────────────────────── */
+  .hp-anchor {
+    margin-top: 56px;
+    padding: 36px 40px;
+    background:
+      linear-gradient(135deg, color-mix(in oklab, var(--dk-forest-2) 30%, var(--dk-surface)) 0%, var(--dk-surface) 70%);
+    border: 1px solid var(--dk-forest);
+    border-radius: 22px;
+    display: flex; align-items: center; gap: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hp-anchor::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(60% 80% at 90% 50%, rgba(109,214,135,.10), transparent 70%);
+    pointer-events: none;
+  }
+  .hp-anchor .anchor-text {
+    flex: 1;
+    display: flex; flex-direction: column; gap: 8px;
+    position: relative; z-index: 1;
+  }
+  .hp-anchor .anchor-text .small {
+    font-family: var(--font-body);
+    font-size: 11px; font-weight: 800; letter-spacing: 2px;
+    color: var(--dk-forest-3); text-transform: uppercase;
+  }
+  .hp-anchor .anchor-text .big {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(28px, 3.4vw, 38px);
+    line-height: 1.12;
+    letter-spacing: -0.6px;
+    color: var(--dk-vanilla);
+    text-wrap: balance;
+  }
+  .hp-anchor .anchor-text .big em { font-style: italic; font-weight: 400; color: var(--dk-forest-3); }
+  .hp-anchor .anchor-text .micro {
+    font-family: var(--font-body);
+    font-size: 14px; color: var(--dk-ink-warm);
+    line-height: 1.45;
+    max-width: 540px;
+    margin-top: 4px;
+  }
+  .btn-dm {
+    flex-shrink: 0;
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 18px 26px;
+    background: var(--dk-vanilla);
+    color: var(--dk-bg);
+    border: none;
+    border-radius: 999px;
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 14px 32px -10px rgba(0,0,0,0.5);
+    transition:
+      transform var(--t-fast) var(--ease-apple),
+      background var(--t-fast) var(--ease-apple),
+      color var(--t-fast) var(--ease-apple);
+    position: relative; z-index: 2;
+  }
+  .btn-dm:hover {
+    transform: translateY(-2px);
+    background: var(--dk-forest-3);
+    color: var(--dk-bg);
+  }
+  .btn-dm .arrow {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.4px;
+    text-transform: none;
+  }
+
+  /* Tagline ribbon under anchor */
+  .hp-tagline {
+    margin-top: 32px;
+    padding: 14px 0;
+    text-align: center;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--dk-ink-mute);
+    border-top: 1px dashed var(--dk-line-2);
+    border-bottom: 1px dashed var(--dk-line-2);
+    letter-spacing: -0.2px;
+  }
+  .hp-tagline em {
+    font-style: normal;
+    color: var(--dk-forest-3);
+    font-weight: 600;
+  }
+</style>
+</head>
+<body data-screen-label="Hook-Pool · Standalone">
+
+<header class="page-head" data-screen-label="Hook-Pool · Crumb">
+  <a class="brand" href="#"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--dk-forest-3);margin-right:6px"></span>vegetarian<em>hulk</em></a>
+  <div class="crumb">
+    <span>Living Doc</span><span class="sep">/</span>
+    <span class="here">Hook‑Pool</span><span class="sep">/</span>
+    <span>Aktualisiert vor 4 Std</span>
+  </div>
+</header>
+
+<section class="hook-pool" data-screen-label="Hook-Pool · Main">
+  <div class="hp-wrap">
+
+    <!-- ── Section header ── -->
+    <div class="hp-head">
+      <div>
+        <div class="hp-eyebrow-row">
+          <span class="n">06</span>
+          <span class="dash"></span>
+          <span class="lbl">Living Doc · Reel‑Hooks</span>
+        </div>
+        <h2>
+          🎬 Hook‑Pool
+          <span class="marker"><span class="pulse"></span> 6 LIVE · 2 ENTWURF</span>
+        </h2>
+        <p class="sub">
+          Was ich grad als Reel‑Hook teste. <em>kein content‑plan ·</em> mein Notizbuch, öffentlich. Wenn dich einer trifft, klau ihn — oder schreib mir.
+        </p>
+      </div>
+      <div class="hp-meta">
+        <div class="num">№<em>08</em></div>
+        <div>Hooks · Mai 2026</div>
+        <div>v0.4 · 14. Mai 14:02</div>
+      </div>
+    </div>
+
+    <!-- ── Grid ── -->
+    <div class="hp-grid">
+
+      <!-- Card 01 · MINDSET / REEL -->
+      <article class="hook-card" data-pillar="mindset" aria-label="Hook 01">
+        <div class="hp-tags">
+          <span class="pillar-tag"><span class="glyph">i.</span> Mindset</span>
+          <span class="usecase-tag"><span class="dot"></span> Reel · 22s</span>
+        </div>
+        <p class="hook-q">
+          Ich bin nicht diszipliniert.<br/>
+          Ich bin nur <span class="em-line">zu stur, um aufzuhören.</span>
+        </p>
+        <div class="hp-foot">
+          <div class="hp-sig">
+            <span class="s-mark">S.</span>
+            <span class="s-name">— Sebi · 5:42</span>
+          </div>
+          <span class="hp-stamp live-tag"><span class="live"></span> LIVE · TAG 1.252</span>
+        </div>
+      </article>
+
+      <!-- Card 02 · FAITH / STORY -->
+      <article class="hook-card" data-pillar="faith" aria-label="Hook 02">
+        <div class="hp-tags">
+          <span class="pillar-tag"><span class="glyph">ii.</span> Faith</span>
+          <span class="usecase-tag"><span class="dot"></span> Story · 1 Frame</span>
+        </div>
+        <p class="hook-q">
+          Ich bete um 5:42 — <span class="em-line">nicht weil ich heilig bin.</span><br/>
+          Sondern weil ich sonst den Tag verliere.
+        </p>
+        <div class="hp-foot">
+          <div class="hp-sig">
+            <span class="s-mark">S.</span>
+            <span class="s-name">— Sebi · ehrlich</span>
+          </div>
+          <span class="hp-stamp live-tag"><span class="live"></span> LIVE · 09. MAI</span>
+        </div>
+      </article>
+
+      <!-- Card 03 · VEGI / REEL -->
+      <article class="hook-card" data-pillar="vegi" aria-label="Hook 03">
+        <div class="hp-tags">
+          <span class="pillar-tag"><span class="glyph">iii.</span> Vegi</span>
+          <span class="usecase-tag"><span class="dot"></span> Reel · 14s</span>
+        </div>
+        <p class="hook-q">
+          10 Jahre kein Fleisch.<br/>
+          Niemand hat mich überzeugt — <span class="em-line">es ist einfach geblieben.</span>
+        </p>
+        <div class="hp-foot">
+          <div class="hp-sig">
+            <span class="s-mark">S.</span>
+            <span class="s-name">— Sebi · seit 14.03.16</span>
+          </div>
+          <span class="hp-stamp live-tag"><span class="live"></span> LIVE · TAG 1.252</span>
+        </div>
+      </article>
+
+      <!-- Card 04 · SOLO / CAPTION -->
+      <article class="hook-card" data-pillar="solo" aria-label="Hook 04">
+        <div class="hp-tags">
+          <span class="pillar-tag"><span class="glyph">iv.</span> Solo</span>
+          <span class="usecase-tag"><span class="dot"></span> Caption</span>
+        </div>
+        <p class="hook-q">
+          Heute hat mir keiner geschrieben.<br/>
+          <span class="em-line">War okay.</span> Bin trotzdem hingegangen.
+        </p>
+        <div class="hp-foot">
+          <div class="hp-sig">
+            <span class="s-mark">S.</span>
+            <span class="s-name">— Sebi · allein, nicht einsam</span>
+          </div>
+          <span class="hp-stamp draft"><span class="live"></span> ENTWURF · v3</span>
+        </div>
+      </article>
+
+      <!-- Card 05 · MINDSET / CAPTION -->
+      <article class="hook-card" data-pillar="mindset" aria-label="Hook 05">
+        <div class="hp-tags">
+          <span class="pillar-tag"><span class="glyph">i.</span> Mindset</span>
+          <span class="usecase-tag"><span class="dot"></span> Caption</span>
+        </div>
+        <p class="hook-q">
+          Motivation ist <span class="em-line">Wetter.</span><br/>
+          Disziplin ist Klima.
+        </p>
+        <div class="hp-foot">
+          <div class="hp-sig">
+            <span class="s-mark">S.</span>
+            <span class="s-name">— Sebi · gestohlen, ehrlich</span>
+          </div>
+          <span class="hp-stamp live-tag"><span class="live"></span> LIVE · TOP‑3</span>
+        </div>
+      </article>
+
+      <!-- Card 06 · FAITH / REEL -->
+      <article class="hook-card" data-pillar="faith" aria-label="Hook 06">
+        <div class="hp-tags">
+          <span class="pillar-tag"><span class="glyph">ii.</span> Faith</span>
+          <span class="usecase-tag"><span class="dot"></span> Reel · 18s</span>
+        </div>
+        <p class="hook-q">
+          Mein erstes Gebet heute war:<br/>
+          <span class="em-line">„Hilf mir, dass ich nicht reiße."</span> Mehr nicht.
+        </p>
+        <div class="hp-foot">
+          <div class="hp-sig">
+            <span class="s-mark">S.</span>
+            <span class="s-name">— Sebi · 5:42</span>
+          </div>
+          <span class="hp-stamp draft"><span class="live"></span> ENTWURF · v1</span>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- ── Anchor ── -->
+    <div class="hp-anchor">
+      <div class="anchor-text">
+        <span class="small">↳ DM‑Anchor · Hook‑Pool</span>
+        <span class="big">Schreib mir, wenn dich <em>einer triggert.</em></span>
+        <span class="micro">
+          Echt — ich antworte selbst, kein Funnel, kein Auto‑Reply. Sag mir welcher, sag mir warum. Wenn ich Deinen Hook ins nächste Reel ziehe, kriegst Du den Cut zuerst.
+        </span>
+      </div>
+      <a class="btn-dm" href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">
+        DM @VEGETARIANHULK <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <!-- ── Tagline anchor ── -->
+    <div class="hp-tagline">
+      „Disziplin ist <em>kein Talent.</em> Sie ist ein Ritual."
+    </div>
+
+  </div>
+</section>
+
+</body>
+</html>

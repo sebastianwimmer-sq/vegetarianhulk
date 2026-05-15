@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hook‑Bank · PEAKING</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================================
+     PEAKING · Sunrise system (admin/creator tool inside the suite)
+     ─── NOT vegetarianhulk Forest. Different surface entirely.
+     ============================================================ */
+  :root {
+    /* ── PEAKING surfaces — warm-dark, denser than public site ── */
+    --bg:        #0c0a14;        /* near-black with cool warmth */
+    --bg-2:      #11101e;        /* alt bg */
+    --panel:     #181628;        /* sidebar / topbar */
+    --surface:   #1c1a2e;        /* card */
+    --surface-2: #232038;        /* hover */
+    --surface-3: #2b2742;        /* active / selected */
+    --line:      #2a2640;        /* hairline */
+    --line-2:    #3a3458;        /* divider */
+    --line-3:    #4d4475;        /* stronger */
+
+    /* ── Text ── */
+    --tx:        #f4ecd8;        /* warm vanilla — primary */
+    --tx-2:      #c8bea4;        /* secondary */
+    --tx-3:      #8a8198;        /* muted */
+    --tx-4:      #5c5478;        /* faintest */
+
+    /* ── Sunrise gradient stops (amber → coral → magenta) ── */
+    --sun-1:     #ffc857;        /* amber */
+    --sun-2:     #ff8a4c;        /* warm orange */
+    --sun-3:     #ff5e7e;        /* coral pink */
+    --sun-4:     #d24bb4;        /* magenta */
+    --sunrise:   linear-gradient(135deg, var(--sun-1) 0%, var(--sun-2) 35%, var(--sun-3) 65%, var(--sun-4) 100%);
+    --sunrise-soft: linear-gradient(135deg, rgba(255,200,87,.18), rgba(255,94,126,.16), rgba(210,75,180,.14));
+
+    /* ── Status colors ── */
+    --st-draft:    #8a8198;   /* gray */
+    --st-live:     #59d979;   /* go-green, used sparingly */
+    --st-archived: #5c5478;   /* dim */
+    --st-killed:   #c95a4a;   /* warm rust */
+
+    /* ── Pillar colors (consistent with vegetarianhulk pillars) ── */
+    --p-mindset: #ff8a4c;     /* sunrise-aligned, was forest in public */
+    --p-faith:   #ffc857;     /* dijon-amber */
+    --p-vegi:    #59d979;     /* greens stay on-brand */
+    --p-solo:    #d24bb4;     /* magenta */
+
+    /* ── Type ── */
+    --f-ui:      'Inter', -apple-system, system-ui, sans-serif;
+    --f-serif:   'Instrument Serif', Georgia, serif;
+    --f-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+    --r-card:    14px;
+    --r-pill:    999px;
+    --r-chip:    7px;
+    --r-input:   10px;
+
+    --t-fast:    160ms;
+    --ease:      cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--tx); font-family: var(--f-ui); -webkit-font-smoothing: antialiased; }
+  ::selection { background: var(--sun-3); color: var(--bg); }
+  a { color: inherit; text-decoration: none; }
+
+  /* ── Background ambience: subtle sunrise glow top-left ── */
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(45% 35% at 0% 0%, rgba(255, 138, 76, 0.10), transparent 60%),
+      radial-gradient(35% 30% at 100% 0%, rgba(210, 75, 180, 0.07), transparent 65%),
+      radial-gradient(50% 40% at 50% 100%, rgba(255, 200, 87, 0.04), transparent 70%);
+    filter: blur(10px);
+  }
+
+  /* ============================================================
+     APP SHELL — sidebar + main, desktop; stacked on mobile
+     ============================================================ */
+  .app {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 232px 1fr;
+    min-height: 100vh;
+  }
+  @media (max-width: 880px) {
+    .app { grid-template-columns: 1fr; }
+    aside.side { display: none; }
+  }
+
+  /* ── Sidebar ── */
+  aside.side {
+    background: var(--panel);
+    border-right: 1px solid var(--line);
+    padding: 18px 14px;
+    display: flex; flex-direction: column; gap: 16px;
+    position: sticky; top: 0; height: 100vh;
+    overflow-y: auto;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 6px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .logo .mark {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    background: var(--sunrise);
+    display: grid; place-items: center;
+    font-family: var(--f-ui);
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--bg);
+    letter-spacing: -0.5px;
+    box-shadow: 0 8px 24px -8px rgba(255, 138, 76, 0.55);
+  }
+  .logo .tx { display: flex; flex-direction: column; gap: 1px; }
+  .logo .nm { font-size: 14px; font-weight: 700; letter-spacing: -0.2px; color: var(--tx); }
+  .logo .v {
+    font-family: var(--f-mono);
+    font-size: 10px; font-weight: 500;
+    color: var(--tx-3);
+    letter-spacing: 0.4px;
+  }
+
+  .ws {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .ws .av {
+    width: 22px; height: 22px; border-radius: 6px;
+    background: linear-gradient(135deg, #2d6a3e, #4ca866);
+    display: grid; place-items: center;
+    font-family: var(--f-serif); font-style: italic; font-weight: 700;
+    color: #f7efde; font-size: 13px;
+  }
+  .ws .ws-tx { flex: 1; min-width: 0; }
+  .ws .ws-tx .a { font-size: 12px; font-weight: 600; color: var(--tx); }
+  .ws .ws-tx .b { font-size: 10px; color: var(--tx-3); font-family: var(--f-mono); letter-spacing: 0.3px; }
+  .ws .chev { color: var(--tx-3); font-size: 10px; }
+
+  .nav-group { display: flex; flex-direction: column; gap: 1px; }
+  .nav-group .lbl {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
+    color: var(--tx-4); text-transform: uppercase;
+    padding: 4px 10px 6px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 10px;
+    border-radius: 7px;
+    font-size: 13px; font-weight: 500;
+    color: var(--tx-2);
+    cursor: pointer;
+    transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+  }
+  .nav-item:hover { background: var(--surface); color: var(--tx); }
+  .nav-item.active {
+    background: var(--surface-2);
+    color: var(--tx);
+    box-shadow: inset 2px 0 0 var(--sun-2);
+  }
+  .nav-item .ic { width: 16px; height: 16px; color: var(--tx-3); flex-shrink: 0; }
+  .nav-item.active .ic { color: var(--sun-2); }
+  .nav-item .ct {
+    margin-left: auto;
+    font-family: var(--f-mono);
+    font-size: 10px; font-weight: 600;
+    color: var(--tx-3);
+    background: var(--bg-2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+  }
+  .nav-item.active .ct { color: var(--sun-1); border-color: var(--line-2); }
+
+  .side-foot { margin-top: auto; display: flex; flex-direction: column; gap: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .me {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .me:hover { background: var(--surface); }
+  .me .av {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--sunrise);
+    display: grid; place-items: center;
+    font-size: 11px; font-weight: 800; color: var(--bg);
+  }
+  .me .tx { flex: 1; min-width: 0; }
+  .me .a { font-size: 12px; font-weight: 600; color: var(--tx); }
+  .me .b { font-size: 10px; color: var(--tx-3); font-family: var(--f-mono); }
+
+  /* ============================================================
+     MAIN — topbar + content
+     ============================================================ */
+  main.main { min-width: 0; display: flex; flex-direction: column; }
+
+  /* ── Topbar ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(12, 10, 20, 0.82);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 24px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .crumbs {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px;
+    color: var(--tx-3);
+    font-family: var(--f-mono);
+    letter-spacing: 0.3px;
+  }
+  .crumbs .sep { color: var(--tx-4); }
+  .crumbs .here {
+    color: var(--tx);
+    background: var(--surface);
+    padding: 3px 8px;
+    border-radius: 5px;
+    border: 1px solid var(--line);
+  }
+  .topbar .grow { flex: 1; }
+
+  .search {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 12px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    width: 320px;
+    color: var(--tx-3);
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .search:hover { border-color: var(--line-2); }
+  .search .ic { width: 14px; height: 14px; }
+  .search .grow { flex: 1; }
+  .search kbd {
+    font-family: var(--f-mono);
+    font-size: 10px; font-weight: 600;
+    color: var(--tx-3);
+    background: var(--bg-2);
+    padding: 2px 5px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+  }
+
+  .icon-btn {
+    width: 32px; height: 32px;
+    display: grid; place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    background: var(--surface);
+    color: var(--tx-2);
+    cursor: pointer;
+    transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+  }
+  .icon-btn:hover { background: var(--surface-2); border-color: var(--line-2); color: var(--tx); }
+  .icon-btn svg { width: 14px; height: 14px; }
+
+  /* ============================================================
+     PAGE HEADER — title + stats + add button
+     ============================================================ */
+  .page-head {
+    padding: 28px 24px 18px;
+    display: flex; align-items: flex-start; gap: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .page-head .title-block { flex: 1; min-width: 0; }
+  .page-head .eyebrow {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--f-mono);
+    font-size: 11px; font-weight: 600; letter-spacing: 0.8px;
+    color: var(--sun-2);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .page-head .eyebrow .live {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--st-live);
+    box-shadow: 0 0 0 3px rgba(89, 217, 121, 0.18);
+    animation: pulse 2.2s var(--ease) infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.7; }
+  }
+  .page-head h1 {
+    display: flex; align-items: baseline; gap: 14px;
+    font-family: var(--f-ui);
+    font-size: 26px; font-weight: 700; letter-spacing: -0.7px;
+    color: var(--tx);
+    margin: 0;
+  }
+  .page-head h1 .emoji { font-size: 24px; }
+  .page-head h1 .ws-tag {
+    font-family: var(--f-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--tx-3);
+    font-size: 22px;
+    letter-spacing: 0;
+  }
+  .page-head .desc {
+    font-family: var(--f-serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--tx-3);
+    margin: 8px 0 0;
+    line-height: 1.4;
+    max-width: 540px;
+  }
+
+  /* Builder voice quote */
+  .page-head .builder-quote {
+    margin-top: 14px;
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 6px 12px 6px 8px;
+    border-radius: 6px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    font-family: var(--f-mono);
+    font-size: 11px;
+    color: var(--tx-2);
+  }
+  .page-head .builder-quote::before {
+    content: "→";
+    color: var(--sun-2);
+    font-weight: 700;
+  }
+  .page-head .builder-quote em { color: var(--sun-2); font-style: normal; font-weight: 600; }
+
+  /* Stats row */
+  .stats {
+    display: flex; align-items: center; gap: 8px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    display: flex; flex-direction: column; gap: 2px;
+    padding: 8px 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    min-width: 78px;
+  }
+  .stat .n {
+    font-family: var(--f-ui);
+    font-size: 18px; font-weight: 700; line-height: 1;
+    letter-spacing: -0.4px;
+    color: var(--tx);
+  }
+  .stat .l {
+    font-family: var(--f-mono);
+    font-size: 10px; font-weight: 600; letter-spacing: 0.6px;
+    color: var(--tx-3);
+    text-transform: uppercase;
+  }
+  .stat[data-st="live"] .n { color: var(--st-live); }
+  .stat[data-st="draft"] .n { color: var(--sun-2); }
+  .stat[data-st="archived"] .n { color: var(--tx-3); }
+
+  /* Add button */
+  .btn-add {
+    padding: 9px 14px 9px 12px;
+    background: var(--sunrise);
+    color: var(--bg);
+    border: none;
+    border-radius: 8px;
+    font-family: var(--f-ui);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: -0.1px;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 10px 28px -10px rgba(255, 138, 76, 0.55);
+    transition: transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
+    align-self: flex-start;
+  }
+  .btn-add:hover { transform: translateY(-1px); box-shadow: 0 14px 36px -10px rgba(255, 138, 76, 0.75); }
+  .btn-add svg { width: 14px; height: 14px; }
+  .btn-add kbd {
+    margin-left: 4px;
+    font-family: var(--f-mono);
+    font-size: 10px; font-weight: 600;
+    background: rgba(12, 10, 20, 0.32);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: rgba(12, 10, 20, 0.78);
+  }
+
+  /* ============================================================
+     FILTER BAR
+     ============================================================ */
+  .filter-bar {
+    padding: 14px 24px;
+    display: flex; align-items: center; gap: 16px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-2);
+  }
+  .fg { display: flex; align-items: center; gap: 6px; }
+  .fg .lbl {
+    font-family: var(--f-mono);
+    font-size: 10px; font-weight: 600; letter-spacing: 0.8px;
+    color: var(--tx-4);
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 10px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-chip);
+    font-family: var(--f-ui);
+    font-size: 12px; font-weight: 500;
+    color: var(--tx-2);
+    cursor: pointer;
+    transition: all var(--t-fast) var(--ease);
+  }
+  .chip:hover { background: var(--surface-2); border-color: var(--line-2); color: var(--tx); }
+  .chip.active {
+    background: var(--surface-3);
+    color: var(--tx);
+    border-color: var(--line-3);
+    box-shadow: 0 0 0 1px var(--accent, var(--sun-2)) inset;
+  }
+  .chip .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--c, var(--tx-3));
+  }
+  .chip .ct {
+    font-family: var(--f-mono);
+    font-size: 10px; font-weight: 600;
+    color: var(--tx-3);
+    margin-left: 2px;
+  }
+  .chip.active .ct { color: var(--tx-2); }
+
+  .perf-slider {
+    display: flex; align-items: center; gap: 10px;
+    padding: 4px 10px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-chip);
+  }
+  .perf-slider .lbl {
+    font-family: var(--f-mono);
+    font-size: 10px; font-weight: 600; letter-spacing: 0.8px;
+    color: var(--tx-4); text-transform: uppercase;
+  }
+  .perf-slider .track {
+    width: 80px; height: 4px;
+    background: var(--bg-2);
+    border-radius: 4px;
+    position: relative;
+  }
+  .perf-slider .fill {
+    position: absolute; left: 0; top: 0; height: 100%;
+    width: 62%;
+    background: var(--sunrise);
+    border-radius: 4px;
+  }
+  .perf-slider .knob {
+    position: absolute; left: 62%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--tx);
+    border: 2px solid var(--bg);
+    box-shadow: 0 2px 4px rgba(0,0,0,.5);
+  }
+  .perf-slider .v {
+    font-family: var(--f-mono);
+    font-size: 11px; font-weight: 600;
+    color: var(--sun-2);
+    min-width: 30px;
+  }
+
+  .fg .reset {
+    font-family: var(--f-ui);
+    font-size: 11px; font-weight: 600;
+    color: var(--tx-3);
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  .fg .reset:hover { background: var(--surface); color: var(--tx); }
+
+  .view-toggle {
+    margin-left: auto;
+    display: flex; align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 2px;
+  }
+  .view-toggle button {
+    width: 26px; height: 24px;
+    display: grid; place-items: center;
+    background: transparent;
+    border: none;
+    color: var(--tx-3);
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .view-toggle button.active { background: var(--surface-3); color: var(--tx); }
+  .view-toggle button svg { width: 13px; height: 13px; }
+
+  .sort-toggle {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 10px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-chip);
+    font-family: var(--f-ui);
+    font-size: 12px; font-weight: 500;
+    color: var(--tx-2);
+    cursor: pointer;
+  }
+  .sort-toggle:hover { background: var(--surface-2); }
+  .sort-toggle .v { color: var(--tx); }
+  .sort-toggle svg { width: 11px; height: 11px; color: var(--tx-3); }
+
+  /* ============================================================
+     CONTENT
+     ============================================================ */
+  .content {
+    padding: 22px 24px 80px;
+    display: flex; flex-direction: column; gap: 22px;
+  }
+  @media (max-width: 640px) {
+    .content { padding: 18px 16px 60px; }
+    .topbar { padding: 12px 16px; }
+    .page-head { padding: 20px 16px 14px; }
+    .filter-bar { padding: 12px 16px; }
+  }
+
+  /* ── Card grid ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  @media (max-width: 1280px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px)  { .grid { grid-template-columns: 1fr; } }
+
+  /* ============================================================
+     HOOK CARD
+     ============================================================ */
+  .hook {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 14px 14px 12px;
+    display: flex; flex-direction: column;
+    gap: 12px;
+    min-height: 220px;
+    overflow: hidden;
+    transition:
+      background var(--t-fast) var(--ease),
+      border-color var(--t-fast) var(--ease),
+      transform var(--t-fast) var(--ease);
+  }
+  .hook:hover {
+    background: var(--surface-2);
+    border-color: var(--line-2);
+  }
+  .hook[data-status="draft"]    { --status-c: var(--st-draft); }
+  .hook[data-status="live"]     { --status-c: var(--st-live); }
+  .hook[data-status="archived"] { --status-c: var(--st-archived); opacity: 0.72; }
+  .hook[data-status="killed"]   { --status-c: var(--st-killed); opacity: 0.6; }
+
+  /* Top row: pillar + use-case + status */
+  .hook-top {
+    display: flex; align-items: center; gap: 8px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 8px;
+    border-radius: 5px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    font-family: var(--f-ui);
+    font-size: 10px; font-weight: 700; letter-spacing: 0.4px;
+    color: var(--tx-2);
+    text-transform: uppercase;
+  }
+  .tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--c, var(--tx-3));
+  }
+  .tag.use {
+    background: transparent;
+    color: var(--tx-3);
+    border-color: var(--line);
+  }
+  .tag.use svg { width: 10px; height: 10px; }
+
+  .status {
+    margin-left: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-family: var(--f-mono);
+    font-size: 10px; font-weight: 700; letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--status-c);
+    background: color-mix(in oklab, var(--status-c) 12%, transparent);
+    border: 1px solid color-mix(in oklab, var(--status-c) 30%, transparent);
+  }
+  .status .blink {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--status-c);
+  }
+  .hook[data-status="live"] .status .blink {
+    animation: pulse 2.2s var(--ease) infinite;
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--status-c) 20%, transparent);
+  }
+
+  /* Quote */
+  .hook-q {
+    font-family: var(--f-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.18;
+    color: var(--tx);
+    letter-spacing: -0.4px;
+    text-wrap: balance;
+    flex: 1;
+    margin: 4px 0 6px;
+  }
+  .hook-q .hl {
+    background-image: linear-gradient(180deg, transparent 60%, color-mix(in oklab, var(--p-c, var(--sun-2)) 30%, transparent) 60%);
+    padding: 0 3px;
+    color: var(--tx);
+    font-style: italic;
+  }
+
+  /* Performance bar */
+  .perf {
+    display: flex; align-items: center; gap: 6px;
+    font-family: var(--f-mono);
+    font-size: 11px; font-weight: 600;
+    color: var(--tx-3);
+  }
+  .perf .stat-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 7px;
+    background: var(--bg-2);
+    border-radius: 4px;
+    border: 1px solid var(--line);
+  }
+  .perf .stat-chip svg { width: 10px; height: 10px; color: var(--tx-4); }
+  .perf .stat-chip .v { color: var(--tx); font-weight: 600; }
+  .perf .stat-chip.hot {
+    background: color-mix(in oklab, var(--sun-3) 14%, var(--bg-2));
+    border-color: color-mix(in oklab, var(--sun-3) 35%, transparent);
+  }
+  .perf .stat-chip.hot .v { color: var(--sun-1); }
+  .perf .stat-chip.hot svg { color: var(--sun-2); }
+
+  .perf-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--bg-2);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .perf-bar .fill {
+    height: 100%;
+    background: var(--sunrise);
+    border-radius: 4px;
+    width: var(--p, 0%);
+  }
+  .perf-score {
+    font-family: var(--f-mono);
+    font-size: 11px; font-weight: 700;
+    color: var(--sun-1);
+    min-width: 30px;
+    text-align: right;
+  }
+  .perf-score.low { color: var(--tx-3); }
+  .perf-score.mid { color: var(--sun-2); }
+  .perf-score.high { color: var(--sun-1); }
+
+  /* No-perf state */
+  .perf-empty {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    color: var(--tx-4);
+    font-style: italic;
+    padding: 4px 0;
+  }
+
+  /* Actions row */
+  .actions {
+    display: flex; align-items: center; gap: 4px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+  }
+  .act {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 9px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    font-family: var(--f-ui);
+    font-size: 11px; font-weight: 600;
+    color: var(--tx-2);
+    cursor: pointer;
+    transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+  }
+  .act:hover { background: var(--surface-3); color: var(--tx); }
+  .act svg { width: 11px; height: 11px; }
+  .act.primary {
+    background: var(--surface-3);
+    color: var(--tx);
+    box-shadow: inset 0 0 0 1px var(--line-3);
+  }
+  .act.primary:hover { background: var(--bg-2); box-shadow: inset 0 0 0 1px var(--sun-2); color: var(--sun-2); }
+  .act.icon { padding: 6px; }
+  .act.kill { margin-left: auto; color: var(--tx-3); }
+  .act.kill:hover { color: var(--st-killed); }
+
+  /* Meta line */
+  .meta-line {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 6px;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    color: var(--tx-4);
+    letter-spacing: 0.3px;
+  }
+  .meta-line .id { color: var(--tx-3); }
+  .meta-line .by em { color: var(--sun-2); font-style: normal; }
+
+  /* ============================================================
+     VARIANT GENERATOR (highlighted card, full-width on grid)
+     ============================================================ */
+  .variant-gen {
+    grid-column: span 3;
+    background:
+      linear-gradient(135deg, rgba(255, 138, 76, 0.05), rgba(210, 75, 180, 0.04)),
+      var(--surface);
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-card);
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  @media (max-width: 1280px) { .variant-gen { grid-column: span 2; grid-template-columns: 1fr; } }
+  @media (max-width: 640px)  { .variant-gen { grid-column: span 1; } }
+
+  .vg-left { display: flex; flex-direction: column; gap: 12px; }
+  .vg-eyebrow {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--f-mono);
+    font-size: 11px; font-weight: 600; letter-spacing: 0.6px;
+    color: var(--sun-2);
+    text-transform: uppercase;
+  }
+  .vg-eyebrow .ai-dot {
+    width: 14px; height: 14px;
+    border-radius: 4px;
+    background: var(--sunrise);
+    display: grid; place-items: center;
+    font-family: var(--f-ui);
+    font-size: 9px; font-weight: 800;
+    color: var(--bg);
+  }
+  .vg-title {
+    font-family: var(--f-ui);
+    font-size: 16px; font-weight: 700;
+    color: var(--tx);
+    letter-spacing: -0.3px;
+  }
+  .vg-title em {
+    font-family: var(--f-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--sun-2);
+  }
+  .vg-src {
+    padding: 12px 14px;
+    background: var(--bg-2);
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    font-family: var(--f-serif);
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.3;
+    color: var(--tx-2);
+    position: relative;
+  }
+  .vg-src::before {
+    content: "SRC";
+    position: absolute; top: -7px; left: 12px;
+    font-family: var(--f-mono);
+    font-size: 9px; font-weight: 700; letter-spacing: 1px;
+    color: var(--tx-4);
+    background: var(--surface);
+    padding: 1px 6px;
+    border-radius: 3px;
+    border: 1px solid var(--line);
+  }
+  .vg-controls {
+    display: flex; align-items: center; gap: 8px;
+    margin-top: auto;
+  }
+  .vg-dial {
+    display: flex; align-items: center;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .vg-dial button {
+    padding: 5px 9px;
+    background: transparent;
+    border: none;
+    color: var(--tx-3);
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  .vg-dial button.active { background: var(--surface-3); color: var(--sun-1); }
+  .btn-regen {
+    margin-left: auto;
+    padding: 6px 11px;
+    background: var(--surface-3);
+    color: var(--tx);
+    border: 1px solid var(--line-3);
+    border-radius: 6px;
+    font-family: var(--f-ui);
+    font-size: 11px; font-weight: 700;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-regen:hover { border-color: var(--sun-2); color: var(--sun-2); }
+  .btn-regen svg { width: 11px; height: 11px; }
+
+  .vg-right { display: flex; flex-direction: column; gap: 8px; }
+  .vg-suggestion {
+    padding: 11px 12px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    display: flex; align-items: flex-start; gap: 10px;
+    transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+    cursor: pointer;
+  }
+  .vg-suggestion:hover {
+    background: var(--surface-3);
+    border-color: var(--line-3);
+  }
+  .vg-suggestion .idx {
+    font-family: var(--f-mono);
+    font-size: 10px; font-weight: 700; letter-spacing: 0.4px;
+    color: var(--sun-2);
+    background: color-mix(in oklab, var(--sun-2) 16%, transparent);
+    padding: 2px 6px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    text-transform: uppercase;
+  }
+  .vg-suggestion .tx {
+    flex: 1;
+    font-family: var(--f-serif);
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.3;
+    color: var(--tx);
+  }
+  .vg-suggestion .tone {
+    font-family: var(--f-mono);
+    font-size: 9px; font-weight: 600; letter-spacing: 0.6px;
+    color: var(--tx-3);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .vg-suggestion .save {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--tx-3);
+    width: 22px; height: 22px;
+    border-radius: 5px;
+    display: grid; place-items: center;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .vg-suggestion:hover .save { border-color: var(--line-3); color: var(--sun-2); }
+  .vg-suggestion .save svg { width: 11px; height: 11px; }
+
+  /* ============================================================
+     EMPTY footer line — keyboard tips
+     ============================================================ */
+  .kb-hints {
+    margin-top: 8px;
+    padding: 10px 14px;
+    background: var(--bg-2);
+    border: 1px dashed var(--line-2);
+    border-radius: 8px;
+    display: flex; align-items: center; gap: 18px;
+    flex-wrap: wrap;
+    font-family: var(--f-mono);
+    font-size: 11px;
+    color: var(--tx-3);
+  }
+  .kb-hints span { display: inline-flex; align-items: center; gap: 6px; }
+  .kb-hints kbd {
+    background: var(--surface);
+    border: 1px solid var(--line-2);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    color: var(--tx-2);
+  }
+  .kb-hints .sep { color: var(--line-3); }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ════════════════════ SIDEBAR ════════════════════ -->
+  <aside class="side" data-screen-label="HookBank · Sidebar">
+
+    <div class="logo">
+      <div class="mark">P</div>
+      <div class="tx">
+        <span class="nm">PEAKING</span>
+        <span class="v">v0.4 · build</span>
+      </div>
+    </div>
+
+    <div class="ws">
+      <div class="av">v</div>
+      <div class="ws-tx">
+        <div class="a">vegetarianhulk</div>
+        <div class="b">brand · sebi</div>
+      </div>
+      <div class="chev">▾</div>
+    </div>
+
+    <div class="nav-group">
+      <div class="lbl">Workspace</div>
+      <div class="nav-item">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </div>
+      <div class="nav-item">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Content
+        <span class="ct">42</span>
+      </div>
+      <div class="nav-item active">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        Hook‑Bank
+        <span class="ct">12</span>
+      </div>
+      <div class="nav-item">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Performance
+      </div>
+      <div class="nav-item">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Schedule
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="lbl">Pillars</div>
+      <div class="nav-item">
+        <span class="ic" style="display:grid;place-items:center"><span style="width:8px;height:8px;border-radius:50%;background:var(--p-mindset)"></span></span>
+        Mindset
+        <span class="ct">5</span>
+      </div>
+      <div class="nav-item">
+        <span class="ic" style="display:grid;place-items:center"><span style="width:8px;height:8px;border-radius:50%;background:var(--p-faith)"></span></span>
+        Faith
+        <span class="ct">3</span>
+      </div>
+      <div class="nav-item">
+        <span class="ic" style="display:grid;place-items:center"><span style="width:8px;height:8px;border-radius:50%;background:var(--p-vegi)"></span></span>
+        Vegi
+        <span class="ct">2</span>
+      </div>
+      <div class="nav-item">
+        <span class="ic" style="display:grid;place-items:center"><span style="width:8px;height:8px;border-radius:50%;background:var(--p-solo)"></span></span>
+        Solo
+        <span class="ct">2</span>
+      </div>
+    </div>
+
+    <div class="side-foot">
+      <div class="me">
+        <div class="av">SW</div>
+        <div class="tx">
+          <div class="a">Sebi</div>
+          <div class="b">sebi@vegetarianhulk.de</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ════════════════════ MAIN ════════════════════ -->
+  <main class="main">
+
+    <!-- Topbar -->
+    <div class="topbar" data-screen-label="HookBank · Topbar">
+      <div class="crumbs">
+        <span>vegetarianhulk</span>
+        <span class="sep">/</span>
+        <span>Content</span>
+        <span class="sep">/</span>
+        <span class="here">Hook‑Bank</span>
+      </div>
+
+      <div class="grow"></div>
+
+      <div class="search">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span class="grow">Search hooks · titles · tags</span>
+        <kbd>⌘ K</kbd>
+      </div>
+
+      <button class="icon-btn" title="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </button>
+      <button class="icon-btn" title="Settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+    </div>
+
+    <!-- Page head -->
+    <div class="page-head" data-screen-label="HookBank · Header">
+      <div class="title-block">
+        <div class="eyebrow">
+          <span class="live"></span>
+          <span>Module · Hook‑Bank · sync 12s ago</span>
+        </div>
+        <h1>
+          <span class="emoji">🎬</span>
+          Hook‑Bank
+          <span class="ws-tag">· vegetarianhulk</span>
+        </h1>
+        <p class="desc">Collect, tag, ship. Every Reel‑Hook you've thought of — never write the same one twice.</p>
+        <div class="builder-quote">
+          <em>builder rule:</em> Track what works. Kill what doesn't. Ship the rest.
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px;align-items:flex-end;">
+        <div class="stats">
+          <div class="stat"><div class="n">12</div><div class="l">Total</div></div>
+          <div class="stat" data-st="live"><div class="n">4</div><div class="l">Live</div></div>
+          <div class="stat" data-st="draft"><div class="n">6</div><div class="l">Draft</div></div>
+          <div class="stat" data-st="archived"><div class="n">2</div><div class="l">Archived</div></div>
+        </div>
+        <button class="btn-add">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New hook
+          <kbd>N</kbd>
+        </button>
+      </div>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="filter-bar" data-screen-label="HookBank · Filters">
+
+      <div class="fg">
+        <span class="lbl">Pillar</span>
+        <span class="chip active" style="--accent: var(--p-mindset)"><span class="dot" style="--c: var(--p-mindset)"></span> All <span class="ct">12</span></span>
+        <span class="chip"><span class="dot" style="--c: var(--p-mindset)"></span> Mindset <span class="ct">5</span></span>
+        <span class="chip"><span class="dot" style="--c: var(--p-faith)"></span> Faith <span class="ct">3</span></span>
+        <span class="chip"><span class="dot" style="--c: var(--p-vegi)"></span> Vegi <span class="ct">2</span></span>
+        <span class="chip"><span class="dot" style="--c: var(--p-solo)"></span> Solo <span class="ct">2</span></span>
+      </div>
+
+      <span style="width:1px;height:18px;background:var(--line-2)"></span>
+
+      <div class="fg">
+        <span class="lbl">Status</span>
+        <span class="chip"><span class="dot" style="--c: var(--st-live)"></span> Live <span class="ct">4</span></span>
+        <span class="chip active" style="--accent: var(--sun-2)"><span class="dot" style="--c: var(--sun-2)"></span> Draft <span class="ct">6</span></span>
+        <span class="chip"><span class="dot" style="--c: var(--st-archived)"></span> Archived <span class="ct">2</span></span>
+      </div>
+
+      <span style="width:1px;height:18px;background:var(--line-2)"></span>
+
+      <div class="fg">
+        <span class="lbl">Use</span>
+        <span class="chip">Reel</span>
+        <span class="chip">Story</span>
+        <span class="chip">Caption</span>
+      </div>
+
+      <span style="width:1px;height:18px;background:var(--line-2)"></span>
+
+      <div class="perf-slider" title="Min. performance score">
+        <span class="lbl">Perf &gt;</span>
+        <div class="track">
+          <div class="fill"></div>
+          <div class="knob"></div>
+        </div>
+        <span class="v">62%</span>
+      </div>
+
+      <span class="reset">Reset</span>
+
+      <div class="sort-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5h10M11 9h7M11 13h4M3 17l3 3 3-3M6 20V4"/></svg>
+        Sort: <span class="v">Performance</span>
+      </div>
+
+      <div class="view-toggle">
+        <button class="active" title="Grid">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </button>
+        <button title="List">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content" data-screen-label="HookBank · Cards">
+
+      <div class="grid">
+
+        <!-- ───── HOOK 01 · MINDSET / REEL / LIVE / 92% ───── -->
+        <article class="hook" data-status="live" style="--p-c: var(--p-mindset)">
+          <div class="hook-top">
+            <span class="tag"><span class="dot" style="--c: var(--p-mindset)"></span> Mindset</span>
+            <span class="tag use">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+              Reel · 22s
+            </span>
+            <span class="status"><span class="blink"></span> Live</span>
+          </div>
+          <p class="hook-q">"Brich das <span class="hl">Pattern</span> heute. Nicht morgen. Heute."</p>
+          <div class="perf">
+            <span class="stat-chip hot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <span class="v">48.2K</span>
+            </span>
+            <span class="stat-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+              <span class="v">1.4K</span>
+            </span>
+            <span class="stat-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              <span class="v">312</span>
+            </span>
+            <div class="perf-bar"><div class="fill" style="--p: 92%"></div></div>
+            <span class="perf-score high">92</span>
+          </div>
+          <div class="actions">
+            <button class="act primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Use in next Reel
+            </button>
+            <button class="act">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Variants
+            </button>
+            <button class="act icon kill" title="Archive">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+            </button>
+          </div>
+          <div class="meta-line">
+            <span class="id">HOOK‑0047</span>
+            <span class="by">Used in: <em>Reel #128</em> · Apr 28</span>
+          </div>
+        </article>
+
+        <!-- ───── HOOK 02 · FAITH / STORY / LIVE / 78% ───── -->
+        <article class="hook" data-status="live" style="--p-c: var(--p-faith)">
+          <div class="hook-top">
+            <span class="tag"><span class="dot" style="--c: var(--p-faith)"></span> Faith</span>
+            <span class="tag use">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Story · 1 frame
+            </span>
+            <span class="status"><span class="blink"></span> Live</span>
+          </div>
+          <p class="hook-q">"Ich bete um 5:42 — <span class="hl">nicht weil ich heilig bin.</span> Sondern weil ich sonst den Tag verliere."</p>
+          <div class="perf">
+            <span class="stat-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <span class="v">12.8K</span>
+            </span>
+            <span class="stat-chip hot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+              <span class="v">3.2K</span>
+            </span>
+            <span class="stat-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              <span class="v">186</span>
+            </span>
+            <div class="perf-bar"><div class="fill" style="--p: 78%"></div></div>
+            <span class="perf-score mid">78</span>
+          </div>
+          <div class="actions">
+            <button class="act primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Use in Story
+            </button>
+            <button class="act">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Variants
+            </button>
+            <button class="act icon kill" title="Archive">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+            </button>
+          </div>
+          <div class="meta-line">
+            <span class="id">HOOK‑0048</span>
+            <span class="by">Used in: <em>Story #441</em> · May 09</span>
+          </div>
+        </article>
+
+        <!-- ───── HOOK 03 · VEGI / REEL / DRAFT ───── -->
+        <article class="hook" data-status="draft" style="--p-c: var(--p-vegi)">
+          <div class="hook-top">
+            <span class="tag"><span class="dot" style="--c: var(--p-vegi)"></span> Vegi</span>
+            <span class="tag use">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+              Reel · 14s
+            </span>
+            <span class="status"><span class="blink"></span> Draft v2</span>
+          </div>
+          <p class="hook-q">"10 Jahre kein Fleisch. <span class="hl">Niemand</span> hat mich überzeugt — es ist einfach geblieben."</p>
+          <div class="perf-empty">— not shipped yet · last edited 2h ago</div>
+          <div class="actions">
+            <button class="act primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Use in next Reel
+            </button>
+            <button class="act">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Variants
+            </button>
+            <button class="act icon kill" title="Archive">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+            </button>
+          </div>
+          <div class="meta-line">
+            <span class="id">HOOK‑0049</span>
+            <span class="by">Created May 14 · v2 of 3</span>
+          </div>
+        </article>
+
+        <!-- ───── HOOK 04 · MINDSET / CAPTION / LIVE / 88% (TOP-3) ───── -->
+        <article class="hook" data-status="live" style="--p-c: var(--p-mindset)">
+          <div class="hook-top">
+            <span class="tag"><span class="dot" style="--c: var(--p-mindset)"></span> Mindset</span>
+            <span class="tag use">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18M3 12h18M3 19h12"/></svg>
+              Caption · evergreen
+            </span>
+            <span class="status"><span class="blink"></span> Live · TOP‑3</span>
+          </div>
+          <p class="hook-q">"Motivation ist <span class="hl">Wetter.</span> Disziplin ist Klima."</p>
+          <div class="perf">
+            <span class="stat-chip hot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <span class="v">82.4K</span>
+            </span>
+            <span class="stat-chip hot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+              <span class="v">5.1K</span>
+            </span>
+            <span class="stat-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              <span class="v">498</span>
+            </span>
+            <div class="perf-bar"><div class="fill" style="--p: 88%"></div></div>
+            <span class="perf-score high">88</span>
+          </div>
+          <div class="actions">
+            <button class="act primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Reuse
+            </button>
+            <button class="act">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Variants
+            </button>
+            <button class="act icon kill" title="Archive">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+            </button>
+          </div>
+          <div class="meta-line">
+            <span class="id">HOOK‑0021</span>
+            <span class="by">Used <em>11×</em> · Last: May 10</span>
+          </div>
+        </article>
+
+        <!-- ════════════════════ VARIANT GENERATOR — spans full row ════════════════════ -->
+        <div class="variant-gen">
+          <div class="vg-left">
+            <div class="vg-eyebrow">
+              <span class="ai-dot">AI</span>
+              <span>Variant Generator · Sebi‑Voice trained</span>
+            </div>
+            <div class="vg-title">Rewrite <em>"Brich das Pattern heute"</em> — 3 variants</div>
+            <div class="vg-src">"Brich das Pattern heute. Nicht morgen. Heute."</div>
+            <div class="vg-controls">
+              <div class="vg-dial">
+                <button>Softer</button>
+                <button class="active">Same tone</button>
+                <button>Harder</button>
+              </div>
+              <button class="btn-regen">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                Regenerate
+              </button>
+            </div>
+          </div>
+
+          <div class="vg-right">
+            <div class="vg-suggestion">
+              <span class="idx">01</span>
+              <div class="tx">
+                "Das Pattern wartet nicht bis morgen. Du auch nicht."
+                <div class="tone">Tone: punchy · est. 84%</div>
+              </div>
+              <button class="save" title="Save as new hook">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+              </button>
+            </div>
+            <div class="vg-suggestion">
+              <span class="idx">02</span>
+              <div class="tx">
+                "Brich es jetzt. Sonst bricht es dich heute Abend."
+                <div class="tone">Tone: confrontational · est. 79%</div>
+              </div>
+              <button class="save" title="Save as new hook">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+              </button>
+            </div>
+            <div class="vg-suggestion">
+              <span class="idx">03</span>
+              <div class="tx">
+                "Heute ist der einzige Tag, an dem du das Pattern brechen kannst."
+                <div class="tone">Tone: reflective · est. 71%</div>
+              </div>
+              <button class="save" title="Save as new hook">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ───── HOOK 05 · SOLO / CAPTION / DRAFT ───── -->
+        <article class="hook" data-status="draft" style="--p-c: var(--p-solo)">
+          <div class="hook-top">
+            <span class="tag"><span class="dot" style="--c: var(--p-solo)"></span> Solo</span>
+            <span class="tag use">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18M3 12h18M3 19h12"/></svg>
+              Caption
+            </span>
+            <span class="status"><span class="blink"></span> Draft v3</span>
+          </div>
+          <p class="hook-q">"Heute hat mir <span class="hl">keiner geschrieben.</span> War okay. Bin trotzdem hingegangen."</p>
+          <div class="perf-empty">— in review · 2 comments from Sebi</div>
+          <div class="actions">
+            <button class="act primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Ship
+            </button>
+            <button class="act">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Variants
+            </button>
+            <button class="act icon kill" title="Archive">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+            </button>
+          </div>
+          <div class="meta-line">
+            <span class="id">HOOK‑0050</span>
+            <span class="by">Created May 13 · revisions <em>v3</em></span>
+          </div>
+        </article>
+
+        <!-- ───── HOOK 06 · FAITH / REEL / DRAFT ───── -->
+        <article class="hook" data-status="draft" style="--p-c: var(--p-faith)">
+          <div class="hook-top">
+            <span class="tag"><span class="dot" style="--c: var(--p-faith)"></span> Faith</span>
+            <span class="tag use">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+              Reel · 18s
+            </span>
+            <span class="status"><span class="blink"></span> Draft v1</span>
+          </div>
+          <p class="hook-q">"Mein erstes Gebet heute war: <span class="hl">'Hilf mir, dass ich nicht reiße.'</span> Mehr nicht."</p>
+          <div class="perf-empty">— not shipped yet · vulnerable, intentional</div>
+          <div class="actions">
+            <button class="act primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Ship
+            </button>
+            <button class="act">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Variants
+            </button>
+            <button class="act icon kill" title="Archive">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+            </button>
+          </div>
+          <div class="meta-line">
+            <span class="id">HOOK‑0051</span>
+            <span class="by">Created May 14 · <em>just now</em></span>
+          </div>
+        </article>
+
+        <!-- ───── HOOK 07 · VEGI / STORY / DRAFT ───── -->
+        <article class="hook" data-status="draft" style="--p-c: var(--p-vegi)">
+          <div class="hook-top">
+            <span class="tag"><span class="dot" style="--c: var(--p-vegi)"></span> Vegi</span>
+            <span class="tag use">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Story · 3 frames
+            </span>
+            <span class="status"><span class="blink"></span> Draft v1</span>
+          </div>
+          <p class="hook-q">"32g Protein <span class="hl">vor 9 Uhr.</span> Ohne Whey. Ohne Drama."</p>
+          <div class="perf-empty">— scheduled May 17 · linked to Reel #142</div>
+          <div class="actions">
+            <button class="act primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Ship now
+            </button>
+            <button class="act">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Variants
+            </button>
+            <button class="act icon kill" title="Archive">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+            </button>
+          </div>
+          <div class="meta-line">
+            <span class="id">HOOK‑0052</span>
+            <span class="by">Owner: <em>Sebi</em> · scheduled May 17</span>
+          </div>
+        </article>
+
+        <!-- ───── HOOK 08 · MINDSET / DRAFT v6 (high-iteration draft) ───── -->
+        <article class="hook" data-status="draft" style="--p-c: var(--p-mindset)">
+          <div class="hook-top">
+            <span class="tag"><span class="dot" style="--c: var(--p-mindset)"></span> Mindset</span>
+            <span class="tag use">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+              Reel · 26s
+            </span>
+            <span class="status"><span class="blink"></span> Draft v6</span>
+          </div>
+          <p class="hook-q">"Ich bin nicht diszipliniert. Ich bin nur <span class="hl">zu stur, um aufzuhören.</span>"</p>
+          <div class="perf-empty">— in heavy iteration · 6 versions · ready for shoot</div>
+          <div class="actions">
+            <button class="act primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Schedule shoot
+            </button>
+            <button class="act">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Variants
+            </button>
+            <button class="act icon kill" title="Archive">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+            </button>
+          </div>
+          <div class="meta-line">
+            <span class="id">HOOK‑0053</span>
+            <span class="by"><em>v6</em> · 3 days · 28 edits</span>
+          </div>
+        </article>
+
+        <!-- ───── HOOK 09 · SOLO / LIVE / 65% ───── -->
+        <article class="hook" data-status="live" style="--p-c: var(--p-solo)">
+          <div class="hook-top">
+            <span class="tag"><span class="dot" style="--c: var(--p-solo)"></span> Solo</span>
+            <span class="tag use">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+              Reel · 19s
+            </span>
+            <span class="status"><span class="blink"></span> Live</span>
+          </div>
+          <p class="hook-q">"Tribe &gt; Coach. <span class="hl">Numbers &gt; Hype.</span> Build in public."</p>
+          <div class="perf">
+            <span class="stat-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <span class="v">9.4K</span>
+            </span>
+            <span class="stat-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+              <span class="v">412</span>
+            </span>
+            <span class="stat-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              <span class="v">94</span>
+            </span>
+            <div class="perf-bar"><div class="fill" style="--p: 65%"></div></div>
+            <span class="perf-score mid">65</span>
+          </div>
+          <div class="actions">
+            <button class="act primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Reuse
+            </button>
+            <button class="act">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Variants
+            </button>
+            <button class="act icon kill" title="Archive">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+            </button>
+          </div>
+          <div class="meta-line">
+            <span class="id">HOOK‑0033</span>
+            <span class="by">Used in: <em>Reel #119</em> · Apr 02</span>
+          </div>
+        </article>
+
+        <!-- ───── HOOK 10 · ARCHIVED (killed, kept for reference) ───── -->
+        <article class="hook" data-status="archived" style="--p-c: var(--p-mindset)">
+          <div class="hook-top">
+            <span class="tag"><span class="dot" style="--c: var(--p-mindset)"></span> Mindset</span>
+            <span class="tag use">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+              Reel · 12s
+            </span>
+            <span class="status"><span class="blink"></span> Archived</span>
+          </div>
+          <p class="hook-q">"You got this. Crush it today!"</p>
+          <div class="perf">
+            <span class="stat-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <span class="v">800</span>
+            </span>
+            <div class="perf-bar"><div class="fill" style="--p: 8%"></div></div>
+            <span class="perf-score low">08</span>
+          </div>
+          <div class="actions">
+            <button class="act">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Restore
+            </button>
+            <button class="act icon kill" title="Delete forever">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+            </button>
+          </div>
+          <div class="meta-line">
+            <span class="id">HOOK‑0008</span>
+            <span class="by">Killed by <em>Sebi</em> · "off‑voice"</span>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Keyboard hints -->
+      <div class="kb-hints">
+        <span><kbd>N</kbd> New hook</span>
+        <span class="sep">·</span>
+        <span><kbd>⌘ K</kbd> Search</span>
+        <span class="sep">·</span>
+        <span><kbd>V</kbd> Variants</span>
+        <span class="sep">·</span>
+        <span><kbd>S</kbd> Ship</span>
+        <span class="sep">·</span>
+        <span><kbd>A</kbd> Archive</span>
+        <span class="sep">·</span>
+        <span><kbd>1‑4</kbd> Switch pillar</span>
+        <span class="sep">·</span>
+        <span style="margin-left:auto;color:var(--tx-4)">Synced to <em style="color:var(--sun-2);font-style:normal">@sebi</em> · last 12s ago</span>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>
