@@ -67,9 +67,8 @@
   .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
   .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: 5px; transition: all .15s; position: relative; overflow: hidden; }
   .card:hover { background: var(--surface2); border-color: var(--vegi); transform: translateY(-1px); }
-  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--vegi); opacity: .6; }
-  .card.smash::before { background: var(--smash); }
-  .card.peaking::before { background: var(--peaking); }
+  /* v3.3 — alle Cards einheitlich Forest-Green-Stripe (Cockpit-Identität), Brand-Differenzierung über Eyebrow + Icon */
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--vegi), transparent); opacity: .35; }
   .card-title { font-weight: 800; font-size: 14px; letter-spacing: .2px; }
   .card-sub { font-size: 11px; color: var(--text3); font-weight: 500; }
   .card-meta { display: flex; gap: 8px; margin-top: 4px; font-size: 10px; color: var(--text3); }
@@ -128,7 +127,7 @@
     </div>
   </div>
 
-  <!-- Tab-Bar (V3) — Cockpit + Tool-iframes -->
+  <!-- Tab-Bar (V3.3) — Cockpit + eigene Brand-Tools als iframe. SaaS-Tools (Brevo/CF/Firebase/Stripe/Replicate) sind Cards, da X-Frame-DENY. -->
   <div class="tab-bar" id="tabBar" style="display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch">
     <button class="tab-btn active" data-tab="cockpit" onclick="switchTab('cockpit')">⌘ Cockpit</button>
     <button class="tab-btn" data-tab="smash-admin" data-src="https://smashtheapp.de/admin.html" onclick="switchTab('smash-admin')">💪 SMASH-Admin</button>
@@ -136,7 +135,6 @@
     <button class="tab-btn" data-tab="peaking-tracker" data-src="https://peaking.world/modules/tracker.html" onclick="switchTab('peaking-tracker')">🔥 Tracker</button>
     <button class="tab-btn" data-tab="peaking-brain" data-src="https://peaking.world/modules/brain.html" onclick="switchTab('peaking-brain')">🧠 Brain</button>
     <button class="tab-btn" data-tab="hulk" data-src="https://vegetarianhulk.de/" onclick="switchTab('hulk')">🌱 hulk</button>
-    <button class="tab-btn" data-tab="brevo" data-src="https://app.brevo.com" onclick="switchTab('brevo')">📧 Brevo</button>
   </div>
 
   <!-- Tool iframe (hidden when on Cockpit-Tab) -->
@@ -358,7 +356,7 @@
     </div>
   </div>
 
-  <div class="footer">v3.0 · Cmd · Sebi-Solo · build 15.05.</div>
+  <div class="footer">v3.3 · Cmd · Sebi-Solo · build 15.05.</div>
   </div><!-- /#cockpitContent -->
 </div>
 
@@ -759,8 +757,11 @@ async function loadStatus() {
   const pendingItems = items.filter(x => (x.status || 'pending') === 'pending');
   const pending = pendingItems.length;
 
+  const tokenPill = tokenOk
+    ? `<div class="pill"><span class="pill-dot"></span> Meta-Token live</div>`
+    : `<div class="pill" style="cursor:pointer;border-color:var(--danger)" onclick="alert('Token expired — im Terminal:\\n\\nbash /tmp/peaking-token-convert.sh\\n\\nDann Quick-Action „♻️ Token Refresh" unten clicken.')"><span class="pill-dot red"></span> Meta-Token down · Fix</div>`;
   row.innerHTML = `
-    <div class="pill"><span class="pill-dot ${tokenOk ? '' : 'red'}"></span> Meta-Token ${tokenOk ? 'live' : 'down'}</div>
+    ${tokenPill}
     <div class="pill"><span class="pill-dot ${pending ? 'amber' : ''}"></span> Inbox: ${pending} pending</div>
     <div class="pill"><span class="pill-dot"></span> ${new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })}</div>
   `;
