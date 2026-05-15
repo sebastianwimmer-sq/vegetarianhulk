@@ -105,6 +105,7 @@
     </p>
 
     <form class="lead-magnet-form" id="leadform" onsubmit="return submitLead(event)">
+      <input type="text" id="lead-firstname" placeholder="Dein Vorname (optional)" autocomplete="given-name" maxlength="40" style="margin-bottom:8px">
       <input type="email" id="lead-email" placeholder="deine@email.de" required autocomplete="email">
       <button type="submit">Schick mir den Reset →</button>
     </form>
@@ -219,7 +220,9 @@
 async function submitLead(e) {
   e.preventDefault();
   const emailInput = document.getElementById('lead-email');
+  const firstNameInput = document.getElementById('lead-firstname');
   const email = (emailInput.value || '').trim().toLowerCase();
+  const firstName = ((firstNameInput && firstNameInput.value) || '').trim().slice(0, 40);
   if (!email) return false;
   const form = document.getElementById('leadform');
   const btn = form.querySelector('button');
@@ -229,7 +232,7 @@ async function submitLead(e) {
     const res = await fetch('https://peaking-ai-api.peaking.workers.dev/newsletter/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, brand: 'vegetarianhulk' }),
+      body: JSON.stringify({ email: email, brand: 'vegetarianhulk', firstName: firstName }),
     });
     const data = await res.json().catch(() => ({}));
     if (res.ok && data.ok) {
@@ -256,6 +259,6 @@ async function submitLead(e) {
   return false;
 }
 </script>
-<script src="update-check.js?v=v27"></script>
+<script src="update-check.js?v=v28"></script>
 </body>
 </html>
