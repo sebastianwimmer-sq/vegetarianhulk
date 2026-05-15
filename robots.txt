@@ -4,5 +4,6 @@ Allow: /
 # Block staging variants (defense-in-depth, falls Subdomain mal gleichen Pfad serves)
 Disallow: /design/
 Disallow: /prototypes/
+Disallow: /command/
 
 Sitemap: https://vegetarianhulk.de/sitemap.xml

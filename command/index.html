@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Command · Sebi</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231a3d28'/><text x='50' y='66' text-anchor='middle' font-size='52' font-weight='900' font-family='system-ui' fill='%23f7efde'>⌘</text></svg>">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap');
+  :root {
+    --bg: #1a1410;
+    --surface: #221a14;
+    --surface2: #2e241c;
+    --border: #3a2e22;
+    --text: #f7efde;
+    --text2: #b8a487;
+    --text3: #7a6850;
+    --vegi: #2d6a3e;
+    --smash: #00ff6a;
+    --peaking: #ff6b35;
+    --danger: #ff5555;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+  body { padding: max(20px, env(safe-area-inset-top, 20px)) 16px 30px; max-width: 720px; margin: 0 auto; }
+
+  /* === Lock-Screen === */
+  .lock { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; gap: 14px; text-align: center; }
+  .lock-icon { font-size: 56px; opacity: .9; }
+  .lock-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; letter-spacing: -.5px; }
+  .lock-sub { color: var(--text2); font-size: 13px; max-width: 320px; line-height: 1.55; }
+  .lock-input { width: 100%; max-width: 320px; background: var(--surface); border: 1.5px solid var(--border); color: var(--text); padding: 14px 16px; border-radius: 12px; font-size: 16px; font-family: inherit; font-weight: 600; text-align: center; letter-spacing: 1px; outline: none; transition: border-color .2s ease; }
+  .lock-input:focus { border-color: var(--vegi); }
+  .lock-btn { background: linear-gradient(180deg, var(--vegi) 0%, #1a3d28 100%); color: var(--text); border: 0; padding: 14px 32px; border-radius: 12px; font-size: 14px; font-weight: 800; cursor: pointer; letter-spacing: .6px; text-transform: uppercase; font-family: inherit; transition: transform .15s ease; }
+  .lock-btn:active { transform: scale(.98); }
+  .lock-err { color: var(--danger); font-size: 12px; font-weight: 700; min-height: 18px; }
+  .lock-setup-hint { background: var(--surface); border: 1px dashed var(--border); padding: 14px 16px; border-radius: 12px; font-size: 12px; line-height: 1.6; color: var(--text2); max-width: 380px; }
+  .lock-setup-hint strong { color: var(--text); }
+
+  /* === Cockpit === */
+  .head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+  .head h1 { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 900; letter-spacing: -.6px; }
+  .head-sub { font-size: 11px; color: var(--text3); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; margin-top: 2px; }
+  .head-actions { display: flex; gap: 8px; }
+  .icon-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text2); width: 38px; height: 38px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: all .15s; }
+  .icon-btn:hover { color: var(--text); border-color: var(--vegi); }
+
+  .status-row { display: flex; gap: 8px; margin-bottom: 26px; flex-wrap: wrap; }
+  .pill { background: var(--surface); border: 1px solid var(--border); padding: 6px 12px; border-radius: 99px; font-size: 11px; font-weight: 700; color: var(--text2); display: flex; align-items: center; gap: 6px; }
+  .pill-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--vegi); box-shadow: 0 0 6px var(--vegi); }
+  .pill-dot.amber { background: #ffb800; box-shadow: 0 0 6px #ffb800; }
+  .pill-dot.red { background: var(--danger); box-shadow: 0 0 6px var(--danger); }
+
+  .group { margin-bottom: 26px; }
+  .group-title { font-size: 11px; color: var(--text3); letter-spacing: 2px; text-transform: uppercase; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .group-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border) 0%, transparent 100%); }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: 5px; transition: all .15s; position: relative; overflow: hidden; }
+  .card:hover { background: var(--surface2); border-color: var(--vegi); transform: translateY(-1px); }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--vegi); opacity: .6; }
+  .card.smash::before { background: var(--smash); }
+  .card.peaking::before { background: var(--peaking); }
+  .card-title { font-weight: 800; font-size: 14px; letter-spacing: .2px; }
+  .card-sub { font-size: 11px; color: var(--text3); font-weight: 500; }
+  .card-meta { display: flex; gap: 8px; margin-top: 4px; font-size: 10px; color: var(--text3); }
+
+  .actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .action-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 10px; cursor: pointer; font-size: 12px; font-weight: 700; font-family: inherit; transition: all .15s; text-align: left; display: flex; flex-direction: column; gap: 3px; }
+  .action-btn:hover { border-color: var(--vegi); background: var(--surface2); }
+  .action-btn-sub { font-size: 10px; color: var(--text3); font-weight: 500; }
+  .action-btn-result { font-size: 10px; color: var(--vegi); font-weight: 700; margin-top: 6px; min-height: 12px; }
+  .action-btn-result.err { color: var(--danger); }
+
+  .footer { margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--border); font-size: 10px; color: var(--text3); text-align: center; letter-spacing: 1px; text-transform: uppercase; }
+
+  @media (max-width: 480px) {
+    .head h1 { font-size: 22px; }
+    .cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Lock-Screen -->
+<div id="lock" class="lock">
+  <div class="lock-icon">⌘</div>
+  <div class="lock-title">Command</div>
+  <div class="lock-sub">Cockpit für alle Brands. Nur Sebi.</div>
+  <input id="pwInput" class="lock-input" type="password" placeholder="Passwort" autocomplete="current-password" autofocus>
+  <div id="pwErr" class="lock-err"></div>
+  <button id="pwBtn" class="lock-btn">Entsperren</button>
+  <div id="setupHint" class="lock-setup-hint" style="display:none">
+    <strong>Erstes Mal hier?</strong><br>
+    Wähle ein langes Passwort (15+ Zeichen). Du speicherst nur den Hash lokal — selbst wenn jemand den Quellcode liest, kann er das Passwort nicht zurückrechnen. Wenn du es vergisst, kannst du in den Browser-Devtools → Application → localStorage den Key <code>cmd_pw_hash</code> löschen und neu setzen.
+  </div>
+</div>
+
+<!-- Cockpit (hidden until unlock) -->
+<div id="cockpit" style="display:none">
+  <div class="head">
+    <div>
+      <h1>Command · Sebi</h1>
+      <div class="head-sub">3 Brands · 1 Cockpit</div>
+    </div>
+    <div class="head-actions">
+      <button class="icon-btn" id="refreshBtn" title="Status neu laden">↻</button>
+      <button class="icon-btn" id="lockBtn" title="Sperren">🔒</button>
+    </div>
+  </div>
+
+  <div class="status-row" id="statusRow">
+    <div class="pill"><span class="pill-dot"></span> Lädt ...</div>
+  </div>
+
+  <!-- SMASH -->
+  <div class="group">
+    <div class="group-title">SMASH</div>
+    <div class="cards">
+      <a class="card smash" href="https://smashtheapp.de/admin.html" target="_blank" rel="noopener">
+        <div class="card-title">🛡 Admin-Panel</div>
+        <div class="card-sub">Tickets · Users · Codes · Biz</div>
+      </a>
+      <a class="card smash" href="https://smashtheapp.de/" target="_blank" rel="noopener">
+        <div class="card-title">📱 App live</div>
+        <div class="card-sub">smashtheapp.de</div>
+      </a>
+      <a class="card smash" href="https://smashtheapp.de/brand.html" target="_blank" rel="noopener">
+        <div class="card-title">🎨 Brand-Page</div>
+        <div class="card-sub">Hulk-Voice + Tagline</div>
+      </a>
+      <a class="card smash" href="https://smashtheapp.de/landing.html" target="_blank" rel="noopener">
+        <div class="card-title">🏠 Landing</div>
+        <div class="card-sub">Hero + Phone-Mockup</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- PEAKING -->
+  <div class="group">
+    <div class="group-title">PEAKING</div>
+    <div class="cards">
+      <a class="card peaking" href="https://peaking.world/dashboard.html" target="_blank" rel="noopener">
+        <div class="card-title">📊 Dashboard</div>
+        <div class="card-sub">Live-Stats · Account-Switch</div>
+      </a>
+      <a class="card peaking" href="https://peaking.world/modules/brain.html" target="_blank" rel="noopener">
+        <div class="card-title">🧠 Brain</div>
+        <div class="card-sub">Memos · Inbox-Connector</div>
+      </a>
+      <a class="card peaking" href="https://peaking.world/modules/tracker.html" target="_blank" rel="noopener">
+        <div class="card-title">🔥 Reel-Tracker</div>
+        <div class="card-sub">Auto-Sync · Sparklines</div>
+      </a>
+      <a class="card peaking" href="https://peaking.world/modules/inbox.html" target="_blank" rel="noopener">
+        <div class="card-title">📥 Idea-Inbox</div>
+        <div class="card-sub">Quick-Capture</div>
+      </a>
+      <a class="card peaking" href="https://peaking.world/modules/growth-coach.html" target="_blank" rel="noopener">
+        <div class="card-title">🌱 Growth-Coach</div>
+        <div class="card-sub">15 Tip-Templates · Live-Data</div>
+      </a>
+      <a class="card peaking" href="https://peaking.world/modules/help.html" target="_blank" rel="noopener">
+        <div class="card-title">📖 Help-Center</div>
+        <div class="card-sub">6 Sections · Search</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- vegetarianhulk -->
+  <div class="group">
+    <div class="group-title">vegetarianhulk</div>
+    <div class="cards">
+      <a class="card" href="https://vegetarianhulk.de/" target="_blank" rel="noopener">
+        <div class="card-title">🌱 Brand-Site</div>
+        <div class="card-sub">Hero · Lead-Magnet · DNA</div>
+      </a>
+      <a class="card" href="https://vegetarianhulk.de/kooperationen.html" target="_blank" rel="noopener">
+        <div class="card-title">🤝 Kooperationen</div>
+        <div class="card-sub">B2B-Anfragen</div>
+      </a>
+      <a class="card" href="https://app.brevo.com/contact/list-listing" target="_blank" rel="noopener">
+        <div class="card-title">📧 Brevo-Lists</div>
+        <div class="card-sub">Drip-Subscribers</div>
+      </a>
+      <a class="card" href="https://app.brevo.com/automation" target="_blank" rel="noopener">
+        <div class="card-title">⚙️ Brevo-Automations</div>
+        <div class="card-sub">3-Tage-Reset-Drip</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Worker Quick-Actions -->
+  <div class="group">
+    <div class="group-title">Worker Admin</div>
+    <div class="actions-grid">
+      <button class="action-btn" id="checkTokenBtn">
+        <span>🔑 Token-Status</span>
+        <span class="action-btn-sub">/insta/me — verify token alive</span>
+        <span class="action-btn-result" id="checkTokenResult"></span>
+      </button>
+      <button class="action-btn" id="refreshTokenBtn">
+        <span>♻️ Token Refresh</span>
+        <span class="action-btn-sub">/admin/refresh-token — extend 60d</span>
+        <span class="action-btn-result" id="refreshTokenResult"></span>
+      </button>
+      <button class="action-btn" id="pullInboxBtn">
+        <span>📥 Inbox-Pull</span>
+        <span class="action-btn-sub">/inbox/list — pending count</span>
+        <span class="action-btn-result" id="pullInboxResult"></span>
+      </button>
+      <button class="action-btn" id="syncReelsBtn">
+        <span>🔄 Reels-Sync</span>
+        <span class="action-btn-sub">/insta/sync-reels — peakingworld</span>
+        <span class="action-btn-result" id="syncReelsResult"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- External Services -->
+  <div class="group">
+    <div class="group-title">External</div>
+    <div class="cards">
+      <a class="card" href="https://dash.cloudflare.com" target="_blank" rel="noopener">
+        <div class="card-title">☁️ Cloudflare</div>
+        <div class="card-sub">Worker · KV · DNS</div>
+      </a>
+      <a class="card" href="https://console.firebase.google.com/project/smash-79ec5" target="_blank" rel="noopener">
+        <div class="card-title">🔥 Firebase</div>
+        <div class="card-sub">SMASH Auth · Firestore</div>
+      </a>
+      <a class="card" href="https://developers.facebook.com/apps/" target="_blank" rel="noopener">
+        <div class="card-title">📘 Meta Developer</div>
+        <div class="card-sub">App-Review · Permissions</div>
+      </a>
+      <a class="card" href="https://dashboard.stripe.com" target="_blank" rel="noopener">
+        <div class="card-title">💳 Stripe</div>
+        <div class="card-sub">SMASH-Pro · Payment-Links</div>
+      </a>
+      <a class="card" href="https://replicate.com/account/billing" target="_blank" rel="noopener">
+        <div class="card-title">🎨 Replicate</div>
+        <div class="card-sub">AI-Bilder · Spend-Cap</div>
+      </a>
+      <a class="card" href="https://github.com/sebastianwimmer-sq" target="_blank" rel="noopener">
+        <div class="card-title">🐙 GitHub</div>
+        <div class="card-sub">Repos · Actions · Secrets</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer">v1.0 · Cmd · Sebi-Solo · build 15.05.</div>
+</div>
+
+<script>
+const WORKER = 'https://peaking-ai-api.peaking.workers.dev';
+const KEY = 'pk_peaking_2026_sebi_solo_x7k2m9';
+
+// Pure-JS SHA-256 (works in non-HTTPS dev contexts too)
+async function sha256(str) {
+  const buf = new TextEncoder().encode(str);
+  const hash = await crypto.subtle.digest('SHA-256', buf);
+  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+const lockEl = document.getElementById('lock');
+const cockpitEl = document.getElementById('cockpit');
+const pwInput = document.getElementById('pwInput');
+const pwErr = document.getElementById('pwErr');
+const pwBtn = document.getElementById('pwBtn');
+const setupHint = document.getElementById('setupHint');
+
+const storedHash = localStorage.getItem('cmd_pw_hash');
+const sessionKey = 'cmd_session_active';
+
+function showCockpit() {
+  lockEl.style.display = 'none';
+  cockpitEl.style.display = 'block';
+  loadStatus();
+}
+
+// Auto-unlock if session was active in last 30 Min
+const sessionStart = parseInt(sessionStorage.getItem(sessionKey) || '0', 10);
+if (sessionStart && Date.now() - sessionStart < 30 * 60 * 1000) {
+  showCockpit();
+}
+
+if (!storedHash) {
+  setupHint.style.display = 'block';
+  pwInput.placeholder = 'Neues Passwort wählen (15+ chars)';
+  pwBtn.textContent = 'Setzen';
+}
+
+async function tryUnlock() {
+  const pw = pwInput.value.trim();
+  if (!pw) { pwErr.textContent = 'Passwort eingeben.'; return; }
+
+  // First-time setup: store hash
+  if (!storedHash) {
+    if (pw.length < 12) { pwErr.textContent = 'Mindestens 12 Zeichen.'; return; }
+    const h = await sha256(pw);
+    localStorage.setItem('cmd_pw_hash', h);
+    sessionStorage.setItem(sessionKey, String(Date.now()));
+    showCockpit();
+    return;
+  }
+  // Verify
+  const h = await sha256(pw);
+  if (h !== storedHash) {
+    pwErr.textContent = 'Falsches Passwort.';
+    pwInput.value = '';
+    return;
+  }
+  sessionStorage.setItem(sessionKey, String(Date.now()));
+  showCockpit();
+}
+
+pwBtn.addEventListener('click', tryUnlock);
+pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+
+document.getElementById('lockBtn')?.addEventListener('click', () => {
+  sessionStorage.removeItem(sessionKey);
+  location.reload();
+});
+
+document.getElementById('refreshBtn')?.addEventListener('click', () => loadStatus());
+
+async function workerCall(path, method = 'GET') {
+  const res = await fetch(WORKER + path, {
+    method,
+    headers: { 'X-Peaking-Key': KEY, 'Origin': 'https://peaking.world' },
+  });
+  const data = await res.json().catch(() => ({}));
+  return { ok: res.ok, status: res.status, data };
+}
+
+function setResult(id, text, isErr = false) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = text;
+  el.classList.toggle('err', isErr);
+}
+
+document.getElementById('checkTokenBtn')?.addEventListener('click', async () => {
+  setResult('checkTokenResult', 'lädt ...');
+  const r = await workerCall('/insta/me');
+  if (r.ok && r.data.me) setResult('checkTokenResult', '✅ ' + r.data.me.name);
+  else setResult('checkTokenResult', '❌ ' + (r.data.error || 'fail').slice(0, 50), true);
+});
+
+document.getElementById('refreshTokenBtn')?.addEventListener('click', async () => {
+  setResult('refreshTokenResult', 'refresh ...');
+  const r = await workerCall('/admin/refresh-token', 'POST');
+  if (r.ok && r.data.ok) setResult('refreshTokenResult', '✅ +' + r.data.daysValid + 'd');
+  else setResult('refreshTokenResult', '❌ ' + (r.data.error || 'fail').slice(0, 50), true);
+});
+
+document.getElementById('pullInboxBtn')?.addEventListener('click', async () => {
+  setResult('pullInboxResult', 'lädt ...');
+  const r = await workerCall('/inbox/list');
+  if (r.ok && r.data) {
+    const items = r.data.items || r.data || [];
+    const pending = items.filter(x => (x.status || 'pending') === 'pending').length;
+    setResult('pullInboxResult', '📥 ' + pending + ' pending · ' + items.length + ' total');
+  } else setResult('pullInboxResult', '❌ ' + (r.data.error || 'fail').slice(0, 50), true);
+});
+
+document.getElementById('syncReelsBtn')?.addEventListener('click', async () => {
+  setResult('syncReelsResult', 'sync läuft ...');
+  const r = await workerCall('/insta/sync-reels?igUserId=17841417585584501', 'POST');
+  if (r.ok && r.data.ok) setResult('syncReelsResult', '✅ ' + (r.data.count || 0) + ' reels');
+  else setResult('syncReelsResult', '❌ ' + (r.data.error || 'fail').slice(0, 50), true);
+});
+
+async function loadStatus() {
+  const row = document.getElementById('statusRow');
+  row.innerHTML = '<div class="pill"><span class="pill-dot amber"></span> lädt ...</div>';
+
+  const checks = await Promise.all([
+    workerCall('/insta/me'),
+    workerCall('/inbox/list'),
+  ]);
+
+  const tokenOk = checks[0].ok && checks[0].data.me;
+  const inboxData = checks[1].data;
+  const pending = inboxData && (inboxData.items || inboxData) ? (inboxData.items || inboxData).filter(x => (x.status || 'pending') === 'pending').length : '?';
+
+  row.innerHTML = `
+    <div class="pill"><span class="pill-dot ${tokenOk ? '' : 'red'}"></span> Meta-Token ${tokenOk ? 'live' : 'down'}</div>
+    <div class="pill"><span class="pill-dot"></span> Inbox: ${pending} pending</div>
+    <div class="pill"><span class="pill-dot"></span> ${new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })}</div>
+  `;
+}
+</script>
+</body>
+</html>
