@@ -34,6 +34,10 @@
   .lock-input:focus { border-color: var(--vegi); }
   .lock-btn { background: linear-gradient(180deg, var(--vegi) 0%, #1a3d28 100%); color: var(--text); border: 0; padding: 14px 32px; border-radius: 12px; font-size: 14px; font-weight: 800; cursor: pointer; letter-spacing: .6px; text-transform: uppercase; font-family: inherit; transition: transform .15s ease; }
   .lock-btn:active { transform: scale(.98); }
+  .lock-btn-secondary { background: transparent; border: 1.5px solid var(--vegi); color: var(--text); padding: 12px 28px; border-radius: 12px; font-size: 13px; font-weight: 800; cursor: pointer; letter-spacing: .4px; font-family: inherit; display: flex; align-items: center; gap: 8px; }
+  .lock-btn-secondary:hover { background: rgba(45,106,62,.12); }
+  .lock-btn-secondary:disabled { opacity: .4; cursor: not-allowed; }
+  .lock-divider { color: var(--text3); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 800; margin: 6px 0; }
   .lock-err { color: var(--danger); font-size: 12px; font-weight: 700; min-height: 18px; }
   .lock-setup-hint { background: var(--surface); border: 1px dashed var(--border); padding: 14px 16px; border-radius: 12px; font-size: 12px; line-height: 1.6; color: var(--text2); max-width: 380px; }
   .lock-setup-hint strong { color: var(--text); }
@@ -88,6 +92,10 @@
   <div class="lock-icon">⌘</div>
   <div class="lock-title">Command</div>
   <div class="lock-sub">Cockpit für alle Brands. Nur Sebi.</div>
+  <button id="passkeyBtn" class="lock-btn-secondary" style="display:none">
+    <span style="font-size:18px">🔐</span> Mit Face-ID / Touch-ID
+  </button>
+  <div id="lockDivider" class="lock-divider" style="display:none">— oder —</div>
   <input id="pwInput" class="lock-input" type="password" placeholder="Passwort" autocomplete="current-password" autofocus>
   <div id="pwErr" class="lock-err"></div>
   <button id="pwBtn" class="lock-btn">Entsperren</button>
@@ -218,6 +226,24 @@
     </div>
   </div>
 
+  <!-- Security -->
+  <div class="group">
+    <div class="group-title">Security · Passkeys</div>
+    <div class="actions-grid">
+      <button class="action-btn" id="addPasskeyBtn">
+        <span>🔐 Passkey hinzufügen</span>
+        <span class="action-btn-sub">Face-ID / Touch-ID an diesem Gerät</span>
+        <span class="action-btn-result" id="addPasskeyResult"></span>
+      </button>
+      <button class="action-btn" id="listPasskeysBtn">
+        <span>📋 Passkeys verwalten</span>
+        <span class="action-btn-sub">Gespeicherte Geräte anzeigen / löschen</span>
+        <span class="action-btn-result" id="listPasskeysResult"></span>
+      </button>
+    </div>
+    <div id="passkeyList" style="margin-top:10px;display:none;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px;font-size:11px"></div>
+  </div>
+
   <!-- External Services -->
   <div class="group">
     <div class="group-title">External</div>
@@ -272,12 +298,111 @@ const setupHint = document.getElementById('setupHint');
 
 const storedHash = localStorage.getItem('cmd_pw_hash');
 const sessionKey = 'cmd_session_active';
+const passkeyListKey = 'cmd_passkeys_v1';
+const passkeyBtn = document.getElementById('passkeyBtn');
+const lockDivider = document.getElementById('lockDivider');
+
+// === WebAuthn Helpers ===
+function getPasskeys() {
+  try { return JSON.parse(localStorage.getItem(passkeyListKey) || '[]'); } catch (e) { return []; }
+}
+function savePasskeys(list) { localStorage.setItem(passkeyListKey, JSON.stringify(list)); }
+function b64urlEncode(buf) {
+  const bytes = new Uint8Array(buf);
+  let s = ''; for (const b of bytes) s += String.fromCharCode(b);
+  return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function b64urlDecode(str) {
+  str = str.replace(/-/g,'+').replace(/_/g,'/');
+  while (str.length % 4) str += '=';
+  const bin = atob(str); const arr = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+  return arr.buffer;
+}
+function randomChallenge() {
+  const b = new Uint8Array(32); crypto.getRandomValues(b); return b.buffer;
+}
+function webauthnSupported() {
+  return !!(window.PublicKeyCredential && navigator.credentials && navigator.credentials.create);
+}
+
+// Show passkey-button on lock-screen if at least 1 passkey registered AND WebAuthn supported
+if (webauthnSupported() && getPasskeys().length > 0) {
+  passkeyBtn.style.display = 'flex';
+  lockDivider.style.display = 'block';
+}
+
+async function registerPasskey() {
+  if (!webauthnSupported()) throw new Error('WebAuthn nicht unterstützt in diesem Browser');
+  const userId = new Uint8Array(16); crypto.getRandomValues(userId);
+  const credential = await navigator.credentials.create({
+    publicKey: {
+      challenge: randomChallenge(),
+      rp: { id: location.hostname, name: 'Command · vegetarianhulk' },
+      user: { id: userId.buffer, name: 'sebi', displayName: 'Sebi' },
+      pubKeyCredParams: [
+        { type: 'public-key', alg: -7 },   // ES256 (most common)
+        { type: 'public-key', alg: -257 }, // RS256 (Windows Hello)
+      ],
+      authenticatorSelection: {
+        userVerification: 'required',
+        residentKey: 'preferred',
+      },
+      timeout: 60000,
+      attestation: 'none',
+    },
+  });
+  if (!credential) throw new Error('Keine Credential erstellt');
+  const rawIdB64 = b64urlEncode(credential.rawId);
+  const ua = navigator.userAgent;
+  const deviceHint = /iPhone|iPad/.test(ua) ? '📱 iPhone/iPad'
+    : /Android/.test(ua) ? '📱 Android'
+    : /Macintosh/.test(ua) ? '💻 Mac'
+    : /Windows/.test(ua) ? '🖥 Windows'
+    : '🔑 Gerät';
+  const list = getPasskeys();
+  list.push({ id: rawIdB64, device: deviceHint, addedAt: new Date().toISOString() });
+  savePasskeys(list);
+  return { device: deviceHint, total: list.length };
+}
+
+async function loginWithPasskey() {
+  if (!webauthnSupported()) throw new Error('WebAuthn nicht unterstützt');
+  const list = getPasskeys();
+  if (!list.length) throw new Error('Kein Passkey registriert');
+  const assertion = await navigator.credentials.get({
+    publicKey: {
+      challenge: randomChallenge(),
+      allowCredentials: list.map(p => ({ id: b64urlDecode(p.id), type: 'public-key' })),
+      userVerification: 'required',
+      timeout: 60000,
+    },
+  });
+  if (!assertion) throw new Error('Authentifizierung abgebrochen');
+  return true;
+}
 
 function showCockpit() {
   lockEl.style.display = 'none';
   cockpitEl.style.display = 'block';
   loadStatus();
+  renderPasskeyList();
 }
+
+passkeyBtn?.addEventListener('click', async () => {
+  pwErr.textContent = '';
+  passkeyBtn.disabled = true;
+  passkeyBtn.innerHTML = '<span style="font-size:18px">⏳</span> Warte ...';
+  try {
+    await loginWithPasskey();
+    sessionStorage.setItem(sessionKey, String(Date.now()));
+    showCockpit();
+  } catch (e) {
+    pwErr.textContent = e.message || 'Passkey-Login fehlgeschlagen';
+    passkeyBtn.disabled = false;
+    passkeyBtn.innerHTML = '<span style="font-size:18px">🔐</span> Mit Face-ID / Touch-ID';
+  }
+});
 
 // Auto-unlock if session was active in last 30 Min
 const sessionStart = parseInt(sessionStorage.getItem(sessionKey) || '0', 10);
@@ -371,6 +496,58 @@ document.getElementById('syncReelsBtn')?.addEventListener('click', async () => {
   if (r.ok && r.data.ok) setResult('syncReelsResult', '✅ ' + (r.data.count || 0) + ' reels');
   else setResult('syncReelsResult', '❌ ' + (r.data.error || 'fail').slice(0, 50), true);
 });
+
+document.getElementById('addPasskeyBtn')?.addEventListener('click', async () => {
+  setResult('addPasskeyResult', 'aktiviere ...');
+  if (!webauthnSupported()) {
+    setResult('addPasskeyResult', '❌ Browser unterstützt kein WebAuthn', true);
+    return;
+  }
+  try {
+    const r = await registerPasskey();
+    setResult('addPasskeyResult', '✅ ' + r.device + ' (' + r.total + ' total)');
+    renderPasskeyList();
+  } catch (e) {
+    setResult('addPasskeyResult', '❌ ' + (e.message || 'fail').slice(0, 60), true);
+  }
+});
+
+document.getElementById('listPasskeysBtn')?.addEventListener('click', () => {
+  const el = document.getElementById('passkeyList');
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+  renderPasskeyList();
+});
+
+function renderPasskeyList() {
+  const el = document.getElementById('passkeyList');
+  if (!el) return;
+  const list = getPasskeys();
+  if (!list.length) {
+    el.innerHTML = '<div style="color:var(--text3);text-align:center;padding:8px">Noch keine Passkeys. Click „Passkey hinzufügen" oben.</div>';
+    return;
+  }
+  el.innerHTML = list.map((p, i) => `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-bottom:1px solid var(--border)">
+      <div>
+        <div style="font-weight:700;color:var(--text)">${p.device}</div>
+        <div style="font-size:10px;color:var(--text3)">registriert: ${new Date(p.addedAt).toLocaleString('de-DE')}</div>
+      </div>
+      <button onclick="removePasskey(${i})" style="background:transparent;border:1px solid var(--border);color:var(--danger);padding:5px 10px;border-radius:6px;font-size:10px;font-weight:700;cursor:pointer">Entfernen</button>
+    </div>
+  `).join('');
+}
+
+window.removePasskey = function(idx) {
+  if (!confirm('Passkey wirklich entfernen? Dieses Gerät kann sich danach nicht mehr per Face-ID einloggen.')) return;
+  const list = getPasskeys();
+  list.splice(idx, 1);
+  savePasskeys(list);
+  renderPasskeyList();
+  if (!list.length) {
+    document.getElementById('passkeyBtn').style.display = 'none';
+    document.getElementById('lockDivider').style.display = 'none';
+  }
+};
 
 async function loadStatus() {
   const row = document.getElementById('statusRow');
