@@ -156,6 +156,29 @@
     <div class="pill"><span class="pill-dot"></span> Lädt ...</div>
   </div>
 
+  <!-- v3.2 Phase 2: Inline-Power-Stats -->
+  <div class="group">
+    <div class="group-title">Live · Cross-Brand-Stats</div>
+    <div class="cards">
+      <div class="card" id="statBrevoVegi" style="cursor:default">
+        <div class="card-title">📧 Brevo · hulk</div>
+        <div class="card-sub" id="statBrevoVegiCount">lädt …</div>
+      </div>
+      <div class="card" id="statBrevoSmash" style="cursor:default">
+        <div class="card-title">📧 Brevo · SMASH</div>
+        <div class="card-sub" id="statBrevoSmashCount">lädt …</div>
+      </div>
+      <div class="card" id="statPeakingTopReel" style="cursor:default">
+        <div class="card-title">🔥 PEAKING · Top-Reel</div>
+        <div class="card-sub" id="statPeakingTopReelCount">lädt …</div>
+      </div>
+      <div class="card" id="statPeakingFollowers" style="cursor:default">
+        <div class="card-title">⛰️ @peakingworld</div>
+        <div class="card-sub" id="statPeakingFollowersCount">lädt …</div>
+      </div>
+    </div>
+  </div>
+
   <!-- Quick-Capture (Inbox) -->
   <div class="group">
     <div class="group-title">Inbox · Quick-Capture</div>
@@ -743,6 +766,53 @@ async function loadStatus() {
   `;
 
   renderInboxList(pendingItems);
+  loadInlineStats();
+}
+
+// === Phase-2 Inline-Power-Stats ===
+async function loadInlineStats() {
+  // Brevo Subscriber counts
+  try {
+    const r = await workerCall('/stats/brevo');
+    if (r.ok && r.data.lists) {
+      const vegi = r.data.lists.find(l => l.brand === 'vegetarianhulk');
+      const smash = r.data.lists.find(l => l.brand === 'smash');
+      const ev = document.getElementById('statBrevoVegiCount');
+      const es = document.getElementById('statBrevoSmashCount');
+      if (ev) ev.innerHTML = vegi ? `<strong style="color:var(--vegi);font-size:18px">${vegi.count}</strong> · ${vegi.name}` : 'Liste nicht konfiguriert';
+      if (es) es.innerHTML = smash ? `<strong style="color:var(--vegi);font-size:18px">${smash.count}</strong> · ${smash.name}` : 'Liste nicht konfiguriert';
+    }
+  } catch(e){}
+
+  // PEAKING Top-Reel + Followers (via Worker /insta/me + /insta/reels-list)
+  try {
+    const me = await workerCall('/insta/me');
+    if (me.ok && me.data.pages) {
+      const peakingPage = me.data.pages.find(p => p.instagram_business_account?.username === 'peakingworld');
+      const igAccount = peakingPage?.instagram_business_account;
+      const ef = document.getElementById('statPeakingFollowersCount');
+      if (ef && igAccount) {
+        ef.innerHTML = `<strong style="color:var(--vegi);font-size:18px">${igAccount.followers_count || '–'}</strong> Follower · ${igAccount.media_count || 0} Posts`;
+      } else if (ef) {
+        ef.textContent = 'Account nicht gefunden';
+      }
+    }
+  } catch(e){}
+
+  try {
+    const r = await workerCall('/insta/reels-list?igUserId=17841417585584501&limit=5');
+    if (r.ok && r.data.reels && r.data.reels.length) {
+      const top = [...r.data.reels].sort((a, b) => (b.play_count || 0) - (a.play_count || 0))[0];
+      const el = document.getElementById('statPeakingTopReelCount');
+      if (el && top) {
+        const cap = (top.caption || '').slice(0, 38).replace(/\n/g, ' ');
+        el.innerHTML = `<strong style="color:var(--vegi);font-size:18px">${(top.play_count || 0).toLocaleString('de-DE')}</strong> Plays<br><span style="color:var(--text3);font-size:10px">${cap}${cap.length === 38 ? '…' : ''}</span>`;
+      }
+    } else {
+      const el = document.getElementById('statPeakingTopReelCount');
+      if (el) el.textContent = 'Keine Reels synced';
+    }
+  } catch(e){}
 }
 
 function renderInboxList(items) {
