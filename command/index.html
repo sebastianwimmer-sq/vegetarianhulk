@@ -79,9 +79,15 @@
 
   .footer { margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--border); font-size: 10px; color: var(--text3); text-align: center; letter-spacing: 1px; text-transform: uppercase; }
 
+  /* v3 Tab-Bar */
+  .tab-btn { background: transparent; border: 0; border-bottom: 2px solid transparent; color: var(--text2); padding: 10px 14px; font-size: 12px; font-weight: 700; letter-spacing: .3px; cursor: pointer; font-family: inherit; white-space: nowrap; transition: all .15s; flex-shrink: 0; }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--text); border-bottom-color: var(--vegi); }
+
   @media (max-width: 480px) {
     .head h1 { font-size: 22px; }
     .cards { grid-template-columns: 1fr; }
+    .tab-btn { padding: 9px 11px; font-size: 11px; }
   }
 </style>
 </head>
@@ -117,6 +123,30 @@
       <button class="icon-btn" id="lockBtn" title="Sperren">🔒</button>
     </div>
   </div>
+
+  <!-- Tab-Bar (V3) — Cockpit + Tool-iframes -->
+  <div class="tab-bar" id="tabBar" style="display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch">
+    <button class="tab-btn active" data-tab="cockpit" onclick="switchTab('cockpit')">⌘ Cockpit</button>
+    <button class="tab-btn" data-tab="smash-admin" data-src="https://smashtheapp.de/admin.html" onclick="switchTab('smash-admin')">💪 SMASH-Admin</button>
+    <button class="tab-btn" data-tab="peaking-dashboard" data-src="https://peaking.world/dashboard.html" onclick="switchTab('peaking-dashboard')">⛰️ PEAKING</button>
+    <button class="tab-btn" data-tab="peaking-tracker" data-src="https://peaking.world/modules/tracker.html" onclick="switchTab('peaking-tracker')">🔥 Tracker</button>
+    <button class="tab-btn" data-tab="peaking-brain" data-src="https://peaking.world/modules/brain.html" onclick="switchTab('peaking-brain')">🧠 Brain</button>
+    <button class="tab-btn" data-tab="hulk" data-src="https://vegetarianhulk.de/" onclick="switchTab('hulk')">🌱 hulk</button>
+    <button class="tab-btn" data-tab="brevo" data-src="https://app.brevo.com" onclick="switchTab('brevo')">📧 Brevo</button>
+  </div>
+
+  <!-- Tool iframe (hidden when on Cockpit-Tab) -->
+  <div id="toolFrame" style="display:none;width:100%;height:calc(100vh - 180px);min-height:600px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;position:relative">
+    <div id="toolLoader" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--surface);color:var(--text2);font-size:13px;pointer-events:none">Lade Tool ...</div>
+    <iframe id="toolIframe" src="" style="width:100%;height:100%;border:0;display:block" onload="document.getElementById('toolLoader').style.display='none'"></iframe>
+    <div style="position:absolute;top:8px;right:12px;display:flex;gap:6px;z-index:10">
+      <button id="toolOpenNew" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;backdrop-filter:blur(8px)" title="In neuem Tab öffnen">↗</button>
+      <button onclick="reloadIframe()" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;backdrop-filter:blur(8px)" title="Tool neu laden">↻</button>
+    </div>
+  </div>
+
+  <!-- Cockpit-Content (default tab) -->
+  <div id="cockpitContent">
 
   <div class="status-row" id="statusRow">
     <div class="pill"><span class="pill-dot"></span> Lädt ...</div>
@@ -301,7 +331,8 @@
     </div>
   </div>
 
-  <div class="footer">v2.0 · Cmd · Sebi-Solo · build 15.05.</div>
+  <div class="footer">v3.0 · Cmd · Sebi-Solo · build 15.05.</div>
+  </div><!-- /#cockpitContent -->
 </div>
 
 <script>
@@ -413,6 +444,11 @@ function showCockpit() {
   cockpitEl.style.display = 'block';
   loadStatus();
   renderPasskeyList();
+  // v3: restore last tab from session (or default to cockpit)
+  const lastTab = sessionStorage.getItem('cmd_last_tab') || 'cockpit';
+  if (lastTab !== 'cockpit' && typeof switchTab === 'function') {
+    setTimeout(() => switchTab(lastTab), 50);
+  }
 }
 
 passkeyBtn?.addEventListener('click', async () => {
@@ -475,6 +511,40 @@ document.getElementById('lockBtn')?.addEventListener('click', () => {
 });
 
 document.getElementById('refreshBtn')?.addEventListener('click', () => loadStatus());
+
+// === v3 Tab-Switching ===
+window.switchTab = function(tabName) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabName));
+  const cockpitContent = document.getElementById('cockpitContent');
+  const toolFrame = document.getElementById('toolFrame');
+  const toolIframe = document.getElementById('toolIframe');
+  const toolOpenNew = document.getElementById('toolOpenNew');
+  const toolLoader = document.getElementById('toolLoader');
+  if (tabName === 'cockpit') {
+    cockpitContent.style.display = 'block';
+    toolFrame.style.display = 'none';
+    toolIframe.src = 'about:blank';
+    return;
+  }
+  const btn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
+  const src = btn?.dataset.src;
+  if (!src) return;
+  cockpitContent.style.display = 'none';
+  toolFrame.style.display = 'block';
+  toolLoader.style.display = 'flex';
+  toolIframe.src = src;
+  toolOpenNew.onclick = () => window.open(src, '_blank', 'noopener');
+  // Save last tab so reload returns to same view
+  sessionStorage.setItem('cmd_last_tab', tabName);
+};
+
+window.reloadIframe = function() {
+  const f = document.getElementById('toolIframe');
+  if (f && f.src && f.src !== 'about:blank') {
+    document.getElementById('toolLoader').style.display = 'flex';
+    f.src = f.src; // re-trigger load
+  }
+};
 
 async function workerCall(path, method = 'GET') {
   const res = await fetch(WORKER + path, {
