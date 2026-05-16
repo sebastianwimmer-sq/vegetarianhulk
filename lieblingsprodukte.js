@@ -277,9 +277,9 @@ function LpNav() {
       </a>
       <ul className="lp-nav-links">
         <li><a href="/">Manifest</a></li>
-        <li><a href="/kooperationen.html">Kooperationen</a></li>
         <li><a href="/lieblingsprodukte.html" aria-current="page">Lieblingsprodukte</a></li>
-        <li><a href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">Insta</a></li>
+        <li><a href="/newsletter">Newsletter</a></li>
+        <li><a href="/kooperationen.html">Kooperationen</a></li>
       </ul>
       <a className="lp-nav-cta" href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">Insta&nbsp;→</a>
     </nav>
