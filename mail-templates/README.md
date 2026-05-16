@@ -7,9 +7,9 @@ Single-Source-of-Truth aller Brevo-Mails. **NICHT** Drag&Drop-Editor — HTML-Mo
 | File | Brevo-Slot | Status | Subject |
 |---|---|---|---|
 | `00-confirmation.html` | Double-Opt-In Template | ✅ ready | Eine Sache noch. |
-| `01-day1.html` | Drip Tag 1 (sofort nach Confirm) | 🟡 TODO | t.b.d. |
-| `02-day2.html` | Drip Tag 2 (+24h) | 🟡 TODO | t.b.d. |
-| `03-day3.html` | Drip Tag 3 (+48h) | 🟡 TODO | t.b.d. |
+| `01-day1.html` | Drip Tag 1 (sofort nach Confirm) | ✅ ready | Tag 1 — Architektur statt Willenskraft |
+| `02-day2.html` | Drip Tag 2 (+24h) | ✅ ready | Tag 2 — Was passiert wenn du fällst |
+| `03-day3.html` | Drip Tag 3 (+48h) | ✅ ready | Tag 3 — Ab heute ist es ein Ritual |
 
 ## Brevo-Workflow (1× setup, dann automatisch)
 
