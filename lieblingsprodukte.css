@@ -648,3 +648,147 @@
   font-size: 10px;
   align-items: flex-start;
 }
+
+/* ============================================================
+   AUTO-RESPONSIVE — kicks in below 768px without needing
+   the .lp--mobile artboard class. Mirrors the mobile artboard.
+   ============================================================ */
+@media (max-width: 768px) {
+  .lp-page {
+    --lp-pad: 20px;
+    --lp-cols: 1;
+  }
+
+  /* Liquid-glass nav — sticky top with frosted backdrop */
+  .lp-nav {
+    gap: 12px;
+    padding: 12px 20px;
+    background: rgba(247, 239, 222, 0.72);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid rgba(45, 106, 62, 0.10);
+    box-shadow: 0 4px 24px rgba(26, 20, 16, 0.04);
+  }
+  .lp-brand { font-size: 18px; flex-shrink: 0; }
+  .lp-nav-links {
+    gap: 6px;
+    flex: 1 1 auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 0;
+    margin: -4px 0;
+  }
+  .lp-nav-links::-webkit-scrollbar { display: none; }
+  .lp-nav-links li { flex-shrink: 0; }
+  .lp-nav-links a {
+    display: inline-block;
+    padding: 7px 13px;
+    font-size: 13px;
+    font-weight: 500;
+    background: rgba(45, 106, 62, 0.06);
+    color: var(--ink-2);
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: all var(--t-fast) var(--ease-apple);
+  }
+  .lp-nav-links a:active { transform: scale(0.97); }
+  .lp-nav-links a[aria-current="page"] {
+    background: var(--forest-1);
+    color: var(--vanilla);
+    box-shadow: 0 2px 8px rgba(45, 106, 62, 0.25);
+  }
+  .lp-nav-links a[aria-current="page"]::after { display: none; }
+  .lp-nav-cta {
+    padding: 7px 12px;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  /* Main padding */
+  .lp-main { padding: 0 20px; }
+
+  /* Hero compression */
+  .lp-hero { padding: 36px 0 36px; }
+  .lp-hero-meta { margin-bottom: 20px; flex-wrap: wrap; gap: 8px; }
+  .lp-hero-h1 { font-size: 44px; letter-spacing: -1.4px; line-height: 1.0; }
+  .lp-hero-lead { font-size: 16px; margin-top: 22px; }
+  .lp-hero-foot {
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 32px;
+    padding-top: 24px;
+  }
+  .lp-hero-stat { flex-direction: row; align-items: baseline; gap: 14px; }
+  .lp-hero-stat-num { font-size: 32px; }
+  .lp-hero-stat-label { margin-top: 0; }
+
+  /* Disclosure box — collapse 2-col to single, kill big asterisk */
+  .lp-disclosure {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 18px 20px;
+    margin: 24px 0 40px;
+  }
+  .lp-disclosure-mark { display: none; }
+  .lp-disclosure-text { font-size: 13px; line-height: 1.55; }
+
+  /* Category head — wrap nicely */
+  .lp-cat { padding: 44px 0; }
+  .lp-cat-head {
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: start;
+    margin-bottom: 28px;
+  }
+  .lp-cat-icon { font-size: 36px; }
+  .lp-cat-title { font-size: 30px; letter-spacing: -0.8px; }
+  .lp-cat-intro { font-size: 14px; }
+  .lp-cat-count {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 0;
+    margin-top: -8px;
+  }
+  .lp-cat-count-num { font-size: 36px; }
+
+  /* Product cards — single column stacked */
+  .lp-grid { gap: 16px; }
+  .lp-item-body { padding: 18px; gap: 12px; }
+  .lp-item-name { font-size: 17px; }
+  .lp-item-voice { font-size: 13px; }
+  .lp-item-foot { flex-direction: column; align-items: stretch; gap: 12px; }
+  .lp-btn { justify-content: center; padding: 12px 18px; }
+
+  /* Pull-quote */
+  .lp-pull { padding: 56px 0; }
+  .lp-pull-mark { font-size: 88px; }
+  .lp-pull-quote { font-size: 28px; letter-spacing: -0.6px; }
+  .lp-pull-attrib { gap: 10px; flex-wrap: wrap; justify-content: center; font-size: 10px; }
+  .lp-pull-line { width: 24px; }
+
+  /* Footer */
+  .lp-foot {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 48px 0 36px;
+  }
+  .lp-foot-mark { padding-left: 18px; }
+  .lp-foot-quote { font-size: 22px; }
+  .lp-foot-trust p { font-size: 13px; }
+  .lp-foot-bottom {
+    flex-direction: column;
+    gap: 8px;
+    font-size: 10px;
+    align-items: flex-start;
+  }
+}
+
+/* Tablet — 2-column product grid between 640 and 980 */
+@media (min-width: 640px) and (max-width: 980px) {
+  .lp-page { --lp-cols: 2; }
+}
