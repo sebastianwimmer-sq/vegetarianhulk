@@ -51,16 +51,25 @@
 }
 .nl-brand em { font-style: italic; font-weight: 400; color: var(--ink); }
 .nl-brand-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--forest-1); transform: translateY(-2px); }
-.nl-nav-links { list-style: none; margin: 0; padding: 0; display: flex; gap: 24px; flex: 1; }
+.nl-nav-links { list-style: none; margin: 0; padding: 0; display: flex; gap: 6px; flex: 1; justify-content: center; }
 .nl-nav-links a {
-  font-size: 14px; font-weight: 500; color: var(--ink-2);
-  text-decoration: none; transition: color var(--t-fast) var(--ease-apple);
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(45, 106, 62, 0.05);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-2);
+  text-decoration: none;
+  transition: all var(--t-fast) var(--ease-apple);
 }
-.nl-nav-links a:hover { color: var(--forest-1); }
-.nl-nav-links a[aria-current="page"] { color: var(--forest-1); font-weight: 700; position: relative; }
-.nl-nav-links a[aria-current="page"]::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: -8px;
-  height: 2px; background: var(--forest-1); border-radius: 1px;
+.nl-nav-links a:hover { background: rgba(45, 106, 62, 0.12); color: var(--forest-1); }
+.nl-nav-links a:active { transform: scale(0.97); }
+.nl-nav-links a[aria-current="page"] {
+  background: var(--forest-1);
+  color: var(--vanilla);
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(45, 106, 62, 0.25);
 }
 .nl-nav-cta {
   font-family: var(--font-body);
@@ -826,10 +835,54 @@
 @media (max-width: 768px) {
   .nl-page { --nl-pad: 20px; }
 
-  .nl-nav { gap: 12px; padding: 14px 20px; }
-  .nl-nav-links { display: none; }
-  .nl-brand { font-size: 18px; flex: 1; }
-  .nl-nav-cta { font-size: 11px; padding: 7px 12px; }
+  /* Mobile Glass-Tab-Bar — same pattern as /lieblingsprodukte */
+  .nl-nav {
+    gap: 12px;
+    padding: 12px 20px;
+    background: rgba(247, 239, 222, 0.72);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid rgba(45, 106, 62, 0.10);
+    box-shadow: 0 4px 24px rgba(26, 20, 16, 0.04);
+  }
+  .nl-brand { font-size: 18px; flex-shrink: 0; }
+  .nl-nav-links {
+    display: flex;
+    gap: 6px;
+    flex: 1 1 auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 0;
+    margin: -4px 0;
+  }
+  .nl-nav-links::-webkit-scrollbar { display: none; }
+  .nl-nav-links li { flex-shrink: 0; }
+  .nl-nav-links a {
+    display: inline-block;
+    padding: 7px 13px;
+    font-size: 13px;
+    font-weight: 500;
+    background: rgba(45, 106, 62, 0.06);
+    color: var(--ink-2);
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: all var(--t-fast) var(--ease-apple);
+  }
+  .nl-nav-links a:active { transform: scale(0.97); }
+  .nl-nav-links a[aria-current="page"] {
+    background: var(--forest-1);
+    color: var(--vanilla);
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(45, 106, 62, 0.25);
+  }
+  .nl-nav-links a[aria-current="page"]::after { display: none; }
+  .nl-nav-cta {
+    font-size: 11px;
+    padding: 7px 12px;
+    flex-shrink: 0;
+  }
 
   .nl-hero {
     grid-template-columns: 1fr;
@@ -898,4 +951,113 @@
   .nl-foot { padding: 48px 20px 32px; }
   .nl-foot-inner { grid-template-columns: 1fr 1fr; }
   .nl-foot-bottom { flex-direction: column; gap: 6px; margin-top: 40px; font-size: 11px; }
+}
+
+/* ============================================================
+   GLASS POLISH V2 — iOS-style depth on cards, subtle lift on
+   interactives. Layers on top of the editorial base; does
+   not change the editorial typography rhythm.
+   ============================================================ */
+
+/* Mail-cards — frosted look + bigger lift on hover */
+.nl-mail {
+  background: linear-gradient(180deg, rgba(255, 251, 240, 0.95), rgba(239, 229, 207, 0.85));
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  backdrop-filter: blur(8px) saturate(140%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 12px 28px -22px rgba(26, 20, 16, 0.15);
+  transition: transform 320ms var(--ease-apple),
+              box-shadow 320ms var(--ease-apple),
+              border-color 320ms var(--ease-apple);
+}
+.nl-mail:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 28px 60px -28px rgba(26, 20, 16, 0.32),
+    0 12px 24px -20px rgba(45, 106, 62, 0.18);
+  border-color: rgba(45, 106, 62, 0.30);
+}
+
+/* Mail-shot mini-inbox — Apple-Mail-style depth */
+.nl-mail-shot {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(247, 239, 222, 0.55));
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  backdrop-filter: blur(12px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 2px 8px -4px rgba(26, 20, 16, 0.08);
+}
+
+/* Trust-bar — single glassy container instead of flat */
+.nl-trust {
+  background: linear-gradient(180deg, rgba(255, 251, 240, 0.6), rgba(239, 229, 207, 0.4));
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  backdrop-filter: blur(12px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 10px 28px -22px rgba(26, 20, 16, 0.12);
+}
+
+/* Signup-form card — premium glass */
+.nl-form-card {
+  background: linear-gradient(180deg, rgba(255, 251, 240, 0.85), rgba(239, 229, 207, 0.75));
+  -webkit-backdrop-filter: blur(16px) saturate(170%);
+  backdrop-filter: blur(16px) saturate(170%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 32px 64px -32px rgba(45, 106, 62, 0.25),
+    0 20px 40px -28px rgba(26, 20, 16, 0.18);
+}
+.nl-form-submit {
+  background: linear-gradient(180deg, var(--forest-1) 0%, var(--forest-2) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.10),
+    0 12px 28px -10px rgba(45, 106, 62, 0.50),
+    0 6px 14px -6px rgba(45, 106, 62, 0.35);
+  transition: all 200ms var(--ease-apple);
+}
+.nl-form-submit:hover {
+  filter: brightness(1.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.10),
+    0 18px 36px -10px rgba(45, 106, 62, 0.60),
+    0 10px 20px -8px rgba(45, 106, 62, 0.45);
+}
+.nl-form-submit:active { transform: scale(0.985); }
+
+/* Anti-cards — frosted, with restraint */
+.nl-anti-card {
+  background: linear-gradient(180deg, rgba(255, 251, 240, 0.8), rgba(239, 229, 207, 0.6));
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  backdrop-filter: blur(10px) saturate(150%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 14px 32px -22px rgba(26, 20, 16, 0.16);
+  transition: transform 280ms var(--ease-apple),
+              box-shadow 280ms var(--ease-apple);
+}
+.nl-anti-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 24px 48px -24px rgba(26, 20, 16, 0.24);
+}
+.nl-anti-card--yes {
+  background: linear-gradient(180deg, rgba(45, 106, 62, 0.10), rgba(45, 106, 62, 0.04));
+  border-color: rgba(45, 106, 62, 0.28);
+}
+
+/* Pull-quote — subtle glass wash on top + bottom edges */
+.nl-pull {
+  background: linear-gradient(180deg, rgba(45, 106, 62, 0.025), transparent 30%, transparent 70%, rgba(45, 106, 62, 0.025));
+}
+
+/* prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .nl-mail, .nl-anti-card, .nl-form-submit { transition: none; }
+  .nl-mail:hover, .nl-anti-card:hover { transform: none; }
 }
