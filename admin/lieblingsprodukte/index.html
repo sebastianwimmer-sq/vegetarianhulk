@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#f7efde" />
+<title>Admin · Lieblingsprodukte · vegetarianhulk</title>
+<meta name="robots" content="noindex,nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ─── Sticky glass top-bar ─── -->
+<header class="topbar" id="topbar">
+  <div class="topbar__inner">
+    <a class="topbar__brand" href="/" aria-label="vegetarianhulk Startseite">
+      <span class="topbar__dot" aria-hidden="true"></span>
+      <span class="topbar__word">
+        <span class="topbar__veg">vegetarian</span><span class="topbar__hulk">hulk</span>
+      </span>
+    </a>
+    <span class="topbar__pill" title="Admin-Bereich">ADMIN</span>
+    <span class="topbar__path" aria-hidden="true">/admin/lieblingsprodukte</span>
+    <button class="topbar__logout" id="logoutBtn" type="button">Logout</button>
+  </div>
+</header>
+
+<main class="page">
+
+  <!-- ─── Page header ─── -->
+  <section class="page__head">
+    <span class="eyebrow">Issue · privat</span>
+    <h1 class="page__title">Lieblings<em>produkte</em></h1>
+    <p class="page__lead">
+      Was ich wirklich kaufe. Karten hier pflegen, Drag-Drop für Reihenfolge,
+      ein Tap auf eine Karte öffnet sie zum Bearbeiten.
+      <span class="muted">Alles wird lokal gespeichert — Auto-Save bei jeder Eingabe.</span>
+    </p>
+    <div class="page__meta">
+      <span class="chip"><span class="chip__num" id="countTotal">0</span> Produkte</span>
+      <span class="chip"><span class="chip__num" id="countDraft">0</span> Drafts</span>
+      <span class="chip chip--ok" id="saveStatus" data-state="idle">
+        <span class="chip__dot"></span>
+        <span class="chip__label">Auto-Save bereit</span>
+      </span>
+    </div>
+  </section>
+
+  <!-- ─── Category filter ─── -->
+  <nav class="catbar" aria-label="Kategorie filtern">
+    <button class="catbar__btn is-active" data-cat="all"         type="button">Alle</button>
+    <button class="catbar__btn"           data-cat="fruehstueck" type="button">Frühstück</button>
+    <button class="catbar__btn"           data-cat="gym"         type="button">Gym</button>
+    <button class="catbar__btn"           data-cat="faith"       type="button">Faith</button>
+    <button class="catbar__btn"           data-cat="daily"       type="button">Daily</button>
+  </nav>
+
+  <!-- ─── Product list ─── -->
+  <section class="list" id="list" aria-live="polite"></section>
+
+  <!-- ─── Empty state (shown when list is empty) ─── -->
+  <section class="empty" id="empty" hidden>
+    <div class="empty__inner">
+      <div class="empty__icon" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="56" height="56" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="6" y="10" width="52" height="44" rx="6" />
+          <path d="M6 42l12-12 10 10 8-8 22 22" />
+          <circle cx="22" cy="22" r="4" />
+        </svg>
+      </div>
+      <h2 class="empty__title">Erstes Lieblings­produkt eintragen <span class="arrow">→</span></h2>
+      <p class="empty__lead">Foto reinziehen oder den grünen Button unten rechts drücken. Voice, Kategorie, Rating — fertig.</p>
+      <button class="btn btn--primary btn--lg" id="emptyAddBtn" type="button">+ Neues Produkt</button>
+    </div>
+  </section>
+</main>
+
+<!-- ─── Floating CTA ─── -->
+<button class="fab" id="fab" type="button" aria-label="Neues Produkt hinzufügen">
+  <span class="fab__icon" aria-hidden="true">+</span>
+  <span class="fab__label">Neues Produkt</span>
+</button>
+
+<!-- ─── Editor sheet (slides up from bottom on mobile, modal on desktop) ─── -->
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="sheet__scrim" data-close></div>
+  <div class="sheet__panel" role="document">
+    <header class="sheet__head">
+      <div class="sheet__grab" aria-hidden="true"></div>
+      <h2 class="sheet__title" id="sheetTitle">Neues Produkt</h2>
+      <button class="sheet__close" type="button" data-close aria-label="Schließen">×</button>
+    </header>
+
+    <form class="form" id="form" novalidate>
+      <input type="hidden" name="id" />
+
+      <!-- Photo drop zone -->
+      <div class="field field--photo">
+        <label class="field__label">Foto</label>
+        <div class="dropzone" id="dropzone" tabindex="0" role="button"
+             aria-label="Foto-Upload — klicken oder reinziehen">
+          <input type="file" id="fileInput" accept="image/*" hidden />
+          <!-- Preview -->
+          <div class="dropzone__preview" hidden>
+            <img id="previewImg" alt="Vorschau" />
+            <div class="dropzone__overlay">
+              <button class="btn btn--ghost btn--sm" type="button" id="replaceBtn">Ersetzen</button>
+              <button class="btn btn--ghost btn--sm btn--danger" type="button" id="removeImgBtn">Entfernen</button>
+            </div>
+          </div>
+          <!-- Empty -->
+          <div class="dropzone__empty">
+            <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="6" y="8" width="36" height="32" rx="4" />
+              <path d="M6 32l8-8 6 6 6-6 16 16" />
+              <circle cx="18" cy="18" r="3" />
+            </svg>
+            <p class="dropzone__hint"><strong>Foto reinziehen</strong> oder <u>auswählen</u></p>
+            <p class="dropzone__sub">Auto-Resize auf max. 1200px · WebP</p>
+          </div>
+          <!-- Crop toggle -->
+          <div class="dropzone__aspect" id="aspectToggle" hidden>
+            <button type="button" class="aspect-btn is-active" data-aspect="16:9">16:9</button>
+            <button type="button" class="aspect-btn"           data-aspect="1:1">1:1</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Name -->
+      <div class="field">
+        <label class="field__label" for="f-name">Name</label>
+        <input class="input input--display" id="f-name" name="name" type="text"
+               placeholder="z.B. Kölln Blütenzarte Haferflocken" autocomplete="off" required />
+      </div>
+
+      <!-- Kategorie -->
+      <div class="field">
+        <label class="field__label">Kategorie</label>
+        <div class="pill-select" role="radiogroup" aria-label="Kategorie">
+          <button type="button" class="pill is-active" role="radio" aria-checked="true"  data-value="fruehstueck">Frühstück</button>
+          <button type="button" class="pill"          role="radio" aria-checked="false" data-value="gym">Gym</button>
+          <button type="button" class="pill"          role="radio" aria-checked="false" data-value="faith">Faith</button>
+          <button type="button" class="pill"          role="radio" aria-checked="false" data-value="daily">Daily</button>
+        </div>
+        <input type="hidden" name="category" value="fruehstueck" />
+      </div>
+
+      <!-- Voice text -->
+      <div class="field">
+        <label class="field__label" for="f-voice">Voice-Text</label>
+        <textarea class="input textarea" id="f-voice" name="voice" rows="3"
+                  placeholder="Direkt, ohne Floskeln. Was nutzt du daran, warum kaufst du genau das? Nicht „ich empfehle…“ — eher „seit 3 Jahren jeden Morgen, kein Tag ohne.“"></textarea>
+        <div class="field__hint">
+          <span id="voiceCount" class="muted">0</span>
+          <span class="muted"> / 280 — kurz halten, Sebi-Ton</span>
+        </div>
+      </div>
+
+      <!-- ASIN -->
+      <div class="field field--row">
+        <div class="field__grow">
+          <label class="field__label" for="f-asin">ASIN <span class="muted">(optional)</span></label>
+          <input class="input input--mono" id="f-asin" name="asin" type="text"
+                 maxlength="10" pattern="[A-Z0-9]{10}" placeholder="B07XYZ1234"
+                 autocomplete="off" inputmode="text" />
+        </div>
+        <!-- Rating -->
+        <div class="field__shrink">
+          <label class="field__label">Rating <span class="muted">(optional)</span></label>
+          <div class="stars" id="stars" role="radiogroup" aria-label="Rating in Sternen">
+            <button type="button" class="star" data-v="1" aria-label="1 Stern">★</button>
+            <button type="button" class="star" data-v="2" aria-label="2 Sterne">★</button>
+            <button type="button" class="star" data-v="3" aria-label="3 Sterne">★</button>
+            <button type="button" class="star" data-v="4" aria-label="4 Sterne">★</button>
+            <button type="button" class="star" data-v="5" aria-label="5 Sterne">★</button>
+            <button type="button" class="star-clear" id="starClear" title="Rating löschen">Zurücksetzen</button>
+          </div>
+          <input type="hidden" name="rating" value="" />
+        </div>
+      </div>
+
+      <!-- Footer actions -->
+      <footer class="form__foot">
+        <button class="btn btn--ghost btn--danger" type="button" id="deleteBtn">Löschen</button>
+        <button class="btn btn--ghost"             type="button" id="previewBtn">Vorschau</button>
+        <button class="btn btn--primary"           type="submit"  id="saveBtn">Speichern</button>
+      </footer>
+    </form>
+  </div>
+</div>
+
+<!-- ─── Toast ─── -->
+<div class="toast" id="toast" hidden role="status" aria-live="polite"></div>
+
+<!-- ─── Card template ─── -->
+<template id="cardTpl">
+  <article class="card" draggable="true" tabindex="0">
+    <div class="card__photo">
+      <img alt="" />
+      <div class="card__photo-empty">
+        <svg viewBox="0 0 48 48" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="6" y="8" width="36" height="32" rx="4" />
+          <path d="M6 32l8-8 6 6 6-6 16 16" />
+          <circle cx="18" cy="18" r="3" />
+        </svg>
+      </div>
+      <span class="card__cat"></span>
+    </div>
+    <div class="card__body">
+      <div class="card__top">
+        <h3 class="card__name"></h3>
+        <span class="card__rating" aria-label="Rating"></span>
+      </div>
+      <p class="card__voice"></p>
+      <div class="card__foot">
+        <span class="card__asin"></span>
+        <button class="card__handle" type="button" aria-label="Zum Verschieben halten" title="Drag to reorder">
+          <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <circle cx="7" cy="5"  r="1.4" /><circle cx="13" cy="5"  r="1.4" />
+            <circle cx="7" cy="10" r="1.4" /><circle cx="13" cy="10" r="1.4" />
+            <circle cx="7" cy="15" r="1.4" /><circle cx="13" cy="15" r="1.4" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </article>
+</template>
+
+<script src="script.js"></script>
+</body>
+</html>
