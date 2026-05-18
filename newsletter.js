@@ -56,17 +56,33 @@ const MAILS = [
 ];
 
 function NlNav() {
+  const [menuOpen, setMenuOpen] = React.useState(false);
+  const navRef = React.useRef(null);
+  const btnRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (!menuOpen) return;
+    const close = (e) => {
+      if (!navRef.current?.contains(e.target) && !btnRef.current?.contains(e.target)) setMenuOpen(false);
+    };
+    document.addEventListener('click', close);
+    return () => document.removeEventListener('click', close);
+  }, [menuOpen]);
+
   return (
     <nav className="nl-nav">
       <a className="nl-brand" href="/">
         <span className="nl-brand-dot" />
         <span>vegetarian<em>hulk</em></span>
       </a>
-      <ul className="nl-nav-links">
-        <li><a href="/#manifest">Manifest</a></li>
-        <li><a href="/lieblingsprodukte.html">Lieblingsprodukte</a></li>
-        <li><a href="/kooperationen.html">Für Brands</a></li>
-        <li><a href="/newsletter" aria-current="page">Newsletter</a></li>
+      <button ref={btnRef} className="nl-nav-burger" aria-label={menuOpen ? 'Menü schließen' : 'Menü öffnen'} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d={menuOpen ? "M5 5l10 10M5 15l10-10" : "M3 5h14M3 10h14M3 15h14"} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
+      </button>
+      <ul ref={navRef} className={"nl-nav-links" + (menuOpen ? " nl-nav-links--open" : "")}>
+        <li><a href="/#manifest" onClick={() => setMenuOpen(false)}>Manifest</a></li>
+        <li><a href="/lieblingsprodukte.html" onClick={() => setMenuOpen(false)}>Lieblingsprodukte</a></li>
+        <li><a href="/kooperationen.html" onClick={() => setMenuOpen(false)}>Für Brands</a></li>
+        <li><a href="/newsletter" aria-current="page" onClick={() => setMenuOpen(false)}>Newsletter</a></li>
       </ul>
       <a className="nl-nav-cta" href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">Insta&nbsp;→</a>
     </nav>
@@ -106,7 +122,7 @@ function TrustBar() {
   return (
     <section className="nl-trust" aria-label="Trust indicators">
       <div className="nl-trust-cell">
-        <div className="nl-trust-num">3.715<em>.</em></div>
+        <div className="nl-trust-num">3.715</div>
         <div className="nl-trust-label">Tage plant-based · seit 14.03.2016</div>
       </div>
       <div className="nl-trust-cell">
@@ -389,6 +405,7 @@ function NlFooter() {
           </a>
           <p className="nl-foot-blurb">Sebi · 25 · Bayern · Christ · Plant-Based seit 2016. Macher, nicht Coach.</p>
           <div className="nl-foot-tag">„Disziplin ist kein Talent."</div>
+          <div className="nl-foot-attrib">— Mein Prinzip · seit Tag 1</div>
         </div>
         <div>
           <h4>Site</h4>

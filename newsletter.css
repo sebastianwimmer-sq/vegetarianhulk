@@ -80,6 +80,19 @@
   transition: all var(--t-fast) var(--ease-apple);
 }
 .nl-nav-cta:hover { border-color: var(--forest-1); color: var(--forest-1); }
+/* Hamburger — hidden on desktop */
+.nl-nav-burger {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--forest-1);
+  padding: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+.nl-nav-burger:hover { background: rgba(45, 106, 62, 0.08); }
 
 .nl-main { padding: 0 var(--nl-pad) 0; }
 
@@ -200,8 +213,8 @@
   letter-spacing: -1px;
   line-height: 1;
   color: var(--forest-1);
+  font-variant-numeric: tabular-nums;
 }
-.nl-trust-num em { font-style: italic; font-weight: 400; color: var(--forest-3); }
 .nl-trust-label {
   font-family: var(--font-body);
   font-size: 12px;
@@ -787,6 +800,15 @@
   font-size: 18px;
   color: var(--forest-1);
 }
+.nl-foot-attrib {
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
 .nl-foot h4 {
   font-size: 11px;
   font-weight: 700;
@@ -846,27 +868,33 @@
     box-shadow: 0 4px 24px rgba(26, 20, 16, 0.04);
   }
   .nl-brand { font-size: 18px; flex-shrink: 0; }
+  .nl-nav-burger { display: flex; align-items: center; justify-content: center; margin-left: auto; }
   .nl-nav-links {
-    display: flex;
-    gap: 6px;
-    flex: 1 1 auto;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    padding: 4px 0;
-    margin: -4px 0;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 20px;
+    background: rgba(247, 239, 222, 0.92);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid rgba(45, 106, 62, 0.08);
+    box-shadow: 0 8px 32px rgba(26, 20, 16, 0.08);
+    animation: nl-nav-slide 0.2s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .nl-nav-links::-webkit-scrollbar { display: none; }
+  .nl-nav-links--open { display: flex; }
   .nl-nav-links li { flex-shrink: 0; }
   .nl-nav-links a {
-    display: inline-block;
-    padding: 7px 13px;
-    font-size: 13px;
+    display: block;
+    padding: 10px 14px;
+    font-size: 14px;
     font-weight: 500;
     background: rgba(45, 106, 62, 0.06);
     color: var(--ink-2);
-    border-radius: 999px;
+    border-radius: 12px;
     white-space: nowrap;
     transition: all var(--t-fast) var(--ease-apple);
   }
@@ -878,10 +906,10 @@
     box-shadow: 0 2px 8px rgba(45, 106, 62, 0.25);
   }
   .nl-nav-links a[aria-current="page"]::after { display: none; }
-  .nl-nav-cta {
-    font-size: 11px;
-    padding: 7px 12px;
-    flex-shrink: 0;
+  .nl-nav-cta { display: none; }
+  @keyframes nl-nav-slide {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   .nl-hero {

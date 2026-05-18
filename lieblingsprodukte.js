@@ -269,17 +269,33 @@ function PullQuote() {
 }
 
 function LpNav() {
+  const [menuOpen, setMenuOpen] = React.useState(false);
+  const navRef = React.useRef(null);
+  const btnRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (!menuOpen) return;
+    const close = (e) => {
+      if (!navRef.current?.contains(e.target) && !btnRef.current?.contains(e.target)) setMenuOpen(false);
+    };
+    document.addEventListener('click', close);
+    return () => document.removeEventListener('click', close);
+  }, [menuOpen]);
+
   return (
     <nav className="lp-nav">
       <a className="lp-brand" href="/">
         <span className="lp-brand-dot" />
         <span>vegetarian<em>hulk</em></span>
       </a>
-      <ul className="lp-nav-links">
-        <li><a href="/">Manifest</a></li>
-        <li><a href="/lieblingsprodukte.html" aria-current="page">Lieblingsprodukte</a></li>
-        <li><a href="/newsletter">Newsletter</a></li>
-        <li><a href="/kooperationen.html">Kooperationen</a></li>
+      <button ref={btnRef} className="lp-nav-burger" aria-label={menuOpen ? 'Menü schließen' : 'Menü öffnen'} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d={menuOpen ? "M5 5l10 10M5 15l10-10" : "M3 5h14M3 10h14M3 15h14"} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
+      </button>
+      <ul ref={navRef} className={"lp-nav-links" + (menuOpen ? " lp-nav-links--open" : "")}>
+        <li><a href="/" onClick={() => setMenuOpen(false)}>Manifest</a></li>
+        <li><a href="/lieblingsprodukte.html" aria-current="page" onClick={() => setMenuOpen(false)}>Lieblingsprodukte</a></li>
+        <li><a href="/newsletter" onClick={() => setMenuOpen(false)}>Newsletter</a></li>
+        <li><a href="/kooperationen.html" onClick={() => setMenuOpen(false)}>Kooperationen</a></li>
       </ul>
       <a className="lp-nav-cta" href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">Insta&nbsp;→</a>
     </nav>
@@ -336,6 +352,7 @@ function LpFooter() {
     <footer className="lp-foot">
       <div className="lp-foot-mark">
         <span className="lp-foot-quote">„Disziplin ist kein Talent.<br/><em>Sie ist ein Ritual.</em>"</span>
+        <div className="lp-foot-attrib">— Mein Prinzip · seit Tag 1</div>
       </div>
       <div className="lp-foot-trust">
         <div className="lp-eyebrow">— Trust-Note —</div>
