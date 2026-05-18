@@ -25,6 +25,9 @@
   <!-- Topbar -->
   <header class="topbar">
     <a href="/" class="brand" style="text-decoration:none;color:inherit">vegetarian<span class="accent">hulk</span></a>
+    <button class="topbar-burger" aria-label="Menü öffnen" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
     <nav class="topbar-nav" aria-label="Hauptnavigation">
       <a href="lieblingsprodukte.html" class="topbar-link">Lieblingsprodukte</a>
       <a href="/newsletter" class="topbar-link">Newsletter</a>
@@ -109,7 +112,7 @@
     </p>
 
     <form class="lead-magnet-form" id="leadform" onsubmit="return submitLead(event)">
-      <input type="text" id="lead-firstname" placeholder="Dein Vorname (optional)" autocomplete="given-name" maxlength="40" style="margin-bottom:8px">
+      <input type="text" id="lead-firstname" placeholder="Dein Vorname (optional)" autocomplete="given-name" maxlength="40">
       <input type="email" id="lead-email" placeholder="deine@email.de" required autocomplete="email">
       <button type="submit">Schick mir den Reset →</button>
     </form>
@@ -266,5 +269,29 @@ async function submitLead(e) {
 }
 </script>
 <script src="update-check.js?v=v28"></script>
+<script>
+(function(){
+  var b=document.querySelector('.topbar-burger'),n=document.querySelector('.topbar-nav');
+  if(!b||!n)return;
+  b.addEventListener('click',function(){
+    var open=n.classList.toggle('topbar-nav--open');
+    b.setAttribute('aria-expanded',open);
+    b.setAttribute('aria-label',open?'Menü schließen':'Menü öffnen');
+  });
+  document.addEventListener('click',function(e){
+    if(!b.contains(e.target)&&!n.contains(e.target)){
+      n.classList.remove('topbar-nav--open');
+      b.setAttribute('aria-expanded','false');
+      b.setAttribute('aria-label','Menü öffnen');
+    }
+  });
+  n.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click',function(){
+      n.classList.remove('topbar-nav--open');
+      b.setAttribute('aria-expanded','false');
+    });
+  });
+})();
+</script>
 </body>
 </html>
