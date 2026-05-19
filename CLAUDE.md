@@ -26,12 +26,25 @@ Sebastian arbeitet mit 3 Claude-Instanzen für Design-Tasks:
 - **Chat-Claude** (mobile): Strukturiert Briefs + koordiniert
 - **Claude Code** (ich): Reviewed Design-Output + implementiert
 
-### Standard-Flow für neue Design-Tasks
+### Standard-Flow für Design-Tasks (4 Phasen)
 
-1. **Pre-Design-Check** (Sebastian -> Code): Code prüft ob Component existiert, welche Constraints
-2. **Brief-Refinement** (Sebastian -> Chat-Claude): Chat-Claude formuliert sauberen Design-Brief
-3. **Design-Phase** (Sebastian -> Claude Design): Briefing absetzen, Mockups/Specs zurück
-4. **Implementation** (Sebastian -> Code): Code reviewed + implementiert + Pre-Live-Test
+**Phase 1 — PLAN:**
+1. Pre-Design-Check (Sebastian -> Code): Code prüft ob Component existiert, welche Constraints
+2. Brief-Refinement (Sebastian -> Chat-Claude): Chat-Claude formuliert sauberen Design-Brief
+
+**Phase 2 — DESIGN:**
+3. Sebastian -> Claude Design: Brief absetzen
+4. Claude Design -> ZIP in ~/Downloads
+
+**Phase 3 — BRIDGE:**
+5. Sebastian -> Code: "ZIP [filename] fuer [component] — Pre-Review bitte"
+6. Code: Pre-Review-Report (siehe Format unten)
+7. Sebastian: "Go" oder Anpassungs-Request
+
+**Phase 4 — IMPLEMENTATION + ARCHIVE:**
+8. Code: feature-Branch, Implementation, Tests
+9. Code: ZIP archivieren + design-history.md updaten + Brain-Note
+10. Sebastian: Review + Merge auf main
 
 ### Wann Pre-Design-Check Pflicht ist
 
@@ -59,6 +72,51 @@ Ich antworte mit:
 3. Welche States müssen mit-designed werden?
 4. Mobile-Breakpoints / Container-Sizes?
 5. Ähnliche Patterns für Konsistenz?
+
+### Pre-Review-Report-Format
+
+Wenn Sebastian sagt "ZIP XY fuer Component Z liegt in Downloads":
+
+```
+PRE-REVIEW: [Component-Name]
+File: [filename]
+Variants found: [1 / 2 / 3]
+
+WAS GUT IST:
+- [Punkt mit Begruendung]
+
+WAS PROBLEMATISCH IST:
+- [Punkt: z.B. "Nutzt Tailwind, wir haben Vanilla CSS"]
+
+PASSENDSTE VARIANTE: [A / B / C oder Combine]
+
+EMPFOHLENE ANPASSUNGEN:
+1. [Anpassung mit Tech-Grund]
+
+INTEGRATION-PLAN:
+1. Target-File(s): [path/to/file]
+2. Geschaetzter Aufwand: [Zeit]
+3. Bestehende Pattern-Konsistenz: [check]
+
+-> Soll ich umsetzen wie beschrieben, oder Anpassungen?
+```
+
+### Archive-Workflow (nach Implementation)
+
+```bash
+# ZIP aus Downloads holen
+mv ~/Downloads/[filename].zip \
+   design-archives/$(date +%Y-%m-%d)-[component]-claude-design.zip
+
+# design-history.md updaten (neue Zeile)
+# Brain-Note mit Tag design:archive + project:vh anlegen
+# Commit + Push
+```
+
+**Was NICHT mehr passieren soll:**
+- ZIPs am Session-Ende einfach loeschen
+- "War das Live oder Prototyp?" Verwirrung
+- Doppel-Design weil vergessen wurde was schon integriert wurde
 
 ### Brain als Single-Source-of-Truth
 

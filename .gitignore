@@ -1,0 +1,6 @@
+.DS_Store
+*.log
+
+# Design-Archive (ZIPs lokal, nicht im Repo)
+design-archives/*
+!design-archives/.gitkeep
