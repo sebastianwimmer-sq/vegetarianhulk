@@ -760,34 +760,224 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* Brain placeholder */
-  .brain-placeholder {
+  /* Brain Tab */
+  .brain { max-width: 1240px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  .brain__header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .brain__search {
+    flex: 1;
+    min-width: 200px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color .2s ease;
+  }
+  .brain__search:focus { border-color: var(--vegi); }
+  .brain__search::placeholder { color: var(--text-4); }
+
+  .brain__sync-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--text-3);
+    font-family: var(--font-mono);
+    white-space: nowrap;
+  }
+  .brain__sync-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 5px var(--success);
+  }
+  .brain__sync-dot--stale { background: var(--warn); box-shadow: 0 0 5px var(--warn); }
+
+  /* Tag filter bar */
+  .brain__filters {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .brain__filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-2);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+  .brain__filter:hover { color: var(--text); background: var(--surface-2); }
+  .brain__filter.is-active {
+    background: var(--vegi-2);
+    border-color: rgba(45, 106, 62, 0.3);
+    color: var(--vegi);
+  }
+  .brain__filter.is-active[data-filter="smash"] { background: var(--smash-2); border-color: rgba(0, 255, 106, 0.3); color: var(--smash); }
+  .brain__filter.is-active[data-filter="peaking"] { background: var(--peaking-2); border-color: rgba(255, 107, 53, 0.3); color: var(--peaking); }
+  .brain__filter.is-active[data-filter="design"] { background: rgba(168, 130, 255, 0.12); border-color: rgba(168, 130, 255, 0.3); color: #a882ff; }
+
+  /* Note count badge */
+  .brain__count {
+    font-size: 11px;
+    color: var(--text-3);
+    font-family: var(--font-mono);
+    margin-bottom: 16px;
+  }
+
+  /* Note cards */
+  .brain__notes { display: flex; flex-direction: column; gap: 8px; }
+
+  .brain-note {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    transition: border-color .15s ease;
+    cursor: pointer;
+  }
+  .brain-note:hover { border-color: var(--border-2); }
+
+  .brain-note__head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+  .brain-note__category {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    background: var(--surface-2);
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+  .brain-note__date {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-4);
+    margin-left: auto;
+  }
+
+  .brain-note__title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .brain-note__preview {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .brain-note__tags {
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  .brain-note__tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-3);
+    background: var(--surface-2);
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+  .brain-note__tag--project { color: var(--vegi); }
+  .brain-note__tag--design { color: #a882ff; }
+
+  /* Expanded note content */
+  .brain-note__content {
+    display: none;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.65;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  .brain-note.is-expanded .brain-note__content { display: block; }
+  .brain-note.is-expanded .brain-note__preview { display: none; }
+
+  /* Design-imports section */
+  .brain__section-head {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 32px 0 16px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .brain__section-head b { font-weight: 700; }
+
+  /* Brain empty state */
+  .brain__empty {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 50vh;
-    gap: 12px;
+    min-height: 30vh;
+    gap: 10px;
     text-align: center;
     padding: 40px;
   }
-  .brain-placeholder__icon { font-size: 48px; opacity: .8; }
-  .brain-placeholder__title {
+  .brain__empty-icon { font-size: 40px; opacity: .6; }
+  .brain__empty-title {
     font-family: var(--font-display);
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 600;
-    letter-spacing: -0.02em;
   }
-  .brain-placeholder__sub {
+  .brain__empty-sub {
     color: var(--text-3);
-    font-size: 14px;
-    max-width: 360px;
+    font-size: 13px;
+    max-width: 340px;
     line-height: 1.5;
+  }
+
+  /* Brain loading state */
+  .brain__loading {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-3);
+    font-size: 13px;
   }
 
   /* 17. Responsive */
   @media (max-width: 880px) {
     .cockpit { padding: 22px 16px 56px; }
+    .brain { padding: 18px 14px 56px; }
     .briefing { padding-bottom: 24px; margin-bottom: 16px; }
     .briefing__masthead { margin-bottom: 16px; }
     .briefing__title { font-size: clamp(38px, 11vw, 56px); }
@@ -800,6 +990,8 @@
     .passkey-grid { grid-template-columns: 1fr; }
     .kpi { font-size: 30px; }
     .tab { padding: 7px 10px; font-size: 12px; }
+    .brain__header { gap: 8px; }
+    .brain__search { min-width: 160px; }
   }
 
   @media (max-width: 480px) {
@@ -842,9 +1034,9 @@
     <button class="tab is-active" data-tab="cockpit" onclick="switchTab('cockpit')">⌘ Cockpit</button>
     <button class="tab" data-tab="smash-admin" data-src="https://smashtheapp.de/admin.html" onclick="switchTab('smash-admin')">💪 SMASH</button>
     <button class="tab" data-tab="peaking-dashboard" data-src="https://peaking.world/dashboard.html" onclick="switchTab('peaking-dashboard')">⛰️ PEAKING</button>
-    <button class="tab" data-tab="brain" data-placeholder="true" onclick="switchTab('brain')">🧠 Brain</button>
+    <button class="tab" data-tab="brain" onclick="switchTab('brain')">🧠 Brain</button>
     <div class="tab-bar__spacer"></div>
-    <div class="tab-bar__user">SEB · v4.0</div>
+    <div class="tab-bar__user">SEB · v4.1</div>
   </nav>
 
   <!-- Tool iframe (for SMASH/PEAKING tabs) -->
@@ -857,12 +1049,51 @@
     </div>
   </div>
 
-  <!-- Brain Placeholder (Phase B) -->
-  <div id="brainPlaceholder" style="display:none" class="cockpit">
-    <div class="brain-placeholder">
-      <div class="brain-placeholder__icon">🧠</div>
-      <div class="brain-placeholder__title">Brain · Phase B</div>
-      <div class="brain-placeholder__sub">Command's eigenes Brain kommt in Phase B. Bis dahin: Second Brain via MCP oder PEAKING Brain nutzen.</div>
+  <!-- Brain Tab -->
+  <div id="brainTab" style="display:none">
+    <div class="brain">
+
+      <!-- Header: Search + Sync-Info -->
+      <div class="brain__header">
+        <input type="search" id="brainSearch" class="brain__search" placeholder="Notes durchsuchen ..." oninput="filterBrainNotes()">
+        <div class="brain__sync-info">
+          <span class="brain__sync-dot" id="brainSyncDot"></span>
+          <span id="brainSyncTime">Sync: --:--</span>
+        </div>
+      </div>
+
+      <!-- Tag-Filter -->
+      <div class="brain__filters" id="brainFilters">
+        <button class="brain__filter is-active" data-filter="all" onclick="setBrainFilter('all',this)">Alle</button>
+        <button class="brain__filter" data-filter="smash" onclick="setBrainFilter('project:smash',this)">💪 SMASH</button>
+        <button class="brain__filter" data-filter="vh" onclick="setBrainFilter('project:vh',this)">🌱 VH</button>
+        <button class="brain__filter" data-filter="peaking" onclick="setBrainFilter('project:peaking',this)">⛰️ PEAKING</button>
+        <button class="brain__filter" data-filter="design" onclick="setBrainFilter('design:',this)">🎨 Design</button>
+        <button class="brain__filter" data-filter="cross" onclick="setBrainFilter('cross-project',this)">🔀 Cross</button>
+      </div>
+
+      <!-- Note count -->
+      <div class="brain__count" id="brainCount"></div>
+
+      <!-- Design-Imports Section (filtered view of design:archive notes) -->
+      <div id="brainDesignImports" style="display:none">
+        <div class="brain__section-head">Design <b>Imports</b></div>
+        <div class="brain__notes" id="brainDesignList"></div>
+      </div>
+
+      <!-- Note list -->
+      <div class="brain__notes" id="brainNotesList"></div>
+
+      <!-- Empty state -->
+      <div class="brain__empty" id="brainEmpty" style="display:none">
+        <div class="brain__empty-icon">🧠</div>
+        <div class="brain__empty-title">Keine Notes</div>
+        <div class="brain__empty-sub" id="brainEmptyMsg">Brain-Sync noch nicht gelaufen. Starte den Cron-Job oder sync manuell.</div>
+      </div>
+
+      <!-- Loading state -->
+      <div class="brain__loading" id="brainLoading" style="display:none">Lade Brain-Notes ...</div>
+
     </div>
   </div>
 
@@ -1059,7 +1290,7 @@
       <!-- Footer -->
       <footer class="footer">
         <div class="footer__l">
-          <span>v4.0 · 20 May 2026</span>
+          <span>v4.1 · 19 May 2026</span>
           <span>Command · Sebi-Solo</span>
         </div>
         <div class="footer__r">
@@ -1342,12 +1573,12 @@ window.switchTab = function(tabName) {
   const toolIframe = document.getElementById('toolIframe');
   const toolOpenNew = document.getElementById('toolOpenNew');
   const toolLoader = document.getElementById('toolLoader');
-  const brainPlaceholder = document.getElementById('brainPlaceholder');
+  const brainTab = document.getElementById('brainTab');
 
   // Hide all content areas first
   cockpitContent.style.display = 'none';
   toolFrame.style.display = 'none';
-  brainPlaceholder.style.display = 'none';
+  brainTab.style.display = 'none';
   toolIframe.src = 'about:blank';
 
   if (tabName === 'cockpit') {
@@ -1356,15 +1587,16 @@ window.switchTab = function(tabName) {
     return;
   }
 
-  // Check for placeholder tabs (Brain Phase B)
-  const btn = document.querySelector(`.tab[data-tab="${tabName}"]`);
-  if (btn?.dataset.placeholder === 'true') {
-    brainPlaceholder.style.display = 'block';
+  // Brain tab
+  if (tabName === 'brain') {
+    brainTab.style.display = 'block';
+    loadBrainNotes();
     sessionStorage.setItem('cmd_last_tab', tabName);
     return;
   }
 
   // iframe tabs (SMASH, PEAKING)
+  const btn = document.querySelector(`.tab[data-tab="${tabName}"]`);
   const src = btn?.dataset.src;
   if (!src) return;
   toolFrame.style.display = 'block';
@@ -1678,6 +1910,183 @@ window.quickCapture = async function() {
     result.textContent = '❌ ' + (e.message || 'network');
   }
   btn.disabled = false; btn.textContent = 'Save →';
+};
+
+// === Brain Tab ===
+let brainData = null;        // cached { generated, memos }
+let brainFilter = 'all';     // aktiver Tag-Filter
+let brainLastLoad = 0;       // Timestamp letzter Fetch
+const BRAIN_CACHE_MS = 60000; // 60s Cache bevor Re-Fetch
+
+async function loadBrainNotes(force = false) {
+  // Cache: nicht neu laden wenn < 60s alt
+  if (!force && brainData && (Date.now() - brainLastLoad < BRAIN_CACHE_MS)) {
+    renderBrainNotes();
+    return;
+  }
+
+  const loading = document.getElementById('brainLoading');
+  const notesList = document.getElementById('brainNotesList');
+  const empty = document.getElementById('brainEmpty');
+  const designSection = document.getElementById('brainDesignImports');
+
+  loading.style.display = 'block';
+  notesList.innerHTML = '';
+  empty.style.display = 'none';
+  designSection.style.display = 'none';
+
+  try {
+    const r = await workerCall('/brain/index');
+    if (r.ok && r.data && r.data.memos) {
+      brainData = r.data;
+      brainLastLoad = Date.now();
+      updateBrainSyncInfo();
+      renderBrainNotes();
+    } else {
+      loading.style.display = 'none';
+      empty.style.display = 'flex';
+      document.getElementById('brainEmptyMsg').textContent =
+        r.data?.error || 'Brain-Sync noch nicht gelaufen.';
+    }
+  } catch (e) {
+    loading.style.display = 'none';
+    empty.style.display = 'flex';
+    document.getElementById('brainEmptyMsg').textContent = 'Netzwerk-Fehler: ' + (e.message || 'offline');
+  }
+}
+
+function updateBrainSyncInfo() {
+  if (!brainData?.generated) return;
+  const syncEl = document.getElementById('brainSyncTime');
+  const dotEl = document.getElementById('brainSyncDot');
+  const genDate = new Date(brainData.generated);
+  const agoMin = Math.round((Date.now() - genDate.getTime()) / 60000);
+  const timeStr = genDate.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+
+  if (agoMin < 1) {
+    syncEl.textContent = 'Sync: ' + timeStr + ' (gerade eben)';
+  } else if (agoMin < 60) {
+    syncEl.textContent = 'Sync: ' + timeStr + ' (vor ' + agoMin + ' Min)';
+  } else {
+    const agoH = Math.round(agoMin / 60);
+    syncEl.textContent = 'Sync: ' + timeStr + ' (vor ' + agoH + 'h)';
+  }
+  // Stale wenn > 30 Min
+  dotEl.classList.toggle('brain__sync-dot--stale', agoMin > 30);
+}
+
+function filterBrainNotes() {
+  renderBrainNotes();
+}
+
+window.setBrainFilter = function(filter, btn) {
+  brainFilter = filter;
+  document.querySelectorAll('.brain__filter').forEach(b => b.classList.remove('is-active'));
+  btn.classList.add('is-active');
+  renderBrainNotes();
+};
+
+function getFilteredBrainNotes() {
+  if (!brainData?.memos) return [];
+  let notes = brainData.memos;
+
+  // Tag-Filter
+  if (brainFilter !== 'all') {
+    if (brainFilter.endsWith(':')) {
+      // Prefix-Match (z.B. "design:" matcht "design:archive", "design:system" etc.)
+      notes = notes.filter(n => n.tags?.some(t => t.startsWith(brainFilter)));
+    } else {
+      notes = notes.filter(n => n.tags?.includes(brainFilter));
+    }
+  }
+
+  // Suchfeld
+  const q = (document.getElementById('brainSearch')?.value || '').trim().toLowerCase();
+  if (q) {
+    notes = notes.filter(n =>
+      (n.title || '').toLowerCase().includes(q) ||
+      (n.content || '').toLowerCase().includes(q) ||
+      (n.category || '').toLowerCase().includes(q) ||
+      (n.tags || []).some(t => t.toLowerCase().includes(q))
+    );
+  }
+
+  return notes;
+}
+
+function renderBrainNotes() {
+  const loading = document.getElementById('brainLoading');
+  const notesList = document.getElementById('brainNotesList');
+  const empty = document.getElementById('brainEmpty');
+  const countEl = document.getElementById('brainCount');
+  const designSection = document.getElementById('brainDesignImports');
+  const designList = document.getElementById('brainDesignList');
+
+  loading.style.display = 'none';
+
+  const filtered = getFilteredBrainNotes();
+
+  // Separate design:archive notes
+  const designNotes = filtered.filter(n => n.tags?.includes('design:archive'));
+  const regularNotes = filtered.filter(n => !n.tags?.includes('design:archive'));
+
+  // Show design-imports section if design filter active or there are design notes
+  if (designNotes.length > 0 && (brainFilter === 'all' || brainFilter.startsWith('design'))) {
+    designSection.style.display = 'block';
+    designList.innerHTML = designNotes.map(renderBrainNoteCard).join('');
+  } else {
+    designSection.style.display = 'none';
+  }
+
+  // Show regular notes (exclude design:archive if they're shown in the section above)
+  const displayNotes = (designSection.style.display === 'block') ? regularNotes : filtered;
+
+  if (!displayNotes.length && !designNotes.length) {
+    notesList.innerHTML = '';
+    empty.style.display = 'flex';
+    document.getElementById('brainEmptyMsg').textContent =
+      brainData?.memos?.length ? 'Keine Notes für diesen Filter.' : 'Brain-Sync noch nicht gelaufen.';
+    countEl.textContent = '';
+    return;
+  }
+
+  empty.style.display = 'none';
+  const totalShown = displayNotes.length + designNotes.length;
+  const totalAll = brainData?.memos?.length || 0;
+  countEl.textContent = totalShown === totalAll
+    ? totalAll + ' Notes'
+    : totalShown + ' / ' + totalAll + ' Notes';
+
+  notesList.innerHTML = displayNotes.map(renderBrainNoteCard).join('');
+}
+
+function renderBrainNoteCard(note) {
+  const title = (note.title || '?').replace(/[<>"'&]/g, c => ({'<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','&':'&amp;'}[c]));
+  const preview = ((note.content || '').slice(0, 180)).replace(/[<>"'&]/g, c => ({'<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','&':'&amp;'}[c]));
+  const fullContent = (note.content || '').replace(/[<>"'&]/g, c => ({'<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','&':'&amp;'}[c]));
+  const date = (note.created_at || '').slice(0, 10);
+  const cat = note.category || '';
+  const tags = (note.tags || []).map(t => {
+    let cls = 'brain-note__tag';
+    if (t.startsWith('project:')) cls += ' brain-note__tag--project';
+    if (t.startsWith('design:')) cls += ' brain-note__tag--design';
+    return '<span class="' + cls + '">' + t + '</span>';
+  }).join('');
+
+  return '<article class="brain-note" onclick="toggleBrainNote(this)">'
+    + '<div class="brain-note__head">'
+    + '<span class="brain-note__category">' + cat + '</span>'
+    + '<span class="brain-note__date">' + date + '</span>'
+    + '</div>'
+    + '<div class="brain-note__title">' + title + '</div>'
+    + '<p class="brain-note__preview">' + preview + (note.content?.length > 180 ? '...' : '') + '</p>'
+    + '<div class="brain-note__content">' + fullContent + '</div>'
+    + (tags ? '<div class="brain-note__tags">' + tags + '</div>' : '')
+    + '</article>';
+}
+
+window.toggleBrainNote = function(el) {
+  el.classList.toggle('is-expanded');
 };
 </script>
 </body>
