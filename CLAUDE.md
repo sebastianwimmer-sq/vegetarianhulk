@@ -118,6 +118,18 @@ mv ~/Downloads/[filename].zip \
 - "War das Live oder Prototyp?" Verwirrung
 - Doppel-Design weil vergessen wurde was schon integriert wurde
 
+### Archive-Policy: Versionierung
+
+Claude Design exportiert oft iterativ (V1, V2, ... Vn). Jede neue Version ist meist Superset.
+
+**Policy:**
+- Nur die **hoechste Versionsnummer** archivieren
+- Intermediate Versionen direkt loeschen
+- Datei umbenennen: `YYYY-MM-DD-[component]-v[N].zip`
+- Initial/Foundation-Version (V0) separat archivieren wenn historisch relevant
+
+**Anti-Pattern:** Alle V1-V8 archivieren (= Muell-Hoarding).
+
 ### Brain als Single-Source-of-Truth
 
 - Vor jedem Pre-Design-Check: Brain-Note `design:inventory + project:vh` lesen
