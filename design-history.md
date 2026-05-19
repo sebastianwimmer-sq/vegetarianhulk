@@ -12,7 +12,7 @@ Tracking welche Claude-Design-Outputs wann integriert wurden.
 
 ## History
 
-(noch keine Imports — wird bei jedem Design-Integration-Run ergaenzt)
+| 2026-05-20 | Command Cockpit v2 Phase A | 2026-05-20-command-v2-phase-a-claude-design.zip | — | 2 Varianten (Editorial-Heavy + Builder-Heavy), Combine: B-Basis + A's Editorial Header |
 
 ---
 

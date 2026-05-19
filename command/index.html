@@ -8,89 +8,808 @@
 <!-- CSP V1: allowlist Worker + Brand-Domains für iframe-Embed + Brevo/Cloudflare-External -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https:; connect-src 'self' https://peaking-ai-api.peaking.workers.dev https://api.brevo.com; frame-src https://smashtheapp.de https://peaking.world https://vegetarianhulk.de https://app.brevo.com https://dash.cloudflare.com https://console.firebase.google.com https://developers.facebook.com https://dashboard.stripe.com https://replicate.com https://github.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
 <meta http-equiv="X-Frame-Options" content="DENY">
+<meta name="theme-color" content="#0d0d0a">
 <title>Command · Sebi</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231a3d28'/><text x='50' y='66' text-anchor='middle' font-size='52' font-weight='900' font-family='system-ui' fill='%23f7efde'>⌘</text></svg>">
 <style>
+  /* 1. Self-hosted fonts (DSGVO) */
   @import url('/fonts.css');
-  :root {
-    --bg: #1a1410;
-    --surface: #221a14;
-    --surface2: #2e241c;
-    --border: #3a2e22;
-    --text: #f7efde;
-    --text2: #b8a487;
-    --text3: #7a6850;
-    --vegi: #2d6a3e;
-    --smash: #00ff6a;
-    --peaking: #ff6b35;
-    --danger: #ff5555;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
-  body { padding: max(20px, env(safe-area-inset-top, 20px)) 16px 30px; max-width: 720px; margin: 0 auto; }
 
-  /* === Lock-Screen === */
-  .lock { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; gap: 14px; text-align: center; }
+  /* 2. Tokens (corrected from shared/tokens.css) */
+  :root {
+    /* Brand DNA — CORRECTED */
+    --vegi:    #2d6a3e;
+    --vegi-2:  rgba(45, 106, 62, 0.12);
+    --smash:   #00ff6a;
+    --smash-2: rgba(0, 255, 106, 0.12);
+    --peaking: #ff6b35;
+    --peaking-2: rgba(255, 107, 53, 0.12);
+
+    /* Surface */
+    --bg:      #0d0d0a;
+    --bg-2:    #111210;
+    --surface: rgba(255, 255, 255, 0.035);
+    --surface-2: rgba(255, 255, 255, 0.06);
+    --border:  rgba(255, 255, 255, 0.07);
+    --border-2: rgba(255, 255, 255, 0.12);
+
+    /* Text */
+    --text:    #f4f4ef;
+    --text-2:  rgba(244, 244, 239, 0.62);
+    --text-3:  rgba(244, 244, 239, 0.4);
+    --text-4:  rgba(244, 244, 239, 0.22);
+
+    /* Status */
+    --danger:  #ff5547;
+    --warn:    #f5b942;
+    --success: var(--smash);
+
+    /* Type — system mono (no JetBrains Mono) */
+    --font-display: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
+    --font-body:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono:    ui-monospace, 'SFMono-Regular', 'SF Mono', Menlo, monospace;
+  }
+
+  /* 3. Reset */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+  button { font-family: inherit; cursor: pointer; }
+
+  /* 4. Lock Screen */
+  .lock { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; gap: 14px; text-align: center; padding: 20px; }
   .lock-icon { font-size: 56px; opacity: .9; }
-  .lock-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; letter-spacing: -.5px; }
-  .lock-sub { color: var(--text2); font-size: 13px; max-width: 320px; line-height: 1.55; }
+  .lock-title { font-family: var(--font-display); font-size: 28px; font-weight: 900; letter-spacing: -.5px; }
+  .lock-sub { color: var(--text-2); font-size: 13px; max-width: 320px; line-height: 1.55; }
   .lock-input { width: 100%; max-width: 320px; background: var(--surface); border: 1.5px solid var(--border); color: var(--text); padding: 14px 16px; border-radius: 12px; font-size: 16px; font-family: inherit; font-weight: 600; text-align: center; letter-spacing: 1px; outline: none; transition: border-color .2s ease; }
   .lock-input:focus { border-color: var(--vegi); }
   .lock-btn { background: linear-gradient(180deg, var(--vegi) 0%, #1a3d28 100%); color: var(--text); border: 0; padding: 14px 32px; border-radius: 12px; font-size: 14px; font-weight: 800; cursor: pointer; letter-spacing: .6px; text-transform: uppercase; font-family: inherit; transition: transform .15s ease; }
   .lock-btn:active { transform: scale(.98); }
   .lock-btn-secondary { background: transparent; border: 1.5px solid var(--vegi); color: var(--text); padding: 12px 28px; border-radius: 12px; font-size: 13px; font-weight: 800; cursor: pointer; letter-spacing: .4px; font-family: inherit; display: flex; align-items: center; gap: 8px; }
-  .lock-btn-secondary:hover { background: rgba(45,106,62,.12); }
+  .lock-btn-secondary:hover { background: var(--vegi-2); }
   .lock-btn-secondary:disabled { opacity: .4; cursor: not-allowed; }
-  .lock-divider { color: var(--text3); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 800; margin: 6px 0; }
+  .lock-divider { color: var(--text-3); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 800; margin: 6px 0; }
   .lock-err { color: var(--danger); font-size: 12px; font-weight: 700; min-height: 18px; }
-  .lock-setup-hint { background: var(--surface); border: 1px dashed var(--border); padding: 14px 16px; border-radius: 12px; font-size: 12px; line-height: 1.6; color: var(--text2); max-width: 380px; }
+  .lock-setup-hint { background: var(--surface); border: 1px dashed var(--border); padding: 14px 16px; border-radius: 12px; font-size: 12px; line-height: 1.6; color: var(--text-2); max-width: 380px; }
   .lock-setup-hint strong { color: var(--text); }
 
-  /* === Cockpit === */
-  .head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
-  .head h1 { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 900; letter-spacing: -.6px; }
-  .head-sub { font-size: 11px; color: var(--text3); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; margin-top: 2px; }
-  .head-actions { display: flex; gap: 8px; }
-  .icon-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text2); width: 38px; height: 38px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: all .15s; }
-  .icon-btn:hover { color: var(--text); border-color: var(--vegi); }
+  /* 5. Tab Bar */
+  .tab-bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 12px;
+    background: rgba(13, 13, 10, 0.85);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border-bottom: 1px solid var(--border);
+  }
+  .tab-bar__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    margin-right: 14px;
+    padding-left: 4px;
+  }
+  .tab-bar__dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--smash);
+    box-shadow: 0 0 8px var(--smash);
+  }
+  .tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-2);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--text); background: var(--surface); }
+  .tab.is-active {
+    background: var(--surface-2);
+    border-color: var(--border);
+    color: var(--text);
+  }
+  .tab-bar__spacer { flex: 1; }
+  .tab-bar__user {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-3);
+    font-family: var(--font-mono);
+    letter-spacing: 0.04em;
+  }
 
-  .status-row { display: flex; gap: 8px; margin-bottom: 26px; flex-wrap: wrap; }
-  .pill { background: var(--surface); border: 1px solid var(--border); padding: 6px 12px; border-radius: 99px; font-size: 11px; font-weight: 700; color: var(--text2); display: flex; align-items: center; gap: 6px; }
-  .pill-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--vegi); box-shadow: 0 0 6px var(--vegi); }
-  .pill-dot.amber { background: #ffb800; box-shadow: 0 0 6px #ffb800; }
-  .pill-dot.red { background: var(--danger); box-shadow: 0 0 6px var(--danger); }
+  /* 6. Cockpit container (B: max-width 1240px) */
+  .cockpit {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 28px 24px 64px;
+  }
 
-  .group { margin-bottom: 26px; }
-  .group-title { font-size: 11px; color: var(--text3); letter-spacing: 2px; text-transform: uppercase; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
-  .group-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border) 0%, transparent 100%); }
+  /* 7. Editorial Briefing Header (from Variant A) */
+  .briefing {
+    padding-bottom: 36px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid var(--border);
+  }
+  .briefing__masthead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: var(--text-3);
+    text-transform: uppercase;
+  }
+  .briefing__masthead-l {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .briefing__masthead-l::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--text-4);
+  }
+  .briefing__masthead-r {
+    color: var(--smash);
+  }
+  .briefing__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(46px, 7vw, 78px);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    margin: 0 0 16px;
+    text-wrap: balance;
+  }
+  .briefing__title em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--text-2);
+  }
+  .briefing__sub {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 18px;
+    color: var(--text-2);
+    letter-spacing: -0.005em;
+    margin: 0;
+  }
+  .briefing__sub b {
+    color: var(--text);
+    font-style: normal;
+    font-weight: 600;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-variant-numeric: tabular-nums;
+    margin-left: 4px;
+  }
 
-  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: 5px; transition: all .15s; position: relative; overflow: hidden; }
-  .card:hover { background: var(--surface2); border-color: var(--vegi); transform: translateY(-1px); }
-  /* v3.3 — alle Cards einheitlich Forest-Green-Stripe (Cockpit-Identität), Brand-Differenzierung über Eyebrow + Icon */
-  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--vegi), transparent); opacity: .35; }
-  .card-title { font-weight: 800; font-size: 14px; letter-spacing: .2px; }
-  .card-sub { font-size: 11px; color: var(--text3); font-weight: 500; }
-  .card-meta { display: flex; gap: 8px; margin-top: 4px; font-size: 10px; color: var(--text3); }
+  /* 8. Health pills */
+  .health-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .health {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-2);
+    font-weight: 500;
+  }
+  .health__dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 6px var(--success);
+  }
+  .health--warn .health__dot  { background: var(--warn);   box-shadow: 0 0 6px var(--warn); }
+  .health--err  .health__dot  { background: var(--danger); box-shadow: 0 0 6px var(--danger); }
+  .health--err { border-color: rgba(255, 85, 71, 0.35); background: rgba(255, 85, 71, 0.08); color: var(--danger); }
+  .health--err .health__label { color: var(--danger); }
+  .health__label { color: var(--text); font-weight: 600; }
+  .health__num   { font-family: var(--font-mono); color: var(--text); font-weight: 600; }
 
-  .actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .action-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 10px; cursor: pointer; font-size: 12px; font-weight: 700; font-family: inherit; transition: all .15s; text-align: left; display: flex; flex-direction: column; gap: 3px; }
-  .action-btn:hover { border-color: var(--vegi); background: var(--surface2); }
-  .action-btn-sub { font-size: 10px; color: var(--text3); font-weight: 500; }
-  .action-btn-result { font-size: 10px; color: var(--vegi); font-weight: 700; margin-top: 6px; min-height: 12px; }
-  .action-btn-result.err { color: var(--danger); }
+  /* Topline divider */
+  .topline {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 24px;
+  }
 
-  .footer { margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--border); font-size: 10px; color: var(--text3); text-align: center; letter-spacing: 1px; text-transform: uppercase; }
+  /* 9. Grid system (B: 12-col) */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+  .span-4 { grid-column: span 4; }
+  .span-6 { grid-column: span 6; }
+  .span-8 { grid-column: span 8; }
+  .span-12 { grid-column: span 12; }
 
-  /* v3 Tab-Bar */
-  .tab-btn { background: transparent; border: 0; border-bottom: 2px solid transparent; color: var(--text2); padding: 10px 14px; font-size: 12px; font-weight: 700; letter-spacing: .3px; cursor: pointer; font-family: inherit; white-space: nowrap; transition: all .15s; flex-shrink: 0; }
-  .tab-btn:hover { color: var(--text); }
-  .tab-btn.active { color: var(--text); border-bottom-color: var(--vegi); }
+  /* 10. Cards + stats (B) */
+  .card {
+    padding: 18px 20px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover { border-color: var(--border-2); }
+  .card--glass {
+    background: linear-gradient(140deg, rgba(255,107,53,0.10), rgba(255,107,53,0.02));
+    border-color: rgba(255, 107, 53, 0.22);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    box-shadow:
+      0 12px 32px rgba(255, 107, 53, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  .card__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .card__brand {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: -0.005em;
+  }
+  .card__brand--vh    { color: var(--vegi); }
+  .card__brand--smash { color: var(--smash); }
+  .card__brand--peak  { color: var(--peaking); }
+  .card__pulse {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--text-3);
+    letter-spacing: 0.1em;
+  }
+  .card__pulse-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 6px var(--success);
+    animation: pulseDot 2.4s ease-in-out infinite;
+  }
+  @keyframes pulseDot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .kpi {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 34px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin: 0 0 2px;
+    font-variant-numeric: tabular-nums;
+  }
+  .kpi__label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--text-3);
+    text-transform: uppercase;
+    margin: 0 0 16px;
+  }
+  .kpi__delta {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 6px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-2);
+  }
+  .kpi__delta--up   { color: var(--smash); }
+  .kpi__delta--down { color: var(--danger); }
+
+  .spark {
+    width: 100%;
+    height: 36px;
+    display: block;
+    margin-top: 4px;
+  }
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 7px 0;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .stat-row__label { color: var(--text-3); }
+  .stat-row__val {
+    color: var(--text);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-row__val--smash { color: var(--smash); }
+  .stat-row__val--vh    { color: var(--vegi); }
+  .stat-row__val--peak  { color: var(--peaking); }
+  .card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 10px;
+    color: var(--text-3);
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .card__link:hover { color: var(--text); }
+
+  .card-stat-content { min-height: 20px; font-size: 13px; color: var(--text-2); line-height: 1.5; }
+  .card-stat-content strong { font-family: var(--font-display); letter-spacing: -0.02em; }
+
+  /* Section heads (B) */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  .section-head__title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: -0.005em;
+    margin: 0;
+  }
+  .section-head__title b {
+    font-style: normal;
+    font-weight: 700;
+  }
+  .section-head__meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--text-3);
+    text-transform: uppercase;
+  }
+
+  /* 11. Inbox (B) */
+  .inbox-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .inbox-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.018);
+    border: 1px solid var(--border);
+    transition: background 0.15s ease, border-color 0.15s ease;
+    align-items: start;
+  }
+  .inbox-item:hover {
+    background: rgba(255,255,255,0.03);
+    border-color: var(--border-2);
+  }
+  .inbox-item__bar {
+    width: 3px;
+    align-self: stretch;
+    border-radius: 2px;
+    background: var(--text-4);
+  }
+  .inbox-item__bar--veg   { background: var(--vegi); }
+  .inbox-item__bar--smash { background: var(--smash); }
+  .inbox-item__bar--peaking { background: var(--peaking); }
+  .inbox-item__bar--cross { background: var(--text-3); }
+
+  .inbox-item__body { min-width: 0; }
+  .inbox-item__head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 3px;
+  }
+  .inbox-item__title {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    color: var(--text);
+    margin: 0;
+  }
+  .inbox-item__preview {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--text-2);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .inbox-item__meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-3);
+    letter-spacing: 0.04em;
+    margin-top: 5px;
+  }
+  .inbox-item__actions {
+    display: flex;
+    gap: 4px;
+    align-items: flex-start;
+  }
+  .inbox-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-3);
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .inbox-action:hover {
+    background: var(--surface-2);
+    border-color: var(--border);
+    color: var(--text);
+  }
+  .inbox-action--done:hover { color: var(--smash); border-color: rgba(0,255,106,0.3); }
+  .inbox-action--archive:hover { color: var(--danger); border-color: rgba(255,85,71,0.3); }
+
+  .inbox-empty {
+    text-align: center;
+    padding: 36px 24px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.018);
+    border: 1px dashed var(--border-2);
+  }
+  .inbox-empty__title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 22px;
+    margin: 0 0 6px;
+  }
+  .inbox-empty__sub {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-3);
+    letter-spacing: 0.08em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  /* 12. Capture (B) */
+  .capture {
+    padding: 16px 16px 14px;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+  .capture__row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .capture__icon {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    background: var(--vegi-2);
+    color: var(--vegi);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .capture__input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .capture__input:focus { outline: none; }
+  .capture__input::placeholder { color: var(--text-3); }
+  .capture__textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--text-2);
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.55;
+    resize: none;
+    min-height: 56px;
+    margin-bottom: 12px;
+  }
+  .capture__textarea:focus { outline: none; }
+  .capture__textarea::placeholder { color: var(--text-3); font-style: italic; }
+  .capture__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .capture__select {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .capture__submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    background: var(--vegi);
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 700;
+    font-family: inherit;
+    letter-spacing: -0.005em;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 14px rgba(45,106,62,0.25), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+  .capture__submit:active { transform: scale(0.97); }
+
+  /* 13. Actions (B) */
+  .actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 36px;
+  }
+  .action {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.018);
+    border: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .action:hover {
+    background: rgba(255,255,255,0.04);
+    border-color: var(--border-2);
+    transform: translateY(-2px);
+  }
+  .action__glyph { font-size: 16px; }
+  .action__label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+  }
+  .action__meta {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--text-3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    min-height: 12px;
+  }
+  .action__meta.err { color: var(--danger); }
+
+  /* Passkey section */
+  .passkey-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 36px;
+  }
+
+  /* 14. Badges */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+  }
+  .badge--veg   { background: var(--vegi-2);    color: var(--vegi);    border-color: rgba(45, 106, 62, 0.3); }
+  .badge--smash { background: var(--smash-2);   color: var(--smash);   border-color: rgba(0, 255, 106, 0.3); }
+  .badge--peaking { background: var(--peaking-2); color: var(--peaking); border-color: rgba(255, 107, 53, 0.3); }
+  .badge--cross { background: var(--surface-2); color: var(--text-2); border-color: var(--border); }
+  .badge--unsicher { background: var(--surface-2); color: var(--text-3); border-color: var(--border); }
+  .badge__dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* Inbox count badge */
+  .inbox-count-badge {
+    background: var(--vegi);
+    color: var(--text);
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 99px;
+    font-weight: 800;
+    letter-spacing: .4px;
+    margin-left: 6px;
+  }
+
+  /* 15. Footer (B) */
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-3);
+    letter-spacing: 0.06em;
+    flex-wrap: wrap;
+    gap: 10px;
+    text-transform: uppercase;
+  }
+  .footer__l { display: inline-flex; gap: 14px; }
+  .footer__r { display: inline-flex; gap: 10px; align-items: center; }
+  .footer__logout {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-2);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .footer__logout:hover {
+    color: var(--danger);
+    border-color: rgba(255, 85, 71, 0.4);
+  }
+
+  /* 16. States (skeleton, error) */
+  .skel {
+    background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s ease-in-out infinite;
+    border-radius: 6px;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Brain placeholder */
+  .brain-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    gap: 12px;
+    text-align: center;
+    padding: 40px;
+  }
+  .brain-placeholder__icon { font-size: 48px; opacity: .8; }
+  .brain-placeholder__title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .brain-placeholder__sub {
+    color: var(--text-3);
+    font-size: 14px;
+    max-width: 360px;
+    line-height: 1.5;
+  }
+
+  /* 17. Responsive */
+  @media (max-width: 880px) {
+    .cockpit { padding: 22px 16px 56px; }
+    .briefing { padding-bottom: 24px; margin-bottom: 16px; }
+    .briefing__masthead { margin-bottom: 16px; }
+    .briefing__title { font-size: clamp(38px, 11vw, 56px); }
+    .briefing__sub { font-size: 15px; }
+    .briefing__sub b { display: block; margin-left: 0; margin-top: 6px; }
+    .health-row { margin-bottom: 16px; }
+    .grid { grid-template-columns: 1fr; gap: 10px; }
+    .span-4, .span-6, .span-8, .span-12 { grid-column: 1 / -1; }
+    .actions { grid-template-columns: repeat(2, 1fr); }
+    .passkey-grid { grid-template-columns: 1fr; }
+    .kpi { font-size: 30px; }
+    .tab { padding: 7px 10px; font-size: 12px; }
+  }
 
   @media (max-width: 480px) {
-    .head h1 { font-size: 22px; }
-    .cards { grid-template-columns: 1fr; }
-    .tab-btn { padding: 9px 11px; font-size: 11px; }
+    .lock-title { font-size: 24px; }
+    .tab { padding: 6px 8px; font-size: 11px; }
+  }
+
+  @media (min-width: 881px) and (max-width: 1100px) {
+    .stats-row .span-4 { grid-column: span 6; }
+    .stats-row .span-4:last-child { grid-column: span 12; }
   }
 </style>
 </head>
@@ -116,282 +835,239 @@
 
 <!-- Cockpit (hidden until unlock) -->
 <div id="cockpit" style="display:none">
-  <div class="head">
-    <div>
-      <h1>Command · Sebi</h1>
-      <div class="head-sub">3 Brands · 1 Cockpit</div>
-    </div>
-    <div class="head-actions">
-      <button class="icon-btn" id="refreshBtn" title="Status neu laden">↻</button>
-      <button class="icon-btn" id="lockBtn" title="Sperren">🔒</button>
-    </div>
-  </div>
 
-  <!-- Tab-Bar (V3.3) — Cockpit + eigene Brand-Tools als iframe. SaaS-Tools (Brevo/CF/Firebase/Stripe/Replicate) sind Cards, da X-Frame-DENY. -->
-  <div class="tab-bar" id="tabBar" style="display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch">
-    <button class="tab-btn active" data-tab="cockpit" onclick="switchTab('cockpit')">⌘ Cockpit</button>
-    <button class="tab-btn" data-tab="smash-admin" data-src="https://smashtheapp.de/admin.html" onclick="switchTab('smash-admin')">💪 SMASH-Admin</button>
-    <button class="tab-btn" data-tab="peaking-dashboard" data-src="https://peaking.world/dashboard.html" onclick="switchTab('peaking-dashboard')">⛰️ PEAKING</button>
-    <button class="tab-btn" data-tab="peaking-tracker" data-src="https://peaking.world/modules/tracker.html" onclick="switchTab('peaking-tracker')">🔥 Tracker</button>
-    <button class="tab-btn" data-tab="peaking-brain" data-src="https://peaking.world/modules/brain.html" onclick="switchTab('peaking-brain')">🧠 Brain</button>
-    <button class="tab-btn" data-tab="hulk" data-src="https://vegetarianhulk.de/" onclick="switchTab('hulk')">🌱 hulk</button>
-  </div>
+  <!-- v2 Tab Bar (sticky, 4 tabs) -->
+  <nav class="tab-bar" id="tabBar">
+    <div class="tab-bar__brand"><span class="tab-bar__dot"></span> COMMAND</div>
+    <button class="tab is-active" data-tab="cockpit" onclick="switchTab('cockpit')">⌘ Cockpit</button>
+    <button class="tab" data-tab="smash-admin" data-src="https://smashtheapp.de/admin.html" onclick="switchTab('smash-admin')">💪 SMASH</button>
+    <button class="tab" data-tab="peaking-dashboard" data-src="https://peaking.world/dashboard.html" onclick="switchTab('peaking-dashboard')">⛰️ PEAKING</button>
+    <button class="tab" data-tab="brain" data-placeholder="true" onclick="switchTab('brain')">🧠 Brain</button>
+    <div class="tab-bar__spacer"></div>
+    <div class="tab-bar__user">SEB · v4.0</div>
+  </nav>
 
-  <!-- Tool iframe (hidden when on Cockpit-Tab) -->
-  <div id="toolFrame" style="display:none;width:100%;height:calc(100vh - 180px);min-height:600px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;position:relative">
-    <div id="toolLoader" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--surface);color:var(--text2);font-size:13px;pointer-events:none">Lade Tool ...</div>
+  <!-- Tool iframe (for SMASH/PEAKING tabs) -->
+  <div id="toolFrame" style="display:none;width:100%;height:calc(100vh - 180px);min-height:600px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;position:relative;margin:0 auto;max-width:1240px">
+    <div id="toolLoader" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(13,13,10,0.9);color:var(--text-2);font-size:13px;pointer-events:none">Lade Tool ...</div>
     <iframe id="toolIframe" src="" style="width:100%;height:100%;border:0;display:block" onload="document.getElementById('toolLoader').style.display='none'"></iframe>
     <div style="position:absolute;top:8px;right:12px;display:flex;gap:6px;z-index:10">
-      <button id="toolOpenNew" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;backdrop-filter:blur(8px)" title="In neuem Tab öffnen">↗</button>
-      <button onclick="reloadIframe()" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;backdrop-filter:blur(8px)" title="Tool neu laden">↻</button>
+      <button id="toolOpenNew" style="background:var(--surface-2);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;backdrop-filter:blur(8px)" title="In neuem Tab öffnen">↗</button>
+      <button onclick="reloadIframe()" style="background:var(--surface-2);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;backdrop-filter:blur(8px)" title="Tool neu laden">↻</button>
     </div>
   </div>
 
-  <!-- Cockpit-Content (default tab) -->
+  <!-- Brain Placeholder (Phase B) -->
+  <div id="brainPlaceholder" style="display:none" class="cockpit">
+    <div class="brain-placeholder">
+      <div class="brain-placeholder__icon">🧠</div>
+      <div class="brain-placeholder__title">Brain · Phase B</div>
+      <div class="brain-placeholder__sub">Command's eigenes Brain kommt in Phase B. Bis dahin: Second Brain via MCP oder PEAKING Brain nutzen.</div>
+    </div>
+  </div>
+
+  <!-- Cockpit Content (default tab) -->
   <div id="cockpitContent">
+    <main class="cockpit">
 
-  <div class="status-row" id="statusRow">
-    <div class="pill"><span class="pill-dot"></span> Lädt ...</div>
-  </div>
+      <!-- 1. Editorial Briefing Header (from Variant A) -->
+      <header class="briefing">
+        <div class="briefing__masthead">
+          <span class="briefing__masthead-l" id="briefingIssue">Issue — · Daily Briefing</span>
+          <span class="briefing__masthead-r">● Live</span>
+        </div>
+        <h1 class="briefing__title" id="briefingTitle">Loading<br><em>Briefing.</em></h1>
+        <p class="briefing__sub" id="briefingSub">...</p>
+      </header>
 
-  <!-- v3.2 Phase 2: Inline-Power-Stats -->
-  <div class="group">
-    <div class="group-title">Live · Cross-Brand-Stats</div>
-    <div class="cards">
-      <div class="card" id="statBrevoVegi" style="cursor:default">
-        <div class="card-title">📧 Brevo · hulk</div>
-        <div class="card-sub" id="statBrevoVegiCount">lädt …</div>
+      <!-- 2. Health/Status Row -->
+      <div class="health-row" id="statusRow">
+        <div class="health health--warn"><span class="health__dot"></span> Lädt ...</div>
       </div>
-      <div class="card" id="statBrevoSmash" style="cursor:default">
-        <div class="card-title">📧 Brevo · SMASH</div>
-        <div class="card-sub" id="statBrevoSmashCount">lädt …</div>
+
+      <div class="topline"></div>
+
+      <!-- 3. Stats Grid (B's 3-brand cards with sparklines) -->
+      <section>
+        <div class="section-head">
+          <h2 class="section-head__title">The <b>three brands</b>, today.</h2>
+          <span class="section-head__meta" id="statsSyncTime">SYNC · --:--</span>
+        </div>
+
+        <div class="grid stats-row">
+          <!-- SMASH -->
+          <article class="card span-4">
+            <div class="card__head">
+              <span class="card__brand card__brand--smash">SMASH</span>
+              <span class="card__pulse"><span class="card__pulse-dot"></span>LIVE</span>
+            </div>
+            <div class="kpi" id="smashKpi">--</div>
+            <div class="kpi__label">Brevo Subs</div>
+            <svg class="spark" viewBox="0 0 200 36" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="g-smash" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#00ff6a" stop-opacity="0.4"/>
+                  <stop offset="100%" stop-color="#00ff6a" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M0,28 L20,26 L40,22 L60,24 L80,18 L100,16 L120,12 L140,14 L160,8 L180,6 L200,4" fill="none" stroke="#00ff6a" stroke-width="1.5"/>
+              <path d="M0,28 L20,26 L40,22 L60,24 L80,18 L100,16 L120,12 L140,14 L160,8 L180,6 L200,4 L200,36 L0,36 Z" fill="url(#g-smash)"/>
+            </svg>
+            <div class="stat-row">
+              <span class="stat-row__label">Brevo List</span>
+              <span class="stat-row__val" id="statBrevoSmashCount">lädt ...</span>
+            </div>
+            <a href="https://smashtheapp.de/" class="card__link" target="_blank" rel="noopener">smashtheapp.de →</a>
+          </article>
+
+          <!-- vegetarianhulk -->
+          <article class="card span-4">
+            <div class="card__head">
+              <span class="card__brand card__brand--vh">vegetarianhulk</span>
+              <span class="card__pulse"><span class="card__pulse-dot"></span>LIVE</span>
+            </div>
+            <div class="kpi" id="vhKpi">--</div>
+            <div class="kpi__label">Newsletter Subs</div>
+            <svg class="spark" viewBox="0 0 200 36" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0,30 L20,28 L40,30 L60,24 L80,22 L100,24 L120,20 L140,18 L160,20 L180,14 L200,12" fill="none" stroke="#2d6a3e" stroke-width="1.5"/>
+              <path d="M0,30 L20,28 L40,30 L60,24 L80,22 L100,24 L120,20 L140,18 L160,20 L180,14 L200,12 L200,36 L0,36 Z" fill="rgba(45,106,62,0.18)"/>
+            </svg>
+            <div class="stat-row">
+              <span class="stat-row__label">Brevo List</span>
+              <span class="stat-row__val" id="statBrevoVegiCount">lädt ...</span>
+            </div>
+            <a href="https://vegetarianhulk.de/" class="card__link" target="_blank" rel="noopener">vegetarianhulk.de →</a>
+          </article>
+
+          <!-- PEAKING (glass) -->
+          <article class="card card--glass span-4">
+            <div class="card__head">
+              <span class="card__brand card__brand--peak">PEAKING</span>
+              <span class="card__pulse"><span class="card__pulse-dot"></span>LIVE</span>
+            </div>
+            <div class="kpi" id="peakingKpi">--</div>
+            <div class="kpi__label">Followers · IG</div>
+            <svg class="spark" viewBox="0 0 200 36" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0,32 L20,30 L40,28 L60,26 L80,22 L100,18 L120,16 L140,10 L160,12 L180,6 L200,4" fill="none" stroke="#ff6b35" stroke-width="1.5"/>
+              <path d="M0,32 L20,30 L40,28 L60,26 L80,22 L100,18 L120,16 L140,10 L160,12 L180,6 L200,4 L200,36 L0,36 Z" fill="rgba(255,107,53,0.2)"/>
+            </svg>
+            <div class="stat-row">
+              <span class="stat-row__label">Followers</span>
+              <span class="stat-row__val stat-row__val--peak" id="statPeakingFollowersCount">lädt ...</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-row__label">Top Reel</span>
+              <span class="stat-row__val" id="statPeakingTopReelCount">lädt ...</span>
+            </div>
+            <a href="https://peaking.world/dashboard.html" class="card__link" target="_blank" rel="noopener">peaking.world →</a>
+          </article>
+        </div>
+      </section>
+
+      <!-- Inbox + Capture side-by-side (B grid) -->
+      <div class="grid">
+
+        <!-- Inbox (span-8) -->
+        <section class="span-8">
+          <div class="section-head">
+            <h2 class="section-head__title">The <b>Inbox</b>.</h2>
+            <span class="section-head__meta"><span id="inboxCountBadge" class="inbox-count-badge" style="display:none"></span></span>
+          </div>
+          <div class="inbox-list" id="inboxList"></div>
+          <div class="inbox-empty" id="inboxEmpty" style="display:none">
+            <div class="inbox-empty__title">Inbox clean.</div>
+            <div class="inbox-empty__sub">— Alles triaged —</div>
+          </div>
+        </section>
+
+        <!-- Quick Capture (span-4) -->
+        <section class="span-4">
+          <div class="section-head">
+            <h2 class="section-head__title"><b>Capture</b>.</h2>
+          </div>
+          <div class="capture">
+            <div class="capture__row">
+              <div class="capture__icon">＋</div>
+              <input id="qcTitle" class="capture__input" type="text" placeholder="Was muss raus?" />
+            </div>
+            <textarea id="qcBody" class="capture__textarea" placeholder="Body · optional..." rows="2"></textarea>
+            <div class="capture__foot">
+              <select id="qcBrand" class="capture__select">
+                <option value="cross">🔀 Cross</option>
+                <option value="smash">💪 SMASH</option>
+                <option value="peaking">⛰️ PEAKING</option>
+                <option value="veg">🌱 hulk</option>
+                <option value="unsicher">❓ Unsicher</option>
+              </select>
+              <button id="qcSubmit" class="capture__submit" onclick="quickCapture()">Save →</button>
+            </div>
+            <div id="qcResult" style="margin-top:8px;font-size:11px;font-weight:700;min-height:14px"></div>
+          </div>
+        </section>
+
       </div>
-      <div class="card" id="statPeakingTopReel" style="cursor:default">
-        <div class="card-title">🔥 PEAKING · Top-Reel</div>
-        <div class="card-sub" id="statPeakingTopReelCount">lädt …</div>
-      </div>
-      <div class="card" id="statPeakingFollowers" style="cursor:default">
-        <div class="card-title">⛰️ @peakingworld</div>
-        <div class="card-sub" id="statPeakingFollowersCount">lädt …</div>
-      </div>
-    </div>
-  </div>
 
-  <!-- 🎨 Design-Drops · Cross-Brand-Hub -->
-  <div class="group">
-    <div class="group-title">🎨 Design-Drops · 16.05 <span style="background:var(--vegi);color:var(--text);font-size:10px;padding:2px 8px;border-radius:99px;font-weight:800;letter-spacing:.4px;margin-left:6px">3 NEW</span></div>
-    <div class="cards">
-      <a class="card" href="https://smashtheapp.de/onboarding-v3/" target="_blank" rel="noopener" style="border-color:#00ff6a33">
-        <div class="card-title">💪 SMASH · Onboarding V3</div>
-        <div class="card-sub">Identity-First · 4 Mobile-Screens · localStorage-save</div>
-        <div style="margin-top:6px;font-size:10px;color:#00ff6a;letter-spacing:.6px;font-weight:700">✓ LIVE auf /onboarding-v3/</div>
-      </a>
-      <a class="card" href="https://smashtheapp.de/_preview/16-05-smash/" target="_blank" rel="noopener" style="border-color:#00ff6a33">
-        <div class="card-title">💪 SMASH · 7 weitere Drops</div>
-        <div class="card-sub">Modal-Q V2 · 3 Modals · Founders-Empty · Statement</div>
-        <div style="margin-top:6px;font-size:10px;color:var(--text2);letter-spacing:.6px;font-weight:700">PREVIEW · awaiting Sebi-Pick</div>
-      </a>
-      <a class="card" href="https://peaking.world/_preview/16-05-peaking-late/reel-tracker.html" target="_blank" rel="noopener" style="border-color:#FFA94D33">
-        <div class="card-title">⛰️ PEAKING · Reel-Tracker V2</div>
-        <div class="card-sub">Sparkline-Drawer · Brand-Filter-Tabs · Metrics-Bento</div>
-        <div style="margin-top:6px;font-size:10px;color:var(--text2);letter-spacing:.6px;font-weight:700">PREVIEW · awaiting review</div>
-      </a>
-      <a class="card" href="https://vegetarianhulk.de/lieblingsprodukte.html" target="_blank" rel="noopener" style="border-color:#2d6a3e66">
-        <div class="card-title">🌱 hulk · Lieblingsprodukte</div>
-        <div class="card-sub">12 Items · 4 Kategorien · Magazine-editorial</div>
-        <div style="margin-top:6px;font-size:10px;color:#2d6a3e;letter-spacing:.6px;font-weight:700">✓ LIVE · waiting Amazon-Tag + ASINs</div>
-      </a>
-      <a class="card" href="https://github.com/sebastianwimmer-sq/vegetarianhulk/tree/main/mail-templates" target="_blank" rel="noopener" style="border-color:#2d6a3e66">
-        <div class="card-title">📧 hulk · Brevo Mail 1+2+3</div>
-        <div class="card-sub">3-Tage-Reset-Drip · Magazine-Editorial · persistente Files</div>
-        <div style="margin-top:6px;font-size:10px;color:#2d6a3e;letter-spacing:.6px;font-weight:700">✓ READY · paste-in-Brevo</div>
-      </a>
-    </div>
-    <div style="margin-top:10px;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;font-size:11px;color:var(--text2);line-height:1.5">
-      <strong style="color:var(--text)">Workflow:</strong> Preview öffnen → reviewen → wenn ✓ sag „[brand] [feature] produktiv pushen" → Claude portiert vom _preview/ ins Production-Path.
-    </div>
-  </div>
+      <!-- Worker Admin -->
+      <section>
+        <div class="section-head">
+          <h2 class="section-head__title"><b>Worker</b> Admin.</h2>
+        </div>
+        <div class="actions">
+          <button class="action" id="checkTokenBtn">
+            <span class="action__glyph">🔑</span>
+            <span class="action__label">Token-Status</span>
+            <span class="action__meta" id="checkTokenResult"></span>
+          </button>
+          <button class="action" id="refreshTokenBtn">
+            <span class="action__glyph">♻️</span>
+            <span class="action__label">Token Refresh</span>
+            <span class="action__meta" id="refreshTokenResult"></span>
+          </button>
+          <button class="action" id="pullInboxBtn">
+            <span class="action__glyph">📥</span>
+            <span class="action__label">Inbox-Pull</span>
+            <span class="action__meta" id="pullInboxResult"></span>
+          </button>
+          <button class="action" id="syncReelsBtn">
+            <span class="action__glyph">🔄</span>
+            <span class="action__label">Reels-Sync</span>
+            <span class="action__meta" id="syncReelsResult"></span>
+          </button>
+        </div>
+      </section>
 
-  <!-- Quick-Capture (Inbox) -->
-  <div class="group">
-    <div class="group-title">Inbox · Quick-Capture</div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px">
-      <input id="qcTitle" placeholder="Idee in 2-5 Worten ..." style="width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:11px 14px;border-radius:10px;font-size:13px;font-family:inherit;font-weight:600;outline:none;margin-bottom:8px">
-      <textarea id="qcBody" placeholder="Beschreibung (optional)" rows="2" style="width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:11px 14px;border-radius:10px;font-size:13px;font-family:inherit;outline:none;margin-bottom:8px;resize:vertical"></textarea>
-      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
-        <select id="qcBrand" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:9px 10px;border-radius:8px;font-size:12px;font-family:inherit;font-weight:600;cursor:pointer">
-          <option value="cross">🔀 Cross</option>
-          <option value="smash">💪 SMASH</option>
-          <option value="peaking">⛰️ PEAKING</option>
-          <option value="veg">🌱 hulk</option>
-          <option value="unsicher">❓ Unsicher</option>
-        </select>
-        <button id="qcSubmit" onclick="quickCapture()" style="flex:1;background:var(--vegi);color:var(--text);border:0;padding:9px 16px;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit">+ Inbox capturen</button>
-      </div>
-      <div id="qcResult" style="margin-top:8px;font-size:11px;color:var(--vegi);font-weight:700;min-height:14px"></div>
-    </div>
-  </div>
+      <!-- Security Passkeys -->
+      <section>
+        <div class="section-head">
+          <h2 class="section-head__title"><b>Security</b> · Passkeys.</h2>
+        </div>
+        <div class="passkey-grid">
+          <button class="action" id="addPasskeyBtn">
+            <span class="action__glyph">🔐</span>
+            <span class="action__label">Passkey hinzufügen</span>
+            <span class="action__meta" id="addPasskeyResult"></span>
+          </button>
+          <button class="action" id="listPasskeysBtn">
+            <span class="action__glyph">📋</span>
+            <span class="action__label">Passkeys verwalten</span>
+            <span class="action__meta" id="listPasskeysResult"></span>
+          </button>
+        </div>
+        <div id="passkeyList" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px;font-size:11px;margin-bottom:36px"></div>
+      </section>
 
-  <!-- Live Inbox Pending -->
-  <div class="group" id="inboxGroup">
-    <div class="group-title">Inbox · Pending <span id="inboxCountBadge" style="background:var(--vegi);color:var(--text);font-size:10px;padding:2px 8px;border-radius:99px;font-weight:800;letter-spacing:.4px;margin-left:6px;display:none"></span></div>
-    <div id="inboxList" style="display:flex;flex-direction:column;gap:6px"></div>
-  </div>
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer__l">
+          <span>v4.0 · 20 May 2026</span>
+          <span>Command · Sebi-Solo</span>
+        </div>
+        <div class="footer__r">
+          <button class="footer__logout" id="lockBtn" type="button">Lock</button>
+        </div>
+      </footer>
 
-  <!-- SMASH -->
-  <div class="group">
-    <div class="group-title">SMASH</div>
-    <div class="cards">
-      <a class="card smash" href="https://smashtheapp.de/admin.html" target="_blank" rel="noopener">
-        <div class="card-title">🛡 Admin-Panel</div>
-        <div class="card-sub">Tickets · Users · Codes · Biz</div>
-      </a>
-      <a class="card smash" href="https://smashtheapp.de/" target="_blank" rel="noopener">
-        <div class="card-title">📱 App live</div>
-        <div class="card-sub">smashtheapp.de</div>
-      </a>
-      <a class="card smash" href="https://smashtheapp.de/brand.html" target="_blank" rel="noopener">
-        <div class="card-title">🎨 Brand-Page</div>
-        <div class="card-sub">Hulk-Voice + Tagline</div>
-      </a>
-      <a class="card smash" href="https://smashtheapp.de/landing.html" target="_blank" rel="noopener">
-        <div class="card-title">🏠 Landing</div>
-        <div class="card-sub">Hero + Phone-Mockup</div>
-      </a>
-    </div>
-  </div>
-
-  <!-- PEAKING -->
-  <div class="group">
-    <div class="group-title">PEAKING</div>
-    <div class="cards">
-      <a class="card peaking" href="https://peaking.world/dashboard.html" target="_blank" rel="noopener">
-        <div class="card-title">📊 Dashboard</div>
-        <div class="card-sub">Live-Stats · Account-Switch</div>
-      </a>
-      <a class="card peaking" href="https://peaking.world/modules/brain.html" target="_blank" rel="noopener">
-        <div class="card-title">🧠 Brain</div>
-        <div class="card-sub">Memos · Inbox-Connector</div>
-      </a>
-      <a class="card peaking" href="https://peaking.world/modules/tracker.html" target="_blank" rel="noopener">
-        <div class="card-title">🔥 Reel-Tracker</div>
-        <div class="card-sub">Auto-Sync · Sparklines</div>
-      </a>
-      <a class="card peaking" href="https://peaking.world/modules/inbox.html" target="_blank" rel="noopener">
-        <div class="card-title">📥 Idea-Inbox</div>
-        <div class="card-sub">Quick-Capture</div>
-      </a>
-      <a class="card peaking" href="https://peaking.world/modules/growth-coach.html" target="_blank" rel="noopener">
-        <div class="card-title">🌱 Growth-Coach</div>
-        <div class="card-sub">15 Tip-Templates · Live-Data</div>
-      </a>
-      <a class="card peaking" href="https://peaking.world/modules/help.html" target="_blank" rel="noopener">
-        <div class="card-title">📖 Help-Center</div>
-        <div class="card-sub">6 Sections · Search</div>
-      </a>
-    </div>
-  </div>
-
-  <!-- vegetarianhulk -->
-  <div class="group">
-    <div class="group-title">vegetarianhulk</div>
-    <div class="cards">
-      <a class="card" href="https://vegetarianhulk.de/" target="_blank" rel="noopener">
-        <div class="card-title">🌱 Brand-Site</div>
-        <div class="card-sub">Hero · Lead-Magnet · DNA</div>
-      </a>
-      <a class="card" href="https://vegetarianhulk.de/kooperationen.html" target="_blank" rel="noopener">
-        <div class="card-title">🤝 Kooperationen</div>
-        <div class="card-sub">B2B-Anfragen</div>
-      </a>
-      <a class="card" href="https://app.brevo.com/contact/list-listing" target="_blank" rel="noopener">
-        <div class="card-title">📧 Brevo-Lists</div>
-        <div class="card-sub">Drip-Subscribers</div>
-      </a>
-      <a class="card" href="https://app.brevo.com/automation" target="_blank" rel="noopener">
-        <div class="card-title">⚙️ Brevo-Automations</div>
-        <div class="card-sub">3-Tage-Reset-Drip</div>
-      </a>
-    </div>
-  </div>
-
-  <!-- Worker Quick-Actions -->
-  <div class="group">
-    <div class="group-title">Worker Admin</div>
-    <div class="actions-grid">
-      <button class="action-btn" id="checkTokenBtn">
-        <span>🔑 Token-Status</span>
-        <span class="action-btn-sub">/insta/me — verify token alive</span>
-        <span class="action-btn-result" id="checkTokenResult"></span>
-      </button>
-      <button class="action-btn" id="refreshTokenBtn">
-        <span>♻️ Token Refresh</span>
-        <span class="action-btn-sub">/admin/refresh-token — extend 60d</span>
-        <span class="action-btn-result" id="refreshTokenResult"></span>
-      </button>
-      <button class="action-btn" id="pullInboxBtn">
-        <span>📥 Inbox-Pull</span>
-        <span class="action-btn-sub">/inbox/list — pending count</span>
-        <span class="action-btn-result" id="pullInboxResult"></span>
-      </button>
-      <button class="action-btn" id="syncReelsBtn">
-        <span>🔄 Reels-Sync</span>
-        <span class="action-btn-sub">/insta/sync-reels — peakingworld</span>
-        <span class="action-btn-result" id="syncReelsResult"></span>
-      </button>
-    </div>
-  </div>
-
-  <!-- Security -->
-  <div class="group">
-    <div class="group-title">Security · Passkeys</div>
-    <div class="actions-grid">
-      <button class="action-btn" id="addPasskeyBtn">
-        <span>🔐 Passkey hinzufügen</span>
-        <span class="action-btn-sub">Face-ID / Touch-ID an diesem Gerät</span>
-        <span class="action-btn-result" id="addPasskeyResult"></span>
-      </button>
-      <button class="action-btn" id="listPasskeysBtn">
-        <span>📋 Passkeys verwalten</span>
-        <span class="action-btn-sub">Gespeicherte Geräte anzeigen / löschen</span>
-        <span class="action-btn-result" id="listPasskeysResult"></span>
-      </button>
-    </div>
-    <div id="passkeyList" style="margin-top:10px;display:none;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px;font-size:11px"></div>
-  </div>
-
-  <!-- External Services -->
-  <div class="group">
-    <div class="group-title">External</div>
-    <div class="cards">
-      <a class="card" href="https://dash.cloudflare.com" target="_blank" rel="noopener">
-        <div class="card-title">☁️ Cloudflare</div>
-        <div class="card-sub">Worker · KV · DNS</div>
-      </a>
-      <a class="card" href="https://console.firebase.google.com/project/smash-79ec5" target="_blank" rel="noopener">
-        <div class="card-title">🔥 Firebase</div>
-        <div class="card-sub">SMASH Auth · Firestore</div>
-      </a>
-      <a class="card" href="https://developers.facebook.com/apps/" target="_blank" rel="noopener">
-        <div class="card-title">📘 Meta Developer</div>
-        <div class="card-sub">App-Review · Permissions</div>
-      </a>
-      <a class="card" href="https://dashboard.stripe.com" target="_blank" rel="noopener">
-        <div class="card-title">💳 Stripe</div>
-        <div class="card-sub">SMASH-Pro · Payment-Links</div>
-      </a>
-      <a class="card" href="https://replicate.com/account/billing" target="_blank" rel="noopener">
-        <div class="card-title">🎨 Replicate</div>
-        <div class="card-sub">AI-Bilder · Spend-Cap</div>
-      </a>
-      <a class="card" href="https://github.com/sebastianwimmer-sq" target="_blank" rel="noopener">
-        <div class="card-title">🐙 GitHub</div>
-        <div class="card-sub">Repos · Actions · Secrets</div>
-      </a>
-    </div>
-  </div>
-
-  <div class="footer">v3.3 · Cmd · Sebi-Solo · build 15.05.</div>
+    </main>
   </div><!-- /#cockpitContent -->
 </div>
 
@@ -418,10 +1094,10 @@ const sessionKey = 'cmd_session_active';
 const lastActivityKey = 'cmd_last_activity';
 const failedLoginKey = 'cmd_failed_logins';
 const passkeyListKey = 'cmd_passkeys_v1';
-const SESSION_TIMEOUT_MS = 15 * 60 * 1000;  // v3: 15 Min Auto-Lock (vorher 30)
-const MIN_PW_LENGTH = 16;                    // v3: 16+ chars (vorher 12)
-const RATE_LIMIT_MAX = 5;                    // 5 fails
-const RATE_LIMIT_WINDOW_MS = 5 * 60 * 1000;  // 5 Min Sperre
+const SESSION_TIMEOUT_MS = 15 * 60 * 1000;
+const MIN_PW_LENGTH = 16;
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW_MS = 5 * 60 * 1000;
 
 // Rate-Limit-Check (Brute-Force-Schutz)
 function getFailedLogins() {
@@ -491,8 +1167,8 @@ async function registerPasskey() {
       rp: { id: location.hostname, name: 'Command · vegetarianhulk' },
       user: { id: userId.buffer, name: 'sebi', displayName: 'Sebi' },
       pubKeyCredParams: [
-        { type: 'public-key', alg: -7 },   // ES256 (most common)
-        { type: 'public-key', alg: -257 }, // RS256 (Windows Hello)
+        { type: 'public-key', alg: -7 },
+        { type: 'public-key', alg: -257 },
       ],
       authenticatorSelection: {
         userVerification: 'required',
@@ -532,12 +1208,30 @@ async function loginWithPasskey() {
   return true;
 }
 
+function updateBriefing() {
+  const now = new Date();
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const dayName = days[now.getDay()];
+  const time = now.toLocaleTimeString('de-DE', {hour:'2-digit',minute:'2-digit'});
+  const date = now.toLocaleDateString('de-DE', {day:'numeric',month:'long',year:'numeric'});
+  // Issue number = days since 1 Jan 2026
+  const epoch = new Date(2026, 0, 1);
+  const issueNum = Math.floor((now - epoch) / (1000*60*60*24)) + 1;
+  const titleEl = document.getElementById('briefingTitle');
+  const subEl = document.getElementById('briefingSub');
+  const issueEl = document.getElementById('briefingIssue');
+  if (titleEl) titleEl.innerHTML = dayName + '<br><em>Morning Briefing.</em>';
+  if (subEl) subEl.innerHTML = date + ' <b>· ' + time + '</b>';
+  if (issueEl) issueEl.textContent = 'Issue ' + issueNum + ' · Daily Briefing';
+}
+
 function showCockpit() {
   lockEl.style.display = 'none';
   cockpitEl.style.display = 'block';
+  updateBriefing();
   loadStatus();
   renderPasskeyList();
-  // v3: restore last tab from session (or default to cockpit)
+  // restore last tab from session (or default to cockpit)
   const lastTab = sessionStorage.getItem('cmd_last_tab') || 'cockpit';
   if (lastTab !== 'cockpit' && typeof switchTab === 'function') {
     setTimeout(() => switchTab(lastTab), 50);
@@ -559,7 +1253,7 @@ passkeyBtn?.addEventListener('click', async () => {
   }
 });
 
-// Auto-unlock if session was active in last 15 Min (v3: hardened from 30)
+// Auto-unlock if session was active in last 15 Min
 const sessionStart = parseInt(sessionStorage.getItem(sessionKey) || '0', 10);
 const lastAct = parseInt(localStorage.getItem(lastActivityKey) || '0', 10);
 if (sessionStart && lastAct && (Date.now() - lastAct < SESSION_TIMEOUT_MS)) {
@@ -583,7 +1277,7 @@ async function tryUnlock() {
   const pw = pwInput.value.trim();
   if (!pw) { pwErr.textContent = 'Passwort eingeben.'; return; }
 
-  // First-time setup: store hash with stronger requirement
+  // First-time setup
   if (!storedHash) {
     if (pw.length < MIN_PW_LENGTH) { pwErr.textContent = `Mindestens ${MIN_PW_LENGTH} Zeichen für die Kommando-Zentrale.`; return; }
     if (!/[a-z]/.test(pw) || !/[A-Z]/.test(pw) || !/[0-9]/.test(pw)) {
@@ -615,7 +1309,7 @@ async function tryUnlock() {
   showCockpit();
 }
 
-// === v3 Auto-Lock bei Inaktivität ===
+// === Auto-Lock bei Inaktivität ===
 function trackActivity() {
   localStorage.setItem(lastActivityKey, String(Date.now()));
 }
@@ -627,11 +1321,9 @@ function checkAutoLock() {
     location.reload();
   }
 }
-// Track Activity bei jeder Interaktion
 ['click', 'keydown', 'mousemove', 'scroll', 'touchstart'].forEach(ev =>
   document.addEventListener(ev, trackActivity, { passive: true })
 );
-// Auto-Lock-Check alle 30s
 setInterval(checkAutoLock, 30 * 1000);
 
 pwBtn.addEventListener('click', tryUnlock);
@@ -642,31 +1334,43 @@ document.getElementById('lockBtn')?.addEventListener('click', () => {
   location.reload();
 });
 
-document.getElementById('refreshBtn')?.addEventListener('click', () => loadStatus());
-
-// === v3 Tab-Switching ===
+// === Tab-Switching (v2: .tab / .is-active) ===
 window.switchTab = function(tabName) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabName));
+  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('is-active', b.dataset.tab === tabName));
   const cockpitContent = document.getElementById('cockpitContent');
   const toolFrame = document.getElementById('toolFrame');
   const toolIframe = document.getElementById('toolIframe');
   const toolOpenNew = document.getElementById('toolOpenNew');
   const toolLoader = document.getElementById('toolLoader');
+  const brainPlaceholder = document.getElementById('brainPlaceholder');
+
+  // Hide all content areas first
+  cockpitContent.style.display = 'none';
+  toolFrame.style.display = 'none';
+  brainPlaceholder.style.display = 'none';
+  toolIframe.src = 'about:blank';
+
   if (tabName === 'cockpit') {
     cockpitContent.style.display = 'block';
-    toolFrame.style.display = 'none';
-    toolIframe.src = 'about:blank';
+    sessionStorage.setItem('cmd_last_tab', tabName);
     return;
   }
-  const btn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
+
+  // Check for placeholder tabs (Brain Phase B)
+  const btn = document.querySelector(`.tab[data-tab="${tabName}"]`);
+  if (btn?.dataset.placeholder === 'true') {
+    brainPlaceholder.style.display = 'block';
+    sessionStorage.setItem('cmd_last_tab', tabName);
+    return;
+  }
+
+  // iframe tabs (SMASH, PEAKING)
   const src = btn?.dataset.src;
   if (!src) return;
-  cockpitContent.style.display = 'none';
   toolFrame.style.display = 'block';
   toolLoader.style.display = 'flex';
   toolIframe.src = src;
   toolOpenNew.onclick = () => window.open(src, '_blank', 'noopener');
-  // Save last tab so reload returns to same view
   sessionStorage.setItem('cmd_last_tab', tabName);
 };
 
@@ -674,7 +1378,7 @@ window.reloadIframe = function() {
   const f = document.getElementById('toolIframe');
   if (f && f.src && f.src !== 'about:blank') {
     document.getElementById('toolLoader').style.display = 'flex';
-    f.src = f.src; // re-trigger load
+    f.src = f.src;
   }
 };
 
@@ -751,14 +1455,14 @@ function renderPasskeyList() {
   if (!el) return;
   const list = getPasskeys();
   if (!list.length) {
-    el.innerHTML = '<div style="color:var(--text3);text-align:center;padding:8px">Noch keine Passkeys. Click „Passkey hinzufügen" oben.</div>';
+    el.innerHTML = '<div style="color:var(--text-3);text-align:center;padding:8px">Noch keine Passkeys. Click "Passkey hinzufügen" oben.</div>';
     return;
   }
   el.innerHTML = list.map((p, i) => `
     <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-bottom:1px solid var(--border)">
       <div>
         <div style="font-weight:700;color:var(--text)">${p.device}</div>
-        <div style="font-size:10px;color:var(--text3)">registriert: ${new Date(p.addedAt).toLocaleString('de-DE')}</div>
+        <div style="font-size:10px;color:var(--text-3)">registriert: ${new Date(p.addedAt).toLocaleString('de-DE')}</div>
       </div>
       <button onclick="removePasskey(${i})" style="background:transparent;border:1px solid var(--border);color:var(--danger);padding:5px 10px;border-radius:6px;font-size:10px;font-weight:700;cursor:pointer">Entfernen</button>
     </div>
@@ -779,7 +1483,7 @@ window.removePasskey = function(idx) {
 
 async function loadStatus() {
   const row = document.getElementById('statusRow');
-  row.innerHTML = '<div class="pill"><span class="pill-dot amber"></span> lädt ...</div>';
+  row.innerHTML = '<div class="health health--warn"><span class="health__dot"></span> lädt ...</div>';
 
   const checks = await Promise.all([
     workerCall('/insta/me'),
@@ -793,19 +1497,25 @@ async function loadStatus() {
   const pending = pendingItems.length;
 
   const tokenPill = tokenOk
-    ? `<div class="pill"><span class="pill-dot"></span> Meta-Token live</div>`
-    : `<div class="pill" style="cursor:pointer;border-color:var(--danger)" onclick="alert('Token expired — im Terminal:\\n\\nbash /tmp/peaking-token-convert.sh\\n\\nDann Quick-Action „♻️ Token Refresh" unten clicken.')"><span class="pill-dot red"></span> Meta-Token down · Fix</div>`;
+    ? `<div class="health"><span class="health__dot"></span> <span>Meta-Token</span> <span class="health__label">Live</span></div>`
+    : `<div class="health health--err" style="cursor:pointer" onclick="alert('Token expired — im Terminal:\\n\\nbash /tmp/peaking-token-convert.sh\\n\\nDann Quick-Action Token Refresh unten clicken.')"><span class="health__dot"></span> <span>Meta-Token</span> <span class="health__label">Down · Fix</span></div>`;
+
+  const inboxClass = pending ? ' health--warn' : '';
   row.innerHTML = `
     ${tokenPill}
-    <div class="pill"><span class="pill-dot ${pending ? 'amber' : ''}"></span> Inbox: ${pending} pending</div>
-    <div class="pill"><span class="pill-dot"></span> ${new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })}</div>
+    <div class="health${inboxClass}"><span class="health__dot"></span> <span>Inbox</span> <span class="health__num">${pending}</span></div>
+    <div class="health"><span class="health__dot"></span> <span>${new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })}</span></div>
   `;
+
+  // Update sync time
+  const syncEl = document.getElementById('statsSyncTime');
+  if (syncEl) syncEl.textContent = 'SYNC · ' + new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
 
   renderInboxList(pendingItems);
   loadInlineStats();
 }
 
-// === Phase-2 Inline-Power-Stats ===
+// === Inline-Power-Stats ===
 async function loadInlineStats() {
   // Brevo Subscriber counts
   try {
@@ -815,26 +1525,33 @@ async function loadInlineStats() {
       const smash = r.data.lists.find(l => l.brand === 'smash');
       const ev = document.getElementById('statBrevoVegiCount');
       const es = document.getElementById('statBrevoSmashCount');
-      if (ev) ev.innerHTML = vegi ? `<strong style="color:var(--vegi);font-size:18px">${vegi.count}</strong> · ${vegi.name}` : 'Liste nicht konfiguriert';
-      if (es) es.innerHTML = smash ? `<strong style="color:var(--vegi);font-size:18px">${smash.count}</strong> · ${smash.name}` : 'Liste nicht konfiguriert';
+      const vhKpi = document.getElementById('vhKpi');
+      const smashKpi = document.getElementById('smashKpi');
+      if (ev && vegi) ev.innerHTML = vegi.name;
+      if (vhKpi && vegi) vhKpi.textContent = vegi.count.toLocaleString('de-DE');
+      if (es && smash) es.innerHTML = smash.name;
+      if (smashKpi && smash) smashKpi.textContent = smash.count.toLocaleString('de-DE');
     }
   } catch(e){}
 
-  // PEAKING Top-Reel + Followers (via Worker /insta/me + /insta/reels-list)
+  // PEAKING Followers
   try {
     const me = await workerCall('/insta/me');
     if (me.ok && me.data.pages) {
       const peakingPage = me.data.pages.find(p => p.instagram_business_account?.username === 'peakingworld');
       const igAccount = peakingPage?.instagram_business_account;
       const ef = document.getElementById('statPeakingFollowersCount');
-      if (ef && igAccount) {
-        ef.innerHTML = `<strong style="color:var(--vegi);font-size:18px">${igAccount.followers_count || '–'}</strong> Follower · ${igAccount.media_count || 0} Posts`;
-      } else if (ef) {
-        ef.textContent = 'Account nicht gefunden';
+      const peakingKpi = document.getElementById('peakingKpi');
+      if (igAccount) {
+        if (ef) ef.textContent = (igAccount.followers_count || '–').toLocaleString('de-DE') + ' · ' + (igAccount.media_count || 0) + ' Posts';
+        if (peakingKpi) peakingKpi.textContent = (igAccount.followers_count || '–').toLocaleString('de-DE');
+      } else {
+        if (ef) ef.textContent = 'Account nicht gefunden';
       }
     }
   } catch(e){}
 
+  // PEAKING Top Reel
   try {
     const r = await workerCall('/insta/reels-list?igUserId=17841417585584501&limit=5');
     if (r.ok && r.data.reels && r.data.reels.length) {
@@ -842,7 +1559,7 @@ async function loadInlineStats() {
       const el = document.getElementById('statPeakingTopReelCount');
       if (el && top) {
         const cap = (top.caption || '').slice(0, 38).replace(/\n/g, ' ');
-        el.innerHTML = `<strong style="color:var(--vegi);font-size:18px">${(top.play_count || 0).toLocaleString('de-DE')}</strong> Plays<br><span style="color:var(--text3);font-size:10px">${cap}${cap.length === 38 ? '…' : ''}</span>`;
+        el.innerHTML = `${(top.play_count || 0).toLocaleString('de-DE')} Plays`;
       }
     } else {
       const el = document.getElementById('statPeakingTopReelCount');
@@ -854,34 +1571,55 @@ async function loadInlineStats() {
 function renderInboxList(items) {
   const el = document.getElementById('inboxList');
   const badge = document.getElementById('inboxCountBadge');
+  const emptyEl = document.getElementById('inboxEmpty');
   if (!el) return;
+
   if (!items.length) {
-    el.innerHTML = '<div style="color:var(--text3);text-align:center;padding:14px;background:var(--surface);border:1px dashed var(--border);border-radius:10px;font-size:12px">Inbox leer — alles triaged ✓</div>';
+    el.innerHTML = '';
+    if (emptyEl) emptyEl.style.display = 'block';
     if (badge) badge.style.display = 'none';
     return;
   }
+
+  if (emptyEl) emptyEl.style.display = 'none';
   if (badge) { badge.style.display = 'inline-block'; badge.textContent = items.length; }
+
+  const brandBarClass = (b) => {
+    if (b === 'smash') return 'inbox-item__bar--smash';
+    if (b === 'veg') return 'inbox-item__bar--veg';
+    if (b === 'peaking') return 'inbox-item__bar--peaking';
+    return 'inbox-item__bar--cross';
+  };
+  const brandBadgeClass = (b) => {
+    if (b === 'smash') return 'badge--smash';
+    if (b === 'veg') return 'badge--veg';
+    if (b === 'peaking') return 'badge--peaking';
+    if (b === 'cross') return 'badge--cross';
+    return 'badge--unsicher';
+  };
+
   el.innerHTML = items.slice(0, 10).map(it => {
     const title = (it.title || '?').replace(/[<>"']/g, '');
     const body = ((it.body || '').slice(0, 100)).replace(/[<>"']/g, '');
     const ts = (it.createdAt || '').slice(0, 16).replace('T', ' ');
     const photos = (it.photoUrls || []).length;
     const brandTag = it.brand || '?';
-    return `<div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:flex-start;gap:10px">
-      <div style="flex:1;min-width:0">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;flex-wrap:wrap">
-          <span style="font-size:9px;background:var(--surface2);color:var(--text2);padding:2px 6px;border-radius:99px;font-weight:800;letter-spacing:.5px;text-transform:uppercase">${brandTag}</span>
-          <span style="font-size:10px;color:var(--text3)">${ts}</span>
+    return `<article class="inbox-item">
+      <div class="inbox-item__bar ${brandBarClass(brandTag)}"></div>
+      <div class="inbox-item__body">
+        <div class="inbox-item__head">
+          <span class="badge ${brandBadgeClass(brandTag)}"><span class="badge__dot"></span>${brandTag.toUpperCase()}</span>
           ${photos ? `<span style="font-size:10px;color:var(--peaking)">📷 ${photos}</span>` : ''}
         </div>
-        <div style="font-weight:700;color:var(--text);font-size:13px;line-height:1.3">${title}</div>
-        ${body ? `<div style="font-size:11px;color:var(--text3);margin-top:3px;line-height:1.4">${body}${(it.body || '').length > 100 ? '…' : ''}</div>` : ''}
+        <h3 class="inbox-item__title">${title}</h3>
+        ${body ? `<p class="inbox-item__preview">${body}${(it.body || '').length > 100 ? '...' : ''}</p>` : ''}
+        <div class="inbox-item__meta">${ts}</div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0">
-        <button onclick="triageItem('${it.id}','triaged',this)" style="background:transparent;border:1px solid var(--vegi);color:var(--vegi);padding:5px 9px;border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap">✓ Triaged</button>
-        <button onclick="triageItem('${it.id}','archived',this)" style="background:transparent;border:1px solid var(--border);color:var(--text3);padding:5px 9px;border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap">🗑 Archiv</button>
+      <div class="inbox-item__actions">
+        <button class="inbox-action inbox-action--done" onclick="triageItem('${it.id}','triaged',this)" title="Triaged">✓</button>
+        <button class="inbox-action inbox-action--archive" onclick="triageItem('${it.id}','archived',this)" title="Archiv">⌫</button>
       </div>
-    </div>`;
+    </article>`;
   }).join('');
 }
 
@@ -894,12 +1632,15 @@ window.triageItem = async function(id, newStatus, btn) {
       body: JSON.stringify({ status: newStatus }),
     });
     if (res.ok) {
-      // Fade-out the row + reload
-      const row = btn?.closest('div[style*="background:var(--surface)"]');
-      if (row) { row.style.opacity = '.3'; row.style.pointerEvents = 'none'; }
+      const row = btn?.closest('.inbox-item');
+      if (row) {
+        row.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        row.style.opacity = '0';
+        row.style.transform = 'translateX(12px)';
+      }
       setTimeout(() => loadStatus(), 300);
     } else {
-      btn.textContent = '❌'; btn.disabled = false;
+      if (btn) { btn.textContent = '❌'; btn.disabled = false; }
     }
   } catch (e) {
     if (btn) { btn.textContent = '❌'; btn.disabled = false; }
@@ -936,7 +1677,7 @@ window.quickCapture = async function() {
     result.style.color = 'var(--danger)';
     result.textContent = '❌ ' + (e.message || 'network');
   }
-  btn.disabled = false; btn.textContent = '+ Inbox capturen';
+  btn.disabled = false; btn.textContent = 'Save →';
 };
 </script>
 </body>
