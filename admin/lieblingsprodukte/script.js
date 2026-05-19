@@ -588,7 +588,7 @@
       : `<div style="aspect-ratio:${p.aspect==='1:1'?'1/1':'16/9'};border:1.5px dashed #cfbf9d;border-radius:14px;display:grid;place-items:center;color:#807260;font-size:13px;">kein Foto</div>`;
     return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Vorschau · ${safe(p.name) || 'Produkt'}</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/fonts.css">
 <style>
 body{margin:0;font-family:'Inter',sans-serif;background:#f7efde;color:#1a1410;padding:24px;}
 .frame{max-width:380px;margin:0 auto;background:#efe5cf;border:1px solid #cfbf9d;border-radius:20px;padding:18px;}
