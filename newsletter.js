@@ -80,9 +80,8 @@ function NlNav() {
       </button>
       <ul ref={navRef} className={"nl-nav-links" + (menuOpen ? " nl-nav-links--open" : "")}>
         <li><a href="/#manifest" onClick={() => setMenuOpen(false)}>Manifest</a></li>
-        <li><a href="/lieblingsprodukte.html" onClick={() => setMenuOpen(false)}>Lieblingsprodukte</a></li>
-        <li><a href="/kooperationen.html" onClick={() => setMenuOpen(false)}>Für Brands</a></li>
         <li><a href="/newsletter" aria-current="page" onClick={() => setMenuOpen(false)}>Newsletter</a></li>
+        <li><a href="/kooperationen.html" onClick={() => setMenuOpen(false)}>Für Brands</a></li>
       </ul>
       <a className="nl-nav-cta" href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">Insta&nbsp;→</a>
     </nav>
@@ -411,7 +410,6 @@ function NlFooter() {
           <h4>Site</h4>
           <ul>
             <li><a href="/#manifest">Manifest</a></li>
-            <li><a href="/lieblingsprodukte.html">Lieblingsprodukte</a></li>
             <li><a href="/kooperationen.html">Für Brands</a></li>
             <li><a href="https://smashtheapp.de" target="_blank" rel="noopener">SMASH (App)</a></li>
           </ul>

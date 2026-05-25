@@ -29,7 +29,7 @@
   letter-spacing: 4px;
 }
 
-/* ── Nav (sticky vanilla blur, matches /lieblingsprodukte) ── */
+/* ── Nav (sticky vanilla blur) ── */
 .nl-nav {
   display: flex;
   align-items: center;
@@ -857,7 +857,7 @@
 @media (max-width: 768px) {
   .nl-page { --nl-pad: 20px; }
 
-  /* Mobile Glass-Tab-Bar — same pattern as /lieblingsprodukte */
+  /* Mobile Glass-Tab-Bar */
   .nl-nav {
     gap: 12px;
     padding: 12px 20px;

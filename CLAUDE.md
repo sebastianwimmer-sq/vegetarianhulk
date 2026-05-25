@@ -5,10 +5,10 @@ Personal Brand Website von Sebi (@vegetarianhulk) — vegetarischer Fitness-Life
 ## Stack
 
 - **Frontend:** Static HTML/CSS/JS (kein Build-Tool)
-- **React Pages:** lieblingsprodukte.html, newsletter/index.html (React via CDN)
+- **React Pages:** newsletter/index.html (React+Babel via CDN — Performance-Schuld, eigener Sprint)
 - **Hosting:** GitHub Pages (vegetarianhulk.de via CNAME)
 - **Newsletter:** Brevo via Cloudflare Worker (peaking-ai-api.peaking.workers.dev)
-- **Admin:** /admin/lieblingsprodukte/ (localStorage-basiert)
+- **Admin:** /admin/lieblingsprodukte/ (localStorage-basiert, verwaltet archivierte Lieblingsprodukte-Daten — Public-Page in /archive/ seit Sprint 23.05.)
 
 ## Brand
 

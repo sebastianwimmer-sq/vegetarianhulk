@@ -6,5 +6,7 @@ Disallow: /design/
 Disallow: /prototypes/
 Disallow: /command/
 Disallow: /admin/
+Disallow: /archive/
+Disallow: /_preview/
 
 Sitemap: https://vegetarianhulk.de/sitemap.xml
