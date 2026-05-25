@@ -1074,18 +1074,7 @@ a { color: inherit; text-decoration: none; }
    V2 COMPONENTS — Lead-Funnel + Media-Kit
    ============================================================ */
 
-/* === Hero V2 — bigger photo + image fallback === */
-.hero-photo-v2 {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  margin-bottom: 28px;
-  object-fit: cover;
-  border: 3px solid var(--green1);
-  box-shadow: 0 0 32px rgba(0, 255, 106, 0.2);
-  background: var(--surface);
-  display: block;
-}
+/* .hero-photo-v2 entfernt in v31 Cleanup — kein Page nutzte es mehr */
 
 /* === Hero V3 — premium look mit double-shadow ring + cinematic === */
 .hero-photo-v3 {
@@ -1132,34 +1121,7 @@ a { color: inherit; text-decoration: none; }
   padding: 10px;
 }
 
-/* === Trust Bar (Stats Pills) ===
-   @deprecated V30 — auf index.html ersetzt durch .identity-glass-card .identity-line.
-   Selektor bleibt definiert, falls andere Pages (kooperationen / Future-Sections) nutzen.
-   Cleanup-Kandidat für Step 6. */
-.trust-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 24px 0 8px;
-}
-.trust-pill {
-  background: rgba(0, 255, 106, 0.08);
-  border: 1px solid rgba(0, 255, 106, 0.25);
-  color: var(--text);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.4px;
-  padding: 7px 12px;
-  border-radius: 99px;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-.trust-pill .tp-num {
-  color: var(--green1);
-  font-weight: 900;
-  font-size: 12px;
-}
+/* .trust-bar/.trust-pill entfernt in v31 Cleanup — kooperationen.html nutzt .brand-trust-bar (eigene Klasse) */
 
 /* === Lead Magnet Section === */
 .lead-magnet {
@@ -1800,40 +1762,7 @@ a { color: inherit; text-decoration: none; }
   color: var(--green-deep);
 }
 
-/* Manifest-Block — 3-4 Sätze die Sebi-DNA festigen */
-.manifest-block {
-  background: #ffffff;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 26px 24px;
-  margin: 0 0 28px;
-  position: relative;
-  box-shadow: 0 8px 24px -12px rgba(26, 20, 16, 0.10);
-}
-.manifest-block::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 24px;
-  right: 24px;
-  height: 2px;
-  background: linear-gradient(90deg, var(--green1), transparent);
-}
-.manifest-line {
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.55;
-  color: var(--text);
-  margin-bottom: 10px;
-}
-.manifest-line:last-child {
-  margin-bottom: 0;
-  font-family: 'Playfair Display', 'Inter', serif;
-  font-style: italic;
-  font-weight: 600;
-  font-size: 17px;
-  color: var(--green-deep);
-}
+/* .manifest-block + .manifest-line entfernt in v31 Cleanup — V17 hat den Block aus DNA-Section entfernt (war redundant zu H1) */
 
 /* Werte-Pills-Pro V30 Magazine — Number-Anchor + editorial spacing
    01-04 in Playfair italic + Title prominent + Emoji subtle accent */
@@ -1925,76 +1854,8 @@ a { color: inherit; text-decoration: none; }
   .werte-pill-pro-desc { font-size: 14px; }
 }
 
-/* Bibel-Vers-Quote */
-.bibel-vers {
-  background: linear-gradient(180deg, var(--surface) 0%, var(--surface2) 100%);
-  border-left: 3px solid var(--green1);
-  border-radius: 10px;
-  padding: 20px 22px;
-  margin: 0 0 28px;
-  position: relative;
-}
-.bibel-vers-icon {
-  position: absolute;
-  top: -2px;
-  right: 18px;
-  font-size: 22px;
-  opacity: 0.4;
-}
-.bibel-vers-quote {
-  font-family: 'Playfair Display', 'Inter', serif;
-  font-style: italic;
-  font-size: 17px;
-  line-height: 1.5;
-  color: var(--text);
-  margin-bottom: 10px;
-}
-.bibel-vers-source {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1.2px;
-  color: var(--green-deep);
-  text-transform: uppercase;
-}
-
-/* V17 — Tribe-Line kompakt (Footer-Statement zur DNA-Section, kein eigenes Card mehr) */
-.tribe-line {
-  font-family: 'Playfair Display', 'Inter', serif;
-  font-style: italic;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text2);
-  text-align: center;
-  margin: 18px 0 8px;
-  letter-spacing: 0.1px;
-  line-height: 1.4;
-}
-
-/* Tribe-Quote — Anti-Coach-Bro Statement (V16, V17 deprecated — siehe .tribe-line oben) */
-.tribe-quote {
-  background: linear-gradient(135deg, var(--green1), var(--green2));
-  border-radius: 16px;
-  padding: 24px 22px;
-  margin: 0 0 8px;
-  color: #ffffff;
-  text-align: center;
-  box-shadow: 0 14px 32px -10px rgba(45, 106, 62, 0.30);
-}
-.tribe-quote-text {
-  font-family: 'Playfair Display', 'Inter', serif;
-  font-size: 19px;
-  font-weight: 700;
-  line-height: 1.35;
-  letter-spacing: -0.3px;
-  margin-bottom: 6px;
-}
-.tribe-quote-sub {
-  font-size: 12px;
-  font-weight: 700;
-  opacity: 0.85;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
+/* .bibel-vers entfernt in v31 Cleanup — Step 3 hat Sprüche 24:16 in eigene .bibel-anchor Section gemoved */
+/* .tribe-line + .tribe-quote entfernt in v31 Cleanup — passte nicht zum cleaner Editorial-Vibe, geparkt im Brain */
 
 /* === Animations V7.1 — smoother, intuitiver, premium feel === */
 html { scroll-behavior: smooth; }
