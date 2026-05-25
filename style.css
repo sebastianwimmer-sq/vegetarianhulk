@@ -770,6 +770,75 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
+/* ============================================================
+   Sticky-CTA Mobile V30 — Newsletter-Funnel-Anchor
+   Mobile-only · Erscheint nach Hero out-of-view · Verschwindet bei
+   Lead-Magnet sichtbar (Memory-Bit, kein Re-Surface).
+   Subscribed users (localStorage) sehen nichts.
+   ============================================================ */
+.sticky-cta-mobile {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+
+  display: block;
+  padding: 14px 20px;
+  padding-bottom: calc(14px + env(safe-area-inset-bottom));
+
+  background: var(--forest-1);
+  color: var(--vanilla);
+  text-align: center;
+  text-decoration: none;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.2px;
+
+  box-shadow: 0 -8px 24px -8px rgba(45, 106, 62, 0.30);
+
+  /* Initial: off-screen, transparent, non-interactive */
+  opacity: 0;
+  transform: translateY(100%);
+  pointer-events: none;
+  transition: opacity 250ms ease-out, transform 250ms ease-out, background 0.2s ease;
+}
+
+.sticky-cta-mobile.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.sticky-cta-mobile:hover,
+.sticky-cta-mobile:focus-visible {
+  background: var(--forest-2);
+}
+
+.sticky-cta-mobile:focus-visible {
+  outline: 2px solid var(--vanilla);
+  outline-offset: -4px;
+}
+
+.sticky-cta-mobile:active {
+  background: var(--forest-deep);
+}
+
+/* Desktop ≥1024px: never show (Hero-CTA always-visible in Glass-Card) */
+@media (min-width: 1024px) {
+  .sticky-cta-mobile {
+    display: none !important;
+  }
+}
+
+/* A11y: prefers-reduced-motion → kein fade/slide */
+@media (prefers-reduced-motion: reduce) {
+  .sticky-cta-mobile {
+    transition: none;
+  }
+}
+
 /* === Section === */
 .section-head {
   display: flex;

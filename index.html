@@ -160,6 +160,10 @@
 
 </main>
 
+<!-- Sticky-CTA Mobile V30 — Newsletter-Funnel-Anchor (appears nach Hero out-of-view) -->
+<a href="#lead-magnet" class="sticky-cta-mobile" id="sticky-cta-mobile"
+   aria-label="Newsletter-Anmeldung">→ 3-Tage-Reset holen</a>
+
 <script>
 // IntersectionObserver für fade-in-up Animationen
 (function() {
@@ -207,6 +211,64 @@
   });
 })();
 
+// V30 — Sticky-CTA Mobile: IntersectionObserver-basiert
+// Hero out-of-view → fade-in · Lead-Magnet sichtbar → fade-out + Memory-Bit
+// Subscribed users (localStorage) sehen nichts. Desktop ≥1024 sieht nichts.
+(function() {
+  const cta = document.getElementById('sticky-cta-mobile');
+  if (!cta) return;
+
+  // localStorage Gate
+  try {
+    if (localStorage.getItem('vegetarianhulk_newsletterSubscribed') === 'true') {
+      cta.remove();
+      return;
+    }
+  } catch(e) { /* localStorage disabled — proceed */ }
+
+  // Desktop disabled (defense-in-depth, CSS @media kümmert sich auch)
+  if (window.matchMedia('(min-width: 1024px)').matches) {
+    cta.remove();
+    return;
+  }
+
+  const hero = document.querySelector('.cinematic-hero');
+  const leadMagnet = document.getElementById('lead-magnet');
+  if (!hero || !leadMagnet) return;
+
+  let leadMagnetSeen = false;
+  let heroVisible = true;
+
+  function updateVisibility() {
+    if (leadMagnetSeen) {
+      cta.classList.remove('is-visible');
+      return;
+    }
+    cta.classList.toggle('is-visible', !heroVisible);
+  }
+
+  // Hero out-of-view → Sticky appears
+  const heroObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      heroVisible = entry.isIntersecting;
+      updateVisibility();
+    });
+  }, { threshold: 0.05 });
+  heroObserver.observe(hero);
+
+  // Lead-Magnet visible → Sticky disappears + Memory-Bit (no re-surface)
+  const leadObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        leadMagnetSeen = true;
+        updateVisibility();
+        leadObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.10 });
+  leadObserver.observe(leadMagnet);
+})();
+
 // Footer-Year + Veggie-Years dynamisch (2026=10, 2027=11, ...)
 (function() {
   const y = new Date().getFullYear();
@@ -234,6 +296,8 @@ async function submitLead(e) {
     });
     const data = await res.json().catch(() => ({}));
     if (res.ok && data.ok) {
+      // Sticky-CTA: User ist subscribed — sticky soll nie wieder erscheinen
+      try { localStorage.setItem('vegetarianhulk_newsletterSubscribed', 'true'); } catch(e) {}
       const msg = data.already
         ? '✓ Du bist schon dabei. Check Inbox (auch Spam).'
         : '✓ Eingetragen. Tag-1-Mail kommt gleich.';
@@ -242,6 +306,8 @@ async function submitLead(e) {
     }
     // 503 Brevo not configured → mailto fallback (smooth)
     if (res.status === 503) {
+      // Sticky-CTA: User hat Mail-App geöffnet (Intent gezeigt) — sticky abblocken
+      try { localStorage.setItem('vegetarianhulk_newsletterSubscribed', 'true'); } catch(e) {}
       const subject = encodeURIComponent('Discipline-Reset bitte');
       const body = encodeURIComponent('Hi Sebi,\n\nbitte schick mir den 3-Tage-Disziplin-Reset.\n\nMeine Mail: ' + email + '\n\nDanke!');
       window.location.href = 'mailto:info@vegetarianhulk.de?subject=' + subject + '&body=' + body;

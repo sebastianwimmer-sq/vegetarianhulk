@@ -24,6 +24,9 @@ secrets/
 # === Node (falls je verwendet) ===
 node_modules/
 
+# === Cloudflare Wrangler (Preview-Deploys, lokaler State) ===
+.wrangler/
+
 # === Design-Archive (ZIPs lokal, nicht im Repo) ===
 design-archives/*
 !design-archives/.gitkeep
