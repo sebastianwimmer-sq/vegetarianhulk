@@ -12,6 +12,7 @@ Tracking welche Claude-Design-Outputs wann integriert wurden.
 
 ## History
 
+| 2026-05-25 | Sprint v30 Homepage Redesign (Code-First) | — code-only, no ZIP | 9f2bb1e → d6183e2 | Editorial Redesign in 6 Steps: Hero Cinematic + Identity-Glass-Card / Bibel-Anchor Sprüche 24:16 (eigene Section) / Lead-Preview 3 Teaser-Tiles / Sticky-CTA Mobile mit localStorage-Gate / Polish A+B+C (Nav + Werte-Magazine + Form-Premium) / Cleanup ~143 Z. Dead-CSS. Direction: Arda-Cinematic + VH-Soul. |
 | 2026-05-20 | Command Cockpit v2 Phase A | 2026-05-20-command-v2-phase-a-claude-design.zip | — | 2 Varianten (Editorial-Heavy + Builder-Heavy), Combine: B-Basis + A's Editorial Header |
 
 ---

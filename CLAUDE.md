@@ -16,6 +16,26 @@ Personal Brand Website von Sebi (@vegetarianhulk) — vegetarischer Fitness-Life
 - **Fonts:** Playfair Display (Display), Inter (Body)
 - **Tone:** Authentisch, diszipliniert, gläubig, kein Coaching-Sprech
 - **Tagline:** "Disziplin ist kein Talent. Sie ist ein Ritual."
+- **Anker-Vers:** Sprüche 24,16 (Schlachter 2000) — DER VH-Vers über alle Pages.
+
+## Brand-Token-Naming (v30+)
+
+Neue Komponenten ab Sprint v30 nutzen Future-Naming, parallel zu Legacy:
+
+| Future (v30+) | Legacy | Wert |
+|---|---|---|
+| `--vanilla` | `--bg` | #f7efde |
+| `--beige-1` | `--surface` | #efe5cf |
+| `--earth` | `--border` | #cfbf9d |
+| `--ink` | `--text` | #1a1410 |
+| `--ink-2` | `--text2` | #5c513f (WCAG-AA-safe für small text) |
+| `--ink-3` | `--text3` | #9a8c75 (nur für large-text decorative) |
+| `--forest-1` | `--green1` | #2d6a3e |
+| `--forest-2` | `--green2` | #1f4d2c |
+| `--forest-deep` | `--green-deep` | #1a3d28 |
+| `--forest-wash` | — (neu) | rgba(45,106,62,0.06) |
+
+Beide Namen sind in `:root` als Aliase definiert. Legacy bleibt für ältere Components, Future für neue.
 
 ## Design-Workflow (Claude Design Integration)
 

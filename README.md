@@ -5,6 +5,25 @@
 **Live:** [vegetarianhulk.de](https://vegetarianhulk.de) · Mirrors `.info` + `.online` → 301 → `.de`
 **Tagline:** „Disziplin ist kein Talent. Sie ist ein Ritual."
 **Anker-Vers:** Sprüche 24,16 (Schlachter 2000)
+**Version:** v31.0 (Sprint v30 wrap-up, 25.05.2026)
+**Preview:** [vegetarianhulk-preview.pages.dev](https://vegetarianhulk-preview.pages.dev) · Branch-Previews: `<branch>.vegetarianhulk-preview.pages.dev`
+
+## Sprint v30 Summary (abgeschlossen 25.05.2026)
+
+Editorial Homepage Redesign — Direction „Arda-Cinematic + VH-Soul", 6 Steps + Polish:
+
+| Step | What | Live |
+|---|---|---|
+| 1 | Quick-Fixes (Lieblingsprodukte → /archive/, Nav-Reorder, README sync) | ✅ v29.x |
+| 1.5 | Pro-404 (Branded 404 + Smart-Redirect-Stub + sessionStorage-Tracking) | ✅ v29.x |
+| 2 | Hero Cinematic (Portrait-Frame + Glass Identity Card) — `data-mode` switchbar | ✅ v30 |
+| 3 | Bibel-Anchor (Sprüche 24:16 als eigene Section, war fragmentiert) | ✅ v30.2 |
+| 4 | Lead-Preview (3 Teaser-Tiles, Foot-in-the-Door-Mechanik) | ✅ v30.3 |
+| 5 | Sticky-CTA Mobile (IntersectionObserver + localStorage Subscribe-Gate) | ✅ v30.4 |
+| 5.5 | Polish A (Nav-Contrast) + B (Werte-Magazine 01-04) + C (Form-Premium) | ✅ v30.5 |
+| 6 | Cleanup (~143 Z. Dead-CSS raus, Doku-Updates, v31.0 bump) | ✅ v31.0 |
+
+**Brand-Token-Aliases v30+:** `--forest-1` / `--vanilla` / `--beige-1` / `--ink-*` (parallel zu Legacy `--green1` / `--bg` / `--surface` / `--text*`). Details: [CLAUDE.md](./CLAUDE.md).
 
 ## Stack
 
@@ -44,7 +63,7 @@ index.html#hero       index.html#mag.       kooperationen.html
 vegetarianhulk/
 ├── index.html, kooperationen.html, impressum.html, datenschutz.html
 ├── 404.html, danke.html
-├── style.css                — Shared CSS (72KB, Refactor-Schuld)
+├── style.css                — Shared CSS (88KB, Cleanup-Schuld für Tiefer-Audit)
 ├── fonts.css                — Selbst gehostete Fonts
 ├── newsletter/, newsletter.css, newsletter.js, newsletter-tokens.css
 ├── 3-tage-reset/            — Lead-Magnet Print-Page
