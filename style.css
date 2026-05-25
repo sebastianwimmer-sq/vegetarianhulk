@@ -664,6 +664,112 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
+/* ============================================================
+   Lead-Magnet Preview V30 — 3 Teaser-Tiles unter dem Form
+   Foot-in-the-Door: "ich seh schon was ich bekomme"-Effekt.
+   KEIN Full-Preview — Tag-Nummer + Mini-Headline + 1 Satz max.
+   ============================================================ */
+.lead-preview {
+  margin: 28px 0 0;
+  padding-top: 26px;
+  border-top: 1px dashed var(--earth);
+}
+
+.lead-preview-eyebrow {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: var(--forest-1);
+  margin: 0 0 18px;
+  text-align: center;
+}
+
+.lead-preview-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lead-preview-tile {
+  background: var(--vanilla);
+  border: 1px solid var(--earth);
+  border-radius: 12px;
+  padding: 18px 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.lead-preview-tile:hover {
+  transform: translateY(-2px);
+  border-color: rgba(45, 106, 62, 0.30);
+  box-shadow: 0 10px 22px -10px rgba(45, 106, 62, 0.25);
+}
+
+.lead-preview-tile-day {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--forest-1);
+  margin: 0 0 8px;
+}
+
+.lead-preview-tile-title {
+  font-family: 'Playfair Display', 'Inter', serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.3px;
+  color: var(--ink);
+  margin: 0 0 6px;
+  text-wrap: balance;
+}
+
+.lead-preview-tile-teaser {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin: 0;
+}
+
+/* Desktop ≥768px: 3-col Grid */
+@media (min-width: 768px) {
+  .lead-preview-grid {
+    flex-direction: row;
+    gap: 14px;
+  }
+  .lead-preview-tile {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .lead-preview-tile-title {
+    font-size: 17px;
+  }
+}
+
+/* Sehr kleine Screens: Padding shrink */
+@media (max-width: 380px) {
+  .lead-preview-tile {
+    padding: 16px 18px;
+  }
+  .lead-preview-tile-title {
+    font-size: 17px;
+  }
+}
+
+/* A11y — Reduced Motion: Hover-Lift weg */
+@media (prefers-reduced-motion: reduce) {
+  .lead-preview-tile {
+    transition: none;
+  }
+  .lead-preview-tile:hover {
+    transform: none;
+  }
+}
+
 /* === Section === */
 .section-head {
   display: flex;
