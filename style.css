@@ -26,6 +26,24 @@
   --radius: 16px;
 }
 
+/* === V30 Token Aliases (Future-Naming, parallel zu --green*) ===
+   Neue Komponenten ab Sprint v30 nutzen --forest-*, --vanilla, --ink-*.
+   Bestehende --green1/--text/--surface etc. bleiben unangetastet. */
+:root {
+  --vanilla:      var(--bg);
+  --beige-1:      var(--surface);
+  --beige-2:      var(--surface2);
+  --earth:        var(--border);
+  --ink:          var(--text);
+  --ink-2:        var(--text2);
+  --ink-3:        var(--text3);
+  --forest-1:     var(--green1);
+  --forest-2:     var(--green2);
+  --forest-3:     var(--green3);
+  --forest-deep:  var(--green-deep);
+  --forest-wash:  rgba(45, 106, 62, 0.06);
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html, body {
@@ -233,6 +251,313 @@ a { color: inherit; text-decoration: none; }
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1px;
+}
+
+/* ============================================================
+   Cinematic Hero V30 — Editorial Portrait-Frame + Glass Identity
+   Switchbar: data-mode="portrait" (default) / data-mode="full-bleed"
+   ============================================================ */
+.cinematic-hero {
+  margin: 0 auto 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+/* === Portrait-Mode Photo Treatment === */
+.cinematic-hero[data-mode="portrait"] .cinematic-hero__photo {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 1 / 1;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow:
+    0 24px 60px -22px rgba(45, 106, 62, 0.30),
+    0 8px 24px -8px rgba(26, 20, 16, 0.18);
+  isolation: isolate;
+}
+
+.cinematic-hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Vignette — Inner Shadow oben + unten */
+.cinematic-hero__photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow:
+    inset 0 24px 48px -24px rgba(26, 20, 16, 0.45),
+    inset 0 -32px 64px -32px rgba(26, 20, 16, 0.35);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Forest-Wash-Overlay — subtle top + bottom fade */
+.cinematic-hero__photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(45, 106, 62, 0.08) 0%,
+    rgba(45, 106, 62, 0.00) 35%,
+    rgba(45, 106, 62, 0.00) 65%,
+    rgba(45, 106, 62, 0.05) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+.cinematic-hero__fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--beige-1), var(--beige-2));
+  border: 2px dashed var(--earth);
+  color: var(--ink-3);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: inherit;
+}
+
+/* === Identity Glass Card === */
+.identity-glass-card {
+  width: 100%;
+  background: var(--beige-1);
+  border: 1px solid var(--earth);
+  border-radius: 20px;
+  padding: 28px 24px;
+  box-shadow: 0 16px 40px -24px rgba(26, 20, 16, 0.15);
+}
+
+.identity-glass-card h1 {
+  font-family: 'Playfair Display', 'Inter', serif;
+  font-size: clamp(34px, 6vw, 54px);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -1.6px;
+  color: var(--ink);
+  margin: 0 0 18px;
+  text-wrap: balance;
+}
+
+.identity-glass-card h1 em,
+.identity-glass-card h1 .italic {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--forest-1);
+}
+
+.identity-glass-card .identity-sub {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink);
+  border-left: 2px solid var(--forest-1);
+  padding-left: 14px;
+  margin: 0 0 22px;
+  max-width: 480px;
+}
+
+.identity-glass-card .identity-sub strong {
+  font-weight: 700;
+  color: var(--forest-deep);
+}
+
+.identity-glass-card .identity-line {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-2);
+  letter-spacing: 0.3px;
+  margin: 0 0 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--earth);
+}
+
+.identity-glass-card .identity-ctas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.identity-glass-card .identity-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 22px;
+  background: var(--forest-1);
+  color: var(--vanilla);
+  border-radius: 12px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  box-shadow: 0 6px 18px -8px rgba(45, 106, 62, 0.45);
+  transition: background 0.2s ease, transform 0.12s ease;
+}
+
+.identity-glass-card .identity-cta-primary:hover,
+.identity-glass-card .identity-cta-primary:focus-visible {
+  background: var(--forest-2);
+  transform: translateY(-1px);
+}
+
+.identity-glass-card .identity-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 18px;
+  background: transparent;
+  color: var(--forest-1);
+  border: 1.5px solid var(--forest-1);
+  border-radius: 12px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.identity-glass-card .identity-cta-secondary:hover,
+.identity-glass-card .identity-cta-secondary:focus-visible {
+  background: var(--forest-1);
+  color: var(--vanilla);
+}
+
+/* === Desktop Break-out (≥1024px) === */
+@media (min-width: 1024px) {
+  .cinematic-hero {
+    /* Bricht aus .page (max-width: 500px) zentriert auf 1100px aus */
+    width: min(1100px, calc(100vw - 64px));
+    max-width: none;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 96px;
+
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+  }
+
+  .cinematic-hero[data-mode="portrait"] .cinematic-hero__photo {
+    flex: 0 0 52%;
+    max-width: none;
+    aspect-ratio: 4 / 5;
+    border-radius: 22px;
+    margin-right: -6%;
+    z-index: 1;
+  }
+
+  .identity-glass-card {
+    flex: 1 1 auto;
+    align-self: center;
+    margin-left: 0;
+    padding: 40px 36px;
+
+    /* Echter Glass-Effekt nur Desktop (Card überlappt Foto) */
+    background: rgba(247, 239, 222, 0.72);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    border: 1px solid rgba(45, 106, 62, 0.18);
+    border-radius: 22px;
+    z-index: 2;
+    box-shadow: 0 24px 60px -20px rgba(26, 20, 16, 0.20);
+  }
+
+  .identity-glass-card h1 {
+    font-size: clamp(44px, 4.2vw, 56px);
+    letter-spacing: -2px;
+    margin-bottom: 22px;
+  }
+
+  .identity-glass-card .identity-sub {
+    font-size: 16px;
+    margin-bottom: 26px;
+  }
+
+  .identity-glass-card .identity-line {
+    margin-bottom: 28px;
+    padding-top: 22px;
+  }
+
+  .identity-glass-card .identity-ctas {
+    flex-direction: row;
+    gap: 14px;
+  }
+
+  .identity-glass-card .identity-cta-primary,
+  .identity-glass-card .identity-cta-secondary {
+    flex: 1 1 auto;
+  }
+}
+
+/* === Glass-Card Fallback (kein backdrop-filter Support) === */
+@supports not (backdrop-filter: blur(1px)) {
+  @media (min-width: 1024px) {
+    .identity-glass-card {
+      background: rgba(247, 239, 222, 0.96);
+    }
+  }
+}
+
+/* === A11y — iOS prefers-reduced-transparency === */
+@media (prefers-reduced-transparency: reduce) {
+  .identity-glass-card {
+    background: var(--beige-1) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+/* === Full-Bleed Mode Scaffold (Future-Switch, untested ohne cinematic Foto) === */
+.cinematic-hero[data-mode="full-bleed"] .cinematic-hero__photo {
+  max-width: none;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  aspect-ratio: 16 / 10;
+  border-radius: 0;
+}
+
+@media (min-width: 1024px) {
+  .cinematic-hero[data-mode="full-bleed"] {
+    flex-direction: column;
+    position: relative;
+  }
+  .cinematic-hero[data-mode="full-bleed"] .cinematic-hero__photo {
+    width: 100vw;
+    aspect-ratio: 21 / 9;
+    flex: 0 0 auto;
+    margin: 0;
+  }
+  .cinematic-hero[data-mode="full-bleed"] .identity-glass-card {
+    position: absolute;
+    bottom: 48px;
+    left: 48px;
+    max-width: 520px;
+    margin: 0;
+  }
 }
 
 /* === Section === */
@@ -513,7 +838,10 @@ a { color: inherit; text-decoration: none; }
   padding: 10px;
 }
 
-/* === Trust Bar (Stats Pills) === */
+/* === Trust Bar (Stats Pills) ===
+   @deprecated V30 — auf index.html ersetzt durch .identity-glass-card .identity-line.
+   Selektor bleibt definiert, falls andere Pages (kooperationen / Future-Sections) nutzen.
+   Cleanup-Kandidat für Step 6. */
 .trust-bar {
   display: flex;
   flex-wrap: wrap;

@@ -34,30 +34,29 @@
     </nav>
   </header>
 
-  <!-- Hero V21 — Desktop zweispaltig (Foto links · Text rechts ab 1024px), Mobile unverändert stacked -->
-  <section class="hero">
-    <div class="hero-photo-wrap fade-in-up">
-      <img src="hero.jpg?v=v29" alt="Sebi" class="hero-photo-v3"
+  <!-- Hero V30 — Cinematic Portrait-Frame + Glass Identity-Card (data-mode switchbar) -->
+  <section class="cinematic-hero" data-mode="portrait">
+    <div class="cinematic-hero__photo fade-in-up">
+      <img src="hero.jpg?v=v29" alt="Sebi, Founder vegetarianhulk" class="cinematic-hero__img"
+           fetchpriority="high" loading="eager"
            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-      <div class="hero-photo-fallback" style="display:none">FOTO<br>kommt</div>
+      <div class="cinematic-hero__fallback" style="display:none">FOTO<br>kommt</div>
     </div>
 
-    <div class="hero-text">
-      <h1 class="fade-in-up delay-1">Disziplin ist<br>kein Talent.<br><span class="italic">Sie ist ein Ritual.</span></h1>
+    <div class="identity-glass-card fade-in-up delay-1">
+      <h1>Disziplin ist<br>kein Talent.<br><em>Sie ist ein Ritual.</em></h1>
 
-      <div class="hero-sub fade-in-up delay-2" style="margin-top:24px">
+      <p class="identity-sub">
         Ich war jemand der hundertmal angefangen hat. Bis ich <strong>aufgehört hab anzufangen</strong>.
-      </div>
+      </p>
 
-      <div class="identity-line fade-in-up delay-2">
+      <div class="identity-line">
         Sebi · 25 · Vegetarisch seit 2016 · Christ · Macher
       </div>
 
-      <div class="trust-bar fade-in-up delay-3">
-        <span class="trust-pill">🌱 10 Jahre vegetarisch</span>
-        <span class="trust-pill">✝️ Faith</span>
-        <span class="trust-pill">🏋️ Gym seit 2017</span>
-        <span class="trust-pill">🦁 Macher</span>
+      <div class="identity-ctas">
+        <a href="#lead-magnet" class="identity-cta-primary">→ 3-Tage-Reset holen</a>
+        <a href="kooperationen.html" class="identity-cta-secondary">Für Brands →</a>
       </div>
     </div>
   </section>
@@ -103,7 +102,7 @@
   </section>
 
   <!-- Lead-Magnet — der einzige dominante User-CTA -->
-  <section class="lead-magnet fade-in-up">
+  <section class="lead-magnet fade-in-up" id="lead-magnet">
     <div class="lead-magnet-eyebrow">Gratis · 3 Mails · 0 Spam</div>
     <div class="lead-magnet-title">Was ich morgens mache, bevor ich aufs Handy schaue.</div>
     <p class="lead-magnet-promise">
@@ -155,53 +154,24 @@
   document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
 })();
 
-// V11 — Multi-Layer Parallax + Fade-Out (Apple-Style Hero-Disappear)
-// Hero-Layer driften unterschiedlich + faden gemeinsam aus beim runter-Scrollen
+// V30 — 3D-Card-Tilt dezenter: max 5°, 300ms ease-out, Desktop-only
+// Multi-Layer-Parallax aus V11 entfernt (Performance + Cleaner Editorial-Vibe)
 (function() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const layers = [
-    { el: document.querySelector('.hero-photo-wrap'), speed: 0.10 },
-    { el: document.querySelector('.hero h1'),         speed: 0.05 },
-    { el: document.querySelector('.hero-sub'),        speed: 0.03 },
-    { el: document.querySelector('.identity-line'),   speed: 0.025 },
-    { el: document.querySelector('.trust-bar'),       speed: 0.02 }
-  ].filter(l => l.el);
-  if (!layers.length) return;
-  const FADE_START = 80;   // fade-out beginnt bei 80px scrollY
-  const FADE_END   = 420;  // ab 420px scrollY komplett unsichtbar
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (ticking) return;
-    window.requestAnimationFrame(() => {
-      const y = window.scrollY;
-      const fadeProgress = Math.max(0, Math.min(1, (y - FADE_START) / (FADE_END - FADE_START)));
-      const opacity = 1 - fadeProgress;
-      layers.forEach(l => {
-        if (y < 600) {
-          l.el.style.transform = `translateY(${y * l.speed}px)`;
-        }
-        l.el.style.opacity = opacity;
-      });
-      ticking = false;
-    });
-    ticking = true;
-  }, { passive: true });
-})();
-
-// V8 — 3D Card-Tilt: Mouse-tracked Perspective auf Werte-Pills + Manifest
-(function() {
+  if (window.matchMedia('(max-width: 1023px)').matches) return; // Desktop only
   if (window.matchMedia('(hover: none)').matches) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const tiltElements = document.querySelectorAll('.werte-pill-pro, .manifest-block');
+  const tiltElements = document.querySelectorAll('.werte-pill-pro');
   tiltElements.forEach(el => {
+    el.style.transition = 'transform 300ms cubic-bezier(0.16, 1, 0.3, 1)';
+    el.style.transformStyle = 'preserve-3d';
     let rafId = null;
     el.addEventListener('mousemove', (e) => {
       if (rafId) cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
         const rect = el.getBoundingClientRect();
-        const dx = (e.clientX - rect.left) / rect.width  - 0.5; // -0.5..0.5
+        const dx = (e.clientX - rect.left) / rect.width  - 0.5;
         const dy = (e.clientY - rect.top)  / rect.height - 0.5;
-        const maxTilt = el.classList.contains('manifest-block') ? 8 : 12;
+        const maxTilt = 5; // V30: dezenter (war 12)
         el.style.setProperty('--tilt-ry', `${dx * maxTilt * 2}deg`);
         el.style.setProperty('--tilt-rx', `${-dy * maxTilt * 2}deg`);
         el.classList.add('tilting');
