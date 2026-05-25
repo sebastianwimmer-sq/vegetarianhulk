@@ -37,11 +37,28 @@
   --ink:          var(--text);
   --ink-2:        var(--text2);
   --ink-3:        var(--text3);
-  --forest-1:     var(--green1);
-  --forest-2:     var(--green2);
-  --forest-3:     var(--green3);
-  --forest-deep:  var(--green-deep);
-  --forest-wash:  rgba(45, 106, 62, 0.06);
+}
+
+/* === V31 Hybrid Forest Family (Sprint v31 — Hero-Foto-anchored) ===
+   3-Tone-Family die Brand-Stylebook + Foto-Reality versöhnt:
+   - --forest-anchor : Foto-BG-Reality (#122d1c, sampled) — tiefste Backgrounds,
+     Gradient-Stops, Body-Text-Emphasis, Hover-Darken auf CTAs
+   - --forest-primary: Sebi-Brand-Spec (#045927) — CTAs, Buttons, Sticky-CTA,
+     Form-Submit, Werte-Number-Anchor, Hamburger-active-state
+   - --forest-accent : Saturated Highlight (#1a7340) — Italic-Headlines,
+     Hover-Akzente, Bibel-Anchor-Label, Detail-Brights
+   "Foto ist im Subtle drin, Brand ist im Action drin, Akzent ist im Detail." */
+:root {
+  --forest-anchor:  #122d1c;
+  --forest-primary: #045927;
+  --forest-accent:  #1a7340;
+  --forest-wash:    rgba(4, 89, 39, 0.08);
+
+  /* V30-Aliase neu mapped auf Hybrid-Family (Sprint-v30-Components inherit) */
+  --forest-1:     var(--forest-primary);   /* CTAs et al. (war: var(--green1) = #2d6a3e) */
+  --forest-2:     var(--forest-anchor);    /* Hover-darken / deep gradients (war: --green2) */
+  --forest-3:     var(--green3);           /* Subtle topbar tint (legacy bleibt) */
+  --forest-deep:  var(--forest-anchor);    /* Body-text emphasis (war: --green-deep) */
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -58,7 +75,7 @@ html, body {
 body {
   padding: 0 0 60px;
   /* subtle warm forest halo top */
-  background-image: radial-gradient(ellipse at 50% -10%, rgba(45, 106, 62, 0.10), transparent 70%);
+  background-image: radial-gradient(ellipse at 50% -10%, rgba(4, 89, 39, 0.10), transparent 70%);
 }
 
 a { color: inherit; text-decoration: none; }
@@ -84,7 +101,7 @@ a { color: inherit; text-decoration: none; }
   background: rgba(247, 239, 222, 0.72);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   backdrop-filter: blur(24px) saturate(180%);
-  border-bottom: 1px solid rgba(45, 106, 62, 0.08);
+  border-bottom: 1px solid rgba(4, 89, 39, 0.08);
   box-shadow: 0 4px 24px rgba(26, 20, 16, 0.04);
   padding-top: max(10px, env(safe-area-inset-top));
 }
@@ -106,7 +123,7 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
   padding: 8px 12px;
   border-radius: 999px;
-  background: rgba(45, 106, 62, 0.10);
+  background: rgba(4, 89, 39, 0.10);
   transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .topbar-meta:hover { background: var(--forest-1); color: var(--vanilla); }
@@ -130,7 +147,7 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.2px;
   padding: 8px 14px;
   border-radius: 999px;
-  background: rgba(45, 106, 62, 0.10);
+  background: rgba(4, 89, 39, 0.10);
   white-space: nowrap;
   transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
   flex-shrink: 0;
@@ -143,7 +160,7 @@ a { color: inherit; text-decoration: none; }
 .topbar-link[aria-current="page"] {
   background: var(--green1);
   color: #fff;
-  box-shadow: 0 2px 8px rgba(45, 106, 62, 0.25);
+  box-shadow: 0 2px 8px rgba(4, 89, 39, 0.25);
 }
 /* Hamburger button — hidden on desktop, prominent touch-target on mobile */
 .topbar-burger {
@@ -152,7 +169,7 @@ a { color: inherit; text-decoration: none; }
   justify-content: center;
   width: 40px;
   height: 40px;
-  background: rgba(45, 106, 62, 0.10);
+  background: rgba(4, 89, 39, 0.10);
   border: none;
   color: var(--forest-deep);
   padding: 0;
@@ -161,7 +178,7 @@ a { color: inherit; text-decoration: none; }
   border-radius: 999px;
   transition: background 0.2s, transform 0.12s;
 }
-.topbar-burger:hover { background: rgba(45, 106, 62, 0.18); }
+.topbar-burger:hover { background: rgba(4, 89, 39, 0.18); }
 .topbar-burger:active { transform: scale(0.94); }
 .topbar-burger[aria-expanded="true"] {
   background: var(--forest-1);
@@ -183,7 +200,7 @@ a { color: inherit; text-decoration: none; }
     background: rgba(247, 239, 222, 0.92);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
     backdrop-filter: blur(24px) saturate(180%);
-    border-bottom: 1px solid rgba(45, 106, 62, 0.08);
+    border-bottom: 1px solid rgba(4, 89, 39, 0.08);
     box-shadow: 0 8px 32px rgba(26, 20, 16, 0.08);
     overflow: visible;
     animation: topbar-slide-in 0.2s cubic-bezier(0.22, 1, 0.36, 1);
@@ -289,7 +306,7 @@ a { color: inherit; text-decoration: none; }
   border-radius: 18px;
   overflow: hidden;
   box-shadow:
-    0 24px 60px -22px rgba(45, 106, 62, 0.30),
+    0 24px 60px -22px rgba(4, 89, 39, 0.30),
     0 8px 24px -8px rgba(26, 20, 16, 0.18);
   isolation: isolate;
 }
@@ -298,7 +315,16 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 35%;   /* V31: Mobile 1:1 crop von 4:5 Foto — Gesicht auf goldenem Schnitt */
   display: block;
+}
+
+/* Desktop ≥1024px hat aspect-ratio: 4/5 = matches Foto exakt, kein crop nötig.
+   Object-position fällt zurück auf center (default) — siehe @media block unten. */
+@media (min-width: 1024px) {
+  .cinematic-hero__img {
+    object-position: center center;
+  }
 }
 
 /* Vignette — Inner Shadow oben + unten */
@@ -322,10 +348,10 @@ a { color: inherit; text-decoration: none; }
   border-radius: inherit;
   background: linear-gradient(
     180deg,
-    rgba(45, 106, 62, 0.08) 0%,
-    rgba(45, 106, 62, 0.00) 35%,
-    rgba(45, 106, 62, 0.00) 65%,
-    rgba(45, 106, 62, 0.05) 100%
+    rgba(4, 89, 39, 0.08) 0%,
+    rgba(4, 89, 39, 0.00) 35%,
+    rgba(4, 89, 39, 0.00) 65%,
+    rgba(4, 89, 39, 0.05) 100%
   );
   pointer-events: none;
   z-index: 2;
@@ -373,7 +399,7 @@ a { color: inherit; text-decoration: none; }
 .identity-glass-card h1 .italic {
   font-style: italic;
   font-weight: 500;
-  color: var(--forest-1);
+  color: var(--forest-accent);   /* V31: italic-headlines use saturated highlight */
 }
 
 .identity-glass-card .identity-sub {
@@ -423,7 +449,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 15px;
   letter-spacing: 0.2px;
   text-decoration: none;
-  box-shadow: 0 6px 18px -8px rgba(45, 106, 62, 0.45);
+  box-shadow: 0 6px 18px -8px rgba(4, 89, 39, 0.45);
   transition: background 0.2s ease, transform 0.12s ease;
 }
 
@@ -493,7 +519,7 @@ a { color: inherit; text-decoration: none; }
     background: rgba(247, 239, 222, 0.72);
     backdrop-filter: blur(14px) saturate(120%);
     -webkit-backdrop-filter: blur(14px) saturate(120%);
-    border: 1px solid rgba(45, 106, 62, 0.18);
+    border: 1px solid rgba(4, 89, 39, 0.18);
     border-radius: 22px;
     z-index: 2;
     box-shadow: 0 24px 60px -20px rgba(26, 20, 16, 0.20);
@@ -605,7 +631,7 @@ a { color: inherit; text-decoration: none; }
   font-weight: 700;
   letter-spacing: 2.4px;
   text-transform: uppercase;
-  color: var(--forest-1);
+  color: var(--forest-accent);   /* V31: Bibel-Label gets saturated highlight */
   white-space: nowrap;
 }
 
@@ -717,8 +743,8 @@ a { color: inherit; text-decoration: none; }
 
 .lead-preview-tile:hover {
   transform: translateY(-2px);
-  border-color: rgba(45, 106, 62, 0.30);
-  box-shadow: 0 10px 22px -10px rgba(45, 106, 62, 0.25);
+  border-color: rgba(4, 89, 39, 0.30);
+  box-shadow: 0 10px 22px -10px rgba(4, 89, 39, 0.25);
 }
 
 .lead-preview-tile-day {
@@ -811,7 +837,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 15px;
   letter-spacing: 0.2px;
 
-  box-shadow: 0 -8px 24px -8px rgba(45, 106, 62, 0.30);
+  box-shadow: 0 -8px 24px -8px rgba(4, 89, 39, 0.30);
 
   /* Initial: off-screen, transparent, non-interactive */
   opacity: 0;
@@ -973,7 +999,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 16px;
   letter-spacing: -0.2px;
   cursor: pointer;
-  box-shadow: 0 12px 28px -8px rgba(45, 106, 62, 0.35);
+  box-shadow: 0 12px 28px -8px rgba(4, 89, 39, 0.35);
   transition: filter 0.15s, transform 0.12s;
 }
 .coop-cta:hover { filter: brightness(1.06); }
@@ -1086,7 +1112,7 @@ a { color: inherit; text-decoration: none; }
   object-position: center 30%;  /* Gesicht hochziehen */
   border: 3px solid var(--green1);
   box-shadow:
-    0 0 0 6px rgba(45, 106, 62, 0.14),
+    0 0 0 6px rgba(4, 89, 39, 0.14),
     0 24px 48px -16px rgba(26, 20, 16, 0.18),
     0 8px 20px -8px rgba(26, 20, 16, 0.10);
   background: var(--surface);
@@ -1186,7 +1212,7 @@ a { color: inherit; text-decoration: none; }
 }
 .lead-magnet-form input[type="email"]:focus,
 .lead-magnet-form input[type="text"]:focus {
-  box-shadow: 0 0 0 4px var(--forest-wash), 0 4px 14px -6px rgba(45, 106, 62, 0.20);
+  box-shadow: 0 0 0 4px var(--forest-wash), 0 4px 14px -6px rgba(4, 89, 39, 0.20);
   border-color: var(--forest-1);
 }
 .lead-magnet-form input[type="email"]::placeholder,
@@ -1197,7 +1223,7 @@ a { color: inherit; text-decoration: none; }
 .lead-magnet-form button {
   margin-top: 4px;
   padding: 18px 20px;
-  background: linear-gradient(180deg, var(--green1) 0%, var(--green2) 100%);
+  background: linear-gradient(180deg, var(--forest-primary) 0%, var(--forest-anchor) 100%);
   color: var(--vanilla);
   border: none;
   border-radius: 12px;
@@ -1206,17 +1232,17 @@ a { color: inherit; text-decoration: none; }
   font-size: 15px;
   letter-spacing: 0.1px;
   cursor: pointer;
-  box-shadow: 0 8px 20px -8px rgba(45, 106, 62, 0.40);
+  box-shadow: 0 8px 20px -8px rgba(4, 89, 39, 0.40);
   transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.25s ease;
 }
 .lead-magnet-form button:hover {
-  background: linear-gradient(180deg, var(--green2) 0%, var(--green-deep) 100%);
+  background: var(--forest-anchor);   /* V31: hover settles into anchor (Hover-darken via anchor) */
   transform: translateY(-1px);
-  box-shadow: 0 14px 32px -10px rgba(45, 106, 62, 0.55);
+  box-shadow: 0 14px 32px -10px rgba(4, 89, 39, 0.55);
 }
 .lead-magnet-form button:active {
   transform: translateY(0);
-  box-shadow: 0 4px 12px -4px rgba(45, 106, 62, 0.40);
+  box-shadow: 0 4px 12px -4px rgba(4, 89, 39, 0.40);
 }
 .lead-magnet-form button:focus-visible {
   outline: 2px solid var(--forest-1);
@@ -1403,7 +1429,7 @@ a { color: inherit; text-decoration: none; }
   padding: 24px 22px;
   margin: 28px 0 0;
   text-align: center;
-  box-shadow: 0 14px 32px -8px rgba(45, 106, 62, 0.35);
+  box-shadow: 0 14px 32px -8px rgba(4, 89, 39, 0.35);
   display: block;
   transition: filter 0.15s, transform 0.12s;
 }
@@ -1606,7 +1632,7 @@ a { color: inherit; text-decoration: none; }
 .v5-cta-primary {
   background: linear-gradient(180deg, var(--green1) 0%, var(--green2) 100%);
   color: #fff;
-  box-shadow: 0 8px 20px -6px rgba(45, 106, 62, 0.35);
+  box-shadow: 0 8px 20px -6px rgba(4, 89, 39, 0.35);
 }
 .v5-cta-primary:hover { filter: brightness(1.06); }
 .v5-cta-primary:active { transform: scale(0.99); }
@@ -1707,7 +1733,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 15px;
   letter-spacing: -0.2px;
   cursor: pointer;
-  box-shadow: 0 8px 20px -6px rgba(45, 106, 62, 0.35);
+  box-shadow: 0 8px 20px -6px rgba(4, 89, 39, 0.35);
   transition: filter 0.15s, transform 0.12s;
 }
 .brand-form-submit:hover { filter: brightness(1.06); }
@@ -1759,7 +1785,7 @@ a { color: inherit; text-decoration: none; }
 .dna-h2 .italic {
   font-style: italic;
   font-weight: 500;
-  color: var(--green-deep);
+  color: var(--forest-accent);   /* V31: italic-accent uses saturated highlight */
 }
 
 /* .manifest-block + .manifest-line entfernt in v31 Cleanup — V17 hat den Block aus DNA-Section entfernt (war redundant zu H1) */
@@ -1792,9 +1818,9 @@ a { color: inherit; text-decoration: none; }
               box-shadow 250ms ease;
 }
 .werte-pill-pro:hover {
-  border-color: rgba(45, 106, 62, 0.35);
+  border-color: rgba(4, 89, 39, 0.35);
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px -14px rgba(45, 106, 62, 0.30);
+  box-shadow: 0 10px 24px -14px rgba(4, 89, 39, 0.30);
 }
 
 .werte-pill-pro-num {
@@ -1889,13 +1915,13 @@ html { scroll-behavior: smooth; }
 @keyframes hero-photo-breathe {
   0%, 100% {
     box-shadow:
-      0 0 0 6px rgba(45, 106, 62, 0.12),
+      0 0 0 6px rgba(4, 89, 39, 0.12),
       0 24px 48px -16px rgba(26, 20, 16, 0.18),
       0 8px 20px -8px rgba(26, 20, 16, 0.10);
   }
   50% {
     box-shadow:
-      0 0 0 10px rgba(45, 106, 62, 0.18),
+      0 0 0 10px rgba(4, 89, 39, 0.18),
       0 28px 56px -14px rgba(26, 20, 16, 0.22),
       0 12px 24px -8px rgba(26, 20, 16, 0.12);
   }
@@ -1970,23 +1996,23 @@ html { scroll-behavior: smooth; }
 :root {
   /* Forest-tinted Layered Shadow Tokens */
   --shadow-pill:
-    0 1px 2px rgba(45, 106, 62, 0.06),
-    0 4px 12px -2px rgba(45, 106, 62, 0.10),
+    0 1px 2px rgba(4, 89, 39, 0.06),
+    0 4px 12px -2px rgba(4, 89, 39, 0.10),
     0 12px 28px -8px rgba(26, 61, 40, 0.08);
   --shadow-pill-hover:
-    0 2px 4px rgba(45, 106, 62, 0.10),
-    0 8px 20px -2px rgba(45, 106, 62, 0.16),
+    0 2px 4px rgba(4, 89, 39, 0.10),
+    0 8px 20px -2px rgba(4, 89, 39, 0.16),
     0 24px 48px -12px rgba(26, 61, 40, 0.14);
   --shadow-card:
-    0 1px 3px rgba(45, 106, 62, 0.08),
-    0 12px 32px -8px rgba(45, 106, 62, 0.12),
+    0 1px 3px rgba(4, 89, 39, 0.08),
+    0 12px 32px -8px rgba(4, 89, 39, 0.12),
     0 32px 64px -16px rgba(26, 61, 40, 0.10);
   --shadow-card-hover:
-    0 2px 6px rgba(45, 106, 62, 0.12),
-    0 20px 48px -8px rgba(45, 106, 62, 0.18),
+    0 2px 6px rgba(4, 89, 39, 0.12),
+    0 20px 48px -8px rgba(4, 89, 39, 0.18),
     0 48px 96px -16px rgba(26, 61, 40, 0.16);
   --shadow-tribe:
-    0 4px 12px -4px rgba(45, 106, 62, 0.22),
+    0 4px 12px -4px rgba(4, 89, 39, 0.22),
     0 24px 56px -12px rgba(26, 61, 40, 0.32),
     0 40px 80px -16px rgba(26, 61, 40, 0.18);
 }
@@ -2007,7 +2033,7 @@ html { scroll-behavior: smooth; }
   will-change: transform;
 }
 .werte-pill-pro:hover {
-  border-color: rgba(45, 106, 62, 0.35);
+  border-color: rgba(4, 89, 39, 0.35);
   --tilt-y: -2px;
   /* :hover transform must repeat full chain to override existing rule */
   transform:
@@ -2058,14 +2084,14 @@ html { scroll-behavior: smooth; }
 
 .bibel-vers {
   box-shadow:
-    0 1px 3px rgba(45, 106, 62, 0.06),
-    0 8px 24px -8px rgba(45, 106, 62, 0.14);
+    0 1px 3px rgba(4, 89, 39, 0.06),
+    0 8px 24px -8px rgba(4, 89, 39, 0.14);
   transition: box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .bibel-vers:hover {
   box-shadow:
-    0 2px 6px rgba(45, 106, 62, 0.10),
-    0 16px 40px -8px rgba(45, 106, 62, 0.20);
+    0 2px 6px rgba(4, 89, 39, 0.10),
+    0 16px 40px -8px rgba(4, 89, 39, 0.20);
 }
 
 .tribe-quote {
@@ -2120,23 +2146,23 @@ html { scroll-behavior: smooth; }
 /* === V9 Stronger Shadow Tokens (override V8) === */
 :root {
   --shadow-pill:
-    0 2px 4px rgba(45, 106, 62, 0.14),
-    0 8px 20px -2px rgba(45, 106, 62, 0.22),
+    0 2px 4px rgba(4, 89, 39, 0.14),
+    0 8px 20px -2px rgba(4, 89, 39, 0.22),
     0 24px 48px -8px rgba(26, 61, 40, 0.20);
   --shadow-pill-hover:
-    0 4px 8px rgba(45, 106, 62, 0.20),
-    0 16px 36px -2px rgba(45, 106, 62, 0.32),
+    0 4px 8px rgba(4, 89, 39, 0.20),
+    0 16px 36px -2px rgba(4, 89, 39, 0.32),
     0 40px 80px -8px rgba(26, 61, 40, 0.30);
   --shadow-card:
-    0 2px 6px rgba(45, 106, 62, 0.16),
-    0 20px 48px -8px rgba(45, 106, 62, 0.24),
+    0 2px 6px rgba(4, 89, 39, 0.16),
+    0 20px 48px -8px rgba(4, 89, 39, 0.24),
     0 48px 96px -16px rgba(26, 61, 40, 0.22);
   --shadow-card-hover:
-    0 4px 12px rgba(45, 106, 62, 0.22),
-    0 32px 72px -8px rgba(45, 106, 62, 0.34),
+    0 4px 12px rgba(4, 89, 39, 0.22),
+    0 32px 72px -8px rgba(4, 89, 39, 0.34),
     0 64px 128px -16px rgba(26, 61, 40, 0.32);
   --shadow-tribe:
-    0 8px 24px -4px rgba(45, 106, 62, 0.32),
+    0 8px 24px -4px rgba(4, 89, 39, 0.32),
     0 32px 80px -12px rgba(26, 61, 40, 0.42),
     0 56px 112px -16px rgba(26, 61, 40, 0.30);
 }
@@ -2150,10 +2176,10 @@ body::before {
   position: fixed;
   inset: -10%;
   background:
-    radial-gradient(ellipse 60% 45% at 18% 12%, rgba(45, 106, 62, 0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 45% at 18% 12%, rgba(4, 89, 39, 0.22) 0%, transparent 60%),
     radial-gradient(ellipse 50% 38% at 82% 22%, rgba(31, 77, 44, 0.18) 0%, transparent 60%),
     radial-gradient(ellipse 55% 35% at 50% 68%, rgba(26, 61, 40, 0.14) 0%, transparent 65%),
-    radial-gradient(ellipse 45% 30% at 15% 85%, rgba(45, 106, 62, 0.10) 0%, transparent 60%);
+    radial-gradient(ellipse 45% 30% at 15% 85%, rgba(4, 89, 39, 0.10) 0%, transparent 60%);
   z-index: -1;
   pointer-events: none;
   animation: aurora-drift 22s ease-in-out infinite alternate;
@@ -2189,15 +2215,15 @@ body::before {
 @keyframes hero-photo-glow-strong {
   0%, 100% {
     box-shadow:
-      0 0 0 8px rgba(45, 106, 62, 0.20),
-      0 0 50px rgba(45, 106, 62, 0.28),
+      0 0 0 8px rgba(4, 89, 39, 0.20),
+      0 0 50px rgba(4, 89, 39, 0.28),
       0 32px 64px -16px rgba(26, 61, 40, 0.32),
       0 12px 24px -8px rgba(26, 61, 40, 0.20);
   }
   50% {
     box-shadow:
-      0 0 0 14px rgba(45, 106, 62, 0.28),
-      0 0 80px rgba(45, 106, 62, 0.40),
+      0 0 0 14px rgba(4, 89, 39, 0.28),
+      0 0 80px rgba(4, 89, 39, 0.40),
       0 44px 88px -16px rgba(26, 61, 40, 0.40),
       0 18px 36px -8px rgba(26, 61, 40, 0.28);
   }
@@ -2217,8 +2243,8 @@ body::before {
   background:
     linear-gradient(#ffffff, #ffffff) padding-box,
     linear-gradient(135deg,
-      rgba(45, 106, 62, 0.45) 0%,
-      rgba(45, 106, 62, 0.12) 50%,
+      rgba(4, 89, 39, 0.45) 0%,
+      rgba(4, 89, 39, 0.12) 50%,
       rgba(31, 77, 44, 0.45) 100%
     ) border-box;
   border: 1.5px solid transparent;
@@ -2230,9 +2256,9 @@ body::before {
   inset: -3px;
   border-radius: inherit;
   background: linear-gradient(135deg,
-    rgba(45, 106, 62, 0) 0%,
-    rgba(45, 106, 62, 0.30) 50%,
-    rgba(45, 106, 62, 0) 100%
+    rgba(4, 89, 39, 0) 0%,
+    rgba(4, 89, 39, 0.30) 50%,
+    rgba(4, 89, 39, 0) 100%
   );
   opacity: 0;
   transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -2254,7 +2280,7 @@ body::before {
     var(--green2) 50%,
     transparent 100%
   );
-  box-shadow: 0 0 12px rgba(45, 106, 62, 0.5);
+  box-shadow: 0 0 12px rgba(4, 89, 39, 0.5);
 }
 
 /* === Tribe-Quote: light-sweep effect === */
@@ -2292,9 +2318,9 @@ body::before {
 /* === Bibel-Vers: subtle inner glow on hover === */
 .bibel-vers:hover {
   box-shadow:
-    inset 0 0 24px rgba(45, 106, 62, 0.10),
-    0 4px 12px rgba(45, 106, 62, 0.18),
-    0 24px 56px -8px rgba(45, 106, 62, 0.30);
+    inset 0 0 24px rgba(4, 89, 39, 0.10),
+    0 4px 12px rgba(4, 89, 39, 0.18),
+    0 24px 56px -8px rgba(4, 89, 39, 0.30);
 }
 
 /* === Lead-Magnet: animated top-stripe glow === */
@@ -2350,23 +2376,23 @@ body::before {
 
 /* === Bug 2: Trust-Pills + Coop-Pills + V5-Pills auf Forest-Hulk migriert === */
 .trust-pill {
-  background: rgba(45, 106, 62, 0.10);
-  border: 1px solid rgba(45, 106, 62, 0.25);
+  background: rgba(4, 89, 39, 0.10);
+  border: 1px solid rgba(4, 89, 39, 0.25);
 }
 .trust-pill .tp-num { color: var(--green1); }
 .coop-pill {
   background: var(--green3);
-  border: 1px solid rgba(45, 106, 62, 0.25);
+  border: 1px solid rgba(4, 89, 39, 0.25);
 }
 .v5-pill {
   background: var(--green3);
-  border: 1px solid rgba(45, 106, 62, 0.30);
+  border: 1px solid rgba(4, 89, 39, 0.30);
 }
 .smash-card:hover {
-  border-color: rgba(45, 106, 62, 0.40);
+  border-color: rgba(4, 89, 39, 0.40);
 }
 .pillar:hover {
-  border-color: rgba(45, 106, 62, 0.40);
+  border-color: rgba(4, 89, 39, 0.40);
 }
 .v5-cta-secondary:hover {
   border-color: var(--green1);
@@ -2377,10 +2403,10 @@ body::before {
   height: 2px;
   background: linear-gradient(90deg,
     var(--green1) 0%,
-    rgba(45, 106, 62, 0.4) 50%,
+    rgba(4, 89, 39, 0.4) 50%,
     transparent 100%
   );
-  box-shadow: 0 0 8px rgba(45, 106, 62, 0.25);
+  box-shadow: 0 0 8px rgba(4, 89, 39, 0.25);
 }
 
 /* === Bug 4: Werte-Pill Gradient-Border klarer Forest-Green === */
@@ -2388,8 +2414,8 @@ body::before {
   background:
     linear-gradient(#ffffff, #ffffff) padding-box,
     linear-gradient(135deg,
-      rgba(45, 106, 62, 0.55) 0%,
-      rgba(45, 106, 62, 0.18) 50%,
+      rgba(4, 89, 39, 0.55) 0%,
+      rgba(4, 89, 39, 0.18) 50%,
       rgba(31, 77, 44, 0.55) 100%
     ) border-box;
   border: 1.5px solid transparent;
@@ -2468,8 +2494,8 @@ body::before {
 .lead-magnet-form input[type="email"]:focus {
   border-color: var(--green1);
   box-shadow:
-    0 0 0 4px rgba(45, 106, 62, 0.12),
-    0 4px 16px rgba(45, 106, 62, 0.18);
+    0 0 0 4px rgba(4, 89, 39, 0.12),
+    0 4px 16px rgba(4, 89, 39, 0.18);
   transform: translateY(-1px);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -2478,8 +2504,8 @@ body::before {
 .brand-form-submit:hover,
 .lead-magnet-form button:hover {
   box-shadow:
-    0 12px 32px -6px rgba(45, 106, 62, 0.45),
-    0 4px 12px rgba(45, 106, 62, 0.25);
+    0 12px 32px -6px rgba(4, 89, 39, 0.45),
+    0 4px 12px rgba(4, 89, 39, 0.25);
 }
 
 /* === Brand-CTA-Big: Light-Sweep (premium loop) === */
@@ -2589,7 +2615,7 @@ body::before {
 .package-card:hover {
   box-shadow: var(--shadow-pill-hover);
   transform: translateY(-3px);
-  border-color: rgba(45, 106, 62, 0.30);
+  border-color: rgba(4, 89, 39, 0.30);
 }
 .package-card-highlight {
   border: 1.5px solid transparent;
@@ -2597,7 +2623,7 @@ body::before {
     linear-gradient(#ffffff, #ffffff) padding-box,
     linear-gradient(135deg,
       var(--green1) 0%,
-      rgba(45, 106, 62, 0.30) 50%,
+      rgba(4, 89, 39, 0.30) 50%,
       var(--green2) 100%
     ) border-box;
 }
@@ -2616,7 +2642,7 @@ body::before {
   padding: 5px 11px;
   border-radius: 99px;
   text-transform: uppercase;
-  box-shadow: 0 4px 10px rgba(45, 106, 62, 0.35);
+  box-shadow: 0 4px 10px rgba(4, 89, 39, 0.35);
 }
 .package-icon {
   font-size: 24px;
@@ -2669,8 +2695,8 @@ body::before {
   bottom: 36px;
   width: 2px;
   background: linear-gradient(180deg,
-    rgba(45, 106, 62, 0.30) 0%,
-    rgba(45, 106, 62, 0.10) 100%
+    rgba(4, 89, 39, 0.30) 0%,
+    rgba(4, 89, 39, 0.10) 100%
   );
   z-index: 0;
 }
@@ -2684,16 +2710,16 @@ body::before {
   border: 1px solid var(--border);
   border-radius: 14px;
   box-shadow:
-    0 1px 3px rgba(45, 106, 62, 0.06),
-    0 6px 16px -4px rgba(45, 106, 62, 0.10);
+    0 1px 3px rgba(4, 89, 39, 0.06),
+    0 6px 16px -4px rgba(4, 89, 39, 0.10);
   transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 1;
 }
 .process-step:hover {
   box-shadow:
-    0 2px 6px rgba(45, 106, 62, 0.10),
-    0 12px 28px -4px rgba(45, 106, 62, 0.18);
+    0 2px 6px rgba(4, 89, 39, 0.10),
+    0 12px 28px -4px rgba(4, 89, 39, 0.18);
   transform: translateX(2px);
 }
 .process-num {
@@ -2708,7 +2734,7 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(45, 106, 62, 0.35);
+  box-shadow: 0 4px 12px rgba(4, 89, 39, 0.35);
   font-family: 'Playfair Display', 'Inter', serif;
 }
 .process-body {
@@ -2761,8 +2787,8 @@ body::before {
   line-height: 1.7;
   color: var(--text);
   box-shadow:
-    0 1px 3px rgba(45, 106, 62, 0.06),
-    0 8px 20px -4px rgba(45, 106, 62, 0.12);
+    0 1px 3px rgba(4, 89, 39, 0.06),
+    0 8px 20px -4px rgba(4, 89, 39, 0.12);
 }
 .usp-statement strong {
   color: var(--green-deep);
@@ -2781,8 +2807,8 @@ body::before {
   background:
     linear-gradient(#ffffff, #ffffff) padding-box,
     linear-gradient(135deg,
-      rgba(45, 106, 62, 0.40) 0%,
-      rgba(45, 106, 62, 0.10) 50%,
+      rgba(4, 89, 39, 0.40) 0%,
+      rgba(4, 89, 39, 0.10) 50%,
       rgba(31, 77, 44, 0.40) 100%
     ) border-box;
   border: 1.5px solid transparent;
@@ -2850,8 +2876,8 @@ body::before {
   letter-spacing: 0.2px;
   border-radius: 99px;
   box-shadow:
-    0 4px 12px rgba(45, 106, 62, 0.35),
-    0 12px 28px -8px rgba(45, 106, 62, 0.30);
+    0 4px 12px rgba(4, 89, 39, 0.35),
+    0 12px 28px -8px rgba(4, 89, 39, 0.30);
   text-decoration: none !important;
   transition:
     filter 0.2s,
@@ -2862,8 +2888,8 @@ body::before {
   filter: brightness(1.08);
   transform: translateY(-2px);
   box-shadow:
-    0 8px 20px rgba(45, 106, 62, 0.45),
-    0 20px 44px -8px rgba(45, 106, 62, 0.40);
+    0 8px 20px rgba(4, 89, 39, 0.45),
+    0 20px 44px -8px rgba(4, 89, 39, 0.40);
 }
 
 /* === Brand-Themes-Pills (visuelle Liste statt Text-Wand) === */
@@ -2882,15 +2908,15 @@ body::before {
   font-weight: 700;
   color: var(--text);
   letter-spacing: 0.1px;
-  box-shadow: 0 1px 3px rgba(45, 106, 62, 0.06),
-              0 4px 10px -2px rgba(45, 106, 62, 0.08);
+  box-shadow: 0 1px 3px rgba(4, 89, 39, 0.06),
+              0 4px 10px -2px rgba(4, 89, 39, 0.08);
   transition: box-shadow 0.3s, transform 0.2s, border-color 0.2s;
 }
 .brand-theme-pill:hover {
-  border-color: rgba(45, 106, 62, 0.40);
+  border-color: rgba(4, 89, 39, 0.40);
   transform: translateY(-1px);
-  box-shadow: 0 2px 6px rgba(45, 106, 62, 0.12),
-              0 10px 20px -4px rgba(45, 106, 62, 0.18);
+  box-shadow: 0 2px 6px rgba(4, 89, 39, 0.12),
+              0 10px 20px -4px rgba(4, 89, 39, 0.18);
 }
 
 .brand-anti-grid {
@@ -2928,17 +2954,17 @@ body::before {
   overflow: hidden;
   transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.2s;
-  box-shadow: 0 1px 3px rgba(45, 106, 62, 0.05);
+  box-shadow: 0 1px 3px rgba(4, 89, 39, 0.05);
 }
 .faq-item:hover {
-  border-color: rgba(45, 106, 62, 0.30);
-  box-shadow: 0 2px 6px rgba(45, 106, 62, 0.10),
-              0 8px 20px -4px rgba(45, 106, 62, 0.12);
+  border-color: rgba(4, 89, 39, 0.30);
+  box-shadow: 0 2px 6px rgba(4, 89, 39, 0.10),
+              0 8px 20px -4px rgba(4, 89, 39, 0.12);
 }
 .faq-item[open] {
-  border-color: rgba(45, 106, 62, 0.45);
-  box-shadow: 0 2px 8px rgba(45, 106, 62, 0.12),
-              0 16px 32px -6px rgba(45, 106, 62, 0.18);
+  border-color: rgba(4, 89, 39, 0.45);
+  box-shadow: 0 2px 8px rgba(4, 89, 39, 0.12),
+              0 16px 32px -6px rgba(4, 89, 39, 0.18);
 }
 .faq-item summary {
   cursor: pointer;
@@ -3071,8 +3097,8 @@ body::before {
   border-radius: 14px;
   background-clip: padding-box;
   box-shadow:
-    0 1px 3px rgba(45, 106, 62, 0.06),
-    0 8px 24px -4px rgba(45, 106, 62, 0.14);
+    0 1px 3px rgba(4, 89, 39, 0.06),
+    0 8px 24px -4px rgba(4, 89, 39, 0.14);
   transition:
     box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
@@ -3089,8 +3115,8 @@ body::before {
   border-radius: inherit;
   padding: 1.5px;
   background: linear-gradient(135deg,
-    rgba(45, 106, 62, 0.50) 0%,
-    rgba(45, 106, 62, 0.15) 50%,
+    rgba(4, 89, 39, 0.50) 0%,
+    rgba(4, 89, 39, 0.15) 50%,
     rgba(31, 77, 44, 0.50) 100%
   );
   -webkit-mask:
@@ -3102,8 +3128,8 @@ body::before {
 }
 .discovery-call-cta:hover {
   box-shadow:
-    0 2px 6px rgba(45, 106, 62, 0.10),
-    0 16px 40px -4px rgba(45, 106, 62, 0.24);
+    0 2px 6px rgba(4, 89, 39, 0.10),
+    0 16px 40px -4px rgba(4, 89, 39, 0.24);
   transform: translateY(-2px);
 }
 .discovery-call-icon {
@@ -3117,7 +3143,7 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(45, 106, 62, 0.30);
+  box-shadow: 0 4px 12px rgba(4, 89, 39, 0.30);
 }
 .discovery-call-body {
   flex: 1;
