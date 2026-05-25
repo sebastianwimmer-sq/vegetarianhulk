@@ -27,6 +27,5 @@ node_modules/
 # === Cloudflare Wrangler (Preview-Deploys, lokaler State) ===
 .wrangler/
 
-# === Design-Archive (ZIPs lokal, nicht im Repo) ===
-design-archives/*
-!design-archives/.gitkeep
+# === Design-Archive — Claude-Design ZIPs lokal (oft groß), Asset-Versionierungen im Repo ===
+design-archives/*.zip
