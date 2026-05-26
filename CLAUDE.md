@@ -30,12 +30,35 @@ Neue Komponenten ab Sprint v30 nutzen Future-Naming, parallel zu Legacy:
 | `--ink` | `--text` | #1a1410 |
 | `--ink-2` | `--text2` | #5c513f (WCAG-AA-safe für small text) |
 | `--ink-3` | `--text3` | #9a8c75 (nur für large-text decorative) |
-| `--forest-1` | `--green1` | #2d6a3e |
-| `--forest-2` | `--green2` | #1f4d2c |
-| `--forest-deep` | `--green-deep` | #1a3d28 |
-| `--forest-wash` | — (neu) | rgba(45,106,62,0.06) |
 
 Beide Namen sind in `:root` als Aliase definiert. Legacy bleibt für ältere Components, Future für neue.
+
+### Hybrid Forest Family (v31+)
+
+Sprint v31 (25.05.2026) hat die Forest-Family neu strukturiert. **Neue Tokens sind canonical, v30-Aliase mappen darauf:**
+
+| Token | Hex | Verwendung |
+|---|---|---|
+| `--forest-anchor` | `#122d1c` | Foto-BG-Reality (sampled). Tiefste Backgrounds, Body-Text-Emphasis, Hover-Darken |
+| `--forest-primary` | `#045927` | Brand-Spec (Sebi). **CTAs, Buttons, Sticky-CTA, Form-Submit, Number-Anchors, Hamburger-active** |
+| `--forest-accent` | `#1a7340` | Saturated Highlight. Italic-Headlines, Bibel-Anchor-Label, Detail-Brights |
+| `--forest-wash` | `rgba(4,89,39,0.08)` | Subtle Tints, Identity-Card BG, Form-Focus outer-glow |
+
+**v30-Aliase (Legacy-Naming bleibt funktional):**
+
+| Future-Alias | Legacy | Maps to |
+|---|---|---|
+| `--forest-1` | `--green1` | `--forest-primary` (war: #2d6a3e) |
+| `--forest-2` | `--green2` | `--forest-anchor` (war: #1f4d2c) |
+| `--forest-deep` | `--green-deep` | `--forest-anchor` (war: #1a3d28) |
+| `--green3` | — | Legacy Topbar-Tint (rgba 12%), unverändert |
+
+**Philosophie:** „Foto ist im Subtle drin, Brand ist im Action drin, Akzent ist im Detail."
+
+**Pages mit eigenem Token-Block** (laden NICHT style.css, müssen Hex direkt updaten):
+- `3-tage-reset/index.html` — eigene `:root` mit `--forest-1/2/3` (auf v31-Hex synced)
+- `404.html` — eigene `:root` mit `--forest-1/2/3` (auf v31-Hex synced)
+- `lieblingsprodukte.html` — eigene `:root` mit `--forest-1/2` (auf v31-Hex synced)
 
 ## Design-Workflow (Claude Design Integration)
 

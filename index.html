@@ -15,9 +15,9 @@
 <meta property="og:url" content="https://vegetarianhulk.de/">
 <meta property="og:image" content="https://vegetarianhulk.de/hero.jpg?v=v31.1">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%232d6a3e'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
-<link rel="stylesheet" href="style.css?v=v31.1">
+<link rel="stylesheet" href="style.css?v=v31.2">
 </head>
 <body>
 <main class="page">
@@ -304,7 +304,7 @@ async function submitLead(e) {
       const msg = data.already
         ? '✓ Du bist schon dabei. Check Inbox (auch Spam).'
         : '✓ Eingetragen. Tag-1-Mail kommt gleich.';
-      form.innerHTML = '<p style="text-align:center;font-weight:700;color:var(--green-deep);padding:14px">' + msg + '</p>';
+      form.innerHTML = '<p style="text-align:center;font-weight:700;color:var(--forest-anchor);padding:14px">' + msg + '</p>';
       return false;
     }
     // 503 Brevo not configured → mailto fallback (smooth)
@@ -314,7 +314,7 @@ async function submitLead(e) {
       const subject = encodeURIComponent('Discipline-Reset bitte');
       const body = encodeURIComponent('Hi Sebi,\n\nbitte schick mir den 3-Tage-Disziplin-Reset.\n\nMeine Mail: ' + email + '\n\nDanke!');
       window.location.href = 'mailto:info@vegetarianhulk.de?subject=' + subject + '&body=' + body;
-      form.innerHTML = '<p style="text-align:center;font-weight:700;color:var(--green-deep);padding:14px">✓ Mail-App geöffnet. Schick ab und ich melde mich persönlich.</p>';
+      form.innerHTML = '<p style="text-align:center;font-weight:700;color:var(--forest-anchor);padding:14px">✓ Mail-App geöffnet. Schick ab und ich melde mich persönlich.</p>';
       return false;
     }
     throw new Error(data.error || ('Status ' + res.status));
