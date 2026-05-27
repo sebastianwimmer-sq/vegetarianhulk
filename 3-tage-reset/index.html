@@ -12,6 +12,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
 <link rel="stylesheet" href="/fonts.css">
+<link rel="stylesheet" href="/style.css?v=v31.11">
 
 <style>
   :root {
@@ -378,7 +379,7 @@
   }
   @media print {
     html, body { background: #ffffff !important; }
-    .help-bar, .legal-footer { display: none !important; }
+    .help-bar, .legal-footer, .vh-footer { display: none !important; }
     .page-wrap { margin: 0; padding: 0; max-width: 100%; }
     .blatt {
       box-shadow: none;
@@ -506,13 +507,35 @@
   </article>
 </div>
 
-<!-- Legal-Footer · v31.5 DSGVO-Compliance (hidden in print) -->
-<footer class="legal-footer" role="contentinfo">
-  <a href="/impressum.html">Impressum</a>
-  <span class="sep" aria-hidden="true">·</span>
-  <a href="/datenschutz.html">Datenschutz</a>
-  <span class="sep" aria-hidden="true">·</span>
-  <a href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">@vegetarianhulk</a>
+<!-- Footer-Editorial v31.11 — A3 Single-Line Compact (Members-Area, hidden in print) -->
+<footer class="vh-footer footer-a3" role="contentinfo" aria-label="Site footer">
+  <div class="row">
+    <div class="left">
+      <span class="vh-wordmark wordmark">VEGETARIANHULK</span>
+      <span class="vh-tagline tagline">Builder &amp; Creator <em>@vegetarianhulk</em></span>
+    </div>
+    <nav class="right" aria-label="Footer navigation">
+      <a class="vh-link" href="/">Startseite</a>
+      <span class="vh-dot" aria-hidden="true"></span>
+      <a class="vh-link" href="/newsletter">Newsletter</a>
+      <span class="vh-dot" aria-hidden="true"></span>
+      <a class="vh-link" href="/impressum.html">Impressum</a>
+      <span class="vh-dot" aria-hidden="true"></span>
+      <a class="vh-link" href="/datenschutz.html">Datenschutz</a>
+    </nav>
+  </div>
+  <hr class="vh-hairline" />
+  <div class="bottom">
+    <span class="vh-copyright">© <span id="footer-year">2026</span> Sebastian Wimmer</span>
+    <a class="vh-link vh-ig" href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener" aria-label="Instagram @vegetarianhulk">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+        <circle cx="12" cy="12" r="4"></circle>
+        <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle>
+      </svg>
+      <span>Instagram</span>
+    </a>
+  </div>
 </footer>
 
 <script>

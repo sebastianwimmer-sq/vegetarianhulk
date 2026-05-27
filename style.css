@@ -3603,3 +3603,231 @@ body::before {
     max-width: 100%;
   }
 }
+
+
+/* ============================================================
+   Footer-Editorial System v31.11 — 3 Layouts (A1/A2/A3)
+   Cross-Page-Application:
+   - A1 Centered Stack — Danke, 404
+   - A2 Asymmetric Editorial — Index, Newsletter (mirror in
+     newsletter/styles.css), Kooperationen
+   - A3 Single-Line Compact — Impressum, Datenschutz, 3-tage-reset
+   ============================================================ */
+
+  /* ── Footer Component — shared base ──────────────────────────────── */
+  .vh-footer {
+    background: var(--vanilla);
+    color: var(--ink-2);
+    font-family: var(--ff-body);
+    border-top: 1px solid var(--earth);
+    box-sizing: border-box;
+  }
+  .vh-footer *, .vh-footer *::before, .vh-footer *::after { box-sizing: border-box; }
+  .vh-footer a {
+    color: var(--ink-2);
+    text-decoration: none;
+    transition: color var(--t-fast) var(--ease-apple);
+  }
+  .vh-footer a:hover { color: var(--forest-1); }
+
+  .vh-wordmark {
+    font-family: var(--ff-body);
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .vh-tagline {
+    font-family: var(--ff-body);
+    font-size: var(--font-body-sm);
+    font-weight: 500;
+    color: var(--ink-3);
+    letter-spacing: 0.01em;
+    line-height: 1.5;
+  }
+  .vh-tagline em {
+    font-family: var(--ff-display);
+    font-style: italic;
+    font-weight: 500;
+    color: var(--ink-2);
+  }
+  .vh-link {
+    font-size: var(--font-label);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .vh-link[aria-current="page"] { color: var(--forest-1); }
+  .vh-link.is-current { color: var(--forest-1); }
+  .vh-meta {
+    font-family: var(--ff-mono);
+    font-size: var(--font-eyebrow);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--ink-3);
+    text-transform: uppercase;
+  }
+  .vh-copyright {
+    font-family: var(--ff-mono);
+    font-size: var(--font-eyebrow);
+    letter-spacing: 0.04em;
+    color: var(--ink-3);
+  }
+  .vh-hairline {
+    height: 1px;
+    background: var(--earth);
+    opacity: 0.6;
+    border: 0;
+    margin: 0;
+  }
+  .vh-dot {
+    width: 3px; height: 3px; border-radius: 50%;
+    background: var(--ink-4);
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .vh-ig {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .vh-ig svg { width: 14px; height: 14px; display: block; }
+  .vh-address {
+    font-family: var(--ff-mono);
+    font-size: var(--font-eyebrow);
+    line-height: 1.6;
+    letter-spacing: 0.04em;
+    color: var(--ink-3);
+    text-transform: none;
+  }
+  .vh-address strong {
+    font-weight: 600;
+    color: var(--ink-2);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: block;
+    font-size: var(--font-micro);
+    margin-bottom: 4px;
+  }
+
+  /* ── A1 · CENTERED STACK ─────────────────────────────────────────── */
+  .footer-a1 { padding: 64px 56px 32px; text-align: center; }
+  .footer-a1 .wordmark { font-size: var(--font-h4); }
+  .footer-a1 .tagline { margin-top: 14px; }
+  .footer-a1 .nav {
+    margin-top: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .footer-a1 .legal-row {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    color: var(--ink-3);
+  }
+  .footer-a1 .legal-row .vh-link { color: var(--ink-3); font-weight: 500; }
+  .footer-a1 hr.vh-hairline { margin-top: 40px; }
+  .footer-a1 .bottom {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* ── A2 · ASYMMETRIC EDITORIAL ───────────────────────────────────── */
+  .footer-a2 { padding: 64px 56px 32px; }
+  .footer-a2 .grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .footer-a2 .col-brand .wordmark { font-size: var(--font-h4); }
+  .footer-a2 .col-brand .tagline { margin-top: 16px; max-width: 320px; }
+  .footer-a2 .col-brand .ig { margin-top: 28px; }
+  .footer-a2 .col h4 {
+    font-family: var(--ff-body);
+    font-size: var(--font-micro);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--forest-1);
+    margin: 0 0 16px;
+  }
+  .footer-a2 .col ul {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .footer-a2 hr.vh-hairline { margin-top: 56px; }
+  .footer-a2 .bottom {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  /* ── A3 · SINGLE-LINE COMPACT ────────────────────────────────────── */
+  .footer-a3 { padding: 32px 56px 28px; }
+  .footer-a3 .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+  .footer-a3 .left {
+    display: flex; align-items: baseline; gap: 18px;
+  }
+  .footer-a3 .left .wordmark { font-size: var(--font-body-sm); }
+  .footer-a3 .left .tagline { font-size: var(--font-label); }
+  .footer-a3 .right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .footer-a3 hr.vh-hairline { margin-top: 22px; }
+  .footer-a3 .bottom {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  /* ── Address slot for Kooperationen variants ─────────────────────── */
+  .vh-address-block {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px dashed rgba(168, 147, 114, 0.5);
+  }
+  .footer-a1 .vh-address-block { text-align: center; }
+  .footer-a2 .col-brand .vh-address-block { margin-top: 28px; padding-top: 24px; }
+  @media (max-width: 640px) {
+    /* A1 — Mobile */
+    .footer-a1 { padding: 48px 24px 28px; }
+    .footer-a1 .nav { gap: 18px; margin-top: 28px; flex-direction: column; }
+    .footer-a1 .legal-row { flex-direction: column; gap: 14px; }
+
+    /* A2 — Mobile */
+    .footer-a2 { padding: 48px 24px 28px; }
+    .footer-a2 .grid { grid-template-columns: 1fr; gap: 36px; text-align: center; }
+    .footer-a2 .col-brand .tagline { margin-left: auto; margin-right: auto; }
+    .footer-a2 .col-brand .ig { justify-content: center; }
+    .footer-a2 .col ul { align-items: center; }
+    .footer-a2 .bottom { flex-direction: column; gap: 12px; text-align: center; }
+
+    /* A3 — Mobile */
+    .footer-a3 { padding: 28px 24px 24px; }
+    .footer-a3 .row { flex-direction: column; align-items: stretch; gap: 18px; }
+    .footer-a3 .left { flex-direction: column; gap: 6px; align-items: flex-start; }
+    .footer-a3 .right { gap: 10px 14px; flex-wrap: wrap; }
+    .footer-a3 .bottom { flex-direction: column; gap: 10px; align-items: flex-start; }
+  }

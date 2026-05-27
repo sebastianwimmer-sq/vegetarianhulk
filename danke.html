@@ -24,10 +24,39 @@
     <a href="https://instagram.com/vegetarianhulk" style="background:var(--forest-primary);color:var(--bg);padding:14px 24px;border-radius:12px;font-weight:800;text-decoration:none;font-size:14px;letter-spacing:.5px">📲 Auf Insta folgen</a>
     <a href="/" style="background:transparent;color:var(--forest-primary);border:1.5px solid var(--forest-primary);padding:13px 24px;border-radius:12px;font-weight:800;text-decoration:none;font-size:14px;letter-spacing:.5px">← Zurück</a>
   </div>
-
-  <div style="margin-top:40px;font-size:11px;color:var(--text2);letter-spacing:1.5px;text-transform:uppercase;font-weight:700">Sebi · @vegetarianhulk · 10 Jahre vegetarisch</div>
-  <div style="margin-top:20px;font-size:11px;color:var(--text2)"><a href="/impressum.html" style="color:inherit;text-decoration:none">Impressum</a> · <a href="/datenschutz.html" style="color:inherit;text-decoration:none">Datenschutz</a></div>
+  <!-- v31.11: Body Bio-Line + inline Legal-Links removed — Footer übernimmt zentral -->
 </main>
+
+<!-- Footer-Editorial v31.11 — A1 Centered Stack (Funnel-Endpoint Personal) -->
+<footer class="vh-footer footer-a1" role="contentinfo" aria-label="Site footer">
+  <div class="vh-wordmark wordmark">VEGETARIANHULK</div>
+  <div class="vh-tagline tagline">Builder &amp; Creator <em>@vegetarianhulk</em></div>
+  <nav class="nav" aria-label="Brand navigation">
+    <a class="vh-link" href="/">Startseite</a>
+    <span class="vh-dot" aria-hidden="true"></span>
+    <a class="vh-link" href="/newsletter">Newsletter</a>
+    <span class="vh-dot" aria-hidden="true"></span>
+    <a class="vh-link" href="/kooperationen.html">Kooperationen</a>
+  </nav>
+  <div class="legal-row">
+    <a class="vh-link" href="/impressum.html">Impressum</a>
+    <span class="vh-dot" aria-hidden="true"></span>
+    <a class="vh-link" href="/datenschutz.html">Datenschutz</a>
+    <span class="vh-dot" aria-hidden="true"></span>
+    <a class="vh-link vh-ig" href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener" aria-label="Instagram @vegetarianhulk">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+        <circle cx="12" cy="12" r="4"></circle>
+        <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle>
+      </svg>
+      <span>Instagram</span>
+    </a>
+  </div>
+  <hr class="vh-hairline" />
+  <div class="bottom">
+    <span class="vh-copyright">© <span id="footer-year">2026</span> Sebastian Wimmer</span>
+  </div>
+</footer>
 
 <script>
 const params = new URLSearchParams(location.search);
