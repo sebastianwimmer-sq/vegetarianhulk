@@ -109,19 +109,21 @@ a { color: inherit; }
   align-items: center;
   gap: 16px;
 }
+/* Wordmark — VEGETARIANHULK Caps · matches Index v31 Topbar-Standard */
 .brand {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   gap: 8px;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 20px;
-  letter-spacing: -0.5px;
-  color: var(--forest-primary);
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ink);
   text-decoration: none;
   flex: 1;
 }
-.brand em { font-style: italic; font-weight: 400; color: var(--ink); }
+.brand .accent { color: var(--forest-primary); }
 .brand-dot {
   width: 7px; height: 7px; border-radius: 50%;
   background: var(--forest-primary);
@@ -648,6 +650,15 @@ a { color: inherit; }
   letter-spacing: 1.8px;
   text-transform: uppercase;
   color: var(--forest-primary);
+  margin: 0 0 10px;
+}
+/* v31.5: "Mein Anker."-Sign-off · matches Index .bibel-anchor-signature Pattern */
+.repeat .verse-signature {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-2);
+  letter-spacing: 0.3px;
   margin: 0 0 24px;
 }
 .repeat h2 {
@@ -675,7 +686,7 @@ a { color: inherit; }
 @media (min-width: 720px) {
   .foot { flex-direction: row; justify-content: space-between; text-align: left; }
 }
-.foot .brand { font-size: 16px; flex: 0 0 auto; }
+.foot .brand { font-size: 13px; flex: 0 0 auto; }
 .foot-links {
   display: flex;
   gap: 18px;

@@ -21,10 +21,16 @@
 <body>
 <main class="page brand-page">
 
-  <!-- Topbar -->
+  <!-- Topbar — Brand-Page Pattern (Hamburger Filled · matches Index v31) -->
   <header class="topbar">
-    <a href="index.html" class="brand">vegetarian<span class="accent">hulk</span></a>
-    <a href="index.html" class="topbar-meta" style="text-decoration:none">← ZURÜCK</a>
+    <a href="/" class="brand" style="text-decoration:none;color:inherit">vegetarian<span class="accent">hulk</span></a>
+    <button class="topbar-burger" aria-label="Menü öffnen" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <nav class="topbar-nav" aria-label="Hauptnavigation">
+      <a href="/" class="topbar-link">Startseite</a>
+      <a href="/newsletter" class="topbar-link">Newsletter</a>
+    </nav>
   </header>
 
   <!-- Hero V24 — Desktop zweispaltig (Foto links + Text rechts ab 1024px), Mobile bleibt stacked -->
@@ -533,6 +539,31 @@
 (function() {
   const y = new Date().getFullYear();
   document.querySelectorAll('#footer-year').forEach(el => el.textContent = y);
+})();
+</script>
+<script>
+// Topbar Hamburger Toggle (matches Index v31 Pattern)
+(function(){
+  var b=document.querySelector('.topbar-burger'),n=document.querySelector('.topbar-nav');
+  if(!b||!n)return;
+  b.addEventListener('click',function(){
+    var open=n.classList.toggle('topbar-nav--open');
+    b.setAttribute('aria-expanded',open);
+    b.setAttribute('aria-label',open?'Menü schließen':'Menü öffnen');
+  });
+  document.addEventListener('click',function(e){
+    if(!b.contains(e.target)&&!n.contains(e.target)){
+      n.classList.remove('topbar-nav--open');
+      b.setAttribute('aria-expanded','false');
+      b.setAttribute('aria-label','Menü öffnen');
+    }
+  });
+  n.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click',function(){
+      n.classList.remove('topbar-nav--open');
+      b.setAttribute('aria-expanded','false');
+    });
+  });
 })();
 </script>
 <script src="update-check.js?v=v24"></script>

@@ -29,3 +29,6 @@ node_modules/
 
 # === Design-Archive — Claude-Design ZIPs lokal (oft groß), Asset-Versionierungen im Repo ===
 design-archives/*.zip
+
+# === Pre-Merge Audit Reports — lokale JSON-Snapshots (oft groß, regenerierbar) ===
+audit-reports/

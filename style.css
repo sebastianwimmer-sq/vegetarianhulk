@@ -291,6 +291,8 @@ a { color: inherit; text-decoration: none; }
    ============================================================ */
 .cinematic-hero {
   margin: 0 auto 56px;
+  /* C3 v31.5: extra top-buffer gegen Sticky-Topbar Initial-Overlap auf iOS-Mobile (Pull-to-Refresh, Safari Address-Bar-Animation) */
+  padding-top: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -467,14 +469,15 @@ a { color: inherit; text-decoration: none; }
   padding: 12px 18px;
   background: transparent;
   color: var(--forest-1);
-  border: 1.5px solid var(--forest-1);
+  border: 2px solid var(--forest-1); /* v31.5: 1.5px → 2px für stärkere Sichtbarkeit */
   border-radius: 12px;
   font-family: 'Inter', system-ui, sans-serif;
   font-weight: 700;
   font-size: 14px;
   letter-spacing: 0.2px;
   text-decoration: none;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 8px -4px rgba(4, 89, 39, 0.20); /* v31.5: subtle pop */
 }
 
 .identity-glass-card .identity-cta-secondary:hover,
@@ -1031,7 +1034,7 @@ a { color: inherit; text-decoration: none; }
 .footer-links a:hover { color: var(--green-deep); }
 .footer-meta {
   font-size: 10px;
-  color: var(--text3);
+  color: var(--text2); /* v31.5: WCAG-AA für small-text (war --text3 = decorative only) */
   letter-spacing: 1px;
   text-transform: uppercase;
 }
@@ -1095,6 +1098,32 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
 }
 .legal-page .back-link:hover { color: var(--green-deep); }
+
+/* v31.5 Brand-Konsistenz: Legal-Page Cross-Footer (Impressum ↔ Datenschutz + Instagram) */
+.legal-page .legal-cross-footer {
+  margin: 32px auto 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--earth);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 18px;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  color: var(--text3);
+}
+.legal-page .legal-cross-footer a {
+  color: var(--text3);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.legal-page .legal-cross-footer a:hover,
+.legal-page .legal-cross-footer a:focus-visible {
+  color: var(--forest-primary);
+}
+.legal-page .legal-cross-footer .sep { opacity: 0.5; }
 
 /* ============================================================
    V2 COMPONENTS — Lead-Funnel + Media-Kit

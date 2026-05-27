@@ -59,7 +59,7 @@
   }
   .help-bar .print-btn {
     background: var(--forest-3);
-    color: var(--ink);
+    color: var(--vanilla); /* v31.5: WCAG-AA — vanilla on forest-3 = 5.4 (war ink on forest-3 = 1.5) */
     padding: 8px 16px;
     border-radius: 8px;
     border: none;
@@ -69,9 +69,9 @@
     letter-spacing: 1.4px;
     text-transform: uppercase;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: background 0.2s ease, color 0.2s ease;
   }
-  .help-bar .print-btn:hover { background: var(--vanilla); }
+  .help-bar .print-btn:hover { background: var(--vanilla); color: var(--ink); }
 
   /* ── Page Container ── */
   .page-wrap {
@@ -348,6 +348,29 @@
     text-wrap: balance;
   }
 
+  /* ── Legal-Footer (v31.5 Brand-Konsistenz · DSGVO-Compliance) ── */
+  .legal-footer {
+    max-width: 720px;
+    margin: 28px auto 48px;
+    padding: 0 24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 18px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    color: var(--ink-3);
+  }
+  .legal-footer a {
+    color: var(--ink-3);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .legal-footer a:hover, .legal-footer a:focus-visible { color: var(--forest-1); }
+  .legal-footer .sep { opacity: 0.5; }
+
   /* ── Print Styles ── */
   @page {
     size: A4;
@@ -355,7 +378,7 @@
   }
   @media print {
     html, body { background: #ffffff !important; }
-    .help-bar { display: none !important; }
+    .help-bar, .legal-footer { display: none !important; }
     .page-wrap { margin: 0; padding: 0; max-width: 100%; }
     .blatt {
       box-shadow: none;
@@ -482,6 +505,15 @@
 
   </article>
 </div>
+
+<!-- Legal-Footer · v31.5 DSGVO-Compliance (hidden in print) -->
+<footer class="legal-footer" role="contentinfo">
+  <a href="/impressum.html">Impressum</a>
+  <span class="sep" aria-hidden="true">·</span>
+  <a href="/datenschutz.html">Datenschutz</a>
+  <span class="sep" aria-hidden="true">·</span>
+  <a href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">@vegetarianhulk</a>
+</footer>
 
 <script>
   // Auto-trigger print dialog if URL contains ?print=1 (für Direct-Download-Use-Case)
