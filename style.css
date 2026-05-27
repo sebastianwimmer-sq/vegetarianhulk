@@ -3635,12 +3635,14 @@ body::before {
   .vh-wordmark {
     font-family: var(--ff-body);
     font-weight: 800;
-    /* v31.11 adjust: forest-primary statt ink — matched Topbar-Wordmark-Treatment */
-    color: var(--forest-primary);
+    /* v31.11 final: Mixed-Treatment matched Topbar — "VEGETARIAN" --ink default,
+       "HULK"-Span (.accent) --forest-primary — Topbar-Pattern 1:1 */
+    color: var(--ink);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     line-height: 1;
   }
+  .vh-wordmark .accent { color: var(--forest-primary); }
   .vh-tagline {
     font-family: var(--ff-body);
     font-size: var(--font-body-sm);
