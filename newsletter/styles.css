@@ -98,8 +98,8 @@
   --motion-slow:      600ms;
   --motion-page:      300ms;
   --motion-distance-sm: 8px;
-  --motion-distance-md: 16px;
-  --motion-distance-lg: 24px;
+  --motion-distance-md: 20px;
+  --motion-distance-lg: 28px;
   --motion-stagger:   80ms;
 }
 

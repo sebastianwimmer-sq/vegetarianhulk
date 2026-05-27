@@ -127,10 +127,10 @@
   --motion-slow:      600ms;
   --motion-page:      300ms;
 
-  /* Distances */
+  /* Distances (v31.10 tuned: md 16 → 20 für Sichtbarkeit, Subtle Editorial bleibt) */
   --motion-distance-sm: 8px;
-  --motion-distance-md: 16px;
-  --motion-distance-lg: 24px;
+  --motion-distance-md: 20px;
+  --motion-distance-lg: 28px;
 
   /* Stagger gap between sibling reveal-delays */
   --motion-stagger:   80ms;
