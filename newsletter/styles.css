@@ -1055,3 +1055,38 @@ body.variant-geo .art-geo { display: block; }
     transition: none;
   }
 }
+
+
+/* ============================================================
+   Motion Layer 3 v31.10 — Page-Transitions (Mirror from style.css)
+   ============================================================ */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root) {
+  animation: vh-page-fade-out var(--motion-page) var(--ease-out-quart) forwards;
+}
+::view-transition-new(root) {
+  animation: vh-page-fade-in var(--motion-page) var(--ease-out-quart) forwards;
+}
+@keyframes vh-page-fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+@keyframes vh-page-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+body {
+  animation: vh-page-load var(--motion-page) var(--ease-out-quart) backwards;
+}
+@keyframes vh-page-load {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+  body { animation: none; }
+}
