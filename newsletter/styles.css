@@ -402,7 +402,7 @@ a { color: inherit; }
 .section-h em { font-style: italic; font-weight: 400; color: var(--forest-primary); }
 .section-lede {
   font-size: 15px;
-  color: var(--ink-3);
+  color: var(--ink-2); /* v31.5: WCAG-AA für small-text */
   margin: 0 0 36px;
   max-width: 520px;
   text-wrap: pretty;
@@ -697,7 +697,7 @@ a { color: inherit; }
   letter-spacing: 0.2px;
 }
 .foot-links a {
-  color: var(--ink-3);
+  color: var(--ink-2); /* v31.5: WCAG-AA für small-text (war --ink-3 = decorative) */
   text-decoration: none;
   transition: color var(--t-fast) var(--ease-apple);
 }

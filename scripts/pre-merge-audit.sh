@@ -158,9 +158,9 @@ audit_dsgvo() {
   } > "$report"
 
   local ls_count cdn_count font_count
-  ls_count=$(grep -cE "localStorage|sessionStorage|document\.cookie" "$report" 2>/dev/null || echo 0)
-  cdn_count=$(grep -cE '<script[^>]+src="https?' "$report" 2>/dev/null || echo 0)
-  font_count=$(grep -cE 'fonts\.google|fonts\.gstatic' "$report" 2>/dev/null || echo 0)
+  ls_count=$(grep -E "localStorage|sessionStorage|document\.cookie" "$report" 2>/dev/null | wc -l | tr -d ' ')
+  cdn_count=$(grep -E '<script[^>]+src="https?' "$report" 2>/dev/null | wc -l | tr -d ' ')
+  font_count=$(grep -E 'fonts\.google|fonts\.gstatic' "$report" 2>/dev/null | wc -l | tr -d ' ')
 
   info "storage refs: $ls_count   external CDN scripts: $cdn_count   external fonts: $font_count"
 
@@ -244,7 +244,7 @@ audit_crosspage() {
 
   # Score: count Footer-Minimum-Fails
   local footer_fails
-  footer_fails=$(grep -cE "✗" "$report" 2>/dev/null || echo 0)
+  footer_fails=$(grep -E "✗" "$report" 2>/dev/null | wc -l | tr -d ' ')
   CROSSPAGE_ISSUES=$footer_fails
 
   if [[ "$footer_fails" -gt 0 ]]; then
