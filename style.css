@@ -3619,7 +3619,8 @@ body::before {
     background: var(--vanilla);
     color: var(--ink-2);
     font-family: var(--ff-body);
-    border-top: 1px solid var(--earth);
+    /* v31.11 adjust: forest-wash statt earth — Brand-Anchor zur Topbar */
+    border-top: 1px solid var(--forest-wash);
     box-sizing: border-box;
   }
   .vh-footer *, .vh-footer *::before, .vh-footer *::after { box-sizing: border-box; }
@@ -3628,12 +3629,14 @@ body::before {
     text-decoration: none;
     transition: color var(--t-fast) var(--ease-apple);
   }
-  .vh-footer a:hover { color: var(--forest-1); }
+  /* v31.11 adjust: forest-accent (saturated highlight) statt forest-1 — hover-pop */
+  .vh-footer a:hover { color: var(--forest-accent); }
 
   .vh-wordmark {
     font-family: var(--ff-body);
     font-weight: 800;
-    color: var(--ink);
+    /* v31.11 adjust: forest-primary statt ink — matched Topbar-Wordmark-Treatment */
+    color: var(--forest-primary);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     line-height: 1;
