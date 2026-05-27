@@ -3715,37 +3715,9 @@ body::before {
     margin-bottom: 4px;
   }
 
-  /* ── A1 · CENTERED STACK ─────────────────────────────────────────── */
-  .footer-a1 { padding: 64px 56px 32px; text-align: center; }
-  .footer-a1 .wordmark { font-size: var(--font-h4); }
-  .footer-a1 .tagline { margin-top: 14px; }
-  .footer-a1 .nav {
-    margin-top: 36px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 28px;
-    flex-wrap: wrap;
-  }
-  .footer-a1 .legal-row {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    color: var(--ink-2);
-  }
-  .footer-a1 .legal-row .vh-link { color: var(--ink-2); font-weight: 500; }
-  .footer-a1 hr.vh-hairline { margin-top: 40px; }
-  .footer-a1 .bottom {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  /* v31.11.1: A1 Centered Stack entfernt — Single-Layout-Approach (alle Pages auf A2) */
 
-  /* ── A2 · ASYMMETRIC EDITORIAL ───────────────────────────────────── */
+  /* ── A2 · ASYMMETRIC EDITORIAL (Single-Layout Cross-Page) ────────── */
   .footer-a2 { padding: 64px 56px 32px; }
   .footer-a2 .grid {
     display: grid;
@@ -3779,49 +3751,16 @@ body::before {
     gap: 16px;
   }
 
-  /* ── A3 · SINGLE-LINE COMPACT ────────────────────────────────────── */
-  .footer-a3 { padding: 32px 56px 28px; }
-  .footer-a3 .row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 48px;
-    flex-wrap: wrap;
-  }
-  .footer-a3 .left {
-    display: flex; align-items: baseline; gap: 18px;
-  }
-  .footer-a3 .left .wordmark { font-size: var(--font-body-sm); }
-  .footer-a3 .left .tagline { font-size: var(--font-label); }
-  .footer-a3 .right {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .footer-a3 hr.vh-hairline { margin-top: 22px; }
-  .footer-a3 .bottom {
-    margin-top: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-  }
+  /* v31.11.1: A3 Single-Line Compact entfernt — Single-Layout-Approach */
 
-  /* ── Address slot for Kooperationen variants ─────────────────────── */
+  /* ── Address slot for Kooperationen ───────────────────────────────── */
   .vh-address-block {
     margin-top: 24px;
     padding-top: 20px;
     border-top: 1px dashed rgba(168, 147, 114, 0.5);
   }
-  .footer-a1 .vh-address-block { text-align: center; }
   .footer-a2 .col-brand .vh-address-block { margin-top: 28px; padding-top: 24px; }
   @media (max-width: 640px) {
-    /* A1 — Mobile */
-    .footer-a1 { padding: 48px 24px 28px; }
-    .footer-a1 .nav { gap: 18px; margin-top: 28px; flex-direction: column; }
-    .footer-a1 .legal-row { flex-direction: column; gap: 14px; }
-
     /* A2 — Mobile */
     .footer-a2 { padding: 48px 24px 28px; }
     .footer-a2 .grid { grid-template-columns: 1fr; gap: 36px; text-align: center; }
@@ -3829,11 +3768,4 @@ body::before {
     .footer-a2 .col-brand .ig { justify-content: center; }
     .footer-a2 .col ul { align-items: center; }
     .footer-a2 .bottom { flex-direction: column; gap: 12px; text-align: center; }
-
-    /* A3 — Mobile */
-    .footer-a3 { padding: 28px 24px 24px; }
-    .footer-a3 .row { flex-direction: column; align-items: stretch; gap: 18px; }
-    .footer-a3 .left { flex-direction: column; gap: 6px; align-items: flex-start; }
-    .footer-a3 .right { gap: 10px 14px; flex-wrap: wrap; }
-    .footer-a3 .bottom { flex-direction: column; gap: 10px; align-items: flex-start; }
   }
