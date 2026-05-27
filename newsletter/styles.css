@@ -85,6 +85,22 @@
   --container-narrow: 720px;
   --pad: 20px;
   --safe-bottom: max(env(safe-area-inset-bottom), 12px);
+
+  /* ============================================================
+     Motion-System v31.10 — Mirror from style.css :root
+     (Newsletter-Page nutzt eigenes Stylesheet)
+     ============================================================ */
+  --ease-out-quart:   cubic-bezier(0.165, 0.84, 0.44, 1);
+  --ease-spring:      cubic-bezier(0.5, 1.5, 0.6, 1);
+  --motion-instant:   100ms;
+  --motion-fast:      200ms;
+  --motion-base:      400ms;
+  --motion-slow:      600ms;
+  --motion-page:      300ms;
+  --motion-distance-sm: 8px;
+  --motion-distance-md: 16px;
+  --motion-distance-lg: 24px;
+  --motion-stagger:   80ms;
 }
 
 @media (min-width: 1024px) {
@@ -999,3 +1015,37 @@ body.variant-geo .art-geo { display: block; }
     .footer-a2 .col ul { align-items: center; }
     .footer-a2 .bottom { flex-direction: column; gap: 12px; text-align: center; }
   }
+
+
+/* ============================================================
+   Motion-Reveal-System v31.10 — Mirror from style.css
+   Overrides existing .reveal (Sprint v31.3) — supports both
+   .is-in (legacy form.js toggle) AND .reveal-active (new JS).
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(var(--motion-distance-md));
+  transition: opacity var(--motion-base) var(--ease-out-quart),
+              transform var(--motion-base) var(--ease-out-quart);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal.reveal-active,
+.reveal.is-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-hero {
+  transform: translateY(var(--motion-distance-lg));
+  transition-duration: var(--motion-slow);
+}
+.reveal-subtle { transform: translateY(var(--motion-distance-sm)); }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-hero, .reveal-subtle {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
