@@ -134,6 +134,20 @@
 
   /* Stagger gap between sibling reveal-delays */
   --motion-stagger:   80ms;
+
+  /* ============================================================
+     Hover-System v31.10 — Subtle Editorial Polish
+     ============================================================ */
+
+  /* Hover-Lift (Cards) */
+  --hover-lift:       -2px;   /* translateY für Card-Lift */
+  --hover-press:      0;      /* Reset für :active */
+
+  /* Hover-Tint (subtle Forest-Wash für Card-BG) */
+  --hover-tint:       rgba(4, 89, 39, 0.04);
+
+  /* Hover-Transition-Defaults — alle hover-states should use this */
+  --hover-transition: var(--motion-fast) var(--ease-out-quart);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -527,13 +541,13 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.2px;
   text-decoration: none;
   box-shadow: 0 6px 18px -8px rgba(4, 89, 39, 0.45);
-  transition: background 0.2s ease, transform 0.12s ease;
+  transition: background var(--hover-transition), transform var(--hover-transition);
 }
 
 .identity-glass-card .identity-cta-primary:hover,
 .identity-glass-card .identity-cta-primary:focus-visible {
   background: var(--forest-2);
-  transform: translateY(-1px);
+  transform: translateY(var(--hover-lift));
 }
 
 .identity-glass-card .identity-cta-secondary {
@@ -551,7 +565,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 14px;
   letter-spacing: 0.2px;
   text-decoration: none;
-  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  transition: background var(--hover-transition), color var(--hover-transition), box-shadow var(--hover-transition), transform var(--hover-transition);
   box-shadow: 0 2px 8px -4px rgba(4, 89, 39, 0.20); /* v31.5: subtle pop */
 }
 
@@ -559,6 +573,7 @@ a { color: inherit; text-decoration: none; }
 .identity-glass-card .identity-cta-secondary:focus-visible {
   background: var(--forest-1);
   color: var(--vanilla);
+  transform: translateY(var(--hover-lift));
 }
 
 /* === Desktop Break-out (≥1024px) === */
@@ -820,7 +835,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .lead-preview-tile:hover {
-  transform: translateY(-2px);
+  transform: translateY(var(--hover-lift));
   border-color: rgba(4, 89, 39, 0.30);
   box-shadow: 0 10px 22px -10px rgba(4, 89, 39, 0.25);
 }
@@ -1001,12 +1016,12 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 18px 18px;
-  transition: border-color 0.2s, transform 0.15s;
+  transition: border-color var(--hover-transition), transform var(--hover-transition);
   cursor: pointer;
 }
 .smash-card:hover {
   border-color: rgba(0, 255, 106, 0.4);
-  transform: translateY(-1px);
+  transform: translateY(var(--hover-lift));
 }
 .smash-card-icon {
   width: 48px;
@@ -1078,9 +1093,9 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: -0.2px;
   cursor: pointer;
   box-shadow: 0 12px 28px -8px rgba(4, 89, 39, 0.35);
-  transition: filter 0.15s, transform 0.12s;
+  transition: filter var(--hover-transition), transform var(--hover-transition);
 }
-.coop-cta:hover { filter: brightness(1.06); }
+.coop-cta:hover { filter: brightness(1.06); transform: translateY(var(--hover-lift)); }
 .coop-cta:active { transform: scale(0.985); }
 .coop-cta .cta-icon { font-size: 22px; }
 .coop-cta .cta-arrow { font-size: 22px; font-weight: 900; }
@@ -1104,9 +1119,9 @@ a { color: inherit; text-decoration: none; }
 .footer-links a {
   color: var(--text2);
   font-weight: 600;
-  transition: color 0.15s;
+  transition: color var(--hover-transition);
 }
-.footer-links a:hover { color: var(--green-deep); }
+.footer-links a:hover { color: var(--forest-accent); }
 .footer-meta {
   font-size: 10px;
   color: var(--text2); /* v31.5: WCAG-AA für small-text (war --text3 = decorative only) */
@@ -1535,9 +1550,9 @@ a { color: inherit; text-decoration: none; }
   text-align: center;
   box-shadow: 0 14px 32px -8px rgba(4, 89, 39, 0.35);
   display: block;
-  transition: filter 0.15s, transform 0.12s;
+  transition: filter var(--hover-transition), transform var(--hover-transition);
 }
-.brand-cta-big:hover { filter: brightness(1.06); }
+.brand-cta-big:hover { filter: brightness(1.06); transform: translateY(var(--hover-lift)); }
 .brand-cta-big:active { transform: scale(0.985); }
 .brand-cta-big-eyebrow {
   font-size: 10px;
@@ -1738,7 +1753,7 @@ a { color: inherit; text-decoration: none; }
   color: #fff;
   box-shadow: 0 8px 20px -6px rgba(4, 89, 39, 0.35);
 }
-.v5-cta-primary:hover { filter: brightness(1.06); }
+.v5-cta-primary:hover { filter: brightness(1.06); transform: translateY(var(--hover-lift)); }
 .v5-cta-primary:active { transform: scale(0.99); }
 .v5-cta-secondary {
   background: #ffffff;
@@ -1838,9 +1853,9 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: -0.2px;
   cursor: pointer;
   box-shadow: 0 8px 20px -6px rgba(4, 89, 39, 0.35);
-  transition: filter 0.15s, transform 0.12s;
+  transition: filter var(--hover-transition), transform var(--hover-transition);
 }
-.brand-form-submit:hover { filter: brightness(1.06); }
+.brand-form-submit:hover { filter: brightness(1.06); transform: translateY(var(--hover-lift)); }
 .brand-form-submit:active { transform: scale(0.99); }
 
 .brand-form-alt {
@@ -1923,7 +1938,7 @@ a { color: inherit; text-decoration: none; }
 }
 .werte-pill-pro:hover {
   border-color: rgba(4, 89, 39, 0.35);
-  transform: translateY(-2px);
+  transform: translateY(var(--hover-lift));
   box-shadow: 0 10px 24px -14px rgba(4, 89, 39, 0.30);
 }
 
