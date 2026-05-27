@@ -30,10 +30,50 @@
   --danger: #b3361f;
   --ok:     #045927;
 
-  /* Type */
-  --font-body:    'Inter', -apple-system, system-ui, sans-serif;
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-mono:    ui-monospace, 'SF Mono', Menlo, monospace;
+  /* Type — Font-Families (renamed v31.9 from --font-* to --ff-* damit
+     --font-* für Size-Tokens frei wird — Konvention konsistent zu style.css) */
+  --ff-body:    'Inter', -apple-system, system-ui, sans-serif;
+  --ff-display: 'Playfair Display', Georgia, serif;
+  --ff-mono:    ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ============================================================
+     Type-Scale-System v31.9 — Fluid Typography
+     (mirrored from style.css :root — Newsletter-Page nutzt eigenes Stylesheet)
+     ============================================================ */
+
+  /* Headlines · Playfair fluid scale */
+  --font-h1: clamp(2rem,      5vw + 0.5rem, 3.5rem);
+  --font-h2: clamp(1.625rem,  4vw,          2.5rem);
+  --font-h3: clamp(1.25rem,   2.5vw,        1.625rem);
+  --font-h4: clamp(1rem,      1.5vw,        1.25rem);
+
+  /* Body · Inter */
+  --font-body-lg: clamp(1.0625rem, 1.5vw,  1.1875rem);
+  --font-body:    clamp(0.9375rem, 1.25vw, 1rem);
+  --font-body-sm: 0.875rem;
+  --font-eyebrow: 0.6875rem;
+  --font-label:   0.8125rem;
+  --font-micro:   0.625rem;
+
+  /* Line-Heights */
+  --leading-tight:   1.1;
+  --leading-snug:    1.3;
+  --leading-normal:  1.55;
+  --leading-relaxed: 1.7;
+
+  /* Letter-Spacing */
+  --tracking-tight:  -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.1em;
+  --tracking-wider:  0.16em;
+
+  /* Font-Weights */
+  --weight-regular:   400;
+  --weight-medium:    500;
+  --weight-semibold:  600;
+  --weight-bold:      700;
+  --weight-extrabold: 800;
+  --weight-black:     900;
 
   /* Motion */
   --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
@@ -64,7 +104,7 @@ html, body { margin: 0; padding: 0; }
 body {
   background: var(--vanilla);
   color: var(--ink);
-  font-family: var(--font-body);
+  font-family: var(--ff-body);
   font-size: 16px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
@@ -114,7 +154,7 @@ a { color: inherit; }
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-body);
+  font-family: var(--ff-body);
   font-weight: 900;
   font-size: 13px;
   letter-spacing: 3px;
@@ -130,7 +170,7 @@ a { color: inherit; }
   transform: translateY(-2px);
 }
 .topbar-back {
-  font-family: var(--font-body);
+  font-family: var(--ff-body);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.6px;
@@ -202,7 +242,7 @@ a { color: inherit; }
   background: var(--vanilla-2);
   border: 1px solid var(--earth);
   border-radius: 999px;
-  font-family: var(--font-mono);
+  font-family: var(--ff-mono);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 1.4px;
@@ -215,11 +255,11 @@ a { color: inherit; }
   box-shadow: 0 0 0 3px rgba(4, 89, 39, 0.18);
 }
 .hero h1 {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(34px, 8vw, 56px);
-  line-height: 1.02;
-  letter-spacing: -1.2px;
+  font-family: var(--ff-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--font-h1);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
   color: var(--forest-anchor);
   margin: 0;
   text-wrap: balance;
@@ -265,7 +305,7 @@ a { color: inherit; }
   border-radius: 14px;
   padding: 16px 18px;
   min-height: 52px;
-  font-family: var(--font-body);
+  font-family: var(--ff-body);
   font-size: 16px; /* ≥16px to prevent iOS auto-zoom */
   font-weight: 500;
   color: var(--ink);
@@ -287,7 +327,7 @@ a { color: inherit; }
   border-radius: 14px;
   padding: 16px 22px;
   min-height: 52px;
-  font-family: var(--font-body);
+  font-family: var(--ff-body);
   font-weight: 700;
   font-size: 14px;
   letter-spacing: 1.4px;
@@ -321,10 +361,10 @@ a { color: inherit; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .form-trust {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 1.2px;
+  font-family: var(--ff-mono);
+  font-size: var(--font-eyebrow);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   color: var(--ink-3);
   margin: 2px 0 0;
@@ -375,10 +415,10 @@ a { color: inherit; }
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.6px;
+  font-family: var(--ff-mono);
+  font-size: var(--font-eyebrow);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   color: var(--forest-primary);
   margin: 0 auto 14px;
@@ -389,20 +429,20 @@ a { color: inherit; }
   background: var(--forest-primary);
 }
 .section-h {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(28px, 5.5vw, 44px);
-  line-height: 1.05;
-  letter-spacing: -1px;
+  font-family: var(--ff-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--font-h2);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
   color: var(--forest-anchor);
   margin: 0 0 8px;
   text-wrap: balance;
   max-width: 640px;
 }
-.section-h em { font-style: italic; font-weight: 400; color: var(--forest-primary); }
+.section-h em { font-style: italic; font-weight: var(--weight-regular); color: var(--forest-primary); }
 .section-lede {
-  font-size: 15px;
-  color: var(--ink-2); /* v31.5: WCAG-AA für small-text */
+  font-size: var(--font-body);
+  color: var(--ink-2);
   margin: 0 0 36px;
   max-width: 520px;
   text-wrap: pretty;
@@ -449,7 +489,7 @@ a { color: inherit; }
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: var(--font-mono);
+  font-family: var(--ff-mono);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -458,7 +498,7 @@ a { color: inherit; }
   opacity: 0.7;
 }
 .habit-tag .num {
-  font-family: var(--font-display);
+  font-family: var(--ff-display);
   font-style: italic;
   font-weight: 400;
   font-size: 18px;
@@ -486,19 +526,19 @@ a { color: inherit; }
   color: var(--vanilla);
 }
 .habit-h {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 26px;
-  line-height: 1.08;
-  letter-spacing: -0.4px;
+  font-family: var(--ff-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--font-h3);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
   color: var(--vanilla);
   margin: 0;
   text-wrap: balance;
 }
-.habit-h em { font-style: italic; font-weight: 400; color: #8cc7a0; }
+.habit-h em { font-style: italic; font-weight: var(--weight-regular); color: #8cc7a0; }
 .habit-hook {
-  font-size: 14px;
-  line-height: 1.55;
+  font-size: var(--font-body-sm);
+  line-height: var(--leading-normal);
   color: rgba(247, 239, 222, 0.75);
   margin: 0;
   text-wrap: pretty;
@@ -519,7 +559,7 @@ a { color: inherit; }
   margin: 0 auto;
 }
 .anti-eyebrow {
-  font-family: var(--font-mono);
+  font-family: var(--ff-mono);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.6px;
@@ -541,11 +581,11 @@ a { color: inherit; }
   .statements { gap: 56px; }
 }
 .statement {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(30px, 6vw, 56px);
-  line-height: 1.05;
-  letter-spacing: -1.2px;
+  font-family: var(--ff-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--font-h1);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
   color: var(--forest-anchor);
   margin: 0;
   text-wrap: balance;
@@ -557,7 +597,7 @@ a { color: inherit; }
   position: absolute;
   left: 0;
   top: 8px;
-  font-family: var(--font-mono);
+  font-family: var(--ff-mono);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.6px;
@@ -599,7 +639,7 @@ a { color: inherit; }
   align-items: baseline;
   justify-content: space-between;
   gap: 16px;
-  font-family: var(--font-mono);
+  font-family: var(--ff-mono);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.6px;
@@ -608,7 +648,7 @@ a { color: inherit; }
   flex-wrap: wrap;
 }
 .anti-foot .sig {
-  font-family: var(--font-display);
+  font-family: var(--ff-display);
   font-style: italic;
   font-weight: 400;
   font-size: 18px;
@@ -634,7 +674,7 @@ a { color: inherit; }
   gap: 16px;
 }
 .repeat .verse {
-  font-family: var(--font-display);
+  font-family: var(--ff-display);
   font-style: italic;
   font-weight: 400;
   font-size: 18px;
@@ -644,7 +684,7 @@ a { color: inherit; }
   text-wrap: balance;
 }
 .repeat .verse-attr {
-  font-family: var(--font-mono);
+  font-family: var(--ff-mono);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.8px;
@@ -654,7 +694,7 @@ a { color: inherit; }
 }
 /* v31.5: "Mein Anker."-Sign-off · matches Index .bibel-anchor-signature Pattern */
 .repeat .verse-signature {
-  font-family: var(--font-body);
+  font-family: var(--ff-body);
   font-size: 13px;
   font-weight: 600;
   color: var(--ink-2);
@@ -662,11 +702,11 @@ a { color: inherit; }
   margin: 0 0 24px;
 }
 .repeat h2 {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(28px, 5vw, 40px);
-  line-height: 1.05;
-  letter-spacing: -1px;
+  font-family: var(--ff-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--font-h2);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
   color: var(--forest-anchor);
   margin: 0;
   text-wrap: balance;
@@ -721,7 +761,7 @@ a { color: inherit; }
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  font-family: var(--font-body);
+  font-family: var(--ff-body);
   font-weight: 700;
   font-size: 13px;
   letter-spacing: 1.4px;
@@ -751,7 +791,7 @@ a { color: inherit; }
   box-shadow: 0 0 0 3px rgba(140, 199, 160, 0.22);
 }
 .sticky-cta .arrow {
-  font-family: var(--font-display);
+  font-family: var(--ff-display);
   font-style: italic;
   font-weight: 400;
   font-size: 16px;
