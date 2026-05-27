@@ -3642,7 +3642,7 @@ body::before {
     font-family: var(--ff-body);
     font-size: var(--font-body-sm);
     font-weight: 500;
-    color: var(--ink-3);
+    color: var(--ink-2);
     letter-spacing: 0.01em;
     line-height: 1.5;
   }
@@ -3664,14 +3664,14 @@ body::before {
     font-size: var(--font-eyebrow);
     font-weight: 500;
     letter-spacing: 0.06em;
-    color: var(--ink-3);
+    color: var(--ink-2);
     text-transform: uppercase;
   }
   .vh-copyright {
     font-family: var(--ff-mono);
     font-size: var(--font-eyebrow);
     letter-spacing: 0.04em;
-    color: var(--ink-3);
+    color: var(--ink-2);
   }
   .vh-hairline {
     height: 1px;
@@ -3697,7 +3697,7 @@ body::before {
     font-size: var(--font-eyebrow);
     line-height: 1.6;
     letter-spacing: 0.04em;
-    color: var(--ink-3);
+    color: var(--ink-2);
     text-transform: none;
   }
   .vh-address strong {
@@ -3729,9 +3729,9 @@ body::before {
     align-items: center;
     gap: 20px;
     flex-wrap: wrap;
-    color: var(--ink-3);
+    color: var(--ink-2);
   }
-  .footer-a1 .legal-row .vh-link { color: var(--ink-3); font-weight: 500; }
+  .footer-a1 .legal-row .vh-link { color: var(--ink-2); font-weight: 500; }
   .footer-a1 hr.vh-hairline { margin-top: 40px; }
   .footer-a1 .bottom {
     margin-top: 20px;
@@ -3751,7 +3751,8 @@ body::before {
   .footer-a2 .col-brand .wordmark { font-size: var(--font-h4); }
   .footer-a2 .col-brand .tagline { margin-top: 16px; max-width: 320px; }
   .footer-a2 .col-brand .ig { margin-top: 28px; }
-  .footer-a2 .col h4 {
+  /* v31.11: <h4> ersetzt durch <p class="vh-col-label"> wegen heading-order a11y (Section endet auf h2, Footer-h4 würde h3 überspringen) */
+  .footer-a2 .col .vh-col-label {
     font-family: var(--ff-body);
     font-size: var(--font-micro);
     font-weight: 700;
