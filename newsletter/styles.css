@@ -237,8 +237,8 @@ a { color: inherit; }
   gap: 18px;
 }
 .hero-portrait {
-  width: 120px;
-  height: 120px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
   background:
     radial-gradient(120% 80% at 50% 0%, var(--forest-accent), var(--forest-anchor) 75%);
