@@ -3882,25 +3882,17 @@ body::before {
   to   { opacity: 1; }
 }
 
-/* Step 9: Page-Load subtle fade — body opacity transition beim Initial-Render.
-   Backwards-fill: Animation gilt schon BEFORE animation starts → kein FOUC.
-   Topbar bleibt instant visible (kein Animation), Hero-Section nutzt existing
-   IntersectionObserver-Reveals mit Stagger-Delays (Foundation v31.10 Layer 1). */
-body {
-  animation: vh-page-load var(--motion-page) var(--ease-out-quart) backwards;
-}
-@keyframes vh-page-load {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
+/* Step 9 REMOVED (v31.10 FCP-Fix): body-fade-Animation entfernt.
+   Reason: `body { animation: vh-page-load ... backwards }` setzt initial
+   opacity 0 → Lighthouse-Driver wartet auf First-Contentful-Paint, sieht
+   keinen Pixel-Paint, schmeisst NO_FCP-Error (6/7 Pages perf=0 im Audit).
+   Initial-Render-Choreographie übernehmen Layer-1 IntersectionObserver-Reveals.
+   View Transitions API (Step 10) bleibt für Inter-Page-Navigation aktiv. */
 
-/* prefers-reduced-motion: skip all page-transitions + load-fade */
+/* prefers-reduced-motion: skip View-Transitions */
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root),
   ::view-transition-new(root) {
-    animation: none;
-  }
-  body {
     animation: none;
   }
 }
