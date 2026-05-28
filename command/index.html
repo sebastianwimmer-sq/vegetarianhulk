@@ -1916,7 +1916,7 @@ window.triageItem = async function(id, newStatus, btn) {
 window.quickCapture = async function() {
   const title = document.getElementById('qcTitle').value.trim();
   const body = document.getElementById('qcBody').value.trim();
-  const brand = document.getElementById('qcBrand').value;
+  const brandHint = document.getElementById('qcBrand').value;
   const result = document.getElementById('qcResult');
   const btn = document.getElementById('qcSubmit');
   if (!title) { result.textContent = '❌ Titel fehlt'; result.style.color = 'var(--danger)'; return; }
@@ -1926,7 +1926,7 @@ window.quickCapture = async function() {
     const res = await fetch(WORKER + '/inbox/add', {
       method: 'POST',
       headers: { 'X-Peaking-Key': KEY, 'Origin': 'https://peaking.world', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title, body, brand }),
+      body: JSON.stringify({ title, body, brandHint }),
     });
     const data = await res.json().catch(() => ({}));
     if (res.ok && data.ok) {
