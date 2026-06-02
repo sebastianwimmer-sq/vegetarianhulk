@@ -5,18 +5,163 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kooperationen — Vegetarianhulk</title>
+<title>Für Brands — Vegetarianhulk</title>
 <meta name="description" content="Du bist Brand und willst mit @vegetarianhulk kooperieren? Schreib mir. Mail oder DM.">
-<meta name="theme-color" content="#faf6ee">
+<meta name="theme-color" content="#f7efde">
 <meta name="robots" content="index,follow">
 
-<meta property="og:title" content="Kooperationen — Vegetarianhulk">
+<meta property="og:title" content="Für Brands — Vegetarianhulk">
 <meta property="og:description" content="Discipline-driven Content für 16-34 Jährige. Vegetarisch · Faith · Build-in-Public.">
 <meta property="og:type" content="website">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
 <link rel="stylesheet" href="style.css?v=v31.10">
+<style>
+/* kooperationen.html — page-scoped Motion + CTA Polish (v31.12, keine neuen Libs) */
+@media (prefers-reduced-motion: no-preference) {
+  .brand-page .fade-in-up {
+    opacity: 0;
+    transform: translateY(20px) scale(.985);
+    transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
+    will-change: opacity, transform;
+  }
+  .brand-page .fade-in-up.visible { opacity: 1; transform: none; }
+  .brand-page .stag-0 { transition-delay: 0ms; }
+  .brand-page .stag-1 { transition-delay: 90ms; }
+  .brand-page .stag-2 { transition-delay: 180ms; }
+  .brand-page .stag-3 { transition-delay: 270ms; }
+  .brand-page .stag-4 { transition-delay: 360ms; }
+  .brand-page .stag-5 { transition-delay: 450ms; }
+  .brand-page .delay-1 { transition-delay: 80ms; }
+  .brand-page .delay-2 { transition-delay: 160ms; }
+  .brand-page .delay-3 { transition-delay: 240ms; }
+}
+.brand-page .usp-card,
+.brand-page .package-card,
+.brand-page .brand-theme-pill,
+.brand-page .process-step {
+  transition: transform .28s cubic-bezier(.16,1,.3,1), box-shadow .28s cubic-bezier(.16,1,.3,1), border-color .28s ease;
+}
+@media (hover: hover) {
+  .brand-page .usp-card:hover,
+  .brand-page .package-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px -12px rgba(4,89,39,.28);
+  }
+  .brand-page .brand-theme-pill:hover {
+    transform: translateY(-2px);
+    border-color: var(--forest-primary, #045927);
+  }
+}
+.brand-page .brand-cta-primary {
+  display: inline-flex; align-items: center; gap: .5em;
+  background: var(--forest-primary, #045927); color: #f7efde;
+  font-weight: 800; font-size: 15px; letter-spacing: .2px;
+  padding: 14px 26px; border-radius: 14px; text-decoration: none;
+  box-shadow: 0 8px 22px -10px rgba(4,89,39,.5);
+  transition: transform .2s cubic-bezier(.16,1,.3,1), box-shadow .2s ease, background .2s ease;
+}
+.brand-page .brand-cta-primary .brand-cta-arrow { transition: transform .2s cubic-bezier(.16,1,.3,1); }
+@media (hover: hover) {
+  .brand-page .brand-cta-primary:hover { transform: translateY(-2px); background: var(--forest-anchor, #122d1c); box-shadow: 0 12px 26px -8px rgba(4,89,39,.55); }
+  .brand-page .brand-cta-primary:hover .brand-cta-arrow { transform: translateX(4px); }
+}
+.brand-page .brand-cta-primary:focus-visible { outline: 3px solid var(--forest-accent, #1a7340); outline-offset: 3px; }
+.brand-page .brand-cta-band { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; padding: 22px 20px 4px; }
+.brand-page .brand-cta-band-text { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: clamp(20px, 3.4vw, 28px); color: var(--ink, #1a1410); }
+.brand-sticky-cta {
+  position: fixed; left: 50%; bottom: 20px; transform: translate(-50%, 160%);
+  z-index: 60; display: inline-flex; align-items: center; gap: .5em;
+  padding: 13px 26px; border-radius: 999px;
+  color: #f7efde; font-weight: 800; font-size: 14px; letter-spacing: .2px; text-decoration: none;
+  background: linear-gradient(135deg, rgba(4,89,39,.92), rgba(18,45,28,.92));
+  -webkit-backdrop-filter: blur(10px) saturate(1.2); backdrop-filter: blur(10px) saturate(1.2);
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 8px 16px -6px rgba(4,89,39,.45), 0 18px 42px -12px rgba(0,0,0,.38);
+  opacity: 0; pointer-events: none;
+  transition: transform .45s cubic-bezier(.16,1,.3,1), opacity .3s ease, box-shadow .3s ease;
+}
+.brand-sticky-cta.is-visible { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
+@media (hover: hover) {
+  .brand-sticky-cta:hover { transform: translate(-50%, -2px); box-shadow: inset 0 1px 0 rgba(255,255,255,.34), 0 10px 20px -6px rgba(4,89,39,.5), 0 24px 50px -12px rgba(0,0,0,.42); }
+}
+.brand-page .brand-trust-bar {
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.5);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 8px 22px -14px rgba(4,89,39,.3);
+  -webkit-backdrop-filter: blur(7px) saturate(1.1); backdrop-filter: blur(7px) saturate(1.1);
+}
+/* Contained, elevated section panels — Tiefe + dezent alternierende Surface */
+.brand-page .v5-section {
+  max-width: 940px;
+  margin: 26px auto;
+  padding: clamp(26px, 4vw, 46px) clamp(20px, 4vw, 40px);
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.3));
+  border: 1px solid rgba(255,255,255,.55);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 18px 48px -26px rgba(4,89,39,.3), 0 4px 14px -10px rgba(0,0,0,.1);
+  -webkit-backdrop-filter: blur(8px) saturate(1.05); backdrop-filter: blur(8px) saturate(1.05);
+}
+.brand-page .v5-section:nth-of-type(2n) {
+  background: linear-gradient(180deg, rgba(239,229,207,.5), rgba(239,229,207,.26));
+}
+.brand-page .v5-h2::after {
+  content: ""; display: block; width: 44px; height: 3px; margin-top: 12px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--forest-primary, #045927), rgba(4,89,39,0));
+}
+/* Card depth (resting) */
+.brand-page .usp-card,
+.brand-page .package-card {
+  border-radius: 18px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 10px 26px -18px rgba(4,89,39,.32), 0 3px 10px -8px rgba(0,0,0,.12);
+}
+.brand-page .package-card-highlight {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 16px 38px -18px rgba(4,89,39,.42), 0 5px 14px -8px rgba(0,0,0,.16);
+}
+/* Hero stat tiles — starke Zahlen, glossy */
+.brand-page .hero-stat-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
+.brand-page .hero-stat-tile {
+  padding: 14px 16px; border-radius: 16px;
+  background: linear-gradient(160deg, rgba(255,255,255,.62), rgba(247,239,222,.4));
+  border: 1px solid rgba(255,255,255,.6);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 10px 26px -18px rgba(4,89,39,.34), 0 3px 10px -8px rgba(0,0,0,.12);
+}
+.brand-page .hero-stat-num {
+  display: block; font-family: 'Playfair Display', Georgia, serif; font-weight: 700;
+  font-size: clamp(22px, 3.6vw, 30px); line-height: 1; letter-spacing: -.5px; color: var(--forest-primary, #045927);
+}
+.brand-page .hero-stat-label { display: block; margin-top: 5px; font-size: 11.5px; font-weight: 600; letter-spacing: .2px; color: var(--ink-2, #4a3f33); line-height: 1.3; }
+@media (max-width: 520px) { .brand-page .hero-stat-tile { padding: 11px 12px; } }
+/* Hero als contained Panel (konsistent zu den Sektionen) + premium Portrait */
+.brand-page .brand-hero {
+  max-width: 940px; margin: 26px auto; padding: clamp(22px, 4vw, 40px);
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255,255,255,.6), rgba(247,239,222,.4));
+  border: 1px solid rgba(255,255,255,.6);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 22px 56px -26px rgba(4,89,39,.34), 0 5px 16px -10px rgba(0,0,0,.12);
+  -webkit-backdrop-filter: blur(8px) saturate(1.06); backdrop-filter: blur(8px) saturate(1.06);
+}
+.brand-page .brand-hero-text .brand-cta-primary { margin-top: 28px; }
+.brand-page .brand-hero .hero-photo-wrap {
+  max-width: 420px; margin-inline: auto; border-radius: 22px; overflow: hidden;
+  background: var(--beige-1, #efe5cf);
+  box-shadow: 0 0 0 1px rgba(4,89,39,.12), 0 0 0 6px rgba(255,255,255,.55), 0 26px 54px -22px rgba(4,89,39,.4), 0 8px 20px -12px rgba(0,0,0,.22);
+}
+.brand-page .brand-hero .hero-photo-v3.hero-photo-small {
+  width: 100%; height: auto; aspect-ratio: 4 / 5;
+  object-fit: cover; object-position: center top; display: block; border-radius: 22px;
+}
+.brand-page .brand-hero .hero-photo-fallback.hero-photo-small {
+  width: 100%; aspect-ratio: 4 / 5; border-radius: 22px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-page .fade-in-up { transition: opacity .35s ease !important; transform: none !important; }
+  .brand-page .usp-card:hover, .brand-page .package-card:hover,
+  .brand-page .brand-theme-pill:hover, .brand-page .brand-cta-primary:hover { transform: none !important; }
+  .brand-sticky-cta { transition: opacity .2s ease; }
+}
+</style>
 </head>
 <body>
 <main class="page brand-page">
@@ -36,7 +181,7 @@
   <!-- Hero V24 — Desktop zweispaltig (Foto links + Text rechts ab 1024px), Mobile bleibt stacked -->
   <section class="hero brand-hero">
     <div class="hero-photo-wrap fade-in-up delay-1">
-      <img src="hero.jpg?v=v31.6.1" alt="Sebi" class="hero-photo-v3 hero-photo-small"
+      <img src="hero.jpg?v=v31.6.1" alt="Sebi, Founder vegetarianhulk" class="hero-photo-v3 hero-photo-small"
            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
       <div class="hero-photo-fallback hero-photo-small" style="display:none">FOTO</div>
     </div>
@@ -44,9 +189,8 @@
     <div class="hero-text brand-hero-text">
       <div class="brand-trust-bar fade-in-up">
         <span>📍 DACH</span>
-        <span>👥 2.100 Follower</span>
-        <span>📊 50%+ Non-Follower-Reach</span>
-        <span>⚡ Antwort in 48h</span>
+        <span>👥 2.079 Follower</span>
+        <span>⚡ Persönliche, schnelle Antwort</span>
       </div>
 
       <h1 class="brand-h1 fade-in-up delay-2">
@@ -58,9 +202,14 @@
         Ich bin <strong>Sebi (@vegetarianhulk)</strong> — Disziplin, Faith, vegetarisch-stark, Build-in-Public. Ehrlicher Content für Brands die ich auch privat nutzen würde. <strong>Keine Coaching-Phrasen, keine Plastik-Sprüche.</strong>
       </div>
 
-      <a href="#anfrage" class="hero-mini-cta fade-in-up delay-3">
-        <span>📨 Direkt Anfrage senden</span>
-        <span style="font-weight:900">→</span>
+      <div class="hero-stat-tiles fade-in-up delay-3">
+        <div class="hero-stat-tile"><span class="hero-stat-num">52%</span><span class="hero-stat-label">Non-Follower-Reichweite</span></div>
+        <div class="hero-stat-tile"><span class="hero-stat-num">16.040</span><span class="hero-stat-label">Aufrufe (Reels/Beiträge)</span></div>
+        <div class="hero-stat-tile"><span class="hero-stat-num">+563%</span><span class="hero-stat-label">Wachstum Reels/Beiträge</span></div>
+      </div>
+
+      <a href="/anfrage.html" class="brand-cta-primary fade-in-up delay-3">
+        📨 Anfrage senden <span class="brand-cta-arrow">→</span>
       </a>
     </div>
   </section>
@@ -73,6 +222,10 @@
       Ich bin nicht der größte Influencer. Aber meine Audience ist <strong>real</strong>, kauft mit, liest Captions zu Ende. Was mich ausmacht: <strong>Zeit</strong> (10 Jahre vegetarisch live), <strong>Tiefe</strong> (Christ-Foundation · Anti-Hustle) und <strong>Reichweite jenseits der Bubble</strong>.
     </div>
 
+    <p class="v5-body" style="margin-top:12px">
+      <strong>Meine vier Themen:</strong> Disziplin · Faith · Vegetarisch-stark · Build-in-Public — 5–7× pro Woche, 1st-person &amp; raw.
+    </p>
+
     <div class="usp-grid">
       <div class="usp-card fade-in-up stag-0">
         <div class="usp-icon">🧬</div>
@@ -82,57 +235,26 @@
       </div>
 
       <div class="usp-card fade-in-up stag-1">
-        <div class="usp-icon">📊</div>
-        <div class="usp-stat">50%+</div>
-        <div class="usp-headline">Non-Follower-Reach</div>
-        <div class="usp-body">Mehr als die Hälfte meiner Aufrufe kommt von Menschen die mir noch nicht folgen. Algorithm-Pickup statt Echo-Bubble.</div>
+        <div class="usp-icon">🇩🇪</div>
+        <div class="usp-stat">83%</div>
+        <div class="usp-headline">DACH-Kern</div>
+        <div class="usp-body">76,2% DE, 6,4% AT — kein DACH-USA-Mix. Wenn DACH dein Markt ist, ist meine Audience relevant.</div>
       </div>
 
       <div class="usp-card fade-in-up stag-2">
-        <div class="usp-icon">🇩🇪</div>
-        <div class="usp-stat">90%</div>
-        <div class="usp-headline">DACH-Kern</div>
-        <div class="usp-body">83% DE, 7% AT, 1% CH — kein DACH-USA-Mix. Wenn DACH dein Markt ist, ist meine Audience relevant.</div>
-      </div>
-
-      <div class="usp-card fade-in-up stag-3">
         <div class="usp-icon">🎯</div>
         <div class="usp-stat">25-34</div>
         <div class="usp-headline">Kaufkräftige Demo</div>
-        <div class="usp-body">50,9% Berufstätige mit Einkommen. 37,6% Welle 18-24. Balance ♂ 52,6% / ♀ 47,4%.</div>
+        <div class="usp-body">81% sind 18–34 — der kaufkräftige Kern (25–34) macht 48% aus. Klar männlich geprägt: 64% ♂ / 36% ♀.</div>
       </div>
 
-      <div class="usp-card fade-in-up stag-4">
+      <div class="usp-card fade-in-up stag-3">
         <div class="usp-icon">✝️</div>
         <div class="usp-stat">Loyal</div>
         <div class="usp-headline">Christ-Foundation</div>
         <div class="usp-body">Bibel als Anker, Glaube als Kompass. Niche-Audience die Christian Brands + Faith-Themes echt vertraut.</div>
       </div>
-
-      <div class="usp-card fade-in-up stag-5">
-        <div class="usp-icon">🦁</div>
-        <div class="usp-stat">Authentic</div>
-        <div class="usp-headline">Anti-Coach-Bro Voice</div>
-        <div class="usp-body">Keine „Boost-your-life-10x"-Phrasen. Brands die echte Authenticity wollen statt Performance-Theater finden hier ihre Voice.</div>
-      </div>
     </div>
-  </section>
-
-  <!-- 1. Was ich mache -->
-  <section class="v5-section fade-in-up">
-    <h2 class="v5-h2">Was ich mache</h2>
-    <p class="v5-body">
-      Mein Content dreht sich um vier Themen, die mein Leben tatsächlich tragen:
-    </p>
-    <p class="v5-body">
-      <strong>Disziplin</strong> — Ritual statt Tracker, dranbleiben wenn Motivation weg ist.
-      <strong>Faith</strong> — Bibel-Verse die mich tragen, Gnade trifft Disziplin.
-      <strong>Vegetarisch + Stark</strong> — Beweis dass beides geht: Ernährung, Supplements, Workout.
-      <strong>Build-in-Public</strong> — eine App bauen, raw: Bug-Stories, MRR-Reality, Solo-Founder-Realtalk.
-    </p>
-    <p class="v5-body">
-      Ich post 5-7× pro Woche, 70% Stories / 30% Feed. Voice: 1st-person, raw, ehrlich — nicht aus dem Coaching-Lehrbuch.
-    </p>
   </section>
 
   <!-- 1.5 Pakete — Was du buchen kannst -->
@@ -189,62 +311,56 @@
     </div>
   </section>
 
+  <!-- Mid-Page CTA (nach den Paketen) -->
+  <div class="brand-cta-band fade-in-up">
+    <span class="brand-cta-band-text">Klingt nach einem Fit?</span>
+    <a href="/anfrage.html" class="brand-cta-primary">📨 Anfrage senden <span class="brand-cta-arrow">→</span></a>
+  </div>
+
   <!-- 2. Wer mir folgt -->
   <section class="v5-section fade-in-up">
-    <h2 class="v5-h2">Wer mir folgt</h2>
+    <h2 class="v5-h2">Reichweite &amp; Zielgruppe (letzte 30 Tage)</h2>
     <p class="v5-body">
-      Aktuell folgen mir <strong>~2.100</strong> Menschen — hauptsächlich aus der DACH-Region. Mehr als <strong>50% meiner Aufrufe kommen von Nicht-Followern</strong> — ich erreiche aktiv über meine Bubble hinaus.
+      Aktuell folgen mir <strong>2.079</strong> Menschen — hauptsächlich aus der DACH-Region. <strong>52% meiner Aufrufe (Reels + Beiträge) kommen von Nicht-Followern</strong> — ich erreiche aktiv über meine Bubble hinaus.
     </p>
 
     <div class="v5-stats">
-      <div class="v5-stat-pill fade-in-up stag-0"><span class="v5-stat-num">2.100</span><span class="v5-stat-label">Follower</span></div>
-      <div class="v5-stat-pill fade-in-up stag-1"><span class="v5-stat-num">~2%</span><span class="v5-stat-label">Engagement</span></div>
-      <div class="v5-stat-pill fade-in-up stag-2"><span class="v5-stat-num">~470</span><span class="v5-stat-label">Reichweite/Post</span></div>
-      <div class="v5-stat-pill fade-in-up stag-3"><span class="v5-stat-num">+38</span><span class="v5-stat-label">Neue Follower/Mo</span></div>
+      <div class="v5-stat-pill fade-in-up stag-0"><span class="v5-stat-num">2.079</span><span class="v5-stat-label">Follower</span></div>
+      <div class="v5-stat-pill fade-in-up stag-1"><span class="v5-stat-num">33.333</span><span class="v5-stat-label">Aufrufe (30 Tage)</span></div>
+      <div class="v5-stat-pill fade-in-up stag-2"><span class="v5-stat-num">3.555</span><span class="v5-stat-label">erreichte Konten (+378%)</span></div>
+      <div class="v5-stat-pill fade-in-up stag-3"><span class="v5-stat-num">+563%</span><span class="v5-stat-label">Aufrufe Reels/Beiträge</span></div>
     </div>
-
-    <p class="v5-body" style="font-size:13px;color:var(--text2);line-height:1.55;margin-top:6px">
-      <strong style="color:var(--forest-anchor)">11.776 Aufrufe · 237 Interaktionen · 25 Inhalte</strong> im Zeitraum 7. April – 6. Mai 2026. <strong style="color:var(--forest-anchor)">51-66% Nicht-Follower-Anteil</strong> — ich poppe regelmäßig out of bubble.
-    </p>
-
-    <p class="v5-body" style="font-size:13px;color:var(--text2);line-height:1.55">
-      <strong>Beste Posting-Times:</strong> Mo · Di · So, 18-21 Uhr (Audience aktiv).
-    </p>
 
     <h3 class="v5-h3">Audience-Mix · Top-Länder</h3>
     <div class="v5-pills-row">
-      <span class="v5-pill">🇩🇪 83,2%</span>
-      <span class="v5-pill">🇦🇹 7,0%</span>
-      <span class="v5-pill">🇺🇸 1,4%</span>
-      <span class="v5-pill">🇫🇷 1,2%</span>
+      <span class="v5-pill">🇩🇪 76,2%</span>
+      <span class="v5-pill">🇦🇹 6,4%</span>
+      <span class="v5-pill">🇬🇧 2,7%</span>
+      <span class="v5-pill">🇫🇷 2,2%</span>
     </div>
 
     <h3 class="v5-h3">Top-Altersgruppen</h3>
     <div class="v5-pills-row">
-      <span class="v5-pill">25-34: 50,9%</span>
-      <span class="v5-pill">18-24: 37,6%</span>
-      <span class="v5-pill">35+: 9,1%</span>
+      <span class="v5-pill">25-34: 48,3%</span>
+      <span class="v5-pill">18-24: 32,9%</span>
+      <span class="v5-pill">35+: 19%</span>
     </div>
 
     <h3 class="v5-h3">Geschlecht</h3>
     <div class="v5-pills-row">
-      <span class="v5-pill">♂ 52,6%</span>
-      <span class="v5-pill">♀ 47,4%</span>
+      <span class="v5-pill">♂ 64,1%</span>
+      <span class="v5-pill">♀ 35,9%</span>
     </div>
 
     <h3 class="v5-h3">Content-Mix</h3>
     <div class="v5-pills-row">
-      <span class="v5-pill">📲 Stories 53%</span>
-      <span class="v5-pill">🎬 Reels 41%</span>
-      <span class="v5-pill">📷 Beiträge 6%</span>
+      <span class="v5-pill">📲 Stories 54,5%</span>
+      <span class="v5-pill">🎬 Reels 24,0%</span>
+      <span class="v5-pill">📷 Beiträge 21,6%</span>
     </div>
 
-    <p class="v5-body" style="font-size:13px;color:var(--text2);line-height:1.55;margin-top:14px">
-      Top-Städte (DACH): <strong>Burghausen · Haiming · Neuötting · Altötting · Mehring · Burgkirchen</strong> — lokal-verwurzelt in Bayern, mit Reichweite über die DACH-Region.
-    </p>
-
     <p class="v5-meta">
-      Stats werden monatlich aus Instagram-Insights aktualisiert. Letztes Update: <strong>06. Mai 2026</strong>.
+      Stats werden monatlich aus Instagram-Insights aktualisiert. Letztes Update: <strong>1. Juni 2026</strong>.
     </p>
   </section>
 
@@ -252,7 +368,7 @@
   <section class="v5-section fade-in-up">
     <h2 class="v5-h2">Mit wem ich gerne arbeite</h2>
     <p class="v5-body">
-      Ich bin offen für ehrliche Anfragen — egal ob du grad startest oder schon große Brand bist. Was zählt: passt's zu meinem Leben und meinen Themen, dann passt's auch für meine Audience.
+      Offen für ehrliche Anfragen — egal ob Newcomer oder große Brand. Es zählt nur: passt's zu meinen Themen, passt's zu meiner Audience.
     </p>
     <h3 class="v5-h3">✓ Themen die zu mir passen</h3>
     <div class="brand-themes-grid">
@@ -344,109 +460,21 @@
         <summary>Was wenn das Reel nicht performt wie erhofft?</summary>
         <div class="faq-body">Ehrlich: keine Erfolgs-Garantie. Aber Re-Use-Optionen sind im Paket — z.B. Reel als Story-Boost recyceln, alternative Caption testen oder organischer Repost nach 2-4 Wochen. Honest-Feedback statt Schönrederei.</div>
       </details>
-
-      <details class="faq-item">
-        <summary>Wie ist Content-Ownership / Rechte-Lage?</summary>
-        <div class="faq-body">Standard: Du bekommst Content-Rechte für deine Brand-Channels (Insta-Repost, Webseite, Newsletter). Erweiterte Rechte für Paid-Ads / Kampagnen-Lizenzierung gegen Aufpreis. Wird im Brief schriftlich geregelt.</div>
-      </details>
-
-      <details class="faq-item">
-        <summary>Antwortest du auf jede Anfrage?</summary>
-        <div class="faq-body">Ja, auf jede ehrliche Anfrage binnen 48h — auch wenn's eine Absage ist. Mass-Pitches und Crypto-Spam ignoriere ich.</div>
-      </details>
     </div>
   </section>
 
-  <!-- 4. Anfrage senden — Funnel-Form mit strukturierten Feldern -->
+  <!-- 4. Anfrage — eigene Seite (/anfrage.html) -->
   <section class="v5-section fade-in-up" id="anfrage">
-    <h2 class="v5-h2">Anfrage senden</h2>
+    <h2 class="v5-h2">Bereit?</h2>
     <p class="v5-body">
-      Schreib mir kurz was deine Brand macht und wie du dir die Zusammenarbeit vorstellst — ich antworte auf jede ehrliche Anfrage binnen 48h.
+      Schreib mir kurz, was deine Brand macht und wie du dir die Zusammenarbeit vorstellst — du bekommst eine persönliche, schnelle Antwort.
     </p>
-
-    <!-- Discovery-Call-CTA (alternativ zur Form) -->
-    <a href="mailto:info@vegetarianhulk.de?subject=Discovery-Call%20Anfrage&body=Hi%20Sebi%2C%0A%0Aich%20w%C3%BCrde%20gerne%20einen%2015-Min-Discovery-Call%20mit%20dir%20vereinbaren.%0A%0AMeine%20Brand%3A%20%0AThema%3A%20%0AMein%20Wunschtermin%20(2-3%20Vorschl%C3%A4ge)%3A%20%0A%0ADanke!"
-       class="discovery-call-cta">
-      <div class="discovery-call-icon">📞</div>
-      <div class="discovery-call-body">
-        <div class="discovery-call-title">Lieber kurz sprechen statt schreiben?</div>
-        <div class="discovery-call-sub">15-Min-Discovery-Call · unverbindlich · per Mail vereinbaren</div>
-      </div>
-      <div class="discovery-call-arrow">→</div>
-    </a>
-
-    <div class="form-or-divider">
-      <span>oder schick eine strukturierte Anfrage</span>
-    </div>
-
-    <form class="brand-form" onsubmit="return submitBrandInquiry(event)">
-      <div class="brand-form-row">
-        <label for="bf-brand">Brand-Name <span class="req">*</span></label>
-        <input type="text" id="bf-brand" required autocomplete="organization">
-      </div>
-      <div class="brand-form-row">
-        <label for="bf-link">Webseite oder Insta</label>
-        <input type="text" id="bf-link" placeholder="instagram.com/... oder https://...">
-      </div>
-      <div class="brand-form-row">
-        <label for="bf-what">Was macht ihr? <span class="req">*</span></label>
-        <textarea id="bf-what" required rows="2" placeholder="1-2 Sätze über euer Produkt"></textarea>
-      </div>
-      <div class="brand-form-row">
-        <label for="bf-idea">Eure Idee <span class="req">*</span></label>
-        <textarea id="bf-idea" required rows="3" placeholder="Was schwebt euch vor? Reel, Story-Set, Long-Term-Partnership ..."></textarea>
-      </div>
-      <div class="brand-form-2col">
-        <div>
-          <label for="bf-time">Zeitrahmen</label>
-          <input type="text" id="bf-time" placeholder="z.B. Q3 2026, asap">
-        </div>
-        <div>
-          <label for="bf-budget">Budget-Range</label>
-          <input type="text" id="bf-budget" placeholder="z.B. 500-1.500 €">
-        </div>
-      </div>
-      <div class="brand-form-row">
-        <label for="bf-email">Eure E-Mail <span class="req">*</span></label>
-        <input type="email" id="bf-email" required placeholder="kontakt@brand.de" autocomplete="email">
-      </div>
-      <button type="submit" class="brand-form-submit">Anfrage senden →</button>
-    </form>
-
-    <div class="brand-form-alt">
+    <a href="/anfrage.html" class="brand-cta-primary">📨 Anfrage senden <span class="brand-cta-arrow">→</span></a>
+    <div class="brand-form-alt" style="margin-top:18px">
       <span>Lieber locker per DM?</span>
       <a href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">@vegetarianhulk auf Insta →</a>
     </div>
   </section>
-
-  <script>
-  function submitBrandInquiry(e) {
-    e.preventDefault();
-    const get = id => (document.getElementById(id).value || '').trim();
-    const brand = get('bf-brand');
-    const link = get('bf-link');
-    const what = get('bf-what');
-    const idea = get('bf-idea');
-    const time = get('bf-time');
-    const budget = get('bf-budget');
-    const email = get('bf-email');
-
-    const subject = 'Kooperation @vegetarianhulk — ' + brand;
-    const body =
-      'Hi Sebi,\n\n' +
-      'wir sind ' + brand + ' und würden gerne mit dir kooperieren.\n\n' +
-      'Webseite/Insta: ' + (link || '—') + '\n\n' +
-      'Was wir machen:\n' + what + '\n\n' +
-      'Unsere Idee:\n' + idea + '\n\n' +
-      'Zeitrahmen: ' + (time || '—') + '\n' +
-      'Budget-Range: ' + (budget || '—') + '\n\n' +
-      'Antwort bitte an: ' + email + '\n\n' +
-      'Danke!';
-
-    window.location.href = 'mailto:info@vegetarianhulk.de?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-    return false;
-  }
-  </script>
 
   <script>
   // V10 — Brand-Page Interactivity: fade-in-up + Tilt + Multi-Layer-Parallax
@@ -463,37 +491,11 @@
     document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
   })();
 
-  // Multi-Layer-Parallax (Hero-Layer mit unterschiedlichen Speeds)
-  (function() {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const layers = [
-      { el: document.querySelector('.hero-photo-wrap'), speed: 0.10 },
-      { el: document.querySelector('.hero h1'),         speed: 0.05 },
-      { el: document.querySelector('.hero-second'),     speed: 0.04 },
-      { el: document.querySelector('.hero-sub'),        speed: 0.03 }
-    ].filter(l => l.el);
-    if (!layers.length) return;
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (ticking) return;
-      window.requestAnimationFrame(() => {
-        const y = window.scrollY;
-        if (y < 800) {
-          layers.forEach(l => {
-            l.el.style.transform = `translateY(${y * l.speed}px)`;
-          });
-        }
-        ticking = false;
-      });
-      ticking = true;
-    }, { passive: true });
-  })();
-
   // 3D-Card-Tilt auf V5-Stat-Pills + Brand-Stats + Pillars
   (function() {
     if (window.matchMedia('(hover: none)').matches) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const tiltElements = document.querySelectorAll('.v5-stat-pill, .brand-stat, .pillar');
+    const tiltElements = document.querySelectorAll('.v5-stat-pill');
     tiltElements.forEach(el => {
       let rafId = null;
       el.addEventListener('mousemove', (e) => {
@@ -544,7 +546,7 @@
         <ul>
           <li><a class="vh-link" href="/">Startseite</a></li>
           <li><a class="vh-link" href="/newsletter">Newsletter</a></li>
-          <li><a class="vh-link is-current" href="kooperationen.html" aria-current="page">Kooperationen</a></li>
+          <li><a class="vh-link is-current" href="/kooperationen.html" aria-current="page">Für Brands</a></li>
         </ul>
       </nav>
       <nav class="col" aria-label="Rechtliches &amp; Kontakt">
@@ -563,6 +565,22 @@
   </footer>
 
 </main>
+
+<a href="/anfrage.html" class="brand-sticky-cta" id="brandStickyCta" aria-label="Anfrage senden">📨 Anfrage senden →</a>
+
+<script>
+// Sticky-CTA: blendet nach dem Hero ein, verschwindet beim Anfrage-Formular
+(function(){
+  var cta = document.getElementById('brandStickyCta');
+  var hero = document.querySelector('.brand-hero');
+  var form = document.getElementById('anfrage');
+  if (!cta || !hero || !form || !('IntersectionObserver' in window)) return;
+  var heroVisible = true, formVisible = false;
+  function upd(){ cta.classList.toggle('is-visible', !heroVisible && !formVisible); }
+  new IntersectionObserver(function(es){ es.forEach(function(e){ heroVisible = e.isIntersecting; upd(); }); }, { threshold: 0.05 }).observe(hero);
+  new IntersectionObserver(function(es){ es.forEach(function(e){ formVisible = e.isIntersecting; upd(); }); }, { threshold: 0.12 }).observe(form);
+})();
+</script>
 
 <script>
 (function() {
