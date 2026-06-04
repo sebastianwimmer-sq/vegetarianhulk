@@ -3896,3 +3896,84 @@ body::before {
     animation: none;
   }
 }
+
+/* ============================================================
+   Glossy/Depth-System v31.14 — extrahiert aus kooperationen.html
+   + anfrage.html (PASS 2). Reusable Tokens + 3 additive Utilities.
+   - Namespaced --shadow-glossy-* (koexistieren mit --shadow-card/-pill/-tribe,
+     KEIN Override). --radius-* / --surface-glossy-* / --glass-border-warm.
+   - GROUNDED: warme Surfaces (white→vanilla), warm-getönte Border (kein icy-white).
+   - KEIN backdrop-filter auf Panels/Cards — Tiefe aus Gradient + Inset + Shadow.
+     Blur bleibt nur auf Sticky-Topbar (oben global) + Sticky-CTA-Pattern.
+   - Pflicht-Fallbacks: prefers-reduced-transparency + @supports not(backdrop-filter).
+   ============================================================ */
+:root {
+  /* Radii */
+  --radius-panel: 24px;
+  --radius-card:  18px;
+  --radius-tile:  16px;
+
+  /* Glossy-Surfaces — warm/grounded (white→vanilla, NICHT white→white) */
+  --surface-glossy-panel: linear-gradient(180deg, rgba(255,255,255,.60), rgba(247,239,222,.40));
+  --surface-glossy-card:  linear-gradient(180deg, rgba(255,255,255,.55), rgba(247,239,222,.40));
+  --surface-glossy-tile:  linear-gradient(160deg, rgba(255,255,255,.62), rgba(247,239,222,.40));
+
+  /* Frosted Edge — bewusst warm-getönt (earth, nicht icy-white) → grounded */
+  --glass-border-warm: 1px solid rgba(207,191,157,.55);
+
+  /* Glossy-Shadow-Stacks (Signatur: inset-Top-Highlight + Forest-Outer + Black-Outer) */
+  --shadow-glossy-panel: inset 0 1px 0 rgba(255,255,255,.55), 0 18px 48px -26px rgba(4,89,39,.30), 0 4px 14px -10px rgba(0,0,0,.10);
+  --shadow-glossy-card:  inset 0 1px 0 rgba(255,255,255,.55), 0 10px 26px -18px rgba(4,89,39,.30), 0 3px 10px -8px rgba(0,0,0,.10);
+  --shadow-glossy-tile:  inset 0 1px 0 rgba(255,255,255,.60), 0 10px 26px -18px rgba(4,89,39,.32), 0 3px 10px -8px rgba(0,0,0,.10);
+  --shadow-glossy-hover: 0 14px 30px -12px rgba(4,89,39,.26);
+}
+
+.glossy-panel {
+  background: var(--surface-glossy-panel);
+  border: var(--glass-border-warm);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-glossy-panel);
+}
+.glossy-card {
+  background: var(--surface-glossy-card);
+  border: var(--glass-border-warm);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-glossy-card);
+}
+.glossy-tile {
+  background: var(--surface-glossy-tile);
+  border: var(--glass-border-warm);
+  border-radius: var(--radius-tile);
+  box-shadow: var(--shadow-glossy-tile);
+}
+
+/* H2-Akzentstrich (opt-in) */
+.glossy-h2::after {
+  content: ""; display: block; width: 44px; height: 3px; margin-top: 12px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--forest-primary), rgba(4,89,39,0));
+}
+
+/* Hover-Lift (nur wo Hover existiert) — Werte-Tilt gewinnt per Spezifität (.tilting) */
+@media (hover: hover) {
+  .glossy-card, .glossy-tile {
+    transition: transform var(--motion-fast, 200ms) var(--ease-out-quart, cubic-bezier(.165,.84,.44,1)),
+                box-shadow var(--motion-fast, 200ms) ease;
+  }
+  .glossy-card:hover, .glossy-tile:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-glossy-hover);
+  }
+}
+
+/* === Pflicht-Fallbacks === */
+@media (prefers-reduced-transparency: reduce) {
+  .glossy-panel, .glossy-card { background: var(--beige-1); }
+  .glossy-tile { background: var(--vanilla); }
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .glossy-panel, .glossy-card, .glossy-tile { background-color: rgba(247,239,222,.96); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glossy-card:hover, .glossy-tile:hover { transform: none; }
+}
