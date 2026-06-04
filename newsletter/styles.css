@@ -1099,3 +1099,70 @@ body.variant-geo .art-geo { display: block; }
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
 }
+
+/* ============================================================
+   Glossy/Depth-System v31.14 — Mirror aus style.css (PASS 3).
+   Newsletter nutzt eigenes Stylesheet → Tokens + Utilities hier dupliziert.
+   Naming an Newsletter angepasst: --vanilla-2 (= --beige-1 Parity), --vanilla.
+   ============================================================ */
+:root {
+  --radius-panel: 24px;
+  --radius-card:  18px;
+  --radius-tile:  16px;
+
+  --surface-glossy-panel: linear-gradient(180deg, rgba(255,255,255,.60), rgba(247,239,222,.40));
+  --surface-glossy-card:  linear-gradient(180deg, rgba(255,255,255,.55), rgba(247,239,222,.40));
+  --surface-glossy-tile:  linear-gradient(160deg, rgba(255,255,255,.62), rgba(247,239,222,.40));
+
+  --glass-border-warm: 1px solid rgba(207,191,157,.55);
+
+  --shadow-glossy-panel: inset 0 1px 0 rgba(255,255,255,.55), 0 18px 48px -26px rgba(4,89,39,.30), 0 4px 14px -10px rgba(0,0,0,.10);
+  --shadow-glossy-card:  inset 0 1px 0 rgba(255,255,255,.55), 0 10px 26px -18px rgba(4,89,39,.30), 0 3px 10px -8px rgba(0,0,0,.10);
+  --shadow-glossy-tile:  inset 0 1px 0 rgba(255,255,255,.60), 0 10px 26px -18px rgba(4,89,39,.32), 0 3px 10px -8px rgba(0,0,0,.10);
+  --shadow-glossy-hover: 0 14px 30px -12px rgba(4,89,39,.26);
+}
+
+.glossy-panel {
+  background: var(--surface-glossy-panel);
+  border: var(--glass-border-warm);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-glossy-panel);
+}
+.glossy-card {
+  background: var(--surface-glossy-card);
+  border: var(--glass-border-warm);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-glossy-card);
+}
+.glossy-tile {
+  background: var(--surface-glossy-tile);
+  border: var(--glass-border-warm);
+  border-radius: var(--radius-tile);
+  box-shadow: var(--shadow-glossy-tile);
+}
+.glossy-h2::after {
+  content: ""; display: block; width: 44px; height: 3px; margin-top: 12px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--forest-primary), rgba(4,89,39,0));
+}
+
+@media (hover: hover) {
+  .glossy-card, .glossy-tile {
+    transition: transform .2s cubic-bezier(.165,.84,.44,1), box-shadow .2s ease;
+  }
+  .glossy-card:hover, .glossy-tile:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-glossy-hover);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glossy-panel, .glossy-card { background: var(--vanilla-2); }
+  .glossy-tile { background: var(--vanilla); }
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .glossy-panel, .glossy-card, .glossy-tile { background-color: rgba(247,239,222,.96); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glossy-card:hover, .glossy-tile:hover { transform: none; }
+}
