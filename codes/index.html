@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Codes &amp; Partner | VegetarianHulk</title>
 <meta name="description" content="Alle Partner-Rabattcodes von Sebi (@vegetarianhulk) an einem Ort — ehrlich ausgewählt, transparent als Werbung gekennzeichnet.">
-<meta name="theme-color" content="#122d1c">
+<meta name="theme-color" content="#f7efde">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://vegetarianhulk.de/codes/">
 
@@ -19,142 +19,127 @@
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
-<link rel="stylesheet" href="/fonts.css?v=1e2010e0">
+<link rel="stylesheet" href="/style.css?v=114f40e8">
 
 <style>
-  /* codes/ — Dark-Forest Bio-Link-Page (page-scoped, lädt style.css bewusst NICHT).
-     Token-Block synced auf Hybrid Forest Family v31 (siehe style.css :root). */
-  :root {
-    --forest-anchor:  #122d1c;  /* = --forest-anchor (Foto-BG-Reality) */
-    --forest-deepest: #0b1d12;  /* Gradient-Endstop, abgeleitet von anchor */
-    --forest-primary: #045927;  /* = --forest-primary (Brand-Action) */
-    --forest-accent:  #1a7340;  /* = --forest-accent (Detail-Brights) */
-    --vanilla:        #f7efde;  /* = --vanilla (Headlines, CTA-Fläche) */
-    --sage:           #a8c5a1;  /* Secondary-Text auf Dark-Surface (page-only) */
-    --line:           rgba(247, 239, 222, 0.14);
-    --radius:         16px;
-    --font-display:   'Playfair Display', Georgia, serif;
-    --font-body:      'Inter', -apple-system, system-ui, sans-serif;
-    --font-mono:      ui-monospace, 'SF Mono', Menlo, monospace;
-    --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+  /* codes/ — V32.1: heller Forest-Family-Look, gleiche Tokens/Chrome wie
+     die übrige Site (vorher: eigenständige Dark-Microsite). Karten-Layout,
+     Copy-Button und Compliance-Elemente funktional unverändert. */
+  .codes-head { text-align: center; padding: var(--space-2xs) 0 0; }
+  .codes-head h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: var(--font-h2);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--ink);
+    margin: 0;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { -webkit-text-size-adjust: 100%; }
-  body {
-    background: radial-gradient(120% 70% at 50% -10%, #14442f 0%, var(--forest-anchor) 60%, var(--forest-deepest) 100%);
-    background-color: var(--forest-anchor);
-    color: var(--vanilla);
-    font-family: var(--font-body);
-    line-height: 1.5;
-    min-height: 100vh;
-    padding: 0 18px 56px;
-    display: flex; justify-content: center;
-    -webkit-font-smoothing: antialiased;
-  }
-  .wrap { width: 100%; max-width: 440px; }
-
-  /* header */
-  header { padding: 46px 4px 14px; text-align: center; }
-  .monogram {
-    width: 54px; height: 54px; margin: 0 auto 18px; border-radius: 50%;
-    border: 1px solid var(--line);
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-display); font-size: 22px; color: var(--sage);
-    background: rgba(168, 197, 161, 0.06);
-  }
-  h1 {
-    font-family: var(--font-display); font-weight: 600;
-    font-size: 34px; line-height: 1.08; letter-spacing: -0.01em; color: var(--vanilla);
-  }
-  .intro {
-    margin: 12px auto 0; max-width: 300px; color: var(--sage);
-    font-size: 14.5px; line-height: 1.45;
+  .codes-head .intro {
+    margin: var(--space-xs) auto 0;
+    max-width: 340px;
+    color: var(--ink-2);
+    font-size: var(--font-body);
+    line-height: var(--leading-normal);
   }
   .adnote {
-    margin: 22px auto 30px; display: flex; gap: 7px; align-items: center;
-    width: 100%; justify-content: center;
-    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--sage);
+    margin: var(--space-md) auto var(--space-lg);
+    display: flex; gap: 7px; align-items: center; justify-content: center;
+    width: 100%; max-width: 520px;
+    font-size: var(--font-eyebrow); letter-spacing: var(--tracking-wider);
+    text-transform: uppercase; color: var(--ink-2);
   }
-  .adnote::before, .adnote::after { content: ""; height: 1px; flex: 1; background: var(--line); }
+  .adnote::before, .adnote::after { content: ""; height: 1px; flex: 1; background: var(--earth); }
   .adnote span { white-space: nowrap; }
 
-  /* card */
+  .codes-cards { max-width: 520px; margin: 0 auto; }
+
+  /* card — helle Surface, Token-Radius/-Spacing */
   .card {
-    background: linear-gradient(180deg, rgba(26, 115, 64, 0.22), rgba(4, 89, 39, 0.18));
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    padding: 22px 20px 18px;
-    margin-bottom: 18px;
+    background: linear-gradient(180deg, #ffffff 0%, var(--surface) 100%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: var(--space-md) var(--space-md) var(--space-sm);
+    margin-bottom: var(--space-sm);
+    box-shadow: 0 1px 3px rgba(4, 89, 39, 0.06), 0 8px 24px -8px rgba(4, 89, 39, 0.14);
   }
   @media (prefers-reduced-motion: no-preference) {
     .card {
       opacity: 0; transform: translateY(14px);
-      animation: rise 0.6s var(--ease-out-quart) forwards;
+      animation: rise 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
     }
     @keyframes rise { to { opacity: 1; transform: none; } }
   }
 
   .card-top { display: flex; align-items: center; gap: 13px; margin-bottom: 6px; }
   .logo {
-    width: 42px; height: 42px; border-radius: 12px; flex: none;
-    background: var(--vanilla); color: var(--forest-anchor);
+    width: 42px; height: 42px; border-radius: var(--radius-control); flex: none;
+    background: var(--forest-primary); color: var(--vanilla);
     display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-display); font-weight: 600; font-size: 19px;
+    font-family: 'Playfair Display', Georgia, serif; font-weight: 600; font-size: 19px;
     overflow: hidden;
   }
   .logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .pname { font-family: var(--font-display); font-size: 21px; font-weight: 600; color: var(--vanilla); }
+  .pname {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 21px; font-weight: 600; color: var(--ink); margin: 0;
+  }
   .disc {
     margin-left: auto; flex: none;
-    background: var(--forest-accent); color: var(--vanilla);
+    background: var(--forest-primary); color: var(--vanilla);
     font-weight: 700; font-size: 12.5px; letter-spacing: 0.02em;
-    padding: 5px 10px; border-radius: 999px;
+    padding: 5px 10px; border-radius: var(--radius-pill);
   }
-  .value { color: var(--sage); font-size: 14px; line-height: 1.5; margin: 8px 2px 16px; }
+  .value { color: var(--ink-2); font-size: 14px; line-height: 1.5; margin: 8px 2px var(--space-sm); }
 
   .code-row { display: flex; gap: 9px; }
   .code {
-    flex: 1; cursor: pointer; border: 1px dashed rgba(168, 197, 161, 0.45);
-    background: rgba(11, 29, 18, 0.55); border-radius: 13px;
-    padding: 13px 14px; text-align: left; color: var(--vanilla);
-    font-family: var(--font-body);
+    flex: 1; cursor: pointer; border: 1.5px dashed var(--earth);
+    background: #ffffff; border-radius: var(--radius-control);
+    padding: 11px 14px; text-align: left; color: var(--ink);
+    font-family: inherit;
     display: flex; flex-direction: column; gap: 2px;
-    transition: border-color 0.2s, background 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
-  .code:hover { border-color: var(--sage); }
-  .code .lbl { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sage); }
-  .code .val { font-family: var(--font-mono); font-weight: 700; font-size: 18px; letter-spacing: 0.04em; color: var(--vanilla); }
+  .code:hover { border-color: var(--forest-primary); }
+  .code .lbl { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-2); }
+  .code .val { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-weight: 700; font-size: 18px; letter-spacing: 0.04em; color: var(--ink); }
   .copybtn {
-    flex: none; width: 50px; border: none; border-radius: 13px; cursor: pointer;
-    background: rgba(168, 197, 161, 0.12); color: var(--sage);
-    font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+    flex: none; width: 52px; border: none; border-radius: var(--radius-control); cursor: pointer;
+    background: var(--forest-wash); color: var(--forest-primary);
+    font-family: inherit; font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
     transition: background 0.2s, color 0.2s;
   }
+  .copybtn:hover { background: rgba(4, 89, 39, 0.16); }
   .copybtn svg { width: 17px; height: 17px; }
   .copybtn.done { background: var(--forest-primary); color: var(--vanilla); }
-  .code:focus-visible, .copybtn:focus-visible, .cta:focus-visible, .flinks a:focus-visible {
+  .code:focus-visible, .copybtn:focus-visible, .cta:focus-visible {
     outline: 3px solid var(--forest-accent); outline-offset: 2px;
   }
 
   .cta {
     margin-top: 11px; display: flex; align-items: center; justify-content: center; gap: 8px;
     width: 100%; text-decoration: none;
-    background: var(--vanilla); color: var(--forest-anchor);
-    font-weight: 600; font-size: 15px;
-    padding: 13px; border-radius: 13px;
-    transition: transform 0.15s, background 0.2s;
+    background: linear-gradient(180deg, var(--forest-primary) 0%, var(--forest-anchor) 100%);
+    color: var(--vanilla);
+    font-weight: 800; font-size: 15px;
+    height: var(--control-h);
+    border-radius: var(--radius-control);
+    box-shadow: 0 8px 20px -8px rgba(4, 89, 39, 0.40);
+    transition: background 0.2s, transform 0.15s, box-shadow 0.25s;
   }
+  .cta:hover { background: var(--forest-anchor); transform: translateY(-1px); box-shadow: 0 14px 32px -10px rgba(4, 89, 39, 0.55); }
   .cta:active { transform: scale(0.985); }
   .cta svg { width: 15px; height: 15px; }
-  .fineprint { margin: 11px 2px 0; font-size: 11px; line-height: 1.45; color: rgba(168, 197, 161, 0.7); }
+  .fineprint { margin: 11px 2px 0; font-size: 11px; line-height: 1.45; color: var(--ink-2); }
 
   .noscript-note {
-    border: 1px solid var(--line); border-radius: var(--radius);
-    padding: 18px; font-size: 14px; color: var(--sage); text-align: center;
+    border: 1px solid var(--border); border-radius: var(--radius-card);
+    padding: var(--space-sm); font-size: 14px; color: var(--ink-2); text-align: center;
+    max-width: 520px; margin: 0 auto;
   }
-  .noscript-note a { color: var(--vanilla); }
+  .noscript-note a { color: var(--forest-primary); }
 
   /* visually hidden (aria-live Copy-Feedback) */
   .sr-only {
@@ -162,46 +147,81 @@
     padding: 0; margin: -1px; overflow: hidden;
     clip: rect(0 0 0 0); white-space: nowrap; border: 0;
   }
-
-  /* footer */
-  footer { margin-top: 34px; text-align: center; border-top: 1px solid var(--line); padding-top: 24px; }
-  .flinks { display: flex; flex-wrap: wrap; gap: 6px 0; justify-content: center; align-items: center; font-size: 13px; }
-  .flinks a { color: var(--sage); text-decoration: none; padding: 0 12px; border-right: 1px solid var(--line); }
-  .flinks a:last-child { border-right: none; }
-  .flinks a:hover { color: var(--vanilla); }
-  .copyline { margin-top: 14px; font-size: 11px; color: rgba(168, 197, 161, 0.5); letter-spacing: 0.02em; }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="monogram" aria-hidden="true">VH</div>
-      <h1>Codes &amp; Partner</h1>
-      <p class="intro">Meine Partner &amp; Codes — ehrlich ausgewählt.</p>
-      <p class="adnote"><span>Werbung · Affiliate-Links</span></p>
-    </header>
+<main class="page codes-page">
 
-    <main aria-label="Partner-Rabattcodes">
-      <div id="partner-cards"></div>
-      <noscript>
-        <p class="noscript-note">
-          Die Partner-Codes brauchen JavaScript. Alternativ findest du alle aktuellen Codes
-          in meinen Story-Highlights auf <a href="https://instagram.com/vegetarianhulk" rel="noopener">@vegetarianhulk</a>.
-        </p>
-      </noscript>
-      <p class="sr-only" id="copy-status" role="status" aria-live="polite"></p>
-    </main>
+  <!-- Topbar — Site-Standard (Wortmarke + Menü, Codes aktiv) -->
+  <header class="topbar">
+    <a href="/" class="brand" style="text-decoration:none;color:inherit">vegetarian<span class="accent">hulk</span></a>
+    <button class="topbar-burger" aria-label="Menü öffnen" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <nav class="topbar-nav" aria-label="Hauptnavigation">
+      <a href="/" class="topbar-link">Startseite</a>
+      <a href="/newsletter" class="topbar-link">Newsletter</a>
+      <a href="/codes/" class="topbar-link" aria-current="page">Codes</a>
+      <a href="/kooperationen.html" class="topbar-link">Für Brands</a>
+    </nav>
+  </header>
 
-    <footer>
-      <nav class="flinks" aria-label="Seiten-Navigation und Rechtliches">
-        <a href="/">Startseite</a>
-        <a href="/kooperationen.html">Für Brands</a>
-        <a href="/impressum.html">Impressum</a>
-        <a href="/datenschutz.html">Datenschutz</a>
+  <header class="codes-head">
+    <h1>Codes &amp; Partner</h1>
+    <p class="intro">Meine Partner &amp; Codes — ehrlich ausgewählt.</p>
+  </header>
+  <p class="adnote"><span>Werbung · Affiliate-Links</span></p>
+
+  <section class="codes-cards" aria-label="Partner-Rabattcodes">
+    <div id="partner-cards"></div>
+    <noscript>
+      <p class="noscript-note">
+        Die Partner-Codes brauchen JavaScript. Alternativ findest du alle aktuellen Codes
+        in meinen Story-Highlights auf <a href="https://instagram.com/vegetarianhulk" rel="noopener">@vegetarianhulk</a>.
+      </p>
+    </noscript>
+    <p class="sr-only" id="copy-status" role="status" aria-live="polite"></p>
+  </section>
+
+  <!-- Footer-Editorial — Site-Standard (A2 Asymmetric Editorial) -->
+  <footer class="vh-footer footer-a2" role="contentinfo" aria-label="Site footer">
+    <div class="grid">
+      <div class="col col-brand">
+        <div class="vh-wordmark wordmark">VEGETARIAN<span class="accent">HULK</span></div>
+        <div class="vh-tagline tagline">Builder &amp; Creator. Disziplin über Hype.</div>
+        <a class="vh-link vh-ig ig" href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener" aria-label="Instagram @vegetarianhulk">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+            <circle cx="12" cy="12" r="4"></circle>
+            <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle>
+          </svg>
+          <span>@vegetarianhulk</span>
+        </a>
+      </div>
+      <nav class="col" aria-label="Brand navigation">
+        <p class="vh-col-label">Explore</p>
+        <ul>
+          <li><a class="vh-link" href="/">Startseite</a></li>
+          <li><a class="vh-link" href="/newsletter">Newsletter</a></li>
+          <li><a class="vh-link is-current" href="/codes/" aria-current="page">Codes &amp; Partner</a></li>
+          <li><a class="vh-link" href="/kooperationen.html">Für Brands</a></li>
+        </ul>
       </nav>
-      <p class="copyline">© <span id="footer-year">2026</span> Sebastian Wimmer · VegetarianHulk</p>
-    </footer>
-  </div>
+      <nav class="col" aria-label="Rechtliches">
+        <p class="vh-col-label">Legal</p>
+        <ul>
+          <li><a class="vh-link" href="/impressum.html">Impressum</a></li>
+          <li><a class="vh-link" href="/datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+    </div>
+    <hr class="vh-hairline" />
+    <div class="bottom">
+      <span class="vh-copyright">© <span id="footer-year">2026</span> Sebastian Wimmer · VegetarianHulk</span>
+    </div>
+  </footer>
+
+</main>
 
 <script src="partners.js?v=9d7e1c60"></script>
 <script>
@@ -350,6 +370,31 @@
   VH_PARTNERS
     .filter(function (p) { return p.active; })
     .forEach(function (p, i) { mount.appendChild(buildCard(p, i)); });
+})();
+</script>
+<script>
+// Topbar Hamburger Toggle (Site-Standard)
+(function(){
+  var b=document.querySelector('.topbar-burger'),n=document.querySelector('.topbar-nav');
+  if(!b||!n)return;
+  b.addEventListener('click',function(){
+    var open=n.classList.toggle('topbar-nav--open');
+    b.setAttribute('aria-expanded',open);
+    b.setAttribute('aria-label',open?'Menü schließen':'Menü öffnen');
+  });
+  document.addEventListener('click',function(e){
+    if(!b.contains(e.target)&&!n.contains(e.target)){
+      n.classList.remove('topbar-nav--open');
+      b.setAttribute('aria-expanded','false');
+      b.setAttribute('aria-label','Menü öffnen');
+    }
+  });
+  n.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click',function(){
+      n.classList.remove('topbar-nav--open');
+      b.setAttribute('aria-expanded','false');
+    });
+  });
 })();
 </script>
 <script>
