@@ -330,15 +330,18 @@ html { scroll-padding-top: calc(var(--topbar-h) + 12px); }
     flex-direction: column;
     gap: 4px;
     padding: 12px 14px;
-    background: rgba(247, 239, 222, 0.92);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    backdrop-filter: blur(24px) saturate(180%);
-    border-bottom: 1px solid rgba(4, 89, 39, 0.08);
-    box-shadow: 0 8px 32px rgba(26, 20, 16, 0.08);
+    /* V32.1: volldeckend — Hero-Foto schien durch (auch bei 0.97 sichtbar,
+       die Item-Pills sind selbst transluzent) und minderte Lesbarkeit */
+    background: var(--vanilla);
+    border-bottom: 1px solid rgba(4, 89, 39, 0.12);
+    box-shadow: 0 8px 32px rgba(26, 20, 16, 0.14);
     overflow: visible;
     animation: topbar-slide-in 0.2s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .topbar-nav--open { display: flex; }
+  /* V32.1: EIN Treatment für alle Menü-Einträge — die alte
+     .topbar-meta-Sonderregel (11px/2.4px caps) machte z.B.
+     "FÜR BRANDS" uneinheitlich zu "Newsletter"/"Codes" */
   .topbar-nav .topbar-link,
   .topbar-nav .topbar-meta {
     font-size: 15px;
@@ -348,11 +351,11 @@ html { scroll-padding-top: calc(var(--topbar-h) + 12px); }
     text-align: left;
     width: 100%;
     letter-spacing: 0.3px;
+    text-transform: none;
   }
-  .topbar-nav .topbar-meta {
-    font-size: 11px;
-    letter-spacing: 2.4px;
-  }
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .topbar-nav--open { background: var(--vanilla); }
 }
 @keyframes topbar-slide-in {
   from { opacity: 0; transform: translateY(-8px); }
