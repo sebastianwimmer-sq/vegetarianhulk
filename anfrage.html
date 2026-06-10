@@ -5,25 +5,28 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anfrage senden — Für Brands · Vegetarianhulk</title>
+<title>Anfrage senden — Für Brands · VegetarianHulk</title>
 <meta name="description" content="Brand-Anfrage an @vegetarianhulk — kurz ausfüllen, ich melde mich persönlich.">
 <meta name="theme-color" content="#f7efde">
 <meta name="robots" content="index,follow">
 
-<meta property="og:title" content="Anfrage senden — Für Brands · Vegetarianhulk">
+<meta property="og:title" content="Anfrage senden — Für Brands · VegetarianHulk">
 <meta property="og:description" content="Interesse an einer Kooperation? Kurz ausfüllen — ich melde mich persönlich.">
 <meta property="og:type" content="website">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
-<link rel="stylesheet" href="style.css?v=v31.14">
+<link rel="stylesheet" href="style.css?v=v32.0">
 <style>
 /* anfrage.html — premium zweispaltig, depth/glossy konsistent zur Koop-Seite (v31.13) */
 .brand-page .anfrage-layout {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
-  max-width: 1040px; margin: 26px auto; padding: 0 20px; align-items: start;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-lg, 24px);
+  max-width: var(--container-wide, 1040px); margin: var(--space-lg, 26px) auto; padding: 0 var(--space-md, 20px); align-items: start;
 }
-@media (max-width: 880px) { .brand-page .anfrage-layout { grid-template-columns: 1fr; gap: 18px; } }
+/* min-width:0 bricht die Grid-min-content-Falle: Panel/Card können nicht
+   mehr breiter als der Viewport werden (war: 24px Overflow @375) */
+.brand-page .anfrage-layout > * { min-width: 0; }
+@media (max-width: 880px) { .brand-page .anfrage-layout { grid-template-columns: 1fr; gap: var(--space-sm, 18px); } }
 
 .brand-page .anfrage-panel, .brand-page .anfrage-card {
   border-radius: 24px; padding: clamp(24px, 4vw, 40px);
@@ -46,10 +49,18 @@
 .brand-page .anfrage-h1 .italic { font-style: italic; font-weight: 400; color: var(--forest-primary, #045927); }
 .brand-page .anfrage-sub { font-size: 16px; line-height: 1.6; color: var(--ink-2, #4a3f33); margin: 0 0 22px; }
 
-.brand-page .anfrage-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-.brand-page .anfrage-tile { padding: 13px 14px; border-radius: 14px; background: linear-gradient(160deg, rgba(255,255,255,.6), rgba(247,239,222,.4)); border: 1px solid rgba(255,255,255,.6); box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 8px 22px -16px rgba(4,89,39,.34); }
+.brand-page .anfrage-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-2xs, 10px); margin-bottom: var(--space-md, 20px); }
+.brand-page .anfrage-tile { min-width: 0; padding: 13px 12px; border-radius: 14px; background: linear-gradient(160deg, rgba(255,255,255,.6), rgba(247,239,222,.4)); border: 1px solid rgba(255,255,255,.6); box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 8px 22px -16px rgba(4,89,39,.34); }
 .brand-page .anfrage-tile-num { display: block; font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(18px, 3vw, 24px); line-height: 1; letter-spacing: -.5px; color: var(--forest-primary, #045927); }
-.brand-page .anfrage-tile-label { display: block; margin-top: 4px; font-size: 10.5px; font-weight: 600; color: var(--ink-2, #4a3f33); line-height: 1.25; }
+.brand-page .anfrage-tile-label { display: block; margin-top: 4px; font-size: 10.5px; font-weight: 600; color: var(--ink-2, #4a3f33); line-height: 1.25; overflow-wrap: break-word; }
+/* ≤520px: 3 Spalten zu eng für die Labels (Silbentrennungs-Brösel) →
+   Tiles werden zu Zeilen: Zahl links, Label rechts */
+@media (max-width: 520px) {
+  .brand-page .anfrage-tiles { grid-template-columns: 1fr; }
+  .brand-page .anfrage-tile { display: flex; align-items: baseline; gap: 10px; padding: 10px 14px; }
+  .brand-page .anfrage-tile-num { flex: none; min-width: 64px; }
+  .brand-page .anfrage-tile-label { margin-top: 0; font-size: 12px; }
+}
 
 .brand-page .anfrage-points { list-style: none; margin: 0; padding: 0; }
 .brand-page .anfrage-points li { position: relative; padding-left: 24px; margin: 10px 0; font-size: 14px; line-height: 1.5; color: var(--ink, #1a1410); }
@@ -290,41 +301,37 @@
 </main>
 
 <script>
-// Brand-Anfrage → FormSubmit (AJAX, CORS-fähig, kein Backend). Autoresponse an den Brand.
-const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/info@vegetarianhulk.de';
+// Brand-Anfrage → eigener Cloudflare-Worker (vh-forms, Repo: workers/vh-forms)
+// → Brevo Transactional → info@vegetarianhulk.de. Ersetzt FormSubmit (US-Drittanbieter).
+const FORMS_ENDPOINT = 'https://vh-forms.smashtheapp.workers.dev/brand-inquiry';
 
 async function submitBrandInquiry(e) {
   e.preventDefault();
   const form = document.getElementById('brandForm');
   const get = id => (document.getElementById(id).value || '').trim();
-  const types = Array.from(document.querySelectorAll('input[name="type"]:checked')).map(i => i.value);
-  const budgetSel = document.querySelector('input[name="budget"]:checked');
-  const timeSel = document.querySelector('input[name="time"]:checked');
-  const idea = get('bf-idea');
+  const checked = name => {
+    const el = document.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value : '';
+  };
   const brand = get('bf-brand');
-  const what = get('bf-what');
   const email = get('bf-email');
-  const contactSel = document.querySelector('input[name="contact"]:checked');
-  const handle = get('bf-handle');
 
   const errBox = document.getElementById('formError');
   errBox.hidden = true;
   if (!brand || !email) return false; // Pflicht: nur Brand + E-Mail
 
   const payload = {
-    'Brand': brand,
-    'Link/Profil': get('bf-link') || '—',
-    'Was/Produkt': what || '—',
-    'Art der Zusammenarbeit': types.length ? types.join(', ') : '—',
-    'Budget': budgetSel ? budgetSel.value : '—',
-    'Zeitrahmen': timeSel ? timeSel.value : '—',
-    'Idee': idea || '—',
-    'Bevorzugte Kontaktform': contactSel ? contactSel.value : '—',
-    'Kontakt (Tel/WA/@)': handle || '—',
-    email: email, // FormSubmit: Autoresponse geht an dieses Feld
-    _subject: 'Neue Brand-Anfrage: ' + brand,
-    _honey: get('bf-hp'),
-    _template: 'table'
+    brand: brand,
+    link: get('bf-link'),
+    what: get('bf-what'),
+    types: Array.from(document.querySelectorAll('input[name="type"]:checked')).map(i => i.value),
+    budget: checked('budget'),
+    time: checked('time'),
+    idea: get('bf-idea'),
+    email: email,
+    contact: checked('contact'),
+    handle: get('bf-handle'),
+    _honey: get('bf-hp')
   };
 
   const btn = form.querySelector('button[type="submit"]');
@@ -333,20 +340,34 @@ async function submitBrandInquiry(e) {
   btn.textContent = 'Wird gesendet …';
 
   try {
-    const res = await fetch(FORMSUBMIT_URL, {
+    const res = await fetch(FORMS_ENDPOINT, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
     const data = await res.json().catch(() => ({}));
-    if (res.ok && (data.success === 'true' || data.success === true)) {
+    if (res.ok && data.ok) {
       document.getElementById('formCard').hidden = true;
       const ok = document.getElementById('successState');
       ok.hidden = false;
       ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return false;
     }
-    throw new Error(data.message || ('Status ' + res.status));
+    // 503 = Worker live, Mail-API (noch) nicht konfiguriert → mailto-Fallback
+    if (res.status === 503) {
+      const subject = encodeURIComponent('Brand-Anfrage: ' + brand);
+      const body = encodeURIComponent(
+        'Brand: ' + brand + '\nWebseite/Insta: ' + (payload.link || '—') +
+        '\nIdee: ' + (payload.idea || '—') + '\nKontakt: ' + email
+      );
+      window.location.href = 'mailto:info@vegetarianhulk.de?subject=' + subject + '&body=' + body;
+      btn.disabled = false;
+      btn.textContent = original;
+      errBox.textContent = 'Mail-App geöffnet — schick die Anfrage direkt ab, ich melde mich persönlich.';
+      errBox.hidden = false;
+      return false;
+    }
+    throw new Error(data.error || ('Status ' + res.status));
   } catch (err) {
     btn.disabled = false;
     btn.textContent = original;

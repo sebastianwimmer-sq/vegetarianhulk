@@ -1,0 +1,7 @@
+# vh-forms — Formular-Endpoint für vegetarianhulk.de (Brand-Anfrage)
+# Deploy:  cd workers/vh-forms && wrangler deploy
+# Secret:  wrangler secret put BREVO_API_KEY   (gleicher Key wie Newsletter-Brevo)
+name = "vh-forms"
+main = "worker.js"
+compatibility_date = "2026-06-01"
+workers_dev = true

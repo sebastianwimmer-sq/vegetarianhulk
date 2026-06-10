@@ -35,6 +35,7 @@ A11Y_VIOLATIONS=0
 DSGVO_ISSUES=0
 CROSSPAGE_ISSUES=0
 DOM_ERRORS=0
+INTERNAL_LEAKS=0
 
 # Thresholds
 PERF_MIN_MOBILE=85
@@ -270,15 +271,56 @@ print_summary() {
   printf "  %-32s %s\n" "DSGVO-risk findings"                 "$DSGVO_ISSUES"
   printf "  %-32s %s\n" "cross-page issues"                   "$CROSSPAGE_ISSUES"
   printf "  %-32s %s\n" "DOM console errors"                  "$DOM_ERRORS"
+  printf "  %-32s %s\n" "internal-content leaks"              "$INTERNAL_LEAKS"
   echo ""
 
-  local total_critical=$((A11Y_VIOLATIONS + DSGVO_ISSUES + DOM_ERRORS))
+  local total_critical=$((A11Y_VIOLATIONS + DSGVO_ISSUES + DOM_ERRORS + INTERNAL_LEAKS))
   if [[ "$total_critical" -gt 0 ]] || [[ "$PERF_FAILS" -gt 2 ]]; then
     fail "AUDIT FAIL — critical issues found, review reports"
     return 1
   else
     ok "AUDIT PASS"
     return 0
+  fi
+}
+
+# ── Audit G: Internal-Content-Guard (Pages-Leak) ──────
+# GitHub Pages served ALLES, was im deployten Tree liegt. Diese Pfade sind
+# intern und dürfen dort nie auftauchen — robots-Disallow reicht NICHT
+# (Dateien bleiben direkt abrufbar). Default prüft HEAD (= Branch vor Merge);
+# mit AUDIT_GIT_REF=origin/main lässt sich der Live-Stand prüfen.
+INTERNAL_PATH_PATTERNS=(
+  '^second-brain/'
+  '^CLAUDE\.md$'
+  '^README\.md$'
+  '^design-history\.md$'
+  '^audit/'
+  '^audit-reports/'
+)
+
+audit_internal_content() {
+  local ref="${AUDIT_GIT_REF:-HEAD}"
+  local files
+  if ! files="$(git -C "$REPO_DIR" ls-tree -r --name-only "$ref" 2>/dev/null)"; then
+    warn "git ls-tree $ref fehlgeschlagen — Internal-Guard übersprungen"
+    return
+  fi
+  local hits="" pat
+  for pat in "${INTERNAL_PATH_PATTERNS[@]}"; do
+    hits+="$(echo "$files" | grep -E "$pat" || true)"$'\n'
+  done
+  # design-archives: nur .gitkeep + versionierte Bild-Assets sind erlaubt
+  # (Policy aus .gitignore: "Asset-Versionierungen im Repo, ZIPs/Quellen lokal")
+  hits+="$(echo "$files" | grep -E '^design-archives/' | grep -vE '(\.gitkeep|\.(jpe?g|png|webp|avif))$' || true)"$'\n'
+  hits="$(echo "$hits" | sed '/^$/d' | sort -u)"
+  if [[ -n "$hits" ]]; then
+    local f
+    while IFS= read -r f; do
+      fail "intern, würde von Pages ausgeliefert ($ref): $f"
+      INTERNAL_LEAKS=$((INTERNAL_LEAKS + 1))
+    done <<< "$hits"
+  else
+    ok "kein interner Content im Deploy-Tree ($ref)"
   fi
 }
 
@@ -300,5 +342,8 @@ audit_dsgvo
 
 section "E: Cross-Page-Konsistenz"
 audit_crosspage
+
+section "G: Internal-Content-Guard (Pages-Leak)"
+audit_internal_content
 
 print_summary

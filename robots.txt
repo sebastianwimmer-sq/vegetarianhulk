@@ -8,5 +8,7 @@ Disallow: /command/
 Disallow: /admin/
 Disallow: /archive/
 Disallow: /_preview/
+Disallow: /workers/
+Disallow: /second-brain/
 
 Sitemap: https://vegetarianhulk.de/sitemap.xml

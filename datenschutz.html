@@ -12,7 +12,7 @@
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
-<link rel="stylesheet" href="style.css?v=v31.14">
+<link rel="stylesheet" href="style.css?v=v32.0">
 </head>
 <body>
 <main class="page legal-page">
@@ -125,15 +125,12 @@
     Die von dir an uns per E-Mail übersandten Daten verbleiben bei uns, bis du uns zur Löschung aufforderst, deine Einwilligung zur Speicherung widerrufst oder der Zweck für die Datenspeicherung entfällt (z.B. nach abgeschlossener Bearbeitung deiner Anfrage).
   </p>
 
-  <h3>Anfrageformular (FormSubmit)</h3>
+  <h3>Anfrageformular (eigener Formular-Endpoint)</h3>
   <p>
-    Auf der Seite <a href="anfrage.html">„Für Brands"</a> kannst du über ein Formular eine Kooperations-Anfrage senden. Die Übermittlung erfolgt über den Dienst <strong>FormSubmit</strong> (formsubmit.co), der die Formulareinträge per E-Mail an unser Postfach weiterleitet. Verarbeitet werden ausschließlich die von dir eingegebenen Angaben (z.B. Brand-Name, E-Mail-Adresse, Profil/Webseite, Art der Zusammenarbeit, Budget, Zeitrahmen, Idee, bevorzugte Kontaktform). Es werden keine Cookies gesetzt.
+    Auf der Seite <a href="anfrage.html">„Für Brands"</a> kannst du über ein Formular eine Kooperations-Anfrage senden. Die Übermittlung erfolgt über einen <strong>eigenen, von uns betriebenen Endpoint auf Cloudflare Workers</strong>, der die Formulareinträge per E-Mail (Versand über Brevo, siehe Abschnitt 5) an unser Postfach info@vegetarianhulk.de zustellt. Verarbeitet werden ausschließlich die von dir eingegebenen Angaben (z.B. Brand-Name, E-Mail-Adresse, Profil/Webseite, Art der Zusammenarbeit, Budget, Zeitrahmen, Idee, bevorzugte Kontaktform). Es werden keine Cookies gesetzt und keine Formulareinträge dauerhaft auf dem Endpoint gespeichert; zur Missbrauchsabwehr (Rate-Limit) wird die IP-Adresse kurzzeitig technisch verarbeitet.
   </p>
   <p>
-    Zweck ist die Bearbeitung deiner Anfrage. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Durchführung vorvertraglicher Maßnahmen) bzw. Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der effizienten Bearbeitung). FormSubmit ist ein eingesetzter Dienst/Empfänger mit Sitz in den USA, über den die Formulardaten verarbeitet und an info@vegetarianhulk.de zugestellt werden; eine Übermittlung in die USA kann nicht ausgeschlossen werden, und ein Auftragsverarbeitungsvertrag liegt ggf. nicht vor. Die Daten verbleiben bei uns, bis der Zweck entfällt oder du die Löschung verlangst.
-  </p>
-  <p>
-    Datenschutzerklärung FormSubmit: <a href="https://formsubmit.co/" target="_blank" rel="noopener">https://formsubmit.co</a>
+    Zweck ist die Bearbeitung deiner Anfrage. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Durchführung vorvertraglicher Maßnahmen) bzw. Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der effizienten Bearbeitung und Missbrauchsabwehr). Cloudflare und Brevo sind als Auftragsverarbeiter eingebunden (siehe Abschnitt 5). Die Daten verbleiben bei uns, bis der Zweck entfällt oder du die Löschung verlangst.
   </p>
 
   <h2>5. Eingesetzte Dienste &amp; Empfänger</h2>
@@ -141,9 +138,8 @@
     Folgende Dienste bzw. Empfänger sind in die Datenverarbeitung eingebunden:
   </p>
   <ul>
-    <li><strong>Brevo (E-Mail-Versand):</strong> Sendinblue GmbH, Köpenicker Str. 126, 10179 Berlin. Zweck: Versand des 3-Tage-Disziplin-Reset-Newsletters (Double-Opt-In). Verarbeitete Daten: E-Mail-Adresse, Vorname. Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung). USA-Transfer über EU-Standardvertragsklauseln (SCC). Datenschutz: <a href="https://www.brevo.com/de/legal/privacypolicy/" target="_blank" rel="noopener">brevo.com/legal/privacypolicy</a></li>
-    <li><strong>Cloudflare Workers (API-Proxy):</strong> Cloudflare Inc., USA / Cloudflare Germany GmbH. Zweck: API-Backend für Newsletter-Anmeldung (Proxy zu Brevo). Verarbeitete Daten: E-Mail-Adresse, Vorname bei Anmeldung. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO. USA-Transfer über SCC + EU-US Data Privacy Framework (DPF). Datenschutz: <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">cloudflare.com/privacypolicy</a></li>
-    <li><strong>FormSubmit (Formular-Weiterleitung):</strong> formsubmit.co, eingesetzter Dienst/Empfänger mit Sitz in den USA, über den die Formulardaten verarbeitet und an info@vegetarianhulk.de zugestellt werden. Zweck: Weiterleitung der Brand-Anfragen vom „Für Brands"-Formular per E-Mail an unser Postfach. Verarbeitete Daten: die im Formular angegebenen Felder (u.a. E-Mail-Adresse). Rechtsgrundlage: Art. 6 Abs. 1 lit. b / f DSGVO. Eine Übermittlung in die USA kann nicht ausgeschlossen werden; ein Auftragsverarbeitungsvertrag liegt ggf. nicht vor. Datenschutz: <a href="https://formsubmit.co/" target="_blank" rel="noopener">formsubmit.co</a></li>
+    <li><strong>Brevo (E-Mail-Versand):</strong> Sendinblue GmbH, Köpenicker Str. 126, 10179 Berlin. Zweck: Versand des 3-Tage-Disziplin-Reset-Newsletters (Double-Opt-In) sowie Zustellung der Brand-Anfragen aus dem „Für Brands"-Formular an unser Postfach (Transaktions-Mail). Verarbeitete Daten: E-Mail-Adresse, Vorname bzw. die im Formular angegebenen Felder. Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Newsletter-Einwilligung) bzw. Art. 6 Abs. 1 lit. b/f DSGVO (Anfragen). USA-Transfer über EU-Standardvertragsklauseln (SCC). Datenschutz: <a href="https://www.brevo.com/de/legal/privacypolicy/" target="_blank" rel="noopener">brevo.com/legal/privacypolicy</a></li>
+    <li><strong>Cloudflare Workers (API-Backend):</strong> Cloudflare Inc., USA / Cloudflare Germany GmbH. Zweck: API-Backend für Newsletter-Anmeldung und für das Brand-Anfrage-Formular (eigener, von uns betriebener Endpoint; Auftragsverarbeitung). Verarbeitete Daten: E-Mail-Adresse, Vorname bzw. Formularfelder; IP-Adresse kurzzeitig zur Missbrauchsabwehr. Rechtsgrundlage: Art. 6 Abs. 1 lit. b/f DSGVO. USA-Transfer über SCC + EU-US Data Privacy Framework (DPF). Datenschutz: <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">cloudflare.com/privacypolicy</a></li>
   </ul>
 
   <h2>6. Externe Links</h2>
@@ -154,8 +150,13 @@
     Datenschutzerklärung Instagram (Meta): <a href="https://privacycenter.instagram.com/policy/" target="_blank" rel="noopener">https://privacycenter.instagram.com/policy/</a>
   </p>
 
+  <h3>Affiliate-Links (Seite „Codes &amp; Partner")</h3>
+  <p>
+    Auf der Seite <a href="/codes/">„Codes &amp; Partner"</a> sind Links zu Shops unserer Werbepartner enthalten (Affiliate-Links, gekennzeichnet als „Werbung · Affiliate-Links"). Wenn du über einen solchen Link einkaufst, erhält der Betreiber dieser Website eine Provision vom jeweiligen Partner-Shop; für dich entstehen keine Mehrkosten. Auf dieser Website selbst findet dabei kein Tracking statt. Beim Klick wirst du auf die Seite des Partner-Shops weitergeleitet; dieser kann zur Zuordnung des Kaufs eigene Cookies oder vergleichbare Technologien einsetzen (z.B. Affiliate-Programme wie UpPromote). Verantwortlich dafür ist der jeweilige Shop-Betreiber — Details findest du in dessen Datenschutzerklärung.
+  </p>
+
   <p style="margin-top: 32px; color: var(--text2); font-size: 12px;">
-    Stand: 2. Juni 2026
+    Stand: 10. Juni 2026
   </p>
 
   <a href="index.html" class="back-link">← Zurück zur Startseite</a>
