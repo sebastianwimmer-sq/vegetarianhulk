@@ -16,7 +16,7 @@
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
-<link rel="stylesheet" href="style.css?v=v31.14">
+<link rel="stylesheet" href="style.css?v=v32.0">
 <style>
 /* kooperationen.html — page-scoped Motion + CTA Polish (v31.12, keine neuen Libs) */
 @media (prefers-reduced-motion: no-preference) {
@@ -94,8 +94,8 @@
 }
 /* Contained, elevated section panels — Tiefe + dezent alternierende Surface */
 .brand-page .v5-section {
-  max-width: 940px;
-  margin: 26px auto;
+  max-width: var(--container-page, 920px); /* V32: Token statt totem 940px (von .page gedeckelt) */
+  margin: var(--space-lg, 26px) auto;
   padding: clamp(26px, 4vw, 46px) clamp(20px, 4vw, 40px);
   border-radius: 24px;
   background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.3));
@@ -120,7 +120,9 @@
   box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 16px 38px -18px rgba(4,89,39,.42), 0 5px 14px -8px rgba(0,0,0,.16);
 }
 /* Hero stat tiles — starke Zahlen, glossy */
-.brand-page .hero-stat-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
+.brand-page .hero-stat-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-2xs, 10px); margin-top: var(--space-md, 20px); }
+.brand-page .hero-stat-tile { min-width: 0; }
+.brand-page .hero-stat-num { overflow-wrap: anywhere; }
 .brand-page .hero-stat-tile {
   padding: 14px 16px; border-radius: 16px;
   background: linear-gradient(160deg, rgba(255,255,255,.62), rgba(247,239,222,.4));
@@ -136,7 +138,7 @@
 @media (max-width: 520px) { .brand-page .hero-stat-tile { padding: 11px 12px; } }
 /* Hero als contained Panel (konsistent zu den Sektionen) + premium Portrait */
 .brand-page .brand-hero {
-  max-width: 940px; margin: 26px auto; padding: clamp(22px, 4vw, 40px);
+  max-width: var(--container-page, 920px); margin: var(--space-lg, 26px) auto; padding: clamp(22px, 4vw, 40px);
   border-radius: 24px;
   background: linear-gradient(180deg, rgba(255,255,255,.6), rgba(247,239,222,.4));
   border: 1px solid rgba(255,255,255,.6);

@@ -170,6 +170,50 @@ body {
 a { color: inherit; text-decoration: none; }
 ::selection { background: var(--green1); color: #fff; }
 
+/* ============================================================
+   V32 Layout-Tokens (Polish-Sprint 10.06.2026)
+   Verbindliche Skalen für Spacing / Container / Cards / Controls.
+   Überarbeitete + neue Komponenten nutzen NUR diese Tokens —
+   keine Ad-hoc-px-Werte und keine pro-Seite kopierten Skalen mehr.
+   ============================================================ */
+:root {
+  /* Spacing-Skala — 4px-Basis, obere Stufen fluid */
+  --space-3xs: 4px;
+  --space-2xs: 8px;
+  --space-xs:  12px;
+  --space-sm:  16px;
+  --space-md:  20px;
+  --space-lg:  clamp(24px, 3vw, 32px);
+  --space-xl:  clamp(32px, 4vw, 48px);
+  --space-2xl: clamp(48px, 6vw, 80px);
+
+  /* Container-Breiten — eine Quelle für alle Seiten */
+  --container-text: 680px;   /* Lesetext / Legal */
+  --container-page: 920px;   /* Standard-Sections (synct .page-Clamp) */
+  --container-wide: 1040px;  /* 2-Spalten-Layouts (z.B. /anfrage) */
+
+  /* Card-/Control-System */
+  --radius-card:    18px;
+  --radius-control: 12px;
+  --radius-pill:    999px;
+  --control-h:      52px;    /* einheitliche Höhe Inputs + Buttons */
+  --card-pad:       clamp(20px, 2.8vw, 32px);
+
+  /* Forest-Mid — Illustrations-/Detail-Ton zwischen primary und accent,
+     kräftig genug für Linework auf hellen Glossy-Surfaces */
+  --forest-mid: #14663a;
+
+  /* Sticky-Topbar-Höhe — Basis für scroll-padding (kein Headline-Anschnitt) */
+  --topbar-h: 58px;
+
+  /* Horizontales Page-Padding — eine Quelle für .page UND .topbar-Negativ-Margin
+     (war: .page fluid 20-56px vs. .topbar fix -22px → 2px Overflow @320) */
+  --page-pad-x: clamp(20px, 3vw, 56px);
+}
+
+/* Anker-Sprünge landen unterhalb der Sticky-Topbar (alle style.css-Pages) */
+html { scroll-padding-top: calc(var(--topbar-h) + 12px); }
+
 .page {
   max-width: 500px;
   margin: 0 auto;
@@ -185,7 +229,7 @@ a { color: inherit; text-decoration: none; }
   position: sticky;
   top: 0;
   z-index: 50;
-  margin: 0 -22px 32px;
+  margin: 0 calc(var(--page-pad-x) * -1) 32px;
   padding: 10px 18px;
   background: rgba(247, 239, 222, 0.72);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
@@ -274,7 +318,7 @@ a { color: inherit; text-decoration: none; }
   color: var(--vanilla);
 }
 @media (max-width: 640px) {
-  .topbar { padding: 8px 14px; margin: 0 -22px 28px; gap: 8px; }
+  .topbar { padding: 8px 14px; margin: 0 calc(var(--page-pad-x) * -1) 28px; gap: 8px; }
   .brand { font-size: 12px; letter-spacing: 2.5px; }
   .topbar-burger { display: flex; align-items: center; justify-content: center; }
   .topbar-nav {
@@ -1272,9 +1316,9 @@ a { color: inherit; text-decoration: none; }
 .lead-magnet {
   background: linear-gradient(180deg, var(--surface) 0%, var(--surface2) 100%);
   border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 24px 22px;
-  margin: 28px 0 8px;
+  border-radius: var(--radius-card);
+  padding: var(--card-pad);
+  margin: var(--space-xl) 0 var(--space-2xs);
   position: relative;
   overflow: hidden;
 }
@@ -1288,39 +1332,49 @@ a { color: inherit; text-decoration: none; }
   background: linear-gradient(90deg, var(--green1), var(--green2));
 }
 .lead-magnet-eyebrow {
-  font-size: var(--font-micro);
+  font-size: var(--font-eyebrow);
   font-weight: var(--weight-extrabold);
   letter-spacing: var(--tracking-wide);
-  color: var(--green1);
+  color: var(--forest-primary);
   text-transform: uppercase;
-  margin-bottom: 12px;
+  margin-bottom: var(--space-xs);
 }
 .lead-magnet-title {
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: var(--font-h3);
-  font-weight: var(--weight-black);
+  font-weight: var(--weight-bold);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-tight);
-  margin-bottom: 10px;
+  color: var(--ink);
+  margin-bottom: var(--space-2xs);
+  text-wrap: balance;
 }
 .lead-magnet-promise {
-  font-size: var(--font-body-sm);
-  line-height: var(--leading-relaxed);
-  color: var(--text);
-  margin-bottom: 18px;
+  font-size: var(--font-body);
+  line-height: var(--leading-normal);
+  color: var(--ink-2);
+  margin-bottom: var(--space-md);
 }
-.lead-magnet-promise strong { color: var(--green-deep); font-weight: 700; }
+.lead-magnet-promise strong { color: var(--forest-deep); font-weight: 700; }
+/* Form-Stack: mobile 1 Spalte; ≥640px Vorname|Email nebeneinander, CTA full-width.
+   Kein flex-wrap mehr — die Boxen können nicht mehr "zufällig" umbrechen. */
 .lead-magnet-form {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xs);
+}
+@media (min-width: 640px) {
+  .lead-magnet-form { grid-template-columns: 1fr 1fr; }
+  .lead-magnet-form button { grid-column: 1 / -1; }
 }
 .lead-magnet-form input[type="email"],
 .lead-magnet-form input[type="text"] {
   width: 100%;
-  padding: 17px 18px;
+  height: var(--control-h);
+  padding: 0 var(--space-sm);
   background: #ffffff;
   border: 1.5px solid var(--earth);
-  border-radius: 12px;
+  border-radius: var(--radius-control);
   color: var(--ink);
   font-family: inherit;
   font-size: 15px;
@@ -1340,12 +1394,12 @@ a { color: inherit; text-decoration: none; }
   font-weight: 500;
 }
 .lead-magnet-form button {
-  margin-top: 4px;
-  padding: 18px 20px;
+  height: var(--control-h);
+  padding: 0 var(--space-lg);
   background: linear-gradient(180deg, var(--forest-primary) 0%, var(--forest-anchor) 100%);
   color: var(--vanilla);
   border: none;
-  border-radius: 12px;
+  border-radius: var(--radius-control);
   font-family: inherit;
   font-weight: 800;
   font-size: 15px;
@@ -1370,9 +1424,8 @@ a { color: inherit; text-decoration: none; }
 .lead-magnet-finepr {
   font-size: 12px;
   color: var(--ink-2);
-  margin-top: 16px;
+  margin-top: var(--space-sm);
   text-align: center;
-  letter-spacing: 0.2px;
   letter-spacing: 0.2px;
 }
 
@@ -1797,13 +1850,20 @@ a { color: inherit; text-decoration: none; }
   padding: 12px 14px;
   background: #ffffff;
   border: 1.5px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-control);
   color: var(--text);
   font-family: inherit;
   font-size: 14px;
   font-weight: 500;
   outline: none;
   transition: border-color 0.15s, box-shadow 0.15s;
+}
+/* V32: einheitliche Control-Höhe (Parität zu .lead-magnet-form) */
+.brand-form-row input,
+.brand-form-2col input {
+  height: var(--control-h);
+  padding-top: 0;
+  padding-bottom: 0;
 }
 .brand-form-row textarea {
   min-height: 60px;
@@ -3382,7 +3442,7 @@ body::before {
 /* === Page-Container: fluid statt fix 500px === */
 .page {
   max-width: clamp(360px, 92vw, 920px);
-  padding: clamp(28px, 4vw, 72px) clamp(20px, 3vw, 56px);
+  padding: clamp(28px, 4vw, 72px) var(--page-pad-x);
 }
 
 /* === Topbar — fluid bottom-margin only (V25 keeps glass styling above) === */
@@ -3467,39 +3527,11 @@ body::before {
   font-size: clamp(15px, 1.5vw, 20px);
 }
 
-/* === Lead-Magnet === */
-.lead-magnet {
-  padding: clamp(22px, 3vw, 44px) clamp(20px, 2.8vw, 40px);
-  margin-top: clamp(24px, 3.5vw, 48px);
-}
-
-.lead-magnet-title {
-  font-size: clamp(19px, 2.3vw, 30px);
-  line-height: 1.25;
-}
-
-.lead-magnet-promise {
-  font-size: clamp(14px, 1.2vw, 17px);
-}
-
-/* === Lead-Form: fluid row/column via flex-wrap ===
-   Wenn Email-Input + Button beides reinpasst → row.
-   Sonst stacken sie automatisch. */
-.lead-magnet-form {
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.lead-magnet-form input[type="email"],
-.lead-magnet-form input[type="text"] {
-  flex: 1 1 240px;
-}
-.lead-magnet-form button {
-  flex: 0 1 auto;
-  padding-left: clamp(18px, 2vw, 28px);
-  padding-right: clamp(18px, 2vw, 28px);
-  white-space: nowrap;
-}
+/* === Lead-Magnet ===
+   V32: Overrides konsolidiert in den Basis-Block (Z. ~1310) — Tokens
+   --card-pad/--space-*/--control-h statt eigener clamp-Werte. Das alte
+   flex-wrap-Row-Layout (Inputs 1 1 240px) erzeugte je nach Breite
+   zufällige Box-Anordnungen und ist durch das Grid ersetzt. */
 
 /* === Footer === */
 .footer {
