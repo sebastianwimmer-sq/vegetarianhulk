@@ -2,7 +2,7 @@
    Vanille/Beige BG + Schwarze Schrift + Hulk-Green-Akzente.
    Shared across index.html, kooperationen.html, impressum.html, datenschutz.html */
 
-@import url('/fonts.css');
+@import url('/fonts.css?v=1e2010e0');
 
 :root {
   /* === Forest-Hulk Light-Theme (V6) ===
