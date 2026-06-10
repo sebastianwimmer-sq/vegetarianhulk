@@ -18,6 +18,7 @@ mkdir -p "$REPORT_DIR"
 PAGES=(
   "/"
   "/newsletter/"
+  "/codes/"
   "/kooperationen.html"
   "/3-tage-reset/"
   "/danke.html"
