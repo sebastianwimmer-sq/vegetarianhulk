@@ -314,7 +314,8 @@
     codeBtn.appendChild(el('span', 'val', partner.code));
     var copyBtn = el('button', 'copybtn');
     copyBtn.type = 'button';
-    copyBtn.setAttribute('aria-label', 'Code ' + partner.code + ' kopieren');
+    // Accessible Name muss das sichtbare "Copy" enthalten (axe: label-content-name-mismatch)
+    copyBtn.setAttribute('aria-label', 'Copy — Code ' + partner.code + ' kopieren');
     copyBtn.appendChild(copyIcon());
     copyBtn.appendChild(el('span', 'copybtn-label', 'Copy'));
     function onCopy() {
