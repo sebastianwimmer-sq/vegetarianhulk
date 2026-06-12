@@ -12,10 +12,11 @@
 <link rel="canonical" href="https://vegetarianhulk.de/codes/">
 
 <meta property="og:title" content="Codes &amp; Partner | VegetarianHulk">
-<meta property="og:description" content="Meine Partner &amp; Codes — ehrlich ausgewählt. Alle aktuellen Rabattcodes an einem Ort.">
+<meta property="og:description" content="Meine Partner &amp; Rabattcodes — ehrlich ausgewählt.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://vegetarianhulk.de/codes/">
-<meta property="og:image" content="https://vegetarianhulk.de/hero.jpg?v=v31.6.1">
+<!-- Platzhalter — Sebi liefert assets/og/codes.jpg nach (1200×630) -->
+<meta property="og:image" content="https://vegetarianhulk.de/assets/og/codes.jpg">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
@@ -53,15 +54,51 @@
   .adnote span { white-space: nowrap; }
 
   .codes-cards { max-width: 520px; margin: 0 auto; }
+  /* Desktop: 2 Partner-Cards nebeneinander, gleiche Höhe (Code-Row am Boden) */
+  @media (min-width: 880px) {
+    .codes-cards { max-width: 1064px; }
+    #partner-cards {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: var(--space-sm); align-items: stretch;
+    }
+    #partner-cards .card { margin-bottom: 0; display: flex; flex-direction: column; }
+    #partner-cards .code-row { margin-top: auto; }
+  }
 
   /* card — helle Surface, Token-Radius/-Spacing */
   .card {
+    position: relative; /* Anker für .newbadge */
     background: linear-gradient(180deg, #ffffff 0%, var(--surface) 100%);
     border: 1px solid var(--border);
     border-radius: var(--radius-card);
     padding: var(--space-md) var(--space-md) var(--space-sm);
     margin-bottom: var(--space-sm);
     box-shadow: 0 1px 3px rgba(4, 89, 39, 0.06), 0 8px 24px -8px rgba(4, 89, 39, 0.14);
+  }
+
+  /* Promo-Banner — zeitgesteuert (promo.validUntil in partners.js),
+     Deep Forest als bewusster Kontrast zum NEU-Badge-Grün */
+  .promo {
+    display: flex; gap: 8px; align-items: flex-start;
+    /* negative Margins: Banner läuft randlos bis an die Card-Kanten */
+    margin: calc(var(--space-md) * -1) calc(var(--space-md) * -1) var(--space-sm);
+    padding: 9px 14px;
+    background: #0f3d2e; color: var(--vanilla);
+    border-radius: calc(var(--radius-card) - 1px) calc(var(--radius-card) - 1px) 0 0;
+    font-size: 12.5px; line-height: 1.45;
+  }
+  .promo svg { width: 14px; height: 14px; flex: none; margin-top: 1px; }
+  /* NEU-Badge + Promo gleichzeitig: Banner-Text rückt unter das Badge */
+  .card.has-promo .promo { padding-top: 20px; }
+
+  /* "Neu"-Badge — dezent, überlappt die obere Card-Kante (isNew in partners.js) */
+  .newbadge {
+    position: absolute; top: -9px; left: var(--space-md);
+    background: #2d7d5a; color: var(--vanilla);
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    padding: 3px 9px; border-radius: var(--radius-pill);
+    box-shadow: 0 2px 6px rgba(4, 89, 39, 0.22);
   }
   @media (prefers-reduced-motion: no-preference) {
     .card {
@@ -80,9 +117,17 @@
     overflow: hidden;
   }
   .logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pname-wrap { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; min-width: 0; }
   .pname {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 21px; font-weight: 600; color: var(--ink); margin: 0;
+  }
+  /* Kategorie-Tag — Sage-Light-Ton als Tint-BG, Text dunkel (Kontrast AA) */
+  .ptag {
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--forest-anchor);
+    background: rgba(168, 197, 161, 0.30);
+    padding: 2px 8px; border-radius: var(--radius-pill);
   }
   .disc {
     margin-left: auto; flex: none;
@@ -91,6 +136,15 @@
     padding: 5px 10px; border-radius: var(--radius-pill);
   }
   .value { color: var(--ink-2); font-size: 14px; line-height: 1.5; margin: 8px 2px var(--space-sm); }
+
+  /* Partner-spezifischer Checkout-Hinweis (Code manuell vs. auto-angewendet) */
+  .hint {
+    background: var(--forest-wash);
+    border-radius: var(--radius-control);
+    padding: 9px 12px; margin: 11px 0 0;
+    font-size: 12.5px; line-height: 1.5; color: var(--ink);
+  }
+  .hint strong { color: var(--forest-primary); }
 
   .code-row { display: flex; gap: 9px; }
   .code {
@@ -103,7 +157,14 @@
   }
   .code:hover { border-color: var(--forest-primary); }
   .code .lbl { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-2); }
-  .code .val { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-weight: 700; font-size: 18px; letter-spacing: 0.04em; color: var(--ink); }
+  .code .val {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-weight: 700;
+    font-size: 18px; letter-spacing: 0.04em; color: var(--ink);
+    /* selektierbar für Manual-Copy-Fallback (IG-In-App-Browser) */
+    -webkit-user-select: text; user-select: text;
+  }
+  /* Sichtbarer Fallback-Hinweis, wenn Clipboard-API fehlschlägt (IG-WebView) */
+  .copyhint { margin: 7px 2px 0; font-size: 12px; font-weight: 600; color: var(--forest-primary); }
   .copybtn {
     flex: none; width: 52px; border: none; border-radius: var(--radius-control); cursor: pointer;
     background: var(--forest-wash); color: var(--forest-primary);
@@ -190,7 +251,8 @@
         <div class="vh-wordmark wordmark">VEGETARIAN<span class="accent">HULK</span></div>
         <div class="vh-tagline tagline">Builder &amp; Creator. Disziplin über Hype.</div>
         <a class="vh-link vh-ig ig" href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener" aria-label="Instagram @vegetarianhulk">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <!-- width/height-Attribute = Fallback gegen Full-Viewport-SVG bei CSS-Ausfall -->
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
             <rect x="3" y="3" width="18" height="18" rx="5"></rect>
             <circle cx="12" cy="12" r="4"></circle>
             <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle>
@@ -223,7 +285,7 @@
 
 </main>
 
-<script src="partners.js?v=9d7e1c60"></script>
+<script src="partners.js?v=3fcfc0c4"></script>
 <script>
 (function () {
   'use strict';
@@ -240,6 +302,9 @@
 
   function copyIcon() {
     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    // width/height = Fallback bei CSS-Ausfall (CSS .copybtn svg gewinnt)
+    svg.setAttribute('width', '17');
+    svg.setAttribute('height', '17');
     svg.setAttribute('viewBox', '0 0 24 24');
     svg.setAttribute('fill', 'none');
     svg.setAttribute('stroke', 'currentColor');
@@ -255,8 +320,33 @@
     return svg;
   }
 
+  function flashIcon() {
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', '14');
+    svg.setAttribute('height', '14');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'currentColor');
+    svg.setAttribute('aria-hidden', 'true');
+    var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'M13 2 3 14h7l-1 8 10-12h-7l1-8z');
+    svg.appendChild(path);
+    return svg;
+  }
+
+  function isPromoActive(promo) {
+    if (!promo || !promo.text || !promo.validUntil) return false;
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(promo.validUntil);
+    if (!m) return false;
+    // validUntil inklusive: Banner läuft bis Ende des Tages (lokale Zeit)
+    var end = new Date(+m[1], +m[2] - 1, +m[3], 23, 59, 59, 999);
+    return Date.now() <= end.getTime();
+  }
+
   function arrowIcon() {
     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    // width/height = Fallback bei CSS-Ausfall (CSS .cta svg gewinnt)
+    svg.setAttribute('width', '15');
+    svg.setAttribute('height', '15');
     svg.setAttribute('viewBox', '0 0 24 24');
     svg.setAttribute('fill', 'none');
     svg.setAttribute('stroke', 'currentColor');
@@ -268,10 +358,7 @@
     return svg;
   }
 
-  function copyToClipboard(text) {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      return navigator.clipboard.writeText(text);
-    }
+  function legacyCopy(text) {
     return new Promise(function (resolve, reject) {
       var t = document.createElement('textarea');
       t.value = text;
@@ -287,6 +374,25 @@
         document.body.removeChild(t);
       }
     });
+  }
+
+  function copyToClipboard(text) {
+    // IG-In-App-Browser: navigator.clipboard existiert oft, rejected aber
+    // → erst Clipboard-API, dann execCommand, erst danach Manual-Fallback
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text).catch(function () {
+        return legacyCopy(text);
+      });
+    }
+    return legacyCopy(text);
+  }
+
+  function selectText(node) {
+    var range = document.createRange();
+    range.selectNodeContents(node);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
   }
 
   function flashCopied(btn, partnerName) {
@@ -305,6 +411,18 @@
     var card = el('article', 'card');
     card.style.animationDelay = (index * STAGGER_MS) + 'ms';
 
+    if (isPromoActive(partner.promo)) {
+      card.classList.add('has-promo');
+      var promo = el('div', 'promo');
+      promo.appendChild(flashIcon());
+      promo.appendChild(el('span', 'promo-text', partner.promo.text));
+      card.appendChild(promo);
+    }
+
+    if (partner.isNew) {
+      card.appendChild(el('span', 'newbadge', 'Neu'));
+    }
+
     var top = el('div', 'card-top');
     var logo = el('div', 'logo');
     if (partner.logo) {
@@ -319,7 +437,12 @@
       logo.setAttribute('aria-hidden', 'true');
     }
     top.appendChild(logo);
-    top.appendChild(el('h2', 'pname', partner.name));
+    var nameWrap = el('div', 'pname-wrap');
+    nameWrap.appendChild(el('h2', 'pname', partner.name));
+    if (partner.category) {
+      nameWrap.appendChild(el('span', 'ptag', partner.category));
+    }
+    top.appendChild(nameWrap);
     if (partner.discount) {
       top.appendChild(el('span', 'disc', '–' + partner.discount));
     }
@@ -331,7 +454,8 @@
     var codeBtn = el('button', 'code');
     codeBtn.type = 'button';
     codeBtn.appendChild(el('span', 'lbl', 'Code'));
-    codeBtn.appendChild(el('span', 'val', partner.code));
+    var valSpan = el('span', 'val', partner.code);
+    codeBtn.appendChild(valSpan);
     var copyBtn = el('button', 'copybtn');
     copyBtn.type = 'button';
     // Accessible Name muss das sichtbare "Copy" enthalten (axe: label-content-name-mismatch)
@@ -342,8 +466,15 @@
       copyToClipboard(partner.code)
         .then(function () { flashCopied(copyBtn, partner.name); })
         .catch(function () {
+          // Manual-Fallback (z.B. IG-WebView): Code selektieren + sichtbarer Hinweis
+          selectText(valSpan);
+          var hintEl = card.querySelector('.copyhint');
+          if (!hintEl) {
+            hintEl = el('p', 'copyhint', 'Gedrückt halten & kopieren');
+            row.insertAdjacentElement('afterend', hintEl);
+          }
           var status = document.getElementById('copy-status');
-          if (status) status.textContent = 'Kopieren nicht möglich — Code: ' + partner.code;
+          if (status) status.textContent = 'Automatisches Kopieren nicht möglich — Code ' + partner.code + ' ist markiert, gedrückt halten und kopieren.';
         });
     }
     codeBtn.addEventListener('click', onCopy);
@@ -352,15 +483,29 @@
     row.appendChild(copyBtn);
     card.appendChild(row);
 
+    if (partner.hint && partner.hint.text) {
+      var hint = el('p', 'hint');
+      if (partner.hint.lead) {
+        var lead = document.createElement('strong');
+        lead.textContent = partner.hint.lead + ' ';
+        hint.appendChild(lead);
+      }
+      hint.appendChild(document.createTextNode(partner.hint.text));
+      card.appendChild(hint);
+    }
+
     var cta = el('a', 'cta', 'Zum ' + partner.name + ' Shop');
-    cta.href = partner.shopUrl;
+    // Interstitial /go/<slug>/ (Danke + Code-Reminder), Fallback: direkte Affiliate-URL
+    cta.href = partner.slug ? '/go/' + partner.slug + '/' : partner.shopUrl;
     cta.target = '_blank';
     cta.rel = 'nofollow sponsored noopener';
     cta.appendChild(arrowIcon());
     card.appendChild(cta);
 
-    card.appendChild(el('p', 'fineprint',
-      'Affiliate-Link: Wenn du über den Link kaufst, erhalte ich eine Provision. Für dich entstehen keine Mehrkosten.'));
+    var finePrint = 'Affiliate-Link: Wenn du über den Link kaufst, erhalte ich eine Provision. ' +
+      'Für dich ändert sich am Preis nichts — mit dem Code sparst du sogar.';
+    if (partner.finePrintExtra) finePrint += ' ' + partner.finePrintExtra;
+    card.appendChild(el('p', 'fineprint', finePrint));
 
     return card;
   }
@@ -369,6 +514,13 @@
   if (!mount || typeof VH_PARTNERS === 'undefined') return;
   VH_PARTNERS
     .filter(function (p) { return p.active; })
+    .slice() // Kopie — Original-Array nicht mutieren
+    .sort(function (a, b) {
+      // isNew-Partner zuerst, innerhalb der Gruppen nach sortOrder aufsteigend
+      var newDiff = (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0);
+      if (newDiff !== 0) return newDiff;
+      return (a.sortOrder || 0) - (b.sortOrder || 0);
+    })
     .forEach(function (p, i) { mount.appendChild(buildCard(p, i)); });
 })();
 </script>
