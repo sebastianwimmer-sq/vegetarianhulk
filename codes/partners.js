@@ -19,6 +19,14 @@
                     Filter kommt erst ab mehr Partnern.
      isNew          Optional — true = dezentes "Neu"-Badge oben an
                     der Card. Zum Abschalten: false setzen/entfernen.
+     sortOrder      Optional (number) — Sortierung: isNew-Partner
+                    zuerst, innerhalb der Gruppen aufsteigend nach
+                    sortOrder (fehlend = 0).
+     promo          Optional — zeitgesteuerter Hinweis-Banner oben auf
+                    der Card: { text, validUntil: "YYYY-MM-DD" }.
+                    Nach validUntil (inklusive, lokale Zeit) wird der
+                    Banner client-seitig nicht mehr gerendert —
+                    automatisches Abschalten ohne Redeploy.
      valueLine      Pflicht — 1 Satz: warum dieser Partner
      hint           Optional — Hinweis-Box über dem CTA: { lead, text }.
                     lead wird fett gerendert (z.B. "Wichtig:" / "Easy:").
@@ -42,6 +50,7 @@ const VH_PARTNERS = [
     code: "VEGETARIANHULK",
     discount: "10%",
     category: "Supplements",
+    sortOrder: 1,
     valueLine: "Laborgeprüfte Nahrungsergänzung, Made in Germany — fester Teil meiner täglichen Routine.",
     hint: {
       lead: "Wichtig:",
@@ -58,7 +67,12 @@ const VH_PARTNERS = [
     code: "VEGETARIANHULK",
     discount: "15%",
     category: "Outdoor-Gear",
+    sortOrder: 2,
     isNew: true,
+    promo: {
+      text: "Summer Sale: bis zu 40 % im Shop — Code gibt währenddessen 5 % extra on top",
+      validUntil: "2026-06-30" // Platzhalter — finales Datum folgt von Melanie
+    },
     valueLine: "Familienbetrieb aus den Alpen seit 1993 — Merino, Wanderstöcke, Schlafsäcke & Ultraleicht-Gear für meine Bergtouren.",
     hint: {
       lead: "Easy:",
