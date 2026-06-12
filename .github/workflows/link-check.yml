@@ -1,0 +1,69 @@
+# Wöchentlicher Partner-Link-Check
+# Prüft alle aktiven Affiliate-URLs aus codes/partners.js:
+#   1. finaler HTTP-Status nach Redirects = 200
+#   2. finale Domain = erwartete Partner-Domain (aus fallbackUrl)
+# Bei Fehlschlag: GitHub-Issue "⚠️ Partner-Link defekt: <Partner>"
+# (nur wenn noch kein offenes Issue mit diesem Titel existiert).
+name: Partner-Link-Check
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # montags 06:00 UTC ≈ 08:00 Europe/Berlin (Sommerzeit)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Aktive Partner aus partners.js extrahieren
+        run: |
+          node -e "
+            var src = require('fs').readFileSync('codes/partners.js', 'utf8');
+            // const im eval bleibt eval-scoped — Wert als letzten Ausdruck zurückgeben
+            var partners = eval(src + ';VH_PARTNERS');
+            partners.filter(function (p) { return p.active; }).forEach(function (p) {
+              var expected = new URL(p.fallbackUrl).hostname.replace(/^www\./, '');
+              console.log([p.name, p.shopUrl, expected].join('\t'));
+            });
+          " > partners.tsv
+          cat partners.tsv
+
+      - name: Affiliate-URLs prüfen (Status + Ziel-Domain)
+        run: |
+          : > failed.tsv
+          while IFS=$'\t' read -r name url expected; do
+            result=$(curl -sIL --max-time 30 -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15" \
+              -o /dev/null -w "%{http_code}\t%{url_effective}" "$url" || printf '000\t-')
+            code="${result%%$'\t'*}"
+            final="${result#*$'\t'}"
+            finalhost=$(node -e "try { console.log(new URL(process.argv[1]).hostname.replace(/^www\./, '')); } catch (e) { console.log('-'); }" "$final")
+            if [ "$code" != "200" ] || [ "$finalhost" != "$expected" ]; then
+              echo "::error::$name — Status: $code, finale URL: $final (erwartet: $expected)"
+              printf '%s\t%s\t%s\t%s\n' "$name" "$code" "$final" "$expected" >> failed.tsv
+            else
+              echo "OK: $name → $final ($code)"
+            fi
+          done < partners.tsv
+
+      - name: Issue erstellen bei defekten Links (keine Duplikate)
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          [ -s failed.tsv ] || { echo "Alle Partner-Links OK."; exit 0; }
+          while IFS=$'\t' read -r name code final expected; do
+            title="⚠️ Partner-Link defekt: $name"
+            open_count=$(gh issue list --state open --search "\"$title\" in:title" --json number --jq 'length')
+            if [ "$open_count" = "0" ]; then
+              gh issue create --title "$title" --body "$(printf 'Der wöchentliche Link-Check ist fehlgeschlagen.\n\n- **Partner:** %s\n- **HTTP-Status (final):** %s\n- **Finale URL:** %s\n- **Erwartete Domain:** %s\n\nBitte Affiliate-Link beim Partner prüfen und ggf. `codes/partners.js` + `go/`-Seite aktualisieren.\n\n_Automatisch erstellt vom Workflow `link-check.yml`._' "$name" "$code" "$final" "$expected")"
+            else
+              echo "Offenes Issue existiert bereits: $title"
+            fi
+          done < failed.tsv
+          exit 1
