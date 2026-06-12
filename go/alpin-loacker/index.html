@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Weiter zu Alpin Loacker … | VegetarianHulk</title>
+<!-- Kein-JS-Fallback: meta refresh ist inert solange JS den Redirect übernimmt.
+     ⚠️ URL-Sync mit codes/partners.js (shopUrl, slug "alpin-loacker"). -->
+<noscript><meta http-equiv="refresh" content="2;url=https://alpinloacker.com/sebastian-wimmer"></noscript>
+<link rel="stylesheet" href="/fonts.css?v=1e2010e0">
+<style>
+  /* Forest-Family-Interstitial — self-contained (lebt nur ~2 s, kein style.css).
+     Keine Cookies, kein Tracking — Klick-Zählung kommt später via Worker. */
+  :root {
+    --vanilla: #f7efde;
+    --ink: #1a1410;
+    --ink-2: #5c513f;
+    --forest-primary: #045927;
+    --forest-anchor: #122d1c;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    background: var(--vanilla); color: var(--ink); text-align: center;
+    font-family: 'Inter', -apple-system, system-ui, sans-serif; padding: 24px;
+  }
+  .wordmark {
+    font-size: 13px; font-weight: 800; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--forest-anchor);
+  }
+  .wordmark .accent { color: var(--forest-primary); }
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(26px, 5vw, 34px);
+    color: var(--forest-anchor); margin: 18px 0 10px;
+  }
+  .msg { max-width: 420px; margin: 0 auto; color: var(--ink-2); font-size: 15.5px; line-height: 1.55; }
+  .msg strong { color: var(--forest-primary); }
+  .redirect-note { margin-top: 14px; font-size: 12.5px; color: var(--ink-2); }
+  .go {
+    display: inline-block; margin-top: 20px; padding: 13px 28px;
+    background: linear-gradient(180deg, var(--forest-primary), var(--forest-anchor));
+    color: var(--vanilla); text-decoration: none; font-weight: 800; font-size: 15px;
+    border-radius: 12px; box-shadow: 0 8px 20px -8px rgba(4, 89, 39, 0.4);
+  }
+  .go:focus-visible { outline: 3px solid var(--forest-primary); outline-offset: 2px; }
+  .fallback { margin-top: 18px; font-size: 12.5px; line-height: 1.5; color: var(--ink-2); }
+  .fallback a { color: var(--forest-primary); }
+</style>
+</head>
+<body>
+<main>
+  <p class="wordmark">Vegetarian<span class="accent">hulk</span></p>
+  <h1>Danke dir!</h1>
+  <p class="msg">Dein Rabatt wird beim Laden des Shops <strong>automatisch angewendet</strong>.</p>
+  <p class="redirect-note">Du wirst gleich zu Alpin Loacker weitergeleitet …</p>
+  <a class="go" id="go-link" href="https://alpinloacker.com/sebastian-wimmer" rel="sponsored noopener">Direkt weiter →</a>
+  <p class="fallback">Link funktioniert nicht? Direkt zum Shop:
+    <a href="https://alpinloacker.com" rel="sponsored noopener">alpinloacker.com</a>
+    — Code VEGETARIANHULK nicht vergessen.</p>
+</main>
+<script src="/codes/partners.js?v=5e40264e"></script>
+<script>
+(function () {
+  'use strict';
+  var SLUG = 'alpin-loacker';
+  var REDIRECT_MS = 2000;
+  // partners.js = Quelle der Wahrheit; statisches href bleibt Fallback
+  var partner = (typeof VH_PARTNERS !== 'undefined')
+    ? VH_PARTNERS.filter(function (p) { return p.slug === SLUG; })[0]
+    : null;
+  var link = document.getElementById('go-link');
+  var url = (partner && partner.shopUrl) || (link && link.href);
+  if (!url) return;
+  if (link) link.href = url;
+  setTimeout(function () { window.location.href = url; }, REDIRECT_MS);
+})();
+</script>
+</body>
+</html>
