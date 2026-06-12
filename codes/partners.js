@@ -69,10 +69,12 @@ const VH_PARTNERS = [
     category: "Outdoor-Gear",
     sortOrder: 2,
     isNew: true,
-    promo: {
-      text: "Summer Sale: bis zu 40 % im Shop — Code gibt währenddessen 5 % extra on top",
-      validUntil: "2026-06-30" // Platzhalter — finales Datum folgt von Melanie
-    },
+    // Promo deaktiviert bis Sale-Enddatum von Melanie bestätigt ist —
+    // zum Reaktivieren einkommentieren + validUntil setzen:
+    // promo: {
+    //   text: "Summer Sale: bis zu 40 % im Shop — Code gibt währenddessen 5 % extra on top",
+    //   validUntil: "2026-06-30"
+    // },
     valueLine: "Familienbetrieb aus den Alpen seit 1993 — Merino, Wanderstöcke, Schlafsäcke & Ultraleicht-Gear für meine Bergtouren.",
     hint: {
       lead: "Easy:",
@@ -80,7 +82,7 @@ const VH_PARTNERS = [
     },
     shopUrl: "https://alpinloacker.com/sebastian-wimmer",
     fallbackUrl: "https://alpinloacker.com",
-    finePrintExtra: "Während großer Sale-Aktionen gilt 5 % statt 15 %.",
+    finePrintExtra: "15 % Rabatt — während großer Sale-Aktionen 5 % on top.",
     active: true
   }
 ];
