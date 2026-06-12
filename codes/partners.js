@@ -72,7 +72,7 @@ const VH_PARTNERS = [
     // Promo deaktiviert bis Sale-Enddatum von Melanie bestätigt ist —
     // zum Reaktivieren einkommentieren + validUntil setzen:
     // promo: {
-    //   text: "Summer Sale: bis zu 40 % im Shop — Code gibt währenddessen 5 % extra on top",
+    //   text: "Summer Sale: bis zu 40 % im Shop — der Code gilt währenddessen mit 5 %",
     //   validUntil: "2026-06-30"
     // },
     valueLine: "Familienbetrieb aus den Alpen seit 1993 — Merino, Wanderstöcke, Schlafsäcke & Ultraleicht-Gear für meine Bergtouren.",
@@ -82,7 +82,7 @@ const VH_PARTNERS = [
     },
     shopUrl: "https://alpinloacker.com/sebastian-wimmer",
     fallbackUrl: "https://alpinloacker.com",
-    finePrintExtra: "15 % Rabatt — während großer Sale-Aktionen 5 % on top.",
+    finePrintExtra: "15 % Rabatt — während großer Sale-Aktionen gilt der Code mit 5 %.",
     active: true
   }
 ];
