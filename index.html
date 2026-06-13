@@ -17,7 +17,7 @@
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
-<link rel="stylesheet" href="style.css?v=485f7211">
+<link rel="stylesheet" href="style.css?v=9401ea5f">
 </head>
 <body>
 <main class="page">
@@ -78,7 +78,7 @@
       </p>
 
       <div class="identity-ctas">
-        <a href="#lead-magnet" class="identity-cta-primary">→ 3-Tage-Reset holen</a>
+        <a href="/newsletter" class="identity-cta-primary">→ 3-Tage-Reset holen</a>
         <!-- EIN Blickpfad, EIN CTA. Brand-Einstiege: Topbar-Pill + Footer-Banner. -->
       </div>
     </div>
@@ -126,46 +126,33 @@
     <p class="bibel-anchor-signature">Mein Anker.</p>
   </section>
 
-  <!-- Lead-Magnet — der einzige dominante User-CTA -->
-  <section class="lead-magnet glossy-panel fade-in-up" id="lead-magnet">
-    <div class="lead-magnet-eyebrow">Gratis · 3 Mails · 0 Spam</div>
-    <div class="lead-magnet-title">Was ich morgens mache, bevor ich aufs Handy schaue.</div>
-    <p class="lead-magnet-promise">
-      3 Tage. 3 Habits die meinen Tag tragen. <strong>Ehrlich aufgeschrieben — nicht aus dem Coaching-Lehrbuch.</strong>
-    </p>
+  <!-- Closing V34 — ruhiger Weiterleit-Block (ersetzt Newsletter-Vollblock +
+       Brand-Banner). Konvertiert NICHT selbst, leitet nur auf die beiden
+       Voll-Seiten (/newsletter, /kooperationen.html). -->
+  <section class="closing fade-in-up" id="closing" aria-labelledby="closing-h">
+    <p class="closing-kicker">Wie es weitergeht</p>
+    <h2 class="closing-h" id="closing-h">Bleib dabei — oder lass uns<br><em>zusammenarbeiten.</em></h2>
 
-    <!-- Newsletter-Signup: gemeinsame Komponente (siehe /newsletter-form.js),
-         identisch zu /newsletter — kein Copy-Paste-Drift. -->
-    <vh-newsletter-form class="signup-mount"></vh-newsletter-form>
+    <div class="closing-cards">
+      <a class="closing-card" href="/newsletter">
+        <span class="closing-card-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+        </span>
+        <span class="closing-card-title">3-Tage-Reset</span>
+        <span class="closing-card-sub">Gratis · 3 Mails · 0 Spam</span>
+        <span class="closing-card-cta">→ Zum Newsletter</span>
+      </a>
 
-    <!-- Lead-Preview V30 — 3 Teaser-Tiles (Foot-in-the-Door, KEINE Full-Mails) -->
-    <div class="lead-preview">
-      <p class="lead-preview-eyebrow">— Vorschau · Was du bekommst —</p>
-      <div class="lead-preview-grid">
-        <article class="lead-preview-tile glossy-tile">
-          <p class="lead-preview-tile-day">📄 Tag 1</p>
-          <h3 class="lead-preview-tile-title">Wecker 2 Meter vom Bett.</h3>
-          <p class="lead-preview-tile-teaser">Eine Bewegung — und du bist raus.</p>
-        </article>
-        <article class="lead-preview-tile glossy-tile">
-          <p class="lead-preview-tile-day">📄 Tag 2</p>
-          <h3 class="lead-preview-tile-title">Mini-Version für Scheißtage.</h3>
-          <p class="lead-preview-tile-teaser">Läuft auch wenn du nicht magst.</p>
-        </article>
-        <article class="lead-preview-tile glossy-tile">
-          <p class="lead-preview-tile-day">📄 Tag 3</p>
-          <h3 class="lead-preview-tile-title">Setup vor Motivation.</h3>
-          <p class="lead-preview-tile-teaser">Das Spielfeld bauen, statt auf Motivation zu warten.</p>
-        </article>
-      </div>
+      <a class="closing-card" href="/kooperationen.html">
+        <span class="closing-card-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6"/><path d="M10 16H8a4 4 0 0 1 0-8h2"/><path d="M14 8h2a4 4 0 0 1 0 8h-2"/></svg>
+        </span>
+        <span class="closing-card-title">Kooperation</span>
+        <span class="closing-card-sub">Affiliate &amp; Partnerschaften</span>
+        <span class="closing-card-cta">→ Anfrage stellen</span>
+      </a>
     </div>
   </section>
-
-  <!-- Brand-Bridge subtil -->
-  <div class="brand-bridge fade-in-up">
-    <span>Du bist Brand & willst kooperieren?</span>
-    <a href="/kooperationen.html">→ Anfrage senden</a>
-  </div>
 
   <!-- Footer-Editorial v31.11 — A2 Asymmetric Editorial (Brand-Page) -->
   <footer class="vh-footer footer-a2 fade-in-up" role="contentinfo" aria-label="Site footer">
@@ -208,7 +195,7 @@
 </main>
 
 <!-- Sticky-CTA Mobile V30 — Newsletter-Funnel-Anchor (appears nach Hero out-of-view) -->
-<a href="#lead-magnet" class="sticky-cta-mobile" id="sticky-cta-mobile"
+<a href="/newsletter" class="sticky-cta-mobile" id="sticky-cta-mobile"
    aria-label="Newsletter-Anmeldung">→ 3-Tage-Reset holen</a>
 
 <script>
@@ -280,14 +267,15 @@
   }
 
   const hero = document.querySelector('.cinematic-hero');
-  const leadMagnet = document.getElementById('lead-magnet');
-  if (!hero || !leadMagnet) return;
+  // Closing-Block ersetzt den früheren Lead-Magnet als "unten angekommen"-Marker
+  const closing = document.getElementById('closing');
+  if (!hero || !closing) return;
 
-  let leadMagnetSeen = false;
+  let closingSeen = false;
   let heroVisible = true;
 
   function updateVisibility() {
-    if (leadMagnetSeen) {
+    if (closingSeen) {
       cta.classList.remove('is-visible');
       return;
     }
@@ -303,17 +291,17 @@
   }, { threshold: 0.05 });
   heroObserver.observe(hero);
 
-  // Lead-Magnet visible → Sticky disappears + Memory-Bit (no re-surface)
-  const leadObserver = new IntersectionObserver((entries) => {
+  // Closing-Block sichtbar → Sticky verschwindet (kein Re-Surface)
+  const closingObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        leadMagnetSeen = true;
+        closingSeen = true;
         updateVisibility();
-        leadObserver.disconnect();
+        closingObserver.disconnect();
       }
     });
   }, { threshold: 0.10 });
-  leadObserver.observe(leadMagnet);
+  closingObserver.observe(closing);
 })();
 
 // Footer-Year + Veggie-Years dynamisch (2026=10, 2027=11, ...)
@@ -322,15 +310,7 @@
   document.querySelectorAll('#footer-year').forEach(el => el.textContent = y);
   document.querySelectorAll('#footer-veggie-years').forEach(el => el.textContent = y - 2016);
 })();
-
-// Newsletter-Signup läuft jetzt über <vh-newsletter-form> (newsletter-form.js).
-// Bei Erfolg dispatcht die Komponente vh:subscribed → Sticky-CTA live ausblenden.
-document.addEventListener('vh:subscribed', function () {
-  var cta = document.getElementById('sticky-cta-mobile');
-  if (cta) cta.classList.remove('is-visible');
-});
 </script>
-<script src="newsletter-form.js?v=dfe1dd55"></script>
 <script src="update-check.js?v=361d366c"></script>
 <script>
 (function(){
