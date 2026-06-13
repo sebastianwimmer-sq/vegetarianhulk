@@ -29,8 +29,9 @@
 
 <link rel="preconnect" href="https://peaking-ai-api.peaking.workers.dev" />
 
-<link rel="stylesheet" href="styles.css?v=7a5844a3" />
-<script src="form.js?v=b760cec9" defer></script>
+<link rel="stylesheet" href="styles.css?v=09ca0f26" />
+<script src="/newsletter-form.js?v=dfe1dd55" defer></script>
+<script src="form.js?v=55eda1f5" defer></script>
 
 <!-- JSON-LD: WebPage for SEO -->
 <script type="application/ld+json">
@@ -90,27 +91,9 @@
       <h1>Drei Mails. Drei Tage.<br/>Wie ich <em>morgens starte.</em></h1>
       <p class="sub">Was ich mache, bevor ich aufs Handy schaue. Konkret, kurz, kein Coach.</p>
 
-      <form class="form-card signup glossy-card" novalidate aria-label="Newsletter-Signup">
-        <div class="form-row">
-          <label class="visually-hidden" for="email-hero" style="position:absolute;clip:rect(0 0 0 0);width:1px;height:1px;overflow:hidden;">Email-Adresse</label>
-          <input
-            id="email-hero"
-            class="input"
-            type="email"
-            name="email"
-            placeholder="deine@email.de"
-            autocomplete="email"
-            inputmode="email"
-            required />
-          <button class="submit" type="submit">
-            <span class="label">3-Tage-Reset holen</span>
-            <span class="arrow" aria-hidden="true">→</span>
-            <span class="spinner" style="display:none;" aria-hidden="true"></span>
-          </button>
-        </div>
-        <p class="form-trust">Kein Spam · Aussteigen jederzeit. Mit der Anmeldung stimmst du dem Erhalt der 3 Mails zu — mehr in der <a href="/datenschutz.html">Datenschutzerklärung</a>.</p>
-        <div class="form-msg" role="status" aria-live="polite"></div>
-      </form>
+      <!-- Newsletter-Signup: gemeinsame Komponente (siehe /newsletter-form.js),
+           identisch zur Startseite — kein Copy-Paste-Drift. -->
+      <vh-newsletter-form class="signup-mount"></vh-newsletter-form>
 
     </div>
   </section>
@@ -405,29 +388,8 @@
         Drei Mails. Drei Tage.<br/>Dann <em>du.</em>
       </h2>
 
-      <form class="form-card signup reveal glossy-card" novalidate aria-label="Newsletter-Signup (Wiederholung)"
-            style="transition-delay:160ms; align-items:center;">
-        <div class="form-row">
-          <label class="visually-hidden" for="email-repeat"
-                 style="position:absolute;clip:rect(0 0 0 0);width:1px;height:1px;overflow:hidden;">Email-Adresse</label>
-          <input
-            id="email-repeat"
-            class="input"
-            type="email"
-            name="email"
-            placeholder="deine@email.de"
-            autocomplete="email"
-            inputmode="email"
-            required />
-          <button class="submit" type="submit">
-            <span class="label">3-Tage-Reset holen</span>
-            <span class="arrow" aria-hidden="true">→</span>
-            <span class="spinner" style="display:none;" aria-hidden="true"></span>
-          </button>
-        </div>
-        <p class="form-trust">Kein Spam · Aussteigen jederzeit. Mit der Anmeldung stimmst du dem Erhalt der 3 Mails zu — mehr in der <a href="/datenschutz.html">Datenschutzerklärung</a>.</p>
-        <div class="form-msg" role="status" aria-live="polite"></div>
-      </form>
+      <!-- Newsletter-Signup (Wiederholung) — gleiche Komponente, reveal-animiert -->
+      <vh-newsletter-form id="signup-repeat" class="signup-mount reveal" style="transition-delay:160ms;"></vh-newsletter-form>
     </div>
   </section>
 
@@ -471,7 +433,7 @@
 </main>
 
 <!-- Sticky-CTA Mobile — auto-shows when Hero out, Form-section not yet in -->
-<a class="sticky-cta" href="#email-repeat" aria-label="Zum Newsletter-Signup springen">
+<a class="sticky-cta" href="#signup-repeat" aria-label="Zum Newsletter-Signup springen">
   <span class="label">3-Tage-Reset holen</span>
   <span class="arrow">→</span>
 </a>

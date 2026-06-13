@@ -556,16 +556,53 @@ html { scroll-padding-top: calc(var(--topbar-h) + 12px); }
   color: var(--forest-deep);
 }
 
-.identity-glass-card .identity-line {
+/* === Identity V33.1 — Name + Facts oben in der Card (EIN Blickpfad) === */
+.hero-name {
+  font-family: 'Playfair Display', 'Inter', serif;
+  font-size: clamp(34px, 9vw, 42px);
+  font-weight: var(--weight-extrabold);
+  line-height: 1.04;
+  letter-spacing: -1px;
+  color: var(--ink);
+  margin: 0;
+}
+
+.hero-handle {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 13px;
   font-weight: 600;
-  color: var(--ink-2);
   letter-spacing: 0.3px;
-  margin: 0 0 24px;
-  padding-top: 18px;
-  border-top: 1px solid var(--earth);
+  color: var(--ink-2);
+  margin: 5px 0 12px;
 }
+
+/* Key-Facts als Small-Caps-Kicker (Site-Konvention: .dna-eyebrow) mit
+   Line-Icons im Signatur-Stil — Umbruch nur an Fact-Grenzen */
+.hero-facts {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green-deep);
+  margin: 0 0 22px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--earth);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 9px;
+  row-gap: 6px;
+}
+
+.hero-fact {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.hero-fact svg { flex: none; color: var(--green-deep); }
+.hero-fact-sep { color: var(--earth); }
 
 .identity-glass-card .identity-ctas {
   display: flex;
@@ -636,39 +673,33 @@ html { scroll-padding-top: calc(var(--topbar-h) + 12px); }
 
     flex-direction: row;
     align-items: stretch;
-    gap: 0;
+    gap: 44px; /* V33.1: sauberes 2-Spalten-Grid mit Luft, kein Overlap mehr */
     padding: 0;
   }
 
   .cinematic-hero[data-mode="portrait"] .cinematic-hero__photo {
-    flex: 0 0 52%;
+    flex: 0 0 48%;
     max-width: none;
     aspect-ratio: 4 / 5;
     border-radius: 22px;
-    margin-right: -6%;
     z-index: 1;
   }
+
+  .hero-name { font-size: 44px; }
 
   .identity-glass-card {
     flex: 1 1 auto;
     align-self: center;
     margin-left: 0;
     padding: 40px 36px;
-
-    /* Echter Glass-Effekt nur Desktop (Card überlappt Foto) */
-    background: rgba(247, 239, 222, 0.72);
-    backdrop-filter: blur(14px) saturate(120%);
-    -webkit-backdrop-filter: blur(14px) saturate(120%);
-    border: 1px solid rgba(4, 89, 39, 0.18);
     border-radius: 22px;
-    z-index: 2;
     box-shadow: 0 24px 60px -20px rgba(26, 20, 16, 0.20);
   }
 
   .identity-glass-card h1 {
-    font-size: clamp(44px, 4.2vw, 56px);
-    letter-spacing: -2px;
-    margin-bottom: 22px;
+    font-size: clamp(38px, 3.6vw, 48px);
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
   }
 
   .identity-glass-card .identity-sub {
@@ -1314,6 +1345,15 @@ html { scroll-padding-top: calc(var(--topbar-h) + 12px); }
 }
 
 /* .trust-bar/.trust-pill entfernt in v31 Cleanup — kooperationen.html nutzt .brand-trust-bar (eigene Klasse) */
+
+/* Newsletter-Form-Komponente (newsletter-form.js) — Platz reservieren bis
+   das Custom-Element upgraded, sonst CLS beim Reinpoppen. display:block,
+   weil min-height an Inline-Elementen ignoriert wird. */
+vh-newsletter-form { display: block; }
+vh-newsletter-form:not(:defined) { min-height: 250px; }
+@media (min-width: 520px) {
+  vh-newsletter-form:not(:defined) { min-height: 180px; }
+}
 
 /* === Lead Magnet Section === */
 .lead-magnet {
@@ -2036,8 +2076,14 @@ html { scroll-padding-top: calc(var(--topbar-h) + 12px); }
   top: 18px;
   right: 20px;
   font-size: 14px;
-  opacity: 0.45;
+  /* V33.1: Line-Icons statt Emojis — dünne Strokes brauchen mehr Opacity */
+  opacity: 0.6;
   line-height: 1;
+}
+
+.werte-pill-pro-icon svg {
+  display: block;
+  color: var(--green-deep);
 }
 
 .werte-pill-pro-desc {
