@@ -320,6 +320,15 @@ html { scroll-padding-top: calc(var(--topbar-h) + 12px); }
   text-wrap: pretty;
 }
 
+/* Newsletter-Form-Komponente (/newsletter-form.js) — Platz reservieren bis
+   das Custom-Element upgraded, sonst CLS beim Reinpoppen. display:block,
+   weil min-height an Inline-Elementen ignoriert wird. */
+vh-newsletter-form { display: block; margin-top: 6px; }
+vh-newsletter-form:not(:defined) { min-height: 250px; }
+@media (min-width: 520px) {
+  vh-newsletter-form:not(:defined) { min-height: 180px; }
+}
+
 /* ── Form (mobile-first, ≥44px touch) ─ */
 .form-card {
   margin-top: 6px;

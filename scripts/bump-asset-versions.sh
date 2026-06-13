@@ -25,6 +25,7 @@ ASSETS=(
   fonts.css
   motion-reveal.js
   update-check.js
+  newsletter-form.js
   newsletter/styles.css
   newsletter/form.js
   codes/partners.js
