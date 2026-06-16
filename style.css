@@ -1355,6 +1355,41 @@ vh-newsletter-form:not(:defined) { min-height: 250px; }
   vh-newsletter-form:not(:defined) { min-height: 180px; }
 }
 
+/* Danke-Block-Komponente (danke-block.js) — CLS-Guard, global
+   (gilt auf /codes UND /lieblingsprodukte, beide laden style.css).
+   min-height passgenau zur gerenderten Höhe → kein Upgrade-Shift. */
+vh-danke-block { display: block; }
+vh-danke-block:not(:defined) { min-height: 416px; }
+@media (min-width: 600px) {
+  vh-danke-block:not(:defined) { min-height: 398px; }
+}
+
+/* "Coming Soon"-Geisterkarte — gemeinsame Klasse für /codes UND
+   /lieblingsprodukte (Single Source). Sitzt als Zelle im Karten-Grid,
+   aber bewusst zurückgenommen: gestrichelter Rand + sehr heller BG →
+   liest sich klar als Platzhalter/in-Arbeit, nicht als echte Karte.
+   Datumslos, mit Newsletter-Haken (kein toter Text). */
+.ghost-card {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; gap: 6px;
+  padding: var(--space-md);
+  border: 1.5px dashed rgba(90, 125, 90, 0.55); /* Sage/Forest-Mid, dezent */
+  background: rgba(255, 255, 255, 0.30);          /* sehr hell, kein voller Cream-Fill */
+  border-radius: var(--radius-card);
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.ghost-card:hover { border-color: var(--forest-primary); background: rgba(255, 255, 255, 0.55); }
+.ghost-card:focus-visible { outline: 3px solid var(--forest-accent); outline-offset: 2px; }
+.ghost-card svg { width: 26px; height: 26px; color: #5a7d5a; margin-bottom: 2px; }
+.ghost-card-kicker {
+  font-size: 11px; font-weight: 800; letter-spacing: 2px;
+  text-transform: uppercase; color: #5a7d5a;
+}
+.ghost-card-line { font-size: 13.5px; line-height: 1.5; color: var(--ink-2); max-width: 240px; }
+.ghost-card-hook { margin-top: 6px; font-size: 13px; font-weight: 700; color: var(--forest-primary); }
+.ghost-card:hover .ghost-card-hook { text-decoration: underline; }
+
 /* === Lead Magnet Section === */
 .lead-magnet {
   background: linear-gradient(180deg, var(--surface) 0%, var(--surface2) 100%);

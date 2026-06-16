@@ -20,7 +20,7 @@
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
-<link rel="stylesheet" href="/style.css?v=9401ea5f">
+<link rel="stylesheet" href="/style.css?v=4de41fb0">
 
 <style>
   /* codes/ — V32.1: heller Forest-Family-Look, gleiche Tokens/Chrome wie
@@ -54,12 +54,17 @@
   .adnote span { white-space: nowrap; }
 
   .codes-cards { max-width: 520px; margin: 0 auto; }
+  /* CLS-Guard: Platz für die JS-gerenderten Partner-Karten reservieren,
+     damit Querlink/Danke/Footer beim Befüllen nicht springen.
+     Bei Partneranzahl-Änderung anpassen (aktuell 2 Partner + 1 Geisterkarte). */
+  #partner-cards { min-height: 1105px; }
   /* Desktop: 2 Partner-Cards nebeneinander, gleiche Höhe (Code-Row am Boden) */
   @media (min-width: 880px) {
     .codes-cards { max-width: 1064px; }
     #partner-cards {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: var(--space-sm); align-items: stretch;
+      min-height: 634px;
     }
     #partner-cards .card { margin-bottom: 0; display: flex; flex-direction: column; }
     #partner-cards .code-row { margin-top: auto; }
@@ -100,13 +105,8 @@
     padding: 3px 9px; border-radius: var(--radius-pill);
     box-shadow: 0 2px 6px rgba(4, 89, 39, 0.22);
   }
-  @media (prefers-reduced-motion: no-preference) {
-    .card {
-      opacity: 0; transform: translateY(14px);
-      animation: rise 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-    }
-    @keyframes rise { to { opacity: 1; transform: none; } }
-  }
+  /* Reveal: Partner-Karten nutzen das globale .reveal-System
+     (motion-reveal.js, IntersectionObserver once, reduced-motion-safe) */
 
   .card-top { display: flex; align-items: center; gap: 13px; margin-bottom: 6px; }
   .logo {
@@ -244,6 +244,14 @@
     <p class="sr-only" id="copy-status" role="status" aria-live="polite"></p>
   </section>
 
+  <p class="adcross" style="max-width:520px;margin:var(--space-lg) auto;text-align:center;font-size:14px;color:var(--ink-2)">
+    Auch interessant → <a href="/lieblingsprodukte/" style="color:var(--forest-primary);font-weight:700;text-decoration:none">Meine Lieblingsprodukte</a>
+  </p>
+
+  <section class="lp-danke" aria-label="Danke an die Smashies" style="margin:var(--space-lg) auto 0">
+    <vh-danke-block class="reveal"></vh-danke-block>
+  </section>
+
   <!-- Footer-Editorial — Site-Standard (A2 Asymmetric Editorial) -->
   <footer class="vh-footer footer-a2" role="contentinfo" aria-label="Site footer">
     <div class="grid">
@@ -266,6 +274,7 @@
           <li><a class="vh-link" href="/">Startseite</a></li>
           <li><a class="vh-link" href="/newsletter">Newsletter</a></li>
           <li><a class="vh-link is-current" href="/codes/" aria-current="page">Codes &amp; Partner</a></li>
+          <li><a class="vh-link" href="/lieblingsprodukte/">Lieblingsprodukte</a></li>
           <li><a class="vh-link" href="/kooperationen.html">Für Brands</a></li>
         </ul>
       </nav>
@@ -285,6 +294,7 @@
 
 </main>
 
+<script src="/danke-block.js?v=980b62a3"></script>
 <script src="partners.js?v=3fcfc0c4"></script>
 <script>
 (function () {
@@ -408,8 +418,8 @@
   }
 
   function buildCard(partner, index) {
-    var card = el('article', 'card');
-    card.style.animationDelay = (index * STAGGER_MS) + 'ms';
+    var card = el('article', 'card reveal');
+    card.style.setProperty('--reveal-delay', (index * STAGGER_MS) + 'ms');
 
     if (isPromoActive(partner.promo)) {
       card.classList.add('has-promo');
@@ -510,9 +520,33 @@
     return card;
   }
 
+  // Geisterkarte (gemeinsame .ghost-card-Klasse, Single Source via CSS) —
+  // datumslos, Newsletter-Haken; sitzt als nächste Zelle im Partner-Grid.
+  function buildGhost(index) {
+    var a = document.createElement('a');
+    a.className = 'ghost-card reveal';
+    a.href = '/newsletter';
+    a.style.setProperty('--reveal-delay', (index * STAGGER_MS) + 'ms');
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor'); svg.setAttribute('stroke-width', '1.8');
+    svg.setAttribute('stroke-linecap', 'round'); svg.setAttribute('stroke-linejoin', 'round');
+    svg.setAttribute('aria-hidden', 'true');
+    var p1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    p1.setAttribute('d', 'M11 20A7 7 0 0 1 4 13C4 8 8 4 20 4c0 12-4 16-9 16z');
+    var p2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    p2.setAttribute('d', 'M12 11c-3 2-5 5-6 9');
+    svg.appendChild(p1); svg.appendChild(p2);
+    a.appendChild(svg);
+    a.appendChild(el('span', 'ghost-card-kicker', 'Bald mehr'));
+    a.appendChild(el('span', 'ghost-card-line', 'Weitere Partner — ehrlich ausgewählt, kein Code-Spam.'));
+    a.appendChild(el('span', 'ghost-card-hook', "Erfahr's zuerst → Newsletter"));
+    return a;
+  }
+
   var mount = document.getElementById('partner-cards');
   if (!mount || typeof VH_PARTNERS === 'undefined') return;
-  VH_PARTNERS
+  var rendered = VH_PARTNERS
     .filter(function (p) { return p.active; })
     .slice() // Kopie — Original-Array nicht mutieren
     .sort(function (a, b) {
@@ -520,8 +554,10 @@
       var newDiff = (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0);
       if (newDiff !== 0) return newDiff;
       return (a.sortOrder || 0) - (b.sortOrder || 0);
-    })
-    .forEach(function (p, i) { mount.appendChild(buildCard(p, i)); });
+    });
+  rendered.forEach(function (p, i) { mount.appendChild(buildCard(p, i)); });
+  // Geisterkarte als nächste Kachel im selben Grid
+  mount.appendChild(buildGhost(rendered.length));
 })();
 </script>
 <script>
@@ -555,5 +591,7 @@
   if (y) y.textContent = new Date().getFullYear();
 })();
 </script>
+<!-- Scroll-Reveal NACH dem Karten-Render (Partner-Karten + Danke-Block im DOM) -->
+<script src="/motion-reveal.js?v=d3baa308"></script>
 </body>
 </html>
