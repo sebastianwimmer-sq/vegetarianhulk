@@ -26,9 +26,11 @@ ASSETS=(
   motion-reveal.js
   update-check.js
   newsletter-form.js
+  danke-block.js
   newsletter/styles.css
   newsletter/form.js
   codes/partners.js
+  lieblingsprodukte/products.js
 )
 
 # Interne Verzeichnisse, deren HTML nicht angefasst wird
