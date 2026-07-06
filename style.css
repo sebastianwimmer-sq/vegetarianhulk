@@ -4354,14 +4354,13 @@ body::before {
   box-shadow: none;
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-  mix-blend-mode: difference;
 }
 .topbar--brandonly .brand {
   font-size: 18px;
   letter-spacing: 2px;
-  color: #ffffff;
+  color: var(--forest-anchor);
 }
-.topbar--brandonly .brand .accent { color: #ffffff; }
+.topbar--brandonly .brand .accent { color: var(--forest-accent); }
 
 /* Platz für die bottom-fixed Nav (alle Breiten) */
 body { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 100px); }
