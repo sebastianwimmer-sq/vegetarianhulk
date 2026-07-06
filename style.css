@@ -4270,7 +4270,12 @@ body::before {
   width: 68px; height: 54px;
   margin-top: -40px;      /* Berg erhebt sich über die obere Bar-Kante */
   color: var(--forest-primary);
-  filter: drop-shadow(0 9px 12px rgba(15,42,26,0.4));
+  /* Mehrlagiger, forest-getönter Schatten (Licht oben) statt flachem Einzel-Schatten */
+  filter:
+    drop-shadow(0 1px 1px rgba(15,42,26,0.30))
+    drop-shadow(0 3px 4px rgba(15,42,26,0.22))
+    drop-shadow(0 8px 11px rgba(15,42,26,0.18))
+    drop-shadow(0 16px 22px rgba(15,42,26,0.13));
   transition: transform var(--duration-normal) var(--ease-out-expo);
 }
 .vh-nav__slot--center .vh-nav__label { color: var(--forest-primary); font-weight: 700; margin-top: 5px; }
@@ -4355,21 +4360,25 @@ body::before {
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
   color: var(--forest-anchor);
-  transition: color var(--duration-normal) var(--ease-out-expo),
-              transform var(--duration-normal) var(--ease-out-expo);
 }
 .topbar--brandonly .brand {
+  position: relative;
   font-size: 18px;
   letter-spacing: 2px;
 }
-.topbar--brandonly .brand .accent {
-  color: var(--forest-accent);
-  transition: color var(--duration-normal) var(--ease-out-expo);
+.topbar--brandonly .brand .accent { color: var(--forest-accent); }
+/* Invert-Overlay: helle Kopie der Wortmarke, per JS pixelgenau auf dunkle
+   Sektionen geclippt → per-Region-Invert MIT sauberer Farbe (kein Pink). */
+.topbar--brandonly .brand--invert-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #f4ead4;
+  pointer-events: none;
+  clip-path: inset(0 100% 0 0);
+  will-change: clip-path;
 }
-/* Adaptiver Invert: über dunklen Sektionen klappt die Wortmarke auf hell um.
-   Farbe am Header, weil .brand inline color:inherit trägt. */
-.topbar--brandonly.is-inverted { color: #f7efde; }
-.topbar--brandonly.is-inverted .brand .accent { color: #9ed9b3; }
+.topbar--brandonly .brand--invert-layer .accent { color: #cfe9d8; }
 
 /* Platz für die bottom-fixed Nav (alle Breiten) */
 body { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 100px); }

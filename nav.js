@@ -34,21 +34,32 @@
     if (best) best.setAttribute('aria-current', 'page');
   })();
 
-  /* --- Adaptiver Logo-Invert über dunklen Sektionen --------- */
-  (function adaptiveInvert() {
+  /* --- Logo per-Region-Invert: helle Klon-Ebene, auf dunkle Sektionen geclippt */
+  (function regionInvert() {
     var brand = document.querySelector('.topbar--brandonly');
-    if (!brand) return;
+    var link = brand && brand.querySelector('.brand');
+    if (!link) return;
     var darks = document.querySelectorAll('[data-nav-dark]');
     if (!darks.length) return;
+    var layer = link.cloneNode(true);
+    layer.classList.add('brand--invert-layer');
+    layer.removeAttribute('href');
+    layer.removeAttribute('id');
+    layer.setAttribute('aria-hidden', 'true');
+    brand.appendChild(layer);
     function update() {
-      var b = brand.getBoundingClientRect();
-      var px = b.left + b.width / 2, py = b.top + b.height / 2;
-      var on = false;
+      var r = link.getBoundingClientRect();
+      var lo = r.right, hi = r.left, covered = false;
       for (var i = 0; i < darks.length; i++) {
-        var r = darks[i].getBoundingClientRect();
-        if (px >= r.left && px <= r.right && py >= r.top && py <= r.bottom) { on = true; break; }
+        var d = darks[i].getBoundingClientRect();
+        if (d.bottom <= r.top || d.top >= r.bottom) continue; // keine vertikale Überlappung
+        var x1 = Math.max(r.left, d.left), x2 = Math.min(r.right, d.right);
+        if (x2 <= x1) continue;
+        lo = Math.min(lo, x1); hi = Math.max(hi, x2); covered = true;
       }
-      brand.classList.toggle('is-inverted', on);
+      layer.style.clipPath = covered
+        ? 'inset(-6px ' + (r.right - hi) + 'px -6px ' + (lo - r.left) + 'px)'
+        : 'inset(0 100% 0 0)';
     }
     var t = false;
     window.addEventListener('scroll', function () {
