@@ -616,7 +616,7 @@ html { scroll-padding-top: calc(var(--topbar-h) + 12px); }
   justify-content: center;
   gap: 8px;
   padding: 14px 22px;
-  background: var(--forest-1);
+  background: var(--grad-forest);
   color: var(--vanilla);
   border-radius: 12px;
   font-family: 'Inter', system-ui, sans-serif;
@@ -624,7 +624,7 @@ html { scroll-padding-top: calc(var(--topbar-h) + 12px); }
   font-size: 15px;
   letter-spacing: 0.2px;
   text-decoration: none;
-  box-shadow: 0 6px 18px -8px rgba(4, 89, 39, 0.45);
+  box-shadow: 0 8px 22px -8px rgba(4, 89, 39, 0.5);
   transition: background var(--hover-transition), transform var(--hover-transition);
 }
 
@@ -999,7 +999,7 @@ html { scroll-padding-top: calc(var(--topbar-h) + 12px); }
   padding: 14px 20px;
   padding-bottom: calc(14px + env(safe-area-inset-bottom));
 
-  background: var(--forest-1);
+  background: var(--grad-forest);
   color: var(--vanilla);
   text-align: center;
   text-decoration: none;
@@ -1474,7 +1474,7 @@ vh-danke-block:not(:defined) { min-height: 416px; }
 .lead-magnet-form button {
   height: var(--control-h);
   padding: 0 var(--space-lg);
-  background: linear-gradient(180deg, var(--forest-primary) 0%, var(--forest-anchor) 100%);
+  background: var(--grad-forest);
   color: var(--vanilla);
   border: none;
   border-radius: var(--radius-control);
