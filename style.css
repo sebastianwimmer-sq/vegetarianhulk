@@ -4354,13 +4354,22 @@ body::before {
   box-shadow: none;
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
+  color: var(--forest-anchor);
+  transition: color var(--duration-normal) var(--ease-out-expo),
+              transform var(--duration-normal) var(--ease-out-expo);
 }
 .topbar--brandonly .brand {
   font-size: 18px;
   letter-spacing: 2px;
-  color: var(--forest-anchor);
 }
-.topbar--brandonly .brand .accent { color: var(--forest-accent); }
+.topbar--brandonly .brand .accent {
+  color: var(--forest-accent);
+  transition: color var(--duration-normal) var(--ease-out-expo);
+}
+/* Adaptiver Invert: über dunklen Sektionen klappt die Wortmarke auf hell um.
+   Farbe am Header, weil .brand inline color:inherit trägt. */
+.topbar--brandonly.is-inverted { color: #f7efde; }
+.topbar--brandonly.is-inverted .brand .accent { color: #9ed9b3; }
 
 /* Platz für die bottom-fixed Nav (alle Breiten) */
 body { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 100px); }

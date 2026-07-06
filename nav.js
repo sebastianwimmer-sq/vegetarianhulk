@@ -34,6 +34,30 @@
     if (best) best.setAttribute('aria-current', 'page');
   })();
 
+  /* --- Adaptiver Logo-Invert über dunklen Sektionen --------- */
+  (function adaptiveInvert() {
+    var brand = document.querySelector('.topbar--brandonly');
+    if (!brand) return;
+    var darks = document.querySelectorAll('[data-nav-dark]');
+    if (!darks.length) return;
+    function update() {
+      var b = brand.getBoundingClientRect();
+      var px = b.left + b.width / 2, py = b.top + b.height / 2;
+      var on = false;
+      for (var i = 0; i < darks.length; i++) {
+        var r = darks[i].getBoundingClientRect();
+        if (px >= r.left && px <= r.right && py >= r.top && py <= r.bottom) { on = true; break; }
+      }
+      brand.classList.toggle('is-inverted', on);
+    }
+    var t = false;
+    window.addEventListener('scroll', function () {
+      if (!t) { window.requestAnimationFrame(function () { update(); t = false; }); t = true; }
+    }, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+  })();
+
   /* --- Scroll-Auto-Hide (nur Nav; Logo bleibt persistent) --- */
   if (!reduceMotion) {
     var lastY = window.pageYOffset;
