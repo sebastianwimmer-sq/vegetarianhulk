@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' https: data:; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smash Partner &amp; Picks | VegetarianHulk</title>
+<meta name="description" content="Meine Partner mit echten Rabattcodes und die Produkte, die ich selbst nutze — ehrlich empfohlen. Supplements, Berg-Gear und mein Content-Equipment.">
+<meta name="theme-color" content="#f7efde">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://vegetarianhulk.de/partner-picks/">
+
+<meta property="og:title" content="Smash Partner & Picks | VegetarianHulk">
+<meta property="og:description" content="Partner-Codes + meine Lieblingsprodukte — ehrlich empfohlen.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vegetarianhulk.de/partner-picks/">
+<meta property="og:image" content="https://vegetarianhulk.de/hero.jpg?v=v31.6.1">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
+
+<link rel="stylesheet" href="/style.css?v=215d8898">
+
+<style>
+  /* ============================================================
+     P&P — Smash Partner & Picks (Merge /codes + /lieblingsprodukte).
+     KANAL-REGEL: Produkte, die es bei Nature Heart ODER Alpin Loacker
+     gibt, laufen NUR über deren Partner-Code — nie über Amazon.
+     Card-Styles aus /lieblingsprodukte übernommen + P&P-Extras.
+     ============================================================ */
+  .pp-hero {
+    position: relative; margin: 0 0 var(--space-md);
+    padding: var(--space-lg) var(--space-md);
+    border-radius: var(--radius-card);
+    background: var(--grad-forest); color: var(--vanilla);
+    text-align: center; overflow: hidden;
+    box-shadow: 0 10px 30px -12px rgba(15,42,26,0.5);
+  }
+  .pp-hero__mono {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.6rem, 9vw, 4rem); font-weight: 700; line-height: 1;
+    margin: 0; color: var(--vanilla);
+  }
+  .pp-hero__title { font-family:'Playfair Display',Georgia,serif; font-weight:600; font-size: var(--font-h4); margin: 8px 0 0; color: var(--vanilla); }
+  .pp-hero__intro { margin: 12px auto 0; max-width: 420px; color: rgba(247,239,222,0.86); font-size: var(--font-body); line-height: 1.55; }
+
+  .adnote {
+    margin: var(--space-md) auto var(--space-lg);
+    display: flex; gap: 7px; align-items: center; justify-content: center;
+    width: 100%; max-width: 560px;
+    font-size: var(--font-eyebrow); letter-spacing: var(--tracking-wider);
+    text-transform: uppercase; color: var(--ink-2);
+  }
+  .adnote::before, .adnote::after { content: ""; height: 1px; flex: 1; background: var(--earth); }
+  .adnote span { white-space: nowrap; }
+
+  .pp-wrap { max-width: 560px; margin: 0 auto; }
+  @media (min-width: 880px) { .pp-wrap { max-width: 1064px; } }
+  .pp-sec-label {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 11px; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--forest-primary); margin: var(--space-lg) 2px var(--space-sm);
+  }
+  .pp-sec-label:first-child { margin-top: 0; }
+  .pp-sec-label::after { content: ""; flex: 1; height: 1px; background: var(--earth); }
+
+  .pp-grid, .lp-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-sm); }
+  @media (min-width: 880px) { .pp-grid, .lp-grid { grid-template-columns: 1fr 1fr; align-items: stretch; } }
+  .lp-cat { font-size: 11px; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--forest-anchor); margin: var(--space-md) 2px var(--space-sm); }
+
+  .pcard {
+    background: linear-gradient(180deg, #ffffff 0%, var(--surface) 100%);
+    border: 1px solid var(--border); border-radius: var(--radius-card);
+    padding: var(--space-md) var(--space-md) var(--space-sm);
+    box-shadow: 0 1px 3px rgba(4, 89, 39, 0.06), 0 8px 24px -8px rgba(4, 89, 39, 0.14);
+    display: flex; flex-direction: column;
+  }
+  .pcard-top { display: flex; align-items: center; gap: 13px; margin-bottom: 8px; }
+  .pcard-logo {
+    width: 42px; height: 42px; border-radius: var(--radius-control); flex: none;
+    background: var(--forest-primary); color: var(--vanilla);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', Georgia, serif; font-weight: 600; font-size: 19px; overflow: hidden;
+  }
+  .pcard-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pcard-names { flex: 1; min-width: 0; }
+  .pname { font-family: 'Playfair Display', Georgia, serif; font-size: 19px; font-weight: 600; color: var(--ink); margin: 0; }
+  .pcard-cat { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-3); margin: 2px 0 0; }
+  .pc-badge { flex: none; background: var(--forest-wash); color: var(--forest-primary); font-weight: 800; font-size: 12px; padding: 3px 9px; border-radius: 999px; }
+  .pcard-text { color: var(--ink-2); font-size: 14px; line-height: 1.55; margin: 0 2px var(--space-sm); }
+  .pprice { font-size: 12px; font-weight: 600; color: var(--forest-primary); margin: 0 2px var(--space-sm); }
+
+  .pc-code {
+    display: flex; align-items: center; gap: 8px; margin: 0 2px var(--space-sm);
+    background: var(--beige-1); border: 1px dashed var(--earth); border-radius: var(--radius-control);
+    padding: 8px 8px 8px 14px;
+  }
+  .pc-code code { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-weight: 700; font-size: 14px; letter-spacing: 1px; color: var(--ink); flex: 1; }
+  .pc-copy { border: none; background: var(--forest-primary); color: var(--vanilla); font-weight: 700; font-size: 12px; padding: 7px 13px; border-radius: 8px; cursor: pointer; transition: background 0.15s; }
+  .pc-copy:hover { background: var(--forest-anchor); }
+  .pc-copy.copied { background: var(--forest-accent); }
+  .pc-hint { margin: 0 2px var(--space-sm); font-size: 12.5px; line-height: 1.5; color: var(--ink-2); background: rgba(4,89,39,0.05); border-radius: 10px; padding: 9px 12px; }
+  .pc-hint strong { color: var(--forest-primary); }
+
+  .cta {
+    margin-top: auto; display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; text-decoration: none;
+    background: var(--grad-forest); color: var(--vanilla); font-weight: 800; font-size: 15px;
+    height: var(--control-h); border-radius: var(--radius-control);
+    box-shadow: 0 8px 20px -8px rgba(4, 89, 39, 0.40);
+    transition: transform 0.15s, box-shadow 0.25s, filter 0.2s;
+  }
+  .cta:hover { filter: brightness(1.06); transform: translateY(-1px); box-shadow: 0 14px 32px -10px rgba(4, 89, 39, 0.55); }
+  .cta:focus-visible { outline: 3px solid var(--forest-accent); outline-offset: 2px; }
+  .cta svg { width: 15px; height: 15px; }
+  .cta--pending {
+    margin-top: auto; display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; height: var(--control-h); border-radius: var(--radius-control);
+    background: var(--beige-1); color: var(--ink-2); border: 1px dashed var(--earth);
+    font-weight: 700; font-size: 13px; cursor: default;
+  }
+  .pfine { margin: 10px 2px 0; font-size: 11px; line-height: 1.45; color: var(--ink-2); }
+
+  .pp-cross { max-width: 560px; margin: var(--space-lg) auto 0; text-align: center; font-size: 14px; color: var(--ink-2); }
+  .lp-danke { margin: var(--space-lg) auto 0; }
+  vh-danke-block { display: block; }
+
+  .noscript-note {
+    border: 1px solid var(--border); border-radius: var(--radius-card);
+    padding: var(--space-sm); font-size: 14px; color: var(--ink-2); text-align: center;
+    max-width: 560px; margin: var(--space-md) auto 0;
+  }
+  .noscript-note a { color: var(--forest-primary); }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <!-- Topbar — nav.js macht daraus die Brand-only-Leiste + floating Nav -->
+  <header class="topbar">
+    <a href="/" class="brand" style="text-decoration:none;color:inherit">vegetarian<span class="accent">hulk</span></a>
+  </header>
+
+  <!-- Dunkle P&P-Hero — data-nav-dark: Logo klappt hier sichtbar auf hell um -->
+  <section class="pp-hero" data-nav-dark aria-labelledby="pp-title">
+    <p class="pp-hero__mono">P&amp;P</p>
+    <h1 class="pp-hero__title" id="pp-title">Smash Partner &amp; Picks</h1>
+    <p class="pp-hero__intro">Meine Partner mit echten Rabattcodes — und die Produkte, die ich selbst nutze. Ehrlich empfohlen, kein Katalog.</p>
+  </section>
+
+  <p class="adnote"><span>Werbung · Affiliate-Links</span></p>
+
+  <div class="pp-wrap">
+    <p class="pp-sec-label">Partner &amp; Codes</p>
+    <div id="partner-cards" class="pp-grid"></div>
+
+    <p class="pp-sec-label">Meine Picks</p>
+    <div id="product-cards"></div>
+
+    <noscript>
+      <p class="noscript-note">
+        Die Liste braucht JavaScript. Schreib mir sonst gern auf
+        <a href="https://instagram.com/vegetarianhulk" rel="noopener">@vegetarianhulk</a>, was dich interessiert.
+      </p>
+    </noscript>
+  </div>
+
+  <section class="lp-danke" aria-label="Danke an die Smashies">
+    <vh-danke-block class="reveal"></vh-danke-block>
+  </section>
+
+  <footer class="vh-footer footer-a2" role="contentinfo" aria-label="Site footer">
+    <div class="grid">
+      <div class="col col-brand">
+        <div class="vh-wordmark wordmark">VEGETARIAN<span class="accent">HULK</span></div>
+        <div class="vh-tagline tagline">Builder &amp; Creator. Disziplin über Hype.</div>
+        <a class="vh-link vh-ig ig" href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener" aria-label="Instagram @vegetarianhulk">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+            <circle cx="12" cy="12" r="4"></circle>
+            <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle>
+          </svg>
+          <span>@vegetarianhulk</span>
+        </a>
+      </div>
+      <nav class="col" aria-label="Brand navigation">
+        <p class="vh-col-label">Explore</p>
+        <ul>
+          <li><a class="vh-link" href="/">Startseite</a></li>
+          <li><a class="vh-link" href="/newsletter">Newsletter</a></li>
+          <li><a class="vh-link is-current" href="/partner-picks/" aria-current="page">Smash Partner &amp; Picks</a></li>
+          <li><a class="vh-link" href="/kooperationen.html">Für Brands</a></li>
+        </ul>
+      </nav>
+      <nav class="col" aria-label="Rechtliches">
+        <p class="vh-col-label">Legal</p>
+        <ul>
+          <li><a class="vh-link" href="/impressum.html">Impressum</a></li>
+          <li><a class="vh-link" href="/datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+    </div>
+    <hr class="vh-hairline" />
+    <div class="bottom">
+      <span class="vh-copyright">© <span id="footer-year">2026</span> Sebastian Wimmer · VegetarianHulk</span>
+    </div>
+  </footer>
+
+</main>
+
+<script src="/codes/partners.js?v=3fcfc0c4"></script>
+<script src="/lieblingsprodukte/products.js?v=56582fff"></script>
+
+<script>
+/* Partner-Cards (aus VH_PARTNERS) — Copy-Code + CTA auf /go/<slug>/ */
+(function () {
+  'use strict';
+  var mount = document.getElementById('partner-cards');
+  if (!mount || typeof VH_PARTNERS === 'undefined') return;
+
+  function el(t, c, x) { var n = document.createElement(t); if (c) n.className = c; if (x != null) n.textContent = x; return n; }
+  function arrow() {
+    var s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('fill', 'none');
+    s.setAttribute('stroke', 'currentColor'); s.setAttribute('stroke-width', '2.2'); s.setAttribute('aria-hidden', 'true');
+    var p = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p.setAttribute('d', 'M7 17 17 7M9 7h8v8'); s.appendChild(p); return s;
+  }
+
+  VH_PARTNERS.filter(function (p) { return p.active; })
+    .sort(function (a, b) { return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0) || (a.sortOrder || 0) - (b.sortOrder || 0); })
+    .forEach(function (p, i) {
+      var card = el('article', 'pcard reveal');
+      card.style.setProperty('--reveal-delay', (i * 80) + 'ms');
+
+      var top = el('div', 'pcard-top');
+      var logo = el('div', 'pcard-logo');
+      if (p.logo) { var img = document.createElement('img'); img.src = p.logo; img.alt = p.name + ' Logo'; img.width = 42; img.height = 42; img.loading = 'lazy'; logo.appendChild(img); }
+      else { logo.textContent = p.name.charAt(0); logo.setAttribute('aria-hidden', 'true'); }
+      top.appendChild(logo);
+      var names = el('div', 'pcard-names');
+      names.appendChild(el('h3', 'pname', p.name));
+      if (p.category) names.appendChild(el('p', 'pcard-cat', p.category));
+      top.appendChild(names);
+      if (p.discount) top.appendChild(el('span', 'pc-badge', '–' + p.discount));
+      card.appendChild(top);
+
+      card.appendChild(el('p', 'pcard-text', p.valueLine));
+
+      if (p.code) {
+        var row = el('div', 'pc-code');
+        row.appendChild(el('code', null, p.code));
+        var btn = el('button', 'pc-copy', 'Copy'); btn.type = 'button';
+        btn.addEventListener('click', function () {
+          if (navigator.clipboard) navigator.clipboard.writeText(p.code);
+          btn.textContent = 'Kopiert'; btn.classList.add('copied');
+          setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+        });
+        row.appendChild(btn);
+        card.appendChild(row);
+      }
+
+      if (p.hint) {
+        var h = el('p', 'pc-hint');
+        h.appendChild(el('strong', null, p.hint.lead + ' '));
+        h.appendChild(document.createTextNode(p.hint.text));
+        card.appendChild(h);
+      }
+
+      var cta = el('a', 'cta', 'Zum Shop');
+      cta.href = '/go/' + p.slug + '/'; cta.rel = 'sponsored noopener';
+      cta.appendChild(arrow());
+      card.appendChild(cta);
+
+      card.appendChild(el('p', 'pfine',
+        'Affiliate-Link: Wenn du über Code/Link kaufst, erhalte ich eine Provision. Für dich entstehen keine Mehrkosten.' +
+        (p.finePrintExtra ? ' ' + p.finePrintExtra : '')));
+
+      mount.appendChild(card);
+    });
+})();
+</script>
+
+<script>
+/* Produkt-Cards (aus VH_PRODUCTS) — Muster 1:1 aus /lieblingsprodukte */
+(function () {
+  'use strict';
+  var STAGGER_MS = 80;
+  function el(tag, className, text) { var n = document.createElement(tag); if (className) n.className = className; if (text) n.textContent = text; return n; }
+  function arrowIcon() {
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor'); svg.setAttribute('stroke-width', '2.2'); svg.setAttribute('aria-hidden', 'true');
+    var p = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p.setAttribute('d', 'M7 17 17 7M9 7h8v8'); svg.appendChild(p); return svg;
+  }
+  function isPending(url) { return !url || url.indexOf('PENDING_') === 0; }
+
+  function buildCard(product, index) {
+    var card = el('article', 'pcard reveal');
+    card.style.setProperty('--reveal-delay', (index * STAGGER_MS) + 'ms');
+    var top = el('div', 'pcard-top');
+    var logo = el('div', 'pcard-logo');
+    if (product.bild) {
+      var img = document.createElement('img'); img.src = product.bild; img.alt = product.name + ' Produktbild';
+      img.width = 42; img.height = 42; img.loading = 'lazy'; logo.appendChild(img);
+    } else { logo.textContent = product.name.charAt(0); logo.setAttribute('aria-hidden', 'true'); }
+    top.appendChild(logo);
+    top.appendChild(el('h3', 'pname', product.name));
+    card.appendChild(top);
+    card.appendChild(el('p', 'pcard-text', product.text));
+    if (product.preisHinweis) card.appendChild(el('p', 'pprice', product.preisHinweis));
+    if (isPending(product.url)) {
+      card.appendChild(el('span', 'cta--pending', 'Link folgt in Kürze'));
+    } else {
+      var cta = el('a', 'cta', 'Bei Amazon ansehen');
+      cta.href = product.url; cta.target = '_blank'; cta.rel = 'sponsored noopener';
+      cta.appendChild(arrowIcon());
+      card.appendChild(cta);
+      card.appendChild(el('p', 'pfine',
+        'Amazon-Partnerlink: Wenn du darüber kaufst, erhalte ich eine Provision. Für dich entstehen keine Mehrkosten.'));
+    }
+    return card;
+  }
+
+  var mount = document.getElementById('product-cards');
+  if (!mount || typeof VH_PRODUCTS === 'undefined') return;
+  var active = VH_PRODUCTS.filter(function (p) { return p.active; });
+  var order = [], groups = {};
+  active.forEach(function (p) { var k = p.kategorie || 'Sonstiges'; if (!groups[k]) { groups[k] = []; order.push(k); } groups[k].push(p); });
+
+  function buildGhost(index) {
+    var a = document.createElement('a'); a.className = 'ghost-card reveal'; a.href = '/newsletter';
+    a.style.setProperty('--reveal-delay', (index * STAGGER_MS) + 'ms');
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('fill', 'none'); svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '1.8'); svg.setAttribute('stroke-linecap', 'round'); svg.setAttribute('stroke-linejoin', 'round'); svg.setAttribute('aria-hidden', 'true');
+    var p1 = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p1.setAttribute('d', 'M11 20A7 7 0 0 1 4 13C4 8 8 4 20 4c0 12-4 16-9 16z');
+    var p2 = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p2.setAttribute('d', 'M12 11c-3 2-5 5-6 9');
+    svg.appendChild(p1); svg.appendChild(p2); a.appendChild(svg);
+    a.appendChild(el('span', 'ghost-card-kicker', 'Bald mehr'));
+    a.appendChild(el('span', 'ghost-card-line', 'Mein Berg-Equipment und mehr, das ich wirklich nutze.'));
+    a.appendChild(el('span', 'ghost-card-hook', "Erfahr's zuerst → Newsletter"));
+    return a;
+  }
+
+  var idx = 0, lastGrid = null;
+  order.forEach(function (k) {
+    mount.appendChild(el('p', 'lp-cat', k));
+    var grid = el('div', 'lp-grid');
+    groups[k].forEach(function (p) { grid.appendChild(buildCard(p, idx++)); });
+    mount.appendChild(grid); lastGrid = grid;
+  });
+  if (lastGrid) lastGrid.appendChild(buildGhost(idx++));
+})();
+</script>
+
+<script src="/danke-block.js?v=980b62a3"></script>
+<script src="/motion-reveal.js?v=d3baa308"></script>
+<script src="/nav.js" defer></script>
+<script>(function () { var y = document.getElementById('footer-year'); if (y) y.textContent = new Date().getFullYear(); })();</script>
+</body>
+</html>
