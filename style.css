@@ -4179,6 +4179,14 @@ body::before {
     radial-gradient(135% 105% at 22% 10%, rgba(96,214,152,0.34), rgba(96,214,152,0) 56%),
     radial-gradient(120% 120% at 90% 100%, rgba(4,40,22,0.55), rgba(4,40,22,0) 60%),
     linear-gradient(152deg, #1c7a45 0%, #045927 50%, #081c12 100%);
+  /* Glow-Hero „Aurora" — dunkler Grund + leuchtender Forest-Bloom (suraj-Look) */
+  --grad-hero:
+    radial-gradient(120% 90% at 50% 122%, rgba(104,232,156,0.60), rgba(40,140,84,0.24) 30%, transparent 60%),
+    radial-gradient(85% 65% at 15% 4%, rgba(34,128,76,0.34), transparent 55%),
+    linear-gradient(180deg, #081711 0%, #0a2016 52%, #050f08 100%);
+  --grain6: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+  /* Kombinierter Glow-Hero-Hintergrund (Grain über Aurora) */
+  --hero-bg: #081711;
   /* Material: MASSIVES warmes Papier (KEIN Glas/Blur) + gestochene Doppellinie */
   --float-surface: linear-gradient(180deg, #f8f0e0 0%, #eddfc5 100%);
   --float-ring:
