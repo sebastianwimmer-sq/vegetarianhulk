@@ -4428,7 +4428,7 @@ body { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 100px); }
    Bausteine für Wiedererkennung: SectionHeader · EditorialIndex ·
    Divider. Hierarchie über Typ + Raum + Linien, NICHT über Boxen.
    ============================================================ */
-.vh-section { max-width: 940px; margin: 0 auto; padding: 0 clamp(20px, 3vw, 40px); }
+.vh-section { max-width: 1080px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
 
 /* SectionHeader — Eyebrow (Nr. + getrackt) + Playfair-Headline + Rule */
 .vh-shead { margin: var(--space-lg) 0 var(--space-md); }
@@ -4470,6 +4470,6 @@ body { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 100px); }
 }
 
 /* SectionDivider — Berg-Motiv (Signatur) + Rule */
-.vh-divider { display: flex; align-items: center; gap: 16px; max-width: 940px; margin: var(--space-lg) auto; padding: 0 clamp(20px, 3vw, 40px); color: var(--forest-primary); }
+.vh-divider { display: flex; align-items: center; gap: 16px; max-width: 1080px; margin: var(--space-lg) auto; padding: 0 clamp(20px, 4vw, 56px); color: var(--forest-primary); }
 .vh-divider::before, .vh-divider::after { content: ""; flex: 1; height: 1px; background: var(--earth); }
 .vh-divider svg { width: 30px; height: 22px; display: block; opacity: 0.9; }
