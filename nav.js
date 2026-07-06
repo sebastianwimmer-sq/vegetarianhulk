@@ -31,20 +31,6 @@
     }
     if (document.readyState === 'complete') hide();
     else window.addEventListener('load', hide);
-    // Beim Klick auf internen Link: Overlay sofort wieder zeigen (Übergang)
-    document.addEventListener('click', function (e) {
-      var a = e.target.closest && e.target.closest('a[href]');
-      if (!a) return;
-      var href = a.getAttribute('href');
-      if (!href || href.charAt(0) === '#' || a.target === '_blank' || a.hasAttribute('download')) return;
-      var url;
-      try { url = new URL(a.href, location.href); } catch (err) { return; }
-      if (url.origin !== location.origin) return;
-      if (url.pathname === location.pathname) return; // gleiche Seite / nur Anker
-      if (!ov.parentNode) document.body.appendChild(ov);
-      shownAt = Date.now();
-      ov.classList.remove('is-done');
-    }, true);
   })();
 
   /* --- Nav-Markup (EINE Quelle für alle Seiten) ------------- */
