@@ -4476,3 +4476,6 @@ body { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 100px); }
 .vh-divider { display: flex; align-items: center; gap: 16px; max-width: 1080px; margin: var(--space-lg) auto; padding: 0 clamp(20px, 4vw, 56px); color: var(--forest-primary); }
 .vh-divider::before, .vh-divider::after { content: ""; flex: 1; height: 1px; background: var(--earth); }
 .vh-divider svg { width: 30px; height: 22px; display: block; opacity: 0.9; }
+
+/* Mobile-Fix: lange URLs in Legal-Texten brechen um (kein Overflow @375) */
+.legal-page a { overflow-wrap: anywhere; }
