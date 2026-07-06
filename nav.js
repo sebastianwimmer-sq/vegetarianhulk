@@ -62,6 +62,8 @@
     var cursor = document.createElement('div');
     cursor.className = 'vh-cursor';
     cursor.setAttribute('aria-hidden', 'true');
+    // Berg-Silhouette (Peak) statt Kreis
+    cursor.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 20.5 9 8l3.2 5.4L15.5 7 22 20.5z"/></svg>';
     document.body.appendChild(cursor);
 
     var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
