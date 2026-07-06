@@ -4175,7 +4175,10 @@ body::before {
   --duration-normal: 300ms;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   /* Signatur-Gradient „Waldtiefe" — roter Faden der VH-Farbwelt */
-  --grad-forest: linear-gradient(152deg, #1e7d46 0%, #045927 54%, #0f2a1a 100%);
+  --grad-forest:
+    radial-gradient(135% 105% at 22% 10%, rgba(96,214,152,0.34), rgba(96,214,152,0) 56%),
+    radial-gradient(120% 120% at 90% 100%, rgba(4,40,22,0.55), rgba(4,40,22,0) 60%),
+    linear-gradient(152deg, #1c7a45 0%, #045927 50%, #081c12 100%);
   /* Material: MASSIVES warmes Papier (KEIN Glas/Blur) + gestochene Doppellinie */
   --float-surface: linear-gradient(180deg, #f8f0e0 0%, #eddfc5 100%);
   --float-ring:
