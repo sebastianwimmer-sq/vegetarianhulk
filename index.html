@@ -22,20 +22,34 @@
 <body>
 <main class="page">
 
-  <!-- Topbar -->
-  <header class="topbar">
+  <!-- Topbar (Brand) -->
+  <header class="topbar topbar--brandonly">
     <a href="/" class="brand" style="text-decoration:none;color:inherit">vegetarian<span class="accent">hulk</span></a>
-    <button class="topbar-burger" aria-label="Menü öffnen" aria-expanded="false">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-    </button>
-    <nav class="topbar-nav" aria-label="Hauptnavigation">
-      <a href="/" class="topbar-link" aria-current="page">Startseite</a>
-      <a href="/newsletter" class="topbar-link">Newsletter</a>
-      <a href="/codes/" class="topbar-link">Smash Codes</a>
-      <a href="/lieblingsprodukte/" class="topbar-link">Hulk&apos;s Picks</a>
-      <a href="/kooperationen.html" class="topbar-link">Für Brands</a>
-    </nav>
   </header>
+
+  <!-- Floating VH Nav (Sub-Projekt A) -->
+  <nav class="vh-nav" aria-label="Hauptnavigation" data-vh-nav>
+    <a class="vh-nav__slot" href="/" data-slot="/" aria-label="Startseite">
+      <span class="vh-nav__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 5l8 6.5"/><path d="M6 10.5V19h12v-8.5"/><path d="M10 19v-4h4v4"/></svg></span>
+      <span class="vh-nav__label">Start</span>
+    </a>
+    <a class="vh-nav__slot" href="/partner-picks/" data-slot="/partner-picks/" aria-label="Smash Partner &amp; Picks">
+      <span class="vh-nav__icon" style="font-family:'Playfair Display',serif;font-size:14px;font-weight:600;letter-spacing:-0.5px;">P&amp;P</span>
+      <span class="vh-nav__label">Partner</span>
+    </a>
+    <a class="vh-nav__slot vh-nav__slot--center" href="/touren/" data-slot="/touren/" aria-label="Hulk Hikes — Wandertouren">
+      <span class="vh-nav__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 19h20"/><path d="M2 19 8.5 7l4.5 7.5"/><path d="M10.5 14 15 6.5 22 19"/><path d="m13.6 8.6 1.4-2.1 1.3 2"/></svg></span>
+      <span class="vh-nav__label">Hulk&nbsp;Hikes</span>
+    </a>
+    <a class="vh-nav__slot" href="/newsletter" data-slot="/newsletter" aria-label="Newsletter">
+      <span class="vh-nav__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="m3.6 7 8.4 6 8.4-6"/></svg></span>
+      <span class="vh-nav__label">News</span>
+    </a>
+    <a class="vh-nav__slot" href="/kooperationen.html" data-slot="/kooperationen.html" aria-label="Für Brands">
+      <span class="vh-nav__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="11.5" rx="2"/><path d="M8.5 7.5V6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v1.5"/><path d="M3 12.5h18"/></svg></span>
+      <span class="vh-nav__label">Brands</span>
+    </a>
+  </nav>
 
   <!-- Hero V30 — Cinematic Portrait-Frame + Glass Identity-Card (data-mode switchbar) -->
   <section class="cinematic-hero" data-mode="portrait">
@@ -314,29 +328,6 @@
 })();
 </script>
 <script src="update-check.js?v=361d366c"></script>
-<script>
-(function(){
-  var b=document.querySelector('.topbar-burger'),n=document.querySelector('.topbar-nav');
-  if(!b||!n)return;
-  b.addEventListener('click',function(){
-    var open=n.classList.toggle('topbar-nav--open');
-    b.setAttribute('aria-expanded',open);
-    b.setAttribute('aria-label',open?'Menü schließen':'Menü öffnen');
-  });
-  document.addEventListener('click',function(e){
-    if(!b.contains(e.target)&&!n.contains(e.target)){
-      n.classList.remove('topbar-nav--open');
-      b.setAttribute('aria-expanded','false');
-      b.setAttribute('aria-label','Menü öffnen');
-    }
-  });
-  n.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click',function(){
-      n.classList.remove('topbar-nav--open');
-      b.setAttribute('aria-expanded','false');
-    });
-  });
-})();
-</script>
+<script src="/nav.js" defer></script>
 <script src="motion-reveal.js?v=d3baa308" defer></script></body>
 </html>

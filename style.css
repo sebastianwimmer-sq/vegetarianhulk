@@ -4155,3 +4155,179 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
   .glossy-card:hover, .glossy-tile:hover { transform: none; }
 }
+
+/* ============================================================
+   VH FLOATING NAV — „Hulk Hikes" IA-Redesign (Sub-Projekt A)
+   Schwebende, editoriale VH-Pille. Center-Slot = Hulk Hikes.
+   Placement: Mobile bottom, Desktop top-center (form-identisch).
+   Motion nur transform/opacity. a11y + reduced-motion + touch-safe.
+   ============================================================ */
+:root {
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --nav-shadow: 0 2px 6px rgba(18,45,28,0.06), 0 14px 34px rgba(18,45,28,0.16);
+}
+
+.vh-nav {
+  position: fixed;
+  left: 50%;
+  z-index: 900;
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(2px, 1.4vw, 10px);
+  padding: 9px clamp(10px, 2.4vw, 16px);
+  border: 1px solid var(--earth);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0) 60%),
+    var(--vanilla);
+  box-shadow: var(--nav-shadow);
+  transform: translateX(-50%);
+  transition: transform var(--duration-normal) var(--ease-out-expo);
+  isolation: isolate;
+}
+/* subtile Topo-Textur-Andeutung */
+.vh-nav::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(120% 140% at 50% -20%, rgba(4,89,39,0.05), transparent 60%);
+  pointer-events: none;
+}
+
+.vh-nav__slot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  min-width: 56px;
+  padding: 6px 4px 4px;
+  border-radius: 18px;
+  text-decoration: none;
+  color: var(--ink-2);
+  transition: color var(--duration-fast) var(--ease-out-expo),
+              transform var(--duration-fast) var(--ease-out-expo);
+  -webkit-tap-highlight-color: transparent;
+}
+.vh-nav__icon {
+  display: grid; place-items: center;
+  width: 24px; height: 24px;
+  transition: transform var(--duration-normal) var(--ease-out-expo);
+}
+.vh-nav__icon svg { width: 100%; height: 100%; display: block; }
+.vh-nav__label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  line-height: 1;
+  white-space: nowrap;
+  color: currentColor;
+}
+
+/* Hover / Focus (Desktop-Pointer) */
+@media (hover: hover) and (pointer: fine) {
+  .vh-nav__slot:hover { color: var(--forest-primary); }
+  .vh-nav__slot:hover .vh-nav__icon { transform: translateY(-3px); }
+}
+.vh-nav__slot:focus-visible {
+  outline: 2px solid var(--forest-accent);
+  outline-offset: 3px;
+}
+.vh-nav__slot:active { transform: scale(0.95); }
+
+/* Aktiver Slot */
+.vh-nav__slot[aria-current="page"] { color: var(--forest-primary); }
+
+/* Center-Slot = Hulk Hikes (Hero) */
+.vh-nav__slot--center {
+  min-width: 66px;
+  margin: 0 clamp(2px, 1vw, 8px);
+  padding: 12px 10px 10px;
+  transform: translateY(-14px);
+  border-radius: 999px;
+  color: var(--vanilla);
+  background: radial-gradient(120% 120% at 50% 15%, var(--forest-accent), var(--forest-primary) 70%);
+  box-shadow: 0 6px 16px rgba(4,89,39,0.34), 0 0 0 4px rgba(247,239,222,0.9);
+}
+.vh-nav__slot--center .vh-nav__icon { width: 27px; height: 27px; }
+.vh-nav__slot--center .vh-nav__label { color: var(--vanilla); font-weight: 700; }
+.vh-nav__slot--center[aria-current="page"] { color: var(--vanilla); }
+@media (hover: hover) and (pointer: fine) {
+  .vh-nav__slot--center:hover { color: var(--vanilla); transform: translateY(-17px); }
+  .vh-nav__slot--center:hover .vh-nav__icon { transform: translateY(-2px) scale(1.04); }
+}
+.vh-nav__slot--center:active { transform: translateY(-14px) scale(0.96); }
+
+/* gleitender Aktiv-Indikator */
+.vh-nav__indicator {
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  width: 20px; height: 3px;
+  border-radius: 3px;
+  background: var(--forest-primary);
+  opacity: 0;
+  transform: translateX(0);
+  transition: transform var(--duration-normal) var(--ease-out-expo),
+              opacity var(--duration-fast) linear;
+  pointer-events: none;
+}
+.vh-nav[data-indicator-ready] .vh-nav__indicator { opacity: 1; }
+
+/* Auto-Hide beim Scrollen */
+.vh-nav.is-hidden { transform: translateX(-50%) translateY(var(--nav-hide-y, 150%)); }
+
+/* Placement: Mobile = Bottom */
+.vh-nav {
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+  --nav-hide-y: 160%;
+  max-width: min(440px, calc(100vw - 24px));
+}
+/* Desktop = Top-Center, form-identisch */
+@media (min-width: 780px) {
+  .vh-nav {
+    top: 16px;
+    bottom: auto;
+    --nav-hide-y: -170%;
+  }
+}
+
+/* Cursor-Signatur (nur Desktop-Pointer, sonst aus) */
+.vh-cursor {
+  position: fixed; top: 0; left: 0;
+  width: 30px; height: 30px;
+  margin: -15px 0 0 -15px;
+  border: 1.5px solid var(--forest-primary);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2000;
+  transition: width var(--duration-fast) var(--ease-out-expo),
+              height var(--duration-fast) var(--ease-out-expo),
+              opacity var(--duration-normal) var(--ease-out-expo),
+              background-color var(--duration-fast) var(--ease-out-expo);
+  will-change: transform;
+}
+.vh-cursor.is-visible { opacity: 0.85; }
+.vh-cursor.is-magnetic {
+  width: 46px; height: 46px; margin: -23px 0 0 -23px;
+  background: rgba(4,89,39,0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vh-nav, .vh-nav__slot, .vh-nav__icon, .vh-nav__indicator { transition: none; }
+  .vh-cursor { display: none; }
+}
+/* Kein Custom-Cursor auf Touch */
+@media not all and (hover: hover) and (pointer: fine) {
+  .vh-cursor { display: none; }
+}
+
+/* Brand-only Topbar + Platz für die floating Nav */
+.topbar--brandonly { justify-content: flex-start; }
+@media (max-width: 779px) {
+  body { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 96px); }
+}
