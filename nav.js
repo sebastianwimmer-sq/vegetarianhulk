@@ -8,6 +8,45 @@
 (function () {
   'use strict';
 
+  /* --- Smashy-Ladescreen (kurzer Übergang zwischen Seiten) -- */
+  (function smashyLoader() {
+    if (!document.body) return;
+    var ov = document.createElement('div');
+    ov.className = 'vh-loader';
+    ov.setAttribute('aria-hidden', 'true');
+    ov.innerHTML =
+      '<div class="vh-loader__inner">' +
+        '<img class="vh-loader__smashy" src="/assets/img/smashy-maskottchen.png" alt="" width="96" height="96">' +
+        '<span class="vh-loader__bar"></span>' +
+      '</div>';
+    document.body.appendChild(ov);
+    var shownAt = Date.now();
+    var MIN_MS = 650;
+    function hide() {
+      var wait = Math.max(0, MIN_MS - (Date.now() - shownAt));
+      setTimeout(function () {
+        ov.classList.add('is-done');
+        setTimeout(function () { if (ov.parentNode) ov.parentNode.removeChild(ov); }, 450);
+      }, wait);
+    }
+    if (document.readyState === 'complete') hide();
+    else window.addEventListener('load', hide);
+    // Beim Klick auf internen Link: Overlay sofort wieder zeigen (Übergang)
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href]');
+      if (!a) return;
+      var href = a.getAttribute('href');
+      if (!href || href.charAt(0) === '#' || a.target === '_blank' || a.hasAttribute('download')) return;
+      var url;
+      try { url = new URL(a.href, location.href); } catch (err) { return; }
+      if (url.origin !== location.origin) return;
+      if (url.pathname === location.pathname) return; // gleiche Seite / nur Anker
+      if (!ov.parentNode) document.body.appendChild(ov);
+      shownAt = Date.now();
+      ov.classList.remove('is-done');
+    }, true);
+  })();
+
   /* --- Nav-Markup (EINE Quelle für alle Seiten) ------------- */
   var NAV_HTML =
     '<nav class="vh-nav" aria-label="Hauptnavigation" data-vh-nav>' +
@@ -93,25 +132,8 @@
     update();
   })();
 
-  /* --- Scroll-Auto-Hide (nur Nav; Logo bleibt persistent) --- */
-  if (!reduceMotion) {
-    var lastY = window.pageYOffset;
-    var ticking = false;
-    var THRESHOLD = 8;
-    function onScroll() {
-      var y = window.pageYOffset;
-      var dy = y - lastY;
-      if (Math.abs(dy) > THRESHOLD) {
-        // runter + genug gescrollt => Nav verstecken; hoch => zeigen
-        nav.classList.toggle('is-hidden', dy > 0 && y > 120);
-        lastY = y;
-      }
-      ticking = false;
-    }
-    window.addEventListener('scroll', function () {
-      if (!ticking) { window.requestAnimationFrame(onScroll); ticking = true; }
-    }, { passive: true });
-  }
+  /* Nav bleibt IMMER sichtbar (kein Auto-Hide) — Insta/WhatsApp-Prinzip,
+     stört sonst beim Navigieren. */
 
   /* --- Cursor-Signatur (Desktop-Pointer only) --------------- */
   if (finePointer && !reduceMotion) {

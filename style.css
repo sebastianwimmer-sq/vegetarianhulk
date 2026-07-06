@@ -2497,7 +2497,15 @@ html { scroll-behavior: smooth; }
 
 /* === Aurora Forest-Light Background (animated) === */
 body {
-  background-image: none; /* override existing halo */
+  /* Atmosphäre + Papier-Grain statt Flat-Fill (Anti-Slop-Tiefe) */
+  background-color: var(--vanilla);
+  background-image:
+    radial-gradient(ellipse 100% 55% at 50% -6%, rgba(4,89,39,0.075), transparent 60%),
+    radial-gradient(ellipse 80% 60% at 108% 108%, rgba(26,115,64,0.05), transparent 55%),
+    radial-gradient(ellipse 60% 50% at -8% 42%, rgba(207,191,157,0.12), transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-attachment: fixed, fixed, fixed, scroll;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat;
 }
 body::before {
   content: '';
@@ -4382,3 +4390,35 @@ body::before {
 
 /* Platz für die bottom-fixed Nav (alle Breiten) */
 body { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 100px); }
+
+/* Smashy-Ladescreen */
+.vh-loader {
+  position: fixed; inset: 0; z-index: 99999;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 38%, rgba(4,89,39,0.06), transparent 60%),
+    var(--vanilla);
+  display: grid; place-items: center;
+  transition: opacity 0.45s var(--ease-out-expo);
+}
+.vh-loader.is-done { opacity: 0; pointer-events: none; }
+.vh-loader__inner { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.vh-loader__smashy {
+  width: 96px; height: 96px; object-fit: contain;
+  filter: drop-shadow(0 10px 16px rgba(15,42,26,0.22));
+  animation: vh-bob 1.15s var(--ease-out-expo) infinite;
+}
+.vh-loader__bar {
+  position: relative; width: 84px; height: 4px; border-radius: 4px;
+  background: var(--earth); overflow: hidden;
+}
+.vh-loader__bar::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -45%; width: 45%;
+  background: var(--forest-primary); border-radius: 4px;
+  animation: vh-slide 1.05s ease-in-out infinite;
+}
+@keyframes vh-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+@keyframes vh-slide { 0% { left: -45%; } 100% { left: 100%; } }
+@media (prefers-reduced-motion: reduce) {
+  .vh-loader__smashy { animation: none; }
+  .vh-loader__bar::after { animation: none; left: 0; width: 100%; }
+}
