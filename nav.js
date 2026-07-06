@@ -34,9 +34,8 @@
     if (best) best.setAttribute('aria-current', 'page');
   })();
 
-  /* --- Scroll-Auto-Hide (Nav + Brand-Chip synchron) --------- */
+  /* --- Scroll-Auto-Hide (nur Nav; Logo bleibt persistent) --- */
   if (!reduceMotion) {
-    var brand = document.querySelector('.topbar--brandonly');
     var lastY = window.pageYOffset;
     var ticking = false;
     var THRESHOLD = 8;
@@ -44,10 +43,8 @@
       var y = window.pageYOffset;
       var dy = y - lastY;
       if (Math.abs(dy) > THRESHOLD) {
-        // runter + genug gescrollt => verstecken; hoch => zeigen
-        var hide = dy > 0 && y > 120;
-        nav.classList.toggle('is-hidden', hide);
-        if (brand) brand.classList.toggle('is-hidden', hide);
+        // runter + genug gescrollt => Nav verstecken; hoch => zeigen
+        nav.classList.toggle('is-hidden', dy > 0 && y > 120);
         lastY = y;
       }
       ticking = false;
