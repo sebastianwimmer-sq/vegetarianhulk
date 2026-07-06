@@ -4241,25 +4241,29 @@ body::before {
 /* Aktiver Slot */
 .vh-nav__slot[aria-current="page"] { color: var(--forest-primary); }
 
-/* Center-Slot = Hulk Hikes (Hero) */
+/* Center-Slot = Hulk Hikes (Hero) — Bergspitzen-Form statt Kreis */
 .vh-nav__slot--center {
-  min-width: 66px;
+  min-width: 62px;
   margin: 0 clamp(2px, 1vw, 8px);
-  padding: 12px 10px 10px;
-  transform: translateY(-14px);
-  border-radius: 999px;
+  transform: translateY(-16px);
+}
+.vh-nav__slot--center .vh-nav__icon {
+  width: 52px; height: 52px;
+  padding: 15px 12px 9px;
   color: var(--vanilla);
-  background: radial-gradient(120% 120% at 50% 15%, var(--forest-accent), var(--forest-primary) 70%);
-  box-shadow: 0 6px 16px rgba(4,89,39,0.34), 0 0 0 4px rgba(247,239,222,0.9);
+  background: radial-gradient(120% 130% at 50% 22%, var(--forest-accent), var(--forest-primary) 72%);
+  /* Peak-Silhouette (Bergspitze), leicht abgeflachte Spitze */
+  clip-path: polygon(50% 0%, 62% 20%, 100% 44%, 100% 100%, 0% 100%, 0% 44%, 38% 20%);
+  box-shadow: 0 8px 18px rgba(4,89,39,0.30);
+  transition: transform var(--duration-normal) var(--ease-out-expo);
 }
-.vh-nav__slot--center .vh-nav__icon { width: 27px; height: 27px; }
-.vh-nav__slot--center .vh-nav__label { color: var(--vanilla); font-weight: 700; }
-.vh-nav__slot--center[aria-current="page"] { color: var(--vanilla); }
+.vh-nav__slot--center .vh-nav__label { color: var(--forest-primary); font-weight: 700; margin-top: 3px; }
+.vh-nav__slot--center[aria-current="page"] { color: var(--forest-primary); }
 @media (hover: hover) and (pointer: fine) {
-  .vh-nav__slot--center:hover { color: var(--vanilla); transform: translateY(-17px); }
-  .vh-nav__slot--center:hover .vh-nav__icon { transform: translateY(-2px) scale(1.04); }
+  .vh-nav__slot--center:hover { color: var(--forest-primary); transform: translateY(-19px); }
+  .vh-nav__slot--center:hover .vh-nav__icon { transform: translateY(-1px) scale(1.05); }
 }
-.vh-nav__slot--center:active { transform: translateY(-14px) scale(0.96); }
+.vh-nav__slot--center:active { transform: translateY(-16px) scale(0.96); }
 
 /* gleitender Aktiv-Indikator */
 .vh-nav__indicator {
@@ -4280,19 +4284,11 @@ body::before {
 /* Auto-Hide beim Scrollen */
 .vh-nav.is-hidden { transform: translateX(-50%) translateY(var(--nav-hide-y, 150%)); }
 
-/* Placement: Mobile = Bottom */
+/* Placement: Bottom-fixed auf ALLEN Plattformen (Insta/WhatsApp-Prinzip) */
 .vh-nav {
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
-  --nav-hide-y: 160%;
-  max-width: min(440px, calc(100vw - 24px));
-}
-/* Desktop = Top-Center, form-identisch */
-@media (min-width: 780px) {
-  .vh-nav {
-    top: 16px;
-    bottom: auto;
-    --nav-hide-y: -170%;
-  }
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 14px);
+  --nav-hide-y: 165%;
+  max-width: min(460px, calc(100vw - 24px));
 }
 
 /* Cursor-Signatur (nur Desktop-Pointer, sonst aus) */
@@ -4326,8 +4322,6 @@ body::before {
   .vh-cursor { display: none; }
 }
 
-/* Brand-only Topbar + Platz für die floating Nav */
+/* Brand-only Topbar + Platz für die bottom-fixed Nav (alle Breiten) */
 .topbar--brandonly { justify-content: flex-start; }
-@media (max-width: 779px) {
-  body { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 96px); }
-}
+body { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 100px); }
