@@ -4422,3 +4422,54 @@ body { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 100px); }
   .vh-loader__smashy { animation: none; }
   .vh-loader__bar::after { animation: none; left: 0; width: 100%; }
 }
+
+/* ============================================================
+   VH CONTENT-BLOCK KIT (v3 Design-System) — wiederkehrende
+   Bausteine für Wiedererkennung: SectionHeader · EditorialIndex ·
+   Divider. Hierarchie über Typ + Raum + Linien, NICHT über Boxen.
+   ============================================================ */
+.vh-section { max-width: 940px; margin: 0 auto; padding: 0 clamp(20px, 3vw, 40px); }
+
+/* SectionHeader — Eyebrow (Nr. + getrackt) + Playfair-Headline + Rule */
+.vh-shead { margin: var(--space-lg) 0 var(--space-md); }
+.vh-shead__eyebrow {
+  display: flex; align-items: center; gap: 13px;
+  font-family: 'Inter', system-ui, sans-serif; font-size: 11px; font-weight: 800;
+  letter-spacing: 2.6px; text-transform: uppercase; color: var(--forest-primary);
+  margin: 0 0 12px;
+}
+.vh-shead__eyebrow .num { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 15px; letter-spacing: 0; color: var(--forest-accent); }
+.vh-shead__eyebrow::after { content: ""; flex: 1; height: 1px; background: var(--earth); }
+.vh-shead__title {
+  font-family: 'Playfair Display', Georgia, serif; font-weight: 600;
+  font-size: clamp(1.9rem, 4.6vw, 3rem); line-height: 1.04; letter-spacing: -0.01em;
+  color: var(--ink); margin: 0;
+}
+.vh-shead__title em { font-style: italic; color: var(--forest-accent); }
+.vh-shead__sub { margin: 12px 0 0; max-width: 56ch; color: var(--ink-2); font-size: var(--font-body); line-height: 1.6; }
+
+/* EditorialIndex — nummerierte Zeilen mit Rules statt Cards */
+.vh-index { border-top: 1px solid var(--earth); }
+.vh-index__row {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: start;
+  column-gap: clamp(14px, 3vw, 34px); row-gap: 14px;
+  padding: clamp(20px, 3vw, 30px) 2px;
+  border-bottom: 1px solid var(--earth);
+  transition: background var(--duration-fast) var(--ease-out-expo);
+}
+@media (hover: hover) { .vh-index__row:hover { background: rgba(4,89,39,0.035); } }
+.vh-index__num { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 700; color: var(--forest-accent); line-height: 1; }
+.vh-index__main { min-width: 0; }
+.vh-index__name { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.3rem, 2.6vw, 1.75rem); font-weight: 600; color: var(--ink); margin: 0; line-height: 1.1; }
+.vh-index__meta { font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--ink-3); margin: 5px 0 0; }
+.vh-index__text { color: var(--ink-2); font-size: 14.5px; line-height: 1.55; margin: 11px 0 0; max-width: 54ch; }
+.vh-index__aside { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; min-width: 168px; }
+@media (max-width: 660px) {
+  .vh-index__row { grid-template-columns: auto 1fr; }
+  .vh-index__aside { grid-column: 1 / -1; align-items: stretch; min-width: 0; }
+}
+
+/* SectionDivider — Berg-Motiv (Signatur) + Rule */
+.vh-divider { display: flex; align-items: center; gap: 16px; max-width: 940px; margin: var(--space-lg) auto; padding: 0 clamp(20px, 3vw, 40px); color: var(--forest-primary); }
+.vh-divider::before, .vh-divider::after { content: ""; flex: 1; height: 1px; background: var(--earth); }
+.vh-divider svg { width: 30px; height: 22px; display: block; opacity: 0.9; }
