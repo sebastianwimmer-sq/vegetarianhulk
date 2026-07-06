@@ -34,8 +34,9 @@
     if (best) best.setAttribute('aria-current', 'page');
   })();
 
-  /* --- Scroll-Auto-Hide ------------------------------------- */
+  /* --- Scroll-Auto-Hide (Nav + Brand-Chip synchron) --------- */
   if (!reduceMotion) {
+    var brand = document.querySelector('.topbar--brandonly');
     var lastY = window.pageYOffset;
     var ticking = false;
     var THRESHOLD = 8;
@@ -44,8 +45,9 @@
       var dy = y - lastY;
       if (Math.abs(dy) > THRESHOLD) {
         // runter + genug gescrollt => verstecken; hoch => zeigen
-        if (dy > 0 && y > 120) nav.classList.add('is-hidden');
-        else nav.classList.remove('is-hidden');
+        var hide = dy > 0 && y > 120;
+        nav.classList.toggle('is-hidden', hide);
+        if (brand) brand.classList.toggle('is-hidden', hide);
         lastY = y;
       }
       ticking = false;
