@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>VH Home v3 — Prototyp (Editorial dark)</title>
+<link rel="stylesheet" href="/fonts.css">
+<style>
+/* ============================================================
+   VH HOME v3 — EDITORIAL DARK (QA-Runde Sebi 10.07. abends)
+   Fixes: 1) Kontrast-Choreografie — nie gleiche Fläche neben
+   gleicher (Raum → Papier → Royal → Mint → Typo-Zeile)
+   2) KI-Vokabular raus: keine Pill+Orb-CTAs, keine Standard-Icons —
+   CTA = Mono-Text mit handgezogenem Kringel, Nav typografisch
+   3) Hero ohne Box: Foto löst sich in den Raum auf, Typo überlappt
+   4) Bibel-Anker = hellste Fläche (der Anker als Licht-Moment)
+   ============================================================ */
+:root {
+  --mint: #D1F2EB; --emerald: #50C878; --royal: #0B6E4F; --evergreen: #013220;
+  --alabaster: #E9E0CF; --gold: #BA9B5F; --sage: #5E775E; --forest: #132B23;
+
+  --bg-deep: #06231A;
+  --paper: #F3EBD9; --paper-dim: rgba(243,235,217,0.68); --paper-faint: rgba(243,235,217,0.45);
+  --card-cream: #F5EEDE; --ink: #182B1F; --ink-soft: #5E6B5E;
+  --leaf: #7ED09B; --meta-green: #9BD9B4;
+
+  /* Typo-Scale — 5 Größen */
+  --t-display: clamp(64px, 19vw, 130px);
+  --t-h2: clamp(32px, 8vw, 48px);
+  --t-h3: 21px;
+  --t-body: 16px;
+  --t-label: 11.5px;
+
+  --shadow-paper:
+    inset 0 1px 0 rgba(255,255,255,0.85),
+    0 0 0 1px rgba(186,155,95,0.22),
+    0 30px 64px -28px rgba(0,0,0,0.6);
+  --shadow-mid:
+    inset 0 1px 1px rgba(255,255,255,0.14),
+    0 0 0 1px rgba(209,242,235,0.16),
+    0 26px 60px -28px rgba(0,0,0,0.65);
+  --ease-lux: cubic-bezier(0.32, 0.72, 0, 1);
+  --mono: ui-monospace, 'SF Mono', Menlo, monospace;
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { overflow-x: clip; scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg-deep);
+  color: var(--paper);
+  font-size: var(--t-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  padding-bottom: 130px;
+  color-scheme: dark;
+}
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--emerald); color: #05130C; }
+body::after { content: ""; position: fixed; inset: 0; background-image: var(--grain); pointer-events: none; z-index: 80; }
+
+/* ---- Raumlicht = Messstation: Instrumente fix, die Landschaft
+   (2 Mesh-Ebenen, 214vh/170vh hoch) faehrt beim Scrollen durch.
+   CSS-Radials als Sicherheitsnetz unter dem transparenten SVG —
+   Lichtzonen fest ueber die ganze Bahn verteilt, nie tote Zonen. ---- */
+.bg-wrap { position: fixed; top: 0; left: -6%; width: 112%; height: 214vh; z-index: -1;
+  pointer-events: none; will-change: transform; }
+.bg2-wrap { position: fixed; top: -30vh; left: -12%; width: 124%; height: 170vh; z-index: -1;
+  pointer-events: none; will-change: transform; }
+.bg { position: absolute; inset: 0;
+  background-color: var(--bg-deep);
+  background-image:
+    url(mesh-bg-dark.svg),
+    radial-gradient(70% 26% at 82% 6%,  rgba(201,169,106,0.5),  transparent 70%),
+    radial-gradient(64% 22% at 14% 18%, rgba(15,126,91,0.8),    transparent 70%),
+    radial-gradient(70% 24% at 78% 38%, rgba(63,191,128,0.6),   transparent 70%),
+    radial-gradient(58% 20% at 18% 55%, rgba(209,242,235,0.16), transparent 70%),
+    radial-gradient(72% 24% at 80% 72%, rgba(15,126,91,0.7),    transparent 70%),
+    radial-gradient(66% 22% at 22% 88%, rgba(69,204,138,0.55),  transparent 70%),
+    radial-gradient(80% 18% at 50% 100%, rgba(3,18,11,0.9),     transparent 75%);
+  background-size: cover, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  background-position: center;
+  animation: lava1 58s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  will-change: transform; }
+.bg2 { position: absolute; inset: 0;
+  background-image:
+    radial-gradient(52% 30% at 70% 20%, rgba(80,200,120,0.5), transparent 72%),
+    radial-gradient(46% 26% at 22% 62%, rgba(201,169,106,0.32), transparent 70%),
+    radial-gradient(56% 30% at 74% 90%, rgba(15,126,91,0.55), transparent 72%);
+  mix-blend-mode: screen; opacity: 0.65;
+  animation: lava2 44s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  will-change: transform; }
+@keyframes lava1 {
+  from { transform: translate(0, 0) rotate(0deg) scale(1.02); }
+  to   { transform: translate(-2%, 1.5%) rotate(1.4deg) scale(1.07); }
+}
+@keyframes lava2 {
+  from { transform: translate(1.5%, -2%) rotate(4deg) scale(1); }
+  to   { transform: translate(-3%, 3%) rotate(-3deg) scale(1.12); }
+}
+
+main { position: relative; z-index: 1; }
+.wrap { width: min(100% - 36px, 560px); margin-inline: auto; }
+
+/* ---- Motion ---- */
+.rv { opacity: 0; transform: translateY(52px); filter: blur(8px);
+  transition: opacity 900ms var(--ease-lux), transform 900ms var(--ease-lux), filter 900ms var(--ease-lux);
+  transition-delay: var(--d, 0ms); }
+.rv.in { opacity: 1; transform: translateY(0); filter: blur(0); }
+.st { opacity: 0; transform: translateY(26px); filter: blur(6px);
+  transition: opacity 800ms var(--ease-lux), transform 800ms var(--ease-lux), filter 800ms var(--ease-lux); }
+body.loaded .st { opacity: 1; transform: translateY(0); filter: blur(0); }
+.st1 { transition-delay: 100ms; } .st2 { transition-delay: 240ms; } .st3 { transition-delay: 360ms; }
+.st4 { transition-delay: 500ms; } .st5 { transition-delay: 660ms; }
+
+/* ---- Altimeter-Rails: volle Höhe, gespiegelt, Berg-Bezug.
+   Tick-Skala wie am Höhenmesser + durchlaufender Mono-Ticker +
+   Gipfel-Marker, der mit dem Scroll-Fortschritt aufsteigt. ---- */
+.rail { display: none; }
+@media (min-width: 1200px) {
+  .rail { display: block; position: fixed; top: 0; bottom: 0; width: 40px; z-index: 5; pointer-events: none; }
+  .rail--l { left: 10px; }
+  .rail--r { right: 10px; }
+  /* Tick-Skala über die volle Höhe */
+  .rail::before { content: ""; position: absolute; top: 0; bottom: 0; width: 7px;
+    background: repeating-linear-gradient(180deg, rgba(243,235,217,0.28) 0 1px, transparent 1px 26px); }
+  .rail--l::before { left: 8px; }
+  .rail--r::before { right: 8px; }
+  .rail::before { top: 42px; }
+  .rail-cross { position: absolute; top: 16px; width: 18px; height: 18px; color: rgba(243,235,217,0.55); }
+  .rail--l .rail-cross { left: 0; }
+  .rail--r .rail-cross { right: 0; }
+  /* Gipfel-Marker: klettert mit Scroll-Fortschritt (JS setzt --p 0..1) */
+  .rail-peak { position: absolute; width: 30px; top: calc(10% + (78% * var(--p, 0)));
+    display: grid; justify-items: center; gap: 3px;
+    transition: top 300ms var(--ease-lux); }
+  .rail--l .rail-peak { left: -3px; }
+  .rail--r .rail-peak { right: -3px; }
+  .rail-peak svg { width: 13px; height: 10px; color: var(--leaf); }
+  .rail-peak .hm { font-family: var(--mono); font-size: 8.5px; font-weight: 700; letter-spacing: 1px; color: var(--leaf); }
+}
+
+/* ---- Topbar ---- */
+.topbar { position: sticky; top: 0; z-index: 60; display: flex; align-items: center; padding: 22px 0 14px;
+  transition: transform 500ms var(--ease-lux), opacity 500ms var(--ease-lux); }
+.topbar.is-hidden { transform: translateY(-130%); opacity: 0; }
+.brandbox { position: relative; display: inline-block; }
+.wordmark { font-weight: 900; letter-spacing: 3px; font-size: 15px; color: var(--paper); }
+.wordmark b { color: var(--leaf); }
+.wordmark--invert { position: absolute; inset: 0; color: var(--forest); clip-path: inset(0 100% 0 0); pointer-events: none; }
+.wordmark--invert b { color: var(--royal); }
+
+/* ============================================================
+   HERO — geordnete Editorial-Spalte + Bogen-Fenster-Portrait
+   (Kapellenbogen: klare Kante, Doppellinie, Mono-Caption).
+   ============================================================ */
+.hero { position: relative; margin-top: 24px; }
+.stage { width: min(82vw, 400px); margin-inline: auto; position: relative; }
+/* Rahmen sitzt versetzt HINTER dem Freisteller — er ragt oben raus */
+.stage-frame { position: absolute; left: 7%; right: -5%; top: 17%; bottom: 44px;
+  border-radius: 24px; overflow: hidden;
+  outline: 1px solid rgba(209,242,235,0.22); outline-offset: 7px;
+  background:
+    radial-gradient(80% 62% at 50% 78%, rgba(80,200,120,0.34), rgba(11,110,79,0.12) 55%, transparent 80%),
+    linear-gradient(170deg, rgba(16,58,38,0.85), rgba(7,29,19,0.9));
+  box-shadow: 0 0 0 1px rgba(209,242,235,0.14), 0 40px 80px -40px rgba(0,0,0,0.8); }
+.stage-frame::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); pointer-events: none; }
+.stage-mtn { position: absolute; left: -6%; bottom: -4%; width: 74%; height: auto;
+  color: rgba(209,242,235,0.38); }
+.stage-cut { position: relative; z-index: 2; display: block; width: 88%; margin-inline: auto;
+  filter: drop-shadow(0 34px 54px rgba(0,0,0,0.6)) drop-shadow(0 6px 14px rgba(0,0,0,0.35)); }
+.stage-caption { margin-top: 16px; text-align: center; font-family: var(--mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 2.2px; text-transform: uppercase; color: var(--paper-faint); }
+.hero-copy { margin-top: 56px; }
+.hero-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: var(--t-display); line-height: 0.95;
+  color: var(--paper); letter-spacing: -0.015em; }
+.hero-handle { margin-top: 14px; font-size: var(--t-body); color: var(--paper-dim); letter-spacing: 0.4px; }
+.hero-meta { margin-top: 22px; font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--meta-green); line-height: 2; }
+.hero-meta .dot { color: rgba(155,217,180,0.4); padding-inline: 6px; }
+.hero-rule { margin: 36px 0; height: 1px; border: 0; max-width: 280px;
+  background: linear-gradient(90deg, rgba(243,235,217,0.35), rgba(243,235,217,0.05)); }
+.hero-tagline { font-family: 'Playfair Display', serif; font-weight: 700; font-size: var(--t-h2); line-height: 1.12;
+  color: var(--paper); letter-spacing: -0.01em; max-width: 14ch; }
+.hero-tagline em { display: inline-block; position: relative; font-weight: 600; font-style: italic; color: var(--leaf); }
+.scribble { position: absolute; left: 2%; bottom: -12px; width: 96%; height: 14px; color: var(--emerald); opacity: 0.9; }
+.scribble path { stroke-dasharray: 240; stroke-dashoffset: 240; }
+body.loaded .scribble path { animation: draw 1100ms var(--ease-lux) 1000ms forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+/* ============================================================
+   CTA — GEPARKT 10.07. (Reset-Angebot im Archiv, Sebi-Entscheid)
+   Kringel-Technik bleibt dokumentiert für spätere Angebote.
+   CTA — kein Pill-Button: Mono-Wort mit handgezogenem Kringel
+   (Scribble-Sprache), der sich beim Laden selbst zeichnet.
+   ============================================================ */
+.cta { position: relative; display: inline-block; margin-top: 44px; padding: 16px 30px;
+  font-family: var(--mono); font-weight: 700; font-size: 14px; letter-spacing: 2.4px; text-transform: uppercase;
+  color: var(--paper); }
+.cta .arr { display: inline-block; margin-left: 10px; transition: transform 500ms var(--ease-lux); }
+.cta:hover .arr { transform: translateX(6px); }
+.cta .sub { position: absolute; left: 30px; top: calc(100% + 10px); white-space: nowrap;
+  font-size: 10px; font-weight: 600; letter-spacing: 2px; color: var(--paper-faint); }
+.cta .ring { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--leaf); }
+.cta .ring path { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round;
+  stroke-dasharray: 900; stroke-dashoffset: 900; }
+body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms forwards; }
+@keyframes draw-ring { to { stroke-dashoffset: 0; } }
+.cta:hover .ring { color: var(--emerald); }
+
+/* ---- Zitat: auf der Fläche ---- */
+.hero .cta { margin-bottom: 26px; }
+.closing .cta { margin-bottom: 26px; }
+.quote { margin-top: 92px; padding-left: 20px; border-left: 2px solid rgba(126,208,155,0.5); }
+.quote p { font-size: 17px; line-height: 1.7; color: var(--paper-dim); max-width: 46ch; }
+.quote strong { color: var(--paper); font-weight: 700; }
+
+/* ---- Sektions-Kopf ---- */
+.shead { margin: 100px 0 28px; }
+.shead .kicker { font-family: var(--mono); font-size: var(--t-label); font-weight: 600; letter-spacing: 2.2px; text-transform: uppercase; color: var(--leaf);
+  display: flex; align-items: center; gap: 12px; }
+.shead .kicker::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.25); }
+.shead h2 { margin-top: 12px; font-family: 'Playfair Display', serif; font-weight: 600; font-size: var(--t-h2); line-height: 1.1; color: var(--paper); }
+.shead h2 em { font-style: italic; color: var(--leaf); }
+
+/* ============================================================
+   VIER WERTE — DER GRAT: interaktiver Fineline-Bergpfad.
+   Wegpunkt antippen -> Pfad faerbt sich bis dorthin, Wert klappt auf.
+   ============================================================ */
+.grat-wrap { margin-top: 8px; }
+.grat-stage { position: relative; }
+.grat { display: block; width: 100%; height: auto; overflow: visible; }
+.grat-base, .grat-prog { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.grat-kreuz { color: rgba(243,235,217,0.55); transition: color 600ms var(--ease-lux); }
+.grat-wrap.summit .grat-kreuz { color: var(--leaf); filter: drop-shadow(0 0 6px rgba(80,200,120,0.6)); }
+.grat-base { stroke: rgba(243,235,217,0.28); stroke-width: 1.6; stroke-dasharray: 100; stroke-dashoffset: 100; }
+.rv.in .grat-base { animation: gratdraw 1600ms var(--ease-lux) 200ms forwards; }
+@keyframes gratdraw { to { stroke-dashoffset: 0; } }
+.grat-prog { stroke: var(--emerald); stroke-width: 2.2; stroke-dasharray: 100; stroke-dashoffset: 100;
+  transition: stroke-dashoffset 900ms var(--ease-lux);
+  filter: drop-shadow(0 0 6px rgba(80,200,120,0.5)); }
+.wp { position: absolute; transform: translate(-50%, -50%); width: 40px; height: 40px;
+  border: 0; border-radius: 50%; cursor: pointer; background: transparent;
+  display: grid; place-items: center; pointer-events: auto; }
+.wp::before { content: ""; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--bg-deep); border: 2px solid rgba(243,235,217,0.5);
+  transition: background 400ms var(--ease-lux), border-color 400ms var(--ease-lux), transform 400ms var(--ease-lux); }
+.wp:hover::before { transform: scale(1.25); border-color: var(--leaf); }
+.wp.on::before { background: var(--emerald); border-color: var(--emerald);
+  box-shadow: 0 0 12px rgba(80,200,120,0.6); }
+.wp .wp-num { position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.6px;
+  color: var(--paper-faint); transition: color 400ms var(--ease-lux); }
+.wp.on .wp-num { color: var(--leaf); }
+.grat-panel { margin-top: 30px; min-height: 128px; }
+.grat-panel .num { font-family: var(--mono); font-size: var(--t-label); font-weight: 600; letter-spacing: 2px; color: var(--gold); }
+.grat-panel h3 { margin: 8px 0 10px; font-family: 'Playfair Display', serif; font-weight: 600;
+  font-size: clamp(26px, 6vw, 34px); color: var(--paper); }
+.grat-panel p { font-size: 15px; line-height: 1.65; color: var(--paper-dim); max-width: 52ch; }
+.grat-panel .inner { opacity: 1; transform: translateY(0); filter: blur(0);
+  transition: opacity 500ms var(--ease-lux), transform 500ms var(--ease-lux), filter 500ms var(--ease-lux); }
+.grat-panel .inner.swap { opacity: 0; transform: translateY(14px); filter: blur(4px); }
+
+/* ============================================================
+   BIBEL-ANKER — der Anker ist der LICHT-Moment: hellste Fläche
+   der Seite, Gold-Label, Forest-Vers.
+   ============================================================ */
+.bibel-card { margin-top: 100px; border-radius: 24px; text-align: center; padding: 58px 32px 50px; position: relative; overflow: hidden;
+  background:
+    radial-gradient(90% 80% at 50% -20%, rgba(186,155,95,0.18), transparent 60%),
+    linear-gradient(175deg, #F8F2E2 0%, #F0E7D2 100%);
+  box-shadow: var(--shadow-paper); }
+.bibel-card::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.7; pointer-events: none; }
+.bibel-card .label { font-family: var(--mono); font-size: var(--t-label); font-weight: 600; letter-spacing: 2.4px; text-transform: uppercase; color: var(--gold); }
+.bibel-card blockquote { margin: 24px auto 20px; max-width: 26ch; font-family: 'Playfair Display', serif; font-style: italic;
+  font-weight: 500; font-size: 27px; line-height: 1.35; color: var(--forest); }
+.bibel-card .sig { font-size: 14px; font-weight: 700; color: var(--royal); display: flex; align-items: center; justify-content: center; gap: 14px; }
+.bibel-card .sig::before, .bibel-card .sig::after { content: ""; width: 34px; height: 1px; background: rgba(19,43,35,0.25); }
+
+/* ---- Hulk-Hikes-Teaser: editorial auf der Fläche ---- */
+.hikes { position: relative; margin-top: 100px; }
+.hikes-copy { font-size: 16px; line-height: 1.65; color: var(--paper-dim); max-width: 48ch; }
+.hikes-stats { margin-top: 24px; font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--meta-green); }
+.hikes-stats .dot { color: rgba(155,217,180,0.4); padding-inline: 8px; }
+.hikes-mtn { position: absolute; right: 0; top: 8px; width: clamp(90px, 14vw, 150px); height: auto;
+  color: rgba(243,235,217,0.3); }
+.hikes-profile { display: block; width: min(100%, 560px); height: auto; margin-top: 26px;
+  color: var(--leaf); overflow: visible; }
+.hikes-profile .hp-line { stroke-dasharray: 100; stroke-dashoffset: 100; }
+.hikes.rv.in .hp-line { animation: gratdraw 1600ms var(--ease-lux) 300ms forwards; stroke-dasharray: 100; }
+.hikes-facts { margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; max-width: 620px; }
+.hikes-facts div { border-top: 1px solid rgba(243,235,217,0.16); padding-top: 10px; }
+.hikes-facts dt { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 1.8px;
+  text-transform: uppercase; color: var(--paper-faint); }
+.hikes-facts dd { margin-top: 4px; font-size: 14px; color: var(--paper-dim); }
+
+/* ---- Closing ---- */
+.closing { margin-top: 100px; }
+.brands-line { margin-top: 30px; font-size: 15px; color: var(--paper-faint); }
+.brands-line a { font-weight: 700; color: var(--leaf); border-bottom: 1px solid rgba(126,208,155,0.4); padding-bottom: 2px;
+  transition: border-color 400ms var(--ease-lux); }
+.brands-line a:hover { border-color: var(--leaf); }
+
+/* ---- Footer ---- */
+footer { position: relative; z-index: 1; margin-top: 120px; text-align: center; color: var(--paper); }
+footer .inner { width: min(100% - 36px, 560px); margin-inline: auto;
+  border-top: 1px solid rgba(243,235,217,0.14); padding: 36px 8px 0; }
+footer .wordmark { color: var(--paper); }
+footer .claim { margin-top: 10px; font-size: 14px; color: var(--paper-dim); }
+footer .legal { margin-top: 20px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.4px; color: var(--paper-faint);
+  display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+footer .legal a:hover { color: var(--paper); }
+
+/* ============================================================
+   NAV — helle Papier-Pille, TYPOGRAFISCH (keine Standard-Icons).
+   Nur der Berg bleibt — er ist Brand, nicht Icon-Set.
+   ============================================================ */
+.nav { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 70;
+  display: flex; align-items: center; gap: clamp(4px, 2.6vw, 24px); padding: 10px clamp(18px, 3.4vw, 34px);
+  border: 1px solid rgba(150,130,92,0.55); border-radius: 16px;
+  background: linear-gradient(180deg, #F8F0E0 0%, #EDDFC5 100%);
+  box-shadow:
+    inset 0 0 0 3px rgba(247,239,222,1),
+    inset 0 0 0 3.5px rgba(150,130,92,0.55),
+    inset 0 -10px 16px -12px rgba(120,100,60,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.7),
+    0 1px 0 rgba(255,255,255,0.14),
+    0 4px 10px rgba(0,0,0,0.42),
+    0 22px 46px -14px rgba(0,0,0,0.72),
+    0 46px 100px -30px rgba(0,0,0,0.6); }
+.nav::after { content: ""; position: absolute; inset: 0; border-radius: 16px;
+  background-image: var(--grain); opacity: 0.5; pointer-events: none; }
+.nav a { position: relative; padding: 8px 6px; min-width: 48px; text-align: center;
+  font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
+  color: #6B5F4A; transition: color 400ms var(--ease-lux), transform 400ms var(--ease-lux); }
+.nav a:hover { color: var(--forest); transform: translateY(-2px); }
+.nav .center { color: #045927; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.nav .center .mtn { width: 60px; height: 48px; margin-top: -38px;
+  filter: drop-shadow(0 1px 1px rgba(15,42,26,0.35)) drop-shadow(0 8px 14px rgba(0,0,0,0.4)); }
+.nav a[aria-current] { color: #045927; }
+.nav a[aria-current]::after { content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+  width: 16px; height: 2px; border-radius: 2px; background: #045927; }
+
+/* ---- Desktop ---- */
+@media (min-width: 900px) {
+  .wrap { width: min(100% - 64px, 1060px); }
+  .topbar { padding-top: 30px; }
+  .hero { display: grid; grid-template-columns: 1fr 0.9fr; align-items: center; column-gap: 64px; margin-top: 40px; }
+  .hero-copy { grid-column: 1; grid-row: 1; margin-top: 0; }
+  .arch { grid-column: 2; grid-row: 1; width: min(100%, 420px); margin-inline: 0 auto; }
+  .hero-rule { max-width: 320px; }
+  .quote { margin-top: 130px; }
+  .quote p { font-size: 18px; max-width: 58ch; }
+  .idx-row { grid-template-columns: 90px 260px 1fr; }
+  .idx-row .num { grid-row: auto; }
+  .idx-row p { justify-self: end; text-align: left; }
+  .bibel-card blockquote { font-size: 36px; max-width: 30ch; }
+}
+/* Tablet: mehr Breite nutzen, Bogen begrenzen */
+@media (min-width: 640px) and (max-width: 899px) {
+  .wrap { width: min(100% - 64px, 680px); }
+  .stage { width: min(52vw, 380px); }
+}
+/* XL: Bühne größer, Typo skaliert über clamp mit */
+@media (min-width: 1440px) {
+  .wrap { width: min(100% - 120px, 1220px); }
+  .hero { column-gap: 96px; }
+  .stage { width: min(100%, 470px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .bg, .bg2 { animation: none !important; }
+  .bg-wrap, .bg2-wrap { transform: none !important; }
+  .rv, .st { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
+  .scribble path, .cta .ring path { stroke-dashoffset: 0 !important; animation: none !important; }
+  .cta:hover .arr, .nav a:hover { transform: none; }
+}
+</style>
+</head>
+<body>
+<div class="bg-wrap" aria-hidden="true"><div class="bg"></div></div>
+<div class="bg2-wrap" aria-hidden="true"><div class="bg2"></div></div>
+
+<div class="rail rail--l" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm" data-hm>2962 hm</span></div>
+</div>
+<div class="rail rail--r" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm" data-hm>2962 hm</span></div>
+</div>
+
+<main>
+  <div class="wrap">
+
+    <header class="topbar">
+      <span class="brandbox">
+        <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+        <span class="wordmark wordmark--invert" aria-hidden="true" data-invert-layer>VEGETARIAN<b>HULK</b></span>
+      </span>
+    </header>
+
+    <!-- HERO — Bogen-Fenster + geordnete Editorial-Spalte -->
+    <section class="hero" aria-label="Sebi — Vegetarianhulk">
+      <figure class="stage st">
+        <div class="stage-frame">
+          <svg class="stage-mtn" viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 50 26 16l10 16 8-12 22 30"/>
+            <path d="M22 23.5 26 20l4 5"/>
+            <path d="M40.5 25.5 44 21.5l3.5 5"/>
+            <circle cx="58" cy="11" r="4.5"/>
+          </svg>
+        </div>
+        <img class="stage-cut" src="hero-cutout.png" alt="Sebi, Founder vegetarianhulk" fetchpriority="high">
+        <figcaption class="stage-caption">@vegetarianhulk · Bayern</figcaption>
+      </figure>
+      <div class="hero-copy">
+      <h1 class="hero-name st st1">Sebi</h1>
+      <p class="hero-handle st st2">Sebastian &nbsp;·&nbsp; @vegetarianhulk</p>
+      <p class="hero-meta st st2">25<span class="dot">·</span>Vegetarisch seit 2016<span class="dot">·</span>✝ Christ<span class="dot">·</span>△ Bergsportler</p>
+      <hr class="hero-rule st st3">
+      <p class="hero-tagline st st4">Disziplin ist kein&nbsp;Talent.
+        <em>Sie ist ein Ritual.
+          <svg class="scribble" viewBox="0 0 220 14" fill="none" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M3 10 C 40 4, 75 12, 110 7 S 180 3, 217 8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+          </svg>
+        </em>
+      </p>
+      </div>
+    </section>
+
+    <!-- Zitat -->
+    <section class="quote rv" aria-label="Warum ich das mache">
+      <p><strong>Ich war jemand der hundertmal</strong> angefangen und nie durchgezogen hat.
+      Heute lebe ich anders. Durch Disziplin. Durch Glauben. Durch bewusste Entscheidungen.
+      <strong>Und ich helfe dir, das auch zu tun.</strong></p>
+    </section>
+
+    <!-- Vier Werte — Kontrast-Choreografie -->
+    <div class="shead rv">
+      <p class="kicker">Sebi DNA · Was mich antreibt</p>
+      <h2>Vier Werte, <em>ein Leben.</em></h2>
+    </div>
+    <section class="grat-wrap rv" aria-label="Vier Werte — Der Grat">
+      <div class="grat-stage">
+      <svg class="grat" viewBox="0 0 720 210" aria-hidden="true">
+        <path class="grat-base" pathLength="100" d="M14 192 C 90 178, 170 146, 250 124 C 330 102, 420 94, 500 66 C 560 46, 640 30, 702 16"/>
+        <path class="grat-prog" pathLength="100" d="M14 192 C 90 178, 170 146, 250 124 C 330 102, 420 94, 500 66 C 560 46, 640 30, 702 16"/>
+        <!-- Gipfelkreuz am höchsten Punkt -->
+        <g class="grat-kreuz" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <path d="M702 14 V -8"/>
+          <path d="M695 -1 H 709"/>
+        </g>
+      </svg>
+      <button class="wp on" type="button" style="left: 1.9%; top: 91.4%;" data-i="0" aria-label="Faith — Bibel-grounded"><span class="wp-num">01</span></button>
+      <button class="wp" type="button" style="left: 34.7%; top: 59%;" data-i="1" aria-label="Disziplin"><span class="wp-num">02</span></button>
+      <button class="wp" type="button" style="left: 69.4%; top: 31.4%;" data-i="2" aria-label="Vegetarisch + Stark"><span class="wp-num">03</span></button>
+      <button class="wp" type="button" style="left: 96.5%; top: 7.6%;" data-i="3" aria-label="Fitness"><span class="wp-num">04</span></button>
+      </div>
+      <div class="grat-panel" aria-live="polite">
+        <div class="inner">
+          <p class="num" data-p-num>01 / Faith</p>
+          <h3 data-p-title>Bibel-grounded. Wörtlich.</h3>
+          <p data-p-text>Das Fundament, bevor irgendwas anderes kommt: Schlachter 2000, jeden Morgen — bevor das Handy angeht. Sprüche 24,16 ist der Anker: hinfallen gehört dazu, liegen bleiben nicht.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hulk Hikes — Mehrwert-Teaser: echte Tour-Daten, Fineline-Berg -->
+    <section class="hikes rv" aria-label="Hulk Hikes — Bergtouren-Guide">
+      <div class="shead" style="margin-bottom: 18px;">
+        <p class="kicker">Hulk Hikes · Bergtouren-Guide</p>
+        <h2>Echte Touren. <em>Selber gangen.</em></h2>
+      </div>
+      <p class="hikes-copy">Keine Stock-Fotos, keine kopierten GPX-Files — jede Route bin ich selbst gelaufen.
+      Mit ehrlichen Zeiten, Höhenprofil und Parkplatz-Info.</p>
+      <p class="hikes-stats">Beispiel-Format<span class="dot">·</span>5 km<span class="dot">·</span>294 hm<span class="dot">·</span>ca. 1:25 h<span class="dot">·</span>Parkplatz ✓</p>
+      <!-- Mini-Höhenprofil (Fineline) mit Tal -> Gipfelkreuz -->
+      <svg class="hikes-profile" viewBox="0 0 560 92" fill="none" aria-hidden="true">
+        <path class="hp-line" pathLength="100" d="M4 84 C 60 80, 110 66, 160 58 C 220 48, 260 52, 310 38 C 360 24, 420 22, 470 14 L 508 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M508 8 V -2 M 504 2 h 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <g font-family="ui-monospace, Menlo, monospace" font-size="9" fill="currentColor" opacity="0.7">
+          <text x="4" y="76">Tal · Parkplatz</text>
+          <text x="440" y="30">Gipfel</text>
+        </g>
+      </svg>
+      <dl class="hikes-facts">
+        <div><dt>Schwierigkeit</dt><dd>leicht – mittel, klar markiert</dd></div>
+        <div><dt>Je Tour dabei</dt><dd>GPX-Download · Höhenprofil · ehrliche Gehzeit</dd></div>
+        <div><dt>Anfahrt</dt><dd>Startpunkt mit Parkplatz-Koordinaten</dd></div>
+        <div><dt>Saison-Check</dt><dd>welche Route gerade Sinn macht</dd></div>
+      </dl>
+      <p class="brands-line" style="margin-top: 26px;">Der Guide wächst gerade — <a href="/touren/">→ Alle Touren</a></p>
+      <svg class="hikes-mtn" viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 50 26 16l10 16 8-12 22 30"/>
+        <path d="M22 23.5 26 20l4 5"/>
+        <path d="M40.5 25.5 44 21.5l3.5 5"/>
+        <circle cx="58" cy="11" r="4.5"/>
+        <path d="M12 50c8-4 16-3.4 22 0" opacity="0.5"/>
+      </svg>
+    </section>
+
+    <!-- Bibel-Anker: der Licht-Moment -->
+    <section class="bibel-card rv" aria-label="Bibel-Anker" data-light>
+      <p class="label">Sprüche 24,16 · Schlachter 2000</p>
+      <blockquote>„Denn siebenmal fällt der Gerechte und steht wieder auf."</blockquote>
+      <p class="sig">Mein Anker.</p>
+    </section>
+
+    <!-- Closing -->
+    <section class="closing rv" aria-label="Wie es weitergeht">
+      <div class="shead" style="margin-bottom: 0;">
+        <p class="kicker">Wie es weitergeht</p>
+        <h2>Bleib dabei — oder lass uns <em>zusammenarbeiten.</em></h2>
+      </div>
+      <p class="brands-line">Brand oder Partner? <a href="/kooperationen.html">→ Anfrage stellen</a></p>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="inner">
+    <p class="wordmark">VEGETARIAN<b>HULK</b></p>
+    <p class="claim">Builder &amp; Creator. Disziplin über Hype.</p>
+    <nav class="legal" aria-label="Rechtliches">
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+      <span>© 2026 Sebastian Wimmer</span>
+    </nav>
+  </div>
+</footer>
+
+<!-- Floating Nav — typografisch, nur der Berg bleibt -->
+<nav class="nav" aria-label="Hauptnavigation">
+  <a href="/" aria-current="page">Start</a>
+  <a href="/partner-picks/">P&amp;P</a>
+  <a class="center" href="/touren/">
+    <span class="mtn"><svg viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 50 26 16l10 16 8-12 22 30"/>
+      <path d="M22 23.5 26 20l4 5" opacity="0.85"/>
+      <path d="M40.5 25.5 44 21.5l3.5 5" opacity="0.85"/>
+      <circle cx="58" cy="11" r="4.5" opacity="0.9"/>
+      <path d="M12 50c8-4 16-3.4 22 0" opacity="0.45"/>
+    </svg></span>
+    Hulk&nbsp;Hikes
+  </a>
+  <a href="/newsletter">News</a>
+  <a href="/kooperationen.html">Brands</a>
+</nav>
+
+<script>
+/* Load-Choreografie */
+(function () {
+  'use strict';
+  function go() { requestAnimationFrame(function () { document.body.classList.add('loaded'); }); }
+  if (document.readyState === 'complete') go();
+  else window.addEventListener('load', go);
+})();
+
+/* Wordmark-Invert über hellen Inseln */
+(function () {
+  'use strict';
+  var base = document.querySelector('.brandbox .wordmark:not(.wordmark--invert)');
+  var layer = document.querySelector('[data-invert-layer]');
+  if (!base || !layer) return;
+  var lights = document.querySelectorAll('[data-light]');
+  function update() {
+    var r = base.getBoundingClientRect();
+    var lo = r.right, hi = r.left, covered = false;
+    for (var i = 0; i < lights.length; i++) {
+      var d = lights[i].getBoundingClientRect();
+      if (d.bottom <= r.top || d.top >= r.bottom) continue;
+      var x1 = Math.max(r.left, d.left), x2 = Math.min(r.right, d.right);
+      if (x2 <= x1) continue;
+      lo = Math.min(lo, x1); hi = Math.max(hi, x2); covered = true;
+    }
+    layer.style.clipPath = covered
+      ? 'inset(-4px ' + (r.right - hi) + 'px -4px ' + (lo - r.left) + 'px)'
+      : 'inset(0 100% 0 0)';
+  }
+  var t = false;
+  window.addEventListener('scroll', function () {
+    if (!t) { requestAnimationFrame(function () { update(); t = false; }); t = true; }
+  }, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
+})();
+
+/* Lava-Parallax: Lichtzonen wandern beim Scrollen (nur transform) */
+(function () {
+  'use strict';
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var a = document.querySelector('.bg-wrap');
+  var b = document.querySelector('.bg2-wrap');
+  if (!a || !b) return;
+  var t = false;
+  function update() {
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    /* Landschafts-Durchfahrt: Ebene 1 faehrt ~104vh hoch (Abstieg),
+       Ebene 2 laeuft gegenlaeufig langsamer — Zonen ziehen vorbei */
+    var vh = window.innerHeight;
+    a.style.transform = 'translateY(' + (-p * 1.04 * vh) + 'px)';
+    b.style.transform = 'translateY(' + (p * 0.38 * vh) + 'px) rotate(' + (p * 5) + 'deg)';
+    t = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!t) { requestAnimationFrame(update); t = true; }
+  }, { passive: true });
+})();
+
+/* Wordmark weicht beim Runterscrollen, kommt beim Hochscrollen zurück */
+(function () {
+  'use strict';
+  var bar = document.querySelector('.topbar');
+  if (!bar) return;
+  var lastY = window.scrollY, t = false;
+  function update() {
+    var y = window.scrollY;
+    if (y > lastY + 4 && y > 180) bar.classList.add('is-hidden');
+    else if (y < lastY - 4 || y <= 180) bar.classList.remove('is-hidden');
+    lastY = y; t = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!t) { requestAnimationFrame(update); t = true; }
+  }, { passive: true });
+})();
+
+/* Altimeter: Scroll-Fortschritt = Aufstieg (0 -> 2962 hm, Zugspitze) */
+(function () {
+  'use strict';
+  var peaks = document.querySelectorAll('.rail-peak');
+  var hms = document.querySelectorAll('[data-hm]');
+  if (!peaks.length) return;
+  var t = false;
+  function update() {
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    var hm = 2962 - Math.round(p * 2962);
+    peaks.forEach(function (el) { el.style.setProperty('--p', p); });
+    hms.forEach(function (el) { el.textContent = hm + ' hm'; });
+    t = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!t) { requestAnimationFrame(update); t = true; }
+  }, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
+})();
+
+/* DER GRAT: Wegpunkt antippen -> Pfad-Fortschritt + Panel-Wechsel */
+(function () {
+  'use strict';
+  var WERTE = [
+    { num: '01 / Faith', title: 'Bibel-grounded. Wörtlich.', text: 'Das Fundament, bevor irgendwas anderes kommt: Schlachter 2000, jeden Morgen — bevor das Handy angeht. Sprüche 24,16 ist der Anker: hinfallen gehört dazu, liegen bleiben nicht.' },
+    { num: '02 / Disziplin', title: 'Ritual statt Willenskraft.', text: 'Architektur die trägt — jeden Morgen, auch wenn keiner hinschaut. 4:50 Uhr, Bibel, Gym. Seit Jahren.' },
+    { num: '03 / Vegetarisch + Stark', title: 'Beweis seit 2016.', text: 'Muskelaufbau ohne Fleisch ist kein Kompromiss — es ist mein Beweis, dass beides geht. Teller statt Theorie.' },
+    { num: '04 / Fitness', title: 'Gym seit 2017.', text: '4-5× pro Woche, Lifting plus Cardio — und am Wochenende den Grat rauf. Kraft ist die Basis für jede Tour.' }
+  ];
+  var PCT = [3, 34, 67, 100]; /* Pfad-Fortschritt je Wegpunkt (pathLength=100) */
+  var prog = document.querySelector('.grat-prog');
+  var wps = document.querySelectorAll('.wp');
+  var panel = document.querySelector('.grat-panel .inner');
+  if (!prog || !wps.length || !panel) return;
+  prog.style.strokeDashoffset = 100 - PCT[0];
+  function activate(i) {
+    wps.forEach(function (b, j) { b.classList.toggle('on', j === i); });
+    var wrap = document.querySelector('.grat-wrap');
+    if (wrap) wrap.classList.toggle('summit', i === 3);
+    prog.style.strokeDashoffset = 100 - PCT[i];
+    panel.classList.add('swap');
+    setTimeout(function () {
+      panel.querySelector('[data-p-num]').textContent = WERTE[i].num;
+      panel.querySelector('[data-p-title]').textContent = WERTE[i].title;
+      panel.querySelector('[data-p-text]').textContent = WERTE[i].text;
+      panel.classList.remove('swap');
+    }, 260);
+  }
+  wps.forEach(function (b) {
+    b.addEventListener('click', function () { activate(parseInt(b.dataset.i, 10)); });
+  });
+})();
+
+/* Scroll-Entry mit Stagger */
+(function () {
+  'use strict';
+  var els = document.querySelectorAll('.rv');
+  if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, { rootMargin: '0px 0px -10% 0px' });
+  els.forEach(function (e) { io.observe(e); });
+})();
+</script>
+</body>
+</html>

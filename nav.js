@@ -33,6 +33,20 @@
     else window.addEventListener('load', hide);
   })();
 
+  /* --- Atmosphäre: punktuelle Glow-Verläufe (Sebi-Mockups) --- */
+  (function atmosphere() {
+    if (!document.body || document.querySelector('.vh-atmo')) return;
+    var atmo = document.createElement('div');
+    atmo.className = 'vh-atmo';
+    atmo.setAttribute('aria-hidden', 'true');
+    atmo.innerHTML =
+      '<div class="vh-atmo__blob vh-atmo__blob--light"></div>' +
+      '<div class="vh-atmo__blob vh-atmo__blob--green-left"></div>' +
+      '<div class="vh-atmo__blob vh-atmo__blob--deep-right"><i class="vh-atmo__core" data-atmo-dark></i></div>' +
+      '<div class="vh-atmo__blob vh-atmo__blob--floor"><i class="vh-atmo__core" data-atmo-dark></i></div>';
+    document.body.insertBefore(atmo, document.body.firstChild);
+  })();
+
   /* --- Nav-Markup (EINE Quelle für alle Seiten) ------------- */
   var NAV_HTML =
     '<nav class="vh-nav" aria-label="Hauptnavigation" data-vh-nav>' +

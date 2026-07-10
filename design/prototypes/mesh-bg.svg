@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600" preserveAspectRatio="xMidYMid slice">
+  <!-- VH Mesh-Background: organische, turbulenz-verzerrte Farbflächen
+       aus beiden Familien. Displacement macht die Formen unregelmäßig,
+       Blur laesst sie ineinander laufen — Aquarell statt Farbtupfer. -->
+  <defs>
+    <filter id="organic" x="-40%" y="-40%" width="180%" height="180%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.0035 0.0055" numOctaves="2" seed="11" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="220" xChannelSelector="R" yChannelSelector="G"/>
+      <feGaussianBlur stdDeviation="72"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="1600" fill="#F2EAD7"/>
+  <g filter="url(#organic)">
+    <!-- warmes Antique-Gold-Licht oben rechts -->
+    <path d="M 860 -180 C 1120 -220, 1360 -40, 1320 220 C 1290 420, 1080 400, 920 300 C 780 210, 700 -120, 860 -180 Z" fill="#E6D4A0" opacity="0.95"/>
+    <!-- Dark-Forest-Ecke oben links -->
+    <path d="M -220 -120 C 40 -200, 240 -40, 200 160 C 170 330, -40 380, -180 280 C -300 190, -350 -30, -220 -120 Z" fill="#17402B" opacity="0.9"/>
+    <!-- Mint-Whisper-Hauch oben mitte -->
+    <path d="M 620 180 C 760 120, 900 200, 870 330 C 840 450, 660 470, 570 380 C 490 300, 500 230, 620 180 Z" fill="#D1F2EB" opacity="0.5"/>
+    <!-- Royal/Wald rechts auf Hero-Höhe -->
+    <path d="M 1080 480 C 1300 420, 1420 640, 1340 840 C 1270 1010, 1060 1020, 960 880 C 870 750, 900 540, 1080 480 Z" fill="#0B6E4F" opacity="0.8"/>
+    <!-- satte Emerald-Sage-Aura links unter der Mitte -->
+    <path d="M -180 860 C 60 760, 320 880, 300 1090 C 280 1280, 40 1380, -140 1280 C -290 1190, -330 940, -180 860 Z" fill="#2E7A4C" opacity="0.8"/>
+    <!-- Emerald-Hauch mitte -->
+    <path d="M 420 980 C 560 920, 700 990, 680 1110 C 660 1220, 500 1250, 420 1170 C 350 1100, 340 1030, 420 980 Z" fill="#50C878" opacity="0.3"/>
+    <!-- Sage-Brücke rechts unten -->
+    <path d="M 1000 1150 C 1180 1090, 1330 1200, 1290 1360 C 1250 1500, 1050 1520, 960 1410 C 880 1310, 880 1200, 1000 1150 Z" fill="#5E775E" opacity="0.55"/>
+    <!-- Evergreen-Boden -->
+    <path d="M -120 1500 C 220 1360, 900 1380, 1300 1480 C 1420 1520, 1420 1700, 1300 1720 L -120 1720 Z" fill="#0A2C1B" opacity="0.98"/>
+  </g>
+</svg>

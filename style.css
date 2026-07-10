@@ -4522,3 +4522,107 @@ body { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 100px); }
   box-shadow: 0 10px 26px -10px rgba(0,0,0,0.4) !important;
 }
 .identity-glass-card .identity-cta-primary:hover { background: #ffffff !important; }
+
+/* ============================================================
+   VH ATMOSPHÄRE — punktuelle Glow-Verläufe (Sebi-Mockups 10.07.)
+   Vanilla-Grund + weiche grüne Auren an den Rändern, site-weit.
+   Self-injecting via nav.js (.vh-atmo). Nur Gradients, kein Filter,
+   kein Layout-Impact: absolute Ebene hinter dem Content, overflow
+   hidden gegen 375px-Querscroll. Dunkle Kerne tragen [data-atmo-dark]
+   als Invert-Zonen für die Klon-Ebenen-Mechanik (Logo/Nav/Schrift).
+   ============================================================ */
+:root {
+  /* Blob-Farben, aus den Mockups gesampelt */
+  --atmo-light:      rgba(236, 217, 166, 0.85);  /* warmes Sonnenlicht oben rechts */
+  --atmo-green:      rgba(45, 122, 74, 0.60);    /* grüne Aura linker Rand */
+  --atmo-deep:       rgba(8, 44, 26, 0.72);      /* dunkle Waldtiefe rechter Rand */
+  --atmo-floor:      rgba(10, 40, 24, 0.72);     /* dunkler Boden hinter der Nav */
+}
+
+body { position: relative; }
+
+.vh-atmo {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Grain über der ganzen Atmosphäre — Mockup-Textur */
+.vh-atmo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--grain6);
+  opacity: 0.5;
+}
+
+.vh-atmo__blob { position: absolute; }
+
+/* Warmes Licht oben rechts (hell — kein Invert nötig) */
+.vh-atmo__blob--light {
+  top: -14vh; right: -24vw;
+  width: 78vw; height: 64vh;
+  min-width: 340px; min-height: 340px;
+  background: radial-gradient(closest-side, var(--atmo-light), rgba(236,217,166,0.35) 45%, transparent 72%);
+}
+
+/* Grüne Aura linker Rand, mittlere Höhe */
+.vh-atmo__blob--green-left {
+  top: 52vh; left: -26vw;
+  width: 62vw; height: 70vh;
+  min-width: 320px; min-height: 380px;
+  background: radial-gradient(closest-side, var(--atmo-green), rgba(45,122,74,0.28) 48%, transparent 76%);
+}
+
+/* Dunkle Waldtiefe rechter Rand, zweiter Screen */
+.vh-atmo__blob--deep-right {
+  top: 108vh; right: -22vw;
+  width: 58vw; height: 72vh;
+  min-width: 320px; min-height: 400px;
+  background: radial-gradient(closest-side, var(--atmo-deep), rgba(8,44,26,0.34) 50%, transparent 78%);
+}
+
+/* Dunkler Boden am Seitenende (hinter der Floating-Nav) */
+.vh-atmo__blob--floor {
+  bottom: -26vh; left: -10vw;
+  width: 120vw; height: 60vh;
+  background: radial-gradient(ellipse 85% 70% at 50% 100%, var(--atmo-floor), rgba(10,40,24,0.32) 55%, transparent 82%);
+}
+
+/* Dichte Kerne der dunklen Blobs = Invert-Zonen (unsichtbar, nur Geometrie) */
+.vh-atmo__core {
+  position: absolute;
+  display: block;
+}
+.vh-atmo__blob--deep-right .vh-atmo__core { top: 18%; right: 30%; width: 45%; height: 55%; }
+.vh-atmo__blob--floor .vh-atmo__core { top: 30%; left: 20%; width: 60%; height: 45%; }
+
+/* ============================================================
+   VH FARBFAMILIEN (Sebi, 10.07. — suraj.dsgn Luxury-Paletten,
+   VH-adaptiert). Verbindlich für alle neuen Flächen:
+   — „Forest Luxury"  = die dunkle Welt (Glow-Bänder, Invert-Flächen)
+   — „Warm Editorial" = die helle Welt (Papier, Karten, Akzente)
+   ============================================================ */
+:root {
+  /* Familie 1 — Forest Luxury (dunkel) */
+  --fl-mint:      #D1F2EB;  /* Mint Whisper — Text-Akzent auf dunkel */
+  --fl-emerald:   #50C878;  /* Emerald Green — Glow/Bloom, Italic-Akzent */
+  --fl-royal:     #0B6E4F;  /* Royal — satte Mittellage, Verlaufs-Stütze */
+  --fl-evergreen: #013220;  /* Dark Evergreen — tiefster Grund */
+
+  /* Familie 2 — Warm Editorial (hell) */
+  --we-alabaster: #E9E0CF;  /* Warm Alabaster — Papier-Fläche */
+  --we-gold:      #BA9B5F;  /* Antique Gold — edler Akzent auf hell */
+  --we-sage:      #5E775E;  /* Sage Green — ruhiges Grün auf hell */
+  --we-forest:    #132B23;  /* Dark Forest — Text/Kontrast auf hell */
+
+  /* Papier-Ton für Text auf dunklen Bändern (VH-warm statt Weiß) */
+  --band-paper:   #F4EAD4;
+}
+
+/* Querscroll-Schutz für Full-bleed-Bänder (clip statt hidden: kein
+   neuer Scroll-Container, sticky/fixed bleiben intakt) */
+html { overflow-x: clip; }
