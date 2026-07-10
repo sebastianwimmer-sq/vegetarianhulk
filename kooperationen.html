@@ -164,6 +164,37 @@
   .brand-page .brand-theme-pill:hover, .brand-page .brand-cta-primary:hover { transform: none !important; }
   .brand-sticky-cta { transition: opacity .2s ease; }
 }
+
+/* ===== v3 De-Glass: massives warmes Papier statt Glassmorphism ===== */
+.brand-page .brand-hero,
+.brand-page .v5-section,
+.brand-page .v5-section:nth-of-type(2n) {
+  background: linear-gradient(180deg, #f9f2e4, #efe4cd) !important;
+  border: 1px solid var(--earth, #cfbf9d) !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+  box-shadow: 0 1px 3px rgba(18,45,28,.05), 0 16px 38px -20px rgba(18,45,28,.20) !important;
+}
+.brand-page .brand-trust-bar {
+  background: rgba(247,239,222,.92) !important;
+  border: 1px solid var(--earth, #cfbf9d) !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+  box-shadow: 0 1px 3px rgba(18,45,28,.05), 0 8px 22px -16px rgba(18,45,28,.16) !important;
+}
+.brand-page .hero-stat-tile,
+.brand-page .usp-card,
+.brand-page .package-card {
+  background: linear-gradient(180deg, #ffffff, #f4ead4) !important;
+  border: 1px solid var(--earth, #cfbf9d) !important;
+  box-shadow: 0 1px 3px rgba(4,89,39,.06), 0 8px 22px -14px rgba(4,89,39,.16) !important;
+}
+.brand-page .brand-hero .hero-photo-wrap {
+  box-shadow: 0 0 0 1px rgba(150,130,92,.5), 0 18px 40px -22px rgba(4,89,39,.4) !important;
+}
+.brand-sticky-cta {
+  background: var(--grad-forest) !important;
+  border: 1px solid rgba(150,130,92,.4) !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+}
 </style>
 </head>
 <body>
