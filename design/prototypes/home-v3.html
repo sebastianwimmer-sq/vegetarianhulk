@@ -171,6 +171,9 @@ body.loaded .st { opacity: 1; transform: translateY(0); filter: blur(0); }
   color: rgba(209,242,235,0.38); }
 .stage-cut { position: relative; z-index: 2; display: block; width: 88%; margin-inline: auto;
   filter: drop-shadow(0 34px 54px rgba(0,0,0,0.6)) drop-shadow(0 6px 14px rgba(0,0,0,0.35)); }
+.social-link { border-bottom: 1px solid rgba(126,208,155,0.4); padding-bottom: 1px;
+  transition: color 400ms var(--ease-lux), border-color 400ms var(--ease-lux); }
+.social-link:hover { color: var(--leaf); border-color: var(--leaf); }
 .stage-caption { margin-top: 16px; text-align: center; font-family: var(--mono); font-size: 10px; font-weight: 600;
   letter-spacing: 2.2px; text-transform: uppercase; color: var(--paper-faint); }
 .hero-copy { margin-top: 56px; }
@@ -235,25 +238,89 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .grat-base, .grat-prog { fill: none; stroke-linecap: round; stroke-linejoin: round; }
 .grat-kreuz { color: rgba(243,235,217,0.55); transition: color 600ms var(--ease-lux); }
 .grat-wrap.summit .grat-kreuz { color: var(--leaf); filter: drop-shadow(0 0 6px rgba(80,200,120,0.6)); }
-.grat-base { stroke: rgba(243,235,217,0.28); stroke-width: 1.6; stroke-dasharray: 100; stroke-dashoffset: 100; }
-.rv.in .grat-base { animation: gratdraw 1600ms var(--ease-lux) 200ms forwards; }
+.grat-base { stroke: rgba(243,235,217,0.34); stroke-width: 1.6; stroke-dasharray: 4 7; }
+.scene { fill: none; stroke: rgba(243,235,217,0.4); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+.scene--far { stroke: rgba(243,235,217,0.16); }
+.scene-massif { fill: rgba(243,235,217,0.05); stroke: none; }
+.scene-ridge { fill: none; stroke: rgba(243,235,217,0.26); stroke-width: 1.2;
+  stroke-linecap: round; stroke-linejoin: round; }
+.scene text { stroke: none; fill: rgba(243,235,217,0.55); }
+/* ---- Choreografie: der Berg entsteht, dann die Tour ---- */
+/* 1) Kamm + Höhenlinien zeichnen sich */
+.scene-ridge, .scene--far path { stroke-dasharray: 100; stroke-dashoffset: 100; }
+.grat-wrap.rv.in .scene-ridge { animation: gratdraw 1800ms var(--ease-lux) 150ms forwards; }
+.grat-wrap.rv.in .scene--far path { animation: gratdraw 2000ms var(--ease-lux) 500ms forwards; }
+/* 2) Massiv-Fläche + Wegmarkierung erscheinen, wenn der Berg steht */
+.scene-massif { opacity: 0; transition: opacity 1000ms var(--ease-lux) 1100ms; }
+.grat-base { opacity: 0; transition: opacity 900ms var(--ease-lux) 1250ms; }
+.grat-wrap.rv.in .scene-massif, .grat-wrap.rv.in .grat-base { opacity: 1; }
+/* 3) Szene-Elemente wachsen nacheinander aus dem Boden */
+.scene > g, .scene > circle, .scene > path { opacity: 0;
+  translate: 0 7px; scale: 0.88; transform-box: fill-box; transform-origin: 50% 100%;
+  transition: opacity 600ms var(--ease-lux) var(--sd, 1500ms),
+    translate 600ms var(--ease-lux) var(--sd, 1500ms),
+    scale 600ms var(--ease-lux) var(--sd, 1500ms); }
+.grat-wrap.rv.in .scene > g, .grat-wrap.rv.in .scene > circle, .grat-wrap.rv.in .scene > path {
+  opacity: 1; translate: 0 0; scale: 1; }
+/* 4) Schilder klappen gestaffelt auf */
+.wp { opacity: 0; }
+.wp .wp-num { transform: rotate(-14deg) scale(0.85); }
+.grat-wrap.rv.in .wp { opacity: 1; transition: opacity 500ms var(--ease-lux); }
+.grat-wrap.rv.in .wp .wp-num { transform: rotate(0) scale(1); }
+.grat-wrap.rv.in .wp:nth-of-type(1), .grat-wrap.rv.in .wp:nth-of-type(1) .wp-num { transition-delay: 2050ms; }
+.grat-wrap.rv.in .wp:nth-of-type(2), .grat-wrap.rv.in .wp:nth-of-type(2) .wp-num { transition-delay: 2200ms; }
+.grat-wrap.rv.in .wp:nth-of-type(3), .grat-wrap.rv.in .wp:nth-of-type(3) .wp-num { transition-delay: 2350ms; }
+.grat-wrap.rv.in .wp:nth-of-type(4), .grat-wrap.rv.in .wp:nth-of-type(4) .wp-num { transition-delay: 2500ms; }
+.grat-wrap.rv.in .wp:hover .wp-num { transition-delay: 0ms; }
+/* 5) Smashy kommt zuletzt an den Start */
+.grat-smashy { opacity: 0; transition: left 1100ms var(--ease-lux), top 1100ms var(--ease-lux), opacity 500ms var(--ease-lux) 2700ms; }
+.grat-wrap.rv.in .grat-smashy { opacity: 1; }
+/* Smashy hüpft beim Wandern */
+@keyframes smashyhop {
+  0%, 100% { transform: translate(-120%, -108%) rotate(-2deg); }
+  50% { transform: translate(-120%, -116%) rotate(3deg); }
+}
+.grat-smashy.walking { animation: smashyhop 360ms ease-in-out infinite; }
+/* Ankunfts-Puls am aktiven Wegpunkt */
+@keyframes wpping { from { box-shadow: 0 0 0 0 rgba(80,200,120,0.55); } to { box-shadow: 0 0 0 16px rgba(80,200,120,0); } }
+.wp.on::before { animation: wpping 900ms var(--ease-lux) 1; }
+/* Gipfelkreuz-Pop beim Summit */
+.grat-kreuz { transform-box: fill-box; transform-origin: 50% 100%; }
+.grat-wrap.summit .grat-kreuz { animation: kreuzpop 700ms var(--ease-lux) 1; }
+@keyframes kreuzpop { 0% { transform: scale(1); } 45% { transform: scale(1.35); } 100% { transform: scale(1); } }
 @keyframes gratdraw { to { stroke-dashoffset: 0; } }
 .grat-prog { stroke: var(--emerald); stroke-width: 2.2; stroke-dasharray: 100; stroke-dashoffset: 100;
   transition: stroke-dashoffset 900ms var(--ease-lux);
   filter: drop-shadow(0 0 6px rgba(80,200,120,0.5)); }
-.wp { position: absolute; transform: translate(-50%, -50%); width: 40px; height: 40px;
-  border: 0; border-radius: 50%; cursor: pointer; background: transparent;
-  display: grid; place-items: center; pointer-events: auto; }
-.wp::before { content: ""; width: 12px; height: 12px; border-radius: 50%;
-  background: var(--bg-deep); border: 2px solid rgba(243,235,217,0.5);
-  transition: background 400ms var(--ease-lux), border-color 400ms var(--ease-lux), transform 400ms var(--ease-lux); }
-.wp:hover::before { transform: scale(1.25); border-color: var(--leaf); }
-.wp.on::before { background: var(--emerald); border-color: var(--emerald);
-  box-shadow: 0 0 12px rgba(80,200,120,0.6); }
-.wp .wp-num { position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
-  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.6px;
-  color: var(--paper-faint); transition: color 400ms var(--ease-lux); }
-.wp.on .wp-num { color: var(--leaf); }
+.wp { position: absolute; transform: translate(-50%, -100%); width: 44px; height: 52px;
+  border: 0; cursor: pointer; background: transparent; pointer-events: auto; }
+/* Wegpunkt-Anker auf dem Pfad */
+.wp::before { content: ""; position: absolute; left: 50%; bottom: -3px; transform: translateX(-50%);
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--bg-deep); border: 1.5px solid rgba(243,235,217,0.55);
+  transition: background 400ms var(--ease-lux), border-color 400ms var(--ease-lux); }
+/* Pfahl */
+.wp::after { content: ""; position: absolute; left: 50%; bottom: 4px; transform: translateX(-50%);
+  width: 1.5px; height: 26px; background: rgba(243,235,217,0.45); }
+/* Schild: zeigt bergwärts */
+.wp .wp-num { position: absolute; top: 0; left: calc(50% - 4px); white-space: nowrap; z-index: 1;
+  font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 1.2px;
+  color: rgba(243,235,217,0.75); background: rgba(7,31,20,0.92);
+  border: 1px solid rgba(243,235,217,0.4); padding: 4px 14px 4px 8px;
+  clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 50%, calc(100% - 9px) 100%, 0 100%);
+  transition: background 400ms var(--ease-lux), color 400ms var(--ease-lux),
+    border-color 400ms var(--ease-lux), transform 400ms var(--ease-lux);
+  transform-origin: left bottom; }
+.wp:hover .wp-num { transform: rotate(-3deg); border-color: var(--leaf); }
+.wp:hover::before { border-color: var(--leaf); }
+.wp.on::before { background: var(--emerald); border-color: var(--emerald); box-shadow: 0 0 10px rgba(80,200,120,0.6); }
+.wp.on .wp-num { background: var(--emerald); color: #06231A; border-color: var(--emerald);
+  box-shadow: 0 0 14px rgba(80,200,120,0.4); }
+/* Smashy wandert den Grat mit */
+.grat-smashy { position: absolute; width: 38px; height: auto; z-index: 2; pointer-events: none;
+  transform: translate(-120%, -108%);
+  transition: left 1100ms var(--ease-lux), top 1100ms var(--ease-lux);
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.45)); }
 .grat-panel { margin-top: 30px; min-height: 128px; }
 .grat-panel .num { font-family: var(--mono); font-size: var(--t-label); font-weight: 600; letter-spacing: 2px; color: var(--gold); }
 .grat-panel h3 { margin: 8px 0 10px; font-family: 'Playfair Display', serif; font-weight: 600;
@@ -378,6 +445,10 @@ footer .legal a:hover { color: var(--paper); }
   .rv, .st { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
   .scribble path, .cta .ring path { stroke-dashoffset: 0 !important; animation: none !important; }
   .cta:hover .arr, .nav a:hover { transform: none; }
+  .grat-smashy { transition: none; animation: none !important; }
+  .scene-ridge, .scene--far path { stroke-dashoffset: 0 !important; animation: none !important; }
+  .scene-massif, .grat-base, .grat-wrap .wp, .grat-wrap .scene > * { opacity: 1 !important; translate: 0 0 !important; scale: 1 !important; transition: none !important; }
+  .wp.on::before, .grat-kreuz { animation: none !important; }
 }
 </style>
 </head>
@@ -416,11 +487,11 @@ footer .legal a:hover { color: var(--paper); }
           </svg>
         </div>
         <img class="stage-cut" src="hero-cutout.png" alt="Sebi, Founder vegetarianhulk" fetchpriority="high">
-        <figcaption class="stage-caption">@vegetarianhulk · Bayern</figcaption>
+        <figcaption class="stage-caption"><a class="social-link" href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">@vegetarianhulk</a> · Bayern</figcaption>
       </figure>
       <div class="hero-copy">
       <h1 class="hero-name st st1">Sebi</h1>
-      <p class="hero-handle st st2">Sebastian &nbsp;·&nbsp; @vegetarianhulk</p>
+      <p class="hero-handle st st2">Sebastian &nbsp;·&nbsp; <a class="social-link" href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">@vegetarianhulk</a></p>
       <p class="hero-meta st st2">25<span class="dot">·</span>Vegetarisch seit 2016<span class="dot">·</span>✝ Christ<span class="dot">·</span>△ Bergsportler</p>
       <hr class="hero-rule st st3">
       <p class="hero-tagline st st4">Disziplin ist kein&nbsp;Talent.
@@ -447,19 +518,71 @@ footer .legal a:hover { color: var(--paper); }
     </div>
     <section class="grat-wrap rv" aria-label="Vier Werte — Der Grat">
       <div class="grat-stage">
-      <svg class="grat" viewBox="0 0 720 210" aria-hidden="true">
-        <path class="grat-base" pathLength="100" d="M14 192 C 90 178, 170 146, 250 124 C 330 102, 420 94, 500 66 C 560 46, 640 30, 702 16"/>
-        <path class="grat-prog" pathLength="100" d="M14 192 C 90 178, 170 146, 250 124 C 330 102, 420 94, 500 66 C 560 46, 640 30, 702 16"/>
+      <svg class="grat" viewBox="0 0 720 240" aria-hidden="true">
+        <!-- Hintergrund: zweiter Kamm + Höhenlinien (Tiefe) -->
+        <!-- Massiv-Silhouette: Fläche (ohne Kanten) + offene Kammlinie -->
+        <path class="scene-massif" d="M-4 240 V 220 C 90 212, 190 184, 290 154 C 400 121, 510 98, 630 56 L 702 37 L 714 44 L 722 52 V 240 Z"/>
+        <path class="scene-ridge" pathLength="100" d="M-4 220 C 90 212, 190 184, 290 154 C 400 121, 510 98, 630 56 L 702 37 L 714 44 L 722 52"/>
+        <g class="scene scene--far">
+          <path pathLength="100" d="M0 150 C 80 138, 150 108, 230 116 C 310 124, 380 84, 460 78 C 540 72, 620 46, 720 52"/>
+          <path pathLength="100" d="M40 226 C 160 218, 300 222, 430 214 C 540 208, 640 212, 716 206" opacity="0.5"/>
+          <path pathLength="100" d="M120 234 C 240 228, 420 232, 560 224 C 640 220, 690 222, 718 220" opacity="0.35"/>
+        </g>
+        <!-- Wander-Szene entlang des Wegs -->
+        <g class="scene">
+          <!-- Parkplatz + Wegweiser am Start -->
+          <g style="--sd: 1450ms" transform="translate(4, 190)">
+            <rect x="0" y="0" width="13" height="13" rx="2.5"/>
+            <text x="6.5" y="10" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="9" stroke="none" fill="currentColor">P</text>
+          </g>
+          <g style="--sd: 1580ms" transform="translate(42, 176)">
+            <path d="M0 36 V 0"/>
+            <path d="M0 4 h 16 l 4 3 -4 3 H 0"/>
+            <path d="M0 14 h -13 l -4 3 4 3 H 0"/>
+          </g>
+          <!-- Kapelle bei 01 / Faith (grounded) -->
+          <g style="--sd: 1710ms" transform="translate(88, 178)">
+            <path d="M0 22 V 8 L 8 0 L 16 8 V 22 Z"/>
+            <path d="M8 0 V -7 M 5 -4 h 6"/>
+            <path d="M6 22 v -7 h 4 v 7"/>
+          </g>
+          <!-- Tannen zwischen 01 und 02 -->
+          <g style="--sd: 1840ms" transform="translate(180, 148)">
+            <path d="M6 22 V 18 M 6 18 L 0 18 L 6 8 L 2 8 L 6 0 L 10 8 L 6 8 L 12 18 Z"/>
+          </g>
+          <g style="--sd: 1900ms" transform="translate(206, 156)" opacity="0.7">
+            <path d="M4.5 16 V 13 M 4.5 13 L 0 13 L 4.5 5 L 1.5 5 L 4.5 -1 L 7.5 5 L 4.5 5 L 9 13 Z"/>
+          </g>
+          <!-- Almhütte kurz vor 03 -->
+          <g style="--sd: 2000ms" transform="translate(428, 92)">
+            <path d="M0 18 V 8 L 9 0 L 18 8 V 18 Z"/>
+            <path d="M-3 8.5 L 9 -2 L 21 8.5"/>
+            <path d="M12 18 v -6 h 4 v 6 M 4 12 h 4 v 4 h -4 z"/>
+          </g>
+          <!-- Schneegrenze vor dem Gipfel -->
+          <g style="--sd: 2120ms" opacity="0.75">
+            <path d="M560 62 l 7 -4 7 4"/>
+            <path d="M590 52 l 6 -3.5 6 3.5"/>
+            <path d="M622 44 l 5 -3 5 3"/>
+          </g>
+          <!-- Sonne + Vögel überm Gipfel -->
+          <circle style="--sd: 2240ms" cx="652" cy="10" r="6"/>
+          <path style="--sd: 2320ms" d="M600 22 q 4 -4 8 0 M 612 16 q 3.5 -3.5 7 0" opacity="0.7"/>
+        </g>
+        <!-- Wegmarkierung: gestrichelt wie auf der Wanderkarte -->
+        <path class="grat-base" d="M14 212 C 90 198, 170 166, 250 144 C 330 122, 420 114, 500 86 C 560 66, 640 50, 702 36"/>
+        <path class="grat-prog" pathLength="100" d="M14 212 C 90 198, 170 166, 250 144 C 330 122, 420 114, 500 86 C 560 66, 640 50, 702 36"/>
         <!-- Gipfelkreuz am höchsten Punkt -->
         <g class="grat-kreuz" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-          <path d="M702 14 V -8"/>
-          <path d="M695 -1 H 709"/>
+          <path d="M702 34 V 12"/>
+          <path d="M695 19 H 709"/>
         </g>
       </svg>
-      <button class="wp on" type="button" style="left: 1.9%; top: 91.4%;" data-i="0" aria-label="Faith — Bibel-grounded"><span class="wp-num">01</span></button>
-      <button class="wp" type="button" style="left: 34.7%; top: 59%;" data-i="1" aria-label="Disziplin"><span class="wp-num">02</span></button>
-      <button class="wp" type="button" style="left: 69.4%; top: 31.4%;" data-i="2" aria-label="Vegetarisch + Stark"><span class="wp-num">03</span></button>
-      <button class="wp" type="button" style="left: 96.5%; top: 7.6%;" data-i="3" aria-label="Fitness"><span class="wp-num">04</span></button>
+      <button class="wp on" type="button" style="left: 1.9%; top: 88.3%;" data-i="0" aria-label="Faith — Bibel-grounded"><span class="wp-num">01 · Tal</span></button>
+      <button class="wp" type="button" style="left: 34.7%; top: 60%;" data-i="1" aria-label="Disziplin"><span class="wp-num">02 · 850 hm</span></button>
+      <button class="wp" type="button" style="left: 69.4%; top: 35.8%;" data-i="2" aria-label="Vegetarisch + Stark"><span class="wp-num">03 · 1900 hm</span></button>
+      <button class="wp" type="button" style="left: 96.5%; top: 15%;" data-i="3" aria-label="Fitness"><span class="wp-num">04 · 2962 hm</span></button>
+      <img class="grat-smashy" src="/assets/img/smashy-maskottchen.png" alt="" style="left: 1.9%; top: 88.3%;">
       </div>
       <div class="grat-panel" aria-live="polite">
         <div class="inner">
@@ -468,40 +591,6 @@ footer .legal a:hover { color: var(--paper); }
           <p data-p-text>Das Fundament, bevor irgendwas anderes kommt: Schlachter 2000, jeden Morgen — bevor das Handy angeht. Sprüche 24,16 ist der Anker: hinfallen gehört dazu, liegen bleiben nicht.</p>
         </div>
       </div>
-    </section>
-
-    <!-- Hulk Hikes — Mehrwert-Teaser: echte Tour-Daten, Fineline-Berg -->
-    <section class="hikes rv" aria-label="Hulk Hikes — Bergtouren-Guide">
-      <div class="shead" style="margin-bottom: 18px;">
-        <p class="kicker">Hulk Hikes · Bergtouren-Guide</p>
-        <h2>Echte Touren. <em>Selber gangen.</em></h2>
-      </div>
-      <p class="hikes-copy">Keine Stock-Fotos, keine kopierten GPX-Files — jede Route bin ich selbst gelaufen.
-      Mit ehrlichen Zeiten, Höhenprofil und Parkplatz-Info.</p>
-      <p class="hikes-stats">Beispiel-Format<span class="dot">·</span>5 km<span class="dot">·</span>294 hm<span class="dot">·</span>ca. 1:25 h<span class="dot">·</span>Parkplatz ✓</p>
-      <!-- Mini-Höhenprofil (Fineline) mit Tal -> Gipfelkreuz -->
-      <svg class="hikes-profile" viewBox="0 0 560 92" fill="none" aria-hidden="true">
-        <path class="hp-line" pathLength="100" d="M4 84 C 60 80, 110 66, 160 58 C 220 48, 260 52, 310 38 C 360 24, 420 22, 470 14 L 508 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-        <path d="M508 8 V -2 M 504 2 h 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-        <g font-family="ui-monospace, Menlo, monospace" font-size="9" fill="currentColor" opacity="0.7">
-          <text x="4" y="76">Tal · Parkplatz</text>
-          <text x="440" y="30">Gipfel</text>
-        </g>
-      </svg>
-      <dl class="hikes-facts">
-        <div><dt>Schwierigkeit</dt><dd>leicht – mittel, klar markiert</dd></div>
-        <div><dt>Je Tour dabei</dt><dd>GPX-Download · Höhenprofil · ehrliche Gehzeit</dd></div>
-        <div><dt>Anfahrt</dt><dd>Startpunkt mit Parkplatz-Koordinaten</dd></div>
-        <div><dt>Saison-Check</dt><dd>welche Route gerade Sinn macht</dd></div>
-      </dl>
-      <p class="brands-line" style="margin-top: 26px;">Der Guide wächst gerade — <a href="/touren/">→ Alle Touren</a></p>
-      <svg class="hikes-mtn" viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M6 50 26 16l10 16 8-12 22 30"/>
-        <path d="M22 23.5 26 20l4 5"/>
-        <path d="M40.5 25.5 44 21.5l3.5 5"/>
-        <circle cx="58" cy="11" r="4.5"/>
-        <path d="M12 50c8-4 16-3.4 22 0" opacity="0.5"/>
-      </svg>
     </section>
 
     <!-- Bibel-Anker: der Licht-Moment -->
@@ -672,6 +761,14 @@ footer .legal a:hover { color: var(--paper); }
     wps.forEach(function (b, j) { b.classList.toggle('on', j === i); });
     var wrap = document.querySelector('.grat-wrap');
     if (wrap) wrap.classList.toggle('summit', i === 3);
+    var smashy = document.querySelector('.grat-smashy');
+    if (smashy) {
+      smashy.style.left = wps[i].style.left;
+      smashy.style.top = wps[i].style.top;
+      smashy.classList.add('walking');
+      clearTimeout(smashy._walkT);
+      smashy._walkT = setTimeout(function () { smashy.classList.remove('walking'); }, 1150);
+    }
     prog.style.strokeDashoffset = 100 - PCT[i];
     panel.classList.add('swap');
     setTimeout(function () {
