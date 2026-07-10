@@ -1,0 +1,42 @@
+<!-- @dsCard group="Foundations" -->
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,600&family=Inter:wght@400;600;700;800&display=swap');
+:root{--vanilla:#f7efde;--beige:#efe5cf;--earth:#cfbf9d;--ink:#1a1410;--ink2:#5c513f;--ink3:#9a8c75;--anchor:#122d1c;--primary:#045927;--accent:#1a7340;
+--grad:radial-gradient(135% 105% at 22% 10%,rgba(96,214,152,.34),rgba(96,214,152,0) 56%),radial-gradient(120% 120% at 90% 100%,rgba(4,40,22,.55),rgba(4,40,22,0) 60%),linear-gradient(152deg,#1c7a45 0%,#045927 50%,#081c12 100%);}
+*{box-sizing:border-box}body{font-family:'Inter',system-ui,sans-serif;background:var(--vanilla);color:var(--ink);margin:0;padding:40px;
+background-image:radial-gradient(ellipse 100% 55% at 50% -6%,rgba(4,89,39,.06),transparent 60%);}
+.pf{font-family:'Playfair Display',Georgia,serif}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:2.6px;text-transform:uppercase;color:var(--primary);display:flex;align-items:center;gap:12px;margin:0 0 20px}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--earth)}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:600;margin:0 0 32px;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--accent)}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:14px;margin:0 0 40px}
+.sw{border-radius:14px;overflow:hidden;border:1px solid var(--earth)}
+.sw .chip{height:76px}.sw .lbl{padding:8px 10px;font-size:11px;font-weight:700}.sw .hex{color:var(--ink2);font-weight:400;font-size:10px}
+.grad{height:130px;border-radius:18px;background:var(--grad);margin:0 0 40px;box-shadow:0 12px 30px -14px rgba(15,42,26,.5)}
+.type div{margin:0 0 6px}
+</style></head><body>
+<p class="eyebrow">VegetarianHulk · v3 Foundations</p>
+<h1 class="pf">Forest editorial, <em>mit Tiefe</em>.</h1>
+
+<div class="swatches">
+  <div class="sw"><div class="chip" style="background:#f7efde"></div><div class="lbl">Vanilla <span class="hex">#f7efde</span></div></div>
+  <div class="sw"><div class="chip" style="background:#efe5cf"></div><div class="lbl">Beige <span class="hex">#efe5cf</span></div></div>
+  <div class="sw"><div class="chip" style="background:#cfbf9d"></div><div class="lbl">Earth <span class="hex">#cfbf9d</span></div></div>
+  <div class="sw"><div class="chip" style="background:#1a7340"></div><div class="lbl" style="color:#fff;background:#1a7340">Accent <span class="hex" style="color:#e5f2ea">#1a7340</span></div></div>
+  <div class="sw"><div class="chip" style="background:#045927"></div><div class="lbl" style="color:#fff;background:#045927">Primary <span class="hex" style="color:#cfe6d7">#045927</span></div></div>
+  <div class="sw"><div class="chip" style="background:#122d1c"></div><div class="lbl" style="color:#fff;background:#122d1c">Anchor <span class="hex" style="color:#9db5a5">#122d1c</span></div></div>
+</div>
+
+<p class="eyebrow">Signatur-Gradient „Waldtiefe"</p>
+<div class="grad"></div>
+
+<p class="eyebrow">Typo — Playfair Display + Inter</p>
+<div class="type">
+  <div class="pf" style="font-size:44px;font-weight:700;line-height:1">Disziplin ist ein Ritual.</div>
+  <div class="pf" style="font-size:28px;font-style:italic;color:var(--accent)">ein Leben.</div>
+  <div style="font-size:15px;color:var(--ink2);max-width:52ch;margin-top:10px">Inter für Body & Meta. Ehrlich, bairisch, kein Coaching-Sprech — alle selber gangen, alle mit Parkplatz.</div>
+  <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);margin-top:12px">5 km · 294 hm · ca. 1:25 h</div>
+</div>
+</body></html>
