@@ -2497,15 +2497,17 @@ html { scroll-behavior: smooth; }
 
 /* === Aurora Forest-Light Background (animated) === */
 body {
-  /* Atmosphäre + Papier-Grain statt Flat-Fill (Anti-Slop-Tiefe) */
-  background-color: var(--vanilla);
+  /* Cream + grüne Glow-Aura an den Rändern (invertierter Glow — Mockup-Look) + Grain */
+  background-color: #f5edda;
   background-image:
-    radial-gradient(ellipse 100% 55% at 50% -6%, rgba(4,89,39,0.075), transparent 60%),
-    radial-gradient(ellipse 80% 60% at 108% 108%, rgba(26,115,64,0.05), transparent 55%),
-    radial-gradient(ellipse 60% 50% at -8% 42%, rgba(207,191,157,0.12), transparent 60%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  background-attachment: fixed, fixed, fixed, scroll;
-  background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+    radial-gradient(60% 44% at -6% 28%, rgba(26,115,64,0.30), transparent 60%),
+    radial-gradient(58% 42% at 106% 16%, rgba(26,115,64,0.24), transparent 60%),
+    radial-gradient(75% 46% at 50% 112%, rgba(4,89,39,0.30), transparent 62%),
+    radial-gradient(55% 40% at 50% -10%, rgba(96,214,152,0.16), transparent 55%),
+    linear-gradient(180deg, #f7efde 0%, #efe4cd 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  background-attachment: fixed, fixed, fixed, fixed, fixed, scroll;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat;
 }
 body::before {
   content: '';
@@ -4487,3 +4489,36 @@ body { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 100px); }
 
 /* Mobile-Fix: lange URLs in Legal-Texten brechen um (kein Overflow @375) */
 .legal-page a { overflow-wrap: anywhere; }
+
+/* ============================================================
+   HOMEPAGE v3 — Identity-Card = dunkelgrüne Invert-Karte + Foto
+   ragt rein (Mockup-Richtung: Cream + Glow + hell/dunkel-Kontrast).
+   ============================================================ */
+.cinematic-hero { gap: 0 !important; }
+.cinematic-hero[data-mode="portrait"] .cinematic-hero__photo { z-index: 3; position: relative; }
+.identity-glass-card {
+  position: relative; z-index: 2;
+  margin-top: -46px !important;
+  padding-top: 62px !important;
+  background-color: #0a2016 !important;
+  background-image: var(--grain6), var(--grad-hero) !important;
+  border: 1px solid rgba(96,214,152,0.16) !important;
+  box-shadow: 0 26px 64px -28px rgba(4,40,22,0.62) !important;
+  overflow: hidden;
+}
+.identity-glass-card .hero-name { color: #f4ead4 !important; }
+.identity-glass-card .hero-handle { color: rgba(244,234,212,0.72) !important; }
+.identity-glass-card .hero-facts { color: #9ed9b3 !important; border-bottom-color: rgba(158,217,179,0.24) !important; }
+.identity-glass-card .hero-fact svg,
+.identity-glass-card .hero-fact { color: #9ed9b3 !important; }
+.identity-glass-card .hero-fact-sep { color: rgba(158,217,179,0.4) !important; }
+.identity-glass-card h1 { color: #f4ead4 !important; }
+.identity-glass-card h1 em, .identity-glass-card h1 .italic { color: #8fd6a6 !important; }
+.identity-glass-card .identity-sub { color: rgba(244,234,212,0.92) !important; border-left-color: #8fd6a6 !important; }
+.identity-glass-card .identity-sub strong { color: #ffffff !important; }
+/* CTA auf der dunklen Karte: Cream-Knopf (invertiert), sticht heraus */
+.identity-glass-card .identity-cta-primary {
+  background: #f4ead4 !important; color: #0a2016 !important;
+  box-shadow: 0 10px 26px -10px rgba(0,0,0,0.4) !important;
+}
+.identity-glass-card .identity-cta-primary:hover { background: #ffffff !important; }
