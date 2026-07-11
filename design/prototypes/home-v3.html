@@ -235,107 +235,79 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .shead h2 em { font-style: italic; color: var(--leaf); }
 
 /* ============================================================
-   VIER WERTE — DAS RELIEF (Stufe 2): Draufsicht-Karte in 3D-
-   Kippung. Serpentinen-Weg schlaengelt sich zum Gipfel, POIs
-   stehen aufrecht auf der Platte (Diorama), Maus neigt sie.
+   VIER WERTE — DER BERG (3D-Scrollytelling): prozeduraler
+   Low-Poly-Berg (Three.js, self-hosted). Scroll = Aufstieg:
+   Weg waechst, Smashy wandert, der Berg dreht sich ~90 Grad.
+   Overlays (Schilder/POIs/Wetterstation) sind HTML, projiziert.
    ============================================================ */
 .grat-wrap { margin-top: 8px; }
-.relief { perspective: 1300px; }
-.relief-plate { position: relative; margin-inline: auto; width: min(100%, 860px); aspect-ratio: 720 / 440;
-  transform: rotateX(calc(var(--tx, 52) * 1deg)) rotateZ(calc(var(--tz, 0) * 1deg));
-  transform-style: preserve-3d;
-  transition: transform 700ms var(--ease-lux); will-change: transform;
-  border-radius: 20px;
-  background:
-    radial-gradient(70% 60% at 56% 22%, rgba(126,208,155,0.16), transparent 65%),
-    linear-gradient(165deg, #124030 0%, #0C3020 55%, #092617 100%);
-  box-shadow:
-    inset 0 0 0 1px rgba(209,242,235,0.16),
-    inset 0 1px 0 rgba(255,255,255,0.1),
-    0 40px 70px -30px rgba(0,0,0,0.75); }
-.relief-plate::before { content: ""; position: absolute; inset: 0; border-radius: 20px;
-  background: linear-gradient(180deg, #051A10, #03110A);
-  transform: translateZ(-16px); box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8); }
-.relief-plate::after { content: ""; position: absolute; inset: 0; border-radius: 20px; pointer-events: none;
-  background:
-    linear-gradient(8deg, rgba(0,0,0,0.32), transparent 45%),
-    linear-gradient(188deg, rgba(209,242,235,0.08), transparent 30%); }
-.relief-map { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 20px; overflow: visible; }
-.kontur { fill: none; stroke: rgba(243,235,217,0.22); stroke-width: 1.1;
-  stroke-dasharray: 100; stroke-dashoffset: 100; }
-.grat-wrap.rv.in .kontur { animation: gratdraw 1700ms var(--ease-lux) forwards; }
-.grat-wrap.rv.in .kontur:nth-of-type(1) { animation-delay: 150ms; }
-.grat-wrap.rv.in .kontur:nth-of-type(2) { animation-delay: 300ms; }
-.grat-wrap.rv.in .kontur:nth-of-type(3) { animation-delay: 450ms; }
-.grat-wrap.rv.in .kontur:nth-of-type(4) { animation-delay: 600ms; }
-.grat-wrap.rv.in .kontur:nth-of-type(5) { animation-delay: 750ms; }
-@keyframes gratdraw { to { stroke-dashoffset: 0; } }
-.map-deko { fill: none; stroke: rgba(243,235,217,0.3); stroke-width: 1;
-  opacity: 0; transition: opacity 900ms var(--ease-lux) 1100ms; }
-.grat-wrap.rv.in .map-deko { opacity: 1; }
-.map-see { fill: rgba(209,242,235,0.14); stroke: rgba(209,242,235,0.35); stroke-width: 1; }
-.map-schnee { fill: rgba(243,235,217,0.14); stroke: none; }
-.grat-base { fill: none; stroke: rgba(243,235,217,0.4); stroke-width: 1.7;
-  stroke-linecap: round; stroke-dasharray: 4 7;
-  opacity: 0; transition: opacity 800ms var(--ease-lux) 1250ms; }
-.grat-wrap.rv.in .grat-base { opacity: 1; }
-.grat-prog { fill: none; stroke: var(--emerald); stroke-width: 2.4; stroke-linecap: round;
-  stroke-dasharray: 100; stroke-dashoffset: 100;
-  transition: stroke-dashoffset 1100ms var(--ease-lux);
-  filter: drop-shadow(0 0 6px rgba(80,200,120,0.55)); }
-.poi { position: absolute; transform-origin: 50% 100%; pointer-events: none;
-  transform: rotateX(calc(var(--tx, 52) * -1deg)); color: rgba(243,235,217,0.62); }
-.poi svg { display: block; width: 100%; height: auto;
-  fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-.grat-wrap .poi { opacity: 0; scale: 0.4; transition: opacity 500ms var(--ease-lux) var(--sd, 1400ms), scale 600ms var(--ease-lux) var(--sd, 1400ms); }
-.grat-wrap.rv.in .poi { opacity: 1; scale: 1; }
-.wp { position: absolute; transform-origin: 50% 100%;
-  transform: translate(-50%, -100%) rotateX(calc(var(--tx, 52) * -1deg));
-  width: auto; height: auto; padding: 0 0 22px; border: 0; cursor: pointer; background: transparent; }
-.wp::after { content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
-  width: 1.5px; height: 22px; background: rgba(243,235,217,0.5); }
-.wp::before { content: ""; position: absolute; left: 50%; bottom: -3px; transform: translateX(-50%);
+.grat-track { height: 320vh; }
+.grat-sticky { position: sticky; top: 0; height: 100vh; overflow: clip; }
+.berg-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.berg-overlays { position: absolute; inset: 0; pointer-events: none; }
+.berg-overlays .wp { pointer-events: auto; }
+.scroll-hint { position: absolute; right: 24px; bottom: 22px;
+  font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 2.4px;
+  text-transform: uppercase; color: var(--paper-faint);
+  display: flex; align-items: center; gap: 10px; }
+.scroll-hint::after { content: ""; width: 1.5px; height: 26px;
+  background: linear-gradient(180deg, var(--leaf), transparent);
+  animation: hintdrop 1.8s var(--ease-lux) infinite; }
+@keyframes hintdrop { 0% { transform: translateY(-6px); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(8px); opacity: 0; } }
+/* Wegweiser-Schilder: Screen-Space, Pfahl zeigt auf den Ankerpunkt */
+.wp { position: absolute; transform: translate(-50%, -100%);
+  width: auto; height: auto; padding: 0 0 24px; border: 0; cursor: pointer; background: transparent; }
+.wp::after { content: ""; position: absolute; left: 50%; bottom: 2px; transform: translateX(-50%);
+  width: 1.5px; height: 22px; background: rgba(243,235,217,0.55); }
+.wp::before { content: ""; position: absolute; left: 50%; bottom: -2px; transform: translateX(-50%);
   width: 7px; height: 7px; border-radius: 50%;
-  background: var(--bg-deep); border: 1.5px solid rgba(243,235,217,0.55);
+  background: var(--bg-deep); border: 1.5px solid rgba(243,235,217,0.6);
   transition: background 400ms var(--ease-lux), border-color 400ms var(--ease-lux); }
 .wp .wp-num { display: block; white-space: nowrap;
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
-  color: rgba(243,235,217,0.8); background: rgba(7,31,20,0.94);
-  border: 1px solid rgba(243,235,217,0.42); padding: 5px 15px 5px 9px;
+  color: rgba(243,235,217,0.85); background: rgba(7,31,20,0.94);
+  border: 1px solid rgba(243,235,217,0.45); padding: 5px 15px 5px 9px;
   clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 50%, calc(100% - 9px) 100%, 0 100%);
   transition: background 400ms var(--ease-lux), color 400ms var(--ease-lux),
     border-color 400ms var(--ease-lux), rotate 400ms var(--ease-lux); }
 .wp:hover .wp-num { rotate: -3deg; border-color: var(--leaf); }
 .wp:hover::before { border-color: var(--leaf); }
-.wp.on::before { background: var(--emerald); border-color: var(--emerald);
-  animation: wpping 900ms var(--ease-lux) 1; }
-.wp.on .wp-num { background: var(--emerald); color: #06231A; border-color: var(--emerald);
-  box-shadow: 0 0 14px rgba(80,200,120,0.4); }
-@keyframes wpping { from { box-shadow: 0 0 0 0 rgba(80,200,120,0.55); } to { box-shadow: 0 0 0 16px rgba(80,200,120,0); } }
-.grat-wrap .wp { opacity: 0; transition: opacity 450ms var(--ease-lux); }
-.grat-wrap.rv.in .wp { opacity: 1; }
-.grat-wrap.rv.in .wp:nth-of-type(1) { transition-delay: 1900ms; }
-.grat-wrap.rv.in .wp:nth-of-type(2) { transition-delay: 2050ms; }
-.grat-wrap.rv.in .wp:nth-of-type(3) { transition-delay: 2200ms; }
-.grat-wrap.rv.in .wp:nth-of-type(4) { transition-delay: 2350ms; }
-.grat-wrap.rv.in .wp:hover .wp-num { transition-delay: 0ms; }
-.poi--kreuz { color: rgba(243,235,217,0.7); transition: color 600ms var(--ease-lux), filter 600ms var(--ease-lux); }
+.wp.on::before { background: var(--emerald); border-color: var(--emerald); }
+.wp.on .wp-num { background: var(--emerald); color: #06231A; border-color: var(--emerald); }
+/* POIs: Screen-Space Miniaturen */
+.poi { position: absolute; transform: translate(-50%, -100%); pointer-events: none;
+  color: rgba(243,235,217,0.72); }
+.poi svg { display: block; width: 100%; height: auto;
+  fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.poi--kreuz { color: rgba(243,235,217,0.85); transition: color 600ms var(--ease-lux), filter 600ms var(--ease-lux); }
 .grat-wrap.summit .poi--kreuz { color: var(--leaf); filter: drop-shadow(0 0 8px rgba(80,200,120,0.65)); }
-.grat-smashy { position: absolute; width: 36px; height: auto; z-index: 2; pointer-events: none;
-  transform-origin: 50% 100%;
-  transform: translate(-130%, -100%) rotateX(calc(var(--tx, 52) * -1deg));
-  transition: left 1100ms var(--ease-lux), top 1100ms var(--ease-lux), opacity 500ms var(--ease-lux) 2550ms;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.45)); opacity: 0; }
-.grat-wrap.rv.in .grat-smashy { opacity: 1; }
+/* Wetterstation am Gipfel */
+.wetter-chip { position: absolute; transform: translate(-50%, -100%); pointer-events: none;
+  padding: 8px 12px 8px 10px; border-radius: 10px;
+  background: rgba(7,31,20,0.92); border: 1px solid rgba(126,208,155,0.4);
+  box-shadow: 0 0 0 1px rgba(3,15,9,0.5), 0 8px 20px rgba(0,0,0,0.45); }
+.wetter-chip::after { content: ""; position: absolute; left: 50%; bottom: -14px; transform: translateX(-50%);
+  width: 1.5px; height: 14px; background: rgba(126,208,155,0.5); }
+.wetter-chip .w1 { display: flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.4px;
+  text-transform: uppercase; color: var(--mint); }
+.wetter-chip .w2 { margin-top: 3px; font-family: var(--mono); font-size: 9px; font-weight: 600;
+  letter-spacing: 1.6px; text-transform: uppercase; color: var(--paper-faint); }
+/* Smashy: folgt der Kurve, hopst beim Wandern */
+.grat-smashy { position: absolute; width: 34px; height: auto; z-index: 2; pointer-events: none;
+  transform: translate(-50%, -96%);
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); }
 @keyframes smashyhop {
-  0%, 100% { transform: translate(-130%, -100%) rotateX(calc(var(--tx, 52) * -1deg)) translateY(0); }
-  50% { transform: translate(-130%, -100%) rotateX(calc(var(--tx, 52) * -1deg)) translateY(-7px); }
+  0%, 100% { transform: translate(-50%, -96%) translateY(0) rotate(-2deg); }
+  50% { transform: translate(-50%, -96%) translateY(-6px) rotate(2deg); }
 }
 .grat-smashy.walking { animation: smashyhop 340ms ease-in-out infinite; }
-.grat-panel { margin-top: 34px; min-height: 150px; position: relative; }
-.panel-nav { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+/* Panel: liegt unten links AUF der Szene */
+.grat-panel { position: absolute; left: max(24px, calc(50vw - 530px)); bottom: 40px;
+  width: min(500px, calc(100vw - 48px)); min-height: 0; z-index: 3; }
+.panel-nav { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
 .panel-nav button { width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
-  background: transparent; border: 1px solid rgba(243,235,217,0.35); color: var(--paper-dim);
+  background: rgba(7,31,20,0.6); border: 1px solid rgba(243,235,217,0.35); color: var(--paper-dim);
   font-size: 16px; line-height: 1; display: grid; place-items: center;
   transition: border-color 400ms var(--ease-lux), color 400ms var(--ease-lux), transform 400ms var(--ease-lux); }
 .panel-nav button:hover { border-color: var(--leaf); color: var(--leaf); transform: translateY(-2px); }
@@ -344,12 +316,17 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .panel-nav .steps b { color: var(--leaf); }
 .grat-panel .num { font-family: var(--mono); font-size: var(--t-label); font-weight: 600; letter-spacing: 2px; color: var(--gold); }
 .grat-panel h3 { margin: 8px 0 10px; font-family: 'Playfair Display', serif; font-weight: 600;
-  font-size: clamp(26px, 6vw, 34px); color: var(--paper); }
-.grat-panel p { font-size: 15px; line-height: 1.65; color: var(--paper-dim); max-width: 52ch; }
+  font-size: clamp(24px, 5vw, 32px); color: var(--paper); }
+.grat-panel p { font-size: 14.5px; line-height: 1.6; color: var(--paper-dim); max-width: 46ch; }
 .grat-panel .inner { opacity: 1; translate: 0 0; filter: blur(0);
   transition: opacity 380ms var(--ease-lux), translate 380ms var(--ease-lux), filter 380ms var(--ease-lux); }
 .grat-panel .inner.swap-out { opacity: 0; translate: -22px 0; filter: blur(5px); }
 .grat-panel .inner.swap-in { opacity: 0; translate: 22px 0; filter: blur(5px); transition: none; }
+/* Fallback ohne WebGL */
+.grat-wrap.no3d .grat-track { height: auto; }
+.grat-wrap.no3d .grat-sticky { position: static; height: auto; min-height: 320px; }
+.grat-wrap.no3d .berg-canvas, .grat-wrap.no3d .berg-overlays, .grat-wrap.no3d .scroll-hint { display: none; }
+.grat-wrap.no3d .grat-panel { position: static; width: auto; margin-top: 24px; }
 
 /* ============================================================
    BIBEL-ANKER — der Anker ist der LICHT-Moment: hellste Fläche
@@ -477,6 +454,20 @@ footer .legal a:hover { color: var(--paper); }
   .stage { width: min(100%, 470px); }
 }
 
+/* ============================================================
+   KONTRAST-PASS: weicher dunkler Halo unter allen Schriften auf
+   der wandernden Licht-Landschaft, Kanten fuer Schilder/Icons.
+   ============================================================ */
+.hero-name, .shead h2, .hero-tagline { text-shadow: 0 2px 6px rgba(3,15,9,0.5), 0 0 32px rgba(3,15,9,0.4); }
+.quote p, .grat-panel p, .hero-handle, .brands-line, .grat-panel h3 { text-shadow: 0 1px 3px rgba(3,15,9,0.55); }
+.shead .kicker, .hero-meta, .grat-panel .num, .panel-nav .steps, footer .legal, footer .claim, .stage-caption, .scroll-hint { text-shadow: 0 1px 2px rgba(3,15,9,0.6); }
+.wordmark { text-shadow: 0 1px 3px rgba(3,15,9,0.55); }
+.wp .wp-num { box-shadow: 0 0 0 1px rgba(3,15,9,0.55), 0 3px 10px rgba(0,0,0,0.45); }
+.poi svg, .rail-cross, .rail-peak svg { filter: drop-shadow(0 1px 2px rgba(0,0,0,0.6)); }
+.rail-peak .hm, .rail .wp-num { text-shadow: 0 1px 2px rgba(3,15,9,0.7); }
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--emerald);
+  box-shadow: 0 0 8px rgba(80,200,120,0.7); animation: livepulse 2.4s ease-in-out infinite; display: inline-block; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .bg, .bg2 { animation: none !important; }
@@ -485,11 +476,13 @@ footer .legal a:hover { color: var(--paper); }
   .scribble path, .cta .ring path { stroke-dashoffset: 0 !important; animation: none !important; }
   .cta:hover .arr, .nav a:hover { transform: none; }
   .grat-smashy { transition: none; animation: none !important; opacity: 1 !important; }
-  .relief-plate { transition: none !important; }
+
   .live-dot { animation: none !important; }
   .nav { transition: none !important; }
-  .kontur { stroke-dashoffset: 0 !important; animation: none !important; }
-  .map-deko, .grat-base, .grat-wrap .wp, .grat-wrap .poi { opacity: 1 !important; scale: 1 !important; transition: none !important; }
+  .grat-track { height: auto !important; }
+  .grat-sticky { position: relative !important; height: 76vh !important; }
+  .scroll-hint { display: none !important; }
+
   .wp.on::before { animation: none !important; }
 }
 </style>
@@ -535,7 +528,6 @@ footer .legal a:hover { color: var(--paper); }
       <h1 class="hero-name st st1">Sebi</h1>
       <p class="hero-handle st st2">Sebastian &nbsp;·&nbsp; <a class="social-link" href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">@vegetarianhulk</a></p>
       <p class="hero-meta st st2">25<span class="dot">·</span>Vegetarisch seit 2016<span class="dot">·</span>✝ Christ<span class="dot">·</span>△ Bergsportler</p>
-      <p class="hero-live st st3" data-live hidden><span class="live-dot" aria-hidden="true"></span><span data-live-text>Live vom Berg</span></p>
       <hr class="hero-rule st st3">
       <p class="hero-tagline st st4">Disziplin ist kein&nbsp;Talent.
         <em>Sie ist ein Ritual.
@@ -559,55 +551,46 @@ footer .legal a:hover { color: var(--paper); }
       <p class="kicker">Sebi DNA · Was mich antreibt</p>
       <h2>Vier Werte, <em>ein Leben.</em></h2>
     </div>
-    <section class="grat-wrap rv" aria-label="Vier Werte — Der Weg zum Gipfel">
-      <div class="relief">
-        <div class="relief-plate">
-          <svg class="relief-map" viewBox="0 0 720 440" aria-hidden="true">
-            <path class="kontur" pathLength="100" d="M370 100 C 380 76, 442 70, 458 92 C 470 108, 432 118, 400 114 C 380 112, 362 112, 370 100 Z"/>
-            <path class="kontur" pathLength="100" d="M322 134 C 342 94, 470 78, 520 112 C 548 134, 482 158, 412 154 C 362 150, 308 156, 322 134 Z"/>
-            <path class="kontur" pathLength="100" d="M262 184 C 292 132, 520 108, 580 154 C 610 180, 522 210, 422 206 C 342 202, 238 212, 262 184 Z"/>
-            <path class="kontur" pathLength="100" d="M192 248 C 232 180, 560 154, 630 208 C 662 234, 562 270, 432 266 C 322 262, 158 278, 192 248 Z"/>
-            <path class="kontur" pathLength="100" d="M122 322 C 172 240, 600 212, 668 274 C 698 306, 572 338, 422 334 C 282 330, 78 354, 122 322 Z"/>
-            <path class="map-schnee map-deko" d="M388 102 C 396 90, 428 88, 438 98 C 444 106, 420 112, 404 110 C 394 109, 384 108, 388 102 Z"/>
-            <ellipse class="map-see map-deko" cx="150" cy="368" rx="44" ry="15"/>
-            <g class="map-deko">
-              <path d="M576 352 l 5 -9 5 9 z"/>
-              <path d="M598 344 l 4.5 -8 4.5 8 z"/>
-              <path d="M620 354 l 5 -9 5 9 z"/>
-              <path d="M598 366 l 4 -7 4 7 z"/>
-            </g>
-            <path class="grat-base" d="M70 392 C 200 386, 420 380, 560 366 C 640 358, 640 330, 560 322 C 420 308, 240 312, 160 300 C 90 290, 90 262, 170 252 C 300 236, 460 240, 540 226 C 600 216, 600 192, 540 184 C 470 174, 380 178, 330 166 C 290 156, 300 132, 350 122 C 380 116, 402 106, 410 96"/>
-            <path class="grat-prog" pathLength="100" d="M70 392 C 200 386, 420 380, 560 366 C 640 358, 640 330, 560 322 C 420 308, 240 312, 160 300 C 90 290, 90 262, 170 252 C 300 236, 460 240, 540 226 C 600 216, 600 192, 540 184 C 470 174, 380 178, 330 166 C 290 156, 300 132, 350 122 C 380 116, 402 106, 410 96"/>
-          </svg>
-          <div class="poi" style="left: 6.4%; top: 89%; width: 34px; --sd: 1350ms" aria-hidden="true">
-            <svg viewBox="0 0 34 30"><rect x="0" y="14" width="12" height="12" rx="2"/><text x="6" y="23.5" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="8.5" stroke="none" fill="currentColor">P</text><path d="M24 30 V 6 M 24 9 h 8 l 3 2.5 -3 2.5 h -8 M 24 19 h -7 l -3 2.5 3 2.5 h 7"/></svg>
+    <section class="grat-wrap" aria-label="Vier Werte — Der Berg">
+      <div class="grat-track">
+        <div class="grat-sticky">
+          <canvas class="berg-canvas" aria-hidden="true"></canvas>
+          <div class="berg-overlays" aria-hidden="false">
+            <div class="poi" data-poi="start" style="width: 34px" aria-hidden="true">
+              <svg viewBox="0 0 34 30"><rect x="0" y="14" width="12" height="12" rx="2"/><text x="6" y="23.5" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="8.5" stroke="none" fill="currentColor">P</text><path d="M24 30 V 6 M 24 9 h 8 l 3 2.5 -3 2.5 h -8 M 24 19 h -7 l -3 2.5 3 2.5 h 7"/></svg>
+            </div>
+            <div class="poi" data-poi="kapelle" style="width: 20px" aria-hidden="true">
+              <svg viewBox="0 0 22 32"><path d="M3 32 V 16 L 11 9 L 19 16 V 32 Z"/><path d="M11 9 V 2 M 8 5 h 6"/><path d="M9 32 v -7 h 4 v 7"/></svg>
+            </div>
+            <div class="poi" data-poi="huette" style="width: 24px" aria-hidden="true">
+              <svg viewBox="0 0 26 24"><path d="M2 24 V 12 L 13 3 L 24 12 V 24 Z"/><path d="M-1 13 L 13 1 L 27 13"/><path d="M16 24 v -7 h 4 v 7 M 6 15 h 5 v 5 h -5 z"/></svg>
+            </div>
+            <div class="poi poi--kreuz" data-poi="kreuz" style="width: 18px" aria-hidden="true">
+              <svg viewBox="0 0 20 30"><path d="M10 30 V 4"/><path d="M4 10 h 12"/><path d="M2 30 l 8 -5 8 5"/></svg>
+            </div>
+            <div class="wetter-chip" hidden>
+              <span class="w1"><span class="live-dot"></span><span data-w-line1></span></span>
+              <span class="w2" data-w-line2></span>
+            </div>
+            <button class="wp on" type="button" data-i="0" aria-label="Faith — Bibel-grounded"><span class="wp-num">01 · Tal</span></button>
+            <button class="wp" type="button" data-i="1" aria-label="Disziplin"><span class="wp-num">02 · 850 hm</span></button>
+            <button class="wp" type="button" data-i="2" aria-label="Vegetarisch + Stark"><span class="wp-num">03 · 1900 hm</span></button>
+            <button class="wp" type="button" data-i="3" aria-label="Fitness"><span class="wp-num">04 · 2962 hm</span></button>
+            <img class="grat-smashy" src="/assets/img/smashy-maskottchen.png" alt="">
           </div>
-          <div class="poi" style="left: 27.8%; top: 66.5%; width: 22px; --sd: 1500ms" aria-hidden="true">
-            <svg viewBox="0 0 22 32"><path d="M3 32 V 16 L 11 9 L 19 16 V 32 Z"/><path d="M11 9 V 2 M 8 5 h 6"/><path d="M9 32 v -7 h 4 v 7"/></svg>
+          <div class="grat-panel" aria-live="polite">
+            <div class="panel-nav">
+              <button type="button" data-step="-1" aria-label="Vorheriger Wert">&#8592;</button>
+              <span class="steps"><b data-step-now>01</b> / 04</span>
+              <button type="button" data-step="1" aria-label="N&#228;chster Wert">&#8594;</button>
+            </div>
+            <div class="inner">
+              <p class="num" data-p-num>01 / Faith</p>
+              <h3 data-p-title>Bibel-grounded. W&#246;rtlich.</h3>
+              <p data-p-text>Das Fundament, bevor irgendwas anderes kommt: Schlachter 2000, jeden Morgen &#8212; bevor das Handy angeht. Spr&#252;che 24,16 ist der Anker: hinfallen geh&#246;rt dazu, liegen bleiben nicht.</p>
+            </div>
           </div>
-          <div class="poi" style="left: 79%; top: 49.5%; width: 26px; --sd: 1650ms" aria-hidden="true">
-            <svg viewBox="0 0 26 24"><path d="M2 24 V 12 L 13 3 L 24 12 V 24 Z"/><path d="M-1 13 L 13 1 L 27 13"/><path d="M16 24 v -7 h 4 v 7 M 6 15 h 5 v 5 h -5 z"/></svg>
-          </div>
-          <div class="poi poi--kreuz" style="left: 57%; top: 20.5%; width: 20px; --sd: 1800ms" aria-hidden="true">
-            <svg viewBox="0 0 20 30"><path d="M10 30 V 4"/><path d="M4 10 h 12"/><path d="M2 30 l 8 -5 8 5"/></svg>
-          </div>
-          <button class="wp on" type="button" style="left: 9.7%; top: 89%;" data-i="0" aria-label="Faith — Bibel-grounded"><span class="wp-num">01 · Tal</span></button>
-          <button class="wp" type="button" style="left: 22.2%; top: 68.2%;" data-i="1" aria-label="Disziplin"><span class="wp-num">02 · 850 hm</span></button>
-          <button class="wp" type="button" style="left: 75%; top: 51.4%;" data-i="2" aria-label="Vegetarisch + Stark"><span class="wp-num">03 · 1900 hm</span></button>
-          <button class="wp" type="button" style="left: 57%; top: 21.8%;" data-i="3" aria-label="Fitness"><span class="wp-num">04 · 2962 hm</span></button>
-          <img class="grat-smashy" src="/assets/img/smashy-maskottchen.png" alt="" style="left: 9.7%; top: 89%;">
-        </div>
-      </div>
-      <div class="grat-panel" aria-live="polite">
-        <div class="panel-nav">
-          <button type="button" data-step="-1" aria-label="Vorheriger Wert">&#8592;</button>
-          <span class="steps"><b data-step-now>01</b> / 04</span>
-          <button type="button" data-step="1" aria-label="N&#228;chster Wert">&#8594;</button>
-        </div>
-        <div class="inner">
-          <p class="num" data-p-num>01 / Faith</p>
-          <h3 data-p-title>Bibel-grounded. W&#246;rtlich.</h3>
-          <p data-p-text>Das Fundament, bevor irgendwas anderes kommt: Schlachter 2000, jeden Morgen &#8212; bevor das Handy angeht. Spr&#252;che 24,16 ist der Anker: hinfallen geh&#246;rt dazu, liegen bleiben nicht.</p>
+          <p class="scroll-hint">Scroll &#183; Der Berg dreht sich</p>
         </div>
       </div>
     </section>
@@ -722,61 +705,6 @@ footer .legal a:hover { color: var(--paper); }
   }, { passive: true });
 })();
 
-/* Relief-Parallax: die Platte neigt sich subtil zur Maus */
-(function () {
-  'use strict';
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-  var wrap = document.querySelector('.relief');
-  var plate = document.querySelector('.relief-plate');
-  if (!wrap || !plate) return;
-  var t = false, mx = 0.5, my = 0.5;
-  wrap.addEventListener('mousemove', function (e) {
-    var r = wrap.getBoundingClientRect();
-    mx = (e.clientX - r.left) / r.width;
-    my = (e.clientY - r.top) / r.height;
-    if (!t) { requestAnimationFrame(apply); t = true; }
-  }, { passive: true });
-  wrap.addEventListener('mouseleave', function () {
-    mx = 0.5; my = 0.5;
-    if (!t) { requestAnimationFrame(apply); t = true; }
-  }, { passive: true });
-  function apply() {
-    plate.style.setProperty('--tz', ((mx - 0.5) * -4).toFixed(2));
-    plate.style.setProperty('--tx', (52 - (my - 0.5) * 8).toFixed(2));
-    t = false;
-  }
-})();
-
-/* LIVE VOM BERG — Open-Meteo (Zugspitze), ohne Key, ohne Cookies.
-   Bei Fehler bleibt die Zeile einfach ausgeblendet. */
-(function () {
-  'use strict';
-  var el = document.querySelector('[data-live]');
-  var txt = document.querySelector('[data-live-text]');
-  if (!el || !txt || !window.fetch) return;
-  var WMO = function (c) {
-    if (c === 0) return 'klar';
-    if (c <= 2) return 'leicht bewölkt';
-    if (c === 3) return 'bedeckt';
-    if (c <= 48) return 'Nebel';
-    if (c <= 67) return 'Regen';
-    if (c <= 77) return 'Schneefall';
-    if (c <= 82) return 'Schauer';
-    return 'Gewitter';
-  };
-  fetch('https://api.open-meteo.com/v1/forecast?latitude=47.7546&longitude=12.3537&current=temperature_2m,weather_code&daily=sunset&timezone=Europe%2FBerlin&forecast_days=1')
-    .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
-    .then(function (d) {
-      var t = Math.round(d.current.temperature_2m);
-      var w = WMO(d.current.weather_code);
-      var s = (d.daily.sunset[0] || '').slice(11, 16);
-      txt.textContent = 'Live von der Kampenwand · ' + t + '°C · ' + w + (s ? ' · Sonne bis ' + s : '');
-      el.hidden = false;
-    })
-    .catch(function () { /* Zeile bleibt aus */ });
-})();
-
 /* Nav-Morph: oben normale Zeile, ab Scroll wird sie zur Bottom-Pille */
 (function () {
   'use strict';
@@ -847,59 +775,6 @@ footer .legal a:hover { color: var(--paper); }
   update();
 })();
 
-/* DAS RELIEF: Wegpunkte, Kompass-Navigation, Smashy, Panel-Slide */
-(function () {
-  'use strict';
-  var WERTE = [
-    { num: '01 / Faith', title: 'Bibel-grounded. W\u00f6rtlich.', text: 'Das Fundament, bevor irgendwas anderes kommt: Schlachter 2000, jeden Morgen \u2014 bevor das Handy angeht. Spr\u00fcche 24,16 ist der Anker: hinfallen geh\u00f6rt dazu, liegen bleiben nicht.' },
-    { num: '02 / Disziplin', title: 'Ritual statt Willenskraft.', text: 'Architektur die tr\u00e4gt \u2014 jeden Morgen, auch wenn keiner hinschaut. 4:50 Uhr, Bibel, Gym. Seit Jahren.' },
-    { num: '03 / Vegetarisch + Stark', title: 'Beweis seit 2016.', text: 'Muskelaufbau ohne Fleisch ist kein Kompromiss \u2014 es ist mein Beweis, dass beides geht. Teller statt Theorie.' },
-    { num: '04 / Fitness', title: 'Gym seit 2017.', text: '4-5\u00d7 pro Woche, Lifting plus Cardio \u2014 und am Wochenende den Grat rauf. Kraft ist die Basis f\u00fcr jede Tour.' }
-  ];
-  var PCT = [1.5, 42, 74, 100];
-  var cur = 0;
-  var prog = document.querySelector('.grat-prog');
-  var wps = document.querySelectorAll('.wp');
-  var panel = document.querySelector('.grat-panel .inner');
-  var stepNow = document.querySelector('[data-step-now]');
-  if (!prog || !wps.length || !panel) return;
-  prog.style.strokeDashoffset = 100 - PCT[0];
-  function activate(i) {
-    i = Math.max(0, Math.min(3, i));
-    if (i === cur) return;
-    cur = i;
-    wps.forEach(function (b, j) { b.classList.toggle('on', j === i); });
-    var wrap = document.querySelector('.grat-wrap');
-    if (wrap) wrap.classList.toggle('summit', i === 3);
-    prog.style.strokeDashoffset = 100 - PCT[i];
-    var smashy = document.querySelector('.grat-smashy');
-    if (smashy) {
-      smashy.style.left = wps[i].style.left;
-      smashy.style.top = wps[i].style.top;
-      smashy.classList.add('walking');
-      clearTimeout(smashy._walkT);
-      smashy._walkT = setTimeout(function () { smashy.classList.remove('walking'); }, 1150);
-    }
-    if (stepNow) stepNow.textContent = '0' + (i + 1);
-    panel.classList.add('swap-out');
-    setTimeout(function () {
-      panel.querySelector('[data-p-num]').textContent = WERTE[i].num;
-      panel.querySelector('[data-p-title]').textContent = WERTE[i].title;
-      panel.querySelector('[data-p-text]').textContent = WERTE[i].text;
-      panel.classList.remove('swap-out');
-      panel.classList.add('swap-in');
-      void panel.offsetWidth;
-      panel.classList.remove('swap-in');
-    }, 260);
-  }
-  wps.forEach(function (b) {
-    b.addEventListener('click', function () { activate(parseInt(b.dataset.i, 10)); });
-  });
-  document.querySelectorAll('[data-step]').forEach(function (b) {
-    b.addEventListener('click', function () { activate(cur + parseInt(b.dataset.step, 10)); });
-  });
-})();
-
 /* Scroll-Entry mit Stagger */
 (function () {
   'use strict';
@@ -913,5 +788,6 @@ footer .legal a:hover { color: var(--paper); }
   els.forEach(function (e) { io.observe(e); });
 })();
 </script>
+<script type="module" src="relief3d.js"></script>
 </body>
 </html>
