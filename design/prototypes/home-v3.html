@@ -183,6 +183,12 @@ body.loaded .st { opacity: 1; transform: translateY(0); filter: blur(0); }
 .hero-meta { margin-top: 22px; font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
   letter-spacing: 2px; text-transform: uppercase; color: var(--meta-green); line-height: 2; }
 .hero-meta .dot { color: rgba(155,217,180,0.4); padding-inline: 6px; }
+.hero-live { margin-top: 16px; display: flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
+  letter-spacing: 1.8px; text-transform: uppercase; color: var(--leaf); }
+.live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--emerald);
+  box-shadow: 0 0 8px rgba(80,200,120,0.7); animation: livepulse 2.4s ease-in-out infinite; }
+@keyframes livepulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 .hero-rule { margin: 36px 0; height: 1px; border: 0; max-width: 280px;
   background: linear-gradient(90deg, rgba(243,235,217,0.35), rgba(243,235,217,0.05)); }
 .hero-tagline { font-family: 'Playfair Display', serif; font-weight: 700; font-size: var(--t-h2); line-height: 1.12;
@@ -233,7 +239,14 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
    Wegpunkt antippen -> Pfad faerbt sich bis dorthin, Wert klappt auf.
    ============================================================ */
 .grat-wrap { margin-top: 8px; }
-.grat-stage { position: relative; }
+.grat-wrap { perspective: 1200px; }
+.grat-stage { position: relative;
+  transform: rotateX(calc(var(--tx, 14) * 1deg)) rotateY(calc(var(--ty, 0) * 1deg));
+  transform-style: preserve-3d;
+  transition: transform 400ms var(--ease-lux); will-change: transform; }
+.grat-stage::after { content: ""; position: absolute; left: 4%; right: 2%; bottom: -3%; height: 12%;
+  background: linear-gradient(180deg, rgba(0,0,0,0.35), transparent 80%);
+  filter: blur(10px); transform: translateZ(-40px); pointer-events: none; }
 .grat { display: block; width: 100%; height: auto; overflow: visible; }
 .grat-base, .grat-prog { fill: none; stroke-linecap: round; stroke-linejoin: round; }
 .grat-kreuz { color: rgba(243,235,217,0.55); transition: color 600ms var(--ease-lux); }
@@ -385,7 +398,10 @@ footer .legal a:hover { color: var(--paper); }
    NAV — helle Papier-Pille, TYPOGRAFISCH (keine Standard-Icons).
    Nur der Berg bleibt — er ist Brand, nicht Icon-Set.
    ============================================================ */
-.nav { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 70;
+.nav { position: fixed; left: 50%; top: 0; z-index: 70;
+  translate: -50% calc(100vh - 100% - 18px);
+  transition: translate 900ms var(--ease-lux), background 600ms var(--ease-lux),
+    box-shadow 600ms var(--ease-lux), border-color 600ms var(--ease-lux);
   display: flex; align-items: center; gap: clamp(4px, 2.6vw, 24px); padding: 10px clamp(18px, 3.4vw, 34px);
   border: 1px solid rgba(150,130,92,0.55); border-radius: 16px;
   background: linear-gradient(180deg, #F8F0E0 0%, #EDDFC5 100%);
@@ -410,6 +426,18 @@ footer .legal a:hover { color: var(--paper); }
 .nav a[aria-current] { color: #045927; }
 .nav a[aria-current]::after { content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
   width: 16px; height: 2px; border-radius: 2px; background: #045927; }
+
+/* Nav oben-Zustand (Desktop, vor dem ersten Scroll): normale Zeile */
+@media (min-width: 900px) {
+  .nav.at-top { translate: -50% 22px;
+    background: transparent; border-color: transparent; box-shadow: none; }
+  .nav.at-top a { color: rgba(243,235,217,0.72); }
+  .nav.at-top a:hover { color: var(--paper); }
+  .nav.at-top a[aria-current] { color: var(--mint); }
+  .nav.at-top a[aria-current]::after { background: var(--leaf); }
+  .nav.at-top .center { color: var(--leaf); }
+  .nav.at-top .center .mtn { color: var(--leaf); filter: none; }
+}
 
 /* ---- Desktop ---- */
 @media (min-width: 900px) {
@@ -446,6 +474,9 @@ footer .legal a:hover { color: var(--paper); }
   .scribble path, .cta .ring path { stroke-dashoffset: 0 !important; animation: none !important; }
   .cta:hover .arr, .nav a:hover { transform: none; }
   .grat-smashy { transition: none; animation: none !important; }
+  .grat-stage { transform: none !important; transition: none !important; }
+  .live-dot { animation: none !important; }
+  .nav { transition: none !important; }
   .scene-ridge, .scene--far path { stroke-dashoffset: 0 !important; animation: none !important; }
   .scene-massif, .grat-base, .grat-wrap .wp, .grat-wrap .scene > * { opacity: 1 !important; translate: 0 0 !important; scale: 1 !important; transition: none !important; }
   .wp.on::before, .grat-kreuz { animation: none !important; }
@@ -493,6 +524,7 @@ footer .legal a:hover { color: var(--paper); }
       <h1 class="hero-name st st1">Sebi</h1>
       <p class="hero-handle st st2">Sebastian &nbsp;·&nbsp; <a class="social-link" href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">@vegetarianhulk</a></p>
       <p class="hero-meta st st2">25<span class="dot">·</span>Vegetarisch seit 2016<span class="dot">·</span>✝ Christ<span class="dot">·</span>△ Bergsportler</p>
+      <p class="hero-live st st3" data-live hidden><span class="live-dot" aria-hidden="true"></span><span data-live-text>Live vom Berg</span></p>
       <hr class="hero-rule st st3">
       <p class="hero-tagline st st4">Disziplin ist kein&nbsp;Talent.
         <em>Sie ist ein Ritual.
@@ -701,6 +733,80 @@ footer .legal a:hover { color: var(--paper); }
   window.addEventListener('scroll', function () {
     if (!t) { requestAnimationFrame(update); t = true; }
   }, { passive: true });
+})();
+
+/* 3D-Diorama: die Bühne neigt sich zur Maus (nur Desktop-Pointer) */
+(function () {
+  'use strict';
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  var wrap = document.querySelector('.grat-wrap');
+  var stage = document.querySelector('.grat-stage');
+  if (!wrap || !stage) return;
+  var t = false, mx = 0.5, my = 0.5;
+  wrap.addEventListener('mousemove', function (e) {
+    var r = wrap.getBoundingClientRect();
+    mx = (e.clientX - r.left) / r.width;
+    my = (e.clientY - r.top) / r.height;
+    if (!t) { requestAnimationFrame(apply); t = true; }
+  }, { passive: true });
+  wrap.addEventListener('mouseleave', function () {
+    mx = 0.5; my = 0.5;
+    if (!t) { requestAnimationFrame(apply); t = true; }
+  }, { passive: true });
+  function apply() {
+    stage.style.setProperty('--ty', ((mx - 0.5) * 7).toFixed(2));
+    stage.style.setProperty('--tx', (14 - (my - 0.5) * 6).toFixed(2));
+    t = false;
+  }
+})();
+
+/* LIVE VOM BERG — Open-Meteo (Zugspitze), ohne Key, ohne Cookies.
+   Bei Fehler bleibt die Zeile einfach ausgeblendet. */
+(function () {
+  'use strict';
+  var el = document.querySelector('[data-live]');
+  var txt = document.querySelector('[data-live-text]');
+  if (!el || !txt || !window.fetch) return;
+  var WMO = function (c) {
+    if (c === 0) return 'klar';
+    if (c <= 2) return 'leicht bewölkt';
+    if (c === 3) return 'bedeckt';
+    if (c <= 48) return 'Nebel';
+    if (c <= 67) return 'Regen';
+    if (c <= 77) return 'Schneefall';
+    if (c <= 82) return 'Schauer';
+    return 'Gewitter';
+  };
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=47.4212&longitude=10.9863&current=temperature_2m,weather_code&daily=sunset&timezone=Europe%2FBerlin&forecast_days=1')
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+    .then(function (d) {
+      var t = Math.round(d.current.temperature_2m);
+      var w = WMO(d.current.weather_code);
+      var s = (d.daily.sunset[0] || '').slice(11, 16);
+      txt.textContent = 'Live von der Zugspitze · ' + t + '°C · ' + w + (s ? ' · Sonne bis ' + s : '');
+      el.hidden = false;
+    })
+    .catch(function () { /* Zeile bleibt aus */ });
+})();
+
+/* Nav-Morph: oben normale Zeile, ab Scroll wird sie zur Bottom-Pille */
+(function () {
+  'use strict';
+  var nav = document.querySelector('.nav');
+  if (!nav) return;
+  var mq = window.matchMedia('(min-width: 900px)');
+  var t = false;
+  function update() {
+    if (mq.matches && window.scrollY < 120) nav.classList.add('at-top');
+    else nav.classList.remove('at-top');
+    t = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!t) { requestAnimationFrame(update); t = true; }
+  }, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
 })();
 
 /* Wordmark weicht beim Runterscrollen, kommt beim Hochscrollen zurück */
