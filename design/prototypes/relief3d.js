@@ -121,8 +121,7 @@ function init() {
   anchor(document.querySelector('[data-poi="huette"]'), curve.getPointAt(0.7).add(new THREE.Vector3(0.4, 0, 0.3)), 0);
   const kreuzEl = document.querySelector('[data-poi="kreuz"]');
   anchor(kreuzEl, new THREE.Vector3(PEAK.x, height(PEAK.x, PEAK.z) + 0.04, PEAK.z), 0);
-  const chip = document.querySelector('.wetter-chip');
-  anchor(chip, new THREE.Vector3(PEAK.x + 1.6, height(PEAK.x + 1.6, PEAK.z + 1.0) + 0.06, PEAK.z + 1.0), -6);
+  const chip = document.querySelector('.wetter-hud');
   const smashy = document.querySelector('.grat-smashy');
   const smashyAnchor = { el: smashy, v3: curve.getPointAt(0).clone(), oy: 0 };
   if (smashy) anchors.push(smashyAnchor);
@@ -245,10 +244,9 @@ function init() {
       .then(r => r.ok ? r.json() : Promise.reject())
       .then(d => {
         const s = (d.daily.sunset[0] || '').slice(11, 16);
-        chip.querySelector('[data-w-line1]').textContent =
-          Math.round(d.current.temperature_2m) + '°C · ' + WMO(d.current.weather_code);
-        chip.querySelector('[data-w-line2]').textContent =
-          'Kampenwand' + (s ? ' · Sonne bis ' + s : '');
+        chip.querySelector('[data-w-temp]').textContent = Math.round(d.current.temperature_2m);
+        chip.querySelector('[data-w-cond]').textContent = WMO(d.current.weather_code);
+        chip.querySelector('[data-w-meta]').textContent = '1669 m' + (s ? ' · Sonne bis ' + s : '');
         chip.hidden = false;
       })
       .catch(() => {});
