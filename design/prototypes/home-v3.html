@@ -244,8 +244,8 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .grat-track { height: 320vh; }
 .grat-sticky { position: sticky; top: 0; height: 100vh; overflow: clip; }
 .berg-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 10%, #000 90%, transparent 100%);
-          mask-image: linear-gradient(180deg, transparent 0, #000 10%, #000 90%, transparent 100%); }
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 3%, #000 93%, transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0, #000 3%, #000 93%, transparent 100%); }
 .berg-overlays { position: absolute; inset: 0; pointer-events: none; }
 .berg-overlays .wp { pointer-events: auto; }
 .scroll-hint { position: absolute; right: max(24px, calc(50vw - 530px)); bottom: 100px;
@@ -320,11 +320,15 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 }
 .grat-smashy.walking { animation: smashyhop 340ms ease-in-out infinite; }
 /* Panel: liegt unten links AUF der Szene */
-.grat-panel { position: absolute; left: max(24px, calc(50vw - 530px)); bottom: 40px;
-  width: min(500px, calc(100vw - 48px)); min-height: 0; z-index: 3;
-  padding: 20px 24px 22px; border-radius: 16px;
-  background: rgba(6,29,19,0.62); border: 1px solid rgba(243,235,217,0.18);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07), 0 0 0 1px rgba(3,15,9,0.5), 0 20px 44px -18px rgba(0,0,0,0.6); }
+.grat-panel { position: absolute; left: max(24px, calc(50vw - 530px)); bottom: 64px;
+  width: min(520px, calc(100vw - 48px)); min-height: 0; z-index: 3;
+  padding: 20px 52px 22px 26px; border-radius: 4px;
+  background: rgba(7,31,20,0.92);
+  clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 50%, calc(100% - 30px) 100%, 0 100%);
+  filter: drop-shadow(0 0 1px rgba(243,235,217,0.55)) drop-shadow(0 2px 2px rgba(3,15,9,0.8)) drop-shadow(0 18px 34px rgba(0,0,0,0.55)); }
+/* Pfahl unterm Wegweiser */
+.grat-panel::after { content: ""; position: absolute; left: 42px; top: 100%;
+  width: 2px; height: 64px; background: linear-gradient(180deg, rgba(243,235,217,0.55), rgba(243,235,217,0.12)); }
 .panel-nav { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
 .panel-nav button { width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
   background: rgba(7,31,20,0.6); border: 1px solid rgba(243,235,217,0.35); color: var(--paper-dim);
@@ -596,8 +600,8 @@ footer .legal a:hover { color: var(--paper); }
             <div class="poi poi--kreuz" data-poi="kreuz" style="width: 18px" aria-hidden="true">
               <svg viewBox="0 0 20 30"><path d="M10 30 V 4"/><path d="M4 10 h 12"/><path d="M2 30 l 8 -5 8 5"/></svg>
             </div>
-            <button class="wp on" type="button" data-i="0" aria-label="Faith — Bibel-grounded"><span class="wp-num">01 · Tal</span></button>
-            <button class="wp" type="button" data-i="1" aria-label="Disziplin"><span class="wp-num">02 · 1200 hm</span></button>
+            <button class="wp on" type="button" data-i="0" aria-label="Faith — Bibel-grounded"><span class="wp-num">01 · Wimbachbrücke</span></button>
+            <button class="wp" type="button" data-i="1" aria-label="Disziplin"><span class="wp-num">02 · 1420 hm</span></button>
             <button class="wp" type="button" data-i="2" aria-label="Vegetarisch + Stark"><span class="wp-num">03 · 1930 hm</span></button>
             <button class="wp" type="button" data-i="3" aria-label="Fitness"><span class="wp-num">04 · 2713 hm</span></button>
             <span class="route-head" aria-hidden="true"></span>

@@ -27,7 +27,9 @@ function init(DEM) {
     section.classList.add('no3d');
     return;
   }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2.5));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.12;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
@@ -35,7 +37,7 @@ function init(DEM) {
   const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
 
   /* ---- Licht: warmes Abendlicht + Emerald-Fill ---- */
-  scene.add(new THREE.HemisphereLight(0xd8ecdc, 0x061c12, 0.55));
+  scene.add(new THREE.HemisphereLight(0xd8ecdc, 0x0a2418, 0.68));
   const sun = new THREE.DirectionalLight(0xf0dcae, 2.4);
   sun.position.set(9, 5, 4);                     /* tiefe Abendsonne: lange Schatten */
   sun.castShadow = true;
@@ -45,12 +47,12 @@ function init(DEM) {
   sun.shadow.camera.far = 40;
   sun.shadow.bias = -0.0004;
   scene.add(sun);
-  const fill = new THREE.DirectionalLight(0x50c878, 0.22);
+  const fill = new THREE.DirectionalLight(0x6fcf97, 0.42);
   fill.position.set(-5, 3, -4);
   scene.add(fill);
 
   /* ---- Echtes Terrain: bilineares DEM-Sampling ---- */
-  const SIZE = 10, SEG = 226;
+  const SIZE = 10, SEG = 254;
   const SPAN = DEM.max - DEM.min;
   const V_SCALE = SIZE * (SPAN / (DEM.km * 1000)) * 1.35;   /* leichte Modell-Überhöhung */
   function demAt(ix, iy) {
@@ -114,15 +116,43 @@ function init(DEM) {
   plinth.position.y = -0.31;
   scene.add(plinth);
 
-  /* ---- Route: Serpentinen aufs echte Terrain projiziert ---- */
+  /* ---- Route: ECHTER Watzmann-Normalweg (reale Koordinaten) ----
+     Wimbachbruecke -> Stubenalm -> Mitterkaseralm -> Watzmannhaus
+     -> Grat -> Hocheck -> Mittelspitze. lat/lon -> Weltkoordinaten. */
+  const LAT0 = 47.5545, LON0 = 12.9221;
+  const DLAT = (DEM.km / 2) / 111.32;
+  const DLON = (DEM.km / 2) / (111.32 * Math.cos(LAT0 * Math.PI / 180));
+  const ll = (lat, lon) => new THREE.Vector3(
+    (lon - LON0) / DLON * (SIZE / 2), 0, -(lat - LAT0) / DLAT * (SIZE / 2));
   const way = [
-    [-3.6, 3.7], [0.4, 3.4], [2.9, 2.9], [3.3, 2.2], [1.2, 1.9], [-1.9, 1.8],
-    [-2.6, 1.1], [-0.8, 0.7], [2.0, 0.6], [2.6, 0.0], [1.0, -0.4], [-1.2, -0.5],
-    [-1.7, -1.0], [-0.3, -1.3], [0.9, -1.2], [PEAK.x + 0.7, PEAK.z + 0.5], [PEAK.x, PEAK.z]
-  ].map(([x, z]) => new THREE.Vector3(x, 0, z));
-  const rough = new THREE.CatmullRomCurve3(way, false, 'centripetal', 0.35);
-  const proj = rough.getPoints(280).map(pt => new THREE.Vector3(pt.x, height(pt.x, pt.z) + 0.045, pt.z));
+    ll(47.5735, 12.9020),   /* Wimbachbruecke, Tal */
+    ll(47.5754, 12.9068),
+    ll(47.5763, 12.9118),   /* Stubenalm */
+    ll(47.5744, 12.9150),
+    ll(47.5738, 12.9168),   /* Mitterkaseralm */
+    ll(47.5722, 12.9160),
+    ll(47.5713, 12.9178),   /* Falzsteig */
+    ll(47.5697, 12.9166),   /* Watzmannhaus 1930 */
+    ll(47.5672, 12.9158),
+    ll(47.5655, 12.9165),   /* Grataufschwung */
+    ll(47.5628, 12.9168),
+    ll(47.5605, 12.9172),
+    ll(47.5590, 12.9175),   /* Hocheck */
+    ll(47.5572, 12.9195),
+    ll(47.5545, 12.9221)    /* Mittelspitze */
+  ];
+  const rough = new THREE.CatmullRomCurve3(way, false, 'centripetal', 0.4);
+  const proj = rough.getPoints(300).map(pt => new THREE.Vector3(pt.x, height(pt.x, pt.z) + 0.04, pt.z));
   const curve = new THREE.CatmullRomCurve3(proj, false, 'catmullrom', 0);
+  /* Wegpunkt-Parameter nach ECHTEN Hoehen finden (1200/1930 hm) */
+  function findT(hm) {
+    for (let i = 0; i <= 400; i++) {
+      const t = i / 400;
+      const q = curve.getPointAt(t);
+      if (DEM.min + q.y / V_SCALE * SPAN >= hm) return t;
+    }
+    return 1;
+  }
 
   /* Basis: gestrichelte Wanderkarten-Linie */
   const baseGeo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(500));
@@ -157,14 +187,14 @@ function init(DEM) {
   const tubeIdx = tubeGeo.index.count, glowIdx = glowGeo.index.count;
 
   /* ---- Overlays (HTML) an 3D-Ankern ---- */
-  const WP_T = [0.02, 0.36, 0.7, 0.985];
+  const WP_T = [0.015, findT(1420), findT(1930), 0.99];
   const anchors = [];
   function anchor(el, v3, oy) { if (el) anchors.push({ el, v3, oy: oy || 0 }); }
   const wps = Array.from(document.querySelectorAll('.wp'));
   wps.forEach((el, i) => anchor(el, curve.getPointAt(WP_T[i]), 0));
   anchor(document.querySelector('[data-poi="start"]'), curve.getPointAt(0.004).add(new THREE.Vector3(-0.5, 0.02, 0)), 0);
-  anchor(document.querySelector('[data-poi="kapelle"]'), curve.getPointAt(0.36).add(new THREE.Vector3(0.45, 0, 0.25)), 0);
-  anchor(document.querySelector('[data-poi="huette"]'), curve.getPointAt(0.7).add(new THREE.Vector3(0.4, 0, 0.3)), 0);
+  anchor(document.querySelector('[data-poi="kapelle"]'), curve.getPointAt(0.06).add(new THREE.Vector3(0.35, 0, 0.3)), 0);
+  anchor(document.querySelector('[data-poi="huette"]'), curve.getPointAt(findT(1930)).add(new THREE.Vector3(0.35, 0.02, -0.25)), 0);
   anchor(document.querySelector('[data-poi="kreuz"]'),
     new THREE.Vector3(PEAK.x, height(PEAK.x, PEAK.z) + 0.04, PEAK.z), 0);
   const smashy = document.querySelector('.grat-smashy');
@@ -238,13 +268,20 @@ function init(DEM) {
   resize();
 
   /* ---- Frame-Loop ---- */
-  const center = new THREE.Vector3(0, V_SCALE * 0.34, 0.2);
+  const baseCenter = new THREE.Vector3(0, V_SCALE * 0.3, 0.2);
+  const center = new THREE.Vector3();
   const v = new THREE.Vector3();
   function frame() {
     p += (target - p) * 0.075;
-    const az = -0.65 + p * 1.6;
-    const el = 0.42 + p * 0.1;
-    const R = 8.8;
+    const sp0 = curve.getPointAt(Math.min(0.999, Math.max(0.001, p)));
+    /* Kamera zieht ins Geschehen: Blickpunkt lerpt zur Route,
+       Radius dollyt in der Wegmitte nah ran */
+    /* Choreografie: Establishing -> reinziehen -> Gipfel-Finale */
+    const mid = Math.sin(p * Math.PI);
+    center.copy(baseCenter).lerp(sp0, 0.12 + 0.42 * mid + 0.25 * p);
+    const az = -2.35 + p * 1.75;
+    const el = 0.52 - mid * 0.14;
+    const R = 9.6 - mid * 3.4 - p * 0.8;
     camera.position.set(
       center.x + R * Math.cos(el) * Math.sin(az),
       center.y + R * Math.sin(el),
@@ -253,9 +290,8 @@ function init(DEM) {
     camera.lookAt(center);
     tube.geometry.setDrawRange(0, Math.floor(tubeIdx * p));
     glow.geometry.setDrawRange(0, Math.floor(glowIdx * p));
-    const sp = curve.getPointAt(Math.min(0.999, Math.max(0.001, p)));
-    smashyAnchor.v3.copy(sp).y += 0.02;
-    headAnchor.v3.copy(sp);
+    smashyAnchor.v3.copy(sp0).y += 0.02;
+    headAnchor.v3.copy(sp0);
     let idx = 0;
     for (let i = 1; i < 4; i++) if (p >= (WP_T[i - 1] + WP_T[i]) / 2) idx = i;
     setPanel(idx);
