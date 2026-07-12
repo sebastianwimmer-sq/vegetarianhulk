@@ -13,7 +13,7 @@ const sticky = document.querySelector('.grat-sticky');
 const track = document.querySelector('.grat-track');
 
 if (section && canvas && sticky && track) {
-  fetch('watzmann-dem.json')
+  fetch('watzmann-dem.json?v=hd2')
     .then(r => r.ok ? r.json() : Promise.reject())
     .then(dem => init(dem))
     .catch(() => section.classList.add('no3d'));
@@ -28,21 +28,29 @@ function init(DEM) {
     return;
   }
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
 
   /* ---- Licht: warmes Abendlicht + Emerald-Fill ---- */
-  scene.add(new THREE.HemisphereLight(0xd8ecdc, 0x061c12, 0.8));
-  const sun = new THREE.DirectionalLight(0xe8d5a4, 1.6);
-  sun.position.set(6, 7, 2);
+  scene.add(new THREE.HemisphereLight(0xd8ecdc, 0x061c12, 0.55));
+  const sun = new THREE.DirectionalLight(0xf0dcae, 2.4);
+  sun.position.set(9, 5, 4);                     /* tiefe Abendsonne: lange Schatten */
+  sun.castShadow = true;
+  sun.shadow.mapSize.set(2048, 2048);
+  sun.shadow.camera.left = -7; sun.shadow.camera.right = 7;
+  sun.shadow.camera.top = 7; sun.shadow.camera.bottom = -7;
+  sun.shadow.camera.far = 40;
+  sun.shadow.bias = -0.0004;
   scene.add(sun);
-  const fill = new THREE.DirectionalLight(0x50c878, 0.3);
+  const fill = new THREE.DirectionalLight(0x50c878, 0.22);
   fill.position.set(-5, 3, -4);
   scene.add(fill);
 
   /* ---- Echtes Terrain: bilineares DEM-Sampling ---- */
-  const SIZE = 10, SEG = 158;
+  const SIZE = 10, SEG = 226;
   const SPAN = DEM.max - DEM.min;
   const V_SCALE = SIZE * (SPAN / (DEM.km * 1000)) * 1.35;   /* leichte Modell-Überhöhung */
   function demAt(ix, iy) {
@@ -75,22 +83,24 @@ function init(DEM) {
   /* Farben: Höhe + Hangneigung (steil = Fels, hoch + flach = Schnee) */
   const nrm = geo.attributes.normal;
   const colors = new Float32Array(pos.count * 3);
-  const cTal = new THREE.Color('#0B2E1E'), cHang = new THREE.Color('#175539'),
-        cFels = new THREE.Color('#5E6B5E'), cSchnee = new THREE.Color('#EDEADF');
+  const cTal = new THREE.Color('#0A2A1B'), cHang = new THREE.Color('#14432B'),
+        cFels = new THREE.Color('#3E5A48'), cSchnee = new THREE.Color('#F0EDE2');
   const tmp = new THREE.Color();
   for (let i = 0; i < pos.count; i++) {
     const t = pos.getY(i) / V_SCALE;
     const ny = nrm.getY(i);
-    tmp.lerpColors(cTal, cHang, Math.min(1, t / 0.55));
-    const steil = Math.min(1, Math.max(0, (0.78 - ny) / 0.3));
-    tmp.lerp(cFels, steil * Math.min(1, t * 1.6));
-    if (t > 0.72 && ny > 0.6) tmp.lerp(cSchnee, Math.min(1, (t - 0.72) / 0.2));
+    tmp.lerpColors(cTal, cHang, Math.min(1, t / 0.5));
+    const steil = Math.min(1, Math.max(0, (0.74 - ny) / 0.32));
+    tmp.lerp(cFels, steil * 0.85);
+    if (t > 0.68 && ny > 0.55) tmp.lerp(cSchnee, Math.min(1, (t - 0.68) / 0.18));
     colors[i * 3] = tmp.r; colors[i * 3 + 1] = tmp.g; colors[i * 3 + 2] = tmp.b;
   }
   geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   const terrain = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({
-    vertexColors: true, flatShading: false, roughness: 0.95, metalness: 0
+    vertexColors: true, flatShading: false, roughness: 0.92, metalness: 0
   }));
+  terrain.castShadow = true;
+  terrain.receiveShadow = true;
   scene.add(terrain);
   const wire = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({
     wireframe: true, color: 0xF3EBD9, transparent: true, opacity: 0.035
