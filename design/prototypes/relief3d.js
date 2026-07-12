@@ -30,22 +30,16 @@ function init(DEM) {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2.5));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.12;
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
 
   const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x0E3A28, 0.028);
   const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
 
   /* ---- Licht: warmes Abendlicht + Emerald-Fill ---- */
   scene.add(new THREE.HemisphereLight(0xd8ecdc, 0x0a2418, 0.68));
-  const sun = new THREE.DirectionalLight(0xf0dcae, 2.4);
-  sun.position.set(9, 5, 4);                     /* tiefe Abendsonne: lange Schatten */
-  sun.castShadow = true;
-  sun.shadow.mapSize.set(2048, 2048);
-  sun.shadow.camera.left = -7; sun.shadow.camera.right = 7;
-  sun.shadow.camera.top = 7; sun.shadow.camera.bottom = -7;
-  sun.shadow.camera.far = 40;
-  sun.shadow.bias = -0.0004;
+  const sun = new THREE.DirectionalLight(0xf0dcae, 2.1);
+  sun.position.set(9, 4.6, 3.5);                     /* tiefe Abendsonne: lange Schatten */
   scene.add(sun);
   const fill = new THREE.DirectionalLight(0x6fcf97, 0.42);
   fill.position.set(-5, 3, -4);
@@ -91,18 +85,17 @@ function init(DEM) {
   for (let i = 0; i < pos.count; i++) {
     const t = pos.getY(i) / V_SCALE;
     const ny = nrm.getY(i);
-    tmp.lerpColors(cTal, cHang, Math.min(1, t / 0.5));
-    const steil = Math.min(1, Math.max(0, (0.74 - ny) / 0.32));
-    tmp.lerp(cFels, steil * 0.85);
-    if (t > 0.68 && ny > 0.55) tmp.lerp(cSchnee, Math.min(1, (t - 0.68) / 0.18));
+    const sm = x => { x = Math.min(1, Math.max(0, x)); return x * x * (3 - 2 * x); };
+    tmp.lerpColors(cTal, cHang, sm(t / 0.5));
+    tmp.lerp(cFels, sm((0.74 - ny) / 0.32) * 0.85);
+    /* Schnee mit WEICHER Grenze (hartes Ja/Nein erzeugte Klotz-Muster) */
+    tmp.lerp(cSchnee, sm((t - 0.6) / 0.22) * sm((ny - 0.42) / 0.34));
     colors[i * 3] = tmp.r; colors[i * 3 + 1] = tmp.g; colors[i * 3 + 2] = tmp.b;
   }
   geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   const terrain = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({
     vertexColors: true, flatShading: false, roughness: 0.92, metalness: 0
   }));
-  terrain.castShadow = true;
-  terrain.receiveShadow = true;
   scene.add(terrain);
   const wire = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({
     wireframe: true, color: 0xF3EBD9, transparent: true, opacity: 0.035
@@ -110,10 +103,10 @@ function init(DEM) {
   scene.add(wire);
   /* Sockel wie beim Relief-Modell */
   const plinth = new THREE.Mesh(
-    new THREE.BoxGeometry(SIZE + 0.24, 0.6, SIZE + 0.24),
+    new THREE.BoxGeometry(SIZE + 0.18, 0.42, SIZE + 0.18),
     new THREE.MeshStandardMaterial({ color: 0x04140C, roughness: 1 })
   );
-  plinth.position.y = -0.31;
+  plinth.position.y = -0.22;
   scene.add(plinth);
 
   /* ---- Route: ECHTER Watzmann-Normalweg (reale Koordinaten) ----
@@ -186,6 +179,29 @@ function init(DEM) {
   scene.add(glow);
   const tubeIdx = tubeGeo.index.count, glowIdx = glowGeo.index.count;
 
+  /* ---- Hoehenprofil der Route -> Sparkline im Panel ---- */
+  const spark = document.querySelector('[data-spark-line]');
+  const sparkFill = document.querySelector('[data-spark-fill]');
+  const sparkDot = document.querySelector('[data-spark-dot]');
+  const SPARK_W = 220, SPARK_H = 34;
+  const sparkPts = [];
+  for (let i = 0; i <= 80; i++) {
+    const q = curve.getPointAt(i / 80);
+    const hn = q.y / V_SCALE;
+    sparkPts.push([(i / 80) * SPARK_W, SPARK_H - 3 - hn * (SPARK_H - 8)]);
+  }
+  if (spark) {
+    const d = sparkPts.map(pt => pt[0].toFixed(1) + ',' + pt[1].toFixed(1)).join(' ');
+    spark.setAttribute('points', d);
+    if (sparkFill) sparkFill.setAttribute('points', '0,' + SPARK_H + ' ' + d + ' ' + SPARK_W + ',' + SPARK_H);
+  }
+  function sparkAt(t) {
+    const i = Math.min(80, Math.max(0, t * 80));
+    const a = sparkPts[Math.floor(i)], b = sparkPts[Math.min(80, Math.ceil(i))];
+    const fr = i - Math.floor(i);
+    return [a[0] + (b[0] - a[0]) * fr, a[1] + (b[1] - a[1]) * fr];
+  }
+
   /* ---- Overlays (HTML) an 3D-Ankern ---- */
   const WP_T = [0.015, findT(1420), findT(1930), 0.99];
   const anchors = [];
@@ -220,6 +236,7 @@ function init(DEM) {
     wps.forEach((b, j) => b.classList.toggle('on', j === i));
     section.classList.toggle('summit', i === 3);
     if (stepNow) stepNow.textContent = '0' + (i + 1);
+    document.querySelectorAll('.panel-ticks i').forEach((el, j) => el.classList.toggle('on', j <= i));
     if (panelBusy) return;
     panelBusy = true;
     panel.classList.add('swap-out');
@@ -299,6 +316,11 @@ function init(DEM) {
       if (Math.abs(p - lastP) > 0.0004) walkT = 14;
       walkT = Math.max(0, walkT - 1);
       smashy.classList.toggle('walking', walkT > 0);
+    }
+    if (sparkDot) {
+      const sPt = sparkAt(p);
+      sparkDot.setAttribute('cx', sPt[0].toFixed(1));
+      sparkDot.setAttribute('cy', sPt[1].toFixed(1));
     }
     lastP = p;
     const w = renderer.domElement.clientWidth, h2 = renderer.domElement.clientHeight;
