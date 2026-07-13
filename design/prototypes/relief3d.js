@@ -38,7 +38,7 @@ function init(DEM) {
 
   /* ---- Licht: warmes Abendlicht + Emerald-Fill ---- */
   scene.add(new THREE.HemisphereLight(0xd8ecdc, 0x0a2418, 0.68));
-  const sun = new THREE.DirectionalLight(0xf0dcae, 2.1);
+  const sun = new THREE.DirectionalLight(0xf2d79c, 2.3);
   sun.position.set(9, 4.6, 3.5);                     /* tiefe Abendsonne: lange Schatten */
   scene.add(sun);
   const fill = new THREE.DirectionalLight(0x6fcf97, 0.42);
@@ -79,8 +79,8 @@ function init(DEM) {
   /* Farben: Höhe + Hangneigung (steil = Fels, hoch + flach = Schnee) */
   const nrm = geo.attributes.normal;
   const colors = new Float32Array(pos.count * 3);
-  const cTal = new THREE.Color('#0A2A1B'), cHang = new THREE.Color('#14432B'),
-        cFels = new THREE.Color('#3E5A48'), cSchnee = new THREE.Color('#F0EDE2');
+  const cTal = new THREE.Color('#0C2416'), cHang = new THREE.Color('#2A6A40'),
+        cFels = new THREE.Color('#8A9282'), cSchnee = new THREE.Color('#F2EFE3');
   const tmp = new THREE.Color();
   for (let i = 0; i < pos.count; i++) {
     const t = pos.getY(i) / V_SCALE;
@@ -258,7 +258,27 @@ function init(DEM) {
   function readScroll() {
     const r = track.getBoundingClientRect();
     const span = track.offsetHeight - sticky.offsetHeight;
-    target = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
+    target = shape(span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0);
+    /* Einblend-Rampe: Szene blendet ein, waehrend der Track in den
+       Viewport faehrt — kein hartes Platten-Reinschieben */
+    const vh = window.innerHeight;
+    const vis = Math.min(1, Math.max(0, 1 - r.top / (vh * 0.7)));
+    sticky.style.opacity = (0.05 + 0.95 * vis * vis).toFixed(3);
+  }
+  /* Scroll-Plateaus: an jeder Etappe haelt der Aufstieg an (Text lesbar) */
+  function shape(raw) {
+    const d = 0.09;
+    let prevEnd = 0, prevT = 0;
+    for (let i = 0; i < WP_T.length; i++) {
+      const c0 = Math.max(prevEnd, WP_T[i] - d / 2), c1 = WP_T[i] + d / 2;
+      if (raw < c0) {
+        const f = (raw - prevEnd) / Math.max(0.0001, c0 - prevEnd);
+        return prevT + (WP_T[i] - prevT) * f;
+      }
+      if (raw <= c1) return WP_T[i];
+      prevEnd = c1; prevT = WP_T[i];
+    }
+    return Math.min(1, prevT + (raw - prevEnd) / Math.max(0.0001, 1 - prevEnd) * (1 - prevT));
   }
   if (!reduce) {
     window.addEventListener('scroll', readScroll, { passive: true });
@@ -269,7 +289,7 @@ function init(DEM) {
     if (reduce) { target = WP_T[i]; setPanel(i); return; }
     const span = track.offsetHeight - sticky.offsetHeight;
     const top = track.getBoundingClientRect().top + window.scrollY;
-    window.scrollTo({ top: top + WP_T[i] * span + 2, behavior: 'smooth' });
+    window.scrollTo({ top: top + WP_T[i] * span + 2, behavior: 'smooth' });  /* WP_T liegt im Plateau */
   }
   wps.forEach(b => b.addEventListener('click', () => goTo(parseInt(b.dataset.i, 10))));
   document.querySelectorAll('[data-step]').forEach(b =>

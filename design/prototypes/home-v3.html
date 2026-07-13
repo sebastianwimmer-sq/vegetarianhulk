@@ -244,8 +244,8 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .grat-track { height: 320vh; }
 .grat-sticky { position: sticky; top: 0; height: 100vh; overflow: clip; }
 .berg-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 3%, #000 93%, transparent 100%);
-          mask-image: linear-gradient(180deg, transparent 0, #000 3%, #000 93%, transparent 100%); }
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 92%, transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 92%, transparent 100%); }
 .berg-overlays { position: absolute; inset: 0; pointer-events: none; }
 .berg-overlays .wp { pointer-events: auto; }
 .scroll-hint { position: absolute; right: max(24px, calc(50vw - 530px)); bottom: 100px;
@@ -267,16 +267,18 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   background: rgba(7,31,20,0.9); border: 1.5px solid rgba(243,235,217,0.75);
   transition: background 400ms var(--ease-lux), border-color 400ms var(--ease-lux), box-shadow 400ms var(--ease-lux); }
 .wp .wp-num { display: block; white-space: nowrap;
-  font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: 2.6px; text-transform: uppercase;
-  color: rgba(243,235,217,0.88);
-  text-shadow: 0 0 3px rgba(3,15,9,0.95), 0 0 8px rgba(3,15,9,0.85), 0 1px 2px rgba(3,15,9,0.9);
-  border-bottom: 1px solid transparent; padding-bottom: 3px;
-  transition: color 400ms var(--ease-lux), border-color 400ms var(--ease-lux); }
+  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(243,235,217,0.92); background: rgba(5,22,14,0.96);
+  padding: 5px 16px 5px 10px;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
+  filter: drop-shadow(0 0 0.8px rgba(243,235,217,0.65)) drop-shadow(0 1.5px 1.5px rgba(2,10,6,0.9)) drop-shadow(0 6px 12px rgba(0,0,0,0.5));
+  transition: color 400ms var(--ease-lux), background 400ms var(--ease-lux); }
+.wp:hover .wp-num { color: var(--leaf); }
 .wp:hover .wp-num { color: var(--leaf); }
 .wp:hover::before { border-color: var(--leaf); }
 .wp.on::before { background: var(--emerald); border-color: var(--emerald);
   box-shadow: 0 0 10px rgba(80,200,120,0.7); animation: wpping 900ms var(--ease-lux) 1; }
-.wp.on .wp-num { color: var(--emerald); border-bottom-color: rgba(80,200,120,0.5); }
+.wp.on .wp-num { color: #06231A; background: var(--emerald); }
 /* POIs: Screen-Space Miniaturen */
 .poi { position: absolute; transform: translate(-50%, -100%); pointer-events: none;
   color: rgba(243,235,217,0.92); }
@@ -287,7 +289,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
    grosser Messwert, klare Hairline-Karte) */
 .wetter-hud { position: absolute; top: 26px; right: max(24px, calc(50vw - 530px)); z-index: 3;
   min-width: 168px; padding: 16px 18px 14px; border-radius: 14px;
-  background: rgba(6,29,19,0.66); border: 1px solid rgba(243,235,217,0.2);
+  background: rgba(4,18,12,0.88); border: 1px solid rgba(243,235,217,0.24);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 0 0 1px rgba(3,15,9,0.5), 0 16px 34px -14px rgba(0,0,0,0.6); }
 .hud-label { display: flex; align-items: center; gap: 8px;
   font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.8px;
@@ -318,13 +320,16 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 }
 .grat-smashy.walking { animation: smashyhop 340ms ease-in-out infinite; }
 /* Panel: liegt unten links AUF der Szene */
-.grat-panel { position: absolute; left: max(24px, calc(50vw - 530px)); bottom: 44px;
-  width: min(480px, calc(100vw - 48px)); z-index: 3;
-  padding: 18px 26px 20px;
-  background: linear-gradient(180deg, rgba(7,31,20,0.88), rgba(6,26,17,0.82));
-  border-top: 1px solid rgba(243,235,217,0.3);
-  border-bottom: 1px solid rgba(243,235,217,0.14);
-  box-shadow: 0 24px 50px -20px rgba(0,0,0,0.6); }
+.grat-panel { position: absolute; left: max(24px, calc(50vw - 530px)); bottom: 74px;
+  width: min(500px, calc(100vw - 48px)); z-index: 3;
+  padding: 18px 58px 22px 28px;
+  background: linear-gradient(180deg, rgba(5,22,14,0.94), rgba(4,18,12,0.9));
+  clip-path: polygon(0 0, calc(100% - 34px) 0, 100% 50%, calc(100% - 34px) 100%, 0 100%);
+  filter: drop-shadow(0 0 0.9px rgba(243,235,217,0.55)) drop-shadow(0 2px 2px rgba(2,10,6,0.85)) drop-shadow(0 22px 40px rgba(0,0,0,0.55)); }
+/* Pfahl mit Standpunkt */
+.grat-panel::after { content: ""; position: absolute; left: 46px; top: 100%;
+  width: 1.5px; height: 72px;
+  background: linear-gradient(180deg, rgba(243,235,217,0.6), rgba(243,235,217,0.1)); }
 /* Etappen-Kopf: Mono + vier Ticks, Blaettern als stille Zeichen */
 .panel-nav { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
 .panel-nav .steps { order: 1; font-family: var(--mono); font-size: 10px; font-weight: 700;
@@ -841,6 +846,6 @@ footer .legal a:hover { color: var(--paper); }
   els.forEach(function (e) { io.observe(e); });
 })();
 </script>
-<script type="module" src="relief3d.js?v=watzmann-hd2"></script>
+<script type="module" src="relief3d.js?v=watzmann-hd3"></script>
 </body>
 </html>
