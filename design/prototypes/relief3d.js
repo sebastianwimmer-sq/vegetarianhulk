@@ -80,7 +80,8 @@ function init(DEM) {
   const nrm = geo.attributes.normal;
   const colors = new Float32Array(pos.count * 3);
   const cTal = new THREE.Color('#0C2416'), cHang = new THREE.Color('#2A6A40'),
-        cFels = new THREE.Color('#8A9282'), cSchnee = new THREE.Color('#F2EFE3');
+        cFels = new THREE.Color('#8A9282'), cSchnee = new THREE.Color('#F2EFE3'),
+        cAtmo = new THREE.Color('#175038');
   const tmp = new THREE.Color();
   for (let i = 0; i < pos.count; i++) {
     const t = pos.getY(i) / V_SCALE;
@@ -90,24 +91,40 @@ function init(DEM) {
     tmp.lerp(cFels, sm((0.74 - ny) / 0.32) * 0.85);
     /* Schnee mit WEICHER Grenze (hartes Ja/Nein erzeugte Klotz-Muster) */
     tmp.lerp(cSchnee, sm((t - 0.6) / 0.22) * sm((ny - 0.42) / 0.34));
+    /* Rand-Zone: Farbe laeuft in den Atmosphaeren-Ton, damit der Alpha-Fade
+       nicht helle Flaechen (Schnee) vor hellem BG aufleuchten laesst */
+    const ex = Math.max(Math.abs(pos.getX(i)), Math.abs(pos.getZ(i))) / (SIZE / 2);
+    tmp.lerp(cAtmo, sm((ex - 0.72) / 0.26) * 0.9);
     colors[i * 3] = tmp.r; colors[i * 3 + 1] = tmp.g; colors[i * 3 + 2] = tmp.b;
   }
   geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  /* Rand-Fade: das Terrain loest sich zum Rand hin in die Atmosphaere auf
+     statt als geschnittene Platte zu enden (alphaMap = drei.js green channel) */
+  const fadeTex = (() => {
+    const N = 256, c = document.createElement('canvas');
+    c.width = c.height = N;
+    const g = c.getContext('2d'), img = g.createImageData(N, N);
+    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+      const u = Math.abs(x / (N - 1) - 0.5) * 2, v = Math.abs(y / (N - 1) - 0.5) * 2;
+      let a = 1 - Math.min(1, Math.max(0, (Math.max(u, v) - 0.8) / 0.19));
+      a = a * a * (3 - 2 * a);
+      const i = (y * N + x) * 4;
+      img.data[i] = img.data[i + 1] = img.data[i + 2] = Math.round(a * 255);
+      img.data[i + 3] = 255;
+    }
+    g.putImageData(img, 0, 0);
+    return new THREE.CanvasTexture(c);
+  })();
   const terrain = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({
-    vertexColors: true, flatShading: false, roughness: 0.92, metalness: 0
+    vertexColors: true, flatShading: false, roughness: 0.92, metalness: 0,
+    transparent: true, alphaMap: fadeTex, side: THREE.DoubleSide
   }));
   scene.add(terrain);
   const wire = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({
-    wireframe: true, color: 0xF3EBD9, transparent: true, opacity: 0.035
+    wireframe: true, color: 0xF3EBD9, transparent: true, opacity: 0.035,
+    alphaMap: fadeTex
   }));
   scene.add(wire);
-  /* Sockel wie beim Relief-Modell */
-  const plinth = new THREE.Mesh(
-    new THREE.BoxGeometry(SIZE + 0.18, 0.42, SIZE + 0.18),
-    new THREE.MeshStandardMaterial({ color: 0x04140C, roughness: 1 })
-  );
-  plinth.position.y = -0.22;
-  scene.add(plinth);
 
   /* ---- Route: ECHTER Watzmann-Normalweg (reale Koordinaten) ----
      Wimbachbruecke -> Stubenalm -> Mitterkaseralm -> Watzmannhaus
@@ -324,6 +341,12 @@ function init(DEM) {
       center.y + R * Math.sin(el),
       center.z + R * Math.cos(el) * Math.cos(az)
     );
+    /* Bodenfreiheit: Kamera darf nie unter einen Vordergrund-Grat tauchen */
+    const half = SIZE / 2;
+    if (Math.abs(camera.position.x) < half && Math.abs(camera.position.z) < half) {
+      const ground = height(camera.position.x, camera.position.z);
+      if (camera.position.y < ground + 0.55) camera.position.y = ground + 0.55;
+    }
     camera.lookAt(center);
     tube.geometry.setDrawRange(0, Math.floor(tubeIdx * p));
     glow.geometry.setDrawRange(0, Math.floor(glowIdx * p));
@@ -362,12 +385,27 @@ function init(DEM) {
   if (chip && window.fetch) {
     const WMO = c => c === 0 ? 'klar' : c <= 2 ? 'leicht bewölkt' : c === 3 ? 'bedeckt'
       : c <= 48 ? 'Nebel' : c <= 67 ? 'Regen' : c <= 77 ? 'Schneefall' : c <= 82 ? 'Schauer' : 'Gewitter';
+    /* Fineline-Wettersymbole (Kartografie-Stil, currentColor) */
+    const IC = {
+      sun: '<circle cx="12" cy="12" r="4.4"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.2 5.2l1.9 1.9M16.9 16.9l1.9 1.9M18.8 5.2l-1.9 1.9M7.1 16.9l-1.9 1.9"/>',
+      suncloud: '<circle cx="8.4" cy="8.2" r="3.4"/><path d="M8.4 2.6v1.8M2.8 8.2h1.8M4.4 4.2l1.3 1.3"/><path d="M8.6 18.4h8.9a3.1 3.1 0 0 0 .4-6.2 4.6 4.6 0 0 0-9-.9 3.6 3.6 0 0 0-.3 7.1z"/>',
+      cloud: '<path d="M7.4 18.2h9.9a3.4 3.4 0 0 0 .5-6.8 5 5 0 0 0-9.8-1 3.9 3.9 0 0 0-.6 7.8z"/>',
+      fog: '<path d="M4 9.6h16M4 13h13M6 16.4h12M8 19.8h9"/>',
+      rain: '<path d="M7.4 14.6h9.9a3.4 3.4 0 0 0 .5-6.8 5 5 0 0 0-9.8-1 3.9 3.9 0 0 0-.6 7.8z"/><path d="M8.6 17.4l-1 2.6M12.6 17.4l-1 2.6M16.6 17.4l-1 2.6"/>',
+      snow: '<path d="M7.4 14.6h9.9a3.4 3.4 0 0 0 .5-6.8 5 5 0 0 0-9.8-1 3.9 3.9 0 0 0-.6 7.8z"/><path d="M8.4 18.4h.01M12.2 20h.01M16 18.4h.01" stroke-linecap="round" stroke-width="2.1"/>',
+      storm: '<path d="M7.4 13.6h9.9a3.4 3.4 0 0 0 .5-6.8 5 5 0 0 0-9.8-1 3.9 3.9 0 0 0-.6 7.8z"/><path d="M12.8 15l-2.4 3.4h3l-2.2 3.4"/>'
+    };
+    const icoKey = c => c === 0 ? 'sun' : c <= 2 ? 'suncloud' : c === 3 ? 'cloud'
+      : c <= 48 ? 'fog' : c <= 67 ? 'rain' : c <= 77 ? 'snow' : c <= 82 ? 'rain' : 'storm';
     fetch('https://api.open-meteo.com/v1/forecast?latitude=47.5545&longitude=12.9221&current=temperature_2m,weather_code&daily=sunset&timezone=Europe%2FBerlin&forecast_days=1')
       .then(r => r.ok ? r.json() : Promise.reject())
       .then(d => {
         const s = (d.daily.sunset[0] || '').slice(11, 16);
         chip.querySelector('[data-w-temp]').textContent = Math.round(d.current.temperature_2m);
         chip.querySelector('[data-w-cond]').textContent = WMO(d.current.weather_code);
+        const ico = chip.querySelector('[data-w-icon]');
+        if (ico) ico.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true">'
+          + IC[icoKey(d.current.weather_code)] + '</svg>';
         chip.querySelector('[data-w-meta]').textContent = '2713 m' + (s ? ' · Sonne bis ' + s : '');
         chip.hidden = false;
       })

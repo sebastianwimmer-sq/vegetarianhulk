@@ -244,8 +244,12 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .grat-track { height: 320vh; }
 .grat-sticky { position: sticky; top: 0; height: 100vh; overflow: clip; }
 .berg-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 92%, transparent 100%);
-          mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 92%, transparent 100%); }
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 92%, transparent 100%),
+                      linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  -webkit-mask-composite: source-in;
+          mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 92%, transparent 100%),
+                      linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+          mask-composite: intersect; }
 .berg-overlays { position: absolute; inset: 0; pointer-events: none; }
 .berg-overlays .wp { pointer-events: auto; }
 .scroll-hint { position: absolute; right: max(24px, calc(50vw - 530px)); bottom: 100px;
@@ -267,18 +271,26 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   background: rgba(7,31,20,0.9); border: 1.5px solid rgba(243,235,217,0.75);
   transition: background 400ms var(--ease-lux), border-color 400ms var(--ease-lux), box-shadow 400ms var(--ease-lux); }
 .wp .wp-num { display: block; white-space: nowrap;
-  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-  color: rgba(243,235,217,0.92); background: rgba(5,22,14,0.96);
-  padding: 5px 16px 5px 10px;
+  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
+  color: #14100A;
+  /* DAV-Gelb wie am echten Wegweiser, mit schwarzem Punkt wie auf den Schildern */
+  background:
+    radial-gradient(circle at 11px 50%, #14100A 2.2px, transparent 3px),
+    linear-gradient(180deg, #E8BF25, #D4A918);
+  padding: 5px 16px 5px 20px;
   clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
-  filter: drop-shadow(0 0 0.8px rgba(243,235,217,0.65)) drop-shadow(0 1.5px 1.5px rgba(2,10,6,0.9)) drop-shadow(0 6px 12px rgba(0,0,0,0.5));
-  transition: color 400ms var(--ease-lux), background 400ms var(--ease-lux); }
-.wp:hover .wp-num { color: var(--leaf); }
-.wp:hover .wp-num { color: var(--leaf); }
+  filter: drop-shadow(0 0 0.8px rgba(20,16,5,0.75)) drop-shadow(0 1.5px 1.5px rgba(2,10,6,0.85)) drop-shadow(0 6px 12px rgba(0,0,0,0.5));
+  transition: filter 400ms var(--ease-lux), background 400ms var(--ease-lux); }
+.wp:hover .wp-num { background:
+    radial-gradient(circle at 11px 50%, #14100A 2.2px, transparent 3px),
+    linear-gradient(180deg, #F4CE33, #E0B51E); }
 .wp:hover::before { border-color: var(--leaf); }
 .wp.on::before { background: var(--emerald); border-color: var(--emerald);
   box-shadow: 0 0 10px rgba(80,200,120,0.7); animation: wpping 900ms var(--ease-lux) 1; }
-.wp.on .wp-num { color: #06231A; background: var(--emerald); }
+.wp.on .wp-num { background:
+    radial-gradient(circle at 11px 50%, #14100A 2.2px, transparent 3px),
+    linear-gradient(180deg, #F8D63A, #E7BC1F);
+  filter: drop-shadow(0 0 0.8px rgba(20,16,5,0.75)) drop-shadow(0 1.5px 1.5px rgba(2,10,6,0.85)) drop-shadow(0 0 14px rgba(232,191,37,0.45)); }
 /* POIs: Screen-Space Miniaturen */
 .poi { position: absolute; transform: translate(-50%, -100%); pointer-events: none;
   color: rgba(243,235,217,0.92); }
@@ -295,7 +307,10 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.8px;
   text-transform: uppercase; color: var(--paper-faint); }
 .hud-temp { margin-top: 8px; font-family: var(--mono); font-weight: 700; font-size: 38px;
-  line-height: 1; color: var(--paper); letter-spacing: -1px; }
+  line-height: 1; color: var(--paper); letter-spacing: -1px;
+  display: flex; align-items: center; }
+.hud-icon { margin-left: auto; padding-left: 14px; color: rgba(243,235,217,0.9); }
+.hud-icon svg { display: block; width: 30px; height: 30px; }
 .hud-unit { font-size: 16px; font-weight: 600; color: var(--leaf); margin-left: 3px; }
 .hud-cond { margin-top: 4px; font-family: var(--mono); font-size: 11px; font-weight: 700;
   letter-spacing: 1.8px; text-transform: uppercase; color: var(--mint); }
@@ -502,7 +517,7 @@ footer .legal a:hover { color: var(--paper); }
 .quote p, .grat-panel p, .hero-handle, .brands-line, .grat-panel h3 { text-shadow: 0 1px 3px rgba(3,15,9,0.55); }
 .shead .kicker, .hero-meta, .grat-panel .num, .panel-nav .steps, footer .legal, footer .claim, .stage-caption, .scroll-hint { text-shadow: 0 1px 2px rgba(3,15,9,0.6); }
 .wordmark { text-shadow: 0 1px 3px rgba(3,15,9,0.55); }
-.wp .wp-num { box-shadow: 0 0 0 1.5px rgba(3,15,9,0.85), 0 4px 12px rgba(0,0,0,0.5); }
+
 /* Fineline-Icons bekommen eine echte dunkle Kontur (4-Richtungs-Shadow) */
 .poi svg, .rail-cross, .rail-peak svg { filter:
   drop-shadow(0.8px 0 0 rgba(3,15,9,0.85)) drop-shadow(-0.8px 0 0 rgba(3,15,9,0.85))
@@ -643,8 +658,8 @@ footer .legal a:hover { color: var(--paper); }
             </div>
           </div>
           <aside class="wetter-hud" hidden aria-label="Bedingungen am Berg">
-            <p class="hud-label"><span class="live-dot"></span>Bergstation · Watzmann</p>
-            <p class="hud-temp"><span data-w-temp>–</span><span class="hud-unit">°C</span></p>
+            <p class="hud-label">Bergstation · Watzmann</p>
+            <p class="hud-temp"><span data-w-temp>–</span><span class="hud-unit">°C</span><span class="hud-icon" data-w-icon aria-hidden="true"></span></p>
             <p class="hud-cond" data-w-cond></p>
             <p class="hud-meta" data-w-meta></p>
           </aside>
@@ -846,6 +861,6 @@ footer .legal a:hover { color: var(--paper); }
   els.forEach(function (e) { io.observe(e); });
 })();
 </script>
-<script type="module" src="relief3d.js?v=watzmann-hd3"></script>
+<script type="module" src="relief3d.js?v=watzmann-hd4"></script>
 </body>
 </html>
