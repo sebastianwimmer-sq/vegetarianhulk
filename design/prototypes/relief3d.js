@@ -63,14 +63,6 @@ function init(DEM) {
     return hh * V_SCALE;
   }
 
-  /* Gipfel im Grid finden (Kreuz-Anker) */
-  let peakI = 0;
-  for (let i = 1; i < DEM.data.length; i++) if (DEM.data[i] > DEM.data[peakI]) peakI = i;
-  const PEAK = {
-    x: (peakI % DEM.w) / (DEM.w - 1) * SIZE - SIZE / 2,
-    z: Math.floor(peakI / DEM.w) / (DEM.h - 1) * SIZE - SIZE / 2
-  };
-
   const geo = new THREE.PlaneGeometry(SIZE, SIZE, SEG, SEG);
   geo.rotateX(-Math.PI / 2);
   const pos = geo.attributes.position;
@@ -229,7 +221,7 @@ function init(DEM) {
   anchor(document.querySelector('[data-poi="kapelle"]'), curve.getPointAt(0.06).add(new THREE.Vector3(0.35, 0, 0.3)), 0);
   anchor(document.querySelector('[data-poi="huette"]'), curve.getPointAt(findT(1930)).add(new THREE.Vector3(0.35, 0.02, -0.25)), 0);
   anchor(document.querySelector('[data-poi="kreuz"]'),
-    new THREE.Vector3(PEAK.x, height(PEAK.x, PEAK.z) + 0.04, PEAK.z), 0);
+    curve.getPointAt(1).add(new THREE.Vector3(0, 0.02, 0)), 0);
   const smashy = document.querySelector('.grat-smashy');
   const smashyAnchor = { el: smashy, v3: curve.getPointAt(0).clone(), oy: 0 };
   if (smashy) anchors.push(smashyAnchor);
@@ -354,8 +346,9 @@ function init(DEM) {
       if (camera.position.y < ground + 0.55) camera.position.y = ground + 0.55;
     }
     camera.lookAt(center);
-    tube.geometry.setDrawRange(0, Math.floor(tubeIdx * p));
-    glow.geometry.setDrawRange(0, Math.floor(glowIdx * p));
+    const dp = p > 0.97 ? 1 : p;  /* Finale: Route bis zum Kreuz durchziehen */
+    tube.geometry.setDrawRange(0, Math.floor(tubeIdx * dp));
+    glow.geometry.setDrawRange(0, Math.floor(glowIdx * dp));
     smashyAnchor.v3.copy(sp0).y += 0.02;
     headAnchor.v3.copy(sp0);
     let idx = 0;

@@ -340,7 +340,18 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   padding: 18px 58px 22px 28px;
   transform-origin: 46px 100%;
   transition: opacity 500ms var(--ease-lux), transform 700ms var(--ease-lux);
-  background: linear-gradient(180deg, rgba(5,22,14,0.94), rgba(4,18,12,0.9));
+  /* Material statt Flaeche: Holz-Maserung, zwei Montage-Schrauben,
+     gerichtetes Licht von oben links + Innen-Bezel (inset ueberlebt clip-path) */
+  background:
+    radial-gradient(circle at 15px 18px, rgba(243,235,217,0.5) 1.2px, rgba(2,10,6,0.9) 1.9px, transparent 2.9px),
+    radial-gradient(circle at 15px calc(100% - 18px), rgba(243,235,217,0.5) 1.2px, rgba(2,10,6,0.9) 1.9px, transparent 2.9px),
+    repeating-linear-gradient(93deg, rgba(243,235,217,0.026) 0 1px, rgba(0,0,0,0) 1px 9px),
+    linear-gradient(166deg, rgba(19,54,35,0.97) 0%, rgba(8,29,18,0.96) 46%, rgba(4,15,10,0.975) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(243,235,217,0.15),
+    inset 0 0 0 1px rgba(243,235,217,0.05),
+    inset 0 22px 36px rgba(64,140,92,0.08),
+    inset 0 -30px 46px rgba(0,0,0,0.42);
   clip-path: polygon(0 0, calc(100% - 34px) 0, 100% 50%, calc(100% - 34px) 100%, 0 100%);
   filter: drop-shadow(0 0 0.9px rgba(243,235,217,0.55)) drop-shadow(0 2px 2px rgba(2,10,6,0.85)) drop-shadow(0 22px 40px rgba(0,0,0,0.55)); }
 /* Waehrend der Fahrt eingeklappt — pflanzt sich am Etappen-Stopp ein */
@@ -348,13 +359,18 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 @media (prefers-reduced-motion: reduce) { .grat-panel.traveling { opacity: 1; transform: none; pointer-events: auto; } }
 /* Pfahl mit Standpunkt */
 .grat-panel::after { content: ""; position: absolute; left: 46px; top: 100%;
-  width: 1.5px; height: 72px;
-  background: linear-gradient(180deg, rgba(243,235,217,0.6), rgba(243,235,217,0.1)); }
+  width: 3px; height: 78px;
+  background: linear-gradient(180deg, rgba(154,138,96,0.85), rgba(60,50,30,0.2));
+  box-shadow: inset 1px 0 0 rgba(243,235,217,0.35); }
 /* Etappen-Kopf: Mono + vier Ticks, Blaettern als stille Zeichen */
-.panel-nav { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.panel-nav { display: flex; align-items: center; gap: 14px; margin-bottom: 14px;
+  padding-bottom: 12px; border-bottom: 1px solid rgba(243,235,217,0.1); }
 .panel-nav .steps { order: 1; font-family: var(--mono); font-size: 10px; font-weight: 700;
   letter-spacing: 2.6px; text-transform: uppercase; color: var(--paper-faint); }
-.panel-nav .steps b { color: var(--leaf); }
+.panel-nav .steps b { display: inline-block; padding: 2px 9px 2px 6px; margin: 0 3px;
+  color: #14100A; font-weight: 700;
+  background: linear-gradient(180deg, #E8BF25, #D4A918);
+  clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 50%, calc(100% - 5px) 100%, 0 100%); }
 .panel-ticks { order: 2; display: flex; gap: 5px; margin-left: 2px; }
 .panel-ticks i { width: 14px; height: 2px; background: rgba(243,235,217,0.22);
   transition: background 400ms var(--ease-lux); }
@@ -866,6 +882,6 @@ footer .legal a:hover { color: var(--paper); }
   els.forEach(function (e) { io.observe(e); });
 })();
 </script>
-<script type="module" src="relief3d.js?v=watzmann-hd5"></script>
+<script type="module" src="relief3d.js?v=watzmann-hd6"></script>
 </body>
 </html>
