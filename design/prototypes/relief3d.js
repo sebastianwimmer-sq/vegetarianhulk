@@ -238,6 +238,7 @@ function init(DEM) {
   ];
   const panel = document.querySelector('.grat-panel .inner');
   const panelBox = document.querySelector('.grat-panel');
+  const overlaysEl = document.querySelector('.berg-overlays');
   const stepNow = document.querySelector('[data-step-now]');
   let curIdx = 0, panelBusy = false;
   function setPanel(i) {
@@ -277,23 +278,24 @@ function init(DEM) {
     /* Panel pflanzt sich am Etappen-Stopp ein, waehrend der Fahrt ist die
        Route frei sichtbar */
     const raw = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
-    const atStop = WP_T.some(t => raw >= t - 0.036 && raw <= t + 0.036);
+    const atStop = STOP_R.some(rr => Math.abs(raw - rr) <= STOP_W / 2 - 0.008);
     if (panelBox) panelBox.classList.toggle('traveling', !atStop);
+    if (overlaysEl) overlaysEl.classList.toggle('reading', atStop);
   }
-  /* Scroll-Plateaus: an jeder Etappe haelt der Aufstieg an (Text lesbar) */
+  /* Scroll-Dramaturgie: Anlauf -> 4 Stopps an festen Scroll-Positionen -> Auslauf.
+     Smoothstep-Rampen = Seilbahn-Gefuehl statt linearem Ruck */
+  const STOP_R = [0.12, 0.38, 0.63, 0.88], STOP_W = 0.1;
   function shape(raw) {
-    const d = 0.09;
+    const ss = x => { x = Math.min(1, Math.max(0, x)); return x * x * (3 - 2 * x); };
     let prevEnd = 0, prevT = 0;
-    for (let i = 0; i < WP_T.length; i++) {
-      const c0 = Math.max(prevEnd, WP_T[i] - d / 2), c1 = WP_T[i] + d / 2;
-      if (raw < c0) {
-        const f = (raw - prevEnd) / Math.max(0.0001, c0 - prevEnd);
-        return prevT + (WP_T[i] - prevT) * f;
-      }
+    for (let i = 0; i < STOP_R.length; i++) {
+      const c0 = STOP_R[i] - STOP_W / 2, c1 = STOP_R[i] + STOP_W / 2;
+      if (raw < c0) return prevT + (WP_T[i] - prevT) * ss((raw - prevEnd) / Math.max(0.0001, c0 - prevEnd));
       if (raw <= c1) return WP_T[i];
       prevEnd = c1; prevT = WP_T[i];
     }
-    return Math.min(1, prevT + (raw - prevEnd) / Math.max(0.0001, 1 - prevEnd) * (1 - prevT));
+    /* Auslauf: nach dem Gipfel-Stopp weich ausrollen, kein eingefrorenes Ende */
+    return prevT + (1 - prevT) * ss((raw - prevEnd) / Math.max(0.0001, 1 - prevEnd));
   }
   if (!reduce) {
     window.addEventListener('scroll', readScroll, { passive: true });
@@ -304,7 +306,7 @@ function init(DEM) {
     if (reduce) { target = WP_T[i]; setPanel(i); return; }
     const span = track.offsetHeight - sticky.offsetHeight;
     const top = track.getBoundingClientRect().top + window.scrollY;
-    window.scrollTo({ top: top + WP_T[i] * span + 2, behavior: 'smooth' });  /* WP_T liegt im Plateau */
+    window.scrollTo({ top: top + STOP_R[i] * span + 2, behavior: 'smooth' });
   }
   wps.forEach(b => b.addEventListener('click', () => goTo(parseInt(b.dataset.i, 10))));
   document.querySelectorAll('[data-step]').forEach(b =>
