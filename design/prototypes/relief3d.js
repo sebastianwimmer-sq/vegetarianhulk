@@ -265,6 +265,7 @@ function init(DEM) {
     panelBusy = true;
     panel.classList.add('swap-out');
     setTimeout(() => {
+      panel.dataset.big = '0' + (curIdx + 1);
       panel.querySelector('[data-p-num]').textContent = WERTE[curIdx].num;
       panel.querySelector('[data-p-ort]').textContent = WERTE[curIdx].ort;
       panel.querySelector('[data-p-title]').textContent = WERTE[curIdx].title;
