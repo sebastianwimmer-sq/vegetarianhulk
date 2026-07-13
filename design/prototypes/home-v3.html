@@ -241,7 +241,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
    Overlays (Schilder/POIs/Wetterstation) sind HTML, projiziert.
    ============================================================ */
 .grat-wrap { margin-top: 8px; }
-.grat-track { height: 320vh; }
+.grat-track { height: 380vh; }
 .grat-sticky { position: sticky; top: 0; height: 100vh; overflow: clip; }
 .berg-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block;
   -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 92%, transparent 100%),
@@ -289,6 +289,10 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .berg-overlays.reading .wp:not(.on) { opacity: 0.32; }
 .poi { transition: opacity 500ms var(--ease-lux); }
 .berg-overlays.reading .poi:not(.poi--kreuz) { opacity: 0.4; }
+/* Pro Stopp leuchtet das passende Kartensymbol */
+.berg-overlays.reading[data-stop="0"] .poi[data-poi="start"],
+.berg-overlays.reading[data-stop="0"] .poi[data-poi="kapelle"],
+.berg-overlays.reading[data-stop="2"] .poi[data-poi="huette"] { opacity: 1; }
 .berg-overlays.reading .wp:not(.on):hover { opacity: 1; }
 .wp.on::before { background: var(--emerald); border-color: var(--emerald);
   box-shadow: 0 0 10px rgba(80,200,120,0.7); animation: wpping 900ms var(--ease-lux) 1; }
@@ -340,17 +344,18 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 }
 .grat-smashy.walking { animation: smashyhop 340ms ease-in-out infinite; }
 /* Panel: liegt unten links AUF der Szene */
-.grat-panel { position: absolute; left: max(24px, calc(50vw - 530px)); bottom: 64px;
-  width: min(540px, calc(100vw - 48px)); z-index: 3;
-  padding: 24px 64px 26px 30px;
+.grat-panel { position: absolute; left: 0; bottom: 0; z-index: 3;
+  width: min(780px, 94vw);
+  padding: 52px 80px 92px calc(max(28px, 50vw - 530px));
   transform-origin: 0 100%;
   transition: opacity 500ms var(--ease-lux), transform 700ms var(--ease-lux);
-  /* Doku-Bauchbinde (7-vs-Wild-Prinzip): keine Box — weicher Scrim,
-     Typografie steht direkt auf der Szene */
-  background: radial-gradient(118% 122% at 12% 94%,
-    rgba(3,14,9,0.93) 0%, rgba(3,14,9,0.8) 36%, rgba(3,14,9,0.46) 58%, rgba(3,14,9,0) 79%); }
-/* Hairline-Anker links, faedet nach unten aus */
-.grat-panel::before { content: ""; position: absolute; left: 4px; top: 28px; bottom: 26px;
+  /* Doku-Bauchbinde (7-vs-Wild-Prinzip): Kino-Scrim laeuft aus der linken
+     unteren BILDKANTE — nirgends eine sichtbare Grenze, Typo auf der Szene */
+  background: radial-gradient(135% 135% at 0% 100%,
+    rgba(3,14,9,0.94) 0%, rgba(3,14,9,0.82) 38%, rgba(3,14,9,0.44) 60%, rgba(3,14,9,0) 80%); }
+/* Hairline-Anker links der Typo, faedet nach unten aus */
+.grat-panel::before { content: ""; position: absolute;
+  left: calc(max(28px, 50vw - 530px) - 16px); top: 56px; bottom: 92px;
   width: 1px; background: linear-gradient(180deg, rgba(243,235,217,0.55), rgba(243,235,217,0.06)); }
 /* Waehrend der Fahrt eingeklappt — pflanzt sich am Etappen-Stopp ein */
 .grat-panel.traveling { opacity: 0; transform: translateY(28px); pointer-events: none; }
@@ -385,6 +390,28 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .panel-spark text { font-family: ui-monospace, Menlo, monospace; font-size: 7.5px; letter-spacing: 1px;
   fill: rgba(243,235,217,0.4); text-transform: uppercase; }
 .grat-panel .num { font-family: var(--mono); font-size: var(--t-label); font-weight: 600; letter-spacing: 2px; color: var(--gold); }
+.grat-panel .p-ort { margin-top: 4px; font-family: var(--mono); font-size: 9.5px; font-weight: 600;
+  letter-spacing: 1.6px; text-transform: uppercase; color: var(--paper-faint); white-space: nowrap; }
+/* Anker-Vers (Faith) / Leitsatz (Gipfel): Serifen-Zitat mit ausfaedelnder Hairline */
+.grat-panel .p-vers { margin-top: 14px; padding-top: 12px; max-width: 42ch;
+  background: linear-gradient(90deg, rgba(243,235,217,0.18), rgba(243,235,217,0)) left top / 130px 1px no-repeat;
+  font-family: 'Playfair Display', serif; font-style: italic; font-size: 16.5px; line-height: 1.5;
+  color: rgba(240,232,212,0.92); }
+.grat-panel .p-vers b { display: block; margin-top: 6px; font-family: var(--mono); font-style: normal;
+  font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+/* Gipfel-Payoff: CTA als DAV-Schild zu den Hulk Hikes */
+.grat-panel .p-cta { display: inline-block; margin-top: 16px;
+  font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase;
+  color: #14100A; text-decoration: none; padding: 9px 20px 9px 21px;
+  background:
+    radial-gradient(circle at 10px 50%, #14100A 2px, transparent 2.7px),
+    linear-gradient(180deg, #E8BF25, #D4A918);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
+  filter: drop-shadow(0 2px 3px rgba(2,10,6,0.7));
+  transition: filter 300ms var(--ease-lux), transform 300ms var(--ease-lux); }
+.grat-panel .p-cta:hover { transform: translateX(3px);
+  filter: drop-shadow(0 2px 3px rgba(2,10,6,0.7)) drop-shadow(0 0 14px rgba(232,191,37,0.55)); }
+.grat-panel .p-cta[hidden] { display: none; }
 .grat-panel h3 { margin: 8px 0 10px; font-family: 'Playfair Display', serif; font-weight: 600;
   font-size: clamp(27px, 5vw, 37px); color: var(--paper); }
 .grat-panel p { font-size: 15px; line-height: 1.65; color: rgba(232,225,206,0.86); max-width: 44ch; }
@@ -669,8 +696,11 @@ footer .legal a:hover { color: var(--paper); }
             </svg>
             <div class="inner">
               <p class="num" data-p-num>01 / Faith</p>
+              <p class="p-ort" data-p-ort>Wimbachbr&#252;cke &#183; 630 m &#183; Start</p>
               <h3 data-p-title>Bibel-grounded. W&#246;rtlich.</h3>
-              <p data-p-text>Das Fundament, bevor irgendwas anderes kommt: Schlachter 2000, jeden Morgen &#8212; bevor das Handy angeht. Spr&#252;che 24,16 ist der Anker: hinfallen geh&#246;rt dazu, liegen bleiben nicht.</p>
+              <p data-p-text>Das Fundament, bevor irgendwas anderes kommt: Schlachter 2000, jeden Morgen &#8212; bevor das Handy angeht. Hinfallen geh&#246;rt dazu, liegen bleiben nicht.</p>
+              <p class="p-vers" data-p-vers>&#8222;Denn der Gerechte f&#228;llt siebenmal und steht wieder auf.&#8220;<b>Spr&#252;che 24,16 &#183; Schlachter 2000</b></p>
+              <a class="p-cta" data-p-cta href="/touren/" hidden>Hulk Hikes &#183; Die Touren dahinter</a>
             </div>
           </div>
           <aside class="wetter-hud" hidden aria-label="Bedingungen am Berg">
@@ -877,6 +907,6 @@ footer .legal a:hover { color: var(--paper); }
   els.forEach(function (e) { io.observe(e); });
 })();
 </script>
-<script type="module" src="relief3d.js?v=watzmann-hd8"></script>
+<script type="module" src="relief3d.js?v=watzmann-hd10"></script>
 </body>
 </html>

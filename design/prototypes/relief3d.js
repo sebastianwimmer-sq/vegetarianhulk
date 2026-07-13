@@ -231,11 +231,25 @@ function init(DEM) {
 
   /* ---- Panel ---- */
   const WERTE = [
-    { num: '01 / Faith', title: 'Bibel-grounded. Wörtlich.', text: 'Das Fundament, bevor irgendwas anderes kommt: Schlachter 2000, jeden Morgen — bevor das Handy angeht. Sprüche 24,16 ist der Anker: hinfallen gehört dazu, liegen bleiben nicht.' },
-    { num: '02 / Disziplin', title: 'Ritual statt Willenskraft.', text: 'Architektur die trägt — jeden Morgen, auch wenn keiner hinschaut. 4:50 Uhr, Bibel, Gym. Seit Jahren.' },
-    { num: '03 / Vegetarisch + Stark', title: 'Beweis seit 2016.', text: 'Muskelaufbau ohne Fleisch ist kein Kompromiss — es ist mein Beweis, dass beides geht. Teller statt Theorie.' },
-    { num: '04 / Fitness', title: 'Gym seit 2017.', text: '4-5× pro Woche, Lifting plus Cardio — und am Wochenende den Grat rauf. Kraft ist die Basis für jede Tour.' }
+    { num: '01 / Faith', ort: 'Wimbachbrücke · 630 m · Start',
+      title: 'Bibel-grounded. Wörtlich.',
+      text: 'Das Fundament, bevor irgendwas anderes kommt: Schlachter 2000, jeden Morgen — bevor das Handy angeht. Hinfallen gehört dazu, liegen bleiben nicht.',
+      vers: '„Denn der Gerechte fällt siebenmal und steht wieder auf."', src: 'Sprüche 24,16 · Schlachter 2000' },
+    { num: '02 / Disziplin', ort: 'Mitterkaseralm · 1420 m',
+      title: 'Ritual statt Willenskraft.',
+      text: 'Architektur die trägt — jeden Morgen, auch wenn keiner hinschaut. 4:50 Uhr, Bibel, Gym. Seit Jahren.' },
+    { num: '03 / Vegetarisch + Stark', ort: 'Watzmannhaus · 1930 m',
+      title: 'Beweis seit 2016.',
+      text: 'Muskelaufbau ohne Fleisch ist kein Kompromiss — es ist mein Beweis, dass beides geht. Einkehr auf der Hütte: Teller statt Theorie.' },
+    { num: '04 / Fitness', ort: 'Mittelspitze · 2713 m · Gipfel',
+      title: 'Gym seit 2017.',
+      text: '4-5× pro Woche, Lifting plus Cardio — und am Wochenende den Grat rauf. Kraft ist die Basis für jede Tour.',
+      vers: '„Disziplin ist kein Talent. Sie ist ein Ritual."', src: 'Der Leitsatz', cta: true }
   ];
+  /* Etappen-Daten: publizierte Wegstrecken (Normalweg), Hoehenmeter real */
+  WERTE[1].ort += ' · +790 hm · 3,5 km';
+  WERTE[2].ort += ' · +510 hm · 2,3 km';
+  WERTE[3].ort += ' · +783 hm · 3,2 km';
   const panel = document.querySelector('.grat-panel .inner');
   const panelBox = document.querySelector('.grat-panel');
   const overlaysEl = document.querySelector('.berg-overlays');
@@ -253,8 +267,16 @@ function init(DEM) {
     panel.classList.add('swap-out');
     setTimeout(() => {
       panel.querySelector('[data-p-num]').textContent = WERTE[curIdx].num;
+      panel.querySelector('[data-p-ort]').textContent = WERTE[curIdx].ort;
       panel.querySelector('[data-p-title]').textContent = WERTE[curIdx].title;
       panel.querySelector('[data-p-text]').textContent = WERTE[curIdx].text;
+      const vEl = panel.querySelector('[data-p-vers]');
+      if (vEl) {
+        vEl.hidden = !WERTE[curIdx].vers;
+        if (WERTE[curIdx].vers) vEl.innerHTML = WERTE[curIdx].vers + '<b>' + WERTE[curIdx].src + '</b>';
+      }
+      const cEl = panel.querySelector('[data-p-cta]');
+      if (cEl) cEl.hidden = !WERTE[curIdx].cta;
       panel.classList.remove('swap-out');
       panel.classList.add('swap-in');
       void panel.offsetWidth;
@@ -278,13 +300,17 @@ function init(DEM) {
     /* Panel pflanzt sich am Etappen-Stopp ein, waehrend der Fahrt ist die
        Route frei sichtbar */
     const raw = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
-    const atStop = STOP_R.some(rr => Math.abs(raw - rr) <= STOP_W / 2 - 0.008);
+    const si = STOP_R.findIndex(rr => Math.abs(raw - rr) <= STOP_W / 2 - 0.008);
+    const atStop = si >= 0;
     if (panelBox) panelBox.classList.toggle('traveling', !atStop);
-    if (overlaysEl) overlaysEl.classList.toggle('reading', atStop);
+    if (overlaysEl) {
+      overlaysEl.classList.toggle('reading', atStop);
+      if (atStop) overlaysEl.dataset.stop = si;
+    }
   }
   /* Scroll-Dramaturgie: Anlauf -> 4 Stopps an festen Scroll-Positionen -> Auslauf.
      Smoothstep-Rampen = Seilbahn-Gefuehl statt linearem Ruck */
-  const STOP_R = [0.12, 0.38, 0.63, 0.88], STOP_W = 0.1;
+  const STOP_R = [0.12, 0.38, 0.63, 0.88], STOP_W = 0.13;
   function shape(raw) {
     const ss = x => { x = Math.min(1, Math.max(0, x)); return x * x * (3 - 2 * x); };
     let prevEnd = 0, prevT = 0;
