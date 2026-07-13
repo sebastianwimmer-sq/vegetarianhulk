@@ -286,9 +286,9 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
     linear-gradient(180deg, #F4CE33, #E0B51E); }
 .wp:hover::before { border-color: var(--leaf); }
 .wp { transition: opacity 500ms var(--ease-lux); }
-.berg-overlays.reading .wp:not(.on) { opacity: 0.32; }
+.berg-overlays.reading .wp:not(.on) { opacity: 0.12; }
 .poi { transition: opacity 500ms var(--ease-lux); }
-.berg-overlays.reading .poi:not(.poi--kreuz) { opacity: 0.4; }
+.berg-overlays.reading .poi:not(.poi--kreuz) { opacity: 0.15; }
 /* Pro Stopp leuchtet das passende Kartensymbol */
 .berg-overlays.reading[data-stop="0"] .poi[data-poi="start"],
 .berg-overlays.reading[data-stop="0"] .poi[data-poi="kapelle"],
@@ -344,19 +344,22 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 }
 .grat-smashy.walking { animation: smashyhop 340ms ease-in-out infinite; }
 /* Panel: liegt unten links AUF der Szene */
-.grat-panel { position: absolute; left: 0; bottom: 0; z-index: 3;
-  width: min(780px, 94vw);
-  padding: 52px 80px 92px calc(max(28px, 50vw - 530px));
+.grat-panel { position: absolute; bottom: 0; z-index: 3;
+  /* bis zur BILD-Kante ausdehnen — die Sticky hat an Rail-Breakpoints Seitenabstand */
+  left: calc((100% - 100vw) / 2);
+  width: min(880px, 96vw);
+  padding: 190px 150px 92px calc(max(28px, 50vw - 530px));
   transform-origin: 0 100%;
   transition: opacity 500ms var(--ease-lux), transform 700ms var(--ease-lux);
   /* Doku-Bauchbinde (7-vs-Wild-Prinzip): Kino-Scrim laeuft aus der linken
      unteren BILDKANTE — nirgends eine sichtbare Grenze, Typo auf der Szene */
-  background: radial-gradient(135% 135% at 0% 100%,
-    rgba(3,14,9,0.94) 0%, rgba(3,14,9,0.82) 38%, rgba(3,14,9,0.44) 60%, rgba(3,14,9,0) 80%); }
+  background: radial-gradient(140% 140% at 0% 100%,
+    rgba(243,235,217,0.97) 0%, rgba(243,235,217,0.93) 36%, rgba(243,235,217,0.8) 48%,
+    rgba(243,235,217,0.42) 60%, rgba(243,235,217,0) 70%); }
 /* Hairline-Anker links der Typo, faedet nach unten aus */
 .grat-panel::before { content: ""; position: absolute;
-  left: calc(max(28px, 50vw - 530px) - 16px); top: 56px; bottom: 92px;
-  width: 1px; background: linear-gradient(180deg, rgba(243,235,217,0.55), rgba(243,235,217,0.06)); }
+  left: calc(max(28px, 50vw - 530px) - 16px); top: 186px; bottom: 92px;
+  width: 1px; background: linear-gradient(180deg, rgba(24,43,31,0.4), rgba(24,43,31,0.05)); }
 /* Waehrend der Fahrt eingeklappt — pflanzt sich am Etappen-Stopp ein */
 .grat-panel.traveling { opacity: 0; transform: translateY(28px); pointer-events: none; }
 @media (prefers-reduced-motion: reduce) { .grat-panel.traveling { opacity: 1; transform: none; pointer-events: auto; } }
@@ -364,7 +367,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 /* Etappen-Kopf: Mono + vier Ticks, Blaettern als stille Zeichen */
 .panel-nav { display: flex; align-items: center; gap: 14px; margin-bottom: 14px;
   padding-bottom: 12px;
-  background: linear-gradient(90deg, rgba(243,235,217,0.16), rgba(243,235,217,0)) left bottom / 100% 1px no-repeat; }
+  background: linear-gradient(90deg, rgba(24,43,31,0.22), rgba(24,43,31,0)) left bottom / 100% 1px no-repeat; }
 .panel-nav .steps { order: 1; font-family: var(--mono); font-size: 10px; font-weight: 700;
   letter-spacing: 2.6px; text-transform: uppercase; color: var(--paper-faint); }
 .panel-nav .steps b { display: inline-block; padding: 2px 9px 2px 6px; margin: 0 3px;
@@ -372,33 +375,33 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   background: linear-gradient(180deg, #E8BF25, #D4A918);
   clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 50%, calc(100% - 5px) 100%, 0 100%); }
 .panel-ticks { order: 2; display: flex; gap: 5px; margin-left: 2px; }
-.panel-ticks i { width: 14px; height: 2px; background: rgba(243,235,217,0.22);
+.panel-ticks i { width: 14px; height: 2px; background: rgba(24,43,31,0.22);
   transition: background 400ms var(--ease-lux); }
-.panel-ticks i.on { background: var(--emerald); }
+.panel-ticks i.on { background: var(--royal); }
 .panel-nav button { order: 3; width: auto; height: auto; border: 0; border-radius: 0;
   background: transparent; cursor: pointer; padding: 4px 8px;
-  font-family: var(--mono); font-size: 15px; line-height: 1; color: var(--paper-faint);
+  font-family: var(--mono); font-size: 15px; line-height: 1; color: rgba(24,43,31,0.5);
   transition: color 300ms var(--ease-lux), transform 300ms var(--ease-lux); }
-.panel-nav button:hover { color: var(--leaf); transform: none; }
+.panel-nav button:hover { color: var(--royal); transform: none; }
 .panel-nav button:first-of-type { order: 3; margin-left: auto; }
 .panel-nav button:last-of-type { order: 4; }
 /* Hoehenprofil der echten Route, Marker laeuft mit dem Scroll */
-.panel-spark { display: block; width: 100%; height: 34px; margin: 14px 0 2px; overflow: visible; }
+.panel-spark { display: none; }
 .panel-spark polyline[data-spark-fill] { fill: rgba(80,200,120,0.08); stroke: none; }
 .panel-spark polyline[data-spark-line] { fill: none; stroke: rgba(126,208,155,0.6); stroke-width: 1.2; }
 .panel-spark circle { fill: var(--emerald); filter: drop-shadow(0 0 4px rgba(80,200,120,0.8)); }
 .panel-spark text { font-family: ui-monospace, Menlo, monospace; font-size: 7.5px; letter-spacing: 1px;
   fill: rgba(243,235,217,0.4); text-transform: uppercase; }
-.grat-panel .num { font-family: var(--mono); font-size: var(--t-label); font-weight: 600; letter-spacing: 2px; color: var(--gold); }
+.grat-panel .num { font-family: var(--mono); font-size: var(--t-label); font-weight: 600; letter-spacing: 2px; color: #8A6F2F; }
 .grat-panel .p-ort { margin-top: 4px; font-family: var(--mono); font-size: 9.5px; font-weight: 600;
-  letter-spacing: 1.6px; text-transform: uppercase; color: var(--paper-faint); white-space: nowrap; }
+  letter-spacing: 1.6px; text-transform: uppercase; color: rgba(24,43,31,0.75); white-space: nowrap; }
 /* Anker-Vers (Faith) / Leitsatz (Gipfel): Serifen-Zitat mit ausfaedelnder Hairline */
 .grat-panel .p-vers { margin-top: 14px; padding-top: 12px; max-width: 42ch;
-  background: linear-gradient(90deg, rgba(243,235,217,0.18), rgba(243,235,217,0)) left top / 130px 1px no-repeat;
+  background: linear-gradient(90deg, rgba(24,43,31,0.3), rgba(24,43,31,0)) left top / 130px 1px no-repeat;
   font-family: 'Playfair Display', serif; font-style: italic; font-size: 16.5px; line-height: 1.5;
-  color: rgba(240,232,212,0.92); }
+  color: rgba(19,43,35,0.92); }
 .grat-panel .p-vers b { display: block; margin-top: 6px; font-family: var(--mono); font-style: normal;
-  font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+  font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #8A6F2F; }
 /* Gipfel-Payoff: CTA als DAV-Schild zu den Hulk Hikes */
 .grat-panel .p-cta { display: inline-block; margin-top: 16px;
   font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase;
@@ -413,8 +416,8 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   filter: drop-shadow(0 2px 3px rgba(2,10,6,0.7)) drop-shadow(0 0 14px rgba(232,191,37,0.55)); }
 .grat-panel .p-cta[hidden] { display: none; }
 .grat-panel h3 { margin: 8px 0 10px; font-family: 'Playfair Display', serif; font-weight: 600;
-  font-size: clamp(27px, 5vw, 37px); color: var(--paper); }
-.grat-panel p { font-size: 15px; line-height: 1.65; color: rgba(232,225,206,0.86); max-width: 44ch; }
+  font-size: clamp(27px, 5vw, 37px); color: var(--ink); }
+.grat-panel p { font-size: 15px; line-height: 1.65; color: rgba(24,43,31,0.82); max-width: 44ch; }
 .grat-panel .inner { opacity: 1; translate: 0 0; filter: blur(0);
   transition: opacity 380ms var(--ease-lux), translate 380ms var(--ease-lux), filter 380ms var(--ease-lux); }
 .grat-panel .inner.swap-out { opacity: 0; translate: -22px 0; filter: blur(5px); }
@@ -557,8 +560,9 @@ footer .legal a:hover { color: var(--paper); }
    der wandernden Licht-Landschaft, Kanten fuer Schilder/Icons.
    ============================================================ */
 .hero-name, .shead h2, .hero-tagline { text-shadow: 0 2px 10px rgba(3,15,9,0.65), 0 0 44px rgba(3,15,9,0.5); }
-.quote p, .grat-panel p, .hero-handle, .brands-line, .grat-panel h3 { text-shadow: 0 1px 3px rgba(3,15,9,0.55); }
-.shead .kicker, .hero-meta, .grat-panel .num, .panel-nav .steps, footer .legal, footer .claim, .stage-caption, .scroll-hint { text-shadow: 0 1px 2px rgba(3,15,9,0.6); }
+.quote p, .hero-handle, .brands-line { text-shadow: 0 1px 3px rgba(3,15,9,0.55); }
+.shead .kicker, .hero-meta, footer .legal, footer .claim, .stage-caption, .scroll-hint { text-shadow: 0 1px 2px rgba(3,15,9,0.6); }
+.grat-panel h3, .grat-panel p, .grat-panel .num, .grat-panel .p-ort, .grat-panel .p-vers { text-shadow: 0 1px 6px rgba(243,235,217,0.5); }
 .wordmark { text-shadow: 0 1px 3px rgba(3,15,9,0.55); }
 
 /* Fineline-Icons bekommen eine echte dunkle Kontur (4-Richtungs-Shadow) */
@@ -682,7 +686,6 @@ footer .legal a:hover { color: var(--paper); }
           </div>
           <div class="grat-panel" aria-live="polite">
             <div class="panel-nav">
-              <span class="steps">Etappe <b data-step-now>01</b> / 04</span>
               <span class="panel-ticks" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></span>
               <button type="button" data-step="-1" aria-label="Vorherige Etappe">&#8249;</button>
               <button type="button" data-step="1" aria-label="N&#228;chste Etappe">&#8250;</button>
@@ -699,7 +702,7 @@ footer .legal a:hover { color: var(--paper); }
               <p class="p-ort" data-p-ort>Wimbachbr&#252;cke &#183; 630 m &#183; Start</p>
               <h3 data-p-title>Bibel-grounded. W&#246;rtlich.</h3>
               <p data-p-text>Das Fundament, bevor irgendwas anderes kommt: Schlachter 2000, jeden Morgen &#8212; bevor das Handy angeht. Hinfallen geh&#246;rt dazu, liegen bleiben nicht.</p>
-              <p class="p-vers" data-p-vers>&#8222;Denn der Gerechte f&#228;llt siebenmal und steht wieder auf.&#8220;<b>Spr&#252;che 24,16 &#183; Schlachter 2000</b></p>
+              <p class="p-vers" data-p-vers hidden></p>
               <a class="p-cta" data-p-cta href="/touren/" hidden>Hulk Hikes &#183; Die Touren dahinter</a>
             </div>
           </div>
@@ -907,6 +910,6 @@ footer .legal a:hover { color: var(--paper); }
   els.forEach(function (e) { io.observe(e); });
 })();
 </script>
-<script type="module" src="relief3d.js?v=watzmann-hd10"></script>
+<script type="module" src="relief3d.js?v=watzmann-hd11"></script>
 </body>
 </html>

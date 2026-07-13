@@ -233,8 +233,7 @@ function init(DEM) {
   const WERTE = [
     { num: '01 / Faith', ort: 'Wimbachbrücke · 630 m · Start',
       title: 'Bibel-grounded. Wörtlich.',
-      text: 'Das Fundament, bevor irgendwas anderes kommt: Schlachter 2000, jeden Morgen — bevor das Handy angeht. Hinfallen gehört dazu, liegen bleiben nicht.',
-      vers: '„Denn der Gerechte fällt siebenmal und steht wieder auf."', src: 'Sprüche 24,16 · Schlachter 2000' },
+      text: 'Das Fundament, bevor irgendwas anderes kommt: Schlachter 2000, jeden Morgen — bevor das Handy angeht. Hinfallen gehört dazu, liegen bleiben nicht.' },
     { num: '02 / Disziplin', ort: 'Mitterkaseralm · 1420 m',
       title: 'Ritual statt Willenskraft.',
       text: 'Architektur die trägt — jeden Morgen, auch wenn keiner hinschaut. 4:50 Uhr, Bibel, Gym. Seit Jahren.' },
@@ -433,7 +432,7 @@ function init(DEM) {
         const ico = chip.querySelector('[data-w-icon]');
         if (ico) ico.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true">'
           + IC[icoKey(d.current.weather_code)] + '</svg>';
-        chip.querySelector('[data-w-meta]').textContent = '2713 m' + (s ? ' · Sonne bis ' + s : '');
+        chip.querySelector('[data-w-meta]').textContent = s ? 'Sonne bis ' + s : 'Live';
         chip.hidden = false;
       })
       .catch(() => {});
