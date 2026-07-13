@@ -94,7 +94,7 @@ function init(DEM) {
     /* Rand-Zone: Farbe laeuft in den Atmosphaeren-Ton, damit der Alpha-Fade
        nicht helle Flaechen (Schnee) vor hellem BG aufleuchten laesst */
     const ex = Math.max(Math.abs(pos.getX(i)), Math.abs(pos.getZ(i))) / (SIZE / 2);
-    tmp.lerp(cAtmo, sm((ex - 0.72) / 0.26) * 0.9);
+    tmp.lerp(cAtmo, sm((ex - 0.52) / 0.34) * 0.94);
     colors[i * 3] = tmp.r; colors[i * 3 + 1] = tmp.g; colors[i * 3 + 2] = tmp.b;
   }
   geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
@@ -106,7 +106,7 @@ function init(DEM) {
     const g = c.getContext('2d'), img = g.createImageData(N, N);
     for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
       const u = Math.abs(x / (N - 1) - 0.5) * 2, v = Math.abs(y / (N - 1) - 0.5) * 2;
-      let a = 1 - Math.min(1, Math.max(0, (Math.max(u, v) - 0.8) / 0.19));
+      let a = 1 - Math.min(1, Math.max(0, (Math.max(u, v) - 0.6) / 0.32));
       a = a * a * (3 - 2 * a);
       const i = (y * N + x) * 4;
       img.data[i] = img.data[i + 1] = img.data[i + 2] = Math.round(a * 255);
@@ -245,6 +245,7 @@ function init(DEM) {
     { num: '04 / Fitness', title: 'Gym seit 2017.', text: '4-5× pro Woche, Lifting plus Cardio — und am Wochenende den Grat rauf. Kraft ist die Basis für jede Tour.' }
   ];
   const panel = document.querySelector('.grat-panel .inner');
+  const panelBox = document.querySelector('.grat-panel');
   const stepNow = document.querySelector('[data-step-now]');
   let curIdx = 0, panelBusy = false;
   function setPanel(i) {
@@ -281,6 +282,11 @@ function init(DEM) {
     const vh = window.innerHeight;
     const vis = Math.min(1, Math.max(0, 1 - r.top / (vh * 0.7)));
     sticky.style.opacity = (0.05 + 0.95 * vis * vis).toFixed(3);
+    /* Panel pflanzt sich am Etappen-Stopp ein, waehrend der Fahrt ist die
+       Route frei sichtbar */
+    const raw = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
+    const atStop = WP_T.some(t => raw >= t - 0.036 && raw <= t + 0.036);
+    if (panelBox) panelBox.classList.toggle('traveling', !atStop);
   }
   /* Scroll-Plateaus: an jeder Etappe haelt der Aufstieg an (Text lesbar) */
   function shape(raw) {

@@ -338,9 +338,14 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .grat-panel { position: absolute; left: max(24px, calc(50vw - 530px)); bottom: 74px;
   width: min(500px, calc(100vw - 48px)); z-index: 3;
   padding: 18px 58px 22px 28px;
+  transform-origin: 46px 100%;
+  transition: opacity 500ms var(--ease-lux), transform 700ms var(--ease-lux);
   background: linear-gradient(180deg, rgba(5,22,14,0.94), rgba(4,18,12,0.9));
   clip-path: polygon(0 0, calc(100% - 34px) 0, 100% 50%, calc(100% - 34px) 100%, 0 100%);
   filter: drop-shadow(0 0 0.9px rgba(243,235,217,0.55)) drop-shadow(0 2px 2px rgba(2,10,6,0.85)) drop-shadow(0 22px 40px rgba(0,0,0,0.55)); }
+/* Waehrend der Fahrt eingeklappt — pflanzt sich am Etappen-Stopp ein */
+.grat-panel.traveling { opacity: 0; transform: translateY(34px) rotate(-1.4deg); pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .grat-panel.traveling { opacity: 1; transform: none; pointer-events: auto; } }
 /* Pfahl mit Standpunkt */
 .grat-panel::after { content: ""; position: absolute; left: 46px; top: 100%;
   width: 1.5px; height: 72px;
@@ -861,6 +866,6 @@ footer .legal a:hover { color: var(--paper); }
   els.forEach(function (e) { io.observe(e); });
 })();
 </script>
-<script type="module" src="relief3d.js?v=watzmann-hd4"></script>
+<script type="module" src="relief3d.js?v=watzmann-hd5"></script>
 </body>
 </html>
