@@ -347,8 +347,8 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .grat-panel { position: absolute; bottom: 0; z-index: 3;
   /* bis zur BILD-Kante ausdehnen — die Sticky hat an Rail-Breakpoints Seitenabstand */
   left: calc((100% - 100vw) / 2);
-  width: min(880px, 96vw);
-  padding: 190px 150px 92px calc(max(28px, 50vw - 530px));
+  width: min(880px, 100vw);
+  padding: clamp(110px, 20vh, 190px) clamp(56px, 10vw, 150px) 92px calc(max(6vw, 50vw - 530px));
   transform-origin: 0 100%;
   transition: opacity 500ms var(--ease-lux), transform 700ms var(--ease-lux);
   /* Doku-Bauchbinde (7-vs-Wild-Prinzip): Kino-Scrim laeuft aus der linken
@@ -358,7 +358,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
     rgba(243,235,217,0.42) 60%, rgba(243,235,217,0) 70%); }
 /* Hairline-Anker links der Typo, faedet nach unten aus */
 .grat-panel::before { content: ""; position: absolute;
-  left: calc(max(28px, 50vw - 530px) - 16px); top: 186px; bottom: 92px;
+  left: calc(max(6vw, 50vw - 530px) - 16px); top: clamp(106px, calc(20vh - 4px), 186px); bottom: 92px;
   width: 1px; background: linear-gradient(180deg, rgba(24,43,31,0.4), rgba(24,43,31,0.05)); }
 /* Waehrend der Fahrt eingeklappt — pflanzt sich am Etappen-Stopp ein */
 .grat-panel.traveling { opacity: 0; transform: translateY(28px); pointer-events: none; }
@@ -416,7 +416,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   filter: drop-shadow(0 2px 3px rgba(2,10,6,0.7)) drop-shadow(0 0 14px rgba(232,191,37,0.55)); }
 .grat-panel .p-cta[hidden] { display: none; }
 .grat-panel h3 { margin: 8px 0 10px; font-family: 'Playfair Display', serif; font-weight: 600;
-  font-size: clamp(27px, 5vw, 37px); color: var(--ink); }
+  font-size: clamp(24px, 2.3vw + 6px, 37px); color: var(--ink); }
 .grat-panel p { font-size: 15px; line-height: 1.65; color: rgba(24,43,31,0.82); max-width: 44ch; }
 .grat-panel .inner { opacity: 1; translate: 0 0; filter: blur(0);
   transition: opacity 380ms var(--ease-lux), translate 380ms var(--ease-lux), filter 380ms var(--ease-lux); }
