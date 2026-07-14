@@ -462,6 +462,42 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 
 /* ---- Closing ---- */
 .closing { margin-top: 100px; }
+/* Weggabelung: Pfahl mit zwei Richtungsschildern (DAV-Sprache der Berg-Sektion) */
+.gabelung { position: relative; width: min(760px, 92vw); margin: 58px auto 26px;
+  display: flex; flex-direction: column; gap: 18px; }
+.gabelung::before { content: ""; position: absolute; left: 50%; top: -30px; bottom: -42px;
+  width: 4px; transform: translateX(-50%);
+  background: linear-gradient(180deg, rgba(154,138,96,0.9), rgba(70,58,34,0.4));
+  box-shadow: inset 1.2px 0 0 rgba(243,235,217,0.4); }
+.gabelung::after { content: ""; position: absolute; left: 50%; bottom: -50px;
+  width: 130px; height: 16px; transform: translateX(-50%);
+  background: radial-gradient(50% 50% at 50% 50%, rgba(2,10,6,0.4), transparent 72%); }
+.gab-schild { position: relative; z-index: 1; display: block; width: min(410px, 86vw);
+  padding: 15px 30px 15px 24px;
+  font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; text-decoration: none; white-space: nowrap;
+  transition: transform 450ms var(--ease-lux), filter 450ms var(--ease-lux); }
+/* rechtsweisend, DAV-Gelb — haengt rechts am Pfahl */
+.gab-schild--gelb { margin-left: calc(50% - 10px); color: #14100A;
+  background:
+    radial-gradient(circle at 12px 50%, #14100A 2.2px, transparent 3px),
+    linear-gradient(180deg, #E8BF25, #D4A918);
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%);
+  filter: drop-shadow(0 2px 2px rgba(2,10,6,0.8)) drop-shadow(0 12px 24px rgba(0,0,0,0.4)); }
+.gab-schild--gelb:hover { transform: translateX(7px); }
+/* linksweisend, Panel-Dunkel — haengt links am Pfahl */
+.gab-schild--dunkel { margin-left: auto; margin-right: calc(50% - 10px);
+  color: rgba(243,235,217,0.94); text-align: right;
+  padding: 15px 24px 15px 34px;
+  background:
+    radial-gradient(circle at calc(100% - 12px) 50%, rgba(243,235,217,0.85) 2.2px, transparent 3px),
+    linear-gradient(180deg, rgba(21,58,38,0.97), rgba(6,22,14,0.97));
+  clip-path: polygon(16px 0, 100% 0, 100% 100%, 16px 100%, 0 50%);
+  filter: drop-shadow(0 0 0.8px rgba(243,235,217,0.6)) drop-shadow(0 2px 2px rgba(2,10,6,0.85)) drop-shadow(0 12px 24px rgba(0,0,0,0.4)); }
+.gab-schild--dunkel:hover { transform: translateX(-7px); }
+@media (max-width: 760px) {
+  .gab-schild, .gab-schild--gelb, .gab-schild--dunkel { margin-left: auto; margin-right: auto; width: min(410px, 88vw); white-space: normal; text-align: center; }
+}
 .brands-line { margin-top: 30px; font-size: 15px; color: var(--paper-faint); }
 .brands-line a { font-weight: 700; color: var(--leaf); border-bottom: 1px solid rgba(126,208,155,0.4); padding-bottom: 2px;
   transition: border-color 400ms var(--ease-lux); }
