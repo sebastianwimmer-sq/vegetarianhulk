@@ -23,6 +23,9 @@ cd "$(dirname "$0")/.."
 ASSETS=(
   style.css
   fonts.css
+  v3.css
+  v3.js
+  relief3d.js
   motion-reveal.js
   update-check.js
   newsletter-form.js

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1600" preserveAspectRatio="xMidYMid slice">
+  <!-- VH Mesh dark v3 — QUADRATISCH: Blobs decken auch das Mittelband,
+       damit bei cover auf Landscape-Screens (Desktop) immer Leben im
+       sichtbaren Ausschnitt ist. Turbulenz verzerrt, Blur verläuft. -->
+  <defs>
+    <filter id="organic" x="-40%" y="-40%" width="180%" height="180%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.0028 0.0042" numOctaves="3" seed="29" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="320" xChannelSelector="R" yChannelSelector="G"/>
+      <feGaussianBlur stdDeviation="70"/>
+    </filter>
+  </defs>
+  <g filter="url(#organic)">
+    <!-- Royal-Glut links, ragt ins Mittelband -->
+    <path d="M -240 380 C 120 240, 520 340, 480 620 C 440 860, 120 920, -80 780 C -260 660, -360 500, -240 380 Z" fill="#0F7E5B" opacity="0.85"/>
+    <!-- Gold-Licht oben rechts, zieht zur Mitte -->
+    <path d="M 1080 60 C 1380 -40, 1660 120, 1580 360 C 1510 570, 1180 580, 1040 430 C 910 310, 860 140, 1080 60 Z" fill="#C9A96A" opacity="0.5"/>
+    <!-- Emerald-Bloom MITTE rechts — sitzt im sichtbaren Band -->
+    <path d="M 980 620 C 1260 540, 1460 740, 1380 980 C 1300 1190, 1020 1200, 900 1020 C 800 860, 800 680, 980 620 Z" fill="#3FBF80" opacity="0.55"/>
+    <!-- Mint-Nebel Mitte links-oben -->
+    <path d="M 520 340 C 700 280, 860 380, 820 520 C 780 650, 560 680, 460 570 C 370 470, 380 390, 520 340 Z" fill="#D1F2EB" opacity="0.16"/>
+    <!-- tiefste Evergreen-Tasche Mitte-unten links -->
+    <path d="M 120 900 C 380 800, 640 920, 600 1150 C 560 1360, 280 1440, 100 1310 C -60 1200, -30 1010, 120 900 Z" fill="#012416" opacity="0.92"/>
+    <!-- Emerald steigt mittig auf -->
+    <path d="M 620 1180 C 840 1050, 1160 1080, 1240 1270 C 1310 1440, 1120 1580, 870 1590 C 660 1600, 530 1330, 620 1180 Z" fill="#45CC8A" opacity="0.5"/>
+    <!-- Gold-Restlicht unten rechts -->
+    <path d="M 1260 1240 C 1460 1170, 1640 1280, 1600 1440 C 1560 1590, 1330 1600, 1240 1480 C 1160 1370, 1150 1290, 1260 1240 Z" fill="#BA9B5F" opacity="0.28"/>
+    <!-- dunkler Rand oben links -->
+    <path d="M -160 -120 C 100 -220, 360 -100, 320 120 C 280 320, 20 380, -120 260 C -250 150, -290 -10, -160 -120 Z" fill="#012416" opacity="0.8"/>
+  </g>
+</svg>

@@ -2,12 +2,12 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VegetarianHulk — Sebi.</title>
 <meta name="description" content="Sebi. 25. Vegetarisch seit 2016. Christ. Disziplin ist kein Talent — sie ist ein Ritual.">
-<meta name="theme-color" content="#f7efde">
+<meta name="theme-color" content="#0B2418">
 
 <meta property="og:title" content="VegetarianHulk — Sebi.">
 <meta property="og:description" content="Disziplin ist kein Talent. Sie ist ein Ritual. 10 Jahre vegetarisch live.">
@@ -17,294 +17,182 @@
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
-<link rel="stylesheet" href="style.css?v=bdf0cecd">
+<link rel="stylesheet" href="/fonts.css?v=1e2010e0">
+<link rel="stylesheet" href="v3.css?v=bf8bde79">
+<link rel="preload" href="hero-cutout.png" as="image" fetchpriority="high">
 </head>
 <body>
-<main class="page">
+<div class="bg-wrap" aria-hidden="true"><div class="bg"></div></div>
+<div class="bg2-wrap" aria-hidden="true"><div class="bg2"></div></div>
 
-  <!-- Topbar (Brand) -->
-  <header class="topbar topbar--brandonly">
-    <a href="/" class="brand" style="text-decoration:none;color:inherit">vegetarian<span class="accent">hulk</span></a>
-  </header>
+<div class="rail rail--l" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm" data-hm>2713 hm</span></div>
+</div>
+<div class="rail rail--r" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm" data-hm>2713 hm</span></div>
+</div>
 
-  <!-- Floating VH Nav wird von nav.js injiziert (eine Quelle für alle Seiten) -->
+<main>
+  <div class="wrap">
 
-  <!-- Hero V30 — Cinematic Portrait-Frame + Glass Identity-Card (data-mode switchbar) -->
-  <section class="cinematic-hero" data-mode="portrait">
-    <div class="cinematic-hero__photo fade-in-up" data-nav-dark>
-      <img src="hero.jpg?v=v31.6.1" alt="Sebi, Founder vegetarianhulk" class="cinematic-hero__img"
-           fetchpriority="high" loading="eager"
-           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-      <div class="cinematic-hero__fallback" style="display:none">FOTO<br>kommt</div>
-    </div>
+    <header class="topbar">
+      <span class="brandbox">
+        <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+        <span class="wordmark wordmark--invert" aria-hidden="true" data-invert-layer>VEGETARIAN<b>HULK</b></span>
+      </span>
+    </header>
 
-    <!-- Identity-Card V33.1 — EIN Blickpfad: Name → Facts → Tagline → Story → CTA.
-         Foto bleibt pur (keine Plate), Card überlappt nicht mehr. -->
-    <div class="identity-glass-card fade-in-up delay-1">
-      <p class="hero-name">Sebi</p>
-      <p class="hero-handle">Sebastian · @vegetarianhulk</p>
-      <!-- Facts mit Line-Icons (Stil: E-Mail-Signatur, stroke 1.8) —
-           .hero-fact ist nowrap: Umbruch nur an Fact-Grenzen -->
-      <p class="hero-facts">
-        <span class="hero-fact">25</span>
-        <span class="hero-fact-sep" aria-hidden="true">·</span>
-        <span class="hero-fact">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 4 13C4 8 8 4 20 4c0 12-4 16-9 16z"/><path d="M12 11c-3 2-5 5-6 9"/></svg>
-          Vegetarisch&nbsp;seit&nbsp;2016
-        </span>
-        <span class="hero-fact-sep" aria-hidden="true">·</span>
-        <span class="hero-fact">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 4v16M7.5 9h9"/></svg>
-          Christ
-        </span>
-        <span class="hero-fact-sep" aria-hidden="true">·</span>
-        <span class="hero-fact">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 19 7-12 4 7 2.5-4L21 19z"/></svg>
-          Bergsportler
-        </span>
-      </p>
-
-      <h1>Disziplin ist<br>kein Talent.<br><em>Sie ist ein Ritual.</em></h1>
-
-      <p class="identity-sub">
-        Ich war jemand der hundertmal angefangen hat. Bis ich <strong>aufgehört hab anzufangen</strong>.
-      </p>
-
-      <div class="identity-ctas">
-        <a href="/newsletter" class="identity-cta-primary">→ 3-Tage-Reset holen</a>
-        <!-- EIN Blickpfad, EIN CTA. Brand-Einstiege: Topbar-Pill + Footer-Banner. -->
-      </div>
-    </div>
-  </section>
-
-  <!-- 🧬 DNA-Section V30 — 4 Werte als Magazine-Layout (Number-Anchors 01-04). Bibel-Vers + Tribe-Line moved out in Step 3. -->
-  <section class="dna-section fade-in-up">
-    <div class="dna-eyebrow">Sebi DNA · Was mich antreibt</div>
-    <h2 class="dna-h2 glossy-h2">Vier Werte,<br><span class="italic">ein Leben.</span></h2>
-
-    <!-- Werte-Pills V30 Magazine — Number-Anchor 01-04 + subtle emoji accent -->
-    <div class="werte-grid">
-      <div class="werte-pill-pro glossy-card fade-in-up stag-0">
-        <div class="werte-pill-pro-num">01</div>
-        <h3 class="werte-pill-pro-name">Disziplin</h3>
-        <span class="werte-pill-pro-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 19 7-12 4 7 2.5-4L21 19z"/></svg></span>
-        <div class="werte-pill-pro-desc">Ritual statt Willenskraft. Architektur die trägt.</div>
-      </div>
-      <div class="werte-pill-pro glossy-card fade-in-up stag-1">
-        <div class="werte-pill-pro-num">02</div>
-        <h3 class="werte-pill-pro-name">Faith</h3>
-        <span class="werte-pill-pro-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 4v16M7.5 9h9"/></svg></span>
-        <div class="werte-pill-pro-desc">Bibel-grounded · Schlachter 2000 · jeden Morgen.</div>
-      </div>
-      <div class="werte-pill-pro glossy-card fade-in-up stag-2">
-        <div class="werte-pill-pro-num">03</div>
-        <h3 class="werte-pill-pro-name">Vegetarisch + Stark</h3>
-        <span class="werte-pill-pro-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13C4 8 8 4 20 4c0 12-4 16-9 16z"/><path d="M12 11c-3 2-5 5-6 9"/></svg></span>
-        <div class="werte-pill-pro-desc">Beweis seit 2016 — beides geht.</div>
-      </div>
-      <div class="werte-pill-pro glossy-card fade-in-up stag-3">
-        <div class="werte-pill-pro-num">04</div>
-        <h3 class="werte-pill-pro-name">Fitness</h3>
-        <span class="werte-pill-pro-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></svg></span>
-        <div class="werte-pill-pro-desc">Gym seit 2017 · 4-5×/Woche · Lifting + Cardio.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Bibel-Anchor V30 — Sprüche 24:16 als DER Anker-Vers (war: 2.Tim 4:7 in DNA-Section) -->
-  <section class="bibel-anchor fade-in-up" aria-label="Bibel-Anker">
-    <blockquote class="bibel-anchor-text">
-      „Denn siebenmal fällt der Gerechte und steht wieder auf."
-    </blockquote>
-    <p class="bibel-anchor-signature">Mein Anker.</p>
-  </section>
-
-  <!-- Closing V34 — ruhiger Weiterleit-Block (ersetzt Newsletter-Vollblock +
-       Brand-Banner). Konvertiert NICHT selbst, leitet nur auf die beiden
-       Voll-Seiten (/newsletter, /kooperationen.html). -->
-  <section class="closing fade-in-up" id="closing" aria-labelledby="closing-h">
-    <p class="closing-kicker">Wie es weitergeht</p>
-    <h2 class="closing-h" id="closing-h">Bleib dabei — oder lass uns<br><em>zusammenarbeiten.</em></h2>
-
-    <div class="closing-cards">
-      <a class="closing-card" href="/newsletter">
-        <span class="closing-card-icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
-        </span>
-        <span class="closing-card-title">3-Tage-Reset</span>
-        <span class="closing-card-sub">Gratis · 3 Mails · 0 Spam</span>
-        <span class="closing-card-cta">→ Zum Newsletter</span>
-      </a>
-
-      <a class="closing-card" href="/kooperationen.html">
-        <span class="closing-card-icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6"/><path d="M10 16H8a4 4 0 0 1 0-8h2"/><path d="M14 8h2a4 4 0 0 1 0 8h-2"/></svg>
-        </span>
-        <span class="closing-card-title">Kooperation</span>
-        <span class="closing-card-sub">Affiliate &amp; Partnerschaften</span>
-        <span class="closing-card-cta">→ Anfrage stellen</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- Footer-Editorial v31.11 — A2 Asymmetric Editorial (Brand-Page) -->
-  <footer class="vh-footer footer-a2 fade-in-up" role="contentinfo" aria-label="Site footer">
-    <div class="grid">
-      <div class="col col-brand">
-        <div class="vh-wordmark wordmark">VEGETARIAN<span class="accent">HULK</span></div>
-        <div class="vh-tagline tagline">Builder &amp; Creator. Disziplin über Hype.</div>
-        <a class="vh-link vh-ig ig" href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener" aria-label="Instagram @vegetarianhulk">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-            <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-            <circle cx="12" cy="12" r="4"></circle>
-            <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle>
+    <!-- HERO — Bogen-Fenster + geordnete Editorial-Spalte -->
+    <section class="hero" aria-label="Sebi — Vegetarianhulk">
+      <figure class="stage st">
+        <div class="stage-frame">
+          <svg class="stage-mtn" viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 50 26 16l10 16 8-12 22 30"/>
+            <path d="M22 23.5 26 20l4 5"/>
+            <path d="M40.5 25.5 44 21.5l3.5 5"/>
+            <circle cx="58" cy="11" r="4.5"/>
           </svg>
-          <span>@vegetarianhulk</span>
-        </a>
+        </div>
+        <img class="stage-cut" src="hero-cutout.png" alt="Sebi, Founder vegetarianhulk" fetchpriority="high">
+        <figcaption class="stage-caption"><a class="social-link" href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">@vegetarianhulk</a> · Bayern</figcaption>
+      </figure>
+      <div class="hero-copy">
+      <h1 class="hero-name st st1">Sebi</h1>
+      <p class="hero-handle st st2">Sebastian &nbsp;·&nbsp; <a class="social-link" href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">@vegetarianhulk</a></p>
+      <p class="hero-meta st st2">25<span class="dot">·</span>Vegetarisch seit 2016<span class="dot">·</span>✝ Christ<span class="dot">·</span>△ Bergsportler</p>
+      <hr class="hero-rule st st3">
+      <p class="hero-tagline st st4">Disziplin ist kein&nbsp;Talent.
+        <em>Sie ist ein Ritual.
+          <svg class="scribble" viewBox="0 0 220 14" fill="none" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M3 10 C 40 4, 75 12, 110 7 S 180 3, 217 8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+          </svg>
+        </em>
+      </p>
       </div>
-      <nav class="col" aria-label="Brand navigation">
-        <p class="vh-col-label">Explore</p>
-        <ul>
-          <li><a class="vh-link is-current" href="/" aria-current="page">Startseite</a></li>
-          <li><a class="vh-link" href="/newsletter">Newsletter</a></li>
-          <li><a class="vh-link" href="/partner-picks/">Smash Partner &amp; Picks</a></li>
-          <li><a class="vh-link" href="/kooperationen.html">Für Brands</a></li>
-        </ul>
-      </nav>
-      <nav class="col" aria-label="Rechtliches">
-        <p class="vh-col-label">Legal</p>
-        <ul>
-          <li><a class="vh-link" href="impressum.html">Impressum</a></li>
-          <li><a class="vh-link" href="datenschutz.html">Datenschutz</a></li>
-        </ul>
-      </nav>
-    </div>
-    <hr class="vh-hairline" />
-    <div class="bottom">
-      <span class="vh-copyright">© <span id="footer-year">2026</span> Sebastian Wimmer</span>
-    </div>
-  </footer>
+    </section>
 
+    <!-- Zitat -->
+    <section class="quote rv" aria-label="Warum ich das mache">
+      <p><strong>Ich war jemand der hundertmal</strong> angefangen und nie durchgezogen hat.
+      Heute lebe ich anders. Durch Disziplin. Durch Glauben. Durch bewusste Entscheidungen.
+      <strong>Und ich helfe dir, das auch zu tun.</strong></p>
+    </section>
+
+    <!-- Vier Werte — Kontrast-Choreografie -->
+    <div class="shead rv">
+      <p class="kicker">Sebi DNA · Was mich antreibt</p>
+      <h2>Vier Werte, <em>ein Leben.</em></h2>
+    </div>
+    <section class="grat-wrap" aria-label="Vier Werte — Der Berg">
+      <div class="grat-track">
+        <div class="grat-sticky">
+          <canvas class="berg-canvas" aria-hidden="true"></canvas>
+          <div class="berg-overlays" aria-hidden="false">
+            <div class="poi" data-poi="start" style="width: 15px" aria-hidden="true" title="Wimbachbr&#252;cke, Parkplatz">
+              <svg viewBox="0 0 16 16"><rect x="0.75" y="0.75" width="14.5" height="14.5" rx="2.5" fill="rgba(7,31,20,0.95)" stroke="currentColor" stroke-width="1.2"/><text x="8" y="12" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-weight="700" font-size="11" fill="currentColor" stroke="none">P</text></svg>
+            </div>
+            <div class="poi" data-poi="kapelle" style="width: 13px" aria-hidden="true" title="Kapelle">
+              <svg viewBox="0 0 14 20"><circle cx="7" cy="13" r="5.2" fill="rgba(7,31,20,0.9)" stroke="currentColor" stroke-width="1.3"/><path d="M7 7.8 V 1 M 4.2 3.8 h 5.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            </div>
+            <div class="poi" data-poi="huette" style="width: 15px" aria-hidden="true" title="Watzmannhaus">
+              <svg viewBox="0 0 16 14"><path d="M1 13 V 6.5 L 8 1 L 15 6.5 V 13 Z" fill="currentColor"/><path d="M6.4 13 v -4.4 h 3.2 v 4.4" fill="rgba(7,31,20,0.95)"/></svg>
+            </div>
+            <div class="poi poi--kreuz" data-poi="kreuz" style="width: 15px" aria-hidden="true" title="Watzmann-Mittelspitze">
+              <svg viewBox="0 0 16 22" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"><path d="M8 22 V 3"/><path d="M3.5 7.5 h 9"/><circle cx="8" cy="22" r="1.6" fill="currentColor" stroke="none"/></svg>
+            </div>
+            <button class="wp on" type="button" data-i="0" aria-label="Faith — Bibel-grounded"><span class="wp-num">01 · Wimbachbrücke</span></button>
+            <button class="wp" type="button" data-i="1" aria-label="Disziplin"><span class="wp-num">02 · 1420 hm</span></button>
+            <button class="wp" type="button" data-i="2" aria-label="Vegetarisch + Stark"><span class="wp-num">03 · 1930 hm</span></button>
+            <button class="wp" type="button" data-i="3" aria-label="Fitness"><span class="wp-num">04 · 2713 hm</span></button>
+            <span class="route-head" aria-hidden="true"></span>
+            <img class="grat-smashy" src="/assets/img/smashy-maskottchen.png" alt="">
+          </div>
+          <div class="grat-panel" aria-live="polite">
+            <div class="panel-nav">
+              <span class="panel-ticks" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></span>
+              <button type="button" data-step="-1" aria-label="Vorherige Etappe">&#8249;</button>
+              <button type="button" data-step="1" aria-label="N&#228;chste Etappe">&#8250;</button>
+            </div>
+            <svg class="panel-spark" viewBox="0 0 220 34" aria-hidden="true">
+              <polyline data-spark-fill points=""/>
+              <polyline data-spark-line points=""/>
+              <circle data-spark-dot cx="0" cy="31" r="3"/>
+              <text x="0" y="10">2713 hm</text>
+              <text x="176" y="32">8,4 km</text>
+            </svg>
+            <div class="inner" data-big="01">
+              <p class="num" data-p-num>01 / Faith</p>
+              <p class="p-ort" data-p-ort>Wimbachbr&#252;cke &#183; 630 m &#183; Start</p>
+              <h3 data-p-title>Bibel-grounded. W&#246;rtlich.</h3>
+              <p data-p-text>Das Fundament, bevor irgendwas anderes kommt: Schlachter 2000, jeden Morgen &#8212; bevor das Handy angeht. Hinfallen geh&#246;rt dazu, liegen bleiben nicht.</p>
+              <p class="p-vers" data-p-vers hidden></p>
+              <a class="p-cta" data-p-cta href="/touren/" hidden>Hulk Hikes &#183; Die Touren dahinter</a>
+            </div>
+          </div>
+          <aside class="wetter-hud" hidden aria-label="Bedingungen am Berg">
+            <p class="hud-label">Bergstation · Watzmann</p>
+            <p class="hud-temp"><span data-w-temp>–</span><span class="hud-unit">°C</span><span class="hud-icon" data-w-icon aria-hidden="true"></span></p>
+            <p class="hud-cond" data-w-cond></p>
+            <p class="hud-meta" data-w-meta></p>
+          </aside>
+          <p class="scroll-hint">Scroll &#183; Der Berg dreht sich</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bibel-Anker: der Licht-Moment -->
+    <section class="bibel-card rv" aria-label="Bibel-Anker" data-light>
+      <p class="label">Sprüche 24,16 · Schlachter 2000</p>
+      <blockquote>„Denn siebenmal fällt der Gerechte und steht wieder auf."</blockquote>
+      <p class="sig">Mein Anker.</p>
+    </section>
+
+    <!-- Closing -->
+    <section class="closing rv" aria-label="Wie es weitergeht">
+      <div class="shead" style="margin-bottom: 0;">
+        <p class="kicker">Wie es weitergeht</p>
+        <h2>Bleib dabei — oder lass uns <em>zusammenarbeiten.</em></h2>
+      </div>
+      <p class="brands-line">Brand oder Partner? <a href="/kooperationen.html">→ Anfrage stellen</a></p>
+    </section>
+
+  </div>
 </main>
 
-<!-- Sticky-CTA Mobile V30 — Newsletter-Funnel-Anchor (appears nach Hero out-of-view) -->
-<a href="/newsletter" class="sticky-cta-mobile" id="sticky-cta-mobile"
-   aria-label="Newsletter-Anmeldung">→ 3-Tage-Reset holen</a>
+<footer>
+  <div class="inner" data-big="01">
+    <p class="wordmark">VEGETARIAN<b>HULK</b></p>
+    <p class="claim">Builder &amp; Creator. Disziplin über Hype.</p>
+    <nav class="legal" aria-label="Rechtliches">
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+      <span>© 2026 Sebastian Wimmer</span>
+    </nav>
+  </div>
+</footer>
 
-<script>
-// IntersectionObserver für fade-in-up Animationen
-(function() {
-  if (!('IntersectionObserver' in window)) return;
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
-})();
+<!-- Floating Nav — typografisch, nur der Berg bleibt -->
+<nav class="nav" aria-label="Hauptnavigation">
+  <a href="/" aria-current="page">Start</a>
+  <a href="/partner-picks/">P&amp;P</a>
+  <a class="center" href="/touren/">
+    <span class="mtn"><svg viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 50 26 16l10 16 8-12 22 30"/>
+      <path d="M22 23.5 26 20l4 5" opacity="0.85"/>
+      <path d="M40.5 25.5 44 21.5l3.5 5" opacity="0.85"/>
+      <circle cx="58" cy="11" r="4.5" opacity="0.9"/>
+      <path d="M12 50c8-4 16-3.4 22 0" opacity="0.45"/>
+    </svg></span>
+    Hulk&nbsp;Hikes
+  </a>
+  <a href="/newsletter">News</a>
+  <a href="/kooperationen.html">Brands</a>
+</nav>
 
-// V30 — 3D-Card-Tilt dezenter: max 5°, 300ms ease-out, Desktop-only
-// Multi-Layer-Parallax aus V11 entfernt (Performance + Cleaner Editorial-Vibe)
-(function() {
-  if (window.matchMedia('(max-width: 1023px)').matches) return; // Desktop only
-  if (window.matchMedia('(hover: none)').matches) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const tiltElements = document.querySelectorAll('.werte-pill-pro');
-  tiltElements.forEach(el => {
-    el.style.transition = 'transform 300ms cubic-bezier(0.16, 1, 0.3, 1)';
-    el.style.transformStyle = 'preserve-3d';
-    let rafId = null;
-    el.addEventListener('mousemove', (e) => {
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        const rect = el.getBoundingClientRect();
-        const dx = (e.clientX - rect.left) / rect.width  - 0.5;
-        const dy = (e.clientY - rect.top)  / rect.height - 0.5;
-        const maxTilt = 5; // V30: dezenter (war 12)
-        el.style.setProperty('--tilt-ry', `${dx * maxTilt * 2}deg`);
-        el.style.setProperty('--tilt-rx', `${-dy * maxTilt * 2}deg`);
-        el.classList.add('tilting');
-      });
-    }, { passive: true });
-    el.addEventListener('mouseleave', () => {
-      if (rafId) cancelAnimationFrame(rafId);
-      el.style.setProperty('--tilt-ry', '0deg');
-      el.style.setProperty('--tilt-rx', '0deg');
-      el.classList.remove('tilting');
-    }, { passive: true });
-  });
-})();
 
-// V30 — Sticky-CTA Mobile: IntersectionObserver-basiert
-// Hero out-of-view → fade-in · Lead-Magnet sichtbar → fade-out + Memory-Bit
-// Subscribed users (localStorage) sehen nichts. Desktop ≥1024 sieht nichts.
-(function() {
-  const cta = document.getElementById('sticky-cta-mobile');
-  if (!cta) return;
-
-  // localStorage Gate
-  try {
-    if (localStorage.getItem('vegetarianhulk_newsletterSubscribed') === 'true') {
-      cta.remove();
-      return;
-    }
-  } catch(e) { /* localStorage disabled — proceed */ }
-
-  // Desktop disabled (defense-in-depth, CSS @media kümmert sich auch)
-  if (window.matchMedia('(min-width: 1024px)').matches) {
-    cta.remove();
-    return;
-  }
-
-  const hero = document.querySelector('.cinematic-hero');
-  // Closing-Block ersetzt den früheren Lead-Magnet als "unten angekommen"-Marker
-  const closing = document.getElementById('closing');
-  if (!hero || !closing) return;
-
-  let closingSeen = false;
-  let heroVisible = true;
-
-  function updateVisibility() {
-    if (closingSeen) {
-      cta.classList.remove('is-visible');
-      return;
-    }
-    cta.classList.toggle('is-visible', !heroVisible);
-  }
-
-  // Hero out-of-view → Sticky appears
-  const heroObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      heroVisible = entry.isIntersecting;
-      updateVisibility();
-    });
-  }, { threshold: 0.05 });
-  heroObserver.observe(hero);
-
-  // Closing-Block sichtbar → Sticky verschwindet (kein Re-Surface)
-  const closingObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        closingSeen = true;
-        updateVisibility();
-        closingObserver.disconnect();
-      }
-    });
-  }, { threshold: 0.10 });
-  closingObserver.observe(closing);
-})();
-
-// Footer-Year + Veggie-Years dynamisch (2026=10, 2027=11, ...)
-(function() {
-  const y = new Date().getFullYear();
-  document.querySelectorAll('#footer-year').forEach(el => el.textContent = y);
-  document.querySelectorAll('#footer-veggie-years').forEach(el => el.textContent = y - 2016);
-})();
-</script>
-<script src="update-check.js?v=361d366c"></script>
-<script src="/nav.js" defer></script>
-<script src="motion-reveal.js?v=d3baa308" defer></script></body>
+<script src="v3.js?v=46209ddf" defer></script>
+<script type="module" src="relief3d.js?v=66fa5f79"></script>
+</body>
 </html>
