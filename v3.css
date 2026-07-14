@@ -461,6 +461,57 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .hikes-facts dd { margin-top: 4px; font-size: 14px; color: var(--paper-dim); }
 
 /* ---- Closing ---- */
+/* ---- Gipfelbuch: aufgeschlagene Doppelseite (ersetzt die Bibel-Karte) ---- */
+.gipfelbuch { margin: 120px auto 0; width: min(880px, 92vw); }
+.gb-kopf { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--paper-faint); text-align: center; margin-bottom: 20px;
+  text-shadow: 0 1px 2px rgba(3,15,9,0.6); }
+.gb-buch { position: relative; display: grid; grid-template-columns: 1fr 1fr;
+  transform: rotate(-0.6deg);
+  background: linear-gradient(100deg, #F1E8D4 0%, #EDE4CE 49.5%, #DFD5BD 50%, #F5EDDC 50.6%, #EDE4CE 100%);
+  border-radius: 5px 12px 12px 5px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(60,50,30,0.18),
+    0 34px 64px -22px rgba(2,10,6,0.6), 0 5px 12px rgba(2,10,6,0.28); }
+.gb-buch::after { content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background-image: var(--grain); opacity: 0.55; pointer-events: none; }
+/* Falz */
+.gb-buch::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 38px;
+  transform: translateX(-50%); pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(60,50,30,0.12) 44%, rgba(30,24,12,0.26) 50%, rgba(60,50,30,0.12) 56%, transparent); }
+.gb-seite { padding: 46px 46px 36px; }
+.gb-seite--links blockquote { margin: 0 0 18px; max-width: 17ch;
+  font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600;
+  font-size: clamp(20px, 2.5vw, 28px); line-height: 1.42; color: #14281C; }
+.gb-quelle { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 2.2px;
+  text-transform: uppercase; color: #8A6F2F; }
+.gb-anker { margin-top: 8px; font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 15px; color: var(--royal); }
+/* rechte Seite: liniert wie ein echtes Buch, Eintrag sitzt auf den Linien */
+.gb-seite--rechts { position: relative;
+  background: repeating-linear-gradient(180deg, transparent 0 29px, rgba(70,95,70,0.14) 29px 30px);
+  background-position: 0 12px; }
+.gb-datum { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: rgba(20,40,28,0.55); margin: 0 0 18px; }
+.gb-eintrag { margin: 0; font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: clamp(17px, 1.9vw, 21px); line-height: 30px; color: #1E3A2A;
+  transform: rotate(-0.8deg); }
+.gb-eintrag [data-gb-tag] { color: var(--royal); }
+.gb-sig { margin: 20px 8px 0 0; text-align: right;
+  font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;
+  font-size: 24px; color: #0B4A2E; transform: rotate(-2deg); }
+.gb-cta { grid-column: 1 / -1; justify-self: center; position: relative; z-index: 1;
+  margin: 0 0 26px; padding: 6px 10px;
+  font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: 2.2px;
+  text-transform: uppercase; text-decoration: none; color: var(--royal);
+  transition: letter-spacing 400ms var(--ease-lux), color 400ms var(--ease-lux); }
+.gb-cta:hover { letter-spacing: 3px; color: #0A3B22; }
+@media (max-width: 700px) {
+  .gb-buch { grid-template-columns: 1fr; }
+  .gb-buch::before { display: none; }
+  .gb-seite { padding: 34px 30px 26px; }
+  .gb-seite--rechts { border-top: 1px solid rgba(60,50,30,0.2); }
+}
+
 .closing { margin-top: 100px; }
 /* Weggabelung: Pfahl mit zwei Richtungsschildern (DAV-Sprache der Berg-Sektion) */
 .gabelung { position: relative; width: min(760px, 92vw); margin: 58px auto 26px;

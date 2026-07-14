@@ -141,3 +141,15 @@
   }, { rootMargin: '0px 0px -10% 0px' });
   els.forEach(function (e) { io.observe(e); });
 })();
+
+/* Gipfelbuch: heutiges Datum + Tag-Zaehler (vegetarisch seit 2016) */
+(function () {
+  'use strict';
+  var d = document.querySelector('[data-gb-datum]');
+  var t = document.querySelector('[data-gb-tag]');
+  if (d) d.textContent = new Date().toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+  if (t) {
+    var days = Math.floor((Date.now() - new Date(2016, 0, 1).getTime()) / 86400000);
+    t.textContent = 'Tag ' + days.toLocaleString('de-DE');
+  }
+})();
