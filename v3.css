@@ -1,4 +1,9 @@
 /* VH v3 — Editorial Dark (aus design/prototypes/home-v3.html portiert) */
+@font-face {
+  font-family: 'Caveat';
+  src: url('/fonts/caveat-latin.woff2') format('woff2');
+  font-weight: 400 700; font-style: normal; font-display: swap;
+}
 /* ============================================================
    VH HOME v3 — EDITORIAL DARK (QA-Runde Sebi 10.07. abends)
    Fixes: 1) Kontrast-Choreografie — nie gleiche Fläche neben
@@ -492,19 +497,22 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   background-position: 0 12px; }
 .gb-datum { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px;
   text-transform: uppercase; color: rgba(20,40,28,0.55); margin: 0 0 18px; }
-.gb-eintrag { margin: 0; font-family: 'Playfair Display', serif; font-style: italic;
-  font-size: clamp(17px, 1.9vw, 21px); line-height: 30px; color: #1E3A2A;
-  transform: rotate(-0.8deg); }
+.gb-eintrag { margin: 0; font-family: 'Caveat', cursive; font-weight: 600;
+  font-size: clamp(24px, 2.6vw, 30px); line-height: 30px; color: #1E3A2A;
+  letter-spacing: 0.5px; transform: rotate(-0.8deg); }
 .gb-eintrag [data-gb-tag] { color: var(--royal); }
-.gb-sig { margin: 20px 8px 0 0; text-align: right;
-  font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;
-  font-size: 24px; color: #0B4A2E; transform: rotate(-2deg); }
-.gb-cta { grid-column: 1 / -1; justify-self: center; position: relative; z-index: 1;
-  margin: 0 0 26px; padding: 6px 10px;
-  font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: 2.2px;
-  text-transform: uppercase; text-decoration: none; color: var(--royal);
-  transition: letter-spacing 400ms var(--ease-lux), color 400ms var(--ease-lux); }
-.gb-cta:hover { letter-spacing: 3px; color: #0A3B22; }
+.gb-sig { margin: 14px 8px 0 0; text-align: right;
+  font-family: 'Caveat', cursive; font-weight: 700;
+  font-size: 34px; color: #0B4A2E; transform: rotate(-3deg); }
+.gb-cta { grid-column: 1 / -1; justify-self: stretch; position: relative; z-index: 1;
+  margin: 0 46px 30px; padding: 2px 30px 4px 4px;
+  font-family: 'Caveat', cursive; font-weight: 600; font-size: 23px;
+  text-decoration: none; color: rgba(11,110,79,0.78);
+  border-bottom: 1.5px dashed rgba(30,58,42,0.45);
+  transition: color 400ms var(--ease-lux), border-color 400ms var(--ease-lux); }
+.gb-cta::after { content: "\2192"; position: absolute; right: 6px; }
+.gb-cta:hover { color: #0A3B22; border-bottom-color: rgba(11,110,79,0.7); }
+@media (max-width: 700px) { .gb-cta { margin: 0 30px 26px; } }
 @media (max-width: 700px) {
   .gb-buch { grid-template-columns: 1fr; }
   .gb-buch::before { display: none; }
@@ -514,18 +522,18 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 
 .closing { margin-top: 100px; }
 /* Weggabelung: Pfahl mit zwei Richtungsschildern (DAV-Sprache der Berg-Sektion) */
-.gabelung { position: relative; width: min(760px, 92vw); margin: 58px auto 26px;
-  display: flex; flex-direction: column; gap: 18px; }
-.gabelung::before { content: ""; position: absolute; left: 50%; top: -30px; bottom: -42px;
+.gabelung { position: relative; width: min(720px, 92vw); margin: 48px auto 22px;
+  display: flex; flex-direction: column; gap: 14px; }
+.gabelung::before { content: ""; position: absolute; left: 50%; top: -22px; bottom: -34px;
   width: 4px; transform: translateX(-50%);
   background: linear-gradient(180deg, rgba(154,138,96,0.9), rgba(70,58,34,0.4));
   box-shadow: inset 1.2px 0 0 rgba(243,235,217,0.4); }
 .gabelung::after { content: ""; position: absolute; left: 50%; bottom: -50px;
   width: 130px; height: 16px; transform: translateX(-50%);
   background: radial-gradient(50% 50% at 50% 50%, rgba(2,10,6,0.4), transparent 72%); }
-.gab-schild { position: relative; z-index: 1; display: block; width: min(410px, 86vw);
-  padding: 15px 30px 15px 24px;
-  font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 2px;
+.gab-schild { position: relative; z-index: 1; display: block; width: fit-content;
+  padding: 11px 34px 11px 18px;
+  font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.8px;
   text-transform: uppercase; text-decoration: none; white-space: nowrap;
   transition: transform 450ms var(--ease-lux), filter 450ms var(--ease-lux); }
 /* rechtsweisend, DAV-Gelb — haengt rechts am Pfahl */
@@ -539,7 +547,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 /* linksweisend, Panel-Dunkel — haengt links am Pfahl */
 .gab-schild--dunkel { margin-left: auto; margin-right: calc(50% - 10px);
   color: rgba(243,235,217,0.94); text-align: right;
-  padding: 15px 24px 15px 34px;
+  padding: 11px 18px 11px 34px;
   background:
     radial-gradient(circle at calc(100% - 12px) 50%, rgba(243,235,217,0.85) 2.2px, transparent 3px),
     linear-gradient(180deg, rgba(21,58,38,0.97), rgba(6,22,14,0.97));
@@ -547,7 +555,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   filter: drop-shadow(0 0 0.8px rgba(243,235,217,0.6)) drop-shadow(0 2px 2px rgba(2,10,6,0.85)) drop-shadow(0 12px 24px rgba(0,0,0,0.4)); }
 .gab-schild--dunkel:hover { transform: translateX(-7px); }
 @media (max-width: 760px) {
-  .gab-schild, .gab-schild--gelb, .gab-schild--dunkel { margin-left: auto; margin-right: auto; width: min(410px, 88vw); white-space: normal; text-align: center; }
+  .gab-schild, .gab-schild--gelb, .gab-schild--dunkel { margin-left: auto; margin-right: auto; width: fit-content; max-width: 88vw; white-space: normal; text-align: center; }
 }
 .brands-line { margin-top: 30px; font-size: 15px; color: var(--paper-faint); }
 .brands-line a { font-weight: 700; color: var(--leaf); border-bottom: 1px solid rgba(126,208,155,0.4); padding-bottom: 2px;
