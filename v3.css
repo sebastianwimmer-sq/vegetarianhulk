@@ -124,15 +124,23 @@ main { position: relative; z-index: 1; }
 
 /* Flagship — Watzmann (Topo-Karte, cream/data-light) */
 .th-flag { width: min(1040px, 92vw); margin: 56px 0 0; margin-left: calc((100% - min(1040px, 92vw)) / 2);
-  border-radius: 20px; overflow: hidden; position: relative;
+  border-radius: 22px; overflow: hidden; position: relative;
+  padding: 7px; /* aeussere Schale fuer Doppelrand */
+  background: linear-gradient(158deg, rgba(24,43,31,0.1), rgba(24,43,31,0.03));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.5),
+    0 0 0 1px rgba(186,155,95,0.28),
+    0 44px 80px -34px rgba(0,0,0,0.66), 0 8px 22px -12px rgba(0,0,0,0.4); }
+.th-flag__grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.1fr 0.9fr;
+  border-radius: 16px; overflow: hidden;
   background:
     repeating-linear-gradient(93deg, rgba(24,43,31,0.028) 0 1px, transparent 1px 10px),
     linear-gradient(158deg, #F5EEDE 0%, #EFE7D2 58%, #E7DDC4 100%);
-  box-shadow: var(--shadow-paper); }
-.th-flag::after { content: ""; position: absolute; inset: 0; background-image: var(--grain);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.7), inset 0 0 0 1px rgba(186,155,95,0.18); }
+.th-flag__grid::after { content: ""; position: absolute; inset: 0; background-image: var(--grain);
   opacity: 0.5; pointer-events: none; }
-.th-flag__grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.1fr 0.9fr; }
-.th-flag__body { padding: clamp(30px, 4vw, 48px); }
+.th-flag__body { position: relative; z-index: 1; padding: clamp(30px, 4vw, 48px); }
+.th-flag__body h2 em { font-style: italic; color: var(--royal); }
 .th-badge { display: inline-flex; align-items: center; gap: 7px;
   font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 2px;
   text-transform: uppercase; color: #14100A;
@@ -158,11 +166,25 @@ main { position: relative; z-index: 1; }
 .th-profile__label { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 2px;
   text-transform: uppercase; color: var(--paper-faint); margin-bottom: 16px; }
 .th-profile { width: 100%; height: auto; color: var(--leaf); overflow: visible; }
-.th-profile__fill { fill: rgba(80,200,120,0.12); }
-.th-profile__line { fill: none; }
-.th-profile__dot { fill: var(--emerald); }
-.th-profile__cross { color: var(--paper); }
-.th-profile__marks text { fill: rgba(243,235,217,0.55); }
+.th-profile__fill { fill: rgba(80,200,120,0.12); opacity: 0;
+  transition: opacity 900ms var(--ease-lux) 500ms; }
+.th-profile__line { fill: none; stroke-dasharray: 100; stroke-dashoffset: 100;
+  filter: drop-shadow(0 0 5px rgba(80,200,120,0.4)); }
+.th-profile__dot { fill: var(--emerald); opacity: 0;
+  filter: drop-shadow(0 0 5px rgba(80,200,120,0.9)); transition: opacity 400ms 300ms; }
+.th-profile__cross { color: var(--paper); opacity: 0; transition: opacity 500ms 1300ms; }
+.th-profile__marks text { fill: rgba(243,235,217,0.55); opacity: 0; transition: opacity 700ms 900ms; }
+/* Draw-on, sobald die Flagship-Karte im Viewport ist */
+.th-flag.in .th-profile__line { animation: thDraw 1500ms var(--ease-lux) 300ms forwards; }
+.th-flag.in .th-profile__fill,
+.th-flag.in .th-profile__dot,
+.th-flag.in .th-profile__cross,
+.th-flag.in .th-profile__marks text { opacity: 1; }
+@keyframes thDraw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .th-profile__line { stroke-dashoffset: 0; animation: none; }
+  .th-profile__fill, .th-profile__dot, .th-profile__cross, .th-profile__marks text { opacity: 1; transition: none; }
+}
 .th-profile__foot { margin-top: 14px; font-family: var(--mono); font-size: 11px; font-weight: 700;
   letter-spacing: 1.5px; color: var(--mint); }
 
@@ -183,19 +205,32 @@ main { position: relative; z-index: 1; }
 .th-cards { list-style: none; display: grid; gap: 16px; padding: 0;
   width: min(1040px, 92vw); margin: 0 0 0 calc((100% - min(1040px, 92vw)) / 2);
   grid-template-columns: repeat(3, 1fr); }
-.th-card { position: relative; padding: 24px 24px 52px;
+.th-card { position: relative; overflow: hidden; padding: 26px 24px 54px;
   background: linear-gradient(158deg, rgba(19,54,35,0.5), rgba(6,26,17,0.55));
   border: 1px solid rgba(126,208,155,0.14); border-radius: 14px;
-  transition: transform 500ms var(--ease-lux), border-color 500ms var(--ease-lux); }
-.th-card:hover { transform: translateY(-4px); border-color: rgba(126,208,155,0.34); }
-.th-card__region { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 2px;
+  box-shadow: inset 0 1px 0 rgba(209,242,235,0.06), 0 18px 40px -26px rgba(0,0,0,0.7);
+  transition: transform 550ms var(--ease-lux), border-color 550ms var(--ease-lux), box-shadow 550ms var(--ease-lux); }
+/* Gipfelgrat-Akzent, waechst beim Hover von links */
+.th-card::before { content: ""; position: absolute; left: 0; top: 0; height: 2px; width: 0;
+  background: linear-gradient(90deg, var(--emerald), transparent);
+  transition: width 650ms var(--ease-lux); }
+.th-card:hover { transform: translateY(-5px); border-color: rgba(126,208,155,0.34);
+  box-shadow: inset 0 1px 0 rgba(209,242,235,0.1), 0 30px 54px -26px rgba(0,0,0,0.75); }
+.th-card:hover::before { width: 60%; }
+.th-card__no { position: absolute; right: 16px; top: 8px;
+  font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; font-size: 56px;
+  line-height: 1; color: rgba(126,208,155,0.09); pointer-events: none;
+  transition: color 550ms var(--ease-lux); }
+.th-card:hover .th-card__no { color: rgba(126,208,155,0.16); }
+.th-card__region { position: relative; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 2px;
   text-transform: uppercase; color: var(--leaf); }
-.th-card h3 { margin: 10px 0 8px; font-family: 'Playfair Display', serif; font-weight: 600;
-  font-size: 20px; line-height: 1.15; color: var(--paper); }
-.th-card__fact { font-family: var(--mono); font-size: 11px; letter-spacing: 0.4px; color: var(--paper-faint); }
+.th-card h3 { position: relative; margin: 10px 0 8px; font-family: 'Playfair Display', serif; font-weight: 600;
+  font-size: 20px; line-height: 1.15; color: var(--paper); max-width: 15ch; }
+.th-card__fact { position: relative; font-family: var(--mono); font-size: 11px; letter-spacing: 0.4px; color: var(--paper-faint); }
 .th-card__state { position: absolute; left: 24px; bottom: 20px;
-  font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
-  color: #14100A; background: rgba(186,155,95,0.85); padding: 4px 10px; border-radius: 3px; }
+  font-family: var(--mono); font-size: 8.5px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
+  color: var(--mint); background: rgba(126,208,155,0.12); border: 1px solid rgba(126,208,155,0.28);
+  padding: 4px 11px; border-radius: 20px; }
 
 /* Newsletter-Hook — cream */
 .th-hook { width: min(760px, 92vw); margin: 96px 0 40px; margin-left: calc((100% - min(760px, 92vw)) / 2);
