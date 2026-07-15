@@ -2,160 +2,169 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' https: data:; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hulk Hikes — Wandertouren zum Nachwandern | VegetarianHulk</title>
-<meta name="description" content="Meine Wandertouren in den bayerischen Bergen — ehrlich eingestuft, zum Nachwandern. Bald mit GPX, Höhenprofil und Karte. Sei dabei, wenn die ersten live gehen.">
-<meta name="theme-color" content="#f7efde">
+<title>Hulk Hikes — Meine Berge zum Nachwandern | VegetarianHulk</title>
+<meta name="description" content="Hulk Hikes: Wandertouren im Berchtesgadener Land und Chiemgau — jede selbst gegangen, ehrlich eingestuft, mit Höhenprofil und Gehzeit. Der Watzmann-Normalweg ist die erste.">
+<meta name="theme-color" content="#0B2418">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://vegetarianhulk.de/touren/">
 
-<meta property="og:title" content="Hulk Hikes — Wandertouren | VegetarianHulk">
-<meta property="og:description" content="Meine Berge zum Nachwandern. Ehrlich eingestuft, bald mit GPX + Karte.">
+<meta property="og:title" content="Hulk Hikes — Meine Berge zum Nachwandern">
+<meta property="og:description" content="Wandertouren im Berchtesgadener Land und Chiemgau — jede selbst gegangen, ehrlich eingestuft.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://vegetarianhulk.de/touren/">
 <meta property="og:image" content="https://vegetarianhulk.de/hero.jpg?v=v31.6.1">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
-<link rel="stylesheet" href="/style.css?v=bdf0cecd">
-
-<style>
-  .th-hero {
-    position: relative; max-width: 1080px; margin: 0 auto var(--space-lg);
-    padding: clamp(40px, 7vw, 76px) var(--space-md);
-    border-radius: var(--radius-card); overflow: hidden; text-align: center;
-    background-color: var(--hero-bg); background-image: var(--grain6), var(--grad-hero);
-    color: var(--vanilla);
-    box-shadow: 0 12px 34px -14px rgba(15,42,26,0.55);
-  }
-  .th-hero__badge {
-    display: inline-flex; align-items: center; gap: 7px; margin: 0 0 20px;
-    font-family: 'Inter', system-ui, sans-serif; font-size: 11px; font-weight: 800;
-    letter-spacing: 2.4px; text-transform: uppercase; color: rgba(247,239,222,0.9);
-    background: rgba(247,239,222,0.14); border: 1px solid rgba(247,239,222,0.28);
-    padding: 6px 14px; border-radius: 999px;
-  }
-  .th-hero__mtn { width: 120px; height: 92px; margin: 0 auto 10px; display: block; }
-  .th-hero__title { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(2.6rem, 9vw, 4.6rem); line-height: 1; margin: 0; }
-  .th-hero__sub { margin: 16px auto 0; max-width: 460px; color: rgba(247,239,222,0.88); font-size: var(--font-body-lg); line-height: 1.55; }
-
-  .th-coming { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; color: var(--forest-accent); white-space: nowrap; }
-  .th-coming::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--forest-accent); }
-  .vh-index__row.is-coming { opacity: 0.9; }
-
-  .th-cta {
-    max-width: 1080px; margin: var(--space-lg) auto 0; padding: 0 clamp(20px, 4vw, 56px);
-    display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center;
-  }
-  .th-cta__line { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: clamp(20px, 3.4vw, 28px); color: var(--ink); }
-  .th-cta__btn {
-    display: inline-flex; align-items: center; gap: 9px; text-decoration: none;
-    background: var(--grad-forest); color: var(--vanilla); font-weight: 800; font-size: 15px;
-    padding: 15px 28px; border-radius: 14px; box-shadow: 0 8px 22px -8px rgba(4,89,39,0.5);
-    transition: transform 0.18s var(--ease-out-expo), box-shadow 0.25s, filter 0.2s;
-  }
-  .th-cta__btn:hover { transform: translateY(-2px); filter: brightness(1.06); box-shadow: 0 14px 30px -10px rgba(4,89,39,0.6); }
-  .th-cta__btn:focus-visible { outline: 3px solid var(--forest-accent); outline-offset: 3px; }
-</style>
+<link rel="stylesheet" href="/fonts.css?v=1e2010e0">
+<link rel="stylesheet" href="/v3.css?v=05d6d70b">
 </head>
-<body>
-<main class="page">
+<body class="th-page">
+<div class="bg-wrap" aria-hidden="true"><div class="bg"></div></div>
+<div class="bg2-wrap" aria-hidden="true"><div class="bg2"></div></div>
 
-  <header class="topbar">
-    <a href="/" class="brand" style="text-decoration:none;color:inherit">vegetarian<span class="accent">hulk</span></a>
-  </header>
+<div class="rail rail--l" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">2713 hm</span></div>
+</div>
+<div class="rail rail--r" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">2713 hm</span></div>
+</div>
 
-  <!-- Dunkle Hero — data-nav-dark: Logo klappt hier auf hell um -->
-  <section class="th-hero" data-nav-dark aria-labelledby="th-title">
-    <span class="th-hero__badge">In Arbeit · Bald hier</span>
-    <svg class="th-hero__mtn" viewBox="0 0 120 92" fill="none" aria-hidden="true">
-      <path d="M2 90 30 44l16 20 14-18 22 26 34-38v56z" fill="rgba(247,239,222,0.14)"/>
-      <path d="M6 90 44 22l16 26 12-16 40 58z" fill="rgba(247,239,222,0.95)"/>
-      <path d="M44 22l7 11.4-7 4-6.6-3.2z" fill="#0f2a1a"/>
-      <path d="M72 32l5 8-5 3-4.6-2.4z" fill="#0f2a1a"/>
-    </svg>
-    <h1 class="th-hero__title" id="th-title">Hulk Hikes</h1>
-    <p class="th-hero__sub">Meine Wege in die Berge — ehrlich eingestuft, zum Nachwandern. Bald hier mit GPX, Höhenprofil und Karte.</p>
-  </section>
+<main>
+  <div class="wrap">
 
-  <!-- Vorschau: die ersten Touren -->
-  <section class="vh-section" aria-labelledby="th-preview">
-    <div class="vh-shead">
-      <p class="vh-shead__eyebrow"><span class="num">01</span> Die ersten Wege</p>
-      <h2 class="vh-shead__title" id="th-preview">Bald zum <em>Nachwandern</em>.</h2>
-      <p class="vh-shead__sub">Alle selber gangen, alle mit Parkplatz, alle ohne 2 Stunden Anfahrt. Kein 3000er, keine teure Ausrüstung — der erste Schritt, der Rest kommt von alleine.</p>
-    </div>
+    <header class="topbar">
+      <span class="brandbox">
+        <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+        <span class="wordmark wordmark--invert" aria-hidden="true" data-invert-layer>VEGETARIAN<b>HULK</b></span>
+      </span>
+    </header>
 
-    <div class="vh-index">
-      <div class="vh-index__row is-coming">
-        <div class="vh-index__num">01</div>
-        <div class="vh-index__main">
-          <h3 class="vh-index__name">Mordau-Alm</h3>
-          <p class="vh-index__meta">Ramsau bei Berchtesgaden · 5 km · 294 hm · ca. 1:25 h</p>
-          <p class="vh-index__text">Der perfekte Einstieg — kurz, aussichtsreich, ab Parkplatz Taubensee. Bald mit voller Karte + GPX zum Nachwandern.</p>
+    <!-- Hero -->
+    <section class="th-hero st" aria-labelledby="th-title">
+      <p class="kicker st st1">Hulk Hikes · Bergtouren-Guide</p>
+      <h1 id="th-title" class="st st2">Meine Berge.<br><em>Zum Nachwandern.</em></h1>
+      <p class="th-lead st st3">Keine Stock-Fotos, keine kopierten GPX-Files. Jede Route bin ich selbst
+      gegangen — im Berchtesgadener Land und Chiemgau, wo ich daheim bin. Mit ehrlicher Gehzeit,
+      echtem Höhenprofil und dem einen Satz, den du sonst nirgends liest: für wen sie sich lohnt.</p>
+      <p class="th-meta st st4"><span>Berchtesgadener Land</span><i>·</i><span>Chiemgau</span><i>·</i><span>selbst gegangen</span></p>
+    </section>
+
+    <!-- Flagship: Watzmann -->
+    <section class="th-flag rv" data-light aria-labelledby="flag-title">
+      <div class="th-flag__grid">
+        <div class="th-flag__body">
+          <p class="th-badge">Erste Tour · live</p>
+          <h2 id="flag-title">Watzmann — Normalweg aufs Hocheck</h2>
+          <p class="th-flag__copy">Der Hausberg über Berchtesgaden, und für mich der ehrlichste Gradmesser.
+          Von der Wimbachbrücke übers Watzmannhaus aufs Hocheck — lang, aber technisch machbar,
+          wenn Kondition und Wetter passen. Kein Klettersteig-Ego, sondern ein Ausdauertag mit Aussicht.</p>
+          <dl class="th-facts">
+            <div><dt>Strecke</dt><dd>8,4 km <span>(einfach)</span></dd></div>
+            <div><dt>Höhenmeter</dt><dd>+2.083 hm</dd></div>
+            <div><dt>Gehzeit</dt><dd>ca. 6–7 h aufwärts</dd></div>
+            <div><dt>Start</dt><dd>Wimbachbrücke · 630 m</dd></div>
+            <div><dt>Gipfel</dt><dd>Hocheck · 2.651 m</dd></div>
+            <div><dt>Einstufung</dt><dd>schwer — Kondition</dd></div>
+          </dl>
+          <p class="th-flag__cta">
+            <a class="th-btn th-btn--gelb" href="/#grat">Die Route in 3D ansehen</a>
+            <span class="th-note">GPX-Download kommt mit dem nächsten Update</span>
+          </p>
         </div>
-        <div class="vh-index__aside"><span class="th-coming">Bald</span></div>
-      </div>
-      <div class="vh-index__row is-coming">
-        <div class="vh-index__num">02</div>
-        <div class="vh-index__main">
-          <h3 class="vh-index__name">Steiner Alm</h3>
-          <p class="vh-index__meta">bei Anger · 7,7 km · 546 hm · ca. 2:45 h</p>
-          <p class="vh-index__text">Knackig steil — aber kurz. Deine zweite Tour, ab Waldparkplatz Urwies. Kommt als Nächstes.</p>
-        </div>
-        <div class="vh-index__aside"><span class="th-coming">Bald</span></div>
-      </div>
-    </div>
-  </section>
-
-  <div class="vh-divider" aria-hidden="true">
-    <svg viewBox="0 0 30 22" fill="none"><path d="M1 21 9 6l4 6.5L18 5l11 16z" fill="currentColor"/></svg>
-  </div>
-
-  <section class="th-cta">
-    <p class="th-cta__line">Sei dabei, wenn die ersten Touren live gehen.</p>
-    <a class="th-cta__btn" href="/newsletter">→ In den Newsletter</a>
-  </section>
-
-  <footer class="vh-footer footer-a2" role="contentinfo" aria-label="Site footer">
-    <div class="grid">
-      <div class="col col-brand">
-        <div class="vh-wordmark wordmark">VEGETARIAN<span class="accent">HULK</span></div>
-        <div class="vh-tagline tagline">Builder &amp; Creator. Disziplin über Hype.</div>
-        <a class="vh-link vh-ig ig" href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener" aria-label="Instagram @vegetarianhulk">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-            <rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle>
+        <div class="th-flag__aside" aria-hidden="true">
+          <p class="th-profile__label">Höhenprofil · Tal → Gipfel</p>
+          <svg class="th-profile" viewBox="0 0 320 150" fill="none">
+            <path class="th-profile__fill" d="M8 142 C 60 132, 96 120, 130 104 C 168 86, 196 84, 224 60 C 256 32, 286 30, 308 16 L 308 142 Z"/>
+            <path class="th-profile__line" pathLength="100" d="M8 142 C 60 132, 96 120, 130 104 C 168 86, 196 84, 224 60 C 256 32, 286 30, 308 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path class="th-profile__cross" d="M308 16 V 2 M 303 7 h 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <circle class="th-profile__dot" cx="8" cy="142" r="3"/>
+            <g class="th-profile__marks" font-family="ui-monospace, Menlo, monospace" font-size="8">
+              <text x="8" y="135">630 m</text>
+              <text x="126" y="98">Watzmannhaus</text>
+              <text x="250" y="26">2.651 m</text>
+            </g>
           </svg>
-          <span>@vegetarianhulk</span>
-        </a>
+          <p class="th-profile__foot">8,4 km · +2.083 hm</p>
+        </div>
       </div>
-      <nav class="col" aria-label="Brand navigation">
-        <p class="vh-col-label">Explore</p>
-        <ul>
-          <li><a class="vh-link" href="/">Startseite</a></li>
-          <li><a class="vh-link is-current" href="/touren/" aria-current="page">Hulk Hikes</a></li>
-          <li><a class="vh-link" href="/partner-picks/">Smash Partner &amp; Picks</a></li>
-          <li><a class="vh-link" href="/newsletter">Newsletter</a></li>
-          <li><a class="vh-link" href="/kooperationen.html">Für Brands</a></li>
-        </ul>
-      </nav>
-      <nav class="col" aria-label="Rechtliches">
-        <p class="vh-col-label">Legal</p>
-        <ul>
-          <li><a class="vh-link" href="/impressum.html">Impressum</a></li>
-          <li><a class="vh-link" href="/datenschutz.html">Datenschutz</a></li>
-        </ul>
-      </nav>
-    </div>
-    <hr class="vh-hairline" />
-    <div class="bottom"><span class="vh-copyright">© <span id="footer-year">2026</span> Sebastian Wimmer · VegetarianHulk</span></div>
-  </footer>
+    </section>
 
+    <!-- Kommende Touren -->
+    <section class="th-next rv" aria-labelledby="next-title">
+      <div class="shead" style="margin-bottom: 8px;">
+        <p class="kicker">In Arbeit</p>
+        <h2 id="next-title">Die nächsten Runden.</h2>
+      </div>
+      <p class="th-next__copy">Ich tracke gerade die nächsten Touren mit — sobald eine sauber im Kasten ist,
+      landet sie hier mit Fotos, GPX und Höhenprofil. Das sind die, die als Nächstes dran sind:</p>
+      <ul class="th-cards">
+        <li class="th-card">
+          <p class="th-card__region">Chiemgau</p>
+          <h3>Hochgern über die Enzianhütte</h3>
+          <p class="th-card__fact">~1.100 hm · Einkehr · Aussichtsberg</p>
+          <span class="th-card__state">bald getrackt</span>
+        </li>
+        <li class="th-card">
+          <p class="th-card__region">Berchtesgadener Land</p>
+          <h3>Jenner-Runde am Königssee</h3>
+          <p class="th-card__fact">~900 hm · familientauglich · See-Blick</p>
+          <span class="th-card__state">bald getrackt</span>
+        </li>
+        <li class="th-card">
+          <p class="th-card__region">Chiemgau</p>
+          <h3>Kampenwand-Überschreitung</h3>
+          <p class="th-card__fact">~800 hm · Fels · Gipfelkreuz</p>
+          <span class="th-card__state">bald getrackt</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Newsletter-Hook -->
+    <section class="th-hook rv" data-light aria-labelledby="hook-title">
+      <h2 id="hook-title">Sei dabei, wenn die erste Tour live geht.</h2>
+      <p>Kein Spam, keine Coaching-Phrasen. Nur eine kurze Nachricht, wenn eine neue Runde
+      mit GPX und Fotos online ist — und ab und zu ein ehrlicher Gedanke aus den Bergen.</p>
+      <a class="th-btn th-btn--gelb th-btn--lg" href="/newsletter">→ Trag dich ein</a>
+    </section>
+
+  </div>
 </main>
 
-<script src="/nav.js" defer></script>
-<script>(function () { var y = document.getElementById('footer-year'); if (y) y.textContent = new Date().getFullYear(); })();</script>
+<footer>
+  <div class="inner">
+    <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+    <p class="claim">Builder &amp; Creator. Disziplin über Hype.</p>
+    <nav class="legal" aria-label="Rechtliches">
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+      <span>© 2026 Sebastian Wimmer</span>
+    </nav>
+  </div>
+</footer>
+
+<nav class="nav" aria-label="Hauptnavigation">
+  <a href="/">Start</a>
+  <a href="/partner-picks/">P&amp;P</a>
+  <a class="center" href="/touren/" aria-current="page">
+    <span class="mtn"><svg viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 50 26 16l10 16 8-12 22 30"/>
+      <path d="M22 23.5 26 20l4 5" opacity="0.85"/>
+      <path d="M40.5 25.5 44 21.5l3.5 5" opacity="0.85"/>
+      <circle cx="58" cy="11" r="4.5" opacity="0.9"/>
+      <path d="M12 50c8-4 16-3.4 22 0" opacity="0.45"/>
+    </svg></span>
+    Hulk&nbsp;Hikes
+  </a>
+  <a href="/newsletter">News</a>
+  <a href="/kooperationen.html">Brands</a>
+</nav>
+
+<script src="/v3.js?v=182e7de3" defer></script>
 </body>
 </html>
