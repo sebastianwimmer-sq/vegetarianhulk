@@ -2,381 +2,181 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>404 · Nicht gefunden — VegetarianHulk</title>
-<meta name="description" content="Diese Seite gibt's nicht (mehr). Aber dein nächster Schritt schon.">
-<meta name="theme-color" content="#f7efde">
+<title>404 · Verstiegen — VegetarianHulk</title>
+<meta name="description" content="Diese Route gibt's nicht. Kein Drama — wir drehen um und finden den Steig zurück.">
+<meta name="theme-color" content="#06231A">
 <meta name="robots" content="noindex,follow">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
-<link rel="stylesheet" href="/style.css?v=bdf0cecd">
+<link rel="stylesheet" href="/v3.css?v=c9fdef3c">
 
 <style>
-  :root {
-    --vanilla: #f7efde;
-    --beige-1: #efe5cf;
-    --earth: #cfbf9d;
-    --earth-2: #a89372;
-    /* Hybrid Forest Family v31 — siehe style.css :root für globale Family */
-    --forest-1: #045927;  /* = --forest-primary (Brand-CTAs) */
-    --forest-2: #122d1c;  /* = --forest-anchor (Body-Text-Emphasis) */
-    --forest-3: #1a7340;  /* = --forest-accent (Saturated Highlight) */
-    --ink: #1a1410;
-    --ink-2: #4a3f33;
-    --ink-3: #807260;
-    --ink-4: #b3a385;
-  }
-  * { box-sizing: border-box; }
-  html, body {
-    margin: 0; padding: 0;
-    background: var(--vanilla);
-    color: var(--ink);
-    font-family: 'Inter', -apple-system, system-ui, sans-serif;
-    min-height: 100dvh;
-    background-image:
-      radial-gradient(60% 40% at 50% 0%, rgba(45,106,62,0.06), transparent 70%),
-      radial-gradient(50% 35% at 100% 100%, rgba(207,191,157,0.35), transparent 70%);
-  }
+  /* ── 404 · Verstiegen — dark editorial, Wegweiser-Sprache ── */
+  .err-hero { margin: clamp(56px, 12vh, 120px) 0 8px; }
+  .err-hero .kicker { font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
+    letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf);
+    display: flex; align-items: center; gap: 12px; }
+  .err-hero .kicker::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.24); }
+  .err-hero h1 { margin: 20px 0 22px; font-family: 'Playfair Display', serif; font-weight: 700;
+    font-size: clamp(48px, 12vw, 92px); line-height: 0.96; color: var(--paper); letter-spacing: -0.6px; }
+  .err-hero h1 em { font-style: italic; color: var(--leaf); }
 
-  /* ── Skip-Nav (a11y) ── */
-  .skip-nav {
-    position: absolute;
-    left: -9999px;
-    top: auto;
-    width: 1px; height: 1px;
-    overflow: hidden;
-  }
-  .skip-nav:focus-visible {
-    left: 16px; top: 16px;
-    width: auto; height: auto;
-    padding: 10px 16px;
-    background: var(--forest-1); color: var(--vanilla);
-    border-radius: 8px;
-    z-index: 1000;
-    font-weight: 700;
-    font-size: 13px;
-  }
+  /* DAV-Wegweiser mit durchgestrichenem, tot geglaubtem Steig */
+  .err-sign { display: inline-flex; align-items: center; gap: 9px; max-width: 100%;
+    font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.8px;
+    text-transform: uppercase; color: #14100A;
+    background:
+      radial-gradient(circle at 11px 50%, #14100A 2.2px, transparent 3px),
+      linear-gradient(180deg, #E8BF25, #D4A918);
+    padding: 6px 26px 6px 22px; transform: rotate(-1.4deg);
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+    filter: drop-shadow(0 2px 3px rgba(2,10,6,0.6)) drop-shadow(0 8px 18px rgba(0,0,0,0.35)); }
+  .err-sign .err-path { overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    max-width: min(52vw, 320px); text-decoration: line-through; text-decoration-thickness: 1.6px;
+    opacity: 0.82; }
 
-  /* ── Topbar minimal ── */
-  .topbar-404 {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 24px;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-  .topbar-404 .brand {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-weight: 700;
-    font-size: 20px;
-    color: var(--ink);
-    letter-spacing: -0.4px;
-    text-decoration: none;
-  }
-  .topbar-404 .brand .accent { color: var(--forest-1); font-style: italic; font-weight: 500; }
-  .topbar-404 .home-link {
-    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--ink-2);
-    text-decoration: none;
-  }
-  .topbar-404 .home-link:hover, .topbar-404 .home-link:focus-visible { color: var(--forest-1); }
+  .err-lead { margin-top: 26px; font-size: 16.5px; line-height: 1.7; color: var(--paper-dim); max-width: 46ch; }
 
-  /* ── Main ── */
-  .main-404 {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 56px 24px 80px;
-    text-align: center;
-  }
-  .eyebrow-404 {
-    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2.8px;
-    text-transform: uppercase;
-    color: var(--forest-1);
-    margin-bottom: 20px;
-  }
-  .h1-404 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-weight: 700;
-    font-size: clamp(34px, 6vw, 52px);
-    line-height: 1.05;
-    letter-spacing: -1.2px;
-    color: var(--ink);
-    margin: 0 0 20px;
-    text-wrap: balance;
-  }
-  .h1-404 em { font-style: italic; font-weight: 500; color: var(--forest-1); }
-  .sub-404 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: clamp(18px, 2.4vw, 22px);
-    line-height: 1.45;
-    color: var(--ink-2);
-    margin: 0 0 44px;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-    text-wrap: balance;
-  }
+  .err-cta { margin-top: 34px; }
+  .err-links { margin-top: 26px; display: flex; align-items: center; gap: 12px 16px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: 1.6px;
+    text-transform: uppercase; color: var(--paper-faint); }
+  .err-links b { color: var(--paper-faint); font-weight: 700; }
+  .err-links a { color: var(--leaf); border-bottom: 1px solid rgba(126,208,155,0.34); padding-bottom: 2px;
+    transition: color 400ms var(--ease-lux), border-color 400ms var(--ease-lux); }
+  .err-links a:hover { color: var(--mint); border-color: var(--mint); }
+  .err-links i { color: rgba(126,208,155,0.4); font-style: normal; }
 
-  /* ── CTAs ── */
-  .ctas-404 {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    align-items: stretch;
-    max-width: 360px;
-    margin: 0 auto 32px;
-  }
-  .cta-primary, .cta-secondary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 15px 24px;
-    border-radius: 12px;
-    font-family: 'Inter', system-ui, sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: 0.2px;
-    text-decoration: none;
-    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.12s ease;
-  }
-  .cta-primary {
-    background: var(--forest-1);
-    color: var(--vanilla);
-    box-shadow: 0 6px 18px -8px rgba(45,106,62,0.45);
-  }
-  .cta-primary:hover, .cta-primary:focus-visible {
-    background: var(--forest-2);
-    transform: translateY(-1px);
-  }
-  .cta-secondary {
-    background: transparent;
-    color: var(--forest-1);
-    border: 1.5px solid var(--forest-1);
-  }
-  .cta-secondary:hover, .cta-secondary:focus-visible {
-    background: var(--forest-1);
-    color: var(--vanilla);
-  }
+  /* Anker-Vers = hellste Fläche, der Licht-Moment (data-light für Wordmark-Invert) */
+  .err-anker { width: min(560px, 92vw); margin: 60px 0 40px;
+    margin-left: calc((100% - min(560px, 92vw)) / 2);
+    text-align: center; border-radius: 22px; position: relative; overflow: hidden;
+    padding: 46px 32px 40px;
+    background:
+      radial-gradient(90% 80% at 50% -20%, rgba(186,155,95,0.18), transparent 60%),
+      linear-gradient(175deg, #F8F2E2 0%, #F0E7D2 100%);
+    box-shadow: var(--shadow-paper); }
+  .err-anker::after { content: ""; position: absolute; inset: 0; background-image: var(--grain);
+    opacity: 0.65; pointer-events: none; }
+  .err-anker > * { position: relative; z-index: 1; }
+  .err-anker__label { font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
+    letter-spacing: 2.4px; text-transform: uppercase; color: var(--gold); }
+  .err-anker blockquote { margin: 22px auto 16px; max-width: 24ch;
+    font-family: 'Playfair Display', serif; font-style: italic; font-weight: 500;
+    font-size: clamp(21px, 4.4vw, 27px); line-height: 1.36; color: var(--forest); }
+  .err-anker__note { font-size: 13.5px; font-weight: 600; color: var(--royal);
+    display: flex; align-items: center; justify-content: center; gap: 12px; }
+  .err-anker__note::before, .err-anker__note::after { content: ""; width: 28px; height: 1px;
+    background: rgba(19,43,35,0.25); }
 
-  .ctas-mini {
-    display: flex;
-    gap: 22px;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    margin: 0 auto 56px;
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-  }
-  .ctas-mini a {
-    color: var(--ink-2);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    padding-bottom: 2px;
-    transition: color 0.2s ease, border-color 0.2s ease;
-  }
-  .ctas-mini a:hover, .ctas-mini a:focus-visible {
-    color: var(--forest-1);
-    border-bottom-color: var(--forest-1);
-  }
-  .ctas-mini-sep {
-    color: var(--ink-4);
-    font-size: 10px;
-  }
-
-  /* ── Bibel-Vers Echo ── */
-  .vers-404 {
-    margin: 56px auto 0;
-    max-width: 480px;
-    padding: 24px 28px;
-    background: var(--beige-1);
-    border: 1px solid var(--earth);
-    border-radius: 6px;
-    position: relative;
-  }
-  .vers-404::before {
-    content: "Sprüche 24,16 · Schlachter 2000";
-    position: absolute;
-    top: -9px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--vanilla);
-    padding: 0 10px;
-    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1.6px;
-    text-transform: uppercase;
-    color: var(--forest-1);
-  }
-  .vers-404-text {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic;
-    font-weight: 500;
-    font-size: 17px;
-    line-height: 1.45;
-    color: var(--ink);
-    margin: 0;
-    text-wrap: balance;
-  }
-  .vers-404-note {
-    margin-top: 10px;
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 13px;
-    line-height: 1.5;
-    color: var(--ink-2);
-  }
-
-  /* ── Footer reduced ── */
-  .footer-404 {
-    max-width: 640px;
-    margin: 64px auto 0;
-    padding: 24px 24px 32px;
-    border-top: 1px solid var(--earth);
-    text-align: center;
-  }
-  .footer-404-links {
-    display: flex;
-    gap: 18px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 12px;
-  }
-  .footer-404-links a {
-    color: var(--ink-2);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 600;
-    transition: color 0.2s ease;
-  }
-  .footer-404-links a:hover, .footer-404-links a:focus-visible { color: var(--forest-1); }
-  .footer-404-meta {
-    font-size: 11px;
-    color: var(--ink-2);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  /* ── Mobile Adjustments ── */
-  @media (max-width: 640px) {
-    .main-404 { padding: 32px 22px 56px; }
-    .vers-404 { padding: 20px 22px; margin-top: 40px; }
-    .vers-404-text { font-size: 15px; }
-    .footer-404 { margin-top: 40px; padding: 20px 22px 28px; }
-  }
-
-  /* ── Reduced motion ── */
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      transition: none !important;
-      animation: none !important;
-    }
+  @media (max-width: 560px) {
+    .err-hero { margin-top: 40px; }
   }
 </style>
 </head>
-<body>
+<body class="err-page">
+<div class="bg-wrap" aria-hidden="true"><div class="bg"></div></div>
+<div class="bg2-wrap" aria-hidden="true"><div class="bg2"></div></div>
 
-<a href="#main" class="skip-nav">Direkt zum Inhalt</a>
+<div class="rail rail--l" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm" data-hm>2713 hm</span></div>
+</div>
+<div class="rail rail--r" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm" data-hm>2713 hm</span></div>
+</div>
 
-<header class="topbar-404">
-  <a href="/" class="brand" aria-label="Zur Startseite">vegetarian<span class="accent">hulk</span></a>
-  <a href="/" class="home-link">← Zurück</a>
-</header>
+<main>
+  <div class="wrap">
 
-<main class="main-404 glossy-panel" id="main">
-  <div class="eyebrow-404 reveal" style="--reveal-delay:0ms">— 404 · Nicht gefunden —</div>
+    <header class="topbar">
+      <span class="brandbox">
+        <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+        <span class="wordmark wordmark--invert" aria-hidden="true" data-invert-layer>VEGETARIAN<b>HULK</b></span>
+      </span>
+    </header>
 
-  <h1 class="h1-404 reveal reveal-hero" style="--reveal-delay:80ms">
-    Diese Seite gibt's nicht (mehr).<br>
-    Aber dein <em>nächster Schritt</em> schon.
-  </h1>
+    <section class="err-hero" aria-labelledby="err-title">
+      <p class="kicker st st1">Fehler 404 · Verstiegen</p>
+      <h1 id="err-title" class="st st2">Diese Route<br><em>gibt's nicht.</em></h1>
+      <p class="st st3"><span class="err-sign"><span aria-hidden="true">✗</span> <span class="err-path" data-err-path>kein steig</span></span></p>
+      <p class="err-lead st st4">Du hast dich verstiegen — kann am Berg passieren, kein Drama. Wir drehen um,
+      nehmen den nächsten markierten Steig und du bist gleich wieder auf Kurs.</p>
+      <div class="err-cta st st4">
+        <a class="th-btn th-btn--gelb th-btn--lg" href="/">→ Zurück ins Tal (Start)</a>
+      </div>
+      <p class="err-links st st5">
+        <b>Wegweiser</b><i>·</i>
+        <a href="/touren/">Hulk Hikes</a><i>·</i>
+        <a href="/newsletter">Newsletter</a><i>·</i>
+        <a href="/kooperationen.html">Für Brands</a><i>·</i>
+        <a href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">@vegetarianhulk</a>
+      </p>
+    </section>
 
-  <p class="sub-404 reveal" style="--reveal-delay:160ms">
-    Verlaufen ist okay. Stehenbleiben nicht.
-  </p>
+    <section class="err-anker rv" data-light aria-label="Anker-Vers">
+      <p class="err-anker__label">Sprüche 24,16 · Schlachter 2000</p>
+      <blockquote>„Denn siebenmal fällt der Gerechte und steht wieder auf."</blockquote>
+      <p class="err-anker__note">Mein Anker. Auch hier.</p>
+    </section>
 
-  <div class="ctas-404 reveal" style="--reveal-delay:240ms">
-    <a href="/newsletter" class="cta-primary">→ 3-Tage-Reset holen</a>
-    <a href="/" class="cta-secondary">Zur Startseite</a>
   </div>
-
-  <div class="ctas-mini" role="navigation" aria-label="Weitere Wege">
-    <a href="/kooperationen.html">→ Für Brands</a>
-    <span class="ctas-mini-sep" aria-hidden="true">·</span>
-    <a href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">→ @vegetarianhulk</a>
-  </div>
-
-  <aside class="vers-404" aria-label="Bibel-Vers">
-    <p class="vers-404-text">
-      „Denn siebenmal fällt der Gerechte und steht wieder auf."
-    </p>
-    <p class="vers-404-note">Mein Anker. Auch hier.</p>
-  </aside>
 </main>
 
-<!-- Footer-Editorial v31.11.1 — A2 Asymmetric Editorial (Single-Layout Cross-Page) -->
-<footer class="vh-footer footer-a2" role="contentinfo" aria-label="Site footer">
-  <div class="grid">
-    <div class="col col-brand">
-      <div class="vh-wordmark wordmark">VEGETARIAN<span class="accent">HULK</span></div>
-      <div class="vh-tagline tagline">Builder &amp; Creator. Disziplin über Hype.</div>
-      <a class="vh-link vh-ig ig" href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener" aria-label="Instagram @vegetarianhulk">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-          <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-          <circle cx="12" cy="12" r="4"></circle>
-          <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle>
-        </svg>
-        <span>@vegetarianhulk</span>
-      </a>
-    </div>
-    <nav class="col" aria-label="Brand navigation">
-      <p class="vh-col-label">Explore</p>
-      <ul>
-        <li><a class="vh-link" href="/">Startseite</a></li>
-        <li><a class="vh-link" href="/newsletter">Newsletter</a></li>
-        <li><a class="vh-link" href="/kooperationen.html">Kooperationen</a></li>
-      </ul>
+<footer>
+  <div class="inner">
+    <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+    <p class="claim">Builder &amp; Creator. Disziplin über Hype.</p>
+    <nav class="legal" aria-label="Rechtliches">
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+      <span>© <span data-year>2026</span> Sebastian Wimmer</span>
     </nav>
-    <nav class="col" aria-label="Rechtliches">
-      <p class="vh-col-label">Legal</p>
-      <ul>
-        <li><a class="vh-link" href="/impressum.html">Impressum</a></li>
-        <li><a class="vh-link" href="/datenschutz.html">Datenschutz</a></li>
-      </ul>
-    </nav>
-  </div>
-  <hr class="vh-hairline" />
-  <div class="bottom">
-    <span class="vh-copyright">© <span id="year-404">2026</span> Sebastian Wimmer</span>
   </div>
 </footer>
 
+<nav class="nav" aria-label="Hauptnavigation">
+  <a href="/">Start</a>
+  <a href="/partner-picks/">P&amp;P</a>
+  <a class="center" href="/touren/">
+    <span class="mtn"><svg viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 50 26 16l10 16 8-12 22 30"/>
+      <path d="M22 23.5 26 20l4 5" opacity="0.85"/>
+      <path d="M40.5 25.5 44 21.5l3.5 5" opacity="0.85"/>
+      <circle cx="58" cy="11" r="4.5" opacity="0.9"/>
+      <path d="M12 50c8-4 16-3.4 22 0" opacity="0.45"/>
+    </svg></span>
+    Hulk&nbsp;Hikes
+  </a>
+  <a href="/newsletter">News</a>
+  <a href="/kooperationen.html">Brands</a>
+</nav>
+
 <script>
   // Footer-Jahr dynamisch
-  (function() {
+  (function () {
     var y = new Date().getFullYear();
-    var el = document.getElementById('year-404');
-    if (el) el.textContent = y;
+    document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = y; });
+  })();
+
+  // Verstiegen-Wegweiser: getippten Pfad anzeigen (textContent = safe)
+  (function () {
+    var el = document.querySelector('[data-err-path]');
+    if (el) {
+      var path = (location.pathname || '/') + (location.search || '');
+      if (path.length > 48) path = path.slice(0, 47) + '…';
+      el.textContent = path;
+    }
   })();
 
   // Self-Service-404-Debug: console.warn + sessionStorage-Log (max 20)
-  (function() {
+  (function () {
     try {
       var path = location.pathname + location.search;
       var ref = document.referrer || 'direct';
@@ -385,9 +185,10 @@
       log.push({ ts: Date.now(), path: path, from: ref });
       if (log.length > 20) log = log.slice(-20);
       sessionStorage.setItem('vh:404:log', JSON.stringify(log));
-    } catch(e) { /* sessionStorage disabled — ignore */ }
+    } catch (e) { /* sessionStorage disabled — ignore */ }
   })();
 </script>
 
-<script src="motion-reveal.js?v=d3baa308" defer></script></body>
+<script src="/v3.js?v=182e7de3" defer></script>
+</body>
 </html>

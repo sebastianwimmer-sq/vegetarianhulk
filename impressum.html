@@ -2,157 +2,197 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Impressum — vegetarianhulk.de</title>
 <meta name="description" content="Impressum und Anbieterkennzeichnung gemäß § 5 DDG.">
-<meta name="theme-color" content="#0d0d0a">
+<meta name="theme-color" content="#0B2418">
 <meta name="robots" content="index,follow">
+<link rel="canonical" href="https://vegetarianhulk.de/impressum.html">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
-<link rel="stylesheet" href="style.css?v=bdf0cecd">
+<link rel="stylesheet" href="/fonts.css?v=1e2010e0">
+<link rel="stylesheet" href="/v3.css?v=c9fdef3c">
+<style>
+  /* ============================================================
+     LEGAL v3 — ruhiges Editorial-Dokument auf der dunklen Shell.
+     Langer Rechtstext sitzt in einem hellen Creme-„Blatt" (data-light)
+     für maximale Lesbarkeit; Playfair für den Titel, Mono für Kicker,
+     Inter für den Fließtext.
+     ============================================================ */
+  .legal-hero { margin: clamp(44px, 9vh, 88px) 0 30px; }
+  .legal-hero .kicker { font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
+    letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf);
+    display: flex; align-items: center; gap: 12px; }
+  .legal-hero .kicker::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.24); }
+  .legal-hero h1 { margin-top: 16px; font-family: 'Playfair Display', serif; font-weight: 700;
+    font-size: clamp(40px, 9vw, 72px); line-height: 1; letter-spacing: -0.5px; color: var(--paper); }
+
+  /* Creme-Blatt: das eigentliche Dokument */
+  .legal-doc { width: min(780px, 100%); margin: 0 auto 40px; position: relative; overflow: hidden;
+    border-radius: 20px; padding: clamp(30px, 5vw, 64px) clamp(24px, 5vw, 60px);
+    background: linear-gradient(168deg, #F5EEDE 0%, #EFE7D2 100%);
+    box-shadow: var(--shadow-paper);
+    --l-ink: #14281C; --l-body: #33453a; --l-soft: #5c6b5e; }
+  .legal-doc::after { content: ""; position: absolute; inset: 0; background-image: var(--grain);
+    opacity: 0.5; pointer-events: none; }
+  .legal-doc > * { position: relative; z-index: 1; }
+
+  .legal-doc h2 { font-family: 'Playfair Display', serif; font-weight: 600;
+    font-size: clamp(22px, 3.2vw, 30px); line-height: 1.14; color: var(--l-ink);
+    margin: 42px 0 14px; padding-top: 28px; border-top: 1px solid rgba(24,43,31,0.14); }
+  .legal-doc > h2:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+  .legal-doc h3 { font-family: 'Inter', system-ui, sans-serif; font-weight: 700;
+    font-size: 16px; letter-spacing: 0.2px; color: var(--l-ink); margin: 26px 0 8px; }
+  .legal-doc h4 { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.6px;
+    text-transform: uppercase; color: var(--royal); margin: 22px 0 6px; }
+  .legal-doc p { font-size: 16px; line-height: 1.72; color: var(--l-body); max-width: 68ch; margin: 0 0 14px; }
+  .legal-doc strong { color: var(--l-ink); font-weight: 700; }
+  .legal-doc a { color: var(--royal); font-weight: 600; text-decoration: underline;
+    text-decoration-thickness: 1px; text-underline-offset: 2px; word-break: break-word;
+    transition: color 300ms var(--ease-lux); }
+  .legal-doc a:hover { color: var(--emerald); }
+  .legal-doc ul { margin: 6px 0 16px; padding-left: 22px; max-width: 68ch; }
+  .legal-doc li { font-size: 16px; line-height: 1.6; color: var(--l-body); margin-bottom: 8px; }
+  .legal-doc li::marker { color: var(--royal); }
+  .legal-stand { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--l-soft); margin-top: 32px; }
+
+  .legal-back { width: min(780px, 100%); margin: 0 auto; text-align: center; }
+  .legal-back a { display: inline-block; font-family: var(--mono); font-size: 11px; font-weight: 700;
+    letter-spacing: 1.6px; text-transform: uppercase; color: var(--paper-dim);
+    border-bottom: 1px solid rgba(243,235,217,0.3); padding-bottom: 3px;
+    transition: color 300ms var(--ease-lux), border-color 300ms var(--ease-lux); }
+  .legal-back a:hover { color: var(--paper); border-color: var(--paper); }
+</style>
 </head>
-<body>
-<main class="page legal-page">
+<body class="legal-page">
+<div class="bg-wrap" aria-hidden="true"><div class="bg"></div></div>
+<div class="bg2-wrap" aria-hidden="true"><div class="bg2"></div></div>
 
-  <header class="topbar">
-    <a href="/" class="brand" style="text-decoration:none;color:inherit">vegetarian<span class="accent">hulk</span></a>
-    <button class="topbar-burger" aria-label="Menü öffnen" aria-expanded="false">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-    </button>
-    <nav class="topbar-nav" aria-label="Hauptnavigation">
-      <a href="/" class="topbar-link">Startseite</a>
-      <a href="/newsletter" class="topbar-link">Newsletter</a>
-      <a href="/codes/" class="topbar-link">Smash Codes</a>
-      <a href="/lieblingsprodukte/" class="topbar-link">Hulk&apos;s Picks</a>
-      <a href="/kooperationen.html" class="topbar-link">Für Brands</a>
-    </nav>
-  </header>
+<div class="rail rail--l" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">2713 hm</span></div>
+</div>
+<div class="rail rail--r" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">2713 hm</span></div>
+</div>
 
-  <h1 class="reveal reveal-hero" style="--reveal-delay:0ms">Impressum</h1>
+<main>
+  <div class="wrap">
 
-  <h2 class="reveal" style="--reveal-delay:120ms">Angaben gemäß § 5 DDG</h2>
-  <p>
-    <strong>Sebastian Wimmer</strong><br>
-    Burghauser Straße 35<br>
-    84533 Haiming<br>
-    Deutschland
-  </p>
+    <header class="topbar">
+      <span class="brandbox">
+        <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+        <span class="wordmark wordmark--invert" aria-hidden="true" data-invert-layer>VEGETARIAN<b>HULK</b></span>
+      </span>
+    </header>
 
-  <h2>Kontakt</h2>
-  <p>
-    E-Mail: <a href="mailto:info@vegetarianhulk.de">info@vegetarianhulk.de</a>
-  </p>
+    <section class="legal-hero st" aria-labelledby="legal-title">
+      <p class="kicker st st1">Rechtliches · § 5 DDG</p>
+      <h1 id="legal-title" class="st st2">Impressum</h1>
+    </section>
 
-  <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
-  <p>
-    <strong>Sebastian Wimmer</strong><br>
-    Burghauser Straße 35<br>
-    84533 Haiming
-  </p>
+    <article class="legal-doc rv" data-light>
 
-  <h2>Hinweis nach § 19 UStG</h2>
-  <p>
-    Aufgrund der Anwendung der Kleinunternehmerregelung gemäß § 19 UStG wird keine Umsatzsteuer ausgewiesen.
-  </p>
+      <h2>Angaben gemäß § 5 DDG</h2>
+      <p>
+        <strong>Sebastian Wimmer</strong><br>
+        Burghauser Straße 35<br>
+        84533 Haiming<br>
+        Deutschland
+      </p>
 
-  <h2>KI-gestützte Inhalte (EU AI-Act Art. 50, ab 08/2026)</h2>
-  <p>
-    Teile der Inhalte auf vegetarianhulk.de werden mit Unterstützung von Künstlicher Intelligenz erstellt — insbesondere Bildgestaltung (via Replicate / Recraft / Flux Dev), Caption-Vorschläge und Reel-Hooks (via Claude / Anthropic). Alle Inhalte werden vor Veröffentlichung von Sebastian Wimmer redaktionell kuratiert, geprüft und freigegeben. Persönliche Geschichten, Werte-Aussagen und Brand-Voice bleiben menschlich verantwortet.
-  </p>
+      <h2>Kontakt</h2>
+      <p>
+        E-Mail: <a href="mailto:info@vegetarianhulk.de">info@vegetarianhulk.de</a>
+      </p>
 
-  <h2>Streitschlichtung</h2>
-  <p>
-    Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
-  </p>
+      <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+      <p>
+        <strong>Sebastian Wimmer</strong><br>
+        Burghauser Straße 35<br>
+        84533 Haiming
+      </p>
 
-  <h2>Haftung für Inhalte</h2>
-  <p>
-    Als Diensteanbieter sind wir gemäß § 7 Abs.1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
-  </p>
-  <p>
-    Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
-  </p>
+      <h2>Hinweis nach § 19 UStG</h2>
+      <p>
+        Aufgrund der Anwendung der Kleinunternehmerregelung gemäß § 19 UStG wird keine Umsatzsteuer ausgewiesen.
+      </p>
 
-  <h2>Haftung für Links</h2>
-  <p>
-    Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.
-  </p>
-  <p>
-    Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.
-  </p>
+      <h2>KI-gestützte Inhalte (EU AI-Act Art. 50, ab 08/2026)</h2>
+      <p>
+        Teile der Inhalte auf vegetarianhulk.de werden mit Unterstützung von Künstlicher Intelligenz erstellt — insbesondere Bildgestaltung (via Replicate / Recraft / Flux Dev), Caption-Vorschläge und Reel-Hooks (via Claude / Anthropic). Alle Inhalte werden vor Veröffentlichung von Sebastian Wimmer redaktionell kuratiert, geprüft und freigegeben. Persönliche Geschichten, Werte-Aussagen und Brand-Voice bleiben menschlich verantwortet.
+      </p>
 
-  <h2>Urheberrecht</h2>
-  <p>
-    Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
-  </p>
-  <p>
-    Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.
-  </p>
+      <h2>Streitschlichtung</h2>
+      <p>
+        Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+      </p>
 
-  <a href="index.html" class="back-link">← Zurück zur Startseite</a>
+      <h2>Haftung für Inhalte</h2>
+      <p>
+        Als Diensteanbieter sind wir gemäß § 7 Abs.1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+      </p>
+      <p>
+        Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
+      </p>
 
+      <h2>Haftung für Links</h2>
+      <p>
+        Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.
+      </p>
+      <p>
+        Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.
+      </p>
 
+      <h2>Urheberrecht</h2>
+      <p>
+        Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
+      </p>
+      <p>
+        Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.
+      </p>
+
+    </article>
+
+    <p class="legal-back"><a href="/">← Zurück zur Startseite</a></p>
+
+  </div>
 </main>
 
-<!-- Footer-Editorial v31.11.1 — A2 Asymmetric Editorial (Single-Layout Cross-Page) -->
-<footer class="vh-footer footer-a2" role="contentinfo" aria-label="Site footer">
-  <div class="grid">
-    <div class="col col-brand">
-      <div class="vh-wordmark wordmark">VEGETARIAN<span class="accent">HULK</span></div>
-      <div class="vh-tagline tagline">Builder &amp; Creator. Disziplin über Hype.</div>
-      <a class="vh-link vh-ig ig" href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener" aria-label="Instagram @vegetarianhulk">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-          <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-          <circle cx="12" cy="12" r="4"></circle>
-          <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle>
-        </svg>
-        <span>@vegetarianhulk</span>
-      </a>
-    </div>
-    <nav class="col" aria-label="Brand navigation">
-      <p class="vh-col-label">Explore</p>
-      <ul>
-        <li><a class="vh-link" href="/">Startseite</a></li>
-        <li><a class="vh-link" href="/newsletter">Newsletter</a></li>
-        <li><a class="vh-link" href="/kooperationen.html">Für Brands</a></li>
-      </ul>
+<footer>
+  <div class="inner">
+    <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+    <p class="claim">Builder &amp; Creator. Disziplin über Hype.</p>
+    <nav class="legal" aria-label="Rechtliches">
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+      <span>© 2026 Sebastian Wimmer</span>
     </nav>
-    <nav class="col" aria-label="Rechtliches">
-      <p class="vh-col-label">Legal</p>
-      <ul>
-        <li><a class="vh-link is-current" href="impressum.html" aria-current="page">Impressum</a></li>
-        <li><a class="vh-link" href="datenschutz.html">Datenschutz</a></li>
-      </ul>
-    </nav>
-  </div>
-  <hr class="vh-hairline" />
-  <div class="bottom">
-    <span class="vh-copyright">© <span id="footer-year">2026</span> Sebastian Wimmer</span>
   </div>
 </footer>
-<script>
-// Topbar Hamburger Toggle (Site-Standard)
-(function(){
-  var b=document.querySelector('.topbar-burger'),n=document.querySelector('.topbar-nav');
-  if(!b||!n)return;
-  b.addEventListener('click',function(){
-    var open=n.classList.toggle('topbar-nav--open');
-    b.setAttribute('aria-expanded',open);
-    b.setAttribute('aria-label',open?'Menü schließen':'Menü öffnen');
-  });
-  document.addEventListener('click',function(e){
-    if(!b.contains(e.target)&&!n.contains(e.target)){
-      n.classList.remove('topbar-nav--open');
-      b.setAttribute('aria-expanded','false');
-      b.setAttribute('aria-label','Menü öffnen');
-    }
-  });
-})();
-</script>
-<script src="update-check.js?v=361d366c"></script>
-<script src="motion-reveal.js?v=d3baa308" defer></script><script src="/nav.js" defer></script>
+
+<nav class="nav" aria-label="Hauptnavigation">
+  <a href="/">Start</a>
+  <a href="/partner-picks/">P&amp;P</a>
+  <a class="center" href="/touren/">
+    <span class="mtn"><svg viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 50 26 16l10 16 8-12 22 30"/>
+      <path d="M22 23.5 26 20l4 5" opacity="0.85"/>
+      <path d="M40.5 25.5 44 21.5l3.5 5" opacity="0.85"/>
+      <circle cx="58" cy="11" r="4.5" opacity="0.9"/>
+      <path d="M12 50c8-4 16-3.4 22 0" opacity="0.45"/>
+    </svg></span>
+    Hulk&nbsp;Hikes
+  </a>
+  <a href="/newsletter">News</a>
+  <a href="/kooperationen.html">Brands</a>
+</nav>
+
+<script src="/v3.js?v=182e7de3" defer></script>
 </body>
 </html>

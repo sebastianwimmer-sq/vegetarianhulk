@@ -2,660 +2,629 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Für Brands — VegetarianHulk</title>
-<meta name="description" content="Du bist Brand und willst mit @vegetarianhulk kooperieren? Schreib mir. Mail oder DM.">
-<meta name="theme-color" content="#f7efde">
+<title>Für Brands — Kooperationen mit @vegetarianhulk | VegetarianHulk</title>
+<meta name="description" content="Content für Brands, die zu meinem Leben passen: Disziplin, Faith, vegetarisch-stark, Build-in-Public. Ehrliche Kooperationen für die DACH-Region — klare Pakete, persönliche Antwort.">
+<meta name="theme-color" content="#0B2418">
 <meta name="robots" content="index,follow">
+<link rel="canonical" href="https://vegetarianhulk.de/kooperationen.html">
 
-<meta property="og:title" content="Für Brands — VegetarianHulk">
-<meta property="og:description" content="Discipline-driven Content für 16-34 Jährige. Vegetarisch · Faith · Build-in-Public.">
+<meta property="og:title" content="Für Brands — Kooperationen mit @vegetarianhulk">
+<meta property="og:description" content="Discipline-driven Content für 16-34 Jährige. Vegetarisch · Faith · Build-in-Public. Ehrliche Kooperationen in der DACH-Region.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://vegetarianhulk.de/kooperationen.html">
+<meta property="og:image" content="https://vegetarianhulk.de/hero.jpg?v=v31.6.1">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
-<link rel="stylesheet" href="style.css?v=bdf0cecd">
+<link rel="stylesheet" href="/fonts.css?v=1e2010e0">
+<link rel="stylesheet" href="/v3.css?v=c9fdef3c">
 <style>
-/* kooperationen.html — page-scoped Motion + CTA Polish (v31.12, keine neuen Libs) */
-@media (prefers-reduced-motion: no-preference) {
-  .brand-page .fade-in-up {
-    opacity: 0;
-    transform: translateY(20px) scale(.985);
-    transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
-    will-change: opacity, transform;
-  }
-  .brand-page .fade-in-up.visible { opacity: 1; transform: none; }
-  .brand-page .stag-0 { transition-delay: 0ms; }
-  .brand-page .stag-1 { transition-delay: 90ms; }
-  .brand-page .stag-2 { transition-delay: 180ms; }
-  .brand-page .stag-3 { transition-delay: 270ms; }
-  .brand-page .stag-4 { transition-delay: 360ms; }
-  .brand-page .stag-5 { transition-delay: 450ms; }
-  .brand-page .delay-1 { transition-delay: 80ms; }
-  .brand-page .delay-2 { transition-delay: 160ms; }
-  .brand-page .delay-3 { transition-delay: 240ms; }
-}
-.brand-page .usp-card,
-.brand-page .package-card,
-.brand-page .brand-theme-pill,
-.brand-page .process-step {
-  transition: transform .28s cubic-bezier(.16,1,.3,1), box-shadow .28s cubic-bezier(.16,1,.3,1), border-color .28s ease;
-}
-@media (hover: hover) {
-  .brand-page .usp-card:hover,
-  .brand-page .package-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 14px 30px -12px rgba(4,89,39,.28);
-  }
-  .brand-page .brand-theme-pill:hover {
-    transform: translateY(-2px);
-    border-color: var(--forest-primary, #045927);
-  }
-}
-.brand-page .brand-cta-primary {
-  display: inline-flex; align-items: center; gap: .5em;
-  background: var(--forest-primary, #045927); color: #f7efde;
-  font-weight: 800; font-size: 15px; letter-spacing: .2px;
-  padding: 14px 26px; border-radius: 14px; text-decoration: none;
-  box-shadow: 0 8px 22px -10px rgba(4,89,39,.5);
-  transition: transform .2s cubic-bezier(.16,1,.3,1), box-shadow .2s ease, background .2s ease;
-}
-.brand-page .brand-cta-primary .brand-cta-arrow { transition: transform .2s cubic-bezier(.16,1,.3,1); }
-@media (hover: hover) {
-  .brand-page .brand-cta-primary:hover { transform: translateY(-2px); background: var(--forest-anchor, #122d1c); box-shadow: 0 12px 26px -8px rgba(4,89,39,.55); }
-  .brand-page .brand-cta-primary:hover .brand-cta-arrow { transform: translateX(4px); }
-}
-.brand-page .brand-cta-primary:focus-visible { outline: 3px solid var(--forest-accent, #1a7340); outline-offset: 3px; }
-.brand-page .brand-cta-band { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; padding: 22px 20px 4px; }
-.brand-page .brand-cta-band-text { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: clamp(20px, 3.4vw, 28px); color: var(--ink, #1a1410); }
-.brand-sticky-cta {
-  position: fixed; left: 50%; bottom: 20px; transform: translate(-50%, 160%);
-  z-index: 60; display: inline-flex; align-items: center; gap: .5em;
-  padding: 13px 26px; border-radius: 999px;
-  color: #f7efde; font-weight: 800; font-size: 14px; letter-spacing: .2px; text-decoration: none;
-  background: linear-gradient(135deg, rgba(4,89,39,.92), rgba(18,45,28,.92));
-  -webkit-backdrop-filter: blur(10px) saturate(1.2); backdrop-filter: blur(10px) saturate(1.2);
-  border: 1px solid rgba(255,255,255,.18);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 8px 16px -6px rgba(4,89,39,.45), 0 18px 42px -12px rgba(0,0,0,.38);
-  opacity: 0; pointer-events: none;
-  transition: transform .45s cubic-bezier(.16,1,.3,1), opacity .3s ease, box-shadow .3s ease;
-}
-.brand-sticky-cta.is-visible { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
-@media (hover: hover) {
-  .brand-sticky-cta:hover { transform: translate(-50%, -2px); box-shadow: inset 0 1px 0 rgba(255,255,255,.34), 0 10px 20px -6px rgba(4,89,39,.5), 0 24px 50px -12px rgba(0,0,0,.42); }
-}
-.brand-page .brand-trust-bar {
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,.5);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 8px 22px -14px rgba(4,89,39,.3);
-  -webkit-backdrop-filter: blur(7px) saturate(1.1); backdrop-filter: blur(7px) saturate(1.1);
-}
-/* Contained, elevated section panels — Tiefe + dezent alternierende Surface */
-.brand-page .v5-section {
-  max-width: var(--container-page, 920px); /* V32: Token statt totem 940px (von .page gedeckelt) */
-  margin: var(--space-lg, 26px) auto;
-  padding: clamp(26px, 4vw, 46px) clamp(20px, 4vw, 40px);
-  border-radius: 24px;
-  background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.3));
-  border: 1px solid rgba(255,255,255,.55);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 18px 48px -26px rgba(4,89,39,.3), 0 4px 14px -10px rgba(0,0,0,.1);
-  -webkit-backdrop-filter: blur(8px) saturate(1.05); backdrop-filter: blur(8px) saturate(1.05);
-}
-.brand-page .v5-section:nth-of-type(2n) {
-  background: linear-gradient(180deg, rgba(239,229,207,.5), rgba(239,229,207,.26));
-}
-.brand-page .v5-h2::after {
-  content: ""; display: block; width: 44px; height: 3px; margin-top: 12px; border-radius: 2px;
-  background: linear-gradient(90deg, var(--forest-primary, #045927), rgba(4,89,39,0));
-}
-/* Card depth (resting) */
-.brand-page .usp-card,
-.brand-page .package-card {
-  border-radius: 18px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 10px 26px -18px rgba(4,89,39,.32), 0 3px 10px -8px rgba(0,0,0,.12);
-}
-.brand-page .package-card-highlight {
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 16px 38px -18px rgba(4,89,39,.42), 0 5px 14px -8px rgba(0,0,0,.16);
-}
-/* Hero stat tiles — starke Zahlen, glossy */
-.brand-page .hero-stat-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-2xs, 10px); margin-top: var(--space-md, 20px); }
-.brand-page .hero-stat-tile { min-width: 0; }
-.brand-page .hero-stat-num { overflow-wrap: anywhere; }
-.brand-page .hero-stat-tile {
-  padding: 14px 16px; border-radius: 16px;
-  background: linear-gradient(160deg, rgba(255,255,255,.62), rgba(247,239,222,.4));
-  border: 1px solid rgba(255,255,255,.6);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 10px 26px -18px rgba(4,89,39,.34), 0 3px 10px -8px rgba(0,0,0,.12);
-}
-.brand-page .hero-stat-num {
-  display: block; font-family: 'Playfair Display', Georgia, serif; font-weight: 700;
-  font-size: clamp(22px, 3.6vw, 30px); line-height: 1; letter-spacing: -.5px; color: var(--forest-primary, #045927);
-}
-.brand-page .hero-stat-label { display: block; margin-top: 5px; font-size: 11.5px; font-weight: 600; letter-spacing: .2px; color: var(--ink-2, #4a3f33); line-height: 1.3; }
-.brand-page .hero-tiles-note { margin: 8px 0 0; font-size: 11px; letter-spacing: .2px; color: var(--ink-3, #807260); }
-@media (max-width: 520px) { .brand-page .hero-stat-tile { padding: 11px 12px; } }
-/* Hero als contained Panel (konsistent zu den Sektionen) + premium Portrait */
-.brand-page .brand-hero {
-  max-width: var(--container-page, 920px); margin: var(--space-lg, 26px) auto; padding: clamp(22px, 4vw, 40px);
-  border-radius: 24px;
-  background: linear-gradient(180deg, rgba(255,255,255,.6), rgba(247,239,222,.4));
-  border: 1px solid rgba(255,255,255,.6);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 22px 56px -26px rgba(4,89,39,.34), 0 5px 16px -10px rgba(0,0,0,.12);
-  -webkit-backdrop-filter: blur(8px) saturate(1.06); backdrop-filter: blur(8px) saturate(1.06);
-}
-.brand-page .brand-hero-text .brand-cta-primary { margin-top: 28px; }
-.brand-page .brand-hero .hero-photo-wrap {
-  max-width: 420px; margin-inline: auto; border-radius: 22px; overflow: hidden;
-  background: var(--beige-1, #efe5cf);
-  box-shadow: 0 0 0 1px rgba(4,89,39,.12), 0 0 0 6px rgba(255,255,255,.55), 0 26px 54px -22px rgba(4,89,39,.4), 0 8px 20px -12px rgba(0,0,0,.22);
-}
-.brand-page .brand-hero .hero-photo-v3.hero-photo-small {
-  width: 100%; height: auto; aspect-ratio: 4 / 5;
-  object-fit: cover; object-position: center top; display: block; border-radius: 22px;
-}
-.brand-page .brand-hero .hero-photo-fallback.hero-photo-small {
-  width: 100%; aspect-ratio: 4 / 5; border-radius: 22px;
-}
-@media (prefers-reduced-motion: reduce) {
-  .brand-page .fade-in-up { transition: opacity .35s ease !important; transform: none !important; }
-  .brand-page .usp-card:hover, .brand-page .package-card:hover,
-  .brand-page .brand-theme-pill:hover, .brand-page .brand-cta-primary:hover { transform: none !important; }
-  .brand-sticky-cta { transition: opacity .2s ease; }
-}
+/* ============================================================
+   /kooperationen.html — v3 Editorial-Dark Port (page-scoped)
+   Kontrast-Choreografie: Raum → Creme → Raum → Creme.
+   Alle Klassen .koop-*, Emphase-Blöcke = helle Creme-Karten
+   mit data-light + Grain + mehrschichtigem Schatten.
+   ============================================================ */
 
-/* ===== v3 De-Glass: massives warmes Papier statt Glassmorphism ===== */
-.brand-page .brand-hero,
-.brand-page .v5-section,
-.brand-page .v5-section:nth-of-type(2n) {
-  background: linear-gradient(180deg, #f9f2e4, #efe4cd) !important;
-  border: 1px solid var(--earth, #cfbf9d) !important;
-  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
-  box-shadow: 0 1px 3px rgba(18,45,28,.05), 0 16px 38px -20px rgba(18,45,28,.20) !important;
-}
-.brand-page .brand-trust-bar {
-  background: rgba(247,239,222,.92) !important;
-  border: 1px solid var(--earth, #cfbf9d) !important;
-  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
-  box-shadow: 0 1px 3px rgba(18,45,28,.05), 0 8px 22px -16px rgba(18,45,28,.16) !important;
-}
-.brand-page .hero-stat-tile,
-.brand-page .usp-card,
-.brand-page .package-card {
-  background: linear-gradient(180deg, #ffffff, #f4ead4) !important;
-  border: 1px solid var(--earth, #cfbf9d) !important;
-  box-shadow: 0 1px 3px rgba(4,89,39,.06), 0 8px 22px -14px rgba(4,89,39,.16) !important;
-}
-.brand-page .brand-hero .hero-photo-wrap {
-  box-shadow: 0 0 0 1px rgba(150,130,92,.5), 0 18px 40px -22px rgba(4,89,39,.4) !important;
-}
-.brand-sticky-cta {
-  background: var(--grad-forest) !important;
-  border: 1px solid rgba(150,130,92,.4) !important;
-  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+/* ---- Hero (dunkel, editorial) ---- */
+.koop-hero { margin: clamp(44px, 9vh, 96px) 0 0; }
+.koop-hero .kicker { font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
+  letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf);
+  display: flex; align-items: center; gap: 12px; }
+.koop-hero .kicker::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.24); }
+.koop-hero h1 { margin: 18px 0 20px; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(40px, 10vw, 78px); line-height: 0.99; color: var(--paper); letter-spacing: -0.5px; }
+.koop-hero h1 em { font-style: italic; color: var(--leaf); }
+.koop-lead { font-size: 16.5px; line-height: 1.7; color: var(--paper-dim); max-width: 54ch; }
+.koop-lead strong { color: var(--paper); font-weight: 700; }
+.koop-trust { margin-top: 24px; display: flex; align-items: center; gap: 12px 18px; flex-wrap: wrap;
+  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.8px;
+  text-transform: uppercase; color: var(--paper-faint); }
+.koop-trust span { display: inline-flex; align-items: center; gap: 7px; }
+.koop-trust i { color: var(--leaf); font-style: normal; }
+.koop-hero-cta { margin-top: 30px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; }
+.koop-hero-cta .koop-note { font-family: var(--mono); font-size: 9.5px; font-weight: 600;
+  letter-spacing: 1.2px; text-transform: uppercase; color: var(--paper-faint); }
+
+/* ---- Creme-Karte (Emphase-Block) — data-light für Wordmark-Invert ---- */
+.koop-cream { position: relative; overflow: hidden; border-radius: 22px;
+  padding: clamp(30px, 4.4vw, 56px) clamp(24px, 4vw, 52px);
+  background: linear-gradient(158deg, #F8F2E2 0%, #F0E7D2 60%, #E9DFC6 100%);
+  box-shadow: var(--shadow-paper); }
+.koop-cream::after { content: ""; position: absolute; inset: 0; background-image: var(--grain);
+  opacity: 0.55; pointer-events: none; }
+.koop-cream > * { position: relative; z-index: 1; }
+
+/* ---- Sektions-Kopf auf Creme (dunkle Typo) ---- */
+.koop-head { margin-bottom: 18px; }
+.koop-head .kicker { font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
+  letter-spacing: 2.2px; text-transform: uppercase; color: var(--gold);
+  display: flex; align-items: center; gap: 12px; }
+.koop-head .kicker::after { content: ""; flex: 1; height: 1px; background: rgba(138,111,47,0.28); }
+.koop-head h2 { margin-top: 12px; font-family: 'Playfair Display', serif; font-weight: 600;
+  font-size: var(--t-h2); line-height: 1.08; color: #14281C; }
+.koop-head h2 em { font-style: italic; color: var(--royal); }
+.koop-cream .koop-body { font-size: 15.5px; line-height: 1.7; color: rgba(24,43,31,0.82); max-width: 56ch; }
+.koop-cream .koop-body strong { color: #14281C; font-weight: 700; }
+
+/* ---- Hero-Zahlen-Band (Creme, editorial) ---- */
+.koop-stats-hero { margin-top: 40px; }
+.koop-stats-hero .koop-eyebrow { font-family: var(--mono); font-size: 9.5px; font-weight: 700;
+  letter-spacing: 2.2px; text-transform: uppercase; color: var(--gold); }
+.koop-fig-row { margin-top: 20px; display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: rgba(24,43,31,0.14); border: 1px solid rgba(24,43,31,0.14);
+  border-radius: 12px; overflow: hidden; }
+.koop-fig { background: linear-gradient(158deg, rgba(248,242,226,0.9), rgba(233,223,198,0.75));
+  padding: 22px 20px; }
+.koop-fig .koop-fig-num { display: block; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(30px, 5vw, 48px); line-height: 0.98; letter-spacing: -1px; color: var(--royal); }
+.koop-fig .koop-fig-label { display: block; margin-top: 8px; font-family: var(--mono);
+  font-size: 9.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+  color: rgba(24,43,31,0.6); line-height: 1.4; }
+.koop-fig-note { margin-top: 14px; font-family: var(--mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.8px; text-transform: uppercase; color: rgba(24,43,31,0.48); }
+
+/* ---- Dunkler Sektions-Block ---- */
+.koop-sec { margin-top: 100px; }
+.koop-sec .koop-body-dark { font-size: 15.5px; line-height: 1.7; color: var(--paper-dim); max-width: 56ch; }
+.koop-sec .koop-body-dark strong { color: var(--paper); font-weight: 700; }
+.koop-statement { margin-top: 6px; font-family: 'Playfair Display', serif; font-weight: 500;
+  font-style: italic; font-size: clamp(19px, 2.6vw, 25px); line-height: 1.42;
+  color: var(--paper); max-width: 40ch; }
+.koop-statement strong { font-style: normal; font-weight: 700; color: var(--leaf); }
+.koop-themes-line { margin-top: 18px; font-size: 15px; line-height: 1.7; color: var(--paper-dim); }
+.koop-themes-line strong { color: var(--paper); }
+
+/* ---- Dunkle Karten (USP) — Ghost-Ziffer + Grat-Hover ---- */
+.koop-cards { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 16px;
+  grid-template-columns: repeat(2, 1fr); }
+.koop-card { position: relative; overflow: hidden; padding: 26px 24px;
+  background: linear-gradient(158deg, rgba(19,54,35,0.5), rgba(6,26,17,0.55));
+  border: 1px solid rgba(126,208,155,0.14); border-radius: 14px;
+  box-shadow: inset 0 1px 0 rgba(209,242,235,0.06), 0 18px 40px -26px rgba(0,0,0,0.7);
+  transition: transform 550ms var(--ease-lux), border-color 550ms var(--ease-lux), box-shadow 550ms var(--ease-lux); }
+.koop-card::before { content: ""; position: absolute; left: 0; top: 0; height: 2px; width: 0;
+  background: linear-gradient(90deg, var(--emerald), transparent);
+  transition: width 650ms var(--ease-lux); }
+.koop-card:hover { transform: translateY(-5px); border-color: rgba(126,208,155,0.34);
+  box-shadow: inset 0 1px 0 rgba(209,242,235,0.1), 0 30px 54px -26px rgba(0,0,0,0.75); }
+.koop-card:hover::before { width: 60%; }
+.koop-card .koop-card-stat { position: relative; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(26px, 3.2vw, 34px); line-height: 1; letter-spacing: -0.5px; color: var(--leaf); }
+.koop-card .koop-card-head { position: relative; margin: 10px 0 8px; font-family: 'Playfair Display', serif;
+  font-weight: 600; font-size: 19px; line-height: 1.2; color: var(--paper); }
+.koop-card .koop-card-body { position: relative; font-size: 13.5px; line-height: 1.6; color: var(--paper-faint); }
+.koop-card .koop-card-tag { position: absolute; right: 18px; top: 14px; font-size: 26px; opacity: 0.5;
+  filter: grayscale(0.2); }
+
+/* ---- Pakete (Creme-Tiles) ---- */
+.koop-pack-grid { margin-top: 24px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.koop-pack { position: relative; display: flex; flex-direction: column; gap: 4px;
+  padding: 22px 22px 24px; border-radius: 16px;
+  background: linear-gradient(180deg, #FFFDF7, #F1E7CF);
+  border: 1px solid var(--earth); box-shadow: 0 1px 3px rgba(4,89,39,0.06), 0 10px 26px -18px rgba(4,89,39,0.28);
+  transition: transform 400ms var(--ease-lux), box-shadow 400ms var(--ease-lux), border-color 400ms var(--ease-lux); }
+.koop-pack:hover { transform: translateY(-4px); border-color: rgba(11,110,79,0.42);
+  box-shadow: 0 3px 8px rgba(4,89,39,0.08), 0 20px 40px -18px rgba(4,89,39,0.34); }
+.koop-pack--hi { border-color: rgba(11,110,79,0.5);
+  background: linear-gradient(180deg, #FFFDF7, #ECE0C5);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 3px 10px rgba(4,89,39,0.1), 0 22px 46px -18px rgba(4,89,39,0.42); }
+.koop-pack--hi::before { content: ""; position: absolute; left: 0; top: 16px; bottom: 16px; width: 3px;
+  border-radius: 2px; background: linear-gradient(180deg, var(--royal), rgba(11,110,79,0)); }
+.koop-pack-eyebrow { align-self: flex-start; font-family: var(--mono); font-size: 8.5px; font-weight: 700;
+  letter-spacing: 1.8px; text-transform: uppercase; color: #14100A;
+  background: linear-gradient(180deg, #E8BF25, #D4A918); padding: 4px 11px; margin-bottom: 4px;
+  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%); }
+.koop-pack-icon { font-size: 22px; line-height: 1; }
+.koop-pack-name { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 20px;
+  line-height: 1.1; color: #14281C; margin-top: 6px; }
+.koop-pack-meta { font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 1.2px;
+  text-transform: uppercase; color: rgba(24,43,31,0.5); }
+.koop-pack-desc { margin-top: 8px; font-size: 13.5px; line-height: 1.55; color: rgba(24,43,31,0.78); flex: 1; }
+.koop-pack-price { margin-top: 14px; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: 22px; letter-spacing: -0.5px; color: var(--royal); }
+.koop-price-note { margin-top: 18px; font-family: var(--mono); font-size: 10px; line-height: 1.6;
+  letter-spacing: 0.4px; color: rgba(24,43,31,0.55); }
+
+/* First-Brand-Bonus — Gold-akzentuierte Sub-Karte auf Creme */
+.koop-bonus { margin-top: 22px; padding: 22px 24px; border-radius: 14px; position: relative; overflow: hidden;
+  background: linear-gradient(158deg, #14281C, #061c12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 16px 34px -20px rgba(0,0,0,0.6); }
+.koop-bonus-eyebrow { font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 1.8px;
+  text-transform: uppercase; color: var(--gold); }
+.koop-bonus-title { margin-top: 8px; font-family: 'Playfair Display', serif; font-weight: 600;
+  font-size: clamp(18px, 2.4vw, 22px); line-height: 1.2; color: var(--paper); }
+.koop-bonus-body { margin-top: 8px; font-size: 13.5px; line-height: 1.6; color: var(--paper-dim); max-width: 52ch; }
+
+/* ---- Mid-CTA-Band (dunkel) ---- */
+.koop-cta-band { margin-top: 80px; text-align: center; display: flex; flex-direction: column;
+  align-items: center; gap: 16px; }
+.koop-cta-band .koop-cta-line { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600;
+  font-size: clamp(22px, 3.4vw, 30px); color: var(--paper); }
+
+/* ---- Reichweite: editorial Zahlen (dunkel) ---- */
+.koop-reach-figs { margin-top: 28px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.koop-reach-fig { border-top: 1px solid rgba(243,235,217,0.16); padding-top: 12px; }
+.koop-reach-fig .koop-rf-num { display: block; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(26px, 3.6vw, 38px); line-height: 1; letter-spacing: -1px; color: var(--leaf); }
+.koop-reach-fig .koop-rf-label { display: block; margin-top: 8px; font-family: var(--mono);
+  font-size: 9px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--paper-faint);
+  line-height: 1.4; }
+.koop-sub-h { margin-top: 34px; font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--leaf); }
+.koop-pills { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+.koop-pill { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.4px;
+  color: var(--mint); background: rgba(126,208,155,0.1); border: 1px solid rgba(126,208,155,0.24);
+  padding: 7px 14px; border-radius: 20px; }
+.koop-meta { margin-top: 26px; font-family: var(--mono); font-size: 10px; line-height: 1.6;
+  letter-spacing: 0.4px; color: var(--paper-faint); }
+.koop-meta strong { color: var(--paper-dim); }
+
+/* ---- Fit-Listen (Creme) ---- */
+.koop-fit-h { margin-top: 24px; font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; }
+.koop-fit-h.yes { color: var(--royal); }
+.koop-fit-h.no { color: rgba(24,43,31,0.5); }
+.koop-fit-pills { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+.koop-fit-pill { font-size: 12.5px; font-weight: 600; letter-spacing: 0.2px; padding: 8px 14px;
+  border-radius: 20px; background: rgba(11,110,79,0.08); border: 1px solid rgba(11,110,79,0.24); color: #14281C;
+  transition: transform 320ms var(--ease-lux), border-color 320ms var(--ease-lux); }
+.koop-fit-pill:hover { transform: translateY(-2px); border-color: var(--royal); }
+.koop-fit-pill.anti { background: rgba(24,43,31,0.05); border: 1px dashed rgba(24,43,31,0.32);
+  color: rgba(24,43,31,0.62); }
+.koop-fit-pill.anti:hover { transform: none; border-color: rgba(24,43,31,0.45); }
+.koop-fit-foot { margin-top: 14px; font-size: 13px; line-height: 1.6; color: rgba(24,43,31,0.6); }
+
+/* ---- Prozess (dunkel) — nummerierte Etappen ---- */
+.koop-steps { margin-top: 28px; display: grid; gap: 14px; }
+.koop-step { position: relative; display: grid; grid-template-columns: auto 1fr; gap: 18px 20px;
+  align-items: start; padding: 20px 22px;
+  background: linear-gradient(158deg, rgba(19,54,35,0.42), rgba(6,26,17,0.5));
+  border: 1px solid rgba(126,208,155,0.12); border-radius: 14px;
+  box-shadow: 0 14px 34px -26px rgba(0,0,0,0.7);
+  transition: border-color 500ms var(--ease-lux), transform 500ms var(--ease-lux); }
+.koop-step:hover { border-color: rgba(126,208,155,0.3); transform: translateX(4px); }
+.koop-step-num { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;
+  font-size: 44px; line-height: 0.8; color: rgba(126,208,155,0.28); min-width: 42px; }
+.koop-step-title { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 19px;
+  color: var(--paper); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.koop-step-time { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.4px;
+  text-transform: uppercase; color: var(--leaf);
+  background: rgba(126,208,155,0.1); border: 1px solid rgba(126,208,155,0.26);
+  padding: 3px 10px; border-radius: 20px; }
+.koop-step-desc { margin-top: 8px; font-size: 13.5px; line-height: 1.6; color: var(--paper-dim); }
+
+/* ---- FAQ (dunkel) ---- */
+.koop-faq { margin-top: 24px; display: grid; gap: 10px; }
+.koop-faq details { border: 1px solid rgba(126,208,155,0.14); border-radius: 12px; overflow: hidden;
+  background: linear-gradient(158deg, rgba(19,54,35,0.4), rgba(6,26,17,0.48));
+  transition: border-color 400ms var(--ease-lux); }
+.koop-faq details[open] { border-color: rgba(126,208,155,0.3); }
+.koop-faq summary { cursor: pointer; list-style: none; padding: 18px 22px;
+  font-family: 'Playfair Display', serif; font-weight: 600; font-size: 16.5px; color: var(--paper);
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.koop-faq summary::-webkit-details-marker { display: none; }
+.koop-faq summary::after { content: "+"; font-family: var(--mono); font-weight: 700; font-size: 20px;
+  color: var(--leaf); transition: transform 400ms var(--ease-lux); flex-shrink: 0; }
+.koop-faq details[open] summary::after { transform: rotate(45deg); }
+.koop-faq .koop-faq-body { padding: 0 22px 20px; font-size: 14px; line-height: 1.65; color: var(--paper-dim);
+  max-width: 60ch; }
+
+/* ---- Bereit? (Creme, zentriert) ---- */
+.koop-ready { margin-top: 90px; text-align: center; }
+.koop-ready .koop-head { margin-inline: auto; }
+.koop-ready .koop-head .kicker::after { display: none; }
+.koop-ready .koop-head .kicker { justify-content: center; }
+.koop-ready .koop-body { margin: 0 auto; text-align: center; }
+.koop-ready-cta { margin-top: 26px; }
+.koop-ready-alt { margin-top: 22px; font-size: 14px; color: rgba(24,43,31,0.7); }
+.koop-ready-alt a { font-weight: 700; color: var(--royal); border-bottom: 1px solid rgba(11,110,79,0.4);
+  padding-bottom: 1px; transition: border-color 350ms var(--ease-lux); }
+.koop-ready-alt a:hover { border-color: var(--royal); }
+.koop-ready-meta { margin-top: 22px; font-family: var(--mono); font-size: 10.5px; line-height: 1.6;
+  letter-spacing: 0.4px; color: rgba(24,43,31,0.55); }
+.koop-ready-meta a { color: var(--royal); font-weight: 700; border-bottom: 1px solid rgba(11,110,79,0.4); }
+
+/* ---- Responsive ---- */
+@media (max-width: 720px) {
+  .koop-cards { grid-template-columns: 1fr; }
+  .koop-pack-grid { grid-template-columns: 1fr; }
+  .koop-fig-row { grid-template-columns: 1fr; }
+  .koop-reach-figs { grid-template-columns: 1fr 1fr; }
 }
 </style>
 </head>
-<body>
-<main class="page brand-page">
+<body class="koop-page">
+<div class="bg-wrap" aria-hidden="true"><div class="bg"></div></div>
+<div class="bg2-wrap" aria-hidden="true"><div class="bg2"></div></div>
 
-  <!-- Topbar — Brand-Page Pattern (Hamburger Filled · matches Index v31) -->
-  <header class="topbar">
-    <a href="/" class="brand" style="text-decoration:none;color:inherit">vegetarian<span class="accent">hulk</span></a>
-    <button class="topbar-burger" aria-label="Menü öffnen" aria-expanded="false">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-    </button>
-    <nav class="topbar-nav" aria-label="Hauptnavigation">
-      <a href="/" class="topbar-link">Startseite</a>
-      <a href="/newsletter" class="topbar-link">Newsletter</a>
-      <a href="/codes/" class="topbar-link">Smash Codes</a>
-      <a href="/lieblingsprodukte/" class="topbar-link">Hulk&apos;s Picks</a>
-      <a href="/kooperationen.html" class="topbar-link" aria-current="page">Für Brands</a>
-    </nav>
-  </header>
+<div class="rail rail--l" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">2713 hm</span></div>
+</div>
+<div class="rail rail--r" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">2713 hm</span></div>
+</div>
 
-  <!-- Hero V24 — Desktop zweispaltig (Foto links + Text rechts ab 1024px), Mobile bleibt stacked -->
-  <section class="hero brand-hero">
-    <div class="hero-photo-wrap fade-in-up delay-1">
-      <img src="hero.jpg?v=v31.6.1" alt="Sebi, Founder vegetarianhulk" class="hero-photo-v3 hero-photo-small"
-           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-      <div class="hero-photo-fallback hero-photo-small" style="display:none">FOTO</div>
+<main>
+  <div class="wrap">
+
+    <header class="topbar">
+      <span class="brandbox">
+        <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+        <span class="wordmark wordmark--invert" aria-hidden="true" data-invert-layer>VEGETARIAN<b>HULK</b></span>
+      </span>
+    </header>
+
+    <!-- Hero -->
+    <section class="koop-hero st" aria-labelledby="koop-title">
+      <p class="kicker st st1">Für Brands · Kooperationen</p>
+      <h1 id="koop-title" class="st st2">Content für Brands,<br><em>die zu meinem Leben passen.</em></h1>
+      <p class="koop-lead st st3">Ich bin <strong>Sebi (@vegetarianhulk)</strong> — Disziplin, Faith,
+      vegetarisch-stark, Build-in-Public. Ehrlicher Content für Brands, die ich auch privat nutzen würde.
+      <strong>Keine Coaching-Phrasen, keine Plastik-Sprüche.</strong></p>
+      <p class="koop-trust st st4">
+        <span><i>📍</i> DACH</span>
+        <span><i>👥</i> 2.079 Follower</span>
+        <span><i>⚡</i> Persönliche, schnelle Antwort</span>
+      </p>
+      <p class="koop-hero-cta st st4">
+        <a class="th-btn th-btn--gelb th-btn--lg" href="/anfrage.html">📨 Anfrage senden →</a>
+        <span class="koop-note">Mail oder DM · du bekommst persönlich Antwort</span>
+      </p>
+
+      <!-- Hero-Zahlen-Band (Creme, editorial) -->
+      <div class="koop-stats-hero rv" data-light style="--d: 120ms">
+        <div class="koop-cream">
+          <p class="koop-eyebrow">Die letzten 30 Tage · in Zahlen</p>
+          <div class="koop-fig-row">
+            <div class="koop-fig"><span class="koop-fig-num">52%</span><span class="koop-fig-label">Non-Follower-Reichweite</span></div>
+            <div class="koop-fig"><span class="koop-fig-num">33.333</span><span class="koop-fig-label">Aufrufe (30 Tage)</span></div>
+            <div class="koop-fig"><span class="koop-fig-num">+563%</span><span class="koop-fig-label">Wachstum Reels/Beiträge</span></div>
+          </div>
+          <p class="koop-fig-note">Stand: Instagram-Insights, Mai 2026 (letzte 30 Tage)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Was mich ausmacht (dunkel) -->
+    <section class="koop-sec rv" aria-labelledby="usp-title">
+      <div class="shead" style="margin: 0 0 20px;">
+        <p class="kicker">Positionierung</p>
+        <h2 id="usp-title">Was mich <em>ausmacht.</em></h2>
+      </div>
+      <p class="koop-statement">
+        Ich bin nicht der größte Influencer. Aber meine Audience ist <strong>real</strong>, kauft mit,
+        liest Captions zu Ende. Was mich ausmacht: <strong>Zeit</strong> (10 Jahre vegetarisch live),
+        <strong>Tiefe</strong> (Christ-Foundation · Anti-Hustle) und <strong>Reichweite jenseits der Bubble</strong>.
+      </p>
+      <p class="koop-themes-line">
+        <strong>Meine vier Themen:</strong> Disziplin · Faith · Vegetarisch-stark · Build-in-Public —
+        5–7× pro Woche, 1st-person &amp; raw.
+      </p>
+
+      <ul class="koop-cards">
+        <li class="koop-card rv" style="--d: 0ms">
+          <span class="koop-card-tag" aria-hidden="true">🧬</span>
+          <span class="koop-card-stat">10 Jahre</span>
+          <h3 class="koop-card-head">Vegetarisch — live, jeden Tag</h3>
+          <p class="koop-card-body">Seit 2016. Kein Trend-Hopping, kein Influencer-Reset. Glaubwürdigkeit aus Zeit, nicht aus Content.</p>
+        </li>
+        <li class="koop-card rv" style="--d: 90ms">
+          <span class="koop-card-tag" aria-hidden="true">🇩🇪</span>
+          <span class="koop-card-stat">83%</span>
+          <h3 class="koop-card-head">DACH-Kern</h3>
+          <p class="koop-card-body">76,2% DE, 6,4% AT — kein DACH-USA-Mix. Wenn DACH dein Markt ist, ist meine Audience relevant.</p>
+        </li>
+        <li class="koop-card rv" style="--d: 180ms">
+          <span class="koop-card-tag" aria-hidden="true">🎯</span>
+          <span class="koop-card-stat">25-34</span>
+          <h3 class="koop-card-head">Kaufkräftige Demo</h3>
+          <p class="koop-card-body">81% sind 18–34 — der kaufkräftige Kern (25–34) macht 48% aus. Klar männlich geprägt: 64% ♂ / 36% ♀.</p>
+        </li>
+        <li class="koop-card rv" style="--d: 270ms">
+          <span class="koop-card-tag" aria-hidden="true">✝️</span>
+          <span class="koop-card-stat">Loyal</span>
+          <h3 class="koop-card-head">Christ-Foundation</h3>
+          <p class="koop-card-body">Bibel als Anker, Glaube als Kompass. Niche-Audience die Christian Brands + Faith-Themes echt vertraut.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Was du buchen kannst (Creme) -->
+    <section class="koop-sec rv" aria-labelledby="pack-title">
+      <div class="koop-cream" data-light>
+        <div class="koop-head">
+          <p class="kicker">Leistungen</p>
+          <h2 id="pack-title">Was du <em>buchen kannst.</em></h2>
+        </div>
+        <p class="koop-body">Klare Pakete, klare Preise. Custom-Wünsche immer möglich.</p>
+
+        <div class="koop-pack-grid">
+          <div class="koop-pack rv" style="--d: 0ms">
+            <span class="koop-pack-icon" aria-hidden="true">📲</span>
+            <p class="koop-pack-name">Story-Set</p>
+            <p class="koop-pack-meta">5-7 Slides · 24h live</p>
+            <p class="koop-pack-desc">Story-Reihe zu deinem Produkt — in meiner Voice, mit klarem Mehrwert für meine Audience.</p>
+            <p class="koop-pack-price">ab 250 €</p>
+          </div>
+          <div class="koop-pack rv" style="--d: 90ms">
+            <span class="koop-pack-icon" aria-hidden="true">🎬</span>
+            <p class="koop-pack-name">Reel-Feature</p>
+            <p class="koop-pack-meta">1 Reel · +24h Story-Boost</p>
+            <p class="koop-pack-desc">Skript gemeinsam abgestimmt, Schnitt selbstgemacht. Reel + 1 Story-Push am Reel-Tag.</p>
+            <p class="koop-pack-price">ab 600 €</p>
+          </div>
+          <div class="koop-pack koop-pack--hi rv" style="--d: 180ms">
+            <span class="koop-pack-eyebrow">Empfohlen</span>
+            <span class="koop-pack-icon" aria-hidden="true">🤝</span>
+            <p class="koop-pack-name">Long-Term-Partnership</p>
+            <p class="koop-pack-meta">3 Monate · 4-6 Posts/Mo</p>
+            <p class="koop-pack-desc">Echte Integration in meinen Alltag — Brand wird Teil meiner Story, nicht „Werbung im Kalender".</p>
+            <p class="koop-pack-price">ab 1.500 €/Mo</p>
+          </div>
+          <div class="koop-pack rv" style="--d: 270ms">
+            <span class="koop-pack-icon" aria-hidden="true">⚙️</span>
+            <p class="koop-pack-name">Custom</p>
+            <p class="koop-pack-meta">Nach Bedarf</p>
+            <p class="koop-pack-desc">Event-Coverage, Test-Drive, Live-Story von einem Brand-Day — schreib's in die Anfrage.</p>
+            <p class="koop-pack-price">auf Anfrage</p>
+          </div>
+        </div>
+
+        <p class="koop-price-note">
+          Alle Preise zzgl. USt. (sofern anwendbar) und ohne Production-Cost (z.B. Reise/Material). Finales Angebot nach Brief.
+        </p>
+
+        <div class="koop-bonus rv">
+          <p class="koop-bonus-eyebrow">🎁 First-Brand-Bonus</p>
+          <p class="koop-bonus-title">Du bist die erste echte Brand-Kooperation für vegetarianhulk?</p>
+          <p class="koop-bonus-body">
+            Dann läuft sie mit besonderer Aufmerksamkeit: extra Story-Slides, längere Engagement-Phase,
+            1× Bonus-Carousel ohne Aufpreis. Keine Discount-Politik — sondern echte Investition in unsere erste gemeinsame Story.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mid-CTA-Band (dunkel) -->
+    <div class="koop-cta-band rv">
+      <span class="koop-cta-line">Klingt nach einem Fit?</span>
+      <a class="th-btn th-btn--gelb th-btn--lg" href="/anfrage.html">📨 Anfrage senden →</a>
     </div>
 
-    <div class="hero-text brand-hero-text">
-      <div class="brand-trust-bar fade-in-up">
-        <span>📍 DACH</span>
-        <span>👥 2.079 Follower</span>
-        <span>⚡ Persönliche, schnelle Antwort</span>
+    <!-- Reichweite & Zielgruppe (dunkel) -->
+    <section class="koop-sec rv" aria-labelledby="reach-title">
+      <div class="shead" style="margin: 0 0 20px;">
+        <p class="kicker">Reichweite &amp; Zielgruppe · letzte 30 Tage</p>
+        <h2 id="reach-title">Wer mir <em>folgt.</em></h2>
+      </div>
+      <p class="koop-body-dark">
+        Aktuell folgen mir <strong>2.079</strong> Menschen — hauptsächlich aus der DACH-Region.
+        <strong>52% meiner Aufrufe (Reels + Beiträge) kommen von Nicht-Followern</strong> — ich erreiche aktiv über meine Bubble hinaus.
+      </p>
+
+      <div class="koop-reach-figs">
+        <div class="koop-reach-fig rv" style="--d: 0ms"><span class="koop-rf-num">2.079</span><span class="koop-rf-label">Follower</span></div>
+        <div class="koop-reach-fig rv" style="--d: 90ms"><span class="koop-rf-num">33.333</span><span class="koop-rf-label">Aufrufe (30 Tage)</span></div>
+        <div class="koop-reach-fig rv" style="--d: 180ms"><span class="koop-rf-num">3.555</span><span class="koop-rf-label">erreichte Konten (+378%)</span></div>
+        <div class="koop-reach-fig rv" style="--d: 270ms"><span class="koop-rf-num">+563%</span><span class="koop-rf-label">Aufrufe Reels/Beiträge</span></div>
       </div>
 
-      <h1 class="brand-h1 fade-in-up delay-2">
-        Content für Brands,<br>
-        <span class="italic">die zu meinem Leben passen.</span>
-      </h1>
-
-      <div class="hero-sub fade-in-up delay-3" style="margin-top:18px">
-        Ich bin <strong>Sebi (@vegetarianhulk)</strong> — Disziplin, Faith, vegetarisch-stark, Build-in-Public. Ehrlicher Content für Brands die ich auch privat nutzen würde. <strong>Keine Coaching-Phrasen, keine Plastik-Sprüche.</strong>
+      <p class="koop-sub-h">Audience-Mix · Top-Länder</p>
+      <div class="koop-pills">
+        <span class="koop-pill">🇩🇪 76,2%</span>
+        <span class="koop-pill">🇦🇹 6,4%</span>
+        <span class="koop-pill">🇬🇧 2,7%</span>
+        <span class="koop-pill">🇫🇷 2,2%</span>
       </div>
 
-      <div class="hero-stat-tiles fade-in-up delay-3">
-        <div class="hero-stat-tile"><span class="hero-stat-num">52%</span><span class="hero-stat-label">Non-Follower-Reichweite</span></div>
-        <div class="hero-stat-tile"><span class="hero-stat-num">33.333</span><span class="hero-stat-label">Aufrufe (30 Tage)</span></div>
-        <div class="hero-stat-tile"><span class="hero-stat-num">+563%</span><span class="hero-stat-label">Wachstum Reels/Beiträge</span></div>
-      </div>
-      <p class="hero-tiles-note fade-in-up delay-3">Stand: Instagram-Insights, Mai 2026 (letzte 30 Tage)</p>
-
-      <a href="/anfrage.html" class="brand-cta-primary fade-in-up delay-3">
-        📨 Anfrage senden <span class="brand-cta-arrow">→</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- 0.5 USP — Was mich ausmacht (research-driven, Stat-fundiert) -->
-  <section class="v5-section fade-in-up">
-    <h2 class="v5-h2">Was mich ausmacht</h2>
-
-    <div class="usp-statement">
-      Ich bin nicht der größte Influencer. Aber meine Audience ist <strong>real</strong>, kauft mit, liest Captions zu Ende. Was mich ausmacht: <strong>Zeit</strong> (10 Jahre vegetarisch live), <strong>Tiefe</strong> (Christ-Foundation · Anti-Hustle) und <strong>Reichweite jenseits der Bubble</strong>.
-    </div>
-
-    <p class="v5-body" style="margin-top:12px">
-      <strong>Meine vier Themen:</strong> Disziplin · Faith · Vegetarisch-stark · Build-in-Public — 5–7× pro Woche, 1st-person &amp; raw.
-    </p>
-
-    <div class="usp-grid">
-      <div class="usp-card fade-in-up stag-0">
-        <div class="usp-icon">🧬</div>
-        <div class="usp-stat">10 Jahre</div>
-        <div class="usp-headline">Vegetarisch — live, jeden Tag</div>
-        <div class="usp-body">Seit 2016. Kein Trend-Hopping, kein Influencer-Reset. Glaubwürdigkeit aus Zeit, nicht aus Content.</div>
+      <p class="koop-sub-h">Top-Altersgruppen</p>
+      <div class="koop-pills">
+        <span class="koop-pill">25-34: 48,3%</span>
+        <span class="koop-pill">18-24: 32,9%</span>
+        <span class="koop-pill">35+: 19%</span>
       </div>
 
-      <div class="usp-card fade-in-up stag-1">
-        <div class="usp-icon">🇩🇪</div>
-        <div class="usp-stat">83%</div>
-        <div class="usp-headline">DACH-Kern</div>
-        <div class="usp-body">76,2% DE, 6,4% AT — kein DACH-USA-Mix. Wenn DACH dein Markt ist, ist meine Audience relevant.</div>
+      <p class="koop-sub-h">Geschlecht</p>
+      <div class="koop-pills">
+        <span class="koop-pill">♂ 64,1%</span>
+        <span class="koop-pill">♀ 35,9%</span>
       </div>
 
-      <div class="usp-card fade-in-up stag-2">
-        <div class="usp-icon">🎯</div>
-        <div class="usp-stat">25-34</div>
-        <div class="usp-headline">Kaufkräftige Demo</div>
-        <div class="usp-body">81% sind 18–34 — der kaufkräftige Kern (25–34) macht 48% aus. Klar männlich geprägt: 64% ♂ / 36% ♀.</div>
+      <p class="koop-sub-h">Content-Mix</p>
+      <div class="koop-pills">
+        <span class="koop-pill">📲 Stories 54,5%</span>
+        <span class="koop-pill">🎬 Reels 24,0%</span>
+        <span class="koop-pill">📷 Beiträge 21,6%</span>
       </div>
 
-      <div class="usp-card fade-in-up stag-3">
-        <div class="usp-icon">✝️</div>
-        <div class="usp-stat">Loyal</div>
-        <div class="usp-headline">Christ-Foundation</div>
-        <div class="usp-body">Bibel als Anker, Glaube als Kompass. Niche-Audience die Christian Brands + Faith-Themes echt vertraut.</div>
+      <p class="koop-meta">
+        Alle Zahlen aus Instagram-Insights · <strong>Stand: Mai 2026</strong> (letzte 30 Tage).
+      </p>
+    </section>
+
+    <!-- Mit wem ich gerne arbeite (Creme) -->
+    <section class="koop-sec rv" aria-labelledby="fit-title">
+      <div class="koop-cream" data-light>
+        <div class="koop-head">
+          <p class="kicker">Passung</p>
+          <h2 id="fit-title">Mit wem ich <em>gerne arbeite.</em></h2>
+        </div>
+        <p class="koop-body">
+          Offen für ehrliche Anfragen — egal ob Newcomer oder große Brand. Es zählt nur: passt's zu meinen Themen, passt's zu meiner Audience.
+        </p>
+
+        <p class="koop-fit-h yes">✓ Themen die zu mir passen</p>
+        <div class="koop-fit-pills">
+          <span class="koop-fit-pill">🌱 Plant-Based Supplements</span>
+          <span class="koop-fit-pill">🥗 Vegan-Food</span>
+          <span class="koop-fit-pill">🏋️ Workout-Gear</span>
+          <span class="koop-fit-pill">✝️ Christian Brands</span>
+          <span class="koop-fit-pill">📓 Habit / Discipline-Tools</span>
+          <span class="koop-fit-pill">📔 Journaling</span>
+          <span class="koop-fit-pill">☕ Coffee / No-Alcohol</span>
+          <span class="koop-fit-pill">📚 Faith-Books</span>
+          <span class="koop-fit-pill">⛪ Bible-Apps</span>
+          <span class="koop-fit-pill">🥦 Vegetarier-freundliche Brands</span>
+        </div>
+
+        <p class="koop-fit-h no">✗ Lieber nicht</p>
+        <div class="koop-fit-pills">
+          <span class="koop-fit-pill anti">Krypto-Pumps</span>
+          <span class="koop-fit-pill anti">Diet-Pills</span>
+          <span class="koop-fit-pill anti">Detox-Teas</span>
+          <span class="koop-fit-pill anti">Glücksspiel</span>
+          <span class="koop-fit-pill anti">Hard-Sell ohne Story</span>
+        </div>
+        <p class="koop-fit-foot">
+          Da bin ich raus — nicht wegen dir, sondern weil's nicht zu meiner Audience passt.
+        </p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- 1.5 Pakete — Was du buchen kannst -->
-  <section class="v5-section fade-in-up">
-    <h2 class="v5-h2">Was du buchen kannst</h2>
-    <p class="v5-body">Klare Pakete, klare Preise. Custom-Wünsche immer möglich.</p>
-
-    <div class="packages-grid">
-      <div class="package-card fade-in-up stag-0">
-        <div class="package-icon">📲</div>
-        <div class="package-name">Story-Set</div>
-        <div class="package-meta">5-7 Slides · 24h live</div>
-        <div class="package-desc">Story-Reihe zu deinem Produkt — in meiner Voice, mit klarem Mehrwert für meine Audience.</div>
-        <div class="package-price">ab 250 €</div>
+    <!-- So läuft's ab (dunkel) -->
+    <section class="koop-sec rv" aria-labelledby="proc-title">
+      <div class="shead" style="margin: 0 0 20px;">
+        <p class="kicker">Ablauf</p>
+        <h2 id="proc-title">So läuft's <em>ab.</em></h2>
       </div>
+      <p class="koop-body-dark">Strukturiert, transparent, ohne Überraschungen.</p>
 
-      <div class="package-card fade-in-up stag-1">
-        <div class="package-icon">🎬</div>
-        <div class="package-name">Reel-Feature</div>
-        <div class="package-meta">1 Reel · +24h Story-Boost</div>
-        <div class="package-desc">Skript gemeinsam abgestimmt, Schnitt selbstgemacht. Reel + 1 Story-Push am Reel-Tag.</div>
-        <div class="package-price">ab 600 €</div>
+      <div class="koop-steps">
+        <div class="koop-step rv" style="--d: 0ms">
+          <span class="koop-step-num" aria-hidden="true">1</span>
+          <div>
+            <p class="koop-step-title">Anfrage senden <span class="koop-step-time">Heute</span></p>
+            <p class="koop-step-desc">Form unten oder DM auf Insta. Brand-Name, was ihr macht, eure Idee, Zeitrahmen, Budget-Range.</p>
+          </div>
+        </div>
+        <div class="koop-step rv" style="--d: 90ms">
+          <span class="koop-step-num" aria-hidden="true">2</span>
+          <div>
+            <p class="koop-step-title">Brief &amp; Vertrag <span class="koop-step-time">3-5 Tage</span></p>
+            <p class="koop-step-desc">Kurzer Call (15 Min) wenn nötig. Schriftliches Briefing-Doc. Honorar + Timeline fixiert.</p>
+          </div>
+        </div>
+        <div class="koop-step rv" style="--d: 180ms">
+          <span class="koop-step-num" aria-hidden="true">3</span>
+          <div>
+            <p class="koop-step-title">Content-Production <span class="koop-step-time">5-10 Tage</span></p>
+            <p class="koop-step-desc">Ich produziere. Du siehst Draft. Eine Feedback-Loop ist eingerechnet, weitere Loops gegen Aufpreis.</p>
+          </div>
+        </div>
+        <div class="koop-step rv" style="--d: 270ms">
+          <span class="koop-step-num" aria-hidden="true">4</span>
+          <div>
+            <p class="koop-step-title">Posting + Reporting <span class="koop-step-time">Laufend</span></p>
+            <p class="koop-step-desc">Live-Schaltung zur abgestimmten Zeit. Nach 7 Tagen Insights-Report: Reach, Engagement, Saves, Stories-Outbound.</p>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="package-card package-card-highlight fade-in-up stag-2">
-        <div class="package-eyebrow">Empfohlen</div>
-        <div class="package-icon">🤝</div>
-        <div class="package-name">Long-Term-Partnership</div>
-        <div class="package-meta">3 Monate · 4-6 Posts/Mo</div>
-        <div class="package-desc">Echte Integration in meinen Alltag — Brand wird Teil meiner Story, nicht „Werbung im Kalender".</div>
-        <div class="package-price">ab 1.500 €/Mo</div>
+    <!-- Häufige Fragen (dunkel) -->
+    <section class="koop-sec rv" aria-labelledby="faq-title">
+      <div class="shead" style="margin: 0 0 20px;">
+        <p class="kicker">FAQ</p>
+        <h2 id="faq-title">Häufige <em>Fragen.</em></h2>
       </div>
-
-      <div class="package-card fade-in-up stag-3">
-        <div class="package-icon">⚙️</div>
-        <div class="package-name">Custom</div>
-        <div class="package-meta">Nach Bedarf</div>
-        <div class="package-desc">Event-Coverage, Test-Drive, Live-Story von einem Brand-Day — schreib's in die Anfrage.</div>
-        <div class="package-price">auf Anfrage</div>
+      <div class="koop-faq">
+        <details>
+          <summary>Wie schnell läuft eine Kooperation durch?</summary>
+          <div class="koop-faq-body">Standardfall: ~10-14 Tage von Anfrage bis Live (3-5 Tage Brief + 5-10 Tage Production + Posting). Long-Term-Partnerships starten bei der ersten Anfrage und laufen 3 Monate.</div>
+        </details>
+        <details>
+          <summary>Bekomme ich Performance-Reports nach dem Posting?</summary>
+          <div class="koop-faq-body">Ja, nach 7 Tagen Insights-Report direkt aus Instagram: Reach, Impressions, Engagement-Rate, Saves, Shares, Stories-Outbound. Bei Long-Term-Partnership monatlich.</div>
+        </details>
+        <details>
+          <summary>Was wenn das Reel nicht performt wie erhofft?</summary>
+          <div class="koop-faq-body">Ehrlich: keine Erfolgs-Garantie. Aber Re-Use-Optionen sind im Paket — z.B. Reel als Story-Boost recyceln, alternative Caption testen oder organischer Repost nach 2-4 Wochen. Honest-Feedback statt Schönrederei.</div>
+        </details>
       </div>
-    </div>
+    </section>
 
-    <p class="v5-meta" style="margin-top:18px">
-      Alle Preise zzgl. USt. (sofern anwendbar) und ohne Production-Cost (z.B. Reise/Material). Finales Angebot nach Brief.
-    </p>
-
-    <!-- First-Brand-Bonus (Pre-Cases-Trust-Builder) -->
-    <div class="first-brand-bonus fade-in-up">
-      <div class="first-brand-bonus-eyebrow">🎁 First-Brand-Bonus</div>
-      <div class="first-brand-bonus-title">Du bist die erste echte Brand-Kooperation für vegetarianhulk?</div>
-      <div class="first-brand-bonus-body">
-        Dann läuft sie mit besonderer Aufmerksamkeit: extra Story-Slides, längere Engagement-Phase, 1× Bonus-Carousel ohne Aufpreis. Keine Discount-Politik — sondern echte Investition in unsere erste gemeinsame Story.
+    <!-- Bereit? (Creme, zentriert) -->
+    <section class="koop-ready rv" id="anfrage" aria-labelledby="ready-title">
+      <div class="koop-cream" data-light>
+        <div class="koop-head">
+          <p class="kicker">Los geht's</p>
+          <h2 id="ready-title">Bereit?</h2>
+        </div>
+        <p class="koop-body">
+          Schreib mir kurz, was deine Brand macht und wie du dir die Zusammenarbeit vorstellst — du bekommst eine persönliche, schnelle Antwort.
+        </p>
+        <p class="koop-ready-cta">
+          <a class="th-btn th-btn--gelb th-btn--lg" href="/anfrage.html">📨 Anfrage senden →</a>
+        </p>
+        <p class="koop-ready-alt">
+          Lieber locker per DM? <a href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">@vegetarianhulk auf Insta →</a>
+        </p>
+        <p class="koop-ready-meta">
+          Aktive Partner-Kooperationen mit Rabattcode liste ich öffentlich auf
+          <a href="/partner-picks/">vegetarianhulk.de/partner-picks</a> — dem Ziel meines Instagram-Bio-Links.
+        </p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Mid-Page CTA (nach den Paketen) -->
-  <div class="brand-cta-band fade-in-up">
-    <span class="brand-cta-band-text">Klingt nach einem Fit?</span>
-    <a href="/anfrage.html" class="brand-cta-primary">📨 Anfrage senden <span class="brand-cta-arrow">→</span></a>
   </div>
-
-  <!-- 2. Wer mir folgt -->
-  <section class="v5-section fade-in-up">
-    <h2 class="v5-h2">Reichweite &amp; Zielgruppe (letzte 30 Tage)</h2>
-    <p class="v5-body">
-      Aktuell folgen mir <strong>2.079</strong> Menschen — hauptsächlich aus der DACH-Region. <strong>52% meiner Aufrufe (Reels + Beiträge) kommen von Nicht-Followern</strong> — ich erreiche aktiv über meine Bubble hinaus.
-    </p>
-
-    <div class="v5-stats">
-      <div class="v5-stat-pill fade-in-up stag-0"><span class="v5-stat-num">2.079</span><span class="v5-stat-label">Follower</span></div>
-      <div class="v5-stat-pill fade-in-up stag-1"><span class="v5-stat-num">33.333</span><span class="v5-stat-label">Aufrufe (30 Tage)</span></div>
-      <div class="v5-stat-pill fade-in-up stag-2"><span class="v5-stat-num">3.555</span><span class="v5-stat-label">erreichte Konten (+378%)</span></div>
-      <div class="v5-stat-pill fade-in-up stag-3"><span class="v5-stat-num">+563%</span><span class="v5-stat-label">Aufrufe Reels/Beiträge</span></div>
-    </div>
-
-    <h3 class="v5-h3">Audience-Mix · Top-Länder</h3>
-    <div class="v5-pills-row">
-      <span class="v5-pill">🇩🇪 76,2%</span>
-      <span class="v5-pill">🇦🇹 6,4%</span>
-      <span class="v5-pill">🇬🇧 2,7%</span>
-      <span class="v5-pill">🇫🇷 2,2%</span>
-    </div>
-
-    <h3 class="v5-h3">Top-Altersgruppen</h3>
-    <div class="v5-pills-row">
-      <span class="v5-pill">25-34: 48,3%</span>
-      <span class="v5-pill">18-24: 32,9%</span>
-      <span class="v5-pill">35+: 19%</span>
-    </div>
-
-    <h3 class="v5-h3">Geschlecht</h3>
-    <div class="v5-pills-row">
-      <span class="v5-pill">♂ 64,1%</span>
-      <span class="v5-pill">♀ 35,9%</span>
-    </div>
-
-    <h3 class="v5-h3">Content-Mix</h3>
-    <div class="v5-pills-row">
-      <span class="v5-pill">📲 Stories 54,5%</span>
-      <span class="v5-pill">🎬 Reels 24,0%</span>
-      <span class="v5-pill">📷 Beiträge 21,6%</span>
-    </div>
-
-    <p class="v5-meta">
-      Alle Zahlen aus Instagram-Insights · <strong>Stand: Mai 2026</strong> (letzte 30 Tage).
-    </p>
-  </section>
-
-  <!-- 3. Mit wem ich gerne arbeite — V7.2 entschärft (kein „wählerisch") -->
-  <section class="v5-section fade-in-up">
-    <h2 class="v5-h2">Mit wem ich gerne arbeite</h2>
-    <p class="v5-body">
-      Offen für ehrliche Anfragen — egal ob Newcomer oder große Brand. Es zählt nur: passt's zu meinen Themen, passt's zu meiner Audience.
-    </p>
-    <h3 class="v5-h3">✓ Themen die zu mir passen</h3>
-    <div class="brand-themes-grid">
-      <div class="brand-theme-pill">🌱 Plant-Based Supplements</div>
-      <div class="brand-theme-pill">🥗 Vegan-Food</div>
-      <div class="brand-theme-pill">🏋️ Workout-Gear</div>
-      <div class="brand-theme-pill">✝️ Christian Brands</div>
-      <div class="brand-theme-pill">📓 Habit / Discipline-Tools</div>
-      <div class="brand-theme-pill">📔 Journaling</div>
-      <div class="brand-theme-pill">☕ Coffee / No-Alcohol</div>
-      <div class="brand-theme-pill">📚 Faith-Books</div>
-      <div class="brand-theme-pill">⛪ Bible-Apps</div>
-      <div class="brand-theme-pill">🥦 Vegetarier-freundliche Brands</div>
-    </div>
-
-    <h3 class="v5-h3" style="margin-top:22px">✗ Lieber nicht</h3>
-    <div class="brand-anti-grid">
-      <div class="brand-anti-pill">Krypto-Pumps</div>
-      <div class="brand-anti-pill">Diet-Pills</div>
-      <div class="brand-anti-pill">Detox-Teas</div>
-      <div class="brand-anti-pill">Glücksspiel</div>
-      <div class="brand-anti-pill">Hard-Sell ohne Story</div>
-    </div>
-    <p class="v5-body" style="font-size:13px;color:var(--text2);margin-top:12px">
-      Da bin ich raus — nicht wegen dir, sondern weil's nicht zu meiner Audience passt.
-    </p>
-  </section>
-
-  <!-- 3.5 Process — So läuft's ab -->
-  <section class="v5-section fade-in-up">
-    <h2 class="v5-h2">So läuft's ab</h2>
-    <p class="v5-body">Strukturiert, transparent, ohne Überraschungen.</p>
-
-    <div class="process-steps">
-      <div class="process-step fade-in-up stag-0">
-        <div class="process-num">1</div>
-        <div class="process-body">
-          <div class="process-title">Anfrage senden</div>
-          <div class="process-time">Heute</div>
-          <div class="process-desc">Form unten oder DM auf Insta. Brand-Name, was ihr macht, eure Idee, Zeitrahmen, Budget-Range.</div>
-        </div>
-      </div>
-
-      <div class="process-step fade-in-up stag-1">
-        <div class="process-num">2</div>
-        <div class="process-body">
-          <div class="process-title">Brief & Vertrag</div>
-          <div class="process-time">3-5 Tage</div>
-          <div class="process-desc">Kurzer Call (15 Min) wenn nötig. Schriftliches Briefing-Doc. Honorar + Timeline fixiert.</div>
-        </div>
-      </div>
-
-      <div class="process-step fade-in-up stag-2">
-        <div class="process-num">3</div>
-        <div class="process-body">
-          <div class="process-title">Content-Production</div>
-          <div class="process-time">5-10 Tage</div>
-          <div class="process-desc">Ich produziere. Du siehst Draft. Eine Feedback-Loop ist eingerechnet, weitere Loops gegen Aufpreis.</div>
-        </div>
-      </div>
-
-      <div class="process-step fade-in-up stag-3">
-        <div class="process-num">4</div>
-        <div class="process-body">
-          <div class="process-title">Posting + Reporting</div>
-          <div class="process-time">Laufend</div>
-          <div class="process-desc">Live-Schaltung zur abgestimmten Zeit. Nach 7 Tagen Insights-Report: Reach, Engagement, Saves, Stories-Outbound.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3.7 Häufige Fragen — Mini-FAQ vor Form -->
-  <section class="v5-section fade-in-up">
-    <h2 class="v5-h2">Häufige Fragen</h2>
-
-    <div class="faq-list">
-      <details class="faq-item">
-        <summary>Wie schnell läuft eine Kooperation durch?</summary>
-        <div class="faq-body">Standardfall: ~10-14 Tage von Anfrage bis Live (3-5 Tage Brief + 5-10 Tage Production + Posting). Long-Term-Partnerships starten bei der ersten Anfrage und laufen 3 Monate.</div>
-      </details>
-
-      <details class="faq-item">
-        <summary>Bekomme ich Performance-Reports nach dem Posting?</summary>
-        <div class="faq-body">Ja, nach 7 Tagen Insights-Report direkt aus Instagram: Reach, Impressions, Engagement-Rate, Saves, Shares, Stories-Outbound. Bei Long-Term-Partnership monatlich.</div>
-      </details>
-
-      <details class="faq-item">
-        <summary>Was wenn das Reel nicht performt wie erhofft?</summary>
-        <div class="faq-body">Ehrlich: keine Erfolgs-Garantie. Aber Re-Use-Optionen sind im Paket — z.B. Reel als Story-Boost recyceln, alternative Caption testen oder organischer Repost nach 2-4 Wochen. Honest-Feedback statt Schönrederei.</div>
-      </details>
-    </div>
-  </section>
-
-  <!-- 4. Anfrage — eigene Seite (/anfrage.html) -->
-  <section class="v5-section fade-in-up" id="anfrage">
-    <h2 class="v5-h2">Bereit?</h2>
-    <p class="v5-body">
-      Schreib mir kurz, was deine Brand macht und wie du dir die Zusammenarbeit vorstellst — du bekommst eine persönliche, schnelle Antwort.
-    </p>
-    <a href="/anfrage.html" class="brand-cta-primary">📨 Anfrage senden <span class="brand-cta-arrow">→</span></a>
-    <div class="brand-form-alt" style="margin-top:18px">
-      <span>Lieber locker per DM?</span>
-      <a href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">@vegetarianhulk auf Insta →</a>
-    </div>
-    <p class="v5-meta" style="margin-top:18px">
-      Aktive Partner-Kooperationen mit Rabattcode liste ich öffentlich auf <a href="/partner-picks/">vegetarianhulk.de/partner-picks</a> — dem Ziel meines Instagram-Bio-Links.
-    </p>
-  </section>
-
-  <script>
-  // V10 — Brand-Page Interactivity: fade-in-up + Tilt + Multi-Layer-Parallax
-  (function() {
-    if (!('IntersectionObserver' in window)) return;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
-  })();
-
-  // 3D-Card-Tilt auf V5-Stat-Pills + Brand-Stats + Pillars
-  (function() {
-    if (window.matchMedia('(hover: none)').matches) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const tiltElements = document.querySelectorAll('.v5-stat-pill');
-    tiltElements.forEach(el => {
-      let rafId = null;
-      el.addEventListener('mousemove', (e) => {
-        if (rafId) cancelAnimationFrame(rafId);
-        rafId = requestAnimationFrame(() => {
-          const rect = el.getBoundingClientRect();
-          const dx = (e.clientX - rect.left) / rect.width  - 0.5;
-          const dy = (e.clientY - rect.top)  / rect.height - 0.5;
-          const maxTilt = 10;
-          el.style.setProperty('--tilt-ry', `${dx * maxTilt * 2}deg`);
-          el.style.setProperty('--tilt-rx', `${-dy * maxTilt * 2}deg`);
-          el.classList.add('tilting');
-        });
-      }, { passive: true });
-      el.addEventListener('mouseleave', () => {
-        if (rafId) cancelAnimationFrame(rafId);
-        el.style.setProperty('--tilt-ry', '0deg');
-        el.style.setProperty('--tilt-rx', '0deg');
-        el.classList.remove('tilting');
-      }, { passive: true });
-    });
-  })();
-  </script>
-
-  <!-- Footer-Editorial v31.11 — A2 Asymmetric Editorial (B2B-Kooperationen mit Adresse) -->
-  <footer class="vh-footer footer-a2" role="contentinfo" aria-label="Site footer">
-    <div class="grid">
-      <div class="col col-brand">
-        <div class="vh-wordmark wordmark">VEGETARIAN<span class="accent">HULK</span></div>
-        <div class="vh-tagline tagline">Builder &amp; Creator. Disziplin über Hype.</div>
-        <a class="vh-link vh-ig ig" href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener" aria-label="Instagram @vegetarianhulk">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-            <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-            <circle cx="12" cy="12" r="4"></circle>
-            <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle>
-          </svg>
-          <span>@vegetarianhulk</span>
-        </a>
-        <div class="vh-address vh-address-block">
-          <strong>Geschäftsadresse</strong>
-          Sebastian Wimmer<br />
-          Burghauser Straße 35<br />
-          84533 Haiming, Deutschland
-        </div>
-      </div>
-      <nav class="col" aria-label="Brand navigation">
-        <p class="vh-col-label">Explore</p>
-        <ul>
-          <li><a class="vh-link" href="/">Startseite</a></li>
-          <li><a class="vh-link" href="/newsletter">Newsletter</a></li>
-          <li><a class="vh-link" href="/partner-picks/">Smash Partner &amp; Picks</a></li>
-          <li><a class="vh-link is-current" href="/kooperationen.html" aria-current="page">Für Brands</a></li>
-        </ul>
-      </nav>
-      <nav class="col" aria-label="Rechtliches &amp; Kontakt">
-        <p class="vh-col-label">Legal &amp; Kontakt</p>
-        <ul>
-          <li><a class="vh-link" href="impressum.html">Impressum</a></li>
-          <li><a class="vh-link" href="datenschutz.html">Datenschutz</a></li>
-          <li><a class="vh-link" href="mailto:info@vegetarianhulk.de">info@vegetarianhulk.de</a></li>
-        </ul>
-      </nav>
-    </div>
-    <hr class="vh-hairline" />
-    <div class="bottom">
-      <span class="vh-copyright">© <span id="footer-year">2026</span> Sebastian Wimmer</span>
-    </div>
-  </footer>
-
 </main>
 
-<a href="/anfrage.html" class="brand-sticky-cta" id="brandStickyCta" aria-label="Anfrage senden">📨 Anfrage senden →</a>
+<footer>
+  <div class="inner">
+    <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+    <p class="claim">Builder &amp; Creator. Disziplin über Hype.</p>
+    <nav class="legal" aria-label="Rechtliches">
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+      <a href="mailto:info@vegetarianhulk.de">info@vegetarianhulk.de</a>
+      <span>© 2026 Sebastian Wimmer</span>
+    </nav>
+  </div>
+</footer>
 
-<script>
-// Sticky-CTA: blendet nach dem Hero ein, verschwindet beim Anfrage-Formular
-(function(){
-  var cta = document.getElementById('brandStickyCta');
-  var hero = document.querySelector('.brand-hero');
-  var form = document.getElementById('anfrage');
-  if (!cta || !hero || !form || !('IntersectionObserver' in window)) return;
-  var heroVisible = true, formVisible = false;
-  function upd(){ cta.classList.toggle('is-visible', !heroVisible && !formVisible); }
-  new IntersectionObserver(function(es){ es.forEach(function(e){ heroVisible = e.isIntersecting; upd(); }); }, { threshold: 0.05 }).observe(hero);
-  new IntersectionObserver(function(es){ es.forEach(function(e){ formVisible = e.isIntersecting; upd(); }); }, { threshold: 0.12 }).observe(form);
-})();
-</script>
+<nav class="nav" aria-label="Hauptnavigation">
+  <a href="/">Start</a>
+  <a href="/partner-picks/">P&amp;P</a>
+  <a class="center" href="/touren/">
+    <span class="mtn"><svg viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 50 26 16l10 16 8-12 22 30"/>
+      <path d="M22 23.5 26 20l4 5" opacity="0.85"/>
+      <path d="M40.5 25.5 44 21.5l3.5 5" opacity="0.85"/>
+      <circle cx="58" cy="11" r="4.5" opacity="0.9"/>
+      <path d="M12 50c8-4 16-3.4 22 0" opacity="0.45"/>
+    </svg></span>
+    Hulk&nbsp;Hikes
+  </a>
+  <a href="/newsletter">News</a>
+  <a href="/kooperationen.html" aria-current="page">Brands</a>
+</nav>
 
-<script>
-(function() {
-  const y = new Date().getFullYear();
-  document.querySelectorAll('#footer-year').forEach(el => el.textContent = y);
-})();
-</script>
-<script>
-// Topbar Hamburger Toggle (matches Index v31 Pattern)
-(function(){
-  var b=document.querySelector('.topbar-burger'),n=document.querySelector('.topbar-nav');
-  if(!b||!n)return;
-  b.addEventListener('click',function(){
-    var open=n.classList.toggle('topbar-nav--open');
-    b.setAttribute('aria-expanded',open);
-    b.setAttribute('aria-label',open?'Menü schließen':'Menü öffnen');
-  });
-  document.addEventListener('click',function(e){
-    if(!b.contains(e.target)&&!n.contains(e.target)){
-      n.classList.remove('topbar-nav--open');
-      b.setAttribute('aria-expanded','false');
-      b.setAttribute('aria-label','Menü öffnen');
-    }
-  });
-  n.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click',function(){
-      n.classList.remove('topbar-nav--open');
-      b.setAttribute('aria-expanded','false');
-    });
-  });
-})();
-</script>
-<script src="update-check.js?v=361d366c"></script>
-<script src="motion-reveal.js?v=d3baa308" defer></script><script src="/nav.js" defer></script>
+<script src="/v3.js?v=182e7de3" defer></script>
 </body>
 </html>

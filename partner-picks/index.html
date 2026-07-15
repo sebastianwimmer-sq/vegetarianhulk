@@ -2,170 +2,265 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' https: data:; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smash Partner &amp; Picks | VegetarianHulk</title>
-<meta name="description" content="Meine Partner mit echten Rabattcodes und die Produkte, die ich selbst nutze — ehrlich empfohlen. Supplements, Berg-Gear und mein Content-Equipment.">
-<meta name="theme-color" content="#f7efde">
+<title>Smash Partner &amp; Picks — Codes &amp; meine Ausrüstung | VegetarianHulk</title>
+<meta name="description" content="Meine Partner mit echten Rabattcodes — und die Ausrüstung, die ich selbst nutze. Ehrlich empfohlen, kein Katalog: Supplements, Berg-Gear und mein Content-Equipment.">
+<meta name="theme-color" content="#0B2418">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://vegetarianhulk.de/partner-picks/">
 
-<meta property="og:title" content="Smash Partner & Picks | VegetarianHulk">
-<meta property="og:description" content="Partner-Codes + meine Lieblingsprodukte — ehrlich empfohlen.">
+<meta property="og:title" content="Smash Partner &amp; Picks — Codes &amp; meine Ausrüstung">
+<meta property="og:description" content="Partner-Codes + meine Lieblingsprodukte — ehrlich empfohlen, kein Katalog.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://vegetarianhulk.de/partner-picks/">
 <meta property="og:image" content="https://vegetarianhulk.de/hero.jpg?v=v31.6.1">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
-<link rel="stylesheet" href="/style.css?v=bdf0cecd">
+<link rel="stylesheet" href="/fonts.css?v=1e2010e0">
+<link rel="stylesheet" href="/v3.css?v=c9fdef3c">
 
 <style>
   /* ============================================================
-     P&P — editorial mit VH-Content-Block-Kit (vh-shead / vh-index /
-     vh-divider). KANAL-REGEL: NH/Alpin-Loacker-Produkte laufen NUR
-     über deren Partner-Code — nie über Amazon.
+     P&P — v3 Editorial Dark. Karten mit Tiefe statt flachem Raster.
+     KANAL-REGEL: NH/Alpin-Loacker-Produkte laufen NUR über deren
+     Partner-Code — nie über Amazon (siehe products.js / partners.js).
+     Alle Klassen .pp-  ·  Body .pp-page.
      ============================================================ */
-  .pp-hero {
-    position: relative; margin: 0 auto var(--space-lg); max-width: 1080px;
-    padding: clamp(34px, 6vw, 60px) var(--space-md);
-    border-radius: var(--radius-card);
-    background-color: var(--hero-bg); background-image: var(--grain6), var(--grad-hero);
-    color: var(--vanilla);
-    text-align: center; overflow: hidden;
-    box-shadow: 0 12px 34px -14px rgba(15,42,26,0.55);
-  }
-  .pp-hero__mono { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(3rem, 10vw, 4.6rem); font-weight: 700; line-height: 1; margin: 0; }
-  .pp-hero__title { font-family: 'Playfair Display', Georgia, serif; font-weight: 600; font-size: var(--font-h4); margin: 8px 0 0; }
-  .pp-hero__intro { margin: 12px auto 0; max-width: 440px; color: rgba(247,239,222,0.86); font-size: var(--font-body); line-height: 1.55; }
 
-  .adnote {
-    display: flex; gap: 7px; align-items: center; justify-content: center;
-    max-width: 1080px; margin: 0 auto var(--space-md); padding: 0 clamp(20px, 3vw, 40px);
-    font-size: var(--font-eyebrow); letter-spacing: var(--tracking-wider);
-    text-transform: uppercase; color: var(--ink-2);
-  }
-  .adnote::before, .adnote::after { content: ""; height: 1px; flex: 1; background: var(--earth); }
-  .adnote span { white-space: nowrap; }
+  /* ---- Hero ---- */
+  .pp-hero { margin: clamp(48px, 9vh, 96px) 0 14px; }
+  .pp-hero .kicker { font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
+    letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf);
+    display: flex; align-items: center; gap: 12px; }
+  .pp-hero .kicker::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.24); }
+  .pp-hero h1 { margin: 16px 0 20px; font-family: 'Playfair Display', serif; font-weight: 700;
+    font-size: clamp(44px, 11vw, 84px); line-height: 0.98; color: var(--paper); letter-spacing: -0.5px; }
+  .pp-hero h1 em { font-style: italic; color: var(--leaf); }
+  .pp-lead { font-size: 16.5px; line-height: 1.7; color: var(--paper-dim); max-width: 52ch; }
+  .pp-meta { margin-top: 22px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--paper-faint); }
+  .pp-meta i { color: var(--leaf); font-style: normal; }
 
-  /* Aside-Elemente in den Index-Zeilen */
-  .pc-badge { align-self: flex-start; background: var(--forest-wash); color: var(--forest-primary); font-weight: 800; font-size: 12px; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
-  .pc-code {
-    display: flex; align-items: center; gap: 8px; width: 100%;
-    background: var(--beige-1); border: 1px dashed var(--earth); border-radius: var(--radius-control);
-    padding: 7px 7px 7px 13px;
-  }
-  .pc-code code { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-weight: 700; font-size: 13.5px; letter-spacing: 1px; color: var(--ink); flex: 1; }
-  .pc-copy { border: none; background: var(--forest-primary); color: var(--vanilla); font-weight: 700; font-size: 12px; padding: 7px 13px; border-radius: 8px; cursor: pointer; transition: background 0.15s; }
-  .pc-copy:hover { background: var(--forest-anchor); }
-  .pc-copy.copied { background: var(--forest-accent); }
-  .pc-hint { margin: 12px 0 0; font-size: 12.5px; line-height: 1.5; color: var(--ink-2); }
-  .pc-hint strong { color: var(--forest-primary); }
+  /* ---- Affiliate-Disclosure: heller data-light-Hinweis, klar sichtbar ---- */
+  .pp-disclosure { width: min(1040px, 92vw); margin: 26px 0 8px;
+    margin-left: calc((100% - min(1040px, 92vw)) / 2);
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px clamp(18px, 3vw, 26px); border-radius: 14px; position: relative; overflow: hidden;
+    background: linear-gradient(158deg, #F5EEDE, #E9DFC6); box-shadow: var(--shadow-paper); }
+  .pp-disclosure::after { content: ""; position: absolute; inset: 0; background-image: var(--grain);
+    opacity: 0.5; pointer-events: none; }
+  .pp-disclosure__tag { position: relative; z-index: 1; flex: none;
+    font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 1.6px;
+    text-transform: uppercase; color: #14100A; align-self: flex-start;
+    background: linear-gradient(180deg, #E8BF25, #D4A918); padding: 6px 13px;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%); }
+  .pp-disclosure__text { position: relative; z-index: 1; margin: 0;
+    font-size: 13px; line-height: 1.55; color: rgba(24,43,31,0.86); }
+  .pp-disclosure__text strong { color: #14281C; font-weight: 700; }
 
-  .cta {
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%;
-    text-decoration: none; background: var(--grad-forest); color: var(--vanilla);
-    font-weight: 800; font-size: 14px; height: 44px; border-radius: var(--radius-control);
-    box-shadow: 0 8px 20px -8px rgba(4,89,39,0.40); transition: transform 0.15s, box-shadow 0.25s, filter 0.2s;
-  }
-  .cta:hover { filter: brightness(1.06); transform: translateY(-1px); box-shadow: 0 14px 32px -10px rgba(4,89,39,0.55); }
-  .cta:focus-visible { outline: 3px solid var(--forest-accent); outline-offset: 2px; }
-  .cta svg { width: 14px; height: 14px; }
-  .cta--pending { display: inline-flex; align-items: center; justify-content: center; width: 100%; height: 44px; border-radius: var(--radius-control); background: var(--beige-1); color: var(--ink-2); border: 1px dashed var(--earth); font-weight: 700; font-size: 13px; }
-  .pfine { margin: 12px 0 0; font-size: 11px; line-height: 1.45; color: var(--ink-3); max-width: 54ch; }
+  /* ---- Sektions-Grids ---- */
+  .pp-grid { display: grid; gap: 16px; margin-top: 4px;
+    width: min(1040px, 92vw); margin-left: calc((100% - min(1040px, 92vw)) / 2); }
+  .pp-grid--partner { grid-template-columns: 1fr; }
+  .pp-grid--pick { grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 640px) { .pp-grid--partner { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 980px) { .pp-grid--pick { grid-template-columns: repeat(4, 1fr); } }
+  @media (max-width: 520px) { .pp-grid--pick { grid-template-columns: 1fr; } }
 
-  .lp-danke { margin: var(--space-lg) auto 0; max-width: 1080px; padding: 0 clamp(20px, 3vw, 40px); }
-  vh-danke-block { display: block; }
-  .noscript-note { max-width: 620px; margin: var(--space-md) auto 0; padding: var(--space-sm); border: 1px solid var(--border); border-radius: var(--radius-card); font-size: 14px; color: var(--ink-2); text-align: center; }
-  .noscript-note a { color: var(--forest-primary); }
+  /* ---- Karte: dunkle Tiefe, Gipfelgrat-Akzent beim Hover (wie /touren) ---- */
+  .pp-card { position: relative; display: flex; flex-direction: column; overflow: hidden;
+    padding: 30px 26px 26px;
+    background: linear-gradient(158deg, rgba(19,54,35,0.5), rgba(6,26,17,0.55));
+    border: 1px solid rgba(126,208,155,0.14); border-radius: 16px;
+    box-shadow: inset 0 1px 0 rgba(209,242,235,0.06), 0 18px 40px -26px rgba(0,0,0,0.7);
+    transition: transform 550ms var(--ease-lux), border-color 550ms var(--ease-lux), box-shadow 550ms var(--ease-lux); }
+  .pp-card::after { content: ""; position: absolute; inset: 0; background-image: var(--grain);
+    opacity: 0.4; pointer-events: none; }
+  .pp-card::before { content: ""; position: absolute; left: 0; top: 0; height: 2px; width: 0;
+    background: linear-gradient(90deg, var(--emerald), transparent);
+    transition: width 650ms var(--ease-lux); z-index: 2; }
+  .pp-card:hover { transform: translateY(-5px); border-color: rgba(126,208,155,0.34);
+    box-shadow: inset 0 1px 0 rgba(209,242,235,0.1), 0 30px 54px -26px rgba(0,0,0,0.78); }
+  .pp-card:hover::before { width: 62%; }
+  .pp-card > * { position: relative; z-index: 1; }
+
+  /* Ghost-Ziffer — riesig, transparent hinter der Typo */
+  .pp-card__no { position: absolute; right: 18px; top: 6px; z-index: 0;
+    font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; font-size: 58px;
+    line-height: 1; color: rgba(126,208,155,0.09); pointer-events: none;
+    transition: color 550ms var(--ease-lux); }
+  .pp-card:hover .pp-card__no { color: rgba(126,208,155,0.17); }
+
+  .pp-card__head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    min-height: 20px; padding-right: 48px; }
+  .pp-card__cat { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--leaf); }
+  .pp-badge { font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 1px;
+    color: #14100A; background: linear-gradient(180deg, #E8BF25, #D4A918); padding: 4px 12px 4px 11px;
+    clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%); }
+  .pp-card__name { margin: 12px 0 8px; font-family: 'Playfair Display', serif; font-weight: 600;
+    font-size: 22px; line-height: 1.14; color: var(--paper); }
+  .pp-card__text { font-size: 14.5px; line-height: 1.62; color: var(--paper-dim); }
+
+  /* Hinweis-Box */
+  .pp-hint { margin-top: 14px; font-size: 12.5px; line-height: 1.5; color: var(--paper-dim); }
+  .pp-hint strong { color: var(--leaf); font-weight: 700; }
+
+  /* Code-Zeile — gepunkteter Bergstations-Rahmen, Mono-Code in Mint */
+  .pp-code { display: flex; align-items: center; gap: 8px; margin-top: 16px;
+    background: rgba(5,22,14,0.6); border: 1px dashed rgba(126,208,155,0.4); border-radius: 10px;
+    padding: 8px 8px 8px 14px; }
+  .pp-code code { flex: 1; font-family: var(--mono); font-weight: 700; font-size: 13.5px;
+    letter-spacing: 1.2px; color: var(--mint); }
+  .pp-copy { flex: none; border: 0; cursor: pointer; background: var(--royal); color: var(--paper);
+    font-family: var(--mono); font-weight: 700; font-size: 11px; letter-spacing: 1px;
+    padding: 8px 15px; border-radius: 8px;
+    transition: background 200ms var(--ease-lux), color 200ms var(--ease-lux), transform 200ms var(--ease-lux); }
+  .pp-copy:hover { background: var(--emerald); color: #05130C; transform: translateY(-1px); }
+  .pp-copy:focus-visible { outline: 2px solid var(--leaf); outline-offset: 2px; }
+  .pp-copy.copied { background: var(--emerald); color: #05130C; }
+
+  /* Preis-Hinweis (Picks) */
+  .pp-price { margin-top: 16px; font-family: var(--mono); font-size: 10px; font-weight: 700;
+    letter-spacing: 1.6px; text-transform: uppercase; color: var(--paper-faint); }
+
+  /* Affiliate-Fineprint (rechtlich) */
+  .pp-fine { margin-top: 12px; font-size: 11px; line-height: 1.45; color: var(--paper-faint); max-width: 46ch; }
+
+  /* CTA — DAV-gelbes Wegweiser-Schild (v3 .th-btn), sitzt unten */
+  .pp-cta { margin-top: 18px; align-self: flex-start; }
+  .pp-cta svg { width: 13px; height: 13px; }
+  .pp-pending { margin-top: 18px; align-self: flex-start; display: inline-flex; align-items: center;
+    font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.4px;
+    text-transform: uppercase; color: var(--paper-faint);
+    background: rgba(5,22,14,0.5); border: 1px dashed rgba(126,208,155,0.28); border-radius: 8px;
+    padding: 11px 18px; }
+
+  /* ---- Divider (Berg-Glyphe zwischen den Sektionen) ---- */
+  .pp-divider { display: flex; justify-content: center; margin: 44px 0; color: rgba(126,208,155,0.4); }
+  .pp-divider svg { width: 30px; height: auto;
+    filter: drop-shadow(0 1px 2px rgba(3,15,9,0.6)); }
+
+  /* ---- Danke-Block ---- */
+  .pp-danke { width: min(560px, 92vw); margin: 96px auto 0; }
+  .pp-noscript { max-width: 560px; margin: 20px auto 0; padding: 16px 20px;
+    border: 1px solid rgba(126,208,155,0.2); border-radius: 12px;
+    font-size: 14px; color: var(--paper-dim); text-align: center; }
+  .pp-noscript a { color: var(--leaf); border-bottom: 1px solid rgba(126,208,155,0.4); }
 </style>
 </head>
-<body>
-<main class="page">
+<body class="pp-page">
+<div class="bg-wrap" aria-hidden="true"><div class="bg"></div></div>
+<div class="bg2-wrap" aria-hidden="true"><div class="bg2"></div></div>
 
-  <header class="topbar">
-    <a href="/" class="brand" style="text-decoration:none;color:inherit">vegetarian<span class="accent">hulk</span></a>
-  </header>
+<div class="rail rail--l" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">2713 hm</span></div>
+</div>
+<div class="rail rail--r" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">2713 hm</span></div>
+</div>
 
-  <!-- Dunkle P&P-Hero — data-nav-dark: Logo klappt hier sichtbar auf hell um -->
-  <section class="pp-hero" data-nav-dark aria-labelledby="pp-title">
-    <p class="pp-hero__mono">P&amp;P</p>
-    <h1 class="pp-hero__title" id="pp-title">Smash Partner &amp; Picks</h1>
-    <p class="pp-hero__intro">Meine Partner mit echten Rabattcodes — und die Produkte, die ich selbst nutze. Ehrlich empfohlen, kein Katalog.</p>
-  </section>
+<main>
+  <div class="wrap">
 
-  <p class="adnote"><span>Werbung · Affiliate-Links</span></p>
+    <header class="topbar">
+      <span class="brandbox">
+        <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+        <span class="wordmark wordmark--invert" aria-hidden="true" data-invert-layer>VEGETARIAN<b>HULK</b></span>
+      </span>
+    </header>
 
-  <!-- 01 — Partner & Codes -->
-  <section class="vh-section" aria-labelledby="sec-partner">
-    <div class="vh-shead">
-      <p class="vh-shead__eyebrow"><span class="num">01</span> Partner &amp; Codes</p>
-      <h2 class="vh-shead__title" id="sec-partner">Wo ich einkaufe, sparst <em>du</em>.</h2>
-    </div>
-    <div id="partner-index" class="vh-index"></div>
-  </section>
+    <!-- Hero -->
+    <section class="pp-hero st" aria-labelledby="pp-title">
+      <p class="kicker st st1">Smash Partner &amp; Picks</p>
+      <h1 id="pp-title" class="st st2">Wo ich einkaufe.<br><em>Sparst du mit.</em></h1>
+      <p class="pp-lead st st3">Meine Partner mit echten Rabattcodes — und die Ausrüstung, die ich
+      selbst nutze. Kein Katalog, keine Fremdfüller-Liste: nur was den Weg vom Berg bis in den Schnitt
+      wirklich mitgeht. Ehrlich empfohlen, sonst steht es hier nicht.</p>
+      <p class="pp-meta st st4"><span>Rabattcodes</span><i>·</i><span>Eigene Ausrüstung</span><i>·</i><span>Amazon-Partner</span></p>
+    </section>
 
-  <div class="vh-divider" aria-hidden="true">
-    <svg viewBox="0 0 30 22" fill="none"><path d="M1 21 9 6l4 6.5L18 5l11 16z" fill="currentColor"/></svg>
-  </div>
+    <!-- Affiliate-Disclosure (rechtlich, klar sichtbar) -->
+    <aside class="pp-disclosure rv" data-light aria-label="Werbekennzeichnung">
+      <span class="pp-disclosure__tag">Werbung</span>
+      <p class="pp-disclosure__text"><strong>Affiliate-Links.</strong> Über meine Codes und Links kaufst
+      du zum selben Preis wie sonst — ich erhalte eine Provision. Für dich entstehen dadurch keine Mehrkosten.</p>
+    </aside>
 
-  <!-- 02 — Meine Picks -->
-  <section class="vh-section" aria-labelledby="sec-picks">
-    <div class="vh-shead">
-      <p class="vh-shead__eyebrow"><span class="num">02</span> Meine Picks</p>
-      <h2 class="vh-shead__title" id="sec-picks">Die Sachen, die ich <em>wirklich</em> nutze.</h2>
-    </div>
-    <div id="product-index" class="vh-index"></div>
-    <noscript>
-      <p class="noscript-note">Die Liste braucht JavaScript. Schreib mir sonst auf <a href="https://instagram.com/vegetarianhulk" rel="noopener">@vegetarianhulk</a>.</p>
-    </noscript>
-  </section>
-
-  <section class="lp-danke" aria-label="Danke an die Smashies">
-    <vh-danke-block class="reveal"></vh-danke-block>
-  </section>
-
-  <footer class="vh-footer footer-a2" role="contentinfo" aria-label="Site footer">
-    <div class="grid">
-      <div class="col col-brand">
-        <div class="vh-wordmark wordmark">VEGETARIAN<span class="accent">HULK</span></div>
-        <div class="vh-tagline tagline">Builder &amp; Creator. Disziplin über Hype.</div>
-        <a class="vh-link vh-ig ig" href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener" aria-label="Instagram @vegetarianhulk">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-            <rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle>
-          </svg>
-          <span>@vegetarianhulk</span>
-        </a>
+    <!-- 01 — Partner & Codes -->
+    <section aria-labelledby="sec-partner">
+      <div class="shead" style="margin-top: 64px;">
+        <p class="kicker">01 · Partner &amp; Codes</p>
+        <h2 id="sec-partner">Wo ich einkaufe, sparst <em>du</em>.</h2>
       </div>
-      <nav class="col" aria-label="Brand navigation">
-        <p class="vh-col-label">Explore</p>
-        <ul>
-          <li><a class="vh-link" href="/">Startseite</a></li>
-          <li><a class="vh-link" href="/newsletter">Newsletter</a></li>
-          <li><a class="vh-link is-current" href="/partner-picks/" aria-current="page">Smash Partner &amp; Picks</a></li>
-          <li><a class="vh-link" href="/kooperationen.html">Für Brands</a></li>
-        </ul>
-      </nav>
-      <nav class="col" aria-label="Rechtliches">
-        <p class="vh-col-label">Legal</p>
-        <ul>
-          <li><a class="vh-link" href="/impressum.html">Impressum</a></li>
-          <li><a class="vh-link" href="/datenschutz.html">Datenschutz</a></li>
-        </ul>
-      </nav>
-    </div>
-    <hr class="vh-hairline" />
-    <div class="bottom"><span class="vh-copyright">© <span id="footer-year">2026</span> Sebastian Wimmer · VegetarianHulk</span></div>
-  </footer>
+      <div id="partner-index" class="pp-grid pp-grid--partner"></div>
+    </section>
 
+    <div class="pp-divider" aria-hidden="true">
+      <svg viewBox="0 0 30 22" fill="none"><path d="M1 21 9 6l4 6.5L18 5l11 16z" fill="currentColor"/></svg>
+    </div>
+
+    <!-- 02 — Meine Picks -->
+    <section aria-labelledby="sec-picks">
+      <div class="shead" style="margin-top: 0;">
+        <p class="kicker">02 · Meine Picks</p>
+        <h2 id="sec-picks">Die Sachen, die ich <em>wirklich</em> nutze.</h2>
+      </div>
+      <div id="product-index" class="pp-grid pp-grid--pick"></div>
+      <noscript>
+        <p class="pp-noscript">Die Liste braucht JavaScript. Schreib mir sonst auf
+        <a href="https://instagram.com/vegetarianhulk" rel="noopener">@vegetarianhulk</a>.</p>
+      </noscript>
+    </section>
+
+    <!-- Danke an die Smashies -->
+    <section class="pp-danke rv" aria-label="Danke an die Smashies">
+      <vh-danke-block data-light></vh-danke-block>
+    </section>
+
+  </div>
 </main>
+
+<footer>
+  <div class="inner">
+    <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+    <p class="claim">Builder &amp; Creator. Disziplin über Hype.</p>
+    <nav class="legal" aria-label="Rechtliches">
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+      <span>© 2026 Sebastian Wimmer</span>
+    </nav>
+  </div>
+</footer>
+
+<nav class="nav" aria-label="Hauptnavigation">
+  <a href="/">Start</a>
+  <a href="/partner-picks/" aria-current="page">P&amp;P</a>
+  <a class="center" href="/touren/">
+    <span class="mtn"><svg viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 50 26 16l10 16 8-12 22 30"/>
+      <path d="M22 23.5 26 20l4 5" opacity="0.85"/>
+      <path d="M40.5 25.5 44 21.5l3.5 5" opacity="0.85"/>
+      <circle cx="58" cy="11" r="4.5" opacity="0.9"/>
+      <path d="M12 50c8-4 16-3.4 22 0" opacity="0.45"/>
+    </svg></span>
+    Hulk&nbsp;Hikes
+  </a>
+  <a href="/newsletter">News</a>
+  <a href="/kooperationen.html">Brands</a>
+</nav>
 
 <script src="/codes/partners.js?v=3fcfc0c4"></script>
 <script src="/lieblingsprodukte/products.js?v=56582fff"></script>
 
 <script>
-/* Partner als EditorialIndex-Zeilen (aus VH_PARTNERS) — Copy-Code + CTA /go/<slug>/ */
+/* Partner als v3-Karten (aus VH_PARTNERS) — Copy-Code + CTA /go/<slug>/ */
 (function () {
   'use strict';
   var mount = document.getElementById('partner-index');
@@ -174,50 +269,51 @@
   function n2(i) { return (i < 10 ? '0' : '') + i; }
   function arrow() {
     var s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('fill', 'none'); s.setAttribute('stroke', 'currentColor'); s.setAttribute('stroke-width', '2.2'); s.setAttribute('aria-hidden', 'true');
+    s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('fill', 'none'); s.setAttribute('stroke', 'currentColor'); s.setAttribute('stroke-width', '2.4'); s.setAttribute('aria-hidden', 'true');
     var p = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p.setAttribute('d', 'M7 17 17 7M9 7h8v8'); s.appendChild(p); return s;
   }
 
   VH_PARTNERS.filter(function (p) { return p.active; })
     .sort(function (a, b) { return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0) || (a.sortOrder || 0) - (b.sortOrder || 0); })
     .forEach(function (p, i) {
-      var row = el('div', 'vh-index__row reveal');
-      row.style.setProperty('--reveal-delay', (i * 70) + 'ms');
-      row.appendChild(el('div', 'vh-index__num', n2(i + 1)));
+      var card = el('article', 'pp-card rv');
+      card.style.setProperty('--d', (i * 90) + 'ms');
+      card.appendChild(el('span', 'pp-card__no', n2(i + 1)));
 
-      var main = el('div', 'vh-index__main');
-      main.appendChild(el('h3', 'vh-index__name', p.name));
-      var meta = p.category || '';
-      if (p.discount) meta += (meta ? ' · ' : '') + '–' + p.discount;
-      if (meta) main.appendChild(el('p', 'vh-index__meta', meta));
-      main.appendChild(el('p', 'vh-index__text', p.valueLine));
-      if (p.hint) { var h = el('p', 'pc-hint'); h.appendChild(el('strong', null, p.hint.lead + ' ')); h.appendChild(document.createTextNode(p.hint.text)); main.appendChild(h); }
-      main.appendChild(el('p', 'pfine', 'Affiliate-Link: Wenn du über Code/Link kaufst, erhalte ich eine Provision. Für dich entstehen keine Mehrkosten.' + (p.finePrintExtra ? ' ' + p.finePrintExtra : '')));
-      row.appendChild(main);
+      var head = el('div', 'pp-card__head');
+      if (p.category) head.appendChild(el('span', 'pp-card__cat', p.category));
+      if (p.discount) head.appendChild(el('span', 'pp-badge', '–' + p.discount));
+      card.appendChild(head);
 
-      var aside = el('div', 'vh-index__aside');
+      card.appendChild(el('h3', 'pp-card__name', p.name));
+      card.appendChild(el('p', 'pp-card__text', p.valueLine));
+
+      if (p.hint) { var h = el('p', 'pp-hint'); h.appendChild(el('strong', null, p.hint.lead + ' ')); h.appendChild(document.createTextNode(p.hint.text)); card.appendChild(h); }
+
       if (p.code) {
-        var code = el('div', 'pc-code');
+        var code = el('div', 'pp-code');
         code.appendChild(el('code', null, p.code));
-        var btn = el('button', 'pc-copy', 'Copy'); btn.type = 'button';
+        var btn = el('button', 'pp-copy', 'Copy'); btn.type = 'button';
         btn.addEventListener('click', function () {
           if (navigator.clipboard) navigator.clipboard.writeText(p.code);
           btn.textContent = 'Kopiert'; btn.classList.add('copied');
           setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
         });
-        code.appendChild(btn); aside.appendChild(code);
+        code.appendChild(btn); card.appendChild(code);
       }
-      var cta = el('a', 'cta', 'Zum Shop'); cta.href = '/go/' + p.slug + '/'; cta.rel = 'sponsored noopener'; cta.appendChild(arrow());
-      aside.appendChild(cta);
-      row.appendChild(aside);
 
-      mount.appendChild(row);
+      card.appendChild(el('p', 'pp-fine', 'Affiliate-Link: Wenn du über Code/Link kaufst, erhalte ich eine Provision. Für dich entstehen keine Mehrkosten.' + (p.finePrintExtra ? ' ' + p.finePrintExtra : '')));
+
+      var cta = el('a', 'th-btn th-btn--gelb pp-cta', 'Zum Shop'); cta.href = '/go/' + p.slug + '/'; cta.rel = 'sponsored noopener'; cta.appendChild(arrow());
+      card.appendChild(cta);
+
+      mount.appendChild(card);
     });
 })();
 </script>
 
 <script>
-/* Produkte als EditorialIndex-Zeilen (aus VH_PRODUCTS) */
+/* Produkte als v3-Karten (aus VH_PRODUCTS) — Amazon-CTA */
 (function () {
   'use strict';
   var mount = document.getElementById('product-index');
@@ -227,39 +323,39 @@
   function isPending(url) { return !url || url.indexOf('PENDING_') === 0; }
   function arrow() {
     var s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('fill', 'none'); s.setAttribute('stroke', 'currentColor'); s.setAttribute('stroke-width', '2.2'); s.setAttribute('aria-hidden', 'true');
+    s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('fill', 'none'); s.setAttribute('stroke', 'currentColor'); s.setAttribute('stroke-width', '2.4'); s.setAttribute('aria-hidden', 'true');
     var p = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p.setAttribute('d', 'M7 17 17 7M9 7h8v8'); s.appendChild(p); return s;
   }
 
   VH_PRODUCTS.filter(function (p) { return p.active; }).forEach(function (p, i) {
-    var row = el('div', 'vh-index__row reveal');
-    row.style.setProperty('--reveal-delay', (i * 70) + 'ms');
-    row.appendChild(el('div', 'vh-index__num', n2(i + 1)));
+    var card = el('article', 'pp-card rv');
+    card.style.setProperty('--d', (i * 90) + 'ms');
+    card.appendChild(el('span', 'pp-card__no', n2(i + 1)));
 
-    var main = el('div', 'vh-index__main');
-    main.appendChild(el('h3', 'vh-index__name', p.name));
-    if (p.kategorie) main.appendChild(el('p', 'vh-index__meta', p.kategorie));
-    main.appendChild(el('p', 'vh-index__text', p.text));
-    if (!isPending(p.url)) main.appendChild(el('p', 'pfine', 'Amazon-Partnerlink: Wenn du darüber kaufst, erhalte ich eine Provision. Für dich entstehen keine Mehrkosten.'));
-    row.appendChild(main);
+    var head = el('div', 'pp-card__head');
+    if (p.kategorie) head.appendChild(el('span', 'pp-card__cat', p.kategorie));
+    card.appendChild(head);
 
-    var aside = el('div', 'vh-index__aside');
-    if (p.preisHinweis) { var pr = el('p', 'vh-index__meta', p.preisHinweis); pr.style.margin = '0'; aside.appendChild(pr); }
+    card.appendChild(el('h3', 'pp-card__name', p.name));
+    card.appendChild(el('p', 'pp-card__text', p.text));
+
+    if (p.preisHinweis) card.appendChild(el('p', 'pp-price', p.preisHinweis));
+
+    if (!isPending(p.url)) card.appendChild(el('p', 'pp-fine', 'Amazon-Partnerlink: Wenn du darüber kaufst, erhalte ich eine Provision. Für dich entstehen keine Mehrkosten.'));
+
     if (isPending(p.url)) {
-      aside.appendChild(el('span', 'cta--pending', 'Link folgt in Kürze'));
+      card.appendChild(el('span', 'pp-pending', 'Link folgt in Kürze'));
     } else {
-      var cta = el('a', 'cta', 'Bei Amazon'); cta.href = p.url; cta.target = '_blank'; cta.rel = 'sponsored noopener'; cta.appendChild(arrow());
-      aside.appendChild(cta);
+      var cta = el('a', 'th-btn th-btn--gelb pp-cta', 'Auf Amazon ansehen'); cta.href = p.url; cta.target = '_blank'; cta.rel = 'sponsored noopener'; cta.appendChild(arrow());
+      card.appendChild(cta);
     }
-    row.appendChild(aside);
-    mount.appendChild(row);
+
+    mount.appendChild(card);
   });
 })();
 </script>
 
 <script src="/danke-block.js?v=980b62a3"></script>
-<script src="/motion-reveal.js?v=d3baa308"></script>
-<script src="/nav.js" defer></script>
-<script>(function () { var y = document.getElementById('footer-year'); if (y) y.textContent = new Date().getFullYear(); })();</script>
+<script src="/v3.js?v=182e7de3" defer></script>
 </body>
 </html>
