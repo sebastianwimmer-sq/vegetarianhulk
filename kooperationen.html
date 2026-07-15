@@ -45,6 +45,8 @@
   text-transform: uppercase; color: var(--paper-faint); }
 .koop-trust span { display: inline-flex; align-items: center; gap: 7px; }
 .koop-trust i { color: var(--leaf); font-style: normal; }
+.koop-ic { width: 15px; height: 15px; color: var(--leaf); flex-shrink: 0; }
+.koop-ic-btn { width: 15px; height: 15px; vertical-align: -2px; margin-right: 4px; }
 .koop-hero-cta { margin-top: 30px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; }
 .koop-hero-cta .koop-note { font-family: var(--mono); font-size: 9.5px; font-weight: 600;
   letter-spacing: 1.2px; text-transform: uppercase; color: var(--paper-faint); }
@@ -121,31 +123,35 @@
   filter: grayscale(0.2); }
 
 /* ---- Pakete (Creme-Tiles) ---- */
-.koop-pack-grid { margin-top: 24px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-.koop-pack { position: relative; display: flex; flex-direction: column; gap: 4px;
-  padding: 22px 22px 24px; border-radius: 16px;
-  background: linear-gradient(180deg, #FFFDF7, #F1E7CF);
-  border: 1px solid var(--earth); box-shadow: 0 1px 3px rgba(4,89,39,0.06), 0 10px 26px -18px rgba(4,89,39,0.28);
-  transition: transform 400ms var(--ease-lux), box-shadow 400ms var(--ease-lux), border-color 400ms var(--ease-lux); }
-.koop-pack:hover { transform: translateY(-4px); border-color: rgba(11,110,79,0.42);
-  box-shadow: 0 3px 8px rgba(4,89,39,0.08), 0 20px 40px -18px rgba(4,89,39,0.34); }
-.koop-pack--hi { border-color: rgba(11,110,79,0.5);
-  background: linear-gradient(180deg, #FFFDF7, #ECE0C5);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 3px 10px rgba(4,89,39,0.1), 0 22px 46px -18px rgba(4,89,39,0.42); }
-.koop-pack--hi::before { content: ""; position: absolute; left: 0; top: 16px; bottom: 16px; width: 3px;
-  border-radius: 2px; background: linear-gradient(180deg, var(--royal), rgba(11,110,79,0)); }
-.koop-pack-eyebrow { align-self: flex-start; font-family: var(--mono); font-size: 8.5px; font-weight: 700;
-  letter-spacing: 1.8px; text-transform: uppercase; color: #14100A;
-  background: linear-gradient(180deg, #E8BF25, #D4A918); padding: 4px 11px; margin-bottom: 4px;
-  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%); }
-.koop-pack-icon { font-size: 22px; line-height: 1; }
-.koop-pack-name { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 20px;
-  line-height: 1.1; color: #14281C; margin-top: 6px; }
-.koop-pack-meta { font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 1.2px;
-  text-transform: uppercase; color: rgba(24,43,31,0.5); }
-.koop-pack-desc { margin-top: 8px; font-size: 13.5px; line-height: 1.55; color: rgba(24,43,31,0.78); flex: 1; }
-.koop-pack-price { margin-top: 14px; font-family: 'Playfair Display', serif; font-weight: 700;
-  font-size: 22px; letter-spacing: -0.5px; color: var(--royal); }
+/* Leistungen als editoriale Tarif-Liste (statt Emoji-Karten-Raster) */
+.koop-tiers { margin-top: 26px; border-top: 1px solid rgba(24,43,31,0.16); }
+.koop-tier { position: relative; display: grid; align-items: baseline;
+  grid-template-columns: 46px 1fr auto; column-gap: 20px;
+  padding: 22px 8px 22px 0; border-bottom: 1px solid rgba(24,43,31,0.13);
+  transition: padding-left 450ms var(--ease-lux), background 450ms var(--ease-lux); }
+.koop-tier:hover { padding-left: 14px; background: linear-gradient(90deg, rgba(11,110,79,0.05), transparent 70%); }
+.koop-tier-idx { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 1px;
+  color: rgba(24,43,31,0.4); padding-top: 4px; }
+.koop-tier-name { font-family: 'Playfair Display', serif; font-weight: 600; font-size: clamp(20px, 2.4vw, 25px);
+  line-height: 1.1; color: #14281C; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.koop-tier-meta { margin-top: 5px; font-family: var(--mono); font-size: 9.5px; font-weight: 700;
+  letter-spacing: 1.4px; text-transform: uppercase; color: rgba(24,43,31,0.5); }
+.koop-tier-desc { margin-top: 9px; font-size: 14px; line-height: 1.55; color: rgba(24,43,31,0.78); max-width: 46ch; }
+.koop-tier-price { font-family: 'Playfair Display', serif; font-size: 15px; color: rgba(24,43,31,0.55);
+  text-align: right; white-space: nowrap; padding-top: 2px; }
+.koop-tier-price b { display: block; font-weight: 700; font-size: clamp(24px, 3vw, 30px);
+  letter-spacing: -0.5px; color: var(--royal); }
+.koop-tier-price small { font-size: 13px; color: rgba(24,43,31,0.5); font-family: var(--mono); letter-spacing: 0.5px; }
+/* Empfohlen: DAV-Schild + gelb-akzentuierte, herausgehobene Zeile */
+.koop-tier-flag { font-family: var(--mono); font-size: 8.5px; font-weight: 700; letter-spacing: 1.6px;
+  text-transform: uppercase; color: #14100A; background: linear-gradient(180deg, #E8BF25, #D4A918);
+  padding: 4px 12px 4px 9px; clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%); }
+.koop-tier--hi { margin: 4px 0; padding-left: 18px; padding-right: 18px; border-bottom-color: transparent;
+  border-radius: 12px; background: linear-gradient(100deg, rgba(11,110,79,0.07), rgba(232,191,37,0.05));
+  box-shadow: inset 0 0 0 1px rgba(11,110,79,0.16); }
+.koop-tier--hi::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 3px;
+  border-radius: 2px; background: linear-gradient(180deg, #E8BF25, var(--royal)); }
+.koop-tier--hi:hover { padding-left: 24px; background: linear-gradient(100deg, rgba(11,110,79,0.1), rgba(232,191,37,0.07)); }
 .koop-price-note { margin-top: 18px; font-family: var(--mono); font-size: 10px; line-height: 1.6;
   letter-spacing: 0.4px; color: rgba(24,43,31,0.55); }
 
@@ -189,7 +195,7 @@
 .koop-fit-h.yes { color: var(--royal); }
 .koop-fit-h.no { color: rgba(24,43,31,0.5); }
 .koop-fit-pills { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
-.koop-fit-pill { font-size: 12.5px; font-weight: 600; letter-spacing: 0.2px; padding: 8px 14px;
+.koop-fit-pill { position: relative; font-size: 12.5px; font-weight: 600; letter-spacing: 0.2px; padding: 8px 14px;
   border-radius: 20px; background: rgba(11,110,79,0.08); border: 1px solid rgba(11,110,79,0.24); color: #14281C;
   transition: transform 320ms var(--ease-lux), border-color 320ms var(--ease-lux); }
 .koop-fit-pill:hover { transform: translateY(-2px); border-color: var(--royal); }
@@ -251,10 +257,15 @@
 /* ---- Responsive ---- */
 @media (max-width: 720px) {
   .koop-cards { grid-template-columns: 1fr; }
-  .koop-pack-grid { grid-template-columns: 1fr; }
+  .koop-tier { grid-template-columns: 34px 1fr; row-gap: 4px; }
+  .koop-tier-price { grid-column: 2; text-align: left; margin-top: 8px; }
+  .koop-tier-price b { display: inline; }
   .koop-fig-row { grid-template-columns: 1fr; }
   .koop-reach-figs { grid-template-columns: 1fr 1fr; }
 }
+.koop-fit-pills:not(:has(.anti)) .koop-fit-pill::before { content: ""; display: inline-block;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--royal); margin-right: 8px; vertical-align: 2px; }
+.koop-pill b { color: var(--leaf); font-weight: 700; }
 </style>
 </head>
 <body class="koop-page">
@@ -288,12 +299,12 @@
       vegetarisch-stark, Build-in-Public. Ehrlicher Content für Brands, die ich auch privat nutzen würde.
       <strong>Keine Coaching-Phrasen, keine Plastik-Sprüche.</strong></p>
       <p class="koop-trust st st4">
-        <span><i>📍</i> DACH</span>
-        <span><i>👥</i> 2.079 Follower</span>
-        <span><i>⚡</i> Persönliche, schnelle Antwort</span>
+        <span><svg class="koop-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> DACH</span>
+        <span><svg class="koop-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M2.8 20a6.2 6.2 0 0 1 12.4 0M16 5.2a3.2 3.2 0 0 1 0 5.6M17.5 20a6.2 6.2 0 0 0-3-5.3"/></svg> 2.079 Follower</span>
+        <span><svg class="koop-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg> Persönliche, schnelle Antwort</span>
       </p>
       <p class="koop-hero-cta st st4">
-        <a class="th-btn th-btn--gelb th-btn--lg" href="/anfrage.html">📨 Anfrage senden →</a>
+        <a class="th-btn th-btn--gelb th-btn--lg" href="/anfrage.html"><svg class="koop-ic-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg> Anfrage senden →</a>
         <span class="koop-note">Mail oder DM · du bekommst persönlich Antwort</span>
       </p>
 
@@ -329,25 +340,21 @@
 
       <ul class="koop-cards">
         <li class="koop-card rv" style="--d: 0ms">
-          <span class="koop-card-tag" aria-hidden="true">🧬</span>
           <span class="koop-card-stat">10 Jahre</span>
           <h3 class="koop-card-head">Vegetarisch — live, jeden Tag</h3>
           <p class="koop-card-body">Seit 2016. Kein Trend-Hopping, kein Influencer-Reset. Glaubwürdigkeit aus Zeit, nicht aus Content.</p>
         </li>
         <li class="koop-card rv" style="--d: 90ms">
-          <span class="koop-card-tag" aria-hidden="true">🇩🇪</span>
           <span class="koop-card-stat">83%</span>
           <h3 class="koop-card-head">DACH-Kern</h3>
           <p class="koop-card-body">76,2% DE, 6,4% AT — kein DACH-USA-Mix. Wenn DACH dein Markt ist, ist meine Audience relevant.</p>
         </li>
         <li class="koop-card rv" style="--d: 180ms">
-          <span class="koop-card-tag" aria-hidden="true">🎯</span>
           <span class="koop-card-stat">25-34</span>
           <h3 class="koop-card-head">Kaufkräftige Demo</h3>
           <p class="koop-card-body">81% sind 18–34 — der kaufkräftige Kern (25–34) macht 48% aus. Klar männlich geprägt: 64% ♂ / 36% ♀.</p>
         </li>
         <li class="koop-card rv" style="--d: 270ms">
-          <span class="koop-card-tag" aria-hidden="true">✝️</span>
           <span class="koop-card-stat">Loyal</span>
           <h3 class="koop-card-head">Christ-Foundation</h3>
           <p class="koop-card-body">Bibel als Anker, Glaube als Kompass. Niche-Audience die Christian Brands + Faith-Themes echt vertraut.</p>
@@ -364,35 +371,42 @@
         </div>
         <p class="koop-body">Klare Pakete, klare Preise. Custom-Wünsche immer möglich.</p>
 
-        <div class="koop-pack-grid">
-          <div class="koop-pack rv" style="--d: 0ms">
-            <span class="koop-pack-icon" aria-hidden="true">📲</span>
-            <p class="koop-pack-name">Story-Set</p>
-            <p class="koop-pack-meta">5-7 Slides · 24h live</p>
-            <p class="koop-pack-desc">Story-Reihe zu deinem Produkt — in meiner Voice, mit klarem Mehrwert für meine Audience.</p>
-            <p class="koop-pack-price">ab 250 €</p>
+        <div class="koop-tiers">
+          <div class="koop-tier rv" style="--d: 0ms">
+            <span class="koop-tier-idx">01</span>
+            <div class="koop-tier-main">
+              <p class="koop-tier-name">Story-Set</p>
+              <p class="koop-tier-meta">5–7 Slides · 24 h live</p>
+              <p class="koop-tier-desc">Story-Reihe zu deinem Produkt — in meiner Voice, mit klarem Mehrwert für meine Audience.</p>
+            </div>
+            <p class="koop-tier-price">ab <b>250&nbsp;€</b></p>
           </div>
-          <div class="koop-pack rv" style="--d: 90ms">
-            <span class="koop-pack-icon" aria-hidden="true">🎬</span>
-            <p class="koop-pack-name">Reel-Feature</p>
-            <p class="koop-pack-meta">1 Reel · +24h Story-Boost</p>
-            <p class="koop-pack-desc">Skript gemeinsam abgestimmt, Schnitt selbstgemacht. Reel + 1 Story-Push am Reel-Tag.</p>
-            <p class="koop-pack-price">ab 600 €</p>
+          <div class="koop-tier rv" style="--d: 90ms">
+            <span class="koop-tier-idx">02</span>
+            <div class="koop-tier-main">
+              <p class="koop-tier-name">Reel-Feature</p>
+              <p class="koop-tier-meta">1 Reel · +24 h Story-Boost</p>
+              <p class="koop-tier-desc">Skript gemeinsam abgestimmt, Schnitt selbstgemacht. Reel + 1 Story-Push am Reel-Tag.</p>
+            </div>
+            <p class="koop-tier-price">ab <b>600&nbsp;€</b></p>
           </div>
-          <div class="koop-pack koop-pack--hi rv" style="--d: 180ms">
-            <span class="koop-pack-eyebrow">Empfohlen</span>
-            <span class="koop-pack-icon" aria-hidden="true">🤝</span>
-            <p class="koop-pack-name">Long-Term-Partnership</p>
-            <p class="koop-pack-meta">3 Monate · 4-6 Posts/Mo</p>
-            <p class="koop-pack-desc">Echte Integration in meinen Alltag — Brand wird Teil meiner Story, nicht „Werbung im Kalender".</p>
-            <p class="koop-pack-price">ab 1.500 €/Mo</p>
+          <div class="koop-tier koop-tier--hi rv" style="--d: 180ms">
+            <span class="koop-tier-idx">03</span>
+            <div class="koop-tier-main">
+              <p class="koop-tier-name">Long-Term-Partnership <span class="koop-tier-flag">Empfohlen</span></p>
+              <p class="koop-tier-meta">3 Monate · 4–6 Posts/Mo</p>
+              <p class="koop-tier-desc">Echte Integration in meinen Alltag — Brand wird Teil meiner Story, nicht „Werbung im Kalender".</p>
+            </div>
+            <p class="koop-tier-price">ab <b>1.500&nbsp;€</b><small>/Mo</small></p>
           </div>
-          <div class="koop-pack rv" style="--d: 270ms">
-            <span class="koop-pack-icon" aria-hidden="true">⚙️</span>
-            <p class="koop-pack-name">Custom</p>
-            <p class="koop-pack-meta">Nach Bedarf</p>
-            <p class="koop-pack-desc">Event-Coverage, Test-Drive, Live-Story von einem Brand-Day — schreib's in die Anfrage.</p>
-            <p class="koop-pack-price">auf Anfrage</p>
+          <div class="koop-tier rv" style="--d: 270ms">
+            <span class="koop-tier-idx">04</span>
+            <div class="koop-tier-main">
+              <p class="koop-tier-name">Custom</p>
+              <p class="koop-tier-meta">Nach Bedarf</p>
+              <p class="koop-tier-desc">Event-Coverage, Test-Drive, Live-Story von einem Brand-Day — schreib's in die Anfrage.</p>
+            </div>
+            <p class="koop-tier-price">auf&nbsp;<b>Anfrage</b></p>
           </div>
         </div>
 
@@ -401,7 +415,7 @@
         </p>
 
         <div class="koop-bonus rv">
-          <p class="koop-bonus-eyebrow">🎁 First-Brand-Bonus</p>
+          <p class="koop-bonus-eyebrow">First-Brand-Bonus</p>
           <p class="koop-bonus-title">Du bist die erste echte Brand-Kooperation für vegetarianhulk?</p>
           <p class="koop-bonus-body">
             Dann läuft sie mit besonderer Aufmerksamkeit: extra Story-Slides, längere Engagement-Phase,
@@ -414,7 +428,7 @@
     <!-- Mid-CTA-Band (dunkel) -->
     <div class="koop-cta-band rv">
       <span class="koop-cta-line">Klingt nach einem Fit?</span>
-      <a class="th-btn th-btn--gelb th-btn--lg" href="/anfrage.html">📨 Anfrage senden →</a>
+      <a class="th-btn th-btn--gelb th-btn--lg" href="/anfrage.html"><svg class="koop-ic-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg> Anfrage senden →</a>
     </div>
 
     <!-- Reichweite & Zielgruppe (dunkel) -->
@@ -437,10 +451,10 @@
 
       <p class="koop-sub-h">Audience-Mix · Top-Länder</p>
       <div class="koop-pills">
-        <span class="koop-pill">🇩🇪 76,2%</span>
-        <span class="koop-pill">🇦🇹 6,4%</span>
-        <span class="koop-pill">🇬🇧 2,7%</span>
-        <span class="koop-pill">🇫🇷 2,2%</span>
+        <span class="koop-pill"><b>DE</b> 76,2%</span>
+        <span class="koop-pill"><b>AT</b> 6,4%</span>
+        <span class="koop-pill"><b>GB</b> 2,7%</span>
+        <span class="koop-pill"><b>FR</b> 2,2%</span>
       </div>
 
       <p class="koop-sub-h">Top-Altersgruppen</p>
@@ -458,9 +472,9 @@
 
       <p class="koop-sub-h">Content-Mix</p>
       <div class="koop-pills">
-        <span class="koop-pill">📲 Stories 54,5%</span>
-        <span class="koop-pill">🎬 Reels 24,0%</span>
-        <span class="koop-pill">📷 Beiträge 21,6%</span>
+        <span class="koop-pill">Stories 54,5%</span>
+        <span class="koop-pill">Reels 24,0%</span>
+        <span class="koop-pill">Beiträge 21,6%</span>
       </div>
 
       <p class="koop-meta">
@@ -481,16 +495,16 @@
 
         <p class="koop-fit-h yes">✓ Themen die zu mir passen</p>
         <div class="koop-fit-pills">
-          <span class="koop-fit-pill">🌱 Plant-Based Supplements</span>
-          <span class="koop-fit-pill">🥗 Vegan-Food</span>
-          <span class="koop-fit-pill">🏋️ Workout-Gear</span>
-          <span class="koop-fit-pill">✝️ Christian Brands</span>
-          <span class="koop-fit-pill">📓 Habit / Discipline-Tools</span>
-          <span class="koop-fit-pill">📔 Journaling</span>
-          <span class="koop-fit-pill">☕ Coffee / No-Alcohol</span>
-          <span class="koop-fit-pill">📚 Faith-Books</span>
-          <span class="koop-fit-pill">⛪ Bible-Apps</span>
-          <span class="koop-fit-pill">🥦 Vegetarier-freundliche Brands</span>
+          <span class="koop-fit-pill">Plant-Based Supplements</span>
+          <span class="koop-fit-pill">Vegan-Food</span>
+          <span class="koop-fit-pill">Workout-Gear</span>
+          <span class="koop-fit-pill">Christian Brands</span>
+          <span class="koop-fit-pill">Habit / Discipline-Tools</span>
+          <span class="koop-fit-pill">Journaling</span>
+          <span class="koop-fit-pill">Coffee / No-Alcohol</span>
+          <span class="koop-fit-pill">Faith-Books</span>
+          <span class="koop-fit-pill">Bible-Apps</span>
+          <span class="koop-fit-pill">Vegetarier-freundliche Brands</span>
         </div>
 
         <p class="koop-fit-h no">✗ Lieber nicht</p>
@@ -580,7 +594,7 @@
           Schreib mir kurz, was deine Brand macht und wie du dir die Zusammenarbeit vorstellst — du bekommst eine persönliche, schnelle Antwort.
         </p>
         <p class="koop-ready-cta">
-          <a class="th-btn th-btn--gelb th-btn--lg" href="/anfrage.html">📨 Anfrage senden →</a>
+          <a class="th-btn th-btn--gelb th-btn--lg" href="/anfrage.html"><svg class="koop-ic-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg> Anfrage senden →</a>
         </p>
         <p class="koop-ready-alt">
           Lieber locker per DM? <a href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">@vegetarianhulk auf Insta →</a>
