@@ -2,309 +2,290 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anfrage senden — Für Brands · VegetarianHulk</title>
 <meta name="description" content="Brand-Anfrage an @vegetarianhulk — kurz ausfüllen, ich melde mich persönlich.">
-<meta name="theme-color" content="#f7efde">
+<meta name="theme-color" content="#0B2418">
 <meta name="robots" content="index,follow">
+<link rel="canonical" href="https://vegetarianhulk.de/anfrage.html">
 
 <meta property="og:title" content="Anfrage senden — Für Brands · VegetarianHulk">
 <meta property="og:description" content="Interesse an einer Kooperation? Kurz ausfüllen — ich melde mich persönlich.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://vegetarianhulk.de/anfrage.html">
+<meta property="og:image" content="https://vegetarianhulk.de/hero.jpg?v=v31.6.1">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
-<link rel="stylesheet" href="style.css?v=bdf0cecd">
+<link rel="stylesheet" href="/fonts.css?v=1e2010e0">
+<link rel="stylesheet" href="/v3.css?v=c9fdef3c">
 <style>
-/* anfrage.html — premium zweispaltig, depth/glossy konsistent zur Koop-Seite (v31.13) */
-.brand-page .anfrage-layout {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-lg, 24px);
-  max-width: var(--container-wide, 1040px); margin: var(--space-lg, 26px) auto; padding: 0 var(--space-md, 20px); align-items: start;
-}
-/* min-width:0 bricht die Grid-min-content-Falle: Panel/Card können nicht
-   mehr breiter als der Viewport werden (war: 24px Overflow @375) */
-.brand-page .anfrage-layout > * { min-width: 0; }
-@media (max-width: 880px) { .brand-page .anfrage-layout { grid-template-columns: 1fr; gap: var(--space-sm, 18px); } }
+/* ============================================================
+   /anfrage.html — v3 Editorial-Dark Port (page-scoped .anf-)
+   Kontext links (dunkel) · Formular rechts (Creme data-light).
+   Formular-Logik + vh-forms-Endpoint unveraendert.
+   ============================================================ */
+.anf-layout { width: min(1040px, 92vw); margin: clamp(40px, 8vh, 90px) 0 0;
+  margin-left: calc((100% - min(1040px, 92vw)) / 2);
+  display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 22px; align-items: start; }
+.anf-layout > * { min-width: 0; }
+@media (max-width: 880px) { .anf-layout { grid-template-columns: 1fr; gap: 18px; } }
 
-.brand-page .anfrage-panel, .brand-page .anfrage-card {
-  border-radius: 24px; padding: clamp(24px, 4vw, 40px);
-  border: 1px solid rgba(255,255,255,.55);
-  -webkit-backdrop-filter: blur(10px) saturate(1.08); backdrop-filter: blur(10px) saturate(1.08);
-}
-.brand-page .anfrage-panel {
-  background: linear-gradient(180deg, rgba(239,229,207,.5), rgba(239,229,207,.26));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 18px 48px -26px rgba(4,89,39,.3), 0 4px 14px -10px rgba(0,0,0,.1);
-  position: sticky; top: 84px;
-}
-@media (max-width: 880px) { .brand-page .anfrage-panel { position: static; } }
-.brand-page .anfrage-card {
-  background: linear-gradient(180deg, rgba(255,255,255,.74), rgba(247,239,222,.5));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.65), 0 22px 56px -22px rgba(4,89,39,.4), 0 6px 18px -12px rgba(0,0,0,.2);
-}
+/* ---- Kontext-Panel (dunkel) ---- */
+.anf-ctx { padding: 8px 6px 0; }
+.anf-eyebrow { font-family: var(--mono); font-size: var(--t-label); font-weight: 700; letter-spacing: 2.4px;
+  text-transform: uppercase; color: var(--leaf); display: flex; align-items: center; gap: 12px; }
+.anf-eyebrow::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.24); }
+.anf-ctx h1 { margin: 18px 0 16px; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(34px, 6vw, 54px); line-height: 1.0; color: var(--paper); letter-spacing: -0.5px; }
+.anf-ctx h1 em { font-style: italic; color: var(--leaf); }
+.anf-sub { font-size: 16px; line-height: 1.68; color: var(--paper-dim); max-width: 42ch; }
+.anf-figs { margin: 30px 0 26px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px;
+  background: rgba(126,208,155,0.16); border: 1px solid rgba(126,208,155,0.16); border-radius: 12px; overflow: hidden; }
+.anf-fig { background: linear-gradient(158deg, rgba(19,54,35,0.5), rgba(6,26,17,0.55)); padding: 16px 14px; }
+.anf-fig b { display: block; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(20px, 3vw, 27px); line-height: 1; letter-spacing: -0.5px; color: var(--leaf); }
+.anf-fig span { display: block; margin-top: 6px; font-family: var(--mono); font-size: 8.5px; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase; color: var(--paper-faint); line-height: 1.35; }
+.anf-points { list-style: none; margin: 0; padding: 0; }
+.anf-points li { position: relative; padding-left: 22px; margin: 12px 0; font-size: 14.5px; line-height: 1.55; color: var(--paper-dim); }
+.anf-points li::before { content: ""; position: absolute; left: 0; top: 8px; width: 6px; height: 6px;
+  border-radius: 50%; background: var(--emerald); box-shadow: 0 0 8px rgba(80,200,120,0.6); }
 
-.brand-page .anfrage-eyebrow { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11px; font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase; color: var(--forest-primary, #045927); margin-bottom: 14px; }
-.brand-page .anfrage-h1 { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(30px, 5vw, 46px); line-height: 1.05; letter-spacing: -1px; color: var(--ink, #1a1410); margin: 0 0 14px; text-wrap: balance; }
-.brand-page .anfrage-h1 .italic { font-style: italic; font-weight: 400; color: var(--forest-primary, #045927); }
-.brand-page .anfrage-sub { font-size: 16px; line-height: 1.6; color: var(--ink-2, #4a3f33); margin: 0 0 22px; }
-
-.brand-page .anfrage-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-2xs, 10px); margin-bottom: var(--space-md, 20px); }
-.brand-page .anfrage-tile { min-width: 0; padding: 13px 12px; border-radius: 14px; background: linear-gradient(160deg, rgba(255,255,255,.6), rgba(247,239,222,.4)); border: 1px solid rgba(255,255,255,.6); box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 8px 22px -16px rgba(4,89,39,.34); }
-.brand-page .anfrage-tile-num { display: block; font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(18px, 3vw, 24px); line-height: 1; letter-spacing: -.5px; color: var(--forest-primary, #045927); }
-.brand-page .anfrage-tile-label { display: block; margin-top: 4px; font-size: 10.5px; font-weight: 600; color: var(--ink-2, #4a3f33); line-height: 1.25; overflow-wrap: break-word; }
-/* ≤520px: 3 Spalten zu eng für die Labels (Silbentrennungs-Brösel) →
-   Tiles werden zu Zeilen: Zahl links, Label rechts */
-@media (max-width: 520px) {
-  .brand-page .anfrage-tiles { grid-template-columns: 1fr; }
-  .brand-page .anfrage-tile { display: flex; align-items: baseline; gap: 10px; padding: 10px 14px; }
-  .brand-page .anfrage-tile-num { flex: none; min-width: 64px; }
-  .brand-page .anfrage-tile-label { margin-top: 0; font-size: 12px; }
-}
-
-.brand-page .anfrage-points { list-style: none; margin: 0; padding: 0; }
-.brand-page .anfrage-points li { position: relative; padding-left: 24px; margin: 10px 0; font-size: 14px; line-height: 1.5; color: var(--ink, #1a1410); }
-.brand-page .anfrage-points li::before { content: "✓"; position: absolute; left: 0; top: 0; color: var(--forest-primary, #045927); font-weight: 800; }
-
-/* Honeypot — visuell + a11y versteckt, kein display:none (Bots füllen es) */
-.brand-page .hp-field { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; overflow: hidden; opacity: 0; }
-
-.brand-page .anfrage-card .brand-form-submit { width: 100%; margin-top: 8px; transition: transform .2s cubic-bezier(.16,1,.3,1), box-shadow .2s ease, background .2s ease; }
-@media (hover: hover) { .brand-page .anfrage-card .brand-form-submit:hover { transform: translateY(-2px); box-shadow: 0 14px 28px -10px rgba(4,89,39,.5); } }
-
-.brand-page .form-error { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: rgba(180,40,30,.08); border: 1px solid rgba(180,40,30,.25); color: #8a2018; font-size: 13.5px; line-height: 1.5; }
-
-.brand-page .success-state { text-align: center; padding: 14px 4px; }
-.brand-page .success-badge { width: 64px; height: 64px; margin: 0 auto 16px; border-radius: 50%; display: grid; place-items: center; font-size: 30px; color: #f7efde; background: linear-gradient(135deg, var(--forest-primary, #045927), var(--forest-anchor, #122d1c)); box-shadow: 0 12px 28px -10px rgba(4,89,39,.5); }
-.brand-page .success-title { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(24px, 4vw, 32px); color: var(--ink, #1a1410); margin: 0 0 10px; }
-.brand-page .success-text { font-size: 15px; line-height: 1.6; color: var(--ink-2, #4a3f33); margin: 0 auto; max-width: 42ch; }
-
-.brand-page .anfrage-back { text-align: center; margin: 24px auto 0; font-size: 13px; }
-.brand-page .anfrage-back a { color: var(--ink-2, #4a3f33); text-decoration: none; }
-.brand-page .anfrage-back a:hover { color: var(--forest-primary, #045927); }
-
-/* Auswahl-Chips (Art / Budget / Zeitrahmen) */
-.brand-page .field-group { margin: 0 0 16px; }
-.brand-page .field-label { display: block; font-size: 13px; font-weight: 700; color: var(--ink, #1a1410); margin: 0 0 8px; }
-.brand-page .field-hint { font-weight: 400; color: var(--ink-2, #4a3f33); font-size: 12px; }
-.brand-page .chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
-.brand-page .chip { position: relative; cursor: pointer; user-select: none; }
-.brand-page .chip input { position: absolute; opacity: 0; width: 0; height: 0; }
-.brand-page .chip span {
-  display: inline-block; padding: 9px 14px; border-radius: 999px; font-size: 13px; font-weight: 600;
-  color: var(--ink, #1a1410); background: rgba(255,255,255,.5);
-  border: 1px solid rgba(207,191,157,.7);
-  transition: background .18s ease, border-color .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease;
-}
-@media (hover: hover) { .brand-page .chip:hover span { border-color: var(--forest-primary, #045927); } }
-.brand-page .chip input:checked + span {
-  background: var(--forest-primary, #045927); color: #f7efde; border-color: var(--forest-primary, #045927);
-  box-shadow: 0 8px 18px -10px rgba(4,89,39,.5); transform: translateY(-1px);
-}
-.brand-page .chip input:focus-visible + span { outline: 3px solid var(--forest-accent, #1a7340); outline-offset: 2px; }
-
-.brand-page .form-privacy { margin: 6px 0 0; font-size: 11.5px; line-height: 1.5; color: var(--ink-3, #807260); }
-.brand-page .form-privacy a { color: var(--ink-2, #4a3f33); text-decoration: underline; text-underline-offset: 2px; }
-.brand-page .form-privacy a:hover { color: var(--forest-primary, #045927); }
-
-@media (prefers-reduced-motion: no-preference) {
-  .brand-page .fade-in-up { opacity: 0; transform: translateY(18px) scale(.99); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); will-change: opacity, transform; }
-  .brand-page .fade-in-up.visible { opacity: 1; transform: none; }
-  .brand-page .delay-1 { transition-delay: 90ms; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .brand-page .fade-in-up { transition: opacity .35s ease !important; transform: none !important; }
-}
+/* ---- Formular-Card (Creme, data-light) ---- */
+.anf-card { position: relative; overflow: hidden; border-radius: 22px;
+  padding: clamp(26px, 3.6vw, 44px);
+  background: linear-gradient(158deg, #F8F2E2 0%, #F0E7D2 60%, #E9DFC6 100%); box-shadow: var(--shadow-paper); }
+.anf-card::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.5; pointer-events: none; }
+.anf-card > * { position: relative; z-index: 1; }
+.anf-row { margin: 0 0 16px; }
+.anf-row label, .anf-flabel { display: block; font-size: 13px; font-weight: 700; color: #14281C; margin: 0 0 7px; }
+.anf-hint { font-weight: 400; color: rgba(24,43,31,0.55); font-size: 12px; }
+.anf-req { color: var(--royal); }
+.anf-card input[type="text"], .anf-card input[type="email"], .anf-card textarea {
+  width: 100%; box-sizing: border-box; font: inherit; font-size: 15px; color: #14281C;
+  padding: 11px 14px; border-radius: 11px; background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(24,43,31,0.2); transition: border-color 220ms var(--ease-lux), box-shadow 220ms var(--ease-lux); }
+.anf-card textarea { resize: vertical; line-height: 1.5; }
+.anf-card input::placeholder, .anf-card textarea::placeholder { color: rgba(24,43,31,0.4); }
+.anf-card input:focus, .anf-card textarea:focus { outline: none; border-color: var(--royal);
+  box-shadow: 0 0 0 3px rgba(11,110,79,0.14); }
+/* Auswahl-Chips */
+.anf-group { margin: 0 0 18px; }
+.anf-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.anf-chip { position: relative; cursor: pointer; user-select: none; }
+.anf-chip input { position: absolute; opacity: 0; width: 0; height: 0; }
+.anf-chip span { display: inline-block; padding: 8px 15px; border-radius: 999px; font-size: 13px; font-weight: 600;
+  color: #14281C; background: rgba(255,255,255,0.6); border: 1px solid rgba(24,43,31,0.22);
+  transition: background 180ms var(--ease-lux), border-color 180ms var(--ease-lux), color 180ms var(--ease-lux), transform 180ms var(--ease-lux); }
+.anf-chip:hover span { border-color: var(--royal); }
+.anf-chip input:checked + span { background: var(--royal); color: #F3EBD9; border-color: var(--royal);
+  box-shadow: 0 6px 16px -8px rgba(11,110,79,0.6); transform: translateY(-1px); }
+.anf-chip input:focus-visible + span { outline: 3px solid var(--emerald); outline-offset: 2px; }
+/* Honeypot */
+.anf-hp { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; overflow: hidden; opacity: 0; }
+/* Submit (gelb, wie die Site-CTAs) */
+.anf-submit { width: 100%; margin-top: 6px; cursor: pointer; border: 0;
+  font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
+  color: #14100A; padding: 15px 24px; background: linear-gradient(180deg, #E8BF25, #D4A918);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.18)); transition: transform 300ms var(--ease-lux), filter 300ms var(--ease-lux); }
+.anf-submit:hover:not(:disabled) { transform: translateY(-2px); filter: drop-shadow(0 6px 16px rgba(232,191,37,0.4)); }
+.anf-submit:disabled { opacity: 0.6; cursor: default; }
+.anf-privacy { margin: 12px 0 0; font-size: 11.5px; line-height: 1.5; color: rgba(24,43,31,0.55); }
+.anf-privacy a { color: var(--royal); text-decoration: underline; text-underline-offset: 2px; }
+.anf-error { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: rgba(160,40,30,0.1);
+  border: 1px solid rgba(160,40,30,0.28); color: #8a2018; font-size: 13.5px; line-height: 1.5; }
+/* Erfolg */
+.anf-success { text-align: center; padding: 20px 4px; }
+.anf-success-badge { width: 60px; height: 60px; margin: 0 auto 18px; border-radius: 50%; display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--royal), var(--evergreen)); box-shadow: 0 12px 28px -10px rgba(4,89,39,0.5); }
+.anf-success-badge svg { width: 26px; height: 26px; color: #F3EBD9; }
+.anf-success h2 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(24px, 4vw, 32px);
+  color: #14281C; margin: 0 0 10px; }
+.anf-success p { font-size: 15px; line-height: 1.6; color: rgba(24,43,31,0.75); margin: 0 auto; max-width: 40ch; }
+.anf-back { text-align: center; margin: 30px auto 60px; font-family: var(--mono); font-size: 11px;
+  letter-spacing: 1.4px; text-transform: uppercase; }
+.anf-back a { color: var(--paper-faint); text-decoration: none; transition: color 300ms var(--ease-lux); }
+.anf-back a:hover { color: var(--leaf); }
 </style>
 </head>
-<body>
-<main class="page brand-page">
+<body class="anf-page">
+<div class="bg-wrap" aria-hidden="true"><div class="bg"></div></div>
+<div class="bg2-wrap" aria-hidden="true"><div class="bg2"></div></div>
 
-  <!-- Topbar — Brand-Page Pattern -->
-  <header class="topbar">
-    <a href="/" class="brand" style="text-decoration:none;color:inherit">vegetarian<span class="accent">hulk</span></a>
-    <button class="topbar-burger" aria-label="Menü öffnen" aria-expanded="false">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-    </button>
-    <nav class="topbar-nav" aria-label="Hauptnavigation">
-      <a href="/" class="topbar-link">Startseite</a>
-      <a href="/newsletter" class="topbar-link">Newsletter</a>
-      <a href="/codes/" class="topbar-link">Smash Codes</a>
-      <a href="/lieblingsprodukte/" class="topbar-link">Hulk&apos;s Picks</a>
-      <a href="/kooperationen.html" class="topbar-link" aria-current="page">Für Brands</a>
-    </nav>
-  </header>
+<div class="rail rail--l" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">2713 hm</span></div>
+</div>
+<div class="rail rail--r" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">2713 hm</span></div>
+</div>
 
-  <section class="anfrage-layout">
+<main>
+  <div class="wrap">
+    <header class="topbar">
+      <span class="brandbox">
+        <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+        <span class="wordmark wordmark--invert" aria-hidden="true" data-invert-layer>VEGETARIAN<b>HULK</b></span>
+      </span>
+    </header>
+  </div>
 
-    <!-- Links: Kontext / Value -->
-    <aside class="anfrage-panel fade-in-up">
-      <div class="anfrage-eyebrow">— Für Brands · Anfrage —</div>
-      <h1 class="anfrage-h1">Interesse?<br><span class="italic">Kurz ausfüllen.</span></h1>
-      <p class="anfrage-sub">
-        Schreib mir, was deine Brand macht und wie du dir die Zusammenarbeit vorstellst — ich melde mich persönlich.
-      </p>
-
-      <div class="anfrage-tiles">
-        <div class="anfrage-tile"><span class="anfrage-tile-num">52%</span><span class="anfrage-tile-label">Non-Follower-Reichweite</span></div>
-        <div class="anfrage-tile"><span class="anfrage-tile-num">16.040</span><span class="anfrage-tile-label">Aufrufe (Reels/Beiträge)</span></div>
-        <div class="anfrage-tile"><span class="anfrage-tile-num">+563%</span><span class="anfrage-tile-label">Wachstum</span></div>
+  <section class="anf-layout">
+    <!-- Kontext (dunkel) -->
+    <aside class="anf-ctx st">
+      <p class="anf-eyebrow st st1">Für Brands · Anfrage</p>
+      <h1 class="st st2">Interesse?<br><em>Kurz ausfüllen.</em></h1>
+      <p class="anf-sub st st3">Schreib mir, was deine Brand macht und wie du dir die Zusammenarbeit
+      vorstellst — ich melde mich persönlich.</p>
+      <div class="anf-figs st st3">
+        <div class="anf-fig"><b>52%</b><span>Non-Follower-Reichweite</span></div>
+        <div class="anf-fig"><b>16.040</b><span>Aufrufe (Reels/Beiträge)</span></div>
+        <div class="anf-fig"><b>+563%</b><span>Wachstum</span></div>
       </div>
-
-      <ul class="anfrage-points">
+      <ul class="anf-points st st4">
         <li>Du schreibst direkt mit mir — kein Team, kein Funnel dazwischen.</li>
         <li>Nur Brands, die ich auch privat nutzen würde.</li>
         <li>DACH-Audience, real &amp; kaufbereit.</li>
       </ul>
     </aside>
 
-    <!-- Rechts: Formular-Card -->
-    <div class="anfrage-card fade-in-up delay-1">
+    <!-- Formular (Creme) -->
+    <div class="anf-card st st4" data-light>
       <div id="formCard">
-        <form class="brand-form" id="brandForm" onsubmit="return submitBrandInquiry(event)">
-          <div class="brand-form-row">
-            <label for="bf-brand">Brand-Name <span class="req">*</span></label>
+        <form class="anf-form" id="brandForm" onsubmit="return submitBrandInquiry(event)">
+          <div class="anf-row">
+            <label for="bf-brand">Brand-Name <span class="anf-req">*</span></label>
             <input type="text" id="bf-brand" required autocomplete="organization">
           </div>
-          <div class="brand-form-row">
-            <label for="bf-link">Webseite oder Insta <span class="field-hint">(optional)</span></label>
-            <input type="text" id="bf-link" placeholder="instagram.com/... oder https://...">
+          <div class="anf-row">
+            <label for="bf-link">Webseite oder Insta <span class="anf-hint">(optional)</span></label>
+            <input type="text" id="bf-link" placeholder="instagram.com/… oder https://…">
           </div>
-          <div class="brand-form-row">
-            <label for="bf-what">Was macht ihr? <span class="field-hint">(optional)</span></label>
-            <textarea id="bf-what" rows="2" placeholder="1-2 Sätze über euer Produkt"></textarea>
+          <div class="anf-row">
+            <label for="bf-what">Was macht ihr? <span class="anf-hint">(optional)</span></label>
+            <textarea id="bf-what" rows="2" placeholder="1–2 Sätze über euer Produkt"></textarea>
           </div>
-          <div class="field-group">
-            <label class="field-label">Art der Zusammenarbeit <span class="field-hint">(Mehrfachauswahl)</span></label>
-            <div class="chip-group">
-              <label class="chip"><input type="checkbox" name="type" value="Reel"><span>Reel</span></label>
-              <label class="chip"><input type="checkbox" name="type" value="Story-Set"><span>Story-Set</span></label>
-              <label class="chip"><input type="checkbox" name="type" value="Beitrag"><span>Beitrag</span></label>
-              <label class="chip"><input type="checkbox" name="type" value="Produkttest"><span>Produkttest</span></label>
-              <label class="chip"><input type="checkbox" name="type" value="Long-Term-Partnership"><span>Long-Term-Partnership</span></label>
-              <label class="chip"><input type="checkbox" name="type" value="Event"><span>Event</span></label>
+
+          <div class="anf-group">
+            <span class="anf-flabel">Art der Zusammenarbeit <span class="anf-hint">(Mehrfachauswahl)</span></span>
+            <div class="anf-chips">
+              <label class="anf-chip"><input type="checkbox" name="type" value="Reel"><span>Reel</span></label>
+              <label class="anf-chip"><input type="checkbox" name="type" value="Story-Set"><span>Story-Set</span></label>
+              <label class="anf-chip"><input type="checkbox" name="type" value="Beitrag"><span>Beitrag</span></label>
+              <label class="anf-chip"><input type="checkbox" name="type" value="Produkttest"><span>Produkttest</span></label>
+              <label class="anf-chip"><input type="checkbox" name="type" value="Long-Term-Partnership"><span>Long-Term-Partnership</span></label>
+              <label class="anf-chip"><input type="checkbox" name="type" value="Event"><span>Event</span></label>
             </div>
           </div>
 
-          <div class="field-group">
-            <label class="field-label">Budget-Range <span class="field-hint">(optional)</span></label>
-            <div class="chip-group">
-              <label class="chip"><input type="radio" name="budget" value="&lt; 500 €"><span>&lt; 500 €</span></label>
-              <label class="chip"><input type="radio" name="budget" value="500–1.500 €"><span>500–1.500 €</span></label>
-              <label class="chip"><input type="radio" name="budget" value="1.500–5.000 €"><span>1.500–5.000 €</span></label>
-              <label class="chip"><input type="radio" name="budget" value="&gt; 5.000 €"><span>&gt; 5.000 €</span></label>
-              <label class="chip"><input type="radio" name="budget" value="Auf Anfrage"><span>Auf Anfrage</span></label>
+          <div class="anf-group">
+            <span class="anf-flabel">Budget-Range <span class="anf-hint">(optional)</span></span>
+            <div class="anf-chips">
+              <label class="anf-chip"><input type="radio" name="budget" value="&lt; 500 €"><span>&lt; 500 €</span></label>
+              <label class="anf-chip"><input type="radio" name="budget" value="500–1.500 €"><span>500–1.500 €</span></label>
+              <label class="anf-chip"><input type="radio" name="budget" value="1.500–5.000 €"><span>1.500–5.000 €</span></label>
+              <label class="anf-chip"><input type="radio" name="budget" value="&gt; 5.000 €"><span>&gt; 5.000 €</span></label>
+              <label class="anf-chip"><input type="radio" name="budget" value="Auf Anfrage"><span>Auf Anfrage</span></label>
             </div>
           </div>
 
-          <div class="field-group">
-            <label class="field-label">Zeitrahmen <span class="field-hint">(optional)</span></label>
-            <div class="chip-group">
-              <label class="chip"><input type="radio" name="time" value="Asap"><span>Asap</span></label>
-              <label class="chip"><input type="radio" name="time" value="1–3 Monate"><span>1–3 Monate</span></label>
-              <label class="chip"><input type="radio" name="time" value="Dieses Quartal"><span>Dieses Quartal</span></label>
-              <label class="chip"><input type="radio" name="time" value="Flexibel"><span>Flexibel</span></label>
+          <div class="anf-group">
+            <span class="anf-flabel">Zeitrahmen <span class="anf-hint">(optional)</span></span>
+            <div class="anf-chips">
+              <label class="anf-chip"><input type="radio" name="time" value="Asap"><span>Asap</span></label>
+              <label class="anf-chip"><input type="radio" name="time" value="1–3 Monate"><span>1–3 Monate</span></label>
+              <label class="anf-chip"><input type="radio" name="time" value="Dieses Quartal"><span>Dieses Quartal</span></label>
+              <label class="anf-chip"><input type="radio" name="time" value="Flexibel"><span>Flexibel</span></label>
             </div>
           </div>
 
-          <div class="brand-form-row">
-            <label for="bf-idea">Eure Idee <span class="field-hint">(optional — ergänze frei)</span></label>
+          <div class="anf-row">
+            <label for="bf-idea">Eure Idee <span class="anf-hint">(optional — ergänze frei)</span></label>
             <textarea id="bf-idea" rows="3" placeholder="Was schwebt euch konkret vor? (optional)"></textarea>
           </div>
-          <div class="brand-form-row">
-            <label for="bf-email">Eure E-Mail <span class="req">*</span></label>
+          <div class="anf-row">
+            <label for="bf-email">Eure E-Mail <span class="anf-req">*</span></label>
             <input type="email" id="bf-email" name="email" required placeholder="kontakt@brand.de" autocomplete="email">
           </div>
 
-          <div class="field-group">
-            <label class="field-label">Bevorzugte Kontaktform <span class="field-hint">(optional)</span></label>
-            <div class="chip-group">
-              <label class="chip"><input type="radio" name="contact" value="Mail"><span>Mail</span></label>
-              <label class="chip"><input type="radio" name="contact" value="Call"><span>Call</span></label>
-              <label class="chip"><input type="radio" name="contact" value="WhatsApp"><span>WhatsApp</span></label>
-              <label class="chip"><input type="radio" name="contact" value="Instagram-DM"><span>Instagram-DM</span></label>
+          <div class="anf-group">
+            <span class="anf-flabel">Bevorzugte Kontaktform <span class="anf-hint">(optional)</span></span>
+            <div class="anf-chips">
+              <label class="anf-chip"><input type="radio" name="contact" value="Mail"><span>Mail</span></label>
+              <label class="anf-chip"><input type="radio" name="contact" value="Call"><span>Call</span></label>
+              <label class="anf-chip"><input type="radio" name="contact" value="WhatsApp"><span>WhatsApp</span></label>
+              <label class="anf-chip"><input type="radio" name="contact" value="Instagram-DM"><span>Instagram-DM</span></label>
             </div>
           </div>
-          <div class="brand-form-row">
-            <label for="bf-handle">Telefon / WhatsApp / @handle <span class="field-hint">(optional)</span></label>
+          <div class="anf-row">
+            <label for="bf-handle">Telefon / WhatsApp / @handle <span class="anf-hint">(optional)</span></label>
             <input type="text" id="bf-handle" placeholder="z.B. +49 … oder @brand" autocomplete="off">
           </div>
 
           <!-- Honeypot (für Menschen unsichtbar; Bots füllen es) -->
-          <div class="hp-field" aria-hidden="true">
+          <div class="anf-hp" aria-hidden="true">
             <label for="bf-hp">Dieses Feld bitte freilassen</label>
             <input type="text" id="bf-hp" name="_honey" tabindex="-1" autocomplete="off">
           </div>
 
-          <button type="submit" class="brand-form-submit">Anfrage senden →</button>
-          <p class="form-privacy">Mit dem Absenden verarbeite ich deine Angaben ausschließlich zur Bearbeitung deiner Anfrage. Mehr dazu in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+          <button type="submit" class="anf-submit">Anfrage senden →</button>
+          <p class="anf-privacy">Mit dem Absenden verarbeite ich deine Angaben ausschließlich zur Bearbeitung
+          deiner Anfrage. Mehr dazu in der <a href="/datenschutz.html">Datenschutzerklärung</a>.</p>
         </form>
-        <div class="form-error" id="formError" hidden role="alert"></div>
+        <div class="anf-error" id="formError" hidden role="alert"></div>
       </div>
 
       <!-- Erfolg: Inline-Danke-State -->
-      <div class="success-state" id="successState" hidden>
-        <div class="success-badge" aria-hidden="true">✓</div>
-        <h2 class="success-title">Danke — deine Anfrage ist da. 🌱</h2>
-        <p class="success-text">
-          Ich schau sie mir persönlich an und melde mich direkt bei dir.
-        </p>
+      <div class="anf-success" id="successState" hidden>
+        <div class="anf-success-badge" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <h2>Danke — deine Anfrage ist da.</h2>
+        <p>Ich schau sie mir persönlich an und melde mich direkt bei dir.</p>
       </div>
     </div>
-
   </section>
 
-  <p class="anfrage-back"><a href="/kooperationen.html">← Zurück zu Für Brands</a></p>
-
-  <!-- Footer-Editorial v31.11 — A2 Asymmetric Editorial -->
-  <footer class="vh-footer footer-a2" role="contentinfo" aria-label="Site footer">
-    <div class="grid">
-      <div class="col col-brand">
-        <div class="vh-wordmark wordmark">VEGETARIAN<span class="accent">HULK</span></div>
-        <div class="vh-tagline tagline">Builder &amp; Creator. Disziplin über Hype.</div>
-        <a class="vh-link vh-ig ig" href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener" aria-label="Instagram @vegetarianhulk">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-            <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-            <circle cx="12" cy="12" r="4"></circle>
-            <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle>
-          </svg>
-          <span>@vegetarianhulk</span>
-        </a>
-        <div class="vh-address vh-address-block">
-          <strong>Geschäftsadresse</strong>
-          Sebastian Wimmer<br />
-          Burghauser Straße 35<br />
-          84533 Haiming, Deutschland
-        </div>
-      </div>
-      <nav class="col" aria-label="Brand navigation">
-        <p class="vh-col-label">Explore</p>
-        <ul>
-          <li><a class="vh-link" href="/">Startseite</a></li>
-          <li><a class="vh-link" href="/newsletter">Newsletter</a></li>
-          <li><a class="vh-link" href="/kooperationen.html">Für Brands</a></li>
-        </ul>
-      </nav>
-      <nav class="col" aria-label="Rechtliches &amp; Kontakt">
-        <p class="vh-col-label">Legal &amp; Kontakt</p>
-        <ul>
-          <li><a class="vh-link" href="impressum.html">Impressum</a></li>
-          <li><a class="vh-link" href="datenschutz.html">Datenschutz</a></li>
-          <li><a class="vh-link" href="mailto:info@vegetarianhulk.de">info@vegetarianhulk.de</a></li>
-        </ul>
-      </nav>
-    </div>
-    <hr class="vh-hairline" />
-    <div class="bottom">
-      <span class="vh-copyright">© <span id="footer-year">2026</span> Sebastian Wimmer</span>
-    </div>
-  </footer>
-
+  <p class="anf-back"><a href="/kooperationen.html">← Zurück zu Für Brands</a></p>
 </main>
+
+<footer>
+  <div class="inner">
+    <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+    <p class="claim">Builder &amp; Creator. Disziplin über Hype.</p>
+    <nav class="legal" aria-label="Rechtliches">
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+      <span>© <span id="footer-year">2026</span> Sebastian Wimmer</span>
+    </nav>
+  </div>
+</footer>
+
+<nav class="nav" aria-label="Hauptnavigation">
+  <a href="/">Start</a>
+  <a href="/partner-picks/">P&amp;P</a>
+  <a class="center" href="/touren/">
+    <span class="mtn"><svg viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 50 26 16l10 16 8-12 22 30"/>
+      <path d="M22 23.5 26 20l4 5" opacity="0.85"/>
+      <path d="M40.5 25.5 44 21.5l3.5 5" opacity="0.85"/>
+      <circle cx="58" cy="11" r="4.5" opacity="0.9"/>
+      <path d="M12 50c8-4 16-3.4 22 0" opacity="0.45"/>
+    </svg></span>
+    Hulk&nbsp;Hikes
+  </a>
+  <a href="/newsletter">News</a>
+  <a href="/kooperationen.html" aria-current="page">Brands</a>
+</nav>
 
 <script>
 // Brand-Anfrage → eigener Cloudflare-Worker (vh-forms, Repo: workers/vh-forms)
-// → Brevo Transactional → info@vegetarianhulk.de. Ersetzt FormSubmit (US-Drittanbieter).
+// → Brevo Transactional → info@vegetarianhulk.de.
 const FORMS_ENDPOINT = 'https://vh-forms.smashtheapp.workers.dev/brand-inquiry';
 
 async function submitBrandInquiry(e) {
@@ -378,48 +359,13 @@ async function submitBrandInquiry(e) {
   }
   return false;
 }
-</script>
-<script>
+
 // Footer-Year
-(function() {
-  const y = new Date().getFullYear();
-  document.querySelectorAll('#footer-year').forEach(el => el.textContent = y);
+(function () {
+  var y = new Date().getFullYear();
+  document.querySelectorAll('#footer-year').forEach(function (el) { el.textContent = y; });
 })();
 </script>
-<script>
-// Topbar Hamburger Toggle
-(function(){
-  var b=document.querySelector('.topbar-burger'),n=document.querySelector('.topbar-nav');
-  if(!b||!n)return;
-  b.addEventListener('click',function(){
-    var open=n.classList.toggle('topbar-nav--open');
-    b.setAttribute('aria-expanded',open);
-    b.setAttribute('aria-label',open?'Menü schließen':'Menü öffnen');
-  });
-  document.addEventListener('click',function(e){
-    if(!b.contains(e.target)&&!n.contains(e.target)){
-      n.classList.remove('topbar-nav--open');
-      b.setAttribute('aria-expanded','false');
-      b.setAttribute('aria-label','Menü öffnen');
-    }
-  });
-  n.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click',function(){
-      n.classList.remove('topbar-nav--open');
-      b.setAttribute('aria-expanded','false');
-    });
-  });
-})();
-</script>
-<script>
-// Scroll-Reveal (fade-in-up)
-(function(){
-  if(!('IntersectionObserver' in window))return;
-  var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
-  document.querySelectorAll('.fade-in-up').forEach(function(el){o.observe(el);});
-})();
-</script>
-<script src="update-check.js?v=361d366c"></script>
-<script src="motion-reveal.js?v=d3baa308" defer></script><script src="/nav.js" defer></script>
+<script src="/v3.js?v=182e7de3" defer></script>
 </body>
 </html>
