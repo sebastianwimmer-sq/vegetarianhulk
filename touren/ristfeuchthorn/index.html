@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ristfeuchthorn (1.569 m) — Hulk Hike | VegetarianHulk</title>
+<meta name="description" content="Ristfeuchthorn über Schneizlreuth: 12,52 km, 1.071 hm, T2–T3. Selbst gegangen am 17. Juli — echte Daten, ehrliche Einschätzung, für wen sich die Runde lohnt.">
+<meta name="theme-color" content="#0B2418">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://vegetarianhulk.de/touren/ristfeuchthorn/">
+
+<meta property="og:title" content="Ristfeuchthorn (1.569 m) — Hulk Hike">
+<meta property="og:description" content="12,52 km, 1.071 hm, T2–T3 über Schneizlreuth. Selbst gegangen, ehrlich eingestuft.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://vegetarianhulk.de/touren/ristfeuchthorn/">
+<meta property="og:image" content="https://vegetarianhulk.de/hero.jpg?v=v31.6.1">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
+
+<link rel="stylesheet" href="/fonts.css?v=1e2010e0">
+<link rel="stylesheet" href="/v3.css?v=c9fdef3c">
+<style>
+/* ============================================================
+   /touren/<slug>/ — Hulk-Hike Detail-Vorlage (page-scoped .tour-)
+   WIEDERHOLBAR: pro Tour nur die Daten (Hero, Stats, Profil-Pfad,
+   Notiz, Verdikt) tauschen; Struktur + CSS bleiben.
+   ============================================================ */
+.tour-hero { margin: clamp(40px, 8vh, 88px) 0 0; }
+.tour-crumb { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--paper-faint); }
+.tour-crumb a { color: var(--leaf); text-decoration: none; }
+.tour-eyebrow { margin-top: 20px; display: flex; align-items: center; gap: 12px;
+  font-family: var(--mono); font-size: var(--t-label); font-weight: 700; letter-spacing: 2.4px;
+  text-transform: uppercase; color: var(--leaf); }
+.tour-eyebrow::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.24); }
+.tour-hero h1 { margin: 16px 0 6px; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(44px, 11vw, 88px); line-height: 0.96; letter-spacing: -1px; color: var(--paper); }
+.tour-alt { font-family: var(--mono); font-size: 13px; font-weight: 700; letter-spacing: 1px; color: var(--leaf); }
+.tour-lead { margin-top: 18px; font-size: 16.5px; line-height: 1.7; color: var(--paper-dim); max-width: 50ch; }
+
+/* Stats-Band (Creme) */
+.tour-stats { width: min(1040px, 92vw); margin: 40px 0 0; margin-left: calc((100% - min(1040px, 92vw)) / 2);
+  position: relative; overflow: hidden; border-radius: 20px; padding: 4px;
+  background: linear-gradient(158deg, rgba(24,43,31,0.1), rgba(24,43,31,0.03));
+  box-shadow: 0 0 0 1px rgba(186,155,95,0.28), 0 40px 74px -34px rgba(0,0,0,0.64); }
+.tour-stats__grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px;
+  border-radius: 16px; overflow: hidden; background: rgba(24,43,31,0.12); }
+.tour-stat { background: linear-gradient(158deg, #F5EEDE, #EAE0C8); padding: 20px 18px; }
+.tour-stat b { display: block; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(20px, 2.5vw, 27px); line-height: 1; letter-spacing: -0.5px; color: var(--royal); }
+.tour-stat span { display: block; margin-top: 7px; font-family: var(--mono); font-size: 8.5px; font-weight: 700;
+  letter-spacing: 1.4px; text-transform: uppercase; color: rgba(24,43,31,0.55); line-height: 1.35; }
+
+/* Höhenprofil (dunkle Karte, signature) */
+.tour-profile { width: min(1040px, 92vw); margin: 22px 0 0; margin-left: calc((100% - min(1040px, 92vw)) / 2);
+  position: relative; overflow: hidden; border-radius: 20px; padding: clamp(24px, 3.4vw, 40px);
+  background: linear-gradient(158deg, rgba(19,54,35,0.5), rgba(6,26,17,0.6));
+  border: 1px solid rgba(126,208,155,0.14);
+  box-shadow: inset 0 1px 0 rgba(209,242,235,0.06), 0 28px 62px -32px rgba(0,0,0,0.7); }
+.tour-profile__head { display: flex; align-items: baseline; justify-content: space-between; gap: 14px;
+  margin-bottom: 18px; flex-wrap: wrap; }
+.tour-profile__label { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--leaf); }
+.tour-profile__sub { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 1px;
+  color: var(--paper-faint); }
+.tour-svg { width: 100%; height: auto; color: var(--leaf); overflow: visible; display: block; }
+.tour-svg .fill { fill: rgba(80,200,120,0.12); opacity: 0; transition: opacity 900ms var(--ease-lux) 500ms; }
+.tour-svg .line { fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round;
+  filter: drop-shadow(0 0 5px rgba(80,200,120,0.4));
+  stroke-dasharray: 1400; stroke-dashoffset: 1400; }
+.tour-svg .peak-dot { fill: var(--emerald); opacity: 0; filter: drop-shadow(0 0 6px rgba(80,200,120,0.9));
+  transition: opacity 400ms 1200ms; }
+.tour-svg .peak-x { color: var(--paper); opacity: 0; transition: opacity 500ms 1400ms; }
+.tour-svg text { fill: rgba(243,235,217,0.6); font-family: ui-monospace, Menlo, monospace; font-size: 11px; }
+.tour-profile.in .line { animation: tourDraw 1800ms var(--ease-lux) 300ms forwards; }
+.tour-profile.in .fill, .tour-profile.in .peak-dot, .tour-profile.in .peak-x { opacity: 1; }
+@keyframes tourDraw { to { stroke-dashoffset: 0; } }
+.tour-profile__gridline { stroke: rgba(243,235,217,0.07); stroke-width: 1; }
+
+/* Sebis Notiz — persönlicher Touch (Gipfelbuch-Sprache) */
+.tour-note { width: min(1040px, 92vw); margin: 26px 0 0; margin-left: calc((100% - min(1040px, 92vw)) / 2);
+  position: relative; overflow: hidden; border-radius: 20px; padding: clamp(30px, 4vw, 48px);
+  background: radial-gradient(120% 120% at 12% 0%, #F8F2E2, #E9DFC6 70%); box-shadow: var(--shadow-paper); }
+.tour-note::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.5; pointer-events: none; }
+.tour-note > * { position: relative; z-index: 1; }
+.tour-note__kicker { font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 2.4px;
+  text-transform: uppercase; color: var(--gold); }
+.tour-note__body { margin: 14px 0 20px; max-width: 44ch;
+  font-family: 'Caveat', cursive; font-weight: 600; font-size: clamp(23px, 3vw, 29px); line-height: 1.4; color: #1E3A2A; }
+.tour-note__sig { font-family: 'Caveat', cursive; font-weight: 700; font-size: 32px; color: #0B4A2E; transform: rotate(-3deg); }
+/* Aktivitäts-Beweise (echt gegangen) */
+.tour-proof { margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(24,43,31,0.16);
+  display: flex; flex-wrap: wrap; gap: 10px 26px; }
+.tour-proof div { display: flex; flex-direction: column; }
+.tour-proof b { font-family: var(--mono); font-size: 16px; font-weight: 700; color: #14281C; letter-spacing: 0.5px; }
+.tour-proof span { margin-top: 3px; font-family: var(--mono); font-size: 8.5px; font-weight: 700;
+  letter-spacing: 1.4px; text-transform: uppercase; color: rgba(24,43,31,0.5); }
+.tour-proof .src { width: 100%; margin-top: 10px; font-family: var(--mono); font-size: 9px; letter-spacing: 1px;
+  text-transform: uppercase; color: rgba(24,43,31,0.4); }
+
+/* Für-wen-Verdikt (dunkel) */
+.tour-verdict { margin-top: 40px; }
+.tour-verdict .shead { margin: 0 0 20px; }
+.tour-verdict__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.tour-vcard { padding: 24px 24px 26px; border-radius: 14px;
+  background: linear-gradient(158deg, rgba(19,54,35,0.5), rgba(6,26,17,0.55));
+  border: 1px solid rgba(126,208,155,0.14); box-shadow: inset 0 1px 0 rgba(209,242,235,0.06); }
+.tour-vcard h3 { display: flex; align-items: center; gap: 9px; font-family: var(--mono); font-size: 10px;
+  font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--leaf); }
+.tour-vcard.no h3 { color: var(--paper-faint); }
+.tour-vcard p { margin-top: 12px; font-size: 15px; line-height: 1.6; color: var(--paper-dim); }
+.tour-vcard .mark { font-family: var(--mono); font-weight: 700; }
+
+/* Foto-Slot (pending) */
+.tour-photos { margin-top: 40px; }
+.tour-photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
+.tour-photo { aspect-ratio: 4 / 5; border-radius: 12px; display: grid; place-items: center;
+  background: linear-gradient(158deg, rgba(19,54,35,0.4), rgba(6,26,17,0.5));
+  border: 1px dashed rgba(126,208,155,0.24);
+  font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.6px;
+  text-transform: uppercase; color: var(--paper-faint); text-align: center; padding: 0 12px; }
+
+/* Abschluss-CTA */
+.tour-cta { width: min(760px, 92vw); margin: 56px 0 50px; margin-left: calc((100% - min(760px, 92vw)) / 2);
+  text-align: center; position: relative; overflow: hidden; border-radius: 20px;
+  padding: clamp(36px, 5vw, 56px) clamp(28px, 5vw, 52px);
+  background: linear-gradient(158deg, #F5EEDE, #E9DFC6); box-shadow: var(--shadow-paper); }
+.tour-cta::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.5; pointer-events: none; }
+.tour-cta > * { position: relative; z-index: 1; }
+.tour-cta h2 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: clamp(24px, 4vw, 34px);
+  line-height: 1.1; color: #14281C; }
+.tour-cta p { margin: 14px auto 24px; max-width: 42ch; font-size: 15px; line-height: 1.6; color: rgba(24,43,31,0.72); }
+.tour-btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+  font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
+  color: #14100A; padding: 14px 26px; background: linear-gradient(180deg, #E8BF25, #D4A918);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.2)); transition: transform 400ms var(--ease-lux); }
+.tour-btn:hover { transform: translateX(4px); }
+.tour-back { display: block; text-align: center; margin: 0 0 60px; font-family: var(--mono); font-size: 11px;
+  letter-spacing: 1.4px; text-transform: uppercase; }
+.tour-back a { color: var(--paper-faint); text-decoration: none; }
+.tour-back a:hover { color: var(--leaf); }
+
+@media (max-width: 760px) {
+  .tour-stats__grid { grid-template-columns: 1fr 1fr 1fr; }
+  .tour-verdict__grid { grid-template-columns: 1fr; }
+  .tour-photo-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body class="tour-page">
+<div class="bg-wrap" aria-hidden="true"><div class="bg"></div></div>
+<div class="bg2-wrap" aria-hidden="true"><div class="bg2"></div></div>
+
+<div class="rail rail--l" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">1569 hm</span></div>
+</div>
+<div class="rail rail--r" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">1569 hm</span></div>
+</div>
+
+<main>
+  <div class="wrap">
+    <header class="topbar">
+      <span class="brandbox">
+        <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+        <span class="wordmark wordmark--invert" aria-hidden="true" data-invert-layer>VEGETARIAN<b>HULK</b></span>
+      </span>
+    </header>
+
+    <section class="tour-hero st">
+      <p class="tour-crumb st st1"><a href="/touren/">Hulk Hikes</a> · Berchtesgadener Land</p>
+      <p class="tour-eyebrow st st1">Hulk Hike 01 · selbst gegangen</p>
+      <h1 class="st st2">Ristfeuchthorn</h1>
+      <p class="tour-alt st st2">1.569 m · über Schneizlreuth</p>
+      <p class="tour-lead st st3">Ein ehrlicher Kondi-Tag. Von Schneizlreuth als Rundtour aufs Gipfelkreuz —
+      1.071 Höhenmeter am Stück, oben T3-Gelände. Kein Klettersteig-Ego, sondern Aufstehen, Hochgehen, Runterkommen.</p>
+    </section>
+  </div>
+
+  <!-- ECHTE STATS (aus Bergfex + Apple Watch, 17.07.) -->
+  <section class="tour-stats st st3">
+    <div class="tour-stats__grid">
+      <div class="tour-stat"><b>12,52</b><span>km Rundtour</span></div>
+      <div class="tour-stat"><b>1.071</b><span>Höhenmeter</span></div>
+      <div class="tour-stat"><b>1.567</b><span>m max. Höhe</span></div>
+      <div class="tour-stat"><b>~5 h</b><span>reine Gehzeit</span></div>
+      <div class="tour-stat"><b>T2–T3</b><span>SAC-Skala</span></div>
+      <div class="tour-stat"><b>17.07.</b><span>gegangen</span></div>
+    </div>
+  </section>
+
+  <!-- HÖHENPROFIL (nachgezeichnet aus echten Daten) -->
+  <section class="tour-profile st st3">
+    <div class="tour-profile__head">
+      <span class="tour-profile__label">Höhenprofil · Rundtour</span>
+      <span class="tour-profile__sub">Start 480 m → Gipfel 1.567 m → zurück</span>
+    </div>
+    <svg class="tour-svg" viewBox="0 0 900 270" fill="none" aria-label="Höhenprofil Ristfeuchthorn">
+      <line class="tour-profile__gridline" x1="0" y1="70" x2="900" y2="70"/>
+      <line class="tour-profile__gridline" x1="0" y1="140" x2="900" y2="140"/>
+      <line class="tour-profile__gridline" x1="0" y1="210" x2="900" y2="210"/>
+      <path class="fill" d="M0,254 L36,236 L72,202 L144,163 L216,115 L288,69 L360,18 L395,33 L431,54 L503,98 L575,141 L647,180 L719,217 L791,240 L900,254 L900,270 L0,270 Z"/>
+      <path class="line" d="M0,254 L36,236 L72,202 L144,163 L216,115 L288,69 L360,18 L395,33 L431,54 L503,98 L575,141 L647,180 L719,217 L791,240 L900,254"/>
+      <path class="peak-x" d="M360,18 V4 M354,9 h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <circle class="peak-dot" cx="0" cy="254" r="4"/>
+      <text x="4" y="248" opacity="0.65">480 m · Start</text>
+      <text x="372" y="16">Ristfeuchthorn · 1.569 m</text>
+    </svg>
+  </section>
+
+  <!-- SEBIS NOTIZ — persönlicher Touch (ENTWURF, Sebi überschreibt) -->
+  <section class="tour-note st st4" data-light>
+    <p class="tour-note__kicker">Sebis Notiz · 17. Juli</p>
+    <p class="tour-note__body">07:27 los, keiner am Parkplatz. 19.354 Schritte später oben am Kreuz — meine
+    längste Runde bisher. Der Ristfeuchthorn nimmt dich ernst: 1.071 Höhenmeter am Stück, oben wird's T3.
+    Ruhig gegangen, nicht gerannt. Der Berg wartet nicht auf Motivation, er wartet auf dich.</p>
+    <p class="tour-note__sig">— Sebi</p>
+    <!-- Aktivitäts-Beweise = echt gegangen -->
+    <div class="tour-proof">
+      <div><b>07:27</b><span>gestartet</span></div>
+      <div><b>19.354</b><span>Schritte</span></div>
+      <div><b>117 bpm</b><span>Ø Puls · mäßig</span></div>
+      <div><b>6:53 h</b><span>unterwegs</span></div>
+      <div><b>2.085</b><span>kcal</span></div>
+      <p class="src">Aufgezeichnet · Apple Watch + Bergfex · 17.07.2026</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <!-- FÜR WEN -->
+    <section class="tour-verdict st">
+      <div class="shead"><p class="kicker">Der ehrliche Blick</p><h2>Für wen sich die Runde <em>lohnt.</em></h2></div>
+      <div class="tour-verdict__grid">
+        <div class="tour-vcard yes">
+          <h3><span class="mark">✓</span> Lohnt sich, wenn</h3>
+          <p>du Grundkondition hast und einen ruhigen, fordernden Aufstieg magst. 1.000+ Höhenmeter am Stück,
+          oben ein echtes Gipfelkreuz, und meist hast du den Weg für dich.</p>
+        </div>
+        <div class="tour-vcard no">
+          <h3><span class="mark">✗</span> Eher nicht, wenn</h3>
+          <p>du den schnellen Feierabend-Gipfel suchst oder mit T3-Gelände (steil, teils weglos) nichts anfangen
+          kannst. Fürs erste Bergerlebnis lieber eine sanftere Runde.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOTOS (pending — Sebi liefert nach) -->
+    <section class="tour-photos st">
+      <div class="shead"><p class="kicker">Unterwegs</p><h2>Bilder von der <em>Tour.</em></h2></div>
+      <div class="tour-photo-grid">
+        <div class="tour-photo">Foto folgt</div>
+        <div class="tour-photo">Foto folgt</div>
+        <div class="tour-photo">Foto folgt</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- CTA -->
+  <section class="tour-cta st" data-light>
+    <h2>Nächste Runde nicht verpassen.</h2>
+    <p>Ich tracke jede Tour selbst. Trag dich ein und du bist dabei, wenn die nächste online geht — mit Profil, Fotos und ehrlicher Einschätzung.</p>
+    <a class="tour-btn" href="/newsletter">→ Trag dich ein</a>
+  </section>
+
+  <p class="tour-back"><a href="/touren/">← Alle Hulk Hikes</a></p>
+</main>
+
+<footer>
+  <div class="inner">
+    <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+    <p class="claim">Builder &amp; Creator. Disziplin über Hype.</p>
+    <nav class="legal" aria-label="Rechtliches">
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+      <span>© 2026 Sebastian Wimmer</span>
+    </nav>
+  </div>
+</footer>
+
+<nav class="nav" aria-label="Hauptnavigation">
+  <a href="/">Start</a>
+  <a href="/partner-picks/">P&amp;P</a>
+  <a class="center" href="/touren/" aria-current="page">
+    <span class="mtn"><svg viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 50 26 16l10 16 8-12 22 30"/>
+      <path d="M22 23.5 26 20l4 5" opacity="0.85"/>
+      <path d="M40.5 25.5 44 21.5l3.5 5" opacity="0.85"/>
+      <circle cx="58" cy="11" r="4.5" opacity="0.9"/>
+      <path d="M12 50c8-4 16-3.4 22 0" opacity="0.45"/>
+    </svg></span>
+    Hulk&nbsp;Hikes
+  </a>
+  <a href="/newsletter">News</a>
+  <a href="/kooperationen.html">Brands</a>
+</nav>
+
+<script>
+// Höhenprofil-Draw-on beim Sichtbarwerden
+(function () {
+  var p = document.querySelector('.tour-profile');
+  if (!p) return;
+  if (!('IntersectionObserver' in window)) { p.classList.add('in'); return; }
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { p.classList.add('in'); io.disconnect(); } });
+  }, { rootMargin: '0px 0px -15% 0px' });
+  io.observe(p);
+})();
+</script>
+<script src="/v3.js?v=182e7de3" defer></script>
+</body>
+</html>
