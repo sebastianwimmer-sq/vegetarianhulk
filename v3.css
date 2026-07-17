@@ -227,6 +227,16 @@ main { position: relative; z-index: 1; }
 .th-card h3 { position: relative; margin: 10px 0 8px; font-family: 'Playfair Display', serif; font-weight: 600;
   font-size: 20px; line-height: 1.15; color: var(--paper); max-width: 15ch; }
 .th-card__fact { position: relative; font-family: var(--mono); font-size: 11px; letter-spacing: 0.4px; color: var(--paper-faint); }
+/* Echte, gegangene Tour — klickbare Karte */
+.th-card--real { padding: 0; border-color: rgba(126,208,155,0.26); }
+.th-card__link { display: block; padding: 26px 24px 54px; text-decoration: none; color: inherit; border-radius: inherit; }
+.th-card--real::before { background: linear-gradient(90deg, #E8BF25, transparent); }
+.th-card--real:hover::before { width: 55%; }
+.th-card__state--live { color: #14100A; background: linear-gradient(180deg, #E8BF25, #D4A918);
+  border: 0; border-radius: 0; padding: 5px 12px;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%);
+  transition: transform 400ms var(--ease-lux); }
+.th-card--real:hover .th-card__state--live { transform: translateX(4px); }
 .th-card__state { position: absolute; left: 24px; bottom: 20px;
   font-family: var(--mono); font-size: 8.5px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
   color: var(--mint); background: rgba(126,208,155,0.12); border: 1px solid rgba(126,208,155,0.28);
