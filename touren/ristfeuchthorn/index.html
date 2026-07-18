@@ -27,31 +27,50 @@
    WIEDERHOLBAR: pro Tour nur die Daten (Hero, Stats, Profil-Pfad,
    Notiz, Verdikt) tauschen; Struktur + CSS bleiben.
    ============================================================ */
-.tour-hero { margin: clamp(40px, 8vh, 88px) 0 0; }
+/* ---- FOTO-HERO: Bild traegt, Text liegt drauf (Overlay) ---- */
+.tour-hero { position: relative; overflow: hidden;
+  margin: clamp(14px, 3vh, 30px) 0 0;
+  width: 100vw; margin-left: calc((100% - 100vw) / 2);
+  min-height: clamp(480px, 78vh, 760px);
+  display: flex; flex-direction: column; justify-content: flex-end; }
+.tour-hero__img { position: absolute; inset: 0; }
+.tour-hero__img img { width: 100%; height: 100%; object-fit: cover; object-position: center 38%;
+  animation: tourHeroZoom 2200ms var(--ease-lux) both; }
+@keyframes tourHeroZoom { from { transform: scale(1.06); } to { transform: scale(1); } }
+/* Scrim: unten dunkel fuer Text, oben leicht fuer Nav-Lesbarkeit */
+.tour-hero__img::after { content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(6,35,26,0.55) 0, rgba(6,35,26,0) 22%),
+    linear-gradient(180deg, rgba(3,15,9,0) 34%, rgba(3,15,9,0.62) 68%, rgba(3,15,9,0.9) 100%); }
+.tour-hero__inner { position: relative; z-index: 1;
+  width: min(1080px, 94vw); margin: 0 auto;
+  padding: 0 0 clamp(22px, 3.5vh, 34px); }
 .tour-crumb { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px;
-  text-transform: uppercase; color: var(--paper-faint); }
+  text-transform: uppercase; color: rgba(243,235,217,0.72); text-shadow: 0 1px 3px rgba(3,15,9,0.7); }
 .tour-crumb a { color: var(--leaf); text-decoration: none; }
-.tour-eyebrow { margin-top: 20px; display: flex; align-items: center; gap: 12px;
-  font-family: var(--mono); font-size: var(--t-label); font-weight: 700; letter-spacing: 2.4px;
-  text-transform: uppercase; color: var(--leaf); }
-.tour-eyebrow::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.24); }
-.tour-hero h1 { margin: 16px 0 6px; font-family: 'Playfair Display', serif; font-weight: 700;
-  font-size: clamp(44px, 11vw, 88px); line-height: 0.96; letter-spacing: -1px; color: var(--paper); }
-.tour-alt { font-family: var(--mono); font-size: 13px; font-weight: 700; letter-spacing: 1px; color: var(--leaf); }
-.tour-lead { margin-top: 18px; font-size: 16.5px; line-height: 1.7; color: var(--paper-dim); max-width: 50ch; }
+.tour-badge { display: inline-flex; margin-top: 14px; align-items: center; gap: 7px;
+  font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
+  color: #14100A; background: linear-gradient(180deg, #E8BF25, #D4A918); padding: 5px 13px 5px 10px;
+  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%);
+  filter: drop-shadow(0 2px 4px rgba(3,15,9,0.5)); }
+.tour-hero h1 { margin: 14px 0 4px; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(46px, 9vw, 96px); line-height: 0.94; letter-spacing: -1px; color: var(--paper);
+  text-shadow: 0 2px 14px rgba(3,15,9,0.7), 0 0 50px rgba(3,15,9,0.5); }
+.tour-alt { font-family: var(--mono); font-size: 13px; font-weight: 700; letter-spacing: 1px; color: var(--leaf);
+  text-shadow: 0 1px 3px rgba(3,15,9,0.8); }
+.tour-lead { margin-top: 14px; font-size: 16px; line-height: 1.65; color: rgba(243,235,217,0.88);
+  max-width: 46ch; text-shadow: 0 1px 4px rgba(3,15,9,0.7); }
+/* Fakten-Strip direkt auf dem Bild, Hairline oben */
+.tour-hero__facts { margin-top: clamp(18px, 3vh, 28px); padding-top: 16px;
+  border-top: 1px solid rgba(243,235,217,0.24);
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px clamp(18px, 3vw, 38px); }
+.tour-hero__facts div { display: flex; flex-direction: column; gap: 3px; }
+.tour-hero__facts b { font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(19px, 2.4vw, 26px); line-height: 1; letter-spacing: -0.5px; color: var(--paper);
+  text-shadow: 0 1px 6px rgba(3,15,9,0.7); }
+.tour-hero__facts span { font-family: var(--mono); font-size: 8.5px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase; color: rgba(243,235,217,0.62); }
 
-/* Stats-Band (Creme) */
-.tour-stats { width: min(1040px, 92vw); margin: 40px 0 0; margin-left: calc((100% - min(1040px, 92vw)) / 2);
-  position: relative; overflow: hidden; border-radius: 20px; padding: 4px;
-  background: linear-gradient(158deg, rgba(24,43,31,0.1), rgba(24,43,31,0.03));
-  box-shadow: 0 0 0 1px rgba(186,155,95,0.28), 0 40px 74px -34px rgba(0,0,0,0.64); }
-.tour-stats__grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px;
-  border-radius: 16px; overflow: hidden; background: rgba(24,43,31,0.12); }
-.tour-stat { background: linear-gradient(158deg, #F5EEDE, #EAE0C8); padding: 20px 18px; }
-.tour-stat b { display: block; font-family: 'Playfair Display', serif; font-weight: 700;
-  font-size: clamp(20px, 2.5vw, 27px); line-height: 1; letter-spacing: -0.5px; color: var(--royal); }
-.tour-stat span { display: block; margin-top: 7px; font-family: var(--mono); font-size: 8.5px; font-weight: 700;
-  letter-spacing: 1.4px; text-transform: uppercase; color: rgba(24,43,31,0.55); line-height: 1.35; }
 
 /* Höhenprofil (dunkle Karte, signature) */
 .tour-profile { width: min(1040px, 92vw); margin: 22px 0 0; margin-left: calc((100% - min(1040px, 92vw)) / 2);
@@ -114,26 +133,20 @@
 .tour-vcard .mark { font-family: var(--mono); font-weight: 700; }
 
 /* Foto-Slot (pending) */
-.tour-photos { margin-top: 40px; }
-.tour-media { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 18px; margin-top: 20px; align-items: start; }
-.tour-photo-real { margin: 0; position: relative; border-radius: 16px; overflow: hidden;
-  box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset, 0 28px 60px -30px rgba(0,0,0,0.75), 0 0 0 1px rgba(126,208,155,0.14); }
-.tour-photo-real img { display: block; width: 100%; height: 100%; object-fit: cover; max-height: 560px; }
-.tour-photo-real figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 18px 14px;
-  font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.4px; color: var(--paper);
-  background: linear-gradient(180deg, transparent, rgba(3,15,9,0.82)); }
-.tour-tips { align-self: stretch; padding: 26px 24px; border-radius: 16px;
+.tour-know { margin-top: 44px; }
+.tour-know__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+.tour-tip { padding: 20px 20px 22px; border-radius: 14px;
   background: linear-gradient(158deg, rgba(19,54,35,0.5), rgba(6,26,17,0.55));
-  border: 1px solid rgba(126,208,155,0.14); box-shadow: inset 0 1px 0 rgba(209,242,235,0.06); }
-.tour-tips__h { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px;
-  text-transform: uppercase; color: var(--leaf); margin-bottom: 6px; }
-.tour-tip { padding: 14px 0; border-bottom: 1px solid rgba(126,208,155,0.12); }
-.tour-tip__k { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.6px;
-  text-transform: uppercase; color: var(--paper-faint); }
-.tour-tip p { margin-top: 5px; font-size: 14px; line-height: 1.5; color: var(--paper-dim); }
-.tour-tip p strong { color: var(--leaf); font-weight: 700; }
-.tour-tips__note { margin-top: 14px; font-size: 12.5px; line-height: 1.5; color: var(--paper-faint); }
-.tour-tips__note a { color: var(--leaf); text-decoration: none; }
+  border: 1px solid rgba(126,208,155,0.14); box-shadow: inset 0 1px 0 rgba(209,242,235,0.06);
+  transition: transform 500ms var(--ease-lux), border-color 500ms var(--ease-lux); }
+.tour-tip:hover { transform: translateY(-3px); border-color: rgba(126,208,155,0.3); }
+.tour-tip__k { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.8px;
+  text-transform: uppercase; color: var(--leaf); }
+.tour-tip p { margin-top: 8px; font-size: 14px; line-height: 1.55; color: var(--paper-dim); }
+.tour-tip p strong { color: var(--paper); font-weight: 700; }
+.tour-know__note { margin-top: 16px; font-size: 13px; line-height: 1.6; color: var(--paper-faint); }
+.tour-know__note a { color: var(--leaf); text-decoration: none; }
+@media (max-width: 720px) { .tour-know__grid { grid-template-columns: 1fr; } }
 
 /* Abschluss-CTA */
 .tour-cta { width: min(760px, 92vw); margin: 56px 0 50px; margin-left: calc((100% - min(760px, 92vw)) / 2);
@@ -157,9 +170,7 @@
 .tour-back a:hover { color: var(--leaf); }
 
 @media (max-width: 760px) {
-  .tour-stats__grid { grid-template-columns: 1fr 1fr 1fr; }
   .tour-verdict__grid { grid-template-columns: 1fr; }
-  .tour-media { grid-template-columns: 1fr; }
   .tour-photo-grid { grid-template-columns: 1fr 1fr; }
 }
 </style>
@@ -186,25 +197,28 @@
       </span>
     </header>
 
-    <section class="tour-hero st">
-      <p class="tour-crumb st st1"><a href="/touren/">Hulk Hikes</a> · Berchtesgadener Land</p>
-      <p class="tour-eyebrow st st1">Hulk Hike 01 · selbst gegangen</p>
-      <h1 class="st st2">Ristfeuchthorn</h1>
-      <p class="tour-alt st st2">1.569 m · über Schneizlreuth</p>
-      <p class="tour-lead st st3">Ein ehrlicher Kondi-Tag. Von Schneizlreuth als Rundtour aufs Gipfelkreuz —
-      1.071 Höhenmeter am Stück, oben T3-Gelände. Kein Klettersteig-Ego, sondern Aufstehen, Hochgehen, Runterkommen.</p>
-    </section>
   </div>
 
-  <!-- ECHTE STATS (aus Bergfex + Apple Watch, 17.07.) -->
-  <section class="tour-stats st st3">
-    <div class="tour-stats__grid">
-      <div class="tour-stat"><b>12,52</b><span>km Rundtour</span></div>
-      <div class="tour-stat"><b>1.071</b><span>Höhenmeter</span></div>
-      <div class="tour-stat"><b>1.567</b><span>m max. Höhe</span></div>
-      <div class="tour-stat"><b>~5 h</b><span>reine Gehzeit</span></div>
-      <div class="tour-stat"><b>T2–T3</b><span>SAC-Skala</span></div>
-      <div class="tour-stat"><b>17.07.</b><span>gegangen</span></div>
+  <!-- FOTO-HERO mit Overlay -->
+  <section class="tour-hero" aria-label="Ristfeuchthorn — Tour-Überblick">
+    <div class="tour-hero__img" aria-hidden="true">
+      <img src="/touren/ristfeuchthorn/ausblick.jpg" width="1200" height="1600"
+           alt="" fetchpriority="high" loading="eager" decoding="async">
+    </div>
+    <div class="tour-hero__inner">
+      <p class="tour-crumb st st1"><a href="/touren/">Hulk Hikes</a> · Berchtesgadener Land</p>
+      <p class="st st1"><span class="tour-badge">Gegangen · 17.07. · selbst getrackt</span></p>
+      <h1 class="st st2">Ristfeuchthorn</h1>
+      <p class="tour-alt st st2">1.569 m · über Schneizlreuth</p>
+      <p class="tour-lead st st3">Ein ehrlicher Kondi-Tag: 1.071 Höhenmeter am Stück, oben T3 —
+      kein Klettersteig-Ego, sondern Aufstehen, Hochgehen, Runterkommen.</p>
+      <div class="tour-hero__facts st st4">
+        <div><b>12,52</b><span>km Rundtour</span></div>
+        <div><b>1.071</b><span>Höhenmeter</span></div>
+        <div><b>1.567</b><span>m max. Höhe</span></div>
+        <div><b>~5 h</b><span>Gehzeit</span></div>
+        <div><b>T2–T3</b><span>SAC-Skala</span></div>
+      </div>
     </div>
   </section>
 
@@ -263,33 +277,26 @@
       </div>
     </section>
 
-    <!-- FOTO + praktische Tipps -->
-    <section class="tour-photos st">
-      <div class="shead"><p class="kicker">Unterwegs</p><h2>Ein Blick von <em>oben.</em></h2></div>
-      <div class="tour-media">
-        <figure class="tour-photo-real">
-          <img src="/touren/ristfeuchthorn/ausblick.jpg" width="1200" height="1600"
-               alt="Almhütte auf der Wiese mit Blick auf die Berchtesgadener Alpen" loading="lazy" decoding="async">
-          <figcaption>Alm kurz unterm Gipfel — dahinter die Berchtesgadener Alpen.</figcaption>
-        </figure>
-        <aside class="tour-tips">
-          <p class="tour-tips__h">Gut zu wissen</p>
-          <div class="tour-tip">
-            <span class="tour-tip__k">Parken</span>
-            <p>Kostenloser Parkplatz unten am <strong>Wurzenwirt</strong> — direkt am Start.</p>
-          </div>
-          <div class="tour-tip">
-            <span class="tour-tip__k">Einkehr</span>
-            <p>Der <strong>Wurzenwirt</strong> (Gasthof am Parkplatz) ist nach der Runde zu empfehlen.</p>
-          </div>
-          <div class="tour-tip">
-            <span class="tour-tip__k">Charakter</span>
-            <p>Naturnah, abgelegen, teils verwachsen. Oben T3 — festes Schuhwerk, Trittsicherheit.</p>
-          </div>
-          <p class="tour-tips__note">Mehr von der Tour gibt's als Video drüben auf
-          <a href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">Instagram</a>.</p>
-        </aside>
+    <!-- Praktische Tipps -->
+    <section class="tour-know st">
+      <div class="shead"><p class="kicker">Gut zu wissen</p><h2>Bevor du <em>losgehst.</em></h2></div>
+      <div class="tour-know__grid">
+        <div class="tour-tip">
+          <span class="tour-tip__k">Parken</span>
+          <p>Kostenloser Parkplatz unten am <strong>Wurzenwirt</strong> — direkt am Start.</p>
+        </div>
+        <div class="tour-tip">
+          <span class="tour-tip__k">Einkehr</span>
+          <p>Der <strong>Wurzenwirt</strong> (Gasthof am Parkplatz) ist nach der Runde zu empfehlen.</p>
+        </div>
+        <div class="tour-tip">
+          <span class="tour-tip__k">Charakter</span>
+          <p>Naturnah, abgelegen, teils verwachsen. Oben T3 — festes Schuhwerk, Trittsicherheit.</p>
+        </div>
       </div>
+      <p class="tour-know__note">Mehr von der Tour gibt's als Video drüben auf
+      <a href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">Instagram</a> —
+      Startpunkt: <a href="https://www.google.com/maps/search/Wurzenwirt+Schneizlreuth" target="_blank" rel="noopener">Wurzenwirt in Maps öffnen</a>.</p>
     </section>
   </div>
 
