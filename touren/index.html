@@ -6,13 +6,13 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hulk Hikes — Meine Bergtouren im Chiemgau &amp; Berchtesgadener Land | VegetarianHulk</title>
-<meta name="description" content="Hulk Hikes: meine eigenen Wandertouren-Empfehlungen im Chiemgau und Berchtesgadener Land — Grünstein, Zinnkopf, Dürrnbachhorn, Rauschberg, Gamsknogel, Hochgern. Mit Höhenprofil, Gehzeit, Schwierigkeit und Startpunkt.">
+<meta name="description" content="Hulk Hikes: meine eigenen Wandertouren im Chiemgau und Berchtesgadener Land — filterbar nach Region und Schwierigkeit. Grünstein, Zinnkopf, Dürrnbachhorn, Rauschberg, Gamsknogel, Hochgern, Ristfeuchthorn. Mit Höhenprofil, Gehzeit und Startpunkt.">
 <meta name="theme-color" content="#0B2418">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://vegetarianhulk.de/touren/">
 
 <meta property="og:title" content="Hulk Hikes — Meine Bergtouren im Chiemgau &amp; Berchtesgadener Land">
-<meta property="og:description" content="Meine eigenen Touren-Empfehlungen mit Höhenprofil, Gehzeit und Startpunkt.">
+<meta property="og:description" content="Meine eigenen Touren — filterbar, mit Höhenprofil, Gehzeit und Startpunkt.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://vegetarianhulk.de/touren/">
 <meta property="og:image" content="https://vegetarianhulk.de/hero.jpg?v=v31.6.1">
@@ -23,8 +23,9 @@
 <link rel="stylesheet" href="/v3.css?v=7808af07">
 <style>
 /* ============================================================
-   /touren/ — Hulk-Hikes Touren-Liste (page-scoped .tk-)
-   Native Kupferstich-Karten (echter Text, SEO), Creme auf dunkel.
+   /touren/ — Hulk-Hikes FORUM-LISTE (page-scoped .tk-)
+   Pinned-Highlight (letzte gegangene Tour) + filterbare,
+   durchsuchbare, sortierbare Zeilen-Liste mit Expand.
    ============================================================ */
 .tk-hero { margin: clamp(40px, 8vh, 90px) 0 0; }
 .tk-hero .kicker { display: flex; align-items: center; gap: 12px; font-family: var(--mono);
@@ -36,83 +37,191 @@
 .tk-lead { font-size: 16.5px; line-height: 1.7; color: var(--paper-dim); max-width: 54ch; }
 .tk-lead strong { color: var(--paper); font-weight: 600; }
 
-/* Sektions-Kopf */
-.tk-sec { margin-top: clamp(52px, 8vh, 86px); }
-.tk-sec .shead { margin: 0 0 6px; }
+.tk-wide { width: min(1080px, 94vw); margin-left: calc((100% - min(1080px, 94vw)) / 2); }
 
-/* Karten-Grid (Breakout) */
-.tk-grid { width: min(1120px, 94vw); margin: 22px 0 0; margin-left: calc((100% - min(1120px, 94vw)) / 2);
-  display: grid; gap: 20px; grid-template-columns: repeat(3, 1fr); }
-@media (max-width: 920px) { .tk-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 600px) { .tk-grid { grid-template-columns: 1fr; } }
-
-/* Kupferstich-Karte */
-.tk-card { position: relative; display: flex; flex-direction: column; overflow: hidden;
-  border-radius: 16px; padding: 24px 24px 0;
+/* ---- Pinned Highlight: zuletzt gegangene Tour ---- */
+.tk-pin { margin-top: clamp(40px, 6vh, 64px); position: relative; overflow: hidden; border-radius: 20px;
+  display: grid; grid-template-columns: 1.25fr 1fr;
   background:
     repeating-linear-gradient(96deg, rgba(24,43,31,0.022) 0 1px, transparent 1px 11px),
-    linear-gradient(168deg, #F6EFDF 0%, #F0E8D3 62%, #E9DFC7 100%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 0 0 1px rgba(186,155,95,0.24),
-    0 26px 54px -30px rgba(0,0,0,0.6);
+    linear-gradient(168deg, #F6EFDF 0%, #EFE7D1 62%, #E8DEC5 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 0 0 1px rgba(186,155,95,0.26),
+    0 36px 70px -34px rgba(0,0,0,0.66);
+  text-decoration: none; color: inherit;
   transition: transform 550ms var(--ease-lux), box-shadow 550ms var(--ease-lux); }
-.tk-card:hover { transform: translateY(-5px);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 0 0 1px rgba(186,155,95,0.38),
-    0 40px 68px -30px rgba(0,0,0,0.66); }
-.tk-num { align-self: flex-start; font-family: var(--mono); font-size: 9px; font-weight: 700;
-  letter-spacing: 2px; text-transform: uppercase; color: var(--royal);
-  border: 1px solid rgba(11,110,79,0.4); border-radius: 999px; padding: 5px 13px; }
-.tk-name { margin: 16px 0 2px; font-family: 'Playfair Display', serif; font-weight: 700;
-  font-size: clamp(28px, 3.4vw, 34px); line-height: 1; letter-spacing: -0.5px; color: #14281C; }
-.tk-name span { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
-  color: rgba(24,43,31,0.5); margin-left: 4px; }
-.tk-tag { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 500;
-  font-size: 17px; color: var(--royal); }
-/* Mini-Höhenprofil */
-.tk-profile { width: 100%; height: 54px; margin: 16px 0 6px; display: block; color: var(--sage); overflow: visible; }
-.tk-profile .pfill { fill: rgba(94,119,94,0.14); }
-.tk-profile .pline { fill: none; stroke: var(--royal); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
-/* Fakten */
-.tk-facts { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 9px; padding: 12px 0;
-  border-top: 1px solid rgba(24,43,31,0.14);
-  font-family: var(--mono); font-size: 11.5px; font-weight: 700; letter-spacing: 0.3px; color: #14281C; }
-.tk-facts i { color: rgba(24,43,31,0.35); font-style: normal; }
-.tk-dots { margin-left: auto; display: inline-flex; gap: 4px; }
-.tk-dots b { width: 7px; height: 7px; border-radius: 50%; border: 1.4px solid var(--royal); box-sizing: border-box; }
-.tk-dots b.on { background: var(--royal); }
-/* Hinweis + Start */
-.tk-hint, .tk-start { display: flex; align-items: flex-start; gap: 8px; padding: 9px 0;
-  font-size: 12.5px; line-height: 1.4; color: rgba(24,43,31,0.72); border-top: 1px solid rgba(24,43,31,0.1); }
-.tk-hint svg, .tk-start svg { flex: 0 0 auto; width: 14px; height: 14px; margin-top: 1px; color: var(--royal); }
-.tk-hint strong { color: #14281C; font-weight: 700; }
-/* Kupferstich unten (randlos, blendet in Creme) */
-.tk-eng { margin: 8px -24px 0; }
-.tk-eng img { display: block; width: 100%; height: auto;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 24%);
-          mask-image: linear-gradient(180deg, transparent 0, #000 24%); mix-blend-mode: multiply; }
-
-/* GEGANGEN-Karte (Ristfeuchthorn, echtes Foto, klickbar) */
-.tk-real { grid-column: 1 / -1; }
-@media (min-width: 920px) { .tk-real { display: grid; grid-template-columns: 1.3fr 1fr; gap: 0; padding: 0; } }
-.tk-real .tk-real__body { padding: 30px 30px 26px; display: flex; flex-direction: column; }
-.tk-real__badge { align-self: flex-start; display: inline-flex; align-items: center; gap: 7px;
+.tk-pin:hover { transform: translateY(-4px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 0 0 1px rgba(186,155,95,0.4), 0 46px 84px -34px rgba(0,0,0,0.7); }
+.tk-pin__body { padding: clamp(26px, 3.4vw, 42px); display: flex; flex-direction: column; }
+.tk-pin__badge { align-self: flex-start; display: inline-flex; align-items: center; gap: 7px;
   font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
-  color: #14100A; background: linear-gradient(180deg, #E8BF25, #D4A918); padding: 5px 12px;
+  color: #14100A; background: linear-gradient(180deg, #E8BF25, #D4A918); padding: 5px 13px 5px 10px;
   clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%); }
-.tk-real__photo { position: relative; overflow: hidden; min-height: 240px; }
-.tk-real__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-@media (max-width: 919px) { .tk-real__photo { min-height: 220px; order: -1; } }
-.tk-real .tk-cta { margin-top: auto; padding-top: 16px; font-family: var(--mono); font-size: 11px;
-  font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--royal); }
-.tk-real:hover .tk-cta { color: #0A3B22; }
+.tk-pin h2 { margin: 16px 0 2px; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(30px, 4.4vw, 44px); line-height: 1; letter-spacing: -0.5px; color: #14281C; }
+.tk-pin h2 span { font-family: var(--mono); font-size: 12px; font-weight: 700; color: rgba(24,43,31,0.5); margin-left: 6px; }
+.tk-pin__tag { font-family: 'Playfair Display', serif; font-style: italic; font-size: 18px; color: var(--royal); }
+.tk-pin__note { margin: 14px 0 0; max-width: 40ch;
+  font-family: 'Caveat', cursive; font-weight: 600; font-size: 21px; line-height: 1.35; color: #1E3A2A; }
+.tk-pin__facts { margin-top: auto; padding-top: 18px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px;
+  font-family: var(--mono); font-size: 11.5px; font-weight: 700; color: #14281C;
+  border-top: 1px solid rgba(24,43,31,0.14); }
+.tk-pin__facts i { color: rgba(24,43,31,0.35); font-style: normal; }
+.tk-pin__cta { margin-top: 10px; font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--royal);
+  transition: letter-spacing 400ms var(--ease-lux); }
+.tk-pin:hover .tk-pin__cta { letter-spacing: 2.2px; }
+.tk-pin__photo { position: relative; min-height: 260px; overflow: hidden; }
+.tk-pin__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  transition: transform 1200ms var(--ease-lux); }
+.tk-pin:hover .tk-pin__photo img { transform: scale(1.04); }
+.tk-pin__photo::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(238,229,209,1) 0, rgba(238,229,209,0) 14%); }
+@media (max-width: 860px) {
+  .tk-pin { grid-template-columns: 1fr; }
+  .tk-pin__photo { min-height: 210px; order: -1; }
+  .tk-pin__photo::after { background: linear-gradient(0deg, rgba(238,229,209,1) 0, rgba(238,229,209,0) 22%); }
+}
 
-/* Watzmann-Verweis (klein) */
-.tk-watz { width: min(1120px, 94vw); margin: 26px 0 0; margin-left: calc((100% - min(1120px, 94vw)) / 2);
-  display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 18px 22px; border-radius: 14px;
+/* ---- Toolbar: Suche · Filter · Sortierung (Instrument-Sprache) ---- */
+.tk-bar { margin-top: clamp(44px, 7vh, 72px); position: relative; z-index: 4;
+  display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px;
+  padding: 14px 16px; border-radius: 16px;
+  background: linear-gradient(158deg, rgba(19,54,35,0.62), rgba(6,26,17,0.68));
+  border: 1px solid rgba(126,208,155,0.18);
+  box-shadow: inset 0 1px 0 rgba(209,242,235,0.07), 0 22px 48px -26px rgba(0,0,0,0.7); }
+.tk-search { flex: 1 1 200px; display: flex; align-items: center; gap: 9px;
+  padding: 9px 13px; border-radius: 10px;
+  background: rgba(3,15,9,0.5); border: 1px solid rgba(126,208,155,0.18);
+  transition: border-color 300ms var(--ease-lux), box-shadow 300ms var(--ease-lux); }
+.tk-search:focus-within { border-color: rgba(126,208,155,0.55); box-shadow: 0 0 0 3px rgba(80,200,120,0.12); }
+.tk-search svg { width: 14px; height: 14px; color: var(--leaf); flex: 0 0 auto; }
+.tk-search input { flex: 1; min-width: 0; background: none; border: 0; outline: none; font: inherit;
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.5px; color: var(--paper); }
+.tk-search input::placeholder { color: var(--paper-faint); }
+.tk-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.tk-group__label { font-family: var(--mono); font-size: 8.5px; font-weight: 700; letter-spacing: 1.6px;
+  text-transform: uppercase; color: var(--paper-faint); margin-right: 2px; }
+.tk-chip { cursor: pointer; border: 1px solid rgba(126,208,155,0.22); border-radius: 999px;
+  background: transparent; padding: 7px 14px;
+  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--paper-dim);
+  transition: background 300ms var(--ease-lux), color 300ms var(--ease-lux), border-color 300ms var(--ease-lux), transform 300ms var(--ease-lux); }
+.tk-chip:hover { border-color: rgba(126,208,155,0.5); color: var(--paper); }
+.tk-chip[aria-pressed="true"] { background: linear-gradient(180deg, #E8BF25, #D4A918); color: #14100A;
+  border-color: transparent; transform: translateY(-1px); }
+.tk-sort { position: relative; }
+.tk-sort select { appearance: none; -webkit-appearance: none; cursor: pointer;
+  padding: 8px 30px 8px 14px; border-radius: 999px;
+  background: rgba(3,15,9,0.5); border: 1px solid rgba(126,208,155,0.22);
+  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--paper-dim); outline: none;
+  transition: border-color 300ms var(--ease-lux); }
+.tk-sort select:hover, .tk-sort select:focus { border-color: rgba(126,208,155,0.5); color: var(--paper); }
+.tk-sort::after { content: "▾"; position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  pointer-events: none; color: var(--leaf); font-size: 10px; }
+.tk-count { margin-left: auto; font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 1.6px; text-transform: uppercase; color: var(--paper-faint); }
+.tk-count b { color: var(--leaf); }
+
+/* ---- Forum-Liste ---- */
+.tk-list { margin: 18px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.tk-row { position: relative; overflow: hidden; border-radius: 14px;
+  background:
+    repeating-linear-gradient(96deg, rgba(24,43,31,0.02) 0 1px, transparent 1px 11px),
+    linear-gradient(168deg, #F6EFDF 0%, #F0E8D3 66%, #EAE0C8 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 0 0 1px rgba(186,155,95,0.2),
+    0 16px 36px -26px rgba(0,0,0,0.55);
+  transition: transform 500ms var(--ease-lux), box-shadow 500ms var(--ease-lux),
+    opacity 350ms var(--ease-lux); }
+.tk-row:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 0 0 1px rgba(186,155,95,0.36),
+  0 26px 48px -26px rgba(0,0,0,0.6); }
+.tk-row.is-out { opacity: 0; transform: translateY(10px) scale(0.99); pointer-events: none; }
+.tk-row[hidden] { display: none; }
+/* Kopfzeile (Klickfläche) */
+.tk-row__head { display: grid; grid-template-columns: 96px 1fr auto; gap: 0 18px; align-items: center;
+  width: 100%; text-align: left; background: none; border: 0; cursor: pointer; padding: 0 20px 0 0; font: inherit; color: inherit; }
+.tk-row__eng { align-self: stretch; position: relative; overflow: hidden; min-height: 86px; }
+.tk-row__eng img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  mix-blend-mode: multiply; transition: transform 900ms var(--ease-lux); }
+.tk-row:hover .tk-row__eng img { transform: scale(1.07); }
+.tk-row__eng::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 60%, rgba(243,236,222,1) 100%); }
+.tk-row__main { padding: 15px 0; min-width: 0; }
+.tk-row__top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.tk-row__name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(19px, 2.4vw, 24px);
+  line-height: 1.05; letter-spacing: -0.3px; color: #14281C; }
+.tk-row__alt { font-family: var(--mono); font-size: 10.5px; font-weight: 700; color: rgba(24,43,31,0.48); }
+.tk-badge-gone { font-family: var(--mono); font-size: 8px; font-weight: 700; letter-spacing: 1.4px;
+  text-transform: uppercase; color: #14100A; background: linear-gradient(180deg, #E8BF25, #D4A918);
+  padding: 3px 9px 3px 7px; clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 50%, calc(100% - 5px) 100%, 0 100%); }
+.tk-row__tag { margin-top: 2px; font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 14.5px; color: var(--royal); }
+.tk-row__facts { margin-top: 7px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px 9px;
+  font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: 0.3px; color: rgba(24,43,31,0.78); }
+.tk-row__facts i { color: rgba(24,43,31,0.3); font-style: normal; }
+.tk-region { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--royal);
+  border: 1px solid rgba(11,110,79,0.32); border-radius: 999px; padding: 2px 9px; }
+.tk-dots { display: inline-flex; gap: 3.5px; }
+.tk-dots b { width: 6.5px; height: 6.5px; border-radius: 50%; border: 1.3px solid var(--royal); box-sizing: border-box; }
+.tk-dots b.on { background: var(--royal); }
+/* rechts: Mini-Profil + Chevron */
+.tk-row__side { display: flex; align-items: center; gap: 16px; }
+.tk-row__profile { width: 120px; height: 34px; color: var(--sage); }
+.tk-row__profile .pfill { fill: rgba(94,119,94,0.14); }
+.tk-row__profile .pline { fill: none; stroke: var(--royal); stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; }
+.tk-row__chev { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;
+  border: 1px solid rgba(24,43,31,0.25); color: var(--royal);
+  transition: transform 500ms var(--ease-lux), background 300ms var(--ease-lux); }
+.tk-row__chev svg { width: 12px; height: 12px; }
+.tk-row.open .tk-row__chev { transform: rotate(180deg); background: rgba(11,110,79,0.1); }
+/* Expand-Panel (animierte Höhe via grid) */
+.tk-row__panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 600ms var(--ease-lux); }
+.tk-row.open .tk-row__panel { grid-template-rows: 1fr; }
+.tk-row__panelin { overflow: hidden; }
+.tk-row__detail { display: grid; grid-template-columns: 1fr auto; gap: 8px 26px;
+  padding: 4px 20px 18px 114px; }
+.tk-row__desc { font-size: 14px; line-height: 1.6; color: rgba(24,43,31,0.8); max-width: 62ch; }
+.tk-row__desc strong { color: #14281C; }
+.tk-row__meta { display: flex; flex-direction: column; gap: 7px; padding-top: 2px; }
+.tk-row__meta p { display: flex; align-items: flex-start; gap: 7px; font-size: 12.5px; line-height: 1.4;
+  color: rgba(24,43,31,0.72); white-space: nowrap; }
+.tk-row__meta svg { flex: 0 0 auto; width: 13px; height: 13px; margin-top: 1px; color: var(--royal); }
+.tk-row__links { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px 10px; margin-top: 6px; }
+.tk-minibtn { display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
+  font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase;
+  color: var(--royal); border: 1px solid rgba(11,110,79,0.35); border-radius: 999px; padding: 7px 14px;
+  transition: background 300ms var(--ease-lux), color 300ms var(--ease-lux), transform 300ms var(--ease-lux); }
+.tk-minibtn:hover { background: var(--royal); color: #F3EBD9; transform: translateY(-1px); }
+.tk-minibtn--gelb { color: #14100A; border-color: transparent;
+  background: linear-gradient(180deg, #E8BF25, #D4A918); }
+.tk-minibtn--gelb:hover { background: linear-gradient(180deg, #F0C82F, #DDAF1C); color: #14100A; }
+@media (max-width: 760px) {
+  .tk-row__head { grid-template-columns: 72px 1fr; padding-right: 14px; }
+  .tk-row__side { display: none; }
+  .tk-row__detail { padding-left: 16px; grid-template-columns: 1fr; }
+  .tk-row__meta p { white-space: normal; }
+}
+
+/* Leerzustand */
+.tk-empty { display: none; margin-top: 18px; padding: 34px 22px; text-align: center; border-radius: 14px;
+  border: 1px dashed rgba(126,208,155,0.3); color: var(--paper-dim); }
+.tk-empty p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 19px; }
+.tk-empty button { margin-top: 12px; cursor: pointer; background: none; border: 0;
+  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+  color: var(--leaf); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Watzmann-Verweis */
+.tk-watz { margin: 34px 0 0; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding: 16px 20px; border-radius: 14px;
   background: linear-gradient(158deg, rgba(19,54,35,0.4), rgba(6,26,17,0.5));
   border: 1px solid rgba(126,208,155,0.14); }
-.tk-watz p { font-size: 14px; color: var(--paper-dim); }
-.tk-watz a { color: var(--leaf); text-decoration: none; font-family: var(--mono); font-size: 11px;
-  font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; margin-left: auto; }
+.tk-watz p { font-size: 13.5px; color: var(--paper-dim); }
+.tk-watz a { color: var(--leaf); text-decoration: none; font-family: var(--mono); font-size: 10.5px;
+  font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; margin-left: auto; white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tk-row, .tk-row__panel, .tk-row__eng img, .tk-pin__photo img, .tk-chip { transition: none !important; }
+}
 </style>
 </head>
 <body class="tk-page">
@@ -139,112 +248,315 @@
 
     <section class="tk-hero st">
       <p class="kicker st st1">Hulk Hikes · Bergtouren-Guide</p>
-      <h1 class="st st2">Meine Berge.<br><em>Meine Empfehlungen.</em></h1>
+      <h1 class="st st2">Meine Berge.<br><em>Meine Touren.</em></h1>
       <p class="tk-lead st st3">Keine kopierten Listen — das sind <strong>meine eigenen Touren</strong> im Chiemgau
-      und Berchtesgadener Land, wo ich daheim bin. Mit Höhenprofil, ehrlicher Gehzeit, Schwierigkeit und
-      Startpunkt. Wo ich selbst oben war, gibt's die ganze Runde zum Nachlesen.</p>
+      und Berchtesgadener Land, wo ich daheim bin. Such, filter, sortier — und wo ich selbst oben war,
+      liest du die ganze Runde nach.</p>
     </section>
   </div>
 
-  <!-- GEGANGEN -->
-  <section class="tk-sec st st3" aria-labelledby="real-title">
-    <div class="wrap"><div class="shead"><p class="kicker">Selbst gegangen</p><h2 id="real-title">Zuletzt oben <em>gewesen.</em></h2></div></div>
-    <div class="tk-grid">
-      <a class="tk-card tk-real rv" href="/touren/ristfeuchthorn/" style="--d: 0ms" aria-label="Ristfeuchthorn — Tour ansehen">
-        <div class="tk-real__body">
-          <span class="tk-real__badge">Gegangen · 17.07.</span>
-          <h3 class="tk-name" style="margin-top:14px;">Ristfeuchthorn <span>1.569 m</span></h3>
-          <p class="tk-tag">Ruhiger Kondi-Tag über Schneizlreuth</p>
-          <div class="tk-facts" style="margin-top:12px;">
-            <span>1.071 hm</span><i>·</i><span>12,52 km</span><i>·</i><span>~5 h</span>
-            <span class="tk-dots" title="T2–T3"><b class="on"></b><b class="on"></b><b class="on"></b></span>
+  <!-- PINNED: zuletzt gegangene Tour -->
+  <a class="tk-pin tk-wide st st3" href="/touren/ristfeuchthorn/" aria-label="Ristfeuchthorn — zuletzt gegangen, ganze Tour ansehen">
+    <div class="tk-pin__body">
+      <span class="tk-pin__badge">Zuletzt gegangen · 17.07.</span>
+      <h2>Ristfeuchthorn <span>1.569 m</span></h2>
+      <p class="tk-pin__tag">Ruhiger Kondi-Tag über Schneizlreuth</p>
+      <p class="tk-pin__note">„Sehr naturnah, abgelegen und teils richtig verwachsen — kein Autobahn-Wanderweg."</p>
+      <div class="tk-pin__facts">
+        <span>1.071 hm</span><i>·</i><span>12,52 km</span><i>·</i><span>~5 h</span><i>·</i><span>T2–T3</span>
+      </div>
+      <span class="tk-pin__cta">→ Ganze Tour: Foto, Höhenprofil, Notiz</span>
+    </div>
+    <div class="tk-pin__photo"><img src="/touren/ristfeuchthorn/ausblick.jpg" width="1200" height="1600" alt="Almhütte mit Blick auf die Berchtesgadener Alpen" loading="eager" fetchpriority="high"></div>
+  </a>
+
+  <!-- TOOLBAR -->
+  <div class="tk-bar tk-wide st st4" role="region" aria-label="Touren filtern und sortieren">
+    <label class="tk-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+      <input type="search" id="tkSearch" placeholder="Tour suchen …" autocomplete="off" aria-label="Touren durchsuchen">
+    </label>
+    <div class="tk-group" role="group" aria-label="Region">
+      <span class="tk-group__label">Region</span>
+      <button class="tk-chip" data-f="region" data-v="" aria-pressed="true" type="button">Alle</button>
+      <button class="tk-chip" data-f="region" data-v="chiemgau" aria-pressed="false" type="button">Chiemgau</button>
+      <button class="tk-chip" data-f="region" data-v="bgl" aria-pressed="false" type="button">Berchtesgaden</button>
+    </div>
+    <div class="tk-group" role="group" aria-label="Schwierigkeit">
+      <span class="tk-group__label">Grad</span>
+      <button class="tk-chip" data-f="diff" data-v="" aria-pressed="true" type="button">Alle</button>
+      <button class="tk-chip" data-f="diff" data-v="2" aria-pressed="false" type="button">Mittel</button>
+      <button class="tk-chip" data-f="diff" data-v="3" aria-pressed="false" type="button">Schwer</button>
+    </div>
+    <div class="tk-sort">
+      <select id="tkSort" aria-label="Sortierung">
+        <option value="new">Neueste zuerst</option>
+        <option value="old">Älteste zuerst</option>
+        <option value="easy">Leicht → Schwer</option>
+        <option value="hard">Schwer → Leicht</option>
+        <option value="hm">Meiste Höhenmeter</option>
+      </select>
+    </div>
+    <span class="tk-count" aria-live="polite"><b id="tkCount">7</b> Touren</span>
+  </div>
+
+  <!-- FORUM-LISTE -->
+  <ol class="tk-list tk-wide" id="tkList">
+
+    <!-- Ristfeuchthorn (gegangen) -->
+    <li class="tk-row rv" data-name="ristfeuchthorn schneizlreuth berchtesgaden" data-region="bgl" data-diff="3" data-thm="1071" data-date="20260717" style="--d: 0ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img src="/touren/ristfeuchthorn/ausblick.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top">
+            <span class="tk-row__name">Ristfeuchthorn</span><span class="tk-row__alt">1.569 m</span>
+            <span class="tk-badge-gone">Gegangen 17.07.</span>
+          </span>
+          <span class="tk-row__tag">Ruhiger Kondi-Tag über Schneizlreuth</span>
+          <span class="tk-row__facts">
+            <span>1.071 hm</span><i>·</i><span>12,52 km</span><i>·</i><span>~5 h</span><i>·</i>
+            <span class="tk-region">Berchtesgaden</span>
+            <span class="tk-dots" title="schwer"><b class="on"></b><b class="on"></b><b class="on"></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,30 L28,22 L58,6 L88,20 L120,30 L120,34 L0,34 Z"/><path class="pline" d="M0,30 L28,22 L58,6 L88,20 L120,30"/></svg>
+          <span class="tk-row__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">Sehr naturnah, abgelegen und teils richtig verwachsen — kein Autobahn-Wanderweg.
+          Oben ein richtig schöner Blick auf die Berchtesgadener Alpen. <strong>Die ganze Runde mit Foto,
+          echtem Höhenprofil und meiner Notiz gibt's auf der Tour-Seite.</strong></p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Parkplatz Wurzenwirt (kostenlos)</p>
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 20 9 8l4 7 3-5 5 10z"/></svg> Einkehr: Wurzenwirt am Parkplatz</p>
           </div>
-          <p class="tk-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Berchtesgadener Land · Rundtour, T2–T3</p>
-          <span class="tk-cta">→ Ganze Tour ansehen (Foto, Profil, Notiz)</span>
+          <div class="tk-row__links">
+            <a class="tk-minibtn tk-minibtn--gelb" href="/touren/ristfeuchthorn/">→ Ganze Tour ansehen</a>
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/Wurzenwirt+Schneizlreuth" target="_blank" rel="noopener">Startpunkt in Maps</a>
+          </div>
         </div>
-        <div class="tk-real__photo"><img src="/touren/ristfeuchthorn/ausblick.jpg" width="1200" height="1600" alt="Almhütte mit Blick auf die Berchtesgadener Alpen" loading="lazy"></div>
-      </a>
-    </div>
-  </section>
+      </div></div>
+    </li>
 
-  <!-- MEINE EMPFEHLUNGEN -->
-  <section class="tk-sec st" aria-labelledby="reco-title">
-    <div class="wrap"><div class="shead"><p class="kicker">Meine Empfehlungen</p><h2 id="reco-title">Sechs, die sich <em>lohnen.</em></h2>
-      <p class="th-next__copy" style="margin-top:14px;">Handverlesen aus meiner Gegend — vom entspannten Aussichtsberg bis zum stillen Grat. Such dir eine raus.</p></div></div>
-    <div class="tk-grid">
+    <!-- Tour 1: Grünstein -->
+    <li class="tk-row rv" data-name="grünstein gruenstein königssee koenigssee schönau berchtesgaden" data-region="bgl" data-diff="2" data-thm="489" data-date="-1" style="--d: 60ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img src="/touren/assets/eng-gruenstein.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top"><span class="tk-row__name">Grünstein</span><span class="tk-row__alt">1.304 m</span></span>
+          <span class="tk-row__tag">Königssee-Blick inklusive</span>
+          <span class="tk-row__facts">
+            <span>489 hm</span><i>·</i><span>ca. 5 km</span><i>·</i><span>ca. 2:00 h</span><i>·</i>
+            <span class="tk-region">Berchtesgaden</span>
+            <span class="tk-dots" title="mittel"><b class="on"></b><b class="on"></b><b></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,30 C24,28 40,24 60,9 C80,24 96,28 120,30 L120,34 L0,34 Z"/><path class="pline" d="M0,30 C24,28 40,24 60,9 C80,24 96,28 120,30"/></svg>
+          <span class="tk-row__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">Der Aussichtsbalkon überm Königssee: kurzer, knackiger Anstieg durch den Wald,
+          oben der Blick auf See und Watzmann-Ostwand. Perfekt als schnelle Feierabend- oder Einsteiger-Runde —
+          und unterwegs lockt die <strong>Grünsteinhütte</strong> zur Einkehr.</p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Parkplatz Hammerstiel, Schönau a. Königssee</p>
+          </div>
+          <div class="tk-row__links">
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/Parkplatz+Hammerstiel+Sch%C3%B6nau+am+K%C3%B6nigssee" target="_blank" rel="noopener">Startpunkt in Maps</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
 
-      <article class="tk-card rv" data-light style="--d: 0ms">
-        <span class="tk-num">Tour 1</span>
-        <h3 class="tk-name">Grünstein <span>1.304 m</span></h3>
-        <p class="tk-tag">Königssee-Blick inklusive</p>
-        <svg class="tk-profile" viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,58 C60,55 100,46 150,18 C200,46 240,55 300,58 L300,64 L0,64 Z"/><path class="pline" d="M0,58 C60,55 100,46 150,18 C200,46 240,55 300,58"/></svg>
-        <div class="tk-facts"><span>489 hm</span><i>·</i><span>ca. 5 km</span><i>·</i><span>ca. 2:00 h</span><span class="tk-dots" title="mittel"><b class="on"></b><b class="on"></b><b></b></span></div>
-        <div class="tk-eng"><img src="/touren/assets/eng-gruenstein.jpg" alt="" loading="lazy"></div>
-      </article>
+    <!-- Tour 2: Zinnkopf -->
+    <li class="tk-row rv" data-name="zinnkopf chiemsee siegsdorf hörgering hoergering chiemgau" data-region="chiemgau" data-diff="2" data-thm="553" data-date="-2" style="--d: 120ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img src="/touren/assets/eng-zinnkopf.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top"><span class="tk-row__name">Zinnkopf</span><span class="tk-row__alt">1.227 m</span></span>
+          <span class="tk-row__tag">Chiemsee-Panorama</span>
+          <span class="tk-row__facts">
+            <span>553 hm</span><i>·</i><span>9 km</span><i>·</i><span>ca. 3:00 h</span><i>·</i>
+            <span class="tk-region">Chiemgau</span>
+            <span class="tk-dots" title="mittel"><b class="on"></b><b class="on"></b><b></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,31 C16,29 28,25 44,9 C64,17 92,26 120,30 L120,34 L0,34 Z"/><path class="pline" d="M0,31 C16,29 28,25 44,9 C64,17 92,26 120,30"/></svg>
+          <span class="tk-row__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">Ruhiger Chiemgauer Aussichtsberg über Siegsdorf: durch Wald und über Almwiesen
+          hinauf, oben öffnet sich der freie Blick über den <strong>Chiemsee</strong> bis in die Berge.
+          Unaufgeregt, wenig los — genau das macht ihn gut.</p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Parkplatz Hörgering, Siegsdorf</p>
+          </div>
+          <div class="tk-row__links">
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/H%C3%B6rgering+Siegsdorf" target="_blank" rel="noopener">Startpunkt in Maps</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
 
-      <article class="tk-card rv" data-light style="--d: 80ms">
-        <span class="tk-num">Tour 2</span>
-        <h3 class="tk-name">Zinnkopf <span>1.227 m</span></h3>
-        <p class="tk-tag">Chiemsee-Panorama</p>
-        <svg class="tk-profile" viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,60 C40,56 70,48 110,18 C160,34 230,50 300,58 L300,64 L0,64 Z"/><path class="pline" d="M0,60 C40,56 70,48 110,18 C160,34 230,50 300,58"/></svg>
-        <div class="tk-facts"><span>553 hm</span><i>·</i><span>9 km</span><i>·</i><span>ca. 3:00 h</span><span class="tk-dots" title="mittel"><b class="on"></b><b class="on"></b><b></b></span></div>
-        <p class="tk-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Parkplatz Hörgering, Siegsdorf</p>
-        <div class="tk-eng"><img src="/touren/assets/eng-zinnkopf.jpg" alt="" loading="lazy"></div>
-      </article>
+    <!-- Tour 3: Dürrnbachhorn -->
+    <li class="tk-row rv" data-name="dürrnbachhorn duerrnbachhorn winklmoosalm reit im winkl grat chiemgau" data-region="chiemgau" data-diff="2" data-thm="591" data-date="-3" style="--d: 180ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img src="/touren/assets/eng-duerrnbachhorn.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top"><span class="tk-row__name">Dürrnbachhorn</span><span class="tk-row__alt">1.765 m</span></span>
+          <span class="tk-row__tag">Grat mit Weitblick</span>
+          <span class="tk-row__facts">
+            <span>591 hm</span><i>·</i><span>8,4 km</span><i>·</i><span>ca. 3:00 h</span><i>·</i>
+            <span class="tk-region">Chiemgau</span>
+            <span class="tk-dots" title="mittel"><b class="on"></b><b class="on"></b><b></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,30 C20,26 32,18 48,15 C64,13 76,16 88,14 C100,16 112,25 120,29 L120,34 L0,34 Z"/><path class="pline" d="M0,30 C20,26 32,18 48,15 C64,13 76,16 88,14 C100,16 112,25 120,29"/></svg>
+          <span class="tk-row__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">Gratwanderung hoch über der <strong>Winklmoosalm</strong>: erst gemütlich über
+          die Alm, dann am Rücken entlang mit Weitblick in Chiemgauer und Loferer Berge.
+          Am Grat brauchst du <strong>Trittsicherheit</strong> — dafür gehört dir oben das Panorama.</p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Parkplatz Winklmoosalm (Mautstraße ab Seegatterl)</p>
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 20 9 8l4 7 3-5 5 10z"/></svg> Grat: Trittsicherheit nötig</p>
+          </div>
+          <div class="tk-row__links">
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/Parkplatz+Winklmoosalm" target="_blank" rel="noopener">Startpunkt in Maps</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
 
-      <article class="tk-card rv" data-light style="--d: 160ms">
-        <span class="tk-num">Tour 3</span>
-        <h3 class="tk-name">Dürrnbachhorn <span>1.765 m</span></h3>
-        <p class="tk-tag">Grat mit Weitblick</p>
-        <svg class="tk-profile" viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,58 C50,52 80,36 120,30 C160,26 190,32 220,28 C250,32 280,48 300,56 L300,64 L0,64 Z"/><path class="pline" d="M0,58 C50,52 80,36 120,30 C160,26 190,32 220,28 C250,32 280,48 300,56"/></svg>
-        <div class="tk-facts"><span>591 hm</span><i>·</i><span>8,4 km</span><i>·</i><span>ca. 3:00 h</span><span class="tk-dots" title="mittel"><b class="on"></b><b class="on"></b><b></b></span></div>
-        <p class="tk-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 20 9 8l4 7 3-5 5 10z"/></svg> <span>Grat: <strong>Trittsicherheit nötig</strong></span></p>
-        <p class="tk-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Parkplatz Winklmoosalm (Mautstraße ab Seegatterl)</p>
-        <div class="tk-eng"><img src="/touren/assets/eng-duerrnbachhorn.jpg" alt="" loading="lazy"></div>
-      </article>
+    <!-- Tour 4: Rauschberg -->
+    <li class="tk-row rv" data-name="rauschberg ruhpolding hausberg chiemgau" data-region="chiemgau" data-diff="3" data-thm="904" data-date="-4" style="--d: 240ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img src="/touren/assets/eng-rauschberg.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top"><span class="tk-row__name">Rauschberg</span><span class="tk-row__alt">1.645 m</span></span>
+          <span class="tk-row__tag">Ruhpoldings Hausberg</span>
+          <span class="tk-row__facts">
+            <span>904 hm</span><i>·</i><span>16 km</span><i>·</i><span>ca. 5:30 h</span><i>·</i>
+            <span class="tk-region">Chiemgau</span>
+            <span class="tk-dots" title="schwer"><b class="on"></b><b class="on"></b><b class="on"></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,31 C24,29 40,21 60,15 C80,21 96,29 120,31 L120,34 L0,34 Z"/><path class="pline" d="M0,31 C24,29 40,21 60,15 C80,21 96,29 120,31"/></svg>
+          <span class="tk-row__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">Ruhpoldings Hausberg als lange Runde: 16 km, stetig bergauf, oben der weite
+          Blick übers Ruhpoldinger Tal. <strong>Bahn und Hütte sind aktuell geschlossen</strong> — heißt: Brotzeit
+          und genug Wasser selbst mitnehmen, dafür hast du den Berg fast für dich.</p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Parkplatz Rauschbergbahn, Ruhpolding</p>
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 20 9 8l4 7 3-5 5 10z"/></svg> Bahn &amp; Hütte geschlossen — Brotzeit mitnehmen</p>
+          </div>
+          <div class="tk-row__links">
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/Rauschbergbahn+Ruhpolding" target="_blank" rel="noopener">Startpunkt in Maps</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
 
-      <article class="tk-card rv" data-light style="--d: 0ms">
-        <span class="tk-num">Tour 4</span>
-        <h3 class="tk-name">Rauschberg <span>1.645 m</span></h3>
-        <p class="tk-tag">Ruhpoldings Hausberg</p>
-        <svg class="tk-profile" viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,60 C60,56 100,42 150,30 C200,42 240,56 300,60 L300,64 L0,64 Z"/><path class="pline" d="M0,60 C60,56 100,42 150,30 C200,42 240,56 300,60"/></svg>
-        <div class="tk-facts"><span>904 hm</span><i>·</i><span>16 km</span><i>·</i><span>ca. 5:30 h</span><span class="tk-dots" title="schwer"><b class="on"></b><b class="on"></b><b class="on"></b></span></div>
-        <p class="tk-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 20 9 8l4 7 3-5 5 10z"/></svg> <span><strong>Bahn &amp; Hütte geschlossen</strong> — Brotzeit mitnehmen</span></p>
-        <p class="tk-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Parkplatz Rauschbergbahn, Ruhpolding</p>
-        <div class="tk-eng"><img src="/touren/assets/eng-rauschberg.jpg" alt="" loading="lazy"></div>
-      </article>
+    <!-- Tour 5: Gamsknogel -->
+    <li class="tk-row rv" data-name="gamsknogel adlgaß adlgass inzell grat chiemgau" data-region="chiemgau" data-diff="3" data-thm="950" data-date="-5" style="--d: 300ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img src="/touren/assets/eng-gamsknogel.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top"><span class="tk-row__name">Gamsknogel</span><span class="tk-row__alt">1.750 m</span></span>
+          <span class="tk-row__tag">Der stille Grat</span>
+          <span class="tk-row__facts">
+            <span>950 hm</span><i>·</i><span>9 km</span><i>·</i><span>ca. 4:30 h</span><i>·</i>
+            <span class="tk-region">Chiemgau</span>
+            <span class="tk-dots" title="schwer"><b class="on"></b><b class="on"></b><b class="on"></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,32 L60,6 L120,32 L120,34 L0,34 Z"/><path class="pline" d="M0,32 L60,6 L120,32"/></svg>
+          <span class="tk-row__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">Der stille Grat der Chiemgauer Alpen: von Adlgaß bei Inzell steil hinauf,
+          oben <strong>Gratpassagen, teils seilversichert</strong>. Deutlich einsamer als die Klassiker —
+          wer Ruhe und ein bisschen Hand-am-Fels mag, ist hier richtig.</p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Wanderparkplatz Adlgaß, Inzell</p>
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 20 9 8l4 7 3-5 5 10z"/></svg> Gratpassagen, teils seilversichert</p>
+          </div>
+          <div class="tk-row__links">
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/Wanderparkplatz+Adlga%C3%9F+Inzell" target="_blank" rel="noopener">Startpunkt in Maps</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
 
-      <article class="tk-card rv" data-light style="--d: 80ms">
-        <span class="tk-num">Tour 5</span>
-        <h3 class="tk-name">Gamsknogel <span>1.750 m</span></h3>
-        <p class="tk-tag">Der stille Grat</p>
-        <svg class="tk-profile" viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,62 L150,14 L300,62 L300,64 L0,64 Z"/><path class="pline" d="M0,62 L150,14 L300,62"/></svg>
-        <div class="tk-facts"><span>950 hm</span><i>·</i><span>9 km</span><i>·</i><span>ca. 4:30 h</span><span class="tk-dots" title="schwer"><b class="on"></b><b class="on"></b><b class="on"></b></span></div>
-        <p class="tk-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 20 9 8l4 7 3-5 5 10z"/></svg> <span><strong>Gratpassagen</strong>, teils seilversichert</span></p>
-        <p class="tk-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Wanderparkplatz Adlgaß, Inzell</p>
-        <div class="tk-eng"><img src="/touren/assets/eng-gamsknogel.jpg" alt="" loading="lazy"></div>
-      </article>
+    <!-- Tour 6: Hochgern -->
+    <li class="tk-row rv" data-name="hochgern unterwössen unterwoessen marquartstein chiemgau klassiker" data-region="chiemgau" data-diff="3" data-thm="1110" data-date="-6" style="--d: 360ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img src="/touren/assets/eng-hochgern.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top"><span class="tk-row__name">Hochgern</span><span class="tk-row__alt">1.747 m</span></span>
+          <span class="tk-row__tag">Der Chiemgau-Klassiker</span>
+          <span class="tk-row__facts">
+            <span>1.110 hm</span><i>·</i><span>15 km</span><i>·</i><span>ca. 4:30 h</span><i>·</i>
+            <span class="tk-region">Chiemgau</span>
+            <span class="tk-dots" title="schwer"><b class="on"></b><b class="on"></b><b class="on"></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,31 C28,29 44,17 60,7 C76,17 92,29 120,31 L120,34 L0,34 Z"/><path class="pline" d="M0,31 C28,29 44,17 60,7 C76,17 92,29 120,31"/></svg>
+          <span class="tk-row__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">Der Chiemgau-Klassiker: lange, abwechslungsreiche Runde von Unterwössen —
+          Wald, Almen, freier Gipfel. Kurz unterm Gipfel liegt das <strong>Hochgernhaus</strong> für die
+          Einkehr, oben der große Rundumblick von Chiemsee bis in die Zentralalpen.</p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Wanderparkplatz Hochgern, Unterwössen</p>
+          </div>
+          <div class="tk-row__links">
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/Wanderparkplatz+Hochgern+Unterw%C3%B6ssen" target="_blank" rel="noopener">Startpunkt in Maps</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
 
-      <article class="tk-card rv" data-light style="--d: 160ms">
-        <span class="tk-num">Tour 6</span>
-        <h3 class="tk-name">Hochgern <span>1.747 m</span></h3>
-        <p class="tk-tag">Der Chiemgau-Klassiker</p>
-        <svg class="tk-profile" viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,60 C70,56 110,38 150,16 C190,38 230,56 300,60 L300,64 L0,64 Z"/><path class="pline" d="M0,60 C70,56 110,38 150,16 C190,38 230,56 300,60"/></svg>
-        <div class="tk-facts"><span>1.110 hm</span><i>·</i><span>15 km</span><i>·</i><span>ca. 4:30 h</span><span class="tk-dots" title="schwer"><b class="on"></b><b class="on"></b><b class="on"></b></span></div>
-        <p class="tk-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Wanderparkplatz Hochgern, Unterwössen</p>
-        <div class="tk-eng"><img src="/touren/assets/eng-hochgern.jpg" alt="" loading="lazy"></div>
-      </article>
+  </ol>
 
-    </div>
+  <!-- Leerzustand -->
+  <div class="tk-empty tk-wide" id="tkEmpty">
+    <p>Keine Tour passt zu deinem Filter.</p>
+    <button type="button" id="tkReset">Filter zurücksetzen</button>
+  </div>
 
-    <!-- Watzmann-Verweis auf die 3D-Startseite -->
-    <div class="tk-watz rv">
-      <p>Den Watzmann-Normalweg gibt's als 3D-Erlebnis auf der Startseite — die Route, an der das ganze Format hängt.</p>
-      <a href="/#grat">→ Watzmann in 3D</a>
-    </div>
-  </section>
+  <!-- Watzmann-Verweis -->
+  <div class="tk-watz tk-wide rv">
+    <p>Den Watzmann-Normalweg gibt's als 3D-Erlebnis auf der Startseite — die Route, an der das ganze Format hängt.</p>
+    <a href="/#grat">→ Watzmann in 3D</a>
+  </div>
 
-  <p class="tour-back" style="text-align:center; margin:56px 0; font-family:var(--mono); font-size:11px; letter-spacing:1.4px; text-transform:uppercase;">
+  <p style="text-align:center; margin:52px 0; font-family:var(--mono); font-size:11px; letter-spacing:1.4px; text-transform:uppercase;">
     <a href="/newsletter" style="color:var(--leaf); text-decoration:none;">→ Neue Touren zuerst erfahren · Newsletter</a>
   </p>
 </main>
@@ -278,6 +590,122 @@
   <a href="/kooperationen.html">Brands</a>
 </nav>
 
+<!-- JSON-LD: Touren als ItemList (SEO + KI-Findbarkeit) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Hulk Hikes — Bergtouren im Chiemgau und Berchtesgadener Land",
+  "description": "Eigene Wandertouren-Empfehlungen von Sebi (VegetarianHulk) mit Höhenmetern, Gehzeit und Startpunkt.",
+  "url": "https://vegetarianhulk.de/touren/",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Ristfeuchthorn (1.569 m) — Rundtour über Schneizlreuth","url":"https://vegetarianhulk.de/touren/ristfeuchthorn/"},
+    {"@type":"ListItem","position":2,"name":"Grünstein (1.304 m) — Königssee-Blick"},
+    {"@type":"ListItem","position":3,"name":"Zinnkopf (1.227 m) — Chiemsee-Panorama"},
+    {"@type":"ListItem","position":4,"name":"Dürrnbachhorn (1.765 m) — Grat über der Winklmoosalm"},
+    {"@type":"ListItem","position":5,"name":"Rauschberg (1.645 m) — Ruhpoldings Hausberg"},
+    {"@type":"ListItem","position":6,"name":"Gamsknogel (1.750 m) — stiller Grat bei Inzell"},
+    {"@type":"ListItem","position":7,"name":"Hochgern (1.747 m) — Chiemgau-Klassiker von Unterwössen"}
+  ]
+}
+</script>
+
+<script>
+/* Hulk-Hikes Forum-Liste: Suche · Filter · Sortierung · Expand */
+(function () {
+  'use strict';
+  var list = document.getElementById('tkList');
+  if (!list) return;
+  var rows = Array.prototype.slice.call(list.querySelectorAll('.tk-row'));
+  var search = document.getElementById('tkSearch');
+  var sortSel = document.getElementById('tkSort');
+  var countEl = document.getElementById('tkCount');
+  var empty = document.getElementById('tkEmpty');
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.tk-chip'));
+  var state = { q: '', region: '', diff: '', sort: 'new' };
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Expand/Collapse */
+  rows.forEach(function (row) {
+    var head = row.querySelector('.tk-row__head');
+    head.addEventListener('click', function (e) {
+      if (e.target.closest('a')) return;
+      var open = row.classList.toggle('open');
+      head.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+
+  function match(row) {
+    if (state.region && row.dataset.region !== state.region) return false;
+    if (state.diff && row.dataset.diff !== state.diff) return false;
+    if (state.q && row.dataset.name.indexOf(state.q) === -1) return false;
+    return true;
+  }
+
+  function apply() {
+    /* sortieren */
+    var sorted = rows.slice().sort(function (a, b) {
+      switch (state.sort) {
+        case 'old': return (+a.dataset.date) - (+b.dataset.date);
+        case 'easy': return (+a.dataset.thm) - (+b.dataset.thm);
+        case 'hard': case 'hm': return (+b.dataset.thm) - (+a.dataset.thm);
+        default: return (+b.dataset.date) - (+a.dataset.date); /* new */
+      }
+    });
+    sorted.forEach(function (r) { list.appendChild(r); });
+
+    /* filtern mit sanfter Ausblendung */
+    var shown = 0;
+    rows.forEach(function (r) {
+      var ok = match(r);
+      if (ok) shown++;
+      if (reduce) { r.hidden = !ok; r.classList.toggle('is-out', !ok); return; }
+      if (!ok && !r.hidden) {
+        r.classList.add('is-out');
+        setTimeout(function () { if (r.classList.contains('is-out')) r.hidden = true; }, 280);
+      } else if (ok) {
+        r.hidden = false;
+        requestAnimationFrame(function () { requestAnimationFrame(function () { r.classList.remove('is-out'); }); });
+      }
+    });
+    countEl.textContent = shown;
+    empty.style.display = shown ? 'none' : 'block';
+  }
+
+  /* Suche (debounced) */
+  var t;
+  search.addEventListener('input', function () {
+    clearTimeout(t);
+    t = setTimeout(function () {
+      state.q = search.value.trim().toLowerCase();
+      apply();
+    }, 140);
+  });
+
+  /* Filter-Chips */
+  chips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      var f = chip.dataset.f, v = chip.dataset.v;
+      state[f] = v;
+      chips.forEach(function (c) {
+        if (c.dataset.f === f) c.setAttribute('aria-pressed', c === chip ? 'true' : 'false');
+      });
+      apply();
+    });
+  });
+
+  sortSel.addEventListener('change', function () { state.sort = sortSel.value; apply(); });
+
+  document.getElementById('tkReset').addEventListener('click', function () {
+    state = { q: '', region: '', diff: '', sort: state.sort };
+    search.value = '';
+    chips.forEach(function (c) { c.setAttribute('aria-pressed', c.dataset.v === '' ? 'true' : 'false'); });
+    apply();
+  });
+
+  apply();
+})();
+</script>
 <script src="/v3.js?v=182e7de3" defer></script>
 </body>
 </html>
