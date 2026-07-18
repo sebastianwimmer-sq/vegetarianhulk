@@ -219,8 +219,62 @@
 .tk-watz a { color: var(--leaf); text-decoration: none; font-family: var(--mono); font-size: 10.5px;
   font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; margin-left: auto; white-space: nowrap; }
 
+/* ---- Abschluss: Bilanz + Live ---- */
+.tk-close { margin-top: clamp(48px, 8vh, 80px); margin-bottom: 56px;
+  display: grid; grid-template-columns: 1.4fr 1fr; gap: 18px; align-items: stretch; }
+.tk-close__stats { position: relative; overflow: hidden; border-radius: 20px;
+  padding: clamp(26px, 3.4vw, 42px);
+  background:
+    repeating-linear-gradient(96deg, rgba(24,43,31,0.022) 0 1px, transparent 1px 11px),
+    linear-gradient(168deg, #F6EFDF 0%, #EFE7D1 62%, #E8DEC5 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 0 0 1px rgba(186,155,95,0.26),
+    0 30px 60px -32px rgba(0,0,0,0.6); }
+.tk-close__label { font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 2.4px;
+  text-transform: uppercase; color: var(--gold); }
+.tk-close__nums { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 14px clamp(24px, 4vw, 54px); }
+.tk-close__nums div { display: flex; flex-direction: column; gap: 5px; }
+.tk-close__nums b { font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(34px, 4.6vw, 52px); line-height: 1; letter-spacing: -1px; color: var(--royal);
+  font-variant-numeric: tabular-nums; }
+.tk-close__nums span { font-family: var(--mono); font-size: 8.5px; font-weight: 700;
+  letter-spacing: 1.6px; text-transform: uppercase; color: rgba(24,43,31,0.55); }
+.tk-close__foot { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(24,43,31,0.14);
+  font-size: 13.5px; line-height: 1.6; color: rgba(24,43,31,0.72); max-width: 52ch; }
+.tk-close__foot a { color: var(--royal); text-decoration: none; font-weight: 600; }
+.tk-close__side { display: flex; flex-direction: column; gap: 14px; }
+/* Live-Widget (Instrument, wie Bergstation-HUD) */
+.tk-live { flex: 1; border-radius: 16px; padding: 20px 22px;
+  background: linear-gradient(158deg, rgba(19,54,35,0.62), rgba(6,26,17,0.68));
+  border: 1px solid rgba(126,208,155,0.2);
+  box-shadow: inset 0 1px 0 rgba(209,242,235,0.08), 0 22px 46px -26px rgba(0,0,0,0.7); }
+.tk-live__label { display: flex; align-items: center; gap: 8px; font-family: var(--mono);
+  font-size: 9px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--paper-faint); }
+.tk-live__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--emerald);
+  box-shadow: 0 0 8px rgba(80,200,120,0.7); animation: tkpulse 2.4s ease-in-out infinite; }
+@keyframes tkpulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+.tk-live__temp { margin-top: 10px; display: flex; align-items: center;
+  font-family: var(--mono); font-weight: 700; font-size: 34px; line-height: 1; color: var(--paper); }
+.tk-live__unit { font-size: 15px; color: var(--leaf); margin-left: 3px; }
+.tk-live__ico { margin-left: auto; color: rgba(243,235,217,0.9); }
+.tk-live__ico svg { display: block; width: 28px; height: 28px; }
+.tk-live__cond { margin-top: 5px; font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+  letter-spacing: 1.6px; text-transform: uppercase; color: var(--mint); }
+.tk-live__meta { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(243,235,217,0.14);
+  font-family: var(--mono); font-size: 9px; font-weight: 600; letter-spacing: 1.4px;
+  text-transform: uppercase; color: var(--paper-faint); }
+.tk-close__cta { display: block; text-align: center; text-decoration: none;
+  font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
+  color: #14100A; padding: 15px 22px;
+  background: linear-gradient(180deg, #E8BF25, #D4A918);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.25));
+  transition: transform 400ms var(--ease-lux), filter 400ms var(--ease-lux); }
+.tk-close__cta:hover { transform: translateX(4px); filter: drop-shadow(0 3px 14px rgba(232,191,37,0.45)); }
+@media (max-width: 860px) { .tk-close { grid-template-columns: 1fr; } }
+
 @media (prefers-reduced-motion: reduce) {
   .tk-row, .tk-row__panel, .tk-row__eng img, .tk-pin__photo img, .tk-chip { transition: none !important; }
+  .tk-live__dot { animation: none; }
 }
 </style>
 </head>
@@ -550,15 +604,28 @@
     <button type="button" id="tkReset">Filter zurücksetzen</button>
   </div>
 
-  <!-- Watzmann-Verweis -->
-  <div class="tk-watz tk-wide rv">
-    <p>Den Watzmann-Normalweg gibt's als 3D-Erlebnis auf der Startseite — die Route, an der das ganze Format hängt.</p>
-    <a href="/#grat">→ Watzmann in 3D</a>
-  </div>
-
-  <p style="text-align:center; margin:52px 0; font-family:var(--mono); font-size:11px; letter-spacing:1.4px; text-transform:uppercase;">
-    <a href="/newsletter" style="color:var(--leaf); text-decoration:none;">→ Neue Touren zuerst erfahren · Newsletter</a>
-  </p>
+  <!-- ABSCHLUSS: Guide-Bilanz (Count-up) + Live-Bedingungen + CTA -->
+  <section class="tk-close tk-wide rv" aria-label="Der Guide in Zahlen und aktuelle Bedingungen">
+    <div class="tk-close__stats">
+      <p class="tk-close__label">Der Guide in Zahlen</p>
+      <div class="tk-close__nums">
+        <div><b data-count="7">0</b><span>Touren</span></div>
+        <div><b data-count="5668">0</b><span>Höhenmeter gesamt</span></div>
+        <div><b data-count="1765">0</b><span>m höchster Punkt</span></div>
+      </div>
+      <p class="tk-close__foot">Jede davon selbst ausgesucht — die gegangenen mit echten Daten.
+      Der Watzmann-Normalweg läuft als <a href="/#grat">3D-Erlebnis auf der Startseite</a>.</p>
+    </div>
+    <div class="tk-close__side">
+      <div class="tk-live" data-tklive hidden>
+        <p class="tk-live__label"><span class="tk-live__dot"></span>Bedingungen im Revier</p>
+        <p class="tk-live__temp"><span data-lv-temp>–</span><span class="tk-live__unit">°C</span><span class="tk-live__ico" data-lv-ico aria-hidden="true"></span></p>
+        <p class="tk-live__cond" data-lv-cond></p>
+        <p class="tk-live__meta" data-lv-meta></p>
+      </div>
+      <a class="tk-close__cta" href="/newsletter">→ Neue Touren zuerst erfahren</a>
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -704,6 +771,61 @@
   });
 
   apply();
+})();
+
+/* Abschluss: Count-up-Bilanz + Live-Bedingungen (Open-Meteo, Revier Schneizlreuth) */
+(function () {
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nums = document.querySelectorAll('[data-count]');
+  function fmt(n) { return n.toLocaleString('de-DE'); }
+  function run(el) {
+    var target = parseInt(el.dataset.count, 10);
+    if (reduce) { el.textContent = fmt(target); return; }
+    var t0 = null, DUR = 1400;
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / DUR);
+      var e = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(Math.round(target * e));
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  if ('IntersectionObserver' in window && nums.length) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) { if (en.isIntersecting) { run(en.target); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -10% 0px' });
+    nums.forEach(function (el) { io.observe(el); });
+  } else { nums.forEach(function (el) { el.textContent = fmt(parseInt(el.dataset.count, 10)); }); }
+
+  var box = document.querySelector('[data-tklive]');
+  if (box && window.fetch) {
+    var WMO = function (cd) { return cd === 0 ? 'klar' : cd <= 2 ? 'leicht bewölkt' : cd === 3 ? 'bedeckt'
+      : cd <= 48 ? 'Nebel' : cd <= 67 ? 'Regen' : cd <= 77 ? 'Schneefall' : cd <= 82 ? 'Schauer' : 'Gewitter'; };
+    var IC = {
+      sun: '<circle cx="12" cy="12" r="4.4"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.2 5.2l1.9 1.9M16.9 16.9l1.9 1.9M18.8 5.2l-1.9 1.9M7.1 16.9l-1.9 1.9"/>',
+      suncloud: '<circle cx="8.4" cy="8.2" r="3.4"/><path d="M8.4 2.6v1.8M2.8 8.2h1.8M4.4 4.2l1.3 1.3"/><path d="M8.6 18.4h8.9a3.1 3.1 0 0 0 .4-6.2 4.6 4.6 0 0 0-9-.9 3.6 3.6 0 0 0-.3 7.1z"/>',
+      cloud: '<path d="M7.4 18.2h9.9a3.4 3.4 0 0 0 .5-6.8 5 5 0 0 0-9.8-1 3.9 3.9 0 0 0-.6 7.8z"/>',
+      fog: '<path d="M4 9.6h16M4 13h13M6 16.4h12M8 19.8h9"/>',
+      rain: '<path d="M7.4 14.6h9.9a3.4 3.4 0 0 0 .5-6.8 5 5 0 0 0-9.8-1 3.9 3.9 0 0 0-.6 7.8z"/><path d="M8.6 17.4l-1 2.6M12.6 17.4l-1 2.6M16.6 17.4l-1 2.6"/>',
+      snow: '<path d="M7.4 14.6h9.9a3.4 3.4 0 0 0 .5-6.8 5 5 0 0 0-9.8-1 3.9 3.9 0 0 0-.6 7.8z"/><path d="M8.4 18.4h.01M12.2 20h.01M16 18.4h.01" stroke-linecap="round" stroke-width="2.1"/>',
+      storm: '<path d="M7.4 13.6h9.9a3.4 3.4 0 0 0 .5-6.8 5 5 0 0 0-9.8-1 3.9 3.9 0 0 0-.6 7.8z"/><path d="M12.8 15l-2.4 3.4h3l-2.2 3.4"/>'
+    };
+    var key = function (cd) { return cd === 0 ? 'sun' : cd <= 2 ? 'suncloud' : cd === 3 ? 'cloud'
+      : cd <= 48 ? 'fog' : cd <= 67 ? 'rain' : cd <= 77 ? 'snow' : cd <= 82 ? 'rain' : 'storm'; };
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=47.65&longitude=12.79&elevation=1200&current=temperature_2m,weather_code&daily=sunset&timezone=Europe%2FBerlin&forecast_days=1')
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (d) {
+        var s = (d.daily.sunset[0] || '').slice(11, 16);
+        box.querySelector('[data-lv-temp]').textContent = Math.round(d.current.temperature_2m);
+        box.querySelector('[data-lv-cond]').textContent = WMO(d.current.weather_code);
+        box.querySelector('[data-lv-ico]').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true">' + IC[key(d.current.weather_code)] + '</svg>';
+        box.querySelector('[data-lv-meta]').textContent = 'Chiemgau/BGL · ~1.200 m' + (s ? ' · Licht bis ' + s : '');
+        box.hidden = false;
+      })
+      .catch(function () {});
+  }
 })();
 </script>
 <script src="/v3.js?v=182e7de3" defer></script>
