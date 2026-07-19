@@ -95,6 +95,15 @@
 .tour-live__meta { margin-left: auto; font-family: var(--mono); font-size: 9px; font-weight: 600;
   letter-spacing: 1.3px; text-transform: uppercase; color: var(--paper-faint); }
 @media (prefers-reduced-motion: reduce) { .tour-live__dot { animation: none; } }
+@media (max-width: 640px) {
+  /* kein Hero-Overlap auf Mobile (kollidierte mit umgebrochenem Fakten-Strip) */
+  .tour-live { margin-top: 12px; }
+  .tour-hero__facts { gap: 8px 20px; }
+  /* Scrim frueher, damit Crumb/Badge nicht im hellen Himmel haengen */
+  .tour-hero__img::after { background:
+    linear-gradient(180deg, rgba(6,35,26,0.55) 0, rgba(6,35,26,0.15) 22%),
+    linear-gradient(180deg, rgba(3,15,9,0.12) 8%, rgba(3,15,9,0.62) 52%, rgba(3,15,9,0.92) 100%); }
+}
 
 /* Höhenprofil (dunkle Karte, signature) */
 .tour-profile { width: min(1040px, 92vw); margin: 22px 0 0; margin-left: calc((100% - min(1040px, 92vw)) / 2);
