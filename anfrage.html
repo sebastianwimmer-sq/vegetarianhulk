@@ -20,7 +20,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
-<link rel="stylesheet" href="/v3.css?v=c9fdef3c">
+<link rel="stylesheet" href="/v3.css?v=d4038ac8">
 <style>
 /* ============================================================
    /anfrage.html — v3 Editorial-Dark Port (page-scoped .anf-)
@@ -89,9 +89,10 @@
 /* Submit (gelb, wie die Site-CTAs) */
 .anf-submit { width: 100%; margin-top: 6px; cursor: pointer; border: 0;
   font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
-  color: #14100A; padding: 15px 24px; background: linear-gradient(180deg, #E8BF25, #D4A918);
+  color: #221803; padding: 15px 24px; text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+  background: linear-gradient(180deg, rgba(255,255,255,0.5) 0, rgba(255,255,255,0) 44%), linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%);
   clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
-  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.18)); transition: transform 300ms var(--ease-lux), filter 300ms var(--ease-lux); }
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4)) drop-shadow(0 2px 1px rgba(120,88,10,0.45)) drop-shadow(0 10px 16px rgba(0,0,0,0.32)); transition: transform 300ms var(--ease-lux), filter 300ms var(--ease-lux); }
 .anf-submit:hover:not(:disabled) { transform: translateY(-2px); filter: drop-shadow(0 6px 16px rgba(232,191,37,0.4)); }
 .anf-submit:disabled { opacity: 0.6; cursor: default; }
 .anf-privacy { margin: 12px 0 0; font-size: 11.5px; line-height: 1.5; color: rgba(24,43,31,0.55); }

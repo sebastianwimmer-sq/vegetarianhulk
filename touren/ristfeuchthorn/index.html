@@ -20,7 +20,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
-<link rel="stylesheet" href="/v3.css?v=e714e0ba">
+<link rel="stylesheet" href="/v3.css?v=d4038ac8">
 <style>
 /* ============================================================
    /touren/<slug>/ — Hulk-Hike Detail-Vorlage (page-scoped .tour-)
@@ -166,9 +166,10 @@
 .tour-cta p { margin: 14px auto 24px; max-width: 42ch; font-size: 15px; line-height: 1.6; color: rgba(24,43,31,0.72); }
 .tour-btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
   font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
-  color: #14100A; padding: 14px 26px; background: linear-gradient(180deg, #E8BF25, #D4A918);
+  color: #221803; padding: 14px 26px; text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+  background: linear-gradient(180deg, rgba(255,255,255,0.5) 0, rgba(255,255,255,0) 44%), linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%);
   clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
-  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.2)); transition: transform 400ms var(--ease-lux); }
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4)) drop-shadow(0 2px 1px rgba(120,88,10,0.45)) drop-shadow(0 10px 16px rgba(0,0,0,0.32)); transition: transform 400ms var(--ease-lux), filter 400ms var(--ease-lux); }
 .tour-btn:hover { transform: translateX(4px); }
 .tour-back { display: block; text-align: center; margin: 0 0 60px; font-family: var(--mono); font-size: 11px;
   letter-spacing: 1.4px; text-transform: uppercase; }
@@ -211,10 +212,10 @@
            alt="" fetchpriority="high" loading="eager" decoding="async">
     </div>
     <div class="tour-hero__inner">
-      <p class="tour-crumb st st1"><a href="/touren/">Hulk Hikes</a> · Berchtesgadener Land</p>
-      <p class="st st1"><span class="tour-badge">Gegangen · 17.07. · selbst getrackt</span></p>
+      <p class="tour-crumb st st1"><a href="/touren/">Hulk Hikes</a><span class="hsep" aria-hidden="true"></span>Berchtesgadener Land</p>
+      <p class="st st1"><span class="tour-badge">Gegangen<span class="hsep" aria-hidden="true"></span>17.07.<span class="hsep" aria-hidden="true"></span>selbst getrackt</span></p>
       <h1 class="st st2">Ristfeuchthorn</h1>
-      <p class="tour-alt st st2">1.569 m · über Schneizlreuth</p>
+      <p class="tour-alt st st2">1.569 m<span class="hsep" aria-hidden="true"></span>über Schneizlreuth</p>
       <p class="tour-lead st st3">Ein ehrlicher Kondi-Tag: 1.071 Höhenmeter am Stück, oben T3 —
       kein Klettersteig-Ego, sondern Aufstehen, Hochgehen, Runterkommen.</p>
       <div class="tour-hero__facts st st4">
@@ -225,7 +226,7 @@
         <div><b>T2–T3</b><span>SAC-Skala</span></div>
         <div class="tour-now" data-tournow hidden>
           <b><span class="tour-now__dot"></span><span data-lv-temp>–</span>°<span class="tour-now__ico" data-lv-ico aria-hidden="true"></span></b>
-          <span><span data-lv-cond>jetzt</span> · am Gipfel</span>
+          <span><span data-lv-cond>jetzt</span> am Gipfel</span>
         </div>
       </div>
     </div>
@@ -234,7 +235,7 @@
   <!-- HÖHENPROFIL (nachgezeichnet aus echten Daten) -->
   <section class="tour-profile st st3">
     <div class="tour-profile__head">
-      <span class="tour-profile__label">Höhenprofil · Rundtour</span>
+      <span class="tour-profile__label">Höhenprofil<span class="hsep" aria-hidden="true"></span>Rundtour</span>
       <span class="tour-profile__sub">Start 480 m → Gipfel 1.567 m → zurück</span>
     </div>
     <svg class="tour-svg" viewBox="0 0 900 270" preserveAspectRatio="none" fill="none" aria-label="Höhenprofil Ristfeuchthorn">
@@ -252,7 +253,7 @@
 
   <!-- SEBIS NOTIZ — persönlicher Touch (ENTWURF, Sebi überschreibt) -->
   <section class="tour-note st st4" data-light>
-    <p class="tour-note__kicker">Sebis Notiz · 17. Juli</p>
+    <p class="tour-note__kicker">Sebis Notiz<span class="hsep" aria-hidden="true"></span>17. Juli</p>
     <p class="tour-note__body">Sehr naturnah, abgelegen und teils richtig verwachsen — kein Autobahn-Wanderweg.
     Dafür oben ein richtig schöner Blick auf die Berchtesgadener Alpen. Zieht sich stellenweise etwas,
     aber genau das macht sie ruhig. 07:27 los, keiner unterwegs, meine längste Runde bisher.</p>
