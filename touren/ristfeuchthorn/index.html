@@ -20,7 +20,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
-<link rel="stylesheet" href="/v3.css?v=d4038ac8">
+<link rel="stylesheet" href="/v3.css?v=8ef48b05">
 <style>
 /* ============================================================
    /touren/<slug>/ — Hulk-Hike Detail-Vorlage (page-scoped .tour-)
@@ -84,8 +84,12 @@
 
 /* Live-"Jetzt"-Fakt im Hero-Strip (integriert, Leaf-Akzent) */
 .tour-now b { display: inline-flex; align-items: center; gap: 6px; color: var(--leaf) !important; }
-.tour-now__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--emerald);
-  box-shadow: 0 0 8px rgba(80,200,120,0.8); animation: tnpulse 2.4s ease-in-out infinite; }
+.tour-now__dot { width: 17px; height: 17px; flex: 0 0 auto;
+  background: url("/assets/img/smashy-maskottchen.png") center/contain no-repeat;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)); transform-origin: 50% 100%;
+  animation: smashylive3 2.8s ease-in-out infinite; vertical-align: -3px; }
+@keyframes smashylive3 { 0%,100% { transform: scale(1) translateY(0) rotate(0deg); }
+  50% { transform: scale(1.1) translateY(-1.5px) rotate(2deg); } }
 .tour-now__ico { display: inline-flex; color: rgba(243,235,217,0.85); margin-left: 1px; }
 .tour-now__ico svg { width: 18px; height: 18px; }
 .tour-now span:last-child { color: rgba(126,208,155,0.85) !important; }

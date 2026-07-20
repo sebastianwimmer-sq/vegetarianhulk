@@ -853,8 +853,13 @@ footer .legal a:hover { color: var(--paper); }
   drop-shadow(0.8px 0 0 rgba(3,15,9,0.7)) drop-shadow(-0.8px 0 0 rgba(3,15,9,0.7))
   drop-shadow(0 0.8px 0 rgba(3,15,9,0.7)) drop-shadow(0 5px 9px rgba(0,0,0,0.5)); }
 .rail-peak .hm, .rail .wp-num { text-shadow: 0 1px 2px rgba(3,15,9,0.7); }
-.live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--emerald);
-  box-shadow: 0 0 8px rgba(80,200,120,0.7); animation: livepulse 2.4s ease-in-out infinite; display: inline-block; }
+.live-dot { width: 22px; height: 22px; display: inline-block; flex: 0 0 auto;
+  background: url("/assets/img/smashy-maskottchen.png") center/contain no-repeat;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5));
+  transform-origin: 50% 100%; animation: smashylive 2.8s ease-in-out infinite; }
+@keyframes smashylive { 0%,100% { transform: scale(1) translateY(0) rotate(0deg); }
+  45% { transform: scale(1.09) translateY(-2px) rotate(-2deg); }
+  55% { transform: scale(1.09) translateY(-2px) rotate(2deg); } }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -867,6 +872,7 @@ footer .legal a:hover { color: var(--paper); }
   .route-head::after { animation: none !important; }
 
   .live-dot { animation: none !important; }
+  .tk-live__dot, .tour-now__dot { animation: none !important; }
   .nav { transition: none !important; }
   .grat-track { height: auto !important; }
   .grat-sticky { position: relative !important; height: 76vh !important; }
