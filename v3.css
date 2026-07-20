@@ -512,20 +512,21 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .grat-smashy.walking { animation: smashyhop 340ms ease-in-out infinite; }
 /* Panel: liegt unten links AUF der Szene */
 .grat-panel { position: absolute; bottom: 0; z-index: 3;
-  /* bis zur BILD-Kante ausdehnen — die Sticky hat an Rail-Breakpoints Seitenabstand */
-  left: calc((100% - 100vw) / 2);
-  width: min(880px, 100vw);
-  padding: clamp(110px, 20vh, 190px) clamp(56px, 9vw, 140px) 92px calc(max(10vw, 50vw - 460px));
-  transform-origin: 0 100%;
+  /* Doku-Bauchbinde jetzt UNTEN RECHTS — weg vom Weg (der zieht links hoch) */
+  right: calc((100% - 100vw) / 2); left: auto;
+  width: min(900px, 100vw); text-align: right;
+  padding: clamp(110px, 20vh, 190px) calc(max(10vw, 50vw - 460px)) 92px clamp(56px, 9vw, 150px);
+  transform-origin: 100% 100%;
   transition: opacity 500ms var(--ease-lux), transform 700ms var(--ease-lux);
-  /* Doku-Bauchbinde (7-vs-Wild-Prinzip): Kino-Scrim laeuft aus der linken
-     unteren BILDKANTE — nirgends eine sichtbare Grenze, Typo auf der Szene */
-  background: radial-gradient(140% 140% at 0% 100%,
-    rgba(243,235,217,0.97) 0%, rgba(243,235,217,0.93) 36%, rgba(243,235,217,0.8) 48%,
-    rgba(243,235,217,0.42) 60%, rgba(243,235,217,0) 70%); }
-/* Hairline-Anker links der Typo, faedet nach unten aus */
+  /* Kino-Scrim aus der unteren RECHTEN Bildkante + warme Eck-Vignette fuer Tiefe */
+  background:
+    radial-gradient(120% 100% at 100% 100%, rgba(120,92,40,0.16) 0%, rgba(120,92,40,0) 34%),
+    radial-gradient(150% 150% at 100% 100%,
+      rgba(244,236,218,0.98) 0%, rgba(243,235,217,0.94) 34%, rgba(243,235,217,0.8) 47%,
+      rgba(243,235,217,0.4) 60%, rgba(243,235,217,0) 72%); }
+/* Hairline-Anker RECHTS der Typo, faedet nach unten aus */
 .grat-panel::before { content: ""; position: absolute;
-  left: calc(max(10vw, 50vw - 460px) - 18px); top: clamp(106px, calc(20vh - 4px), 186px); bottom: 92px;
+  right: calc(max(10vw, 50vw - 460px) - 18px); top: clamp(106px, calc(20vh - 4px), 186px); bottom: 92px;
   width: 1px; background: linear-gradient(180deg, rgba(11,110,79,0.5), rgba(11,110,79,0.05)); }
 /* Waehrend der Fahrt eingeklappt — pflanzt sich am Etappen-Stopp ein */
 .grat-panel.traveling { opacity: 0; transform: translateY(28px); pointer-events: none; }
