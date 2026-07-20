@@ -769,14 +769,25 @@ footer .legal a:hover { color: var(--paper); }
 /* Nav oben-Zustand (Desktop, vor dem ersten Scroll): normale Zeile */
 @media (min-width: 900px) {
   .nav.at-top { translate: -50% 22px;
-    background: rgba(6,29,19,0.6); border-color: rgba(243,235,217,0.22);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 0 0 1px rgba(3,15,9,0.45), 0 10px 26px -12px rgba(0,0,0,0.55); }
-  .nav.at-top a { color: rgba(243,235,217,0.82); }
+    -webkit-backdrop-filter: blur(16px) saturate(1.35);
+            backdrop-filter: blur(16px) saturate(1.35);
+    background:
+      linear-gradient(180deg, rgba(18,58,40,0.72), rgba(6,26,17,0.66));
+    border-color: rgba(126,208,155,0.42);
+    box-shadow:
+      inset 0 1px 0 rgba(209,242,235,0.22),
+      inset 0 0 22px -6px rgba(80,200,120,0.18),
+      0 0 0 1px rgba(3,15,9,0.4),
+      0 2px 0 rgba(126,208,155,0.12),
+      0 16px 40px -14px rgba(0,0,0,0.7),
+      0 0 34px -8px rgba(80,200,120,0.28); }
+  .nav.at-top::after { opacity: 0.18; }
+  .nav.at-top a { color: rgba(243,235,217,0.9); }
   .nav.at-top a:hover { color: var(--paper); }
   .nav.at-top a[aria-current] { color: var(--mint); }
-  .nav.at-top a[aria-current]::after { background: var(--leaf); }
+  .nav.at-top a[aria-current]::after { background: var(--leaf); box-shadow: 0 0 8px rgba(126,208,155,0.7); }
   .nav.at-top .center { color: var(--leaf); }
-  .nav.at-top .center .mtn { color: var(--leaf); filter: none; }
+  .nav.at-top .center .mtn { color: var(--leaf); filter: drop-shadow(0 0 8px rgba(80,200,120,0.4)); }
 }
 
 /* ---- Desktop ---- */

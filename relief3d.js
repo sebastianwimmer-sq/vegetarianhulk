@@ -33,7 +33,7 @@ function init(DEM) {
 
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x0E3A28, 0.028);
+  scene.fog = new THREE.FogExp2(0x0E3A28, 0.036);
   const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
 
   /* ---- Licht: warmes Abendlicht + Emerald-Fill ---- */
@@ -73,7 +73,7 @@ function init(DEM) {
   const colors = new Float32Array(pos.count * 3);
   const cTal = new THREE.Color('#0C2416'), cHang = new THREE.Color('#2A6A40'),
         cFels = new THREE.Color('#8A9282'), cSchnee = new THREE.Color('#F2EFE3'),
-        cAtmo = new THREE.Color('#175038');
+        cAtmo = new THREE.Color('#0E3A28');
   const tmp = new THREE.Color();
   for (let i = 0; i < pos.count; i++) {
     const t = pos.getY(i) / V_SCALE;
@@ -86,7 +86,7 @@ function init(DEM) {
     /* Rand-Zone: Farbe laeuft in den Atmosphaeren-Ton, damit der Alpha-Fade
        nicht helle Flaechen (Schnee) vor hellem BG aufleuchten laesst */
     const ex = Math.max(Math.abs(pos.getX(i)), Math.abs(pos.getZ(i))) / (SIZE / 2);
-    tmp.lerp(cAtmo, sm((ex - 0.52) / 0.34) * 0.94);
+    tmp.lerp(cAtmo, sm((ex - 0.4) / 0.3));
     colors[i * 3] = tmp.r; colors[i * 3 + 1] = tmp.g; colors[i * 3 + 2] = tmp.b;
   }
   geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
@@ -98,7 +98,7 @@ function init(DEM) {
     const g = c.getContext('2d'), img = g.createImageData(N, N);
     for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
       const u = Math.abs(x / (N - 1) - 0.5) * 2, v = Math.abs(y / (N - 1) - 0.5) * 2;
-      let a = 1 - Math.min(1, Math.max(0, (Math.max(u, v) - 0.6) / 0.32));
+      let a = 1 - Math.min(1, Math.max(0, (Math.max(u, v) - 0.46) / 0.24));
       a = a * a * (3 - 2 * a);
       const i = (y * N + x) * 4;
       img.data[i] = img.data[i + 1] = img.data[i + 2] = Math.round(a * 255);
