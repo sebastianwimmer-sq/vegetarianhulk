@@ -144,6 +144,14 @@
   text-transform: uppercase; color: rgba(24,43,31,0.4); }
 
 /* Foto-Slot (pending) */
+/* SPLIT: Vorm Start | Persönliche Meinung */
+.tour-split { width: min(1040px, 92vw); margin: 30px 0 0; margin-left: calc((100% - min(1040px, 92vw)) / 2); }
+.tour-split__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+.tour-split .tour-know { margin-top: 0; }
+.tour-split .tour-know .shead { margin: 0 0 16px; }
+.tour-split .tour-know__grid { grid-template-columns: 1fr; }
+.tour-split .tour-note { width: auto; margin: 0; }
+@media (max-width: 820px) { .tour-split__grid { grid-template-columns: 1fr; } }
 .tour-know { margin-top: 44px; }
 .tour-know__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 18px; }
 .tour-tip { padding: 20px 20px 22px; border-radius: 14px;
@@ -236,6 +244,56 @@
     </div>
   </section>
 
+  <!-- SPLIT: Vorm Start (Praxis) | Persönliche Meinung — direkt unterm Bild -->
+  <section class="tour-split st st3">
+    <div class="tour-split__grid">
+
+      <!-- Links: Vorm Start -->
+      <div class="tour-know">
+        <div class="shead"><p class="kicker">Vorm Start</p><h2>Kurz fürs <em>Rucksack-Hirn.</em></h2></div>
+        <div class="tour-know__grid">
+          <div class="tour-tip">
+            <span class="tour-tip__k">Parken</span>
+            <p>Gratis parken direkt am Start — am <strong>Wurzenwirt</strong>.</p>
+          </div>
+          <div class="tour-tip">
+            <span class="tour-tip__k">Einkehr</span>
+            <p>Danach einkehren: der <strong>Wurzenwirt</strong> am Parkplatz ist top.</p>
+          </div>
+          <div class="tour-tip">
+            <span class="tour-tip__k">Charakter</span>
+            <p>Wild, ruhig, teils zugewachsen. Oben T3 — feste Schuhe und Trittsicherheit gehören dazu.</p>
+          </div>
+          <div class="tour-tip">
+            <span class="tour-tip__k">Für wen</span>
+            <p><strong>✓</strong> Ruhige Kondi-Tage, 1.000+ hm gewohnt. <strong>✗</strong> Schneller Feierabend-Gipfel oder erstes Bergerlebnis.</p>
+          </div>
+        </div>
+        <p class="tour-know__note">Ganze Runde als Video drüben auf
+        <a href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">Instagram</a> —
+        <a href="https://www.google.com/maps/search/Wurzenwirt+Schneizlreuth" target="_blank" rel="noopener">Startpunkt in Maps</a>.</p>
+      </div>
+
+      <!-- Rechts: persönliche Meinung -->
+      <div class="tour-note" data-light>
+        <p class="tour-note__kicker">Meine Meinung<span class="hsep" aria-hidden="true"></span>gegangen 17.07.</p>
+        <p class="tour-note__body">Sehr naturnah, abgelegen und teils richtig verwachsen — kein Autobahn-Wanderweg.
+        Dafür oben ein richtig schöner Blick auf die Berchtesgadener Alpen. Zieht sich stellenweise etwas,
+        aber genau das macht sie ruhig. 07:27 los, keiner unterwegs, meine längste Runde bisher.</p>
+        <p class="tour-note__sig">— Sebi</p>
+        <div class="tour-proof">
+          <div><b>07:27</b><span>gestartet</span></div>
+          <div><b>19.354</b><span>Schritte</span></div>
+          <div><b>117 bpm</b><span>Ø Puls</span></div>
+          <div><b>6:53 h</b><span>unterwegs</span></div>
+          <div><b>2.085</b><span>kcal</span></div>
+          <p class="src">Aufgezeichnet mit Apple Watch + Bergfex</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- HÖHENPROFIL (nachgezeichnet aus echten Daten) -->
   <section class="tour-profile st st3">
     <div class="tour-profile__head">
@@ -254,53 +312,6 @@
       <text x="372" y="16">Ristfeuchthorn · 1.569 m</text>
     </svg>
   </section>
-
-  <!-- SEBIS NOTIZ — persönlicher Touch (ENTWURF, Sebi überschreibt) -->
-  <section class="tour-note st st4" data-light>
-    <p class="tour-note__kicker">Sebis Notiz<span class="hsep" aria-hidden="true"></span>17. Juli</p>
-    <p class="tour-note__body">Sehr naturnah, abgelegen und teils richtig verwachsen — kein Autobahn-Wanderweg.
-    Dafür oben ein richtig schöner Blick auf die Berchtesgadener Alpen. Zieht sich stellenweise etwas,
-    aber genau das macht sie ruhig. 07:27 los, keiner unterwegs, meine längste Runde bisher.</p>
-    <p class="tour-note__sig">— Sebi</p>
-    <!-- Aktivitäts-Beweise = echt gegangen -->
-    <div class="tour-proof">
-      <div><b>07:27</b><span>gestartet</span></div>
-      <div><b>19.354</b><span>Schritte</span></div>
-      <div><b>117 bpm</b><span>Ø Puls · mäßig</span></div>
-      <div><b>6:53 h</b><span>unterwegs</span></div>
-      <div><b>2.085</b><span>kcal</span></div>
-      <p class="src">Aufgezeichnet · Apple Watch + Bergfex · 17.07.2026</p>
-    </div>
-  </section>
-
-  <div class="wrap">
-    <!-- Praktische Tipps -->
-    <section class="tour-know st">
-      <div class="shead"><p class="kicker">Vorm Start</p><h2>Kurz fürs <em>Rucksack-Hirn.</em></h2></div>
-      <div class="tour-know__grid">
-        <div class="tour-tip">
-          <span class="tour-tip__k">Parken</span>
-          <p>Gratis parken direkt am Start — am <strong>Wurzenwirt</strong>.</p>
-        </div>
-        <div class="tour-tip">
-          <span class="tour-tip__k">Einkehr</span>
-          <p>Danach einkehren: der <strong>Wurzenwirt</strong> am Parkplatz ist top.</p>
-        </div>
-        <div class="tour-tip">
-          <span class="tour-tip__k">Charakter</span>
-          <p>Wild, ruhig, teils zugewachsen. Oben T3 — feste Schuhe und Trittsicherheit gehören dazu.</p>
-        </div>
-        <div class="tour-tip">
-          <span class="tour-tip__k">Für wen</span>
-          <p><strong>✓</strong> Ruhige Kondi-Tage, 1.000+ hm gewohnt. <strong>✗</strong> Schneller
-          Feierabend-Gipfel oder erstes Bergerlebnis.</p>
-        </div>
-      </div>
-      <p class="tour-know__note">Die ganze Runde als Video gibt's drüben auf
-      <a href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">Instagram</a> —
-      Startpunkt: <a href="https://www.google.com/maps/search/Wurzenwirt+Schneizlreuth" target="_blank" rel="noopener">Wurzenwirt in Maps öffnen</a>.</p>
-    </section>
-  </div>
 
   <!-- CTA -->
   <section class="tour-cta st" data-light>
