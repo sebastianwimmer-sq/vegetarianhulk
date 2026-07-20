@@ -20,7 +20,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
-<link rel="stylesheet" href="/v3.css?v=7808af07">
+<link rel="stylesheet" href="/v3.css?v=13e1d9f4">
 <style>
 /* ============================================================
    /touren/ — Hulk-Hikes FORUM-LISTE (page-scoped .tk-)
@@ -187,14 +187,33 @@
   color: rgba(24,43,31,0.72); white-space: nowrap; }
 .tk-row__meta svg { flex: 0 0 auto; width: 13px; height: 13px; margin-top: 1px; color: var(--royal); }
 .tk-row__links { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px 10px; margin-top: 6px; }
+/* Sekundaer-Button: gepraegter Papier-Chip statt flacher Outline-Bubble */
 .tk-minibtn { display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
   font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase;
-  color: var(--royal); border: 1px solid rgba(11,110,79,0.35); border-radius: 999px; padding: 7px 14px;
-  transition: background 300ms var(--ease-lux), color 300ms var(--ease-lux), transform 300ms var(--ease-lux); }
-.tk-minibtn:hover { background: var(--royal); color: #F3EBD9; transform: translateY(-1px); }
-.tk-minibtn--gelb { color: #14100A; border-color: transparent;
-  background: linear-gradient(180deg, #E8BF25, #D4A918); }
-.tk-minibtn--gelb:hover { background: linear-gradient(180deg, #F0C82F, #DDAF1C); color: #14100A; }
+  color: #14281C; border-radius: 10px; padding: 9px 15px; border: 1px solid rgba(24,43,31,0.16);
+  background: linear-gradient(180deg, #FBF6E9 0%, #EFE6CE 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), inset 0 -2px 3px rgba(120,100,60,0.12),
+    0 2px 3px rgba(60,50,30,0.14), 0 8px 16px -8px rgba(0,0,0,0.35);
+  transition: transform 300ms var(--ease-lux), box-shadow 300ms var(--ease-lux), color 300ms var(--ease-lux); }
+.tk-minibtn:hover { transform: translateY(-2px); color: var(--royal);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 4px 6px rgba(60,50,30,0.16), 0 16px 26px -10px rgba(0,0,0,0.4); }
+.tk-minibtn:active { transform: translateY(0);
+  box-shadow: inset 0 2px 4px rgba(120,100,60,0.28), 0 1px 2px rgba(0,0,0,0.2); }
+/* Primaer-Button: gepraegtes gelbes Schild */
+.tk-minibtn--gelb { color: #221803; border: 0; border-radius: 0;
+  padding: 9px 20px 9px 16px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.5) 0, rgba(255,255,255,0) 44%),
+    linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4)) drop-shadow(0 2px 1px rgba(120,88,10,0.45)) drop-shadow(0 8px 14px rgba(0,0,0,0.32)); }
+.tk-minibtn--gelb:hover { transform: translateX(3px) translateY(-2px); color: #221803;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.6) 0, rgba(255,255,255,0) 44%),
+    linear-gradient(180deg, #F8D648 0%, #EBBE28 46%, #CFA114 100%);
+  box-shadow: none;
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4)) drop-shadow(0 2px 1px rgba(120,88,10,0.45)) drop-shadow(0 14px 22px rgba(0,0,0,0.38)) drop-shadow(0 0 16px rgba(232,191,37,0.42)); }
 @media (max-width: 760px) {
   .tk-row__head { grid-template-columns: 72px 1fr; padding-right: 14px; }
   .tk-row__side { display: none; }
