@@ -20,7 +20,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
-<link rel="stylesheet" href="/v3.css?v=7808af07">
+<link rel="stylesheet" href="/v3.css?v=e714e0ba">
 <style>
 /* ============================================================
    /touren/<slug>/ — Hulk-Hike Detail-Vorlage (page-scoped .tour-)
@@ -72,29 +72,6 @@
   letter-spacing: 1.5px; text-transform: uppercase; color: rgba(243,235,217,0.62); }
 
 
-/* Live-Instrument: ueberlappt den Hero (Bergstation-Sprache) */
-.tour-live { position: relative; z-index: 3; width: min(1040px, 92vw);
-  margin: -30px 0 0; margin-left: calc((100% - min(1040px, 92vw)) / 2);
-  display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 22px;
-  border-radius: 16px; padding: 16px 22px;
-  background: linear-gradient(158deg, rgba(21,58,38,0.96), rgba(6,22,14,0.97));
-  border: 1px solid rgba(126,208,155,0.26);
-  box-shadow: inset 0 1px 0 rgba(209,242,235,0.09), 0 24px 50px -24px rgba(0,0,0,0.75); }
-.tour-live__label { display: flex; align-items: center; gap: 8px; font-family: var(--mono);
-  font-size: 9px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--paper-faint); }
-.tour-live__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--emerald);
-  box-shadow: 0 0 8px rgba(80,200,120,0.7); animation: tlpulse 2.4s ease-in-out infinite; }
-@keyframes tlpulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
-.tour-live__temp { display: flex; align-items: center; gap: 2px;
-  font-family: var(--mono); font-weight: 700; font-size: 26px; line-height: 1; color: var(--paper); }
-.tour-live__unit { font-size: 13px; color: var(--leaf); }
-.tour-live__ico { margin-left: 8px; color: rgba(243,235,217,0.9); }
-.tour-live__ico svg { display: block; width: 22px; height: 22px; }
-.tour-live__cond { font-family: var(--mono); font-size: 10px; font-weight: 700;
-  letter-spacing: 1.6px; text-transform: uppercase; color: var(--mint); }
-.tour-live__meta { margin-left: auto; font-family: var(--mono); font-size: 9px; font-weight: 600;
-  letter-spacing: 1.3px; text-transform: uppercase; color: var(--paper-faint); }
-@media (prefers-reduced-motion: reduce) { .tour-live__dot { animation: none; } }
 @media (max-width: 640px) {
   /* kein Hero-Overlap auf Mobile (kollidierte mit umgebrochenem Fakten-Strip) */
   .tour-live { margin-top: 12px; }
@@ -105,9 +82,19 @@
     linear-gradient(180deg, rgba(3,15,9,0.12) 8%, rgba(3,15,9,0.62) 52%, rgba(3,15,9,0.92) 100%); }
 }
 
+/* Live-"Jetzt"-Fakt im Hero-Strip (integriert, Leaf-Akzent) */
+.tour-now b { display: inline-flex; align-items: center; gap: 6px; color: var(--leaf) !important; }
+.tour-now__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--emerald);
+  box-shadow: 0 0 8px rgba(80,200,120,0.8); animation: tnpulse 2.4s ease-in-out infinite; }
+.tour-now__ico { display: inline-flex; color: rgba(243,235,217,0.85); margin-left: 1px; }
+.tour-now__ico svg { width: 18px; height: 18px; }
+.tour-now span:last-child { color: rgba(126,208,155,0.85) !important; }
+@keyframes tnpulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+@media (prefers-reduced-motion: reduce) { .tour-now__dot { animation: none; } }
+
 /* Höhenprofil (dunkle Karte, signature) */
-.tour-profile { width: min(1040px, 92vw); margin: 22px 0 0; margin-left: calc((100% - min(1040px, 92vw)) / 2);
-  position: relative; overflow: hidden; border-radius: 20px; padding: clamp(24px, 3.4vw, 40px);
+.tour-profile { width: min(1040px, 92vw); margin: 26px 0 0; margin-left: calc((100% - min(1040px, 92vw)) / 2);
+  position: relative; overflow: hidden; border-radius: 18px; padding: clamp(18px, 2.4vw, 28px);
   background: linear-gradient(158deg, rgba(19,54,35,0.5), rgba(6,26,17,0.6));
   border: 1px solid rgba(126,208,155,0.14);
   box-shadow: inset 0 1px 0 rgba(209,242,235,0.06), 0 28px 62px -32px rgba(0,0,0,0.7); }
@@ -117,7 +104,7 @@
   text-transform: uppercase; color: var(--leaf); }
 .tour-profile__sub { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 1px;
   color: var(--paper-faint); }
-.tour-svg { width: 100%; height: auto; color: var(--leaf); overflow: visible; display: block; }
+.tour-svg { width: 100%; height: clamp(120px, 20vh, 168px); color: var(--leaf); overflow: visible; display: block; }
 .tour-svg .fill { fill: rgba(80,200,120,0.12); opacity: 0; transition: opacity 900ms var(--ease-lux) 500ms; }
 .tour-svg .line { fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round;
   filter: drop-shadow(0 0 5px rgba(80,200,120,0.4));
@@ -133,15 +120,15 @@
 
 /* Sebis Notiz — persönlicher Touch (Gipfelbuch-Sprache) */
 .tour-note { width: min(1040px, 92vw); margin: 26px 0 0; margin-left: calc((100% - min(1040px, 92vw)) / 2);
-  position: relative; overflow: hidden; border-radius: 20px; padding: clamp(30px, 4vw, 48px);
+  position: relative; overflow: hidden; border-radius: 18px; padding: clamp(24px, 3vw, 34px);
   background: radial-gradient(120% 120% at 12% 0%, #F8F2E2, #E9DFC6 70%); box-shadow: var(--shadow-paper); }
 .tour-note::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.5; pointer-events: none; }
 .tour-note > * { position: relative; z-index: 1; }
 .tour-note__kicker { font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 2.4px;
   text-transform: uppercase; color: var(--gold); }
-.tour-note__body { margin: 14px 0 20px; max-width: 44ch;
-  font-family: 'Caveat', cursive; font-weight: 600; font-size: clamp(23px, 3vw, 29px); line-height: 1.4; color: #1E3A2A; }
-.tour-note__sig { font-family: 'Caveat', cursive; font-weight: 700; font-size: 32px; color: #0B4A2E; transform: rotate(-3deg); }
+.tour-note__body { margin: 12px 0 16px; max-width: 46ch;
+  font-family: 'Caveat', cursive; font-weight: 600; font-size: clamp(19px, 2.1vw, 23px); line-height: 1.38; color: #1E3A2A; }
+.tour-note__sig { font-family: 'Caveat', cursive; font-weight: 700; font-size: 26px; color: #0B4A2E; transform: rotate(-3deg); }
 /* Aktivitäts-Beweise (echt gegangen) */
 .tour-proof { margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(24,43,31,0.16);
   display: flex; flex-wrap: wrap; gap: 10px 26px; }
@@ -236,17 +223,13 @@
         <div><b data-count="1567">0</b><span>m max. Höhe</span></div>
         <div><b>~5 h</b><span>Gehzeit</span></div>
         <div><b>T2–T3</b><span>SAC-Skala</span></div>
+        <div class="tour-now" data-tournow hidden>
+          <b><span class="tour-now__dot"></span><span data-lv-temp>–</span>°<span class="tour-now__ico" data-lv-ico aria-hidden="true"></span></b>
+          <span><span data-lv-cond>jetzt</span> · am Gipfel</span>
+        </div>
       </div>
     </div>
   </section>
-
-  <!-- LIVE: Bedingungen am Berg (Open-Meteo, Gipfelhoehe) -->
-  <div class="tour-live" data-tourlive hidden>
-    <p class="tour-live__label"><span class="tour-live__dot"></span>Am Ristfeuchthorn · jetzt</p>
-    <p class="tour-live__temp"><span data-lv-temp>–</span><span class="tour-live__unit">°C</span><span class="tour-live__ico" data-lv-ico aria-hidden="true"></span></p>
-    <p class="tour-live__cond" data-lv-cond></p>
-    <p class="tour-live__meta" data-lv-meta></p>
-  </div>
 
   <!-- HÖHENPROFIL (nachgezeichnet aus echten Daten) -->
   <section class="tour-profile st st3">
@@ -254,7 +237,7 @@
       <span class="tour-profile__label">Höhenprofil · Rundtour</span>
       <span class="tour-profile__sub">Start 480 m → Gipfel 1.567 m → zurück</span>
     </div>
-    <svg class="tour-svg" viewBox="0 0 900 270" fill="none" aria-label="Höhenprofil Ristfeuchthorn">
+    <svg class="tour-svg" viewBox="0 0 900 270" preserveAspectRatio="none" fill="none" aria-label="Höhenprofil Ristfeuchthorn">
       <line class="tour-profile__gridline" x1="0" y1="70" x2="900" y2="70"/>
       <line class="tour-profile__gridline" x1="0" y1="140" x2="900" y2="140"/>
       <line class="tour-profile__gridline" x1="0" y1="210" x2="900" y2="210"/>
@@ -288,19 +271,19 @@
   <div class="wrap">
     <!-- Praktische Tipps -->
     <section class="tour-know st">
-      <div class="shead"><p class="kicker">Gut zu wissen</p><h2>Bevor du <em>losgehst.</em></h2></div>
+      <div class="shead"><p class="kicker">Vorm Start</p><h2>Kurz fürs <em>Rucksack-Hirn.</em></h2></div>
       <div class="tour-know__grid">
         <div class="tour-tip">
           <span class="tour-tip__k">Parken</span>
-          <p>Kostenloser Parkplatz unten am <strong>Wurzenwirt</strong> — direkt am Start.</p>
+          <p>Gratis parken direkt am Start — am <strong>Wurzenwirt</strong>.</p>
         </div>
         <div class="tour-tip">
           <span class="tour-tip__k">Einkehr</span>
-          <p>Der <strong>Wurzenwirt</strong> (Gasthof am Parkplatz) ist nach der Runde zu empfehlen.</p>
+          <p>Danach einkehren: der <strong>Wurzenwirt</strong> am Parkplatz ist top.</p>
         </div>
         <div class="tour-tip">
           <span class="tour-tip__k">Charakter</span>
-          <p>Naturnah, abgelegen, teils verwachsen. Oben T3 — festes Schuhwerk, Trittsicherheit.</p>
+          <p>Wild, ruhig, teils zugewachsen. Oben T3 — feste Schuhe und Trittsicherheit gehören dazu.</p>
         </div>
         <div class="tour-tip">
           <span class="tour-tip__k">Für wen</span>
@@ -308,7 +291,7 @@
           Feierabend-Gipfel oder erstes Bergerlebnis.</p>
         </div>
       </div>
-      <p class="tour-know__note">Mehr von der Tour gibt's als Video drüben auf
+      <p class="tour-know__note">Die ganze Runde als Video gibt's drüben auf
       <a href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">Instagram</a> —
       Startpunkt: <a href="https://www.google.com/maps/search/Wurzenwirt+Schneizlreuth" target="_blank" rel="noopener">Wurzenwirt in Maps öffnen</a>.</p>
     </section>
@@ -386,7 +369,7 @@
 
 /* Live: Bedingungen am Gipfel (Open-Meteo, elevation 1569) */
 (function () {
-  var box = document.querySelector('[data-tourlive]');
+  var box = document.querySelector('[data-tournow]');
   if (!box || !window.fetch) return;
   var WMO = function (cd) { return cd === 0 ? 'klar' : cd <= 2 ? 'leicht bewölkt' : cd === 3 ? 'bedeckt'
     : cd <= 48 ? 'Nebel' : cd <= 67 ? 'Regen' : cd <= 77 ? 'Schneefall' : cd <= 82 ? 'Schauer' : 'Gewitter'; };
@@ -407,9 +390,8 @@
       var s = (d.daily.sunset[0] || '').slice(11, 16);
       box.querySelector('[data-lv-temp]').textContent = Math.round(d.current.temperature_2m);
       box.querySelector('[data-lv-cond]').textContent = WMO(d.current.weather_code);
-      box.querySelector('[data-lv-ico]').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true">' + IC[key(d.current.weather_code)] + '</svg>';
-      box.querySelector('[data-lv-meta]').textContent = 'auf 1.569 m' + (s ? ' · Licht bis ' + s : '') + ' · Open-Meteo';
-      box.hidden = false;
+      box.querySelector('[data-lv-ico]').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true">' + IC[key(d.current.weather_code)] + '</svg>';
+      box.style.display = 'flex'; box.hidden = false;
     })
     .catch(function () {});
 })();
