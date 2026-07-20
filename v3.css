@@ -349,7 +349,7 @@ body.loaded .st { opacity: 1; transform: translateY(0); filter: blur(0); }
 .hero-handle { margin-top: 14px; font-size: var(--t-body); color: var(--paper-dim); letter-spacing: 0.4px; }
 .hero-meta { margin-top: 22px; font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
   letter-spacing: 2px; text-transform: uppercase; color: var(--meta-green); line-height: 2; }
-.hero-meta .dot { color: rgba(155,217,180,0.4); padding-inline: 6px; }
+.hero-meta .dot { display: inline-block; width: 1px; height: 10px; margin: 0 10px; vertical-align: -1px; background: rgba(155,217,180,0.4); font-size: 0; }
 .hero-live { margin-top: 16px; display: flex; align-items: center; gap: 10px;
   font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
   letter-spacing: 1.8px; text-transform: uppercase; color: var(--leaf); }
@@ -622,7 +622,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .hikes-copy { font-size: 16px; line-height: 1.65; color: var(--paper-dim); max-width: 48ch; }
 .hikes-stats { margin-top: 24px; font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
   letter-spacing: 2px; text-transform: uppercase; color: var(--meta-green); }
-.hikes-stats .dot { color: rgba(155,217,180,0.4); padding-inline: 8px; }
+.hikes-stats .dot { display: inline-block; width: 1px; height: 10px; margin: 0 9px; vertical-align: -1px; background: rgba(155,217,180,0.4); font-size: 0; }
 .hikes-mtn { position: absolute; right: 0; top: 8px; width: clamp(90px, 14vw, 150px); height: auto;
   color: rgba(243,235,217,0.3); }
 .hikes-profile { display: block; width: min(100%, 560px); height: auto; margin-top: 26px;
