@@ -124,34 +124,59 @@
 
 /* ---- Pakete (Creme-Tiles) ---- */
 /* Leistungen als editoriale Tarif-Liste (statt Emoji-Karten-Raster) */
-.koop-tiers { margin-top: 26px; border-top: 1px solid rgba(24,43,31,0.16); }
+/* ---- Leistungen: Hero-Paket (empfohlen) + à-la-carte-Menü ---- */
+.koop-tiers { margin-top: 26px; }
+
+/* Hero: das empfohlene Long-Term-Paket als herausgehobene dunkle Karte */
+.koop-pkg-hero { position: relative; overflow: hidden; border-radius: 18px;
+  padding: clamp(24px, 3vw, 34px); display: grid; grid-template-columns: 1fr auto;
+  align-items: end; gap: 22px 30px;
+  background: linear-gradient(152deg, #143a24 0%, #0a2417 76%);
+  box-shadow: inset 0 1px 0 rgba(209,242,235,0.09), 0 26px 54px -28px rgba(0,0,0,0.6);
+  transition: transform 550ms var(--ease-lux), box-shadow 550ms var(--ease-lux); }
+.koop-pkg-hero::after { content: ""; position: absolute; inset: 0; background-image: var(--grain);
+  opacity: 0.4; mix-blend-mode: overlay; pointer-events: none; }
+.koop-pkg-hero:hover { transform: translateY(-3px);
+  box-shadow: inset 0 1px 0 rgba(209,242,235,0.12), 0 34px 64px -28px rgba(0,0,0,0.66); }
+.koop-pkg-hero > * { position: relative; z-index: 1; }
+.koop-pkg-flag { display: inline-flex; align-items: center; font-family: var(--mono); font-size: 8.5px;
+  font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #14100A;
+  background: linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%); padding: 5px 13px 5px 10px;
+  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%);
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.35)) drop-shadow(0 4px 8px rgba(0,0,0,0.35)); }
+.koop-pkg-name { margin: 14px 0 0; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(26px, 3.4vw, 34px); line-height: 1.05; color: var(--paper); }
+.koop-pkg-meta { margin-top: 7px; font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 1.4px; text-transform: uppercase; color: var(--leaf); }
+.koop-pkg-desc { margin-top: 12px; font-size: 14.5px; line-height: 1.6; color: var(--paper-dim); max-width: 42ch; }
+.koop-pkg-pricewrap { text-align: right; white-space: nowrap; }
+.koop-pkg-pricewrap .lbl { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
+  text-transform: uppercase; color: var(--paper-faint); }
+.koop-pkg-pricewrap b { display: block; margin-top: 4px; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(40px, 6vw, 58px); line-height: 0.92; letter-spacing: -1.5px; color: var(--paper); }
+.koop-pkg-pricewrap small { display: block; margin-top: 4px; font-family: var(--mono); font-size: 11px;
+  font-weight: 600; letter-spacing: 0.5px; color: var(--leaf); }
+
+/* Menü: die drei Einzel-Optionen */
+.koop-menu-lbl { display: flex; align-items: center; gap: 12px; margin: 30px 0 4px;
+  font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(24,43,31,0.5); }
+.koop-menu-lbl::after { content: ""; flex: 1; height: 1px; background: rgba(24,43,31,0.16); }
+.koop-menu { border-top: 1px solid rgba(24,43,31,0.14); }
 .koop-tier { position: relative; display: grid; align-items: baseline;
-  grid-template-columns: 46px 1fr auto; column-gap: 20px;
-  padding: 22px 8px 22px 0; border-bottom: 1px solid rgba(24,43,31,0.13);
+  grid-template-columns: 1fr auto; column-gap: 24px;
+  padding: 20px 6px 20px 0; border-bottom: 1px solid rgba(24,43,31,0.12);
   transition: padding-left 450ms var(--ease-lux), background 450ms var(--ease-lux); }
-.koop-tier:hover { padding-left: 14px; background: linear-gradient(90deg, rgba(11,110,79,0.05), transparent 70%); }
-.koop-tier-idx { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 1px;
-  color: rgba(24,43,31,0.4); padding-top: 4px; }
-.koop-tier-name { font-family: 'Playfair Display', serif; font-weight: 600; font-size: clamp(20px, 2.4vw, 25px);
-  line-height: 1.1; color: #14281C; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.koop-tier:hover { padding-left: 12px; background: linear-gradient(90deg, rgba(11,110,79,0.05), transparent 72%); }
+.koop-tier-name { font-family: 'Playfair Display', serif; font-weight: 600; font-size: clamp(19px, 2.2vw, 23px);
+  line-height: 1.12; color: #14281C; }
 .koop-tier-meta { margin-top: 5px; font-family: var(--mono); font-size: 9.5px; font-weight: 700;
   letter-spacing: 1.4px; text-transform: uppercase; color: rgba(24,43,31,0.5); }
-.koop-tier-desc { margin-top: 9px; font-size: 14px; line-height: 1.55; color: rgba(24,43,31,0.78); max-width: 46ch; }
-.koop-tier-price { font-family: 'Playfair Display', serif; font-size: 15px; color: rgba(24,43,31,0.55);
+.koop-tier-desc { margin-top: 9px; font-size: 13.5px; line-height: 1.55; color: rgba(24,43,31,0.75); max-width: 48ch; }
+.koop-tier-price { font-family: 'Playfair Display', serif; font-size: 14px; color: rgba(24,43,31,0.5);
   text-align: right; white-space: nowrap; padding-top: 2px; }
-.koop-tier-price b { display: block; font-weight: 700; font-size: clamp(24px, 3vw, 30px);
+.koop-tier-price b { display: block; font-weight: 700; font-size: clamp(22px, 2.6vw, 27px);
   letter-spacing: -0.5px; color: var(--royal); }
-.koop-tier-price small { font-size: 13px; color: rgba(24,43,31,0.5); font-family: var(--mono); letter-spacing: 0.5px; }
-/* Empfohlen: DAV-Schild + gelb-akzentuierte, herausgehobene Zeile */
-.koop-tier-flag { font-family: var(--mono); font-size: 8.5px; font-weight: 700; letter-spacing: 1.6px;
-  text-transform: uppercase; color: #14100A; background: linear-gradient(180deg, #E8BF25, #D4A918);
-  padding: 4px 12px 4px 9px; clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%); }
-.koop-tier--hi { margin: 4px 0; padding-left: 18px; padding-right: 18px; border-bottom-color: transparent;
-  border-radius: 12px; background: linear-gradient(100deg, rgba(11,110,79,0.07), rgba(232,191,37,0.05));
-  box-shadow: inset 0 0 0 1px rgba(11,110,79,0.16); }
-.koop-tier--hi::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 3px;
-  border-radius: 2px; background: linear-gradient(180deg, #E8BF25, var(--royal)); }
-.koop-tier--hi:hover { padding-left: 24px; background: linear-gradient(100deg, rgba(11,110,79,0.1), rgba(232,191,37,0.07)); }
 .koop-price-note { margin-top: 18px; font-family: var(--mono); font-size: 10px; line-height: 1.6;
   letter-spacing: 0.4px; color: rgba(24,43,31,0.55); }
 
@@ -257,8 +282,11 @@
 /* ---- Responsive ---- */
 @media (max-width: 720px) {
   .koop-cards { grid-template-columns: 1fr; }
-  .koop-tier { grid-template-columns: 34px 1fr; row-gap: 4px; }
-  .koop-tier-price { grid-column: 2; text-align: left; margin-top: 8px; }
+  .koop-pkg-hero { grid-template-columns: 1fr; align-items: start; gap: 18px; }
+  .koop-pkg-pricewrap { text-align: left; }
+  .koop-pkg-pricewrap b { display: inline-block; }
+  .koop-tier { grid-template-columns: 1fr; row-gap: 4px; }
+  .koop-tier-price { text-align: left; margin-top: 10px; }
   .koop-tier-price b { display: inline; }
   .koop-fig-row { grid-template-columns: 1fr; }
   .koop-reach-figs { grid-template-columns: 1fr 1fr; }
@@ -372,41 +400,43 @@
         <p class="koop-body">Klare Pakete, klare Preise. Custom-Wünsche immer möglich.</p>
 
         <div class="koop-tiers">
-          <div class="koop-tier rv" style="--d: 0ms">
-            <span class="koop-tier-idx">01</span>
-            <div class="koop-tier-main">
-              <p class="koop-tier-name">Story-Set</p>
-              <p class="koop-tier-meta">5–7 Slides · 24 h live</p>
-              <p class="koop-tier-desc">Story-Reihe zu deinem Produkt — in meiner Voice, mit klarem Mehrwert für meine Audience.</p>
+          <!-- Empfohlen: herausgehobenes Hero-Paket -->
+          <div class="koop-pkg-hero rv">
+            <div class="koop-pkg-main">
+              <span class="koop-pkg-flag">Empfohlen</span>
+              <h3 class="koop-pkg-name">Long-Term-Partnership</h3>
+              <p class="koop-pkg-meta">3 Monate · 4–6 Posts/Mo</p>
+              <p class="koop-pkg-desc">Echte Integration in meinen Alltag — die Brand wird Teil meiner Story, nicht „Werbung im Kalender". Hier entsteht der Effekt, den One-Shots nicht liefern.</p>
             </div>
-            <p class="koop-tier-price">ab <b>250&nbsp;€</b></p>
+            <p class="koop-pkg-pricewrap"><span class="lbl">ab</span><b>1.500&nbsp;€</b><small>pro Monat</small></p>
           </div>
-          <div class="koop-tier rv" style="--d: 90ms">
-            <span class="koop-tier-idx">02</span>
-            <div class="koop-tier-main">
-              <p class="koop-tier-name">Reel-Feature</p>
-              <p class="koop-tier-meta">1 Reel · +24 h Story-Boost</p>
-              <p class="koop-tier-desc">Skript gemeinsam abgestimmt, Schnitt selbstgemacht. Reel + 1 Story-Push am Reel-Tag.</p>
+
+          <p class="koop-menu-lbl">Oder einzeln</p>
+          <div class="koop-menu">
+            <div class="koop-tier rv" style="--d: 0ms">
+              <div class="koop-tier-main">
+                <p class="koop-tier-name">Story-Set</p>
+                <p class="koop-tier-meta">5–7 Slides · 24 h live</p>
+                <p class="koop-tier-desc">Story-Reihe zu deinem Produkt — in meiner Voice, mit klarem Mehrwert für meine Audience.</p>
+              </div>
+              <p class="koop-tier-price">ab <b>250&nbsp;€</b></p>
             </div>
-            <p class="koop-tier-price">ab <b>600&nbsp;€</b></p>
-          </div>
-          <div class="koop-tier koop-tier--hi rv" style="--d: 180ms">
-            <span class="koop-tier-idx">03</span>
-            <div class="koop-tier-main">
-              <p class="koop-tier-name">Long-Term-Partnership <span class="koop-tier-flag">Empfohlen</span></p>
-              <p class="koop-tier-meta">3 Monate · 4–6 Posts/Mo</p>
-              <p class="koop-tier-desc">Echte Integration in meinen Alltag — Brand wird Teil meiner Story, nicht „Werbung im Kalender".</p>
+            <div class="koop-tier rv" style="--d: 90ms">
+              <div class="koop-tier-main">
+                <p class="koop-tier-name">Reel-Feature</p>
+                <p class="koop-tier-meta">1 Reel · +24 h Story-Boost</p>
+                <p class="koop-tier-desc">Skript gemeinsam abgestimmt, Schnitt selbstgemacht. Reel + 1 Story-Push am Reel-Tag.</p>
+              </div>
+              <p class="koop-tier-price">ab <b>600&nbsp;€</b></p>
             </div>
-            <p class="koop-tier-price">ab <b>1.500&nbsp;€</b><small>/Mo</small></p>
-          </div>
-          <div class="koop-tier rv" style="--d: 270ms">
-            <span class="koop-tier-idx">04</span>
-            <div class="koop-tier-main">
-              <p class="koop-tier-name">Custom</p>
-              <p class="koop-tier-meta">Nach Bedarf</p>
-              <p class="koop-tier-desc">Event-Coverage, Test-Drive, Live-Story von einem Brand-Day — schreib's in die Anfrage.</p>
+            <div class="koop-tier rv" style="--d: 180ms">
+              <div class="koop-tier-main">
+                <p class="koop-tier-name">Custom</p>
+                <p class="koop-tier-meta">Nach Bedarf</p>
+                <p class="koop-tier-desc">Event-Coverage, Test-Drive, Live-Story von einem Brand-Day — schreib's in die Anfrage.</p>
+              </div>
+              <p class="koop-tier-price">auf&nbsp;<b>Anfrage</b></p>
             </div>
-            <p class="koop-tier-price">auf&nbsp;<b>Anfrage</b></p>
           </div>
         </div>
 
