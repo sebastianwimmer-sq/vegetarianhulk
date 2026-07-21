@@ -77,13 +77,13 @@
     '      <label class="sr" for="vhnf-email">Deine E-Mail-Adresse</label>' +
     '      <input id="vhnf-email" class="field" type="email" name="email" placeholder="deine@email.de" autocomplete="email" inputmode="email" required />' +
     '      <button class="submit" type="submit">' +
-    '        <span class="label">3-Tage-Reset holen</span>' +
+    '        <span class="label">Berg-Starter holen</span>' +
     '        <span class="arrow" aria-hidden="true">&rarr;</span>' +
     '        <span class="spinner" hidden aria-hidden="true"></span>' +
     '      </button>' +
     '    </div>' +
     '  </div>' +
-    '  <p class="trust">Kein Spam &middot; Aussteigen jederzeit. Mit der Anmeldung stimmst du dem Erhalt der 3 Mails zu &mdash; mehr in der <a href="/datenschutz.html">Datenschutzerkl&auml;rung</a>.</p>' +
+    '  <p class="trust">Kein Spam &middot; Aussteigen jederzeit. Mit der Anmeldung bekommst du den Berg-Starter und ab und zu den Letter &mdash; mehr in der <a href="/datenschutz.html">Datenschutzerkl&auml;rung</a>.</p>' +
     '  <div class="msg" role="status" aria-live="polite"></div>' +
     '</form>';
 
@@ -154,7 +154,7 @@
     }
     if (state === 'success') {
       this._msg.className = 'msg is-visible msg--success';
-      this._msg.innerHTML = '<strong>Eingetragen.</strong> Schau in dein Postfach &mdash; Tag 1 kommt direkt.';
+      this._msg.innerHTML = '<strong>Fast geschafft.</strong> Best&auml;tige kurz den Link in deiner Mail &mdash; dann kommt der Berg-Starter.';
       return;
     }
     if (state === 'already') {
@@ -204,9 +204,9 @@
         if (r.res.status === 503) {
           setLocalStorageSubscribed();
           emitSubscribed();
-          var subject = encodeURIComponent('3-Tage-Reset bitte');
+          var subject = encodeURIComponent('Berg-Starter bitte');
           var body = encodeURIComponent(
-            'Hi Sebi,\n\nbitte schick mir den 3-Tage-Disziplin-Reset.\n\n' +
+            'Hi Sebi,\n\nbitte schick mir den Berg-Starter.\n\n' +
             (firstName ? 'Mein Vorname: ' + firstName + '\n' : '') +
             'Meine Mail: ' + email + '\n\nDanke!'
           );
