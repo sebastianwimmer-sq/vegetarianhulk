@@ -12,8 +12,8 @@
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E" />
 
-<link rel="stylesheet" href="/fonts.css" />
-<link rel="stylesheet" href="/v3.css" />
+<link rel="stylesheet" href="/fonts.css?v=1e2010e0" />
+<link rel="stylesheet" href="/v3.css?v=cbb2ed12" />
 <style>
 /* ============================================================
    /berg-starter — Freebie v2 (persönlich, story-getrieben)
@@ -42,8 +42,15 @@
 .bs-note p { font-family: 'Caveat', cursive; font-size: 21px; line-height: 1.32; color: #21372a; }
 
 /* ---- Hero: Identität + echtes Foto, Raster gebrochen ---- */
-.bs-hero { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(24px, 4vw, 52px);
+.bs-hero { position: relative; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(24px, 4vw, 52px);
   align-items: center; padding: clamp(30px, 6vh, 66px) 0 clamp(24px, 4vh, 48px); }
+/* Gradient-Glow wie Startseiten-Hero */
+.bs-hero::before { content: ""; position: absolute; inset: -30% 0 -22%; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(48% 42% at 80% 16%, rgba(201,169,106,0.30), transparent 70%),
+    radial-gradient(56% 48% at 16% 34%, rgba(15,126,91,0.42),   transparent 72%),
+    radial-gradient(50% 42% at 84% 74%, rgba(63,191,128,0.26),  transparent 70%);
+  filter: blur(12px); }
 .bs-hero__k { display: inline-flex; align-items: center; gap: 9px; font-family: var(--mono);
   font-size: 9.5px; font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf); }
 .bs-hero__k svg { width: 15px; height: 15px; }
@@ -62,16 +69,20 @@
   box-shadow: var(--shadow-paper); }
 .bs-sheet::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.5; pointer-events: none; }
 .bs-sheet > * { position: relative; z-index: 1; }
-.bs-k { font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 2.2px;
+.bs-k { display: inline-flex; align-items: center; font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 2.2px;
   text-transform: uppercase; color: var(--gold); }
-.bs-k .line { display: inline-block; width: 26px; height: 1px; background: rgba(24,43,31,0.28); vertical-align: 4px; margin-right: 11px; }
+/* Berg-Glyphe statt KI-Slop-Strich */
+.bs-k .line { display: inline-block; width: 17px; height: 11px; margin-right: 9px; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'%3E%3Cpath d='M1.5 15 9 3.2l3.4 5L15.8 4l6.7 11z'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'%3E%3Cpath d='M1.5 15 9 3.2l3.4 5L15.8 4l6.7 11z'/%3E%3C/svg%3E") center/contain no-repeat; }
 .bs-sheet h2 { margin: 12px 0 0; font-family: 'Playfair Display', serif; font-weight: 600;
   font-size: clamp(27px, 4vw, 40px); line-height: 1.04; color: #14281C; }
 .bs-sheet h2 em { font-style: italic; color: var(--royal); }
 
 /* Story: Text + Foto nebeneinander (gebrochen) */
 .bs-story__grid { margin-top: 24px; display: grid; grid-template-columns: 1fr 300px; gap: clamp(24px, 4vw, 46px); align-items: start; }
-@media (max-width: 780px) { .bs-story__grid { grid-template-columns: 1fr; } .bs-story__grid .bs-photo { max-width: 260px; } }
+.bs-story__grid--center { align-items: center; grid-template-columns: 1fr 250px; }
+@media (max-width: 780px) { .bs-story__grid, .bs-story__grid--center { grid-template-columns: 1fr; } .bs-story__grid .bs-photo { max-width: 260px; } }
 .bs-prose p { font-size: 16px; line-height: 1.72; color: #21372a; margin-bottom: 15px; max-width: 56ch; }
 .bs-prose p:last-child { margin-bottom: 0; }
 .bs-prose .lead { font-family: 'Playfair Display', serif; font-size: clamp(20px, 2.6vw, 24px);
@@ -137,9 +148,14 @@
   filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4)) drop-shadow(0 2px 2px rgba(120,88,10,0.4)) drop-shadow(0 12px 22px rgba(0,0,0,0.32));
   transition: transform 260ms var(--ease-lux); }
 .bs-btn:hover { transform: translateY(-2px); }
-.bs-sign { margin-top: 30px; padding-top: 22px; border-top: 1px solid rgba(243,235,217,0.14); }
-.bs-sign .hand { font-family: 'Caveat', cursive; font-size: 34px; line-height: 1; color: var(--leaf); }
-.bs-sign .date { margin-top: 6px; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--paper-faint); }
+.bs-sign { margin-top: 30px; padding-top: 24px; border-top: 1px solid rgba(243,235,217,0.14);
+  display: inline-flex; align-items: center; gap: 16px; text-align: left; }
+.bs-sign__mascot { width: 66px; height: auto; flex: 0 0 auto;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.45)); animation: bsMascot 4.5s ease-in-out infinite; }
+@keyframes bsMascot { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-5px) rotate(1.5deg); } }
+.bs-sign .hand { font-family: 'Caveat', cursive; font-size: 30px; line-height: 1.05; color: var(--leaf); }
+.bs-sign .date { margin-top: 5px; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--paper-faint); }
+@media (prefers-reduced-motion: reduce) { .bs-sign__mascot { animation: none; } }
 
 @media print {
   .bg-wrap, .bg2-wrap, .rail, .topbar { display: none !important; }
@@ -203,7 +219,7 @@
     <section class="bs-sheet">
       <span class="bs-k"><span class="line"></span>Meine Auswahl</span>
       <h2>Warum genau <em>diese drei.</em></h2>
-      <div class="bs-story__grid">
+      <div class="bs-story__grid bs-story__grid--center">
         <p class="bs-why">Weil's ein <b>guter, bunter Mix</b> ist. Eine mit Hütte und Postkarten-Blick, eine ruhige Einsame zum Runterkommen,
         eine mit Weitblick übers Umland. So kannst du dich ausprobieren und findest raus, welcher Typ Berg dir liegt. Alle drei sind gut machbar —
         keine hat einen Haken, den du nicht packst. Fang mit der an, die dir am nächsten liegt, und häng die anderen zwei dran, wenn's läuft.</p>
@@ -341,14 +357,29 @@
       Antworte mir einfach auf die Willkommens-Mail. Ich freu mich drüber und geb dir noch einen Tipp für genau die Tour.</p>
       <a class="bs-btn" href="/touren/">Alle Hulk Hikes im Überblick →</a>
       <div class="bs-sign">
-        <p class="hand">Man sieht sich am Berg. — Sebi</p>
-        <p class="date">VegetarianHulk · dein Berg-Starter</p>
+        <img class="bs-sign__mascot" src="/assets/img/smashy-maskottchen.png" alt="Smashy, das VegetarianHulk-Maskottchen" loading="lazy">
+        <div>
+          <p class="hand">Man sieht sich am Berg. — Sebi</p>
+          <p class="date">VegetarianHulk · dein Berg-Starter</p>
+        </div>
       </div>
     </section>
 
   </div>
 </main>
 
-<script src="/v3.js?v=1" defer></script>
+<footer>
+  <div class="inner">
+    <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+    <p class="claim">Builder &amp; Creator. Disziplin über Hype.</p>
+    <nav class="legal" aria-label="Rechtliches">
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+      <span>© 2026 Sebastian Wimmer</span>
+    </nav>
+  </div>
+</footer>
+
+<script src="/v3.js?v=182e7de3" defer></script>
 </body>
 </html>
