@@ -51,6 +51,34 @@
 .koop-hero-cta .koop-note { font-family: var(--mono); font-size: 9.5px; font-weight: 600;
   letter-spacing: 1.2px; text-transform: uppercase; color: var(--paper-faint); }
 
+/* Hero 2-spaltig: Text + echtes Sebi-Foto (Präsenz = 'buch die Person') */
+.koop-hero__top { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: clamp(26px, 4vw, 56px); align-items: center; }
+.koop-hero__photo { justify-self: center; width: min(300px, 82%); }
+@media (max-width: 860px) { .koop-hero__top { grid-template-columns: 1fr; }
+  .koop-hero__photo { order: -1; width: min(230px, 62%); margin-bottom: 4px; } }
+/* Field-Photo (echte Aufnahme als gerahmter Print, leicht schräg) */
+.koop-photo { position: relative; display: inline-block; padding: 9px 9px 0; background: #FBF6EA;
+  box-shadow: 0 22px 44px -20px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.25); border-radius: 3px; transform: rotate(2deg); }
+.koop-photo img { display: block; width: 100%; height: auto; border-radius: 1px; }
+.koop-photo figcaption { display: block; padding: 11px 4px 12px; font-family: 'Caveat', cursive;
+  font-size: 19px; line-height: 1.15; color: #2a2118; text-align: center; }
+/* Sebis Notiz (Handschrift-Marginalie) */
+.koop-notiz { position: relative; margin: 20px 0 0; padding: 15px 18px 16px 46px; border-radius: 4px 14px 14px 4px;
+  background: rgba(126,208,155,0.08); box-shadow: inset 3px 0 0 var(--leaf); }
+.koop-notiz::before { content: "✎"; position: absolute; left: 16px; top: 13px; font-size: 17px; color: var(--leaf); opacity: 0.8; }
+.koop-notiz b { display: block; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.6px;
+  text-transform: uppercase; color: var(--leaf); margin-bottom: 6px; }
+.koop-notiz p { font-family: 'Caveat', cursive; font-size: 21px; line-height: 1.32; color: var(--paper); }
+/* Signierter Abschluss */
+.koop-sign { margin: 28px auto 0; padding-top: 22px; border-top: 1px solid rgba(24,43,31,0.16);
+  display: inline-flex; align-items: center; gap: 15px; text-align: left; }
+.koop-sign__mascot { width: 58px; height: auto; flex: 0 0 auto; filter: drop-shadow(0 8px 15px rgba(20,40,28,0.35));
+  animation: koopMascot 4.5s ease-in-out infinite; }
+@keyframes koopMascot { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-5px) rotate(1.5deg); } }
+.koop-sign .hand { font-family: 'Caveat', cursive; font-size: 27px; line-height: 1.05; color: var(--royal); }
+.koop-sign .date { margin-top: 4px; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: rgba(24,43,31,0.5); }
+@media (prefers-reduced-motion: reduce) { .koop-sign__mascot { animation: none; } }
+
 /* ---- Creme-Karte (Emphase-Block) — data-light für Wordmark-Invert ---- */
 .koop-cream { position: relative; overflow: hidden; border-radius: 22px;
   padding: clamp(30px, 4.4vw, 56px) clamp(24px, 4vw, 52px);
@@ -119,8 +147,6 @@
 .koop-card .koop-card-head { position: relative; margin: 10px 0 8px; font-family: 'Playfair Display', serif;
   font-weight: 600; font-size: 19px; line-height: 1.2; color: var(--paper); }
 .koop-card .koop-card-body { position: relative; font-size: 13.5px; line-height: 1.6; color: var(--paper-faint); }
-.koop-card .koop-card-tag { position: absolute; right: 18px; top: 14px; font-size: 26px; opacity: 0.5;
-  filter: grayscale(0.2); }
 
 /* ---- Pakete (Creme-Tiles) ---- */
 /* Leistungen als editoriale Tarif-Liste (statt Emoji-Karten-Raster) */
@@ -321,6 +347,8 @@
 
     <!-- Hero -->
     <section class="koop-hero st" aria-labelledby="koop-title">
+      <div class="koop-hero__top">
+        <div class="koop-hero__text">
       <p class="kicker st st1">Für Brands · Kooperationen</p>
       <h1 id="koop-title" class="st st2">Content für Brands,<br><em>die zu meinem Leben passen.</em></h1>
       <p class="koop-lead st st3">Ich bin <strong>Sebi (@vegetarianhulk)</strong> — Disziplin, Faith,
@@ -335,6 +363,12 @@
         <a class="th-btn th-btn--gelb th-btn--lg" href="/anfrage.html"><svg class="koop-ic-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg> Anfrage senden →</a>
         <span class="koop-note">Mail oder DM · du bekommst persönlich Antwort</span>
       </p>
+        </div>
+        <figure class="koop-photo koop-hero__photo st st3">
+          <img src="/berg-starter/img/sebi-flex.jpg" alt="Sebi am Berg" loading="eager">
+          <figcaption>Real, nicht gestellt. So mach ich Content.</figcaption>
+        </figure>
+      </div>
 
       <!-- Hero-Zahlen-Band (Creme, editorial) -->
       <div class="koop-stats-hero rv" data-light style="--d: 120ms">
@@ -345,7 +379,8 @@
             <div class="koop-fig"><span class="koop-fig-num">33.333</span><span class="koop-fig-label">Aufrufe (30 Tage)</span></div>
             <div class="koop-fig"><span class="koop-fig-num">+563%</span><span class="koop-fig-label">Wachstum Reels/Beiträge</span></div>
           </div>
-          <p class="koop-fig-note">Stand: Instagram-Insights, Mai 2026 (letzte 30 Tage)</p>
+          <!-- TODO SEBI: alle Zahlen dieser Seite vor Relaunch mit aktuellen IG-Insights gegenchecken (letzte 30 Tage). -->
+          <p class="koop-fig-note">Stand: Instagram-Insights, letzte 30 Tage</p>
         </div>
       </div>
     </section>
@@ -366,6 +401,11 @@
         5–7× pro Woche, 1st-person &amp; raw.
       </p>
 
+      <div class="koop-notiz">
+        <b>Sebis Notiz</b>
+        <p>Ich sag ehrlich mehr Anfragen ab als ich mache. Wenn ich was zeig, nutz ich's auch privat — sonst merken's meine Leute sofort, und dann ist das Vertrauen weg. Das ist mir mehr wert als jeder schnelle Deal.</p>
+      </div>
+
       <ul class="koop-cards">
         <li class="koop-card rv" style="--d: 0ms">
           <span class="koop-card-stat">10 Jahre</span>
@@ -385,7 +425,7 @@
         <li class="koop-card rv" style="--d: 270ms">
           <span class="koop-card-stat">Loyal</span>
           <h3 class="koop-card-head">Christ-Foundation</h3>
-          <p class="koop-card-body">Bibel als Anker, Glaube als Kompass. Niche-Audience die Christian Brands + Faith-Themes echt vertraut.</p>
+          <p class="koop-card-body">Bibel als Anker, Glaube als Kompass. Meine Leute vertrauen mir grad bei Faith-Themen — da bin ich echt, nicht performativ.</p>
         </li>
       </ul>
     </section>
@@ -507,8 +547,12 @@
         <span class="koop-pill">Beiträge 21,6%</span>
       </div>
 
+      <p class="koop-body-dark" style="margin-top: 24px;">
+        Kurz gesagt: klein, aber <strong>echt</strong> — jung, DACH, und aktiv über die eigene Bubble hinaus.
+        Genau die Leute, die wirklich zuhören statt nur durchzuscrollen.
+      </p>
       <p class="koop-meta">
-        Alle Zahlen aus Instagram-Insights · <strong>Stand: Mai 2026</strong> (letzte 30 Tage).
+        Alle Zahlen aus Instagram-Insights · <strong>letzte 30 Tage</strong>.
       </p>
     </section>
 
@@ -633,6 +677,13 @@
           Aktive Partner-Kooperationen mit Rabattcode liste ich öffentlich auf
           <a href="/partner-picks/">vegetarianhulk.de/partner-picks</a> — dem Ziel meines Instagram-Bio-Links.
         </p>
+        <div class="koop-sign">
+          <img class="koop-sign__mascot" src="/assets/img/smashy-maskottchen.png" alt="Smashy, das VegetarianHulk-Maskottchen" loading="lazy">
+          <div>
+            <p class="hand">Freu mich auf deine Nachricht. — Sebi</p>
+            <p class="date">VegetarianHulk · @vegetarianhulk</p>
+          </div>
+        </div>
       </div>
     </section>
 

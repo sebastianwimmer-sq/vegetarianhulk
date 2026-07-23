@@ -51,7 +51,7 @@ const VH_PARTNERS = [
     discount: "10%",
     category: "Supplements",
     sortOrder: 1,
-    valueLine: "Laborgeprüfte Nahrungsergänzung, Made in Germany — fester Teil meiner täglichen Routine.",
+    valueLine: "Meine Supplements hol ich von denen — laborgeprüft, Made in Germany, und läuft bei mir jeden Tag mit.",
     hint: {
       lead: "Wichtig:",
       text: "Der Link allein gibt keinen Rabatt — Code VEGETARIANHULK im Warenkorb eingeben."
@@ -75,7 +75,7 @@ const VH_PARTNERS = [
     //   text: "Summer Sale: bis zu 40 % im Shop — der Code gilt währenddessen mit 5 %",
     //   validUntil: "2026-06-30"
     // },
-    valueLine: "Familienbetrieb aus den Alpen seit 1993 — Merino, Wanderstöcke, Schlafsäcke & Ultraleicht-Gear für meine Bergtouren.",
+    valueLine: "Meine Wanderstöcke sind von denen — echt goat. Familienbetrieb aus den Alpen seit 1993: Merino, Schlafsäcke & Ultraleicht-Gear für den Berg.",
     hint: {
       lead: "Easy:",
       text: "Der Rabatt wird beim Klick auf den Link automatisch angewendet."

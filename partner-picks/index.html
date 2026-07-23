@@ -40,10 +40,34 @@
     font-size: clamp(44px, 11vw, 84px); line-height: 0.98; color: var(--paper); letter-spacing: -0.5px; }
   .pp-hero h1 em { font-style: italic; color: var(--leaf); }
   .pp-lead { font-size: 16.5px; line-height: 1.7; color: var(--paper-dim); max-width: 52ch; }
-  .pp-meta { margin-top: 22px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  .pp-meta { margin-top: 22px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
     font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px;
     text-transform: uppercase; color: var(--paper-faint); }
-  .pp-meta i { color: var(--leaf); font-style: normal; }
+  /* Deko-Punkt → kleine Berg-Glyphe */
+  .pp-meta i { display: inline-block; width: 13px; height: 8px; font-size: 0; background: var(--leaf);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'%3E%3Cpath d='M1.5 15 9 3.2l3.4 5L15.8 4l6.7 11z'/%3E%3C/svg%3E") center/contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'%3E%3Cpath d='M1.5 15 9 3.2l3.4 5L15.8 4l6.7 11z'/%3E%3C/svg%3E") center/contain no-repeat; }
+
+  /* Hero 2-spaltig: Text + echtes Sebi-Foto */
+  .pp-hero__top { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: clamp(26px, 4vw, 56px); align-items: center; }
+  .pp-hero__photo { justify-self: center; width: min(290px, 82%); }
+  @media (max-width: 860px) { .pp-hero__top { grid-template-columns: 1fr; }
+    .pp-hero__photo { order: -1; width: min(220px, 60%); margin-bottom: 4px; } }
+  .pp-photo { position: relative; display: inline-block; padding: 9px 9px 0; background: #FBF6EA;
+    box-shadow: 0 22px 44px -20px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.25); border-radius: 3px; transform: rotate(-2.2deg); }
+  .pp-photo img { display: block; width: 100%; height: auto; border-radius: 1px; }
+  .pp-photo figcaption { display: block; padding: 11px 4px 12px; font-family: 'Caveat', cursive;
+    font-size: 18px; line-height: 1.18; color: #2a2118; text-align: center; }
+
+  /* Signierter Abschluss (dunkel) */
+  .pp-sign { width: min(1040px, 92vw); margin: 40px auto 0; margin-left: calc((100% - min(1040px, 92vw)) / 2);
+    padding-top: 24px; border-top: 1px solid rgba(243,235,217,0.14); display: inline-flex; align-items: center; gap: 15px; }
+  .pp-sign__mascot { width: 58px; height: auto; flex: 0 0 auto; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.45));
+    animation: ppMascot 4.5s ease-in-out infinite; }
+  @keyframes ppMascot { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-5px) rotate(1.5deg); } }
+  .pp-sign .hand { font-family: 'Caveat', cursive; font-size: 27px; line-height: 1.05; color: var(--leaf); }
+  .pp-sign .date { margin-top: 4px; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--paper-faint); }
+  @media (prefers-reduced-motion: reduce) { .pp-sign__mascot { animation: none; } }
 
   /* ---- Affiliate-Disclosure: heller data-light-Hinweis, klar sichtbar ---- */
   .pp-disclosure { width: min(1040px, 92vw); margin: 26px 0 8px;
@@ -178,12 +202,20 @@
 
     <!-- Hero -->
     <section class="pp-hero st" aria-labelledby="pp-title">
-      <p class="kicker st st1">Smash Partner &amp; Picks</p>
-      <h1 id="pp-title" class="st st2">Wo ich einkaufe.<br><em>Sparst du mit.</em></h1>
-      <p class="pp-lead st st3">Meine Partner mit echten Rabattcodes — und die Ausrüstung, die ich
-      selbst nutze. Kein Katalog, keine Fremdfüller-Liste: nur was den Weg vom Berg bis in den Schnitt
-      wirklich mitgeht. Ehrlich empfohlen, sonst steht es hier nicht.</p>
-      <p class="pp-meta st st4"><span>Rabattcodes</span><i>·</i><span>Eigene Ausrüstung</span><i>·</i><span>Amazon-Partner</span></p>
+      <div class="pp-hero__top">
+        <div class="pp-hero__text">
+          <p class="kicker st st1">Smash Partner &amp; Picks</p>
+          <h1 id="pp-title" class="st st2">Wo ich einkaufe.<br><em>Sparst du mit.</em></h1>
+          <p class="pp-lead st st3">Meine Partner mit echten Rabattcodes — und die Ausrüstung, die ich
+          selbst nutze. Kein Katalog, keine Fremdfüller-Liste: nur was den Weg vom Berg bis in den Schnitt
+          wirklich mitgeht. Ehrlich empfohlen, sonst steht es hier nicht.</p>
+          <p class="pp-meta st st4"><span>Rabattcodes</span><i></i><span>Eigene Ausrüstung</span><i></i><span>Amazon-Partner</span></p>
+        </div>
+        <figure class="pp-photo pp-hero__photo st st3">
+          <img src="/berg-starter/img/sebi-poles.jpg" alt="Sebi am Berg mit Wanderstöcken" loading="eager">
+          <figcaption>Die Stöcke im Bild: Alpin Loacker — gibt's unten mit Code.</figcaption>
+        </figure>
+      </div>
     </section>
 
     <!-- Affiliate-Disclosure (rechtlich, klar sichtbar) -->
@@ -212,12 +244,21 @@
         <p class="kicker">02 · Meine Picks</p>
         <h2 id="sec-picks">Die Sachen, die ich <em>wirklich</em> nutze.</h2>
       </div>
+      <p class="pp-lead" style="margin: -4px 0 18px;">Aktuell mein <strong>Content-Equipment</strong> — womit ich am Berg filme und schneide. Berg-Gear und Supplements kommen dazu, sobald ich sie ehrlich empfehlen kann.</p>
       <div id="product-index" class="pp-grid pp-grid--pick"></div>
       <noscript>
         <p class="pp-noscript">Die Liste braucht JavaScript. Schreib mir sonst auf
         <a href="https://instagram.com/vegetarianhulk" rel="noopener">@vegetarianhulk</a>.</p>
       </noscript>
     </section>
+
+    <div class="pp-sign">
+      <img class="pp-sign__mascot" src="/assets/img/smashy-maskottchen.png" alt="Smashy, das VegetarianHulk-Maskottchen" loading="lazy">
+      <div>
+        <p class="hand">Ehrlich empfohlen. — Sebi</p>
+        <p class="date">VegetarianHulk · nur was ich selbst nutze</p>
+      </div>
+    </div>
 
     <!-- Danke an die Smashies -->
     <section class="pp-danke rv" aria-label="Danke an die Smashies">
@@ -256,7 +297,7 @@
   <a href="/kooperationen.html">Brands</a>
 </nav>
 
-<script src="/codes/partners.js?v=3fcfc0c4"></script>
+<script src="/codes/partners.js?v=f9bebed4"></script>
 <script src="/lieblingsprodukte/products.js?v=56582fff"></script>
 
 <script>
