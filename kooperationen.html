@@ -147,6 +147,9 @@
 .koop-card .koop-card-head { position: relative; margin: 10px 0 8px; font-family: 'Playfair Display', serif;
   font-weight: 600; font-size: 19px; line-height: 1.2; color: var(--paper); }
 .koop-card .koop-card-body { position: relative; font-size: 13.5px; line-height: 1.6; color: var(--paper-faint); }
+/* Live tickende Tag-Zahl (vegetarisch seit 15.08.2016) */
+.koop-veggie { display: inline-block; font-family: var(--mono); font-weight: 700; color: var(--leaf);
+  font-variant-numeric: tabular-nums; letter-spacing: 0.3px; white-space: nowrap; }
 
 /* ---- Pakete (Creme-Tiles) ---- */
 /* Leistungen als editoriale Tarif-Liste (statt Emoji-Karten-Raster) */
@@ -375,9 +378,9 @@
         <div class="koop-cream">
           <p class="koop-eyebrow">Die letzten 30 Tage · in Zahlen</p>
           <div class="koop-fig-row">
-            <div class="koop-fig"><span class="koop-fig-num">62,8%</span><span class="koop-fig-label">Reichweite von Nicht-Followern</span></div>
-            <div class="koop-fig"><span class="koop-fig-num">101.397</span><span class="koop-fig-label">Aufrufe (30 Tage)</span></div>
-            <div class="koop-fig"><span class="koop-fig-num">35.515</span><span class="koop-fig-label">erreichte Konten (30 Tage)</span></div>
+            <div class="koop-fig"><span class="koop-fig-num" data-count-pct="62.8">62,8%</span><span class="koop-fig-label">Reichweite von Nicht-Followern</span></div>
+            <div class="koop-fig"><span class="koop-fig-num" data-count="101397">101.397</span><span class="koop-fig-label">Aufrufe (30 Tage)</span></div>
+            <div class="koop-fig"><span class="koop-fig-num" data-count="35515">35.515</span><span class="koop-fig-label">erreichte Konten (30 Tage)</span></div>
           </div>
           <!-- Performance-Zahlen: echte IG-Insights Stand 22.07.2026 (30 Tage). TODO SEBI: Demografie-Splits (Länder/Alter/Gender/DACH%) im Zielgruppe-Tab gegenchecken + monatlich aktualisieren. -->
           <p class="koop-fig-note">Stand: Instagram-Insights, letzte 30 Tage (Juli 2026)</p>
@@ -406,20 +409,20 @@
       </div>
 
       <ul class="koop-cards">
-        <li class="koop-card rv" style="--d: 0ms">
+        <li class="koop-card koop-card--live rv" style="--d: 0ms">
           <span class="koop-card-stat">10 Jahre</span>
           <h3 class="koop-card-head">Vegetarisch — live, jeden Tag</h3>
-          <p class="koop-card-body">Seit 2016. Kein Trend-Hopping, kein Influencer-Reset. Glaubwürdigkeit aus Zeit, nicht aus Content.</p>
+          <p class="koop-card-body">Seit 15.08.2016 — heute <b class="koop-veggie" data-gb-tag>Tag …</b>, und zählt live weiter. Kein Trend-Hopping, kein Reset. Glaubwürdigkeit aus Zeit.</p>
         </li>
         <li class="koop-card rv" style="--d: 90ms">
-          <span class="koop-card-stat">83%</span>
-          <h3 class="koop-card-head">DACH-Kern</h3>
-          <p class="koop-card-body">76,2% DE, 6,4% AT — kein DACH-USA-Mix. Wenn DACH dein Markt ist, ist meine Audience relevant.</p>
+          <span class="koop-card-stat">DACH</span>
+          <h3 class="koop-card-head">Kein Streuverlust</h3>
+          <p class="koop-card-body">Meine Leute sitzen im deutschsprachigen Raum — kein DACH-USA-Mix. Wenn DACH dein Markt ist, passt's.</p>
         </li>
         <li class="koop-card rv" style="--d: 180ms">
-          <span class="koop-card-stat">25-34</span>
-          <h3 class="koop-card-head">Kaufkräftige Demo</h3>
-          <p class="koop-card-body">81% sind 18–34 — der kaufkräftige Kern (25–34) macht 48% aus. Klar männlich geprägt: 64% ♂ / 36% ♀.</p>
+          <span class="koop-card-stat">18–34</span>
+          <h3 class="koop-card-head">Junger Kern</h3>
+          <p class="koop-card-body">Mein Kern ist jung und kaufkräftig, eher männlich geprägt — die Zielgruppe, die Disziplin, Berg und ehrlichen Content lebt.</p>
         </li>
         <li class="koop-card rv" style="--d: 270ms">
           <span class="koop-card-stat">Loyal</span>
@@ -512,32 +515,17 @@
       </p>
 
       <div class="koop-reach-figs">
-        <div class="koop-reach-fig rv" style="--d: 0ms"><span class="koop-rf-num">2.091</span><span class="koop-rf-label">Follower</span></div>
-        <div class="koop-reach-fig rv" style="--d: 90ms"><span class="koop-rf-num">101.397</span><span class="koop-rf-label">Aufrufe (30 Tage)</span></div>
-        <div class="koop-reach-fig rv" style="--d: 180ms"><span class="koop-rf-num">35.515</span><span class="koop-rf-label">erreichte Konten</span></div>
-        <div class="koop-reach-fig rv" style="--d: 270ms"><span class="koop-rf-num">55.937</span><span class="koop-rf-label">Reel-Aufrufe</span></div>
+        <div class="koop-reach-fig rv" style="--d: 0ms"><span class="koop-rf-num" data-count="2091">2.091</span><span class="koop-rf-label">Follower</span></div>
+        <div class="koop-reach-fig rv" style="--d: 90ms"><span class="koop-rf-num" data-count="101397">101.397</span><span class="koop-rf-label">Aufrufe (30 Tage)</span></div>
+        <div class="koop-reach-fig rv" style="--d: 180ms"><span class="koop-rf-num" data-count="35515">35.515</span><span class="koop-rf-label">erreichte Konten</span></div>
+        <div class="koop-reach-fig rv" style="--d: 270ms"><span class="koop-rf-num" data-count="55937">55.937</span><span class="koop-rf-label">Reel-Aufrufe</span></div>
       </div>
 
-      <p class="koop-sub-h">Audience-Mix · Top-Länder</p>
-      <div class="koop-pills">
-        <span class="koop-pill"><b>DE</b> 76,2%</span>
-        <span class="koop-pill"><b>AT</b> 6,4%</span>
-        <span class="koop-pill"><b>GB</b> 2,7%</span>
-        <span class="koop-pill"><b>FR</b> 2,2%</span>
-      </div>
-
-      <p class="koop-sub-h">Top-Altersgruppen</p>
-      <div class="koop-pills">
-        <span class="koop-pill">25-34: 48,3%</span>
-        <span class="koop-pill">18-24: 32,9%</span>
-        <span class="koop-pill">35+: 19%</span>
-      </div>
-
-      <p class="koop-sub-h">Geschlecht</p>
-      <div class="koop-pills">
-        <span class="koop-pill">♂ 64,1%</span>
-        <span class="koop-pill">♀ 35,9%</span>
-      </div>
+      <p class="koop-sub-h">Wer das ist</p>
+      <p class="koop-body-dark" style="margin-top: 8px;">
+        Hauptsächlich <strong>DACH</strong>, junger Kern (<strong>18–34</strong>), eher männlich geprägt —
+        Menschen, die Disziplin, Berg und ehrlichen Content mögen.
+      </p>
 
       <p class="koop-sub-h">Aufrufe nach Format</p>
       <div class="koop-pills">
@@ -720,5 +708,37 @@
 </nav>
 
 <script src="/v3.js?v=182e7de3" defer></script>
+<script>
+/* Count-Up der Stat-Zahlen beim Reinscrollen (animiert + live-Gefühl) */
+(function () {
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function fmtInt(n) { return n.toLocaleString('de-DE'); }
+  function fmtPct(n) { return n.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%'; }
+  var nums = document.querySelectorAll('[data-count], [data-count-pct]');
+  function run(el) {
+    var pct = el.hasAttribute('data-count-pct');
+    var target = parseFloat(pct ? el.dataset.countPct : el.dataset.count);
+    var fmt = pct ? fmtPct : fmtInt;
+    if (reduce) { el.textContent = fmt(target); return; }
+    var t0 = null, DUR = 1400;
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / DUR);
+      var e = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(pct ? Math.round(target * e * 10) / 10 : Math.round(target * e));
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  if ('IntersectionObserver' in window && nums.length) {
+    if (!reduce) nums.forEach(function (el) { el.textContent = el.hasAttribute('data-count-pct') ? fmtPct(0) : fmtInt(0); });
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) { if (en.isIntersecting) { run(en.target); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -12% 0px' });
+    nums.forEach(function (el) { io.observe(el); });
+  } else { nums.forEach(run); }
+})();
+</script>
 </body>
 </html>
