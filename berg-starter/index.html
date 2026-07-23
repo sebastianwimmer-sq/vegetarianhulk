@@ -6,146 +6,149 @@
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#06231A" />
-<!-- Lead-Magnet: nicht indexieren, nicht in Sitemap, nicht in Nav -->
 <meta name="robots" content="noindex,nofollow" />
 <title>Dein Berg-Starter — VegetarianHulk</title>
-<meta name="description" content="Dein Willkommens-Guide: 3 Einsteiger-Touren, eine Packliste die wirklich reicht, und wie ich reingekommen bin." />
+<meta name="description" content="Willkommen am Berg. Meine drei Touren zum Reinkommen, was wirklich in den Rucksack gehört, und wie ich selbst reingekommen bin." />
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E" />
 
-<link rel="stylesheet" href="/fonts.css?v=1e2010e0" />
-<link rel="stylesheet" href="/v3.css?v=cbb2ed12" />
+<link rel="stylesheet" href="/fonts.css" />
+<link rel="stylesheet" href="/v3.css" />
 <style>
 /* ============================================================
-   /berg-starter — Freebie-Guide (v3 Editorial Dark, print-ready)
-   Lead-Magnet, per Newsletter-Willkommensmail verlinkt.
+   /berg-starter — Freebie v2 (persönlich, story-getrieben)
+   Research-Richtung: Wert = Sebi, nicht Info. Echtes Foto,
+   Handschrift-Notizen, Raster gebrochen, signiert.
+   Lead-Magnet: noindex, unlisted, per Willkommensmail verlinkt.
    ============================================================ */
-.bs-wrap { width: min(880px, 92vw); margin: 0 auto; }
+.bs-wrap { width: min(940px, 92vw); margin: 0 auto; }
 
-/* ---- Hero ---- */
-.bs-hero { position: relative; padding: clamp(46px, 9vh, 96px) 0 clamp(30px, 5vh, 54px); text-align: center; }
-.bs-kicker { display: inline-flex; align-items: center; gap: 9px; font-family: var(--mono);
+/* Field-Photo: echte Aufnahme als gerahmter Print, leicht schräg */
+.bs-photo { position: relative; display: inline-block; padding: 9px 9px 0; background: #FBF6EA;
+  box-shadow: 0 22px 44px -20px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.25);
+  border-radius: 3px; }
+.bs-photo img { display: block; width: 100%; height: auto; border-radius: 1px; }
+.bs-photo figcaption { display: block; padding: 11px 4px 12px; font-family: 'Caveat', cursive;
+  font-size: 19px; line-height: 1.15; color: #2a2118; text-align: center; }
+.bs-photo--tilt-l { transform: rotate(-2.4deg); }
+.bs-photo--tilt-r { transform: rotate(2deg); }
+
+/* Sebis Notiz: Handschrift-Marginalie mit Pfeil */
+.bs-note { position: relative; margin: 18px 0 4px; padding: 15px 18px 16px 46px; border-radius: 4px 14px 14px 4px;
+  background: rgba(4,89,39,0.07); box-shadow: inset 3px 0 0 var(--royal); }
+.bs-note::before { content: "✎"; position: absolute; left: 16px; top: 13px; font-size: 17px; color: var(--royal); opacity: 0.75; }
+.bs-note b { display: block; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.6px;
+  text-transform: uppercase; color: var(--royal); margin-bottom: 6px; }
+.bs-note p { font-family: 'Caveat', cursive; font-size: 21px; line-height: 1.32; color: #21372a; }
+
+/* ---- Hero: Identität + echtes Foto, Raster gebrochen ---- */
+.bs-hero { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(24px, 4vw, 52px);
+  align-items: center; padding: clamp(30px, 6vh, 66px) 0 clamp(24px, 4vh, 48px); }
+.bs-hero__k { display: inline-flex; align-items: center; gap: 9px; font-family: var(--mono);
   font-size: 9.5px; font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf); }
-.bs-kicker svg { width: 15px; height: 15px; }
+.bs-hero__k svg { width: 15px; height: 15px; }
 .bs-hero h1 { margin: 18px 0 0; font-family: 'Playfair Display', serif; font-weight: 700;
-  font-size: clamp(42px, 9vw, 78px); line-height: 0.96; letter-spacing: -1px; color: var(--paper); }
+  font-size: clamp(40px, 6.6vw, 72px); line-height: 0.98; letter-spacing: -1px; color: var(--paper); }
 .bs-hero h1 em { font-style: italic; color: var(--leaf); }
-.bs-lead { margin: 20px auto 0; max-width: 46ch; font-size: 16.5px; line-height: 1.65; color: var(--paper-dim); }
-.bs-lead strong { color: var(--paper); font-weight: 600; }
-.bs-meta { margin-top: 24px; display: inline-flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: center;
-  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--paper-faint); }
-.bs-meta .hs { width: 14px; height: 9px; color: var(--leaf); opacity: 0.8; }
+.bs-hero__sub { margin-top: 20px; font-size: 16.5px; line-height: 1.65; color: var(--paper-dim); max-width: 42ch; }
+.bs-hero__sub strong { color: var(--paper); font-weight: 600; }
+.bs-hero__photo { justify-self: center; max-width: 340px; }
+@media (max-width: 780px) { .bs-hero { grid-template-columns: 1fr; text-align: left; }
+  .bs-hero__photo { order: -1; max-width: 260px; margin-bottom: 6px; } }
 
-/* ---- Sheet (Creme-Inhaltsblock) ---- */
+/* ---- Sheet ---- */
 .bs-sheet { position: relative; overflow: hidden; border-radius: 20px; margin: clamp(20px, 3.5vh, 40px) 0;
-  padding: clamp(28px, 4vw, 46px); background: radial-gradient(130% 120% at 12% 0%, #F8F2E2, #EBE1C9 78%);
+  padding: clamp(28px, 4.2vw, 50px); background: radial-gradient(130% 120% at 12% 0%, #F8F2E2, #EBE1C9 78%);
   box-shadow: var(--shadow-paper); }
 .bs-sheet::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.5; pointer-events: none; }
 .bs-sheet > * { position: relative; z-index: 1; }
-.bs-sheet__head { display: flex; align-items: center; gap: 13px; }
-.bs-sheet__k { font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 2.2px;
+.bs-k { font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 2.2px;
   text-transform: uppercase; color: var(--gold); }
-.bs-sheet__k .line { display: inline-block; width: 26px; height: 1px; background: rgba(24,43,31,0.28); vertical-align: 4px; margin-right: 11px; }
+.bs-k .line { display: inline-block; width: 26px; height: 1px; background: rgba(24,43,31,0.28); vertical-align: 4px; margin-right: 11px; }
 .bs-sheet h2 { margin: 12px 0 0; font-family: 'Playfair Display', serif; font-weight: 600;
-  font-size: clamp(26px, 3.6vw, 36px); line-height: 1.06; color: #14281C; }
+  font-size: clamp(27px, 4vw, 40px); line-height: 1.04; color: #14281C; }
 .bs-sheet h2 em { font-style: italic; color: var(--royal); }
-.bs-sheet__intro { margin-top: 13px; font-size: 15px; line-height: 1.6; color: rgba(24,43,31,0.75); max-width: 54ch; }
 
-/* ---- Tour-Karten ---- */
-.bs-tours { margin-top: 26px; display: grid; gap: 16px; }
-.bs-tour { position: relative; display: grid; grid-template-columns: 96px 1fr; gap: 20px; align-items: start;
-  padding: 20px 0; border-top: 1px solid rgba(24,43,31,0.14); }
-.bs-tour:first-child { border-top: 0; padding-top: 4px; }
-.bs-tour__eng { position: relative; width: 96px; height: 120px; border-radius: 6px; overflow: hidden;
-  box-shadow: inset 0 0 0 1px rgba(24,43,31,0.12), 0 12px 24px -12px rgba(20,40,28,0.5); }
-.bs-tour__eng img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.12) contrast(1.02); }
-.bs-tour__eng b { position: absolute; left: 0; top: 0; font-family: 'Playfair Display', serif; font-style: italic;
-  font-weight: 700; font-size: 14px; color: #F3EBD9; padding: 4px 9px; background: rgba(11,45,28,0.82); border-radius: 0 0 8px 0; }
-.bs-tour__top { display: flex; align-items: baseline; gap: 11px; flex-wrap: wrap; }
-.bs-tour__name { font-family: 'Playfair Display', serif; font-weight: 600; font-size: clamp(21px, 2.6vw, 26px);
-  line-height: 1.05; color: #14281C; }
-.bs-tour__alt { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.6px; color: var(--royal); }
-.bs-tour__tag { margin-top: 4px; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
-  text-transform: uppercase; color: rgba(24,43,31,0.5); }
-.bs-tour__facts { margin-top: 11px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-  font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: rgba(24,43,31,0.68); }
-.bs-tour__facts i { color: rgba(24,43,31,0.3); font-style: normal; }
-.bs-tour__facts b { color: #14281C; font-weight: 700; }
-.bs-tour__dots { display: inline-flex; gap: 3px; }
-.bs-tour__dots span { width: 5px; height: 5px; border-radius: 50%; background: rgba(24,43,31,0.2); }
-.bs-tour__dots span.on { background: var(--royal); }
-.bs-tour__desc { margin-top: 11px; font-size: 13.5px; line-height: 1.58; color: rgba(24,43,31,0.8); max-width: 52ch; }
-.bs-tour__desc strong { color: #14281C; font-weight: 600; }
-.bs-tour__start { margin-top: 11px; display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; line-height: 1.5; color: rgba(24,43,31,0.68); }
-.bs-tour__start svg { flex: 0 0 auto; width: 14px; height: 14px; color: var(--royal); margin-top: 2px; }
-.bs-tour__map { margin-top: 12px; display: inline-flex; align-items: center; gap: 7px;
-  font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
-  color: #14281C; text-decoration: none; padding: 8px 13px; border-radius: 10px;
-  background: linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 10px -3px rgba(120,88,10,0.5); transition: transform 220ms var(--ease-lux); }
-.bs-tour__map:hover { transform: translateY(-2px); }
-.bs-tour__map svg { width: 12px; height: 12px; }
+/* Story: Text + Foto nebeneinander (gebrochen) */
+.bs-story__grid { margin-top: 24px; display: grid; grid-template-columns: 1fr 300px; gap: clamp(24px, 4vw, 46px); align-items: start; }
+@media (max-width: 780px) { .bs-story__grid { grid-template-columns: 1fr; } .bs-story__grid .bs-photo { max-width: 260px; } }
+.bs-prose p { font-size: 16px; line-height: 1.72; color: #21372a; margin-bottom: 15px; max-width: 56ch; }
+.bs-prose p:last-child { margin-bottom: 0; }
+.bs-prose .lead { font-family: 'Playfair Display', serif; font-size: clamp(20px, 2.6vw, 24px);
+  font-style: italic; line-height: 1.4; color: #14281C; }
+.bs-prose .uline { background: linear-gradient(transparent 62%, rgba(4,89,39,0.22) 62%, rgba(4,89,39,0.22) 92%, transparent 92%); }
 
-/* ---- Packliste ---- */
-.bs-pack { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 30px; }
-.bs-pack__item { display: flex; align-items: flex-start; gap: 11px; padding: 9px 0; border-top: 1px solid rgba(24,43,31,0.1); }
-.bs-pack__item:nth-child(-n+2) { border-top: 0; }
-.bs-pack__chk { flex: 0 0 auto; width: 19px; height: 19px; border-radius: 6px; margin-top: 1px;
-  background: rgba(4,89,39,0.1); box-shadow: inset 0 0 0 1px rgba(4,89,39,0.3);
-  display: inline-flex; align-items: center; justify-content: center; }
-.bs-pack__chk svg { width: 11px; height: 11px; color: var(--royal); }
-.bs-pack__t { font-size: 13.5px; line-height: 1.4; color: #1c3325; }
-.bs-pack__t b { font-weight: 600; color: #14281C; }
-.bs-pack__t span { display: block; font-family: var(--mono); font-size: 9.5px; font-weight: 600;
-  letter-spacing: 0.4px; color: rgba(24,43,31,0.5); margin-top: 2px; }
-.bs-pack-note { margin-top: 20px; padding-top: 15px; border-top: 1px dashed rgba(24,43,31,0.2);
-  font-size: 13px; line-height: 1.55; color: rgba(24,43,31,0.7); }
-.bs-pack-note b { color: var(--royal); }
+/* Warum diese 3 */
+.bs-why { margin-top: 22px; font-size: 16px; line-height: 1.7; color: #21372a; max-width: 60ch; }
+.bs-why b { color: #14281C; }
 
-/* ---- Sebis Story (Caveat-Notiz) ---- */
-.bs-story__body { margin-top: 20px; font-family: 'Caveat', cursive; font-size: clamp(21px, 3vw, 27px);
-  line-height: 1.5; color: #223b2b; }
-.bs-story__body p { margin: 0 0 12px; }
-.bs-story__sig { margin-top: 18px; font-family: 'Caveat', cursive; font-size: 30px; color: var(--royal); }
-.bs-story__ph { border-radius: 12px; padding: 16px 18px; background: rgba(4,89,39,0.06);
-  box-shadow: inset 0 0 0 1px rgba(4,89,39,0.16); font-family: var(--mono); font-size: 11px; line-height: 1.6;
-  letter-spacing: 0.3px; color: rgba(24,43,31,0.62); text-transform: none; }
-.bs-story__ph b { color: var(--royal); font-weight: 700; }
+/* ---- Touren ---- */
+.bs-tour { position: relative; margin-top: 30px; padding-top: 28px; border-top: 1px solid rgba(24,43,31,0.16); }
+.bs-tour:first-of-type { border-top: 0; padding-top: 6px; margin-top: 18px; }
+.bs-tour__no { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; font-size: 15px; color: var(--royal); }
+.bs-tour__name { margin: 3px 0 0; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(24px, 3.2vw, 32px); line-height: 1.03; color: #14281C; }
+.bs-tour__name span { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 0.5px; color: var(--royal); vertical-align: 4px; margin-left: 8px; }
+.bs-tour__tagline { margin-top: 4px; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: rgba(24,43,31,0.5); }
+.bs-tour__body { margin-top: 16px; display: grid; grid-template-columns: 1fr 220px; gap: clamp(18px, 3vw, 36px); align-items: start; }
+@media (max-width: 720px) { .bs-tour__body { grid-template-columns: 1fr; } }
+.bs-tour__voice { font-size: 15.5px; line-height: 1.68; color: #21372a; }
+.bs-tour__voice strong { color: #14281C; font-weight: 600; }
+/* Fakten-Seitenpanel */
+.bs-facts { border-radius: 12px; padding: 16px 18px; background: rgba(20,40,28,0.04); box-shadow: inset 0 0 0 1px rgba(24,43,31,0.1); }
+.bs-facts dl { display: grid; grid-template-columns: auto 1fr; gap: 7px 12px; margin: 0; }
+.bs-facts dt { font-family: var(--mono); font-size: 8.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: rgba(24,43,31,0.5); padding-top: 3px; }
+.bs-facts dd { margin: 0; font-size: 13.5px; font-weight: 600; color: #14281C; text-align: right; }
+.bs-facts dd b { font-family: 'Playfair Display', serif; font-weight: 700; }
+.bs-map { margin-top: 13px; display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono);
+  font-size: 9px; font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; color: #14281C; text-decoration: none;
+  padding: 8px 12px; border-radius: 9px; background: linear-gradient(180deg,#F4CE3C,#E4B824 46%,#C99C12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 9px -3px rgba(120,88,10,0.5); transition: transform 220ms var(--ease-lux); }
+.bs-map:hover { transform: translateY(-2px); }
+.bs-map svg { width: 11px; height: 11px; }
 
-/* ---- Schluss-CTA ---- */
-.bs-end { text-align: center; padding: clamp(30px, 6vh, 60px) 0 clamp(50px, 9vh, 90px); }
-.bs-end h2 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: clamp(28px, 5vw, 44px);
-  line-height: 1.05; color: var(--paper); }
+/* ---- Packliste: Rucksack + Kopf ---- */
+.bs-pack2 { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(22px, 3.5vw, 42px); align-items: start; }
+@media (max-width: 720px) { .bs-pack2 { grid-template-columns: 1fr; } }
+.bs-pack2 h3 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 21px; color: #14281C; }
+.bs-pack2 h3 small { display: block; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: rgba(24,43,31,0.45); margin-top: 4px; }
+.bs-list { list-style: none; margin: 15px 0 0; padding: 0; }
+.bs-list li { display: flex; align-items: flex-start; gap: 11px; padding: 8px 0; font-size: 14.5px; line-height: 1.4; color: #1c3325; }
+.bs-list li svg { flex: 0 0 auto; width: 17px; height: 17px; margin-top: 1px; color: var(--royal); }
+.bs-list li b { font-weight: 600; color: #14281C; }
+.bs-list li span { color: rgba(24,43,31,0.6); }
+.bs-kopf li { align-items: baseline; }
+.bs-kopf li::before { content: ""; flex: 0 0 auto; width: 6px; height: 6px; border-radius: 50%; background: var(--royal); margin-top: 8px; }
+
+/* ---- Schluss ---- */
+.bs-end { position: relative; overflow: hidden; text-align: center; border-radius: 22px; margin: clamp(22px,4vh,44px) 0 clamp(50px,9vh,90px);
+  padding: clamp(38px, 6vw, 68px) clamp(24px, 5vw, 54px);
+  background: linear-gradient(158deg, rgba(19,54,35,0.92), rgba(6,24,15,0.94));
+  box-shadow: inset 0 1px 0 rgba(209,242,235,0.08), 0 30px 64px -30px rgba(0,0,0,0.7); }
+.bs-end::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.35; mix-blend-mode: overlay; pointer-events: none; }
+.bs-end > * { position: relative; z-index: 1; }
+.bs-end h2 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: clamp(28px, 5vw, 44px); line-height: 1.05; color: var(--paper); }
 .bs-end h2 em { font-style: italic; color: var(--leaf); }
-.bs-end p { margin: 15px auto 26px; max-width: 44ch; font-size: 15px; line-height: 1.6; color: var(--paper-dim); }
-.bs-btn { display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+.bs-end p { margin: 16px auto 0; max-width: 46ch; font-size: 15.5px; line-height: 1.65; color: var(--paper-dim); }
+.bs-end p strong { color: var(--paper); font-weight: 600; }
+.bs-btn { margin-top: 26px; display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
   font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #14100A;
-  padding: 15px 26px; border-radius: 14px;
-  background: linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%);
+  padding: 15px 26px; border-radius: 14px; background: linear-gradient(180deg,#F4CE3C,#E4B824 46%,#C99C12);
   filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4)) drop-shadow(0 2px 2px rgba(120,88,10,0.4)) drop-shadow(0 12px 22px rgba(0,0,0,0.32));
   transition: transform 260ms var(--ease-lux); }
 .bs-btn:hover { transform: translateY(-2px); }
-.bs-end__micro { margin-top: 18px; font-family: var(--mono); font-size: 9.5px; font-weight: 700;
-  letter-spacing: 1.4px; text-transform: uppercase; color: var(--paper-faint); }
+.bs-sign { margin-top: 30px; padding-top: 22px; border-top: 1px solid rgba(243,235,217,0.14); }
+.bs-sign .hand { font-family: 'Caveat', cursive; font-size: 34px; line-height: 1; color: var(--leaf); }
+.bs-sign .date { margin-top: 6px; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--paper-faint); }
 
-@media (max-width: 620px) {
-  .bs-tour { grid-template-columns: 72px 1fr; gap: 15px; }
-  .bs-tour__eng { width: 72px; height: 96px; }
-  .bs-pack { grid-template-columns: 1fr; }
-  .bs-pack__item:nth-child(2) { border-top: 1px solid rgba(24,43,31,0.1); }
-  .bs-pack__item:first-child { border-top: 0; }
-}
-
-/* ---- Print / PDF ---- */
 @media print {
   .bg-wrap, .bg2-wrap, .rail, .topbar { display: none !important; }
   body { background: #fff !important; }
-  .bs-hero h1, .bs-hero .bs-kicker, .bs-lead, .bs-lead strong, .bs-meta, .bs-end h2, .bs-end p, .bs-end__micro { color: #14281C !important; }
-  .bs-hero h1 em, .bs-end h2 em { color: var(--royal) !important; }
-  .bs-sheet { box-shadow: none; border: 1px solid #d8cca8; break-inside: avoid; }
-  .bs-tour { break-inside: avoid; }
+  .bs-hero h1, .bs-hero__k, .bs-hero__sub, .bs-hero__sub strong { color: #14281C !important; }
+  .bs-hero h1 em { color: var(--royal) !important; }
+  .bs-sheet, .bs-tour, .bs-end { break-inside: avoid; }
+  .bs-end { background: #143a24 !important; }
   .bs-btn { box-shadow: none; filter: none; }
-  main { padding: 0 !important; }
 }
 </style>
 </head>
@@ -156,135 +159,196 @@
 <main>
   <div class="bs-wrap">
     <header class="topbar" style="justify-content:center">
-      <span class="brandbox">
-        <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
-      </span>
+      <span class="brandbox"><a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a></span>
     </header>
 
-    <!-- Hero -->
+    <!-- Hero: Identität + echtes Foto -->
     <section class="bs-hero">
-      <span class="bs-kicker">
-        <svg viewBox="0 0 24 18" fill="currentColor" aria-hidden="true"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg>
-        Dein Willkommens-Guide
-      </span>
-      <h1>Der <em>Berg-Starter.</em></h1>
-      <p class="bs-lead">Schön, dass du dabei bist. Das hier ist dein Startpaket: <strong>drei Touren zum Reinkommen</strong>,
-      eine Packliste die wirklich reicht — und wie ich selbst angefangen hab. Kein Coaching-Sprech. Einfach loslaufen.</p>
-      <p class="bs-meta">
-        <span>3 Einsteiger-Touren</span>
-        <svg class="hs" viewBox="0 0 24 18" fill="currentColor" aria-hidden="true"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg>
-        <span>1 Packliste</span>
-        <svg class="hs" viewBox="0 0 24 18" fill="currentColor" aria-hidden="true"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg>
-        <span>Alle mittel · gut machbar</span>
-      </p>
-    </section>
-
-    <!-- 3 Touren -->
-    <section class="bs-sheet">
-      <div class="bs-sheet__head"><span class="bs-sheet__k"><span class="line"></span>Los geht's</span></div>
-      <h2>Drei Touren zum <em>Reinkommen.</em></h2>
-      <p class="bs-sheet__intro">Alle drei sind machbar, aussichtsreich und nicht überlaufen. Fang mit der an, die dir am nächsten liegt —
-      und häng die anderen zwei dran, wenn's läuft.</p>
-
-      <div class="bs-tours">
-        <!-- 01 Grünstein -->
-        <article class="bs-tour">
-          <span class="bs-tour__eng"><img src="/touren/assets/eng-gruenstein.jpg" alt="Kupferstich Grünstein" loading="lazy"><b>01</b></span>
-          <div class="bs-tour__main">
-            <div class="bs-tour__top"><span class="bs-tour__name">Grünstein</span><span class="bs-tour__alt">1.304 m</span></div>
-            <p class="bs-tour__tag">Königssee-Blick inklusive</p>
-            <p class="bs-tour__facts"><b>489 hm</b><i>·</i><span>ca. 5 km</span><i>·</i><span>ca. 2:00 h</span><i>·</i><span>Berchtesgaden</span>
-              <span class="bs-tour__dots" title="mittel"><span class="on"></span><span class="on"></span><span></span></span></p>
-            <p class="bs-tour__desc">Der Aussichtsbalkon überm Königssee: kurzer, knackiger Anstieg durch den Wald, oben der Blick auf See
-            und Watzmann-Ostwand. Perfekt als schnelle Feierabend- oder Einsteiger-Runde — und unterwegs lockt die
-            <strong>Grünsteinhütte</strong> zur Einkehr.</p>
-            <p class="bs-tour__start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Parkplatz Hammerstiel, Schönau a. Königssee</p>
-            <a class="bs-tour__map" href="https://www.google.com/maps/search/Parkplatz+Hammerstiel+Sch%C3%B6nau+am+K%C3%B6nigssee" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Startpunkt in Maps</a>
-          </div>
-        </article>
-
-        <!-- 02 Zinnkopf -->
-        <article class="bs-tour">
-          <span class="bs-tour__eng"><img src="/touren/assets/eng-zinnkopf.jpg" alt="Kupferstich Zinnkopf" loading="lazy"><b>02</b></span>
-          <div class="bs-tour__main">
-            <div class="bs-tour__top"><span class="bs-tour__name">Zinnkopf</span><span class="bs-tour__alt">1.227 m</span></div>
-            <p class="bs-tour__tag">Chiemsee-Panorama</p>
-            <p class="bs-tour__facts"><b>553 hm</b><i>·</i><span>9 km</span><i>·</i><span>ca. 3:00 h</span><i>·</i><span>Chiemgau</span>
-              <span class="bs-tour__dots" title="mittel"><span class="on"></span><span class="on"></span><span></span></span></p>
-            <p class="bs-tour__desc">Ruhiger Chiemgauer Aussichtsberg über Siegsdorf: durch Wald und über Almwiesen hinauf, oben öffnet sich
-            der freie Blick über den <strong>Chiemsee</strong> bis in die Berge. Unaufgeregt, wenig los — genau das macht ihn gut.</p>
-            <p class="bs-tour__start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Parkplatz Hörgering, Siegsdorf</p>
-            <a class="bs-tour__map" href="https://www.google.com/maps/search/H%C3%B6rgering+Siegsdorf" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Startpunkt in Maps</a>
-          </div>
-        </article>
-
-        <!-- 03 Dürrnbachhorn -->
-        <article class="bs-tour">
-          <span class="bs-tour__eng"><img src="/touren/assets/eng-duerrnbachhorn.jpg" alt="Kupferstich Dürrnbachhorn" loading="lazy"><b>03</b></span>
-          <div class="bs-tour__main">
-            <div class="bs-tour__top"><span class="bs-tour__name">Dürrnbachhorn</span><span class="bs-tour__alt">1.765 m</span></div>
-            <p class="bs-tour__tag">Grat mit Weitblick</p>
-            <p class="bs-tour__facts"><b>591 hm</b><i>·</i><span>8,4 km</span><i>·</i><span>ca. 3:00 h</span><i>·</i><span>Chiemgau</span>
-              <span class="bs-tour__dots" title="mittel"><span class="on"></span><span class="on"></span><span></span></span></p>
-            <p class="bs-tour__desc">Gratwanderung hoch über der <strong>Winklmoosalm</strong>: erst gemütlich über die Alm, dann am Rücken entlang
-            mit Weitblick in Chiemgauer und Loferer Berge. Am Grat brauchst du <strong>Trittsicherheit</strong> — dafür gehört dir oben das Panorama.</p>
-            <p class="bs-tour__start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Parkplatz Winklmoosalm (Mautstraße ab Seegatterl) · am Grat Trittsicherheit nötig</p>
-            <a class="bs-tour__map" href="https://www.google.com/maps/search/Parkplatz+Winklmoosalm" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Startpunkt in Maps</a>
-          </div>
-        </article>
+      <div class="bs-hero__text">
+        <span class="bs-hero__k">
+          <svg viewBox="0 0 24 18" fill="currentColor" aria-hidden="true"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg>
+          Willkommen am Berg
+        </span>
+        <h1>Du musst kein Profi sein.<br><em>Du gehörst schon dazu.</em></h1>
+        <p class="bs-hero__sub">Schön, dass du da bist. Ich nehm dich mit auf die <strong>drei Touren, mit denen ich Leute zum ersten Mal
+        mit hochnehm</strong> — plus was wirklich in den Rucksack gehört und wie ich selbst reingekommen bin. Kein Lehrbuch. Einfach loslaufen.</p>
       </div>
+      <figure class="bs-photo bs-photo--tilt-r bs-hero__photo">
+        <img src="/berg-starter/img/sebi-kreuz.jpg" alt="Sebi am Gipfelkreuz" loading="eager">
+        <!-- TODO SEBI: Ort + ungefähres Datum für echte Caption ("<Berg>, <Uhrzeit>, <Gefühl>") -->
+        <figcaption>Oben am Kreuz. Genau dafür machst du's.</figcaption>
+      </figure>
     </section>
 
-    <!-- Packliste -->
+    <!-- Wie ich reingekommen bin -->
     <section class="bs-sheet">
-      <div class="bs-sheet__head"><span class="bs-sheet__k"><span class="line"></span>Rucksack</span></div>
-      <h2>Die Packliste, die <em>wirklich reicht.</em></h2>
-      <p class="bs-sheet__intro">Für einen Tag am Berg brauchst du weniger, als du denkst — aber ein paar Sachen wirklich.
-      Das hier deckt die drei Touren oben ab.</p>
-
-      <div class="bs-pack">
-        <div class="bs-pack__item"><span class="bs-pack__chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="bs-pack__t"><b>Feste Wanderschuhe</b><span>Profilsohle · keine Turnschuhe</span></span></div>
-        <div class="bs-pack__item"><span class="bs-pack__chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="bs-pack__t"><b>Rucksack 20–25 L</b><span>genug für den Tag</span></span></div>
-        <div class="bs-pack__item"><span class="bs-pack__chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="bs-pack__t"><b>Mind. 1,5 L Wasser</b><span>mehr im Sommer</span></span></div>
-        <div class="bs-pack__item"><span class="bs-pack__chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="bs-pack__t"><b>Brotzeit</b><span>was dich satt macht</span></span></div>
-        <div class="bs-pack__item"><span class="bs-pack__chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="bs-pack__t"><b>Regenjacke + warme Schicht</b><span>Berg = Wetterwechsel</span></span></div>
-        <div class="bs-pack__item"><span class="bs-pack__chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="bs-pack__t"><b>Sonnenschutz</b><span>Cap · Creme · Brille</span></span></div>
-        <div class="bs-pack__item"><span class="bs-pack__chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="bs-pack__t"><b>Mini-Erste-Hilfe + Blasenpflaster</b><span>klein, aber Gold wert</span></span></div>
-        <div class="bs-pack__item"><span class="bs-pack__chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="bs-pack__t"><b>Handy geladen + Offline-Karte</b><span>z. B. Bergfex oder Komoot</span></span></div>
-      </div>
-      <p class="bs-pack-note"><b>Ein Satz zur Sicherheit:</b> Check vorm Start das Wetter, sag jemandem Bescheid wohin du gehst,
-      und dreh lieber um, wenn's kippt. Der Berg läuft nicht weg.</p>
-    </section>
-
-    <!-- Sebis Story (Platzhalter) -->
-    <section class="bs-sheet">
-      <div class="bs-sheet__head"><span class="bs-sheet__k"><span class="line"></span>Ehrlich</span></div>
+      <span class="bs-k"><span class="line"></span>Ehrlich, kurz</span>
       <h2>Wie ich <em>reingekommen bin.</em></h2>
-      <!-- TODO SEBI: Diese Story mit deinen echten Worten überschreiben (3–5 Sätze, deine Stimme).
-           Bis dahin steht hier ein sichtbarer Platzhalter — geht NICHT so live. -->
-      <div class="bs-story__ph">
-        <b>Platzhalter — Sebi überschreibt.</b><br>
-        Hier kommt deine echte Geschichte rein: Wie du angefangen hast (vom ersten Berg / vom „eigentlich kein Bergmensch"
-        bis heute), was dich hängen geblieben ist, warum du weitermachst. 3–5 Sätze, deine Stimme, kein Coaching-Sprech.
-        Ich lass den Block im Caveat-Handschrift-Look, sobald dein Text steht.
+      <div class="bs-story__grid">
+        <div class="bs-prose">
+          <p class="lead">Ich bin da nicht reingeboren worden — ich wurde mitgenommen.</p>
+          <p>Angefangen hat's über meinen <strong>Dad und meinen Opa</strong>, die mich als Kind oft mit auf den Berg genommen haben.
+          Dafür bin ich bis heute richtig dankbar. Mittlerweile geh ich meistens mit <strong>Freunden</strong>, die dasselbe Hobby teilen.</p>
+          <p>Und genau das ist für mich das Schönste: <span class="uline">zu zweit oder in der kleinen Gruppe die Natur gemeinsam genießen.</span>
+          Du musst das nicht allein rausfinden. Nimm jemanden mit — der Berg ist zu zweit am schönsten.</p>
+        </div>
+        <figure class="bs-photo bs-photo--tilt-l">
+          <img src="/berg-starter/img/sebi-poles.jpg" alt="Sebi am Berg" loading="lazy">
+          <figcaption>Kurz stehenbleiben. Schauen. Durchatmen.</figcaption>
+        </figure>
       </div>
     </section>
 
-    <!-- Schluss -->
+    <!-- Warum diese 3 -->
+    <section class="bs-sheet">
+      <span class="bs-k"><span class="line"></span>Meine Auswahl</span>
+      <h2>Warum genau <em>diese drei.</em></h2>
+      <div class="bs-story__grid">
+        <p class="bs-why">Weil's ein <b>guter, bunter Mix</b> ist. Eine mit Hütte und Postkarten-Blick, eine ruhige Einsame zum Runterkommen,
+        eine mit Weitblick übers Umland. So kannst du dich ausprobieren und findest raus, welcher Typ Berg dir liegt. Alle drei sind gut machbar —
+        keine hat einen Haken, den du nicht packst. Fang mit der an, die dir am nächsten liegt, und häng die anderen zwei dran, wenn's läuft.</p>
+        <figure class="bs-photo bs-photo--tilt-r">
+          <img src="/berg-starter/img/sebi-flex.jpg" alt="Sebi am Berg" loading="lazy">
+          <figcaption>Gute Laune ist Pflichtausrüstung.</figcaption>
+        </figure>
+      </div>
+
+      <!-- Tour 1 -->
+      <article class="bs-tour">
+        <p class="bs-tour__no">i.</p>
+        <h2 class="bs-tour__name">Grünstein <span>1.304 m · Berchtesgaden</span></h2>
+        <p class="bs-tour__tagline">Hütte, Postkarten-Blick, Königssee</p>
+        <div class="bs-tour__body">
+          <div>
+            <p class="bs-tour__voice">Für mich <strong>einer der schönsten Ausblicke bisher</strong> — und vom Weg her richtig entspannt.
+            Oben wartet die <strong>Grünsteinhütte</strong> mit Verpflegung. Und wenn du Lust auf mehr hast, gehst du weiter zur
+            <strong>Archenkanzel</strong>: der beste Blick über den Königssee, den ich kenne.</p>
+            <div class="bs-note">
+              <b>Sebis Notiz</b>
+              <p>Am Grünstein gibt's auch einen Klettersteig — der ist NICHT für den Anfang. Nimm den normalen Weg 445, der hat keine heiklen Stellen.
+              Die Archenkanzel ist nochmal ~1,5 h weiter, also plan sie als ganzen Tag ein.</p>
+            </div>
+          </div>
+          <div class="bs-facts">
+            <dl>
+              <dt>Höhenmeter</dt><dd><b>489 hm</b></dd>
+              <dt>Distanz</dt><dd>ca. 5 km</dd>
+              <dt>Dauer</dt><dd>ca. 2:00 h</dd>
+              <dt>Einkehr</dt><dd>Grünsteinhütte</dd>
+              <dt>Saison</dt><dd>Mai–Okt</dd>
+              <dt>Start</dt><dd>Pp. Hammerstiel</dd>
+            </dl>
+            <a class="bs-map" href="https://www.google.com/maps/search/Parkplatz+Hammerstiel+Sch%C3%B6nau+am+K%C3%B6nigssee" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start in Maps</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Tour 2 -->
+      <article class="bs-tour">
+        <p class="bs-tour__no">ii.</p>
+        <h2 class="bs-tour__name">Zinnkopf <span>1.227 m · Chiemgau</span></h2>
+        <p class="bs-tour__tagline">Einsam, Gipfelkreuz, zum Runterkommen</p>
+        <div class="bs-tour__body">
+          <div>
+            <p class="bs-tour__voice">War mal eine <strong>spontane Tour</strong> von mir, ich war schon zweimal oben. Ein sehr
+            <strong>einsamer Gipfel</strong> — schönes Holzkreuz, Bänke, entspannte Lage. Es gibt mehrere Startpunkte, such dir den nächsten.
+            Perfekt zum Reinkommen: leicht, waldig, kein Trubel.</p>
+            <div class="bs-note">
+              <b>Sebis Notiz</b>
+              <p>Von unten kann's ordentlich matschig und feucht sein — feste Schuhe. Am Berg selbst gibt's keine Einkehr, also Brotzeit einpacken.
+              Und ehrlich: der schönste Blick ist schon auf halber Höhe, nicht erst oben.</p>
+            </div>
+          </div>
+          <div class="bs-facts">
+            <dl>
+              <dt>Höhenmeter</dt><dd><b>553 hm</b></dd>
+              <dt>Distanz</dt><dd>ca. 9 km</dd>
+              <dt>Dauer</dt><dd>ca. 3:00 h</dd>
+              <dt>Level</dt><dd>leicht (T1–T2)</dd>
+              <dt>Saison</dt><dd>fast ganzjährig</dd>
+              <dt>Start</dt><dd>Pp. Hörgering</dd>
+            </dl>
+            <a class="bs-map" href="https://www.google.com/maps/search/H%C3%B6rgering+Siegsdorf" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start in Maps</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Tour 3 -->
+      <article class="bs-tour">
+        <p class="bs-tour__no">iii.</p>
+        <h2 class="bs-tour__name">Dürrnbachhorn <span>1.776 m · Chiemgau</span></h2>
+        <p class="bs-tour__tagline">Weitblick übers Umland, Latschen-Grat</p>
+        <div class="bs-tour__body">
+          <div>
+            <p class="bs-tour__voice">Ich geh immer vom <strong>Parkplatz Winklmoosalm</strong> los. Oben hast du einen guten
+            <strong>Blick übers ganze Umland</strong>, unterwegs viele Latschen. Geht oft schon im Frühjahr und noch im Herbst — der hohe Start macht's.</p>
+            <div class="bs-note">
+              <b>Sebis Notiz</b>
+              <p>Die Winklmoosalm-Straße kostet Maut — den aktuellen Preis check kurz vor Ort. Es fährt sogar eine alte Nostalgie-Sesselbahn hoch,
+              falls du's gemütlich willst. Für den Grat überm Gipfel brauchst du Trittsicherheit — zum Reinkommen einfach hoch und den gleichen Weg zurück.</p>
+            </div>
+          </div>
+          <div class="bs-facts">
+            <dl>
+              <dt>Höhenmeter</dt><dd><b>591 hm</b></dd>
+              <dt>Distanz</dt><dd>ca. 8,4 km</dd>
+              <dt>Dauer</dt><dd>ca. 3:00 h</dd>
+              <dt>Anfahrt</dt><dd>Maut ab Seegatterl</dd>
+              <dt>Saison</dt><dd>Frühjahr–Herbst</dd>
+              <dt>Start</dt><dd>Pp. Winklmoosalm</dd>
+            </dl>
+            <a class="bs-map" href="https://www.google.com/maps/search/Parkplatz+Winklmoosalm" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start in Maps</a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Packliste: Rucksack + Kopf -->
+    <section class="bs-sheet">
+      <span class="bs-k"><span class="line"></span>Bevor du losgehst</span>
+      <h2>Was <em>wirklich</em> mitkommt.</h2>
+      <div class="bs-pack2">
+        <div>
+          <h3>Im Rucksack<small>Mehr brauchst du nicht</small></h3>
+          <ul class="bs-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Feste Wanderschuhe</b> mit Profil — keine Turnschuhe</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Stöcke</b> — die von Alpin Loacker sind echt goat</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Sonnenbrille</b> + Creme + Cap — oben knallt's</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Mind. 1,5 L Wasser</b> + Brotzeit</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Regenjacke + warme Schicht</b> — Berg = Wetterwechsel</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Mini-Erste-Hilfe</b> + Blasenpflaster + Handy mit Offline-Karte</span></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Im Kopf<small>Die wichtigere Ausrüstung</small></h3>
+          <ul class="bs-list bs-kopf">
+            <li><span><b>Gute Laune</b> — nimmst du eh mit, oder?</span></li>
+            <li><span><b>Ausdauer</b> — kommt mit jedem Mal von allein</span></li>
+            <li><span><b>Respekt vor Berg und Natur</b> — der Berg läuft nicht weg, dreh lieber um wenn's kippt</span></li>
+            <li><span><b>Offenheit</b> — in den Bergen ist jeder freundlich, echt jetzt</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Schluss: Einladung + Aktion + Signatur -->
     <section class="bs-end">
-      <h2>Das war der <em>Start.</em></h2>
-      <p>Die drei sind dein Einstieg. Alle Hulk Hikes — mit Foto, echtem Höhenprofil und ehrlicher Einschätzung —
-      findest du im Hub. Und jede neue Tour landet zuerst bei dir im Postfach.</p>
-      <a class="bs-btn" href="/touren/">Alle Hulk Hikes ansehen →</a>
-      <p class="bs-end__micro">Neue Touren kommen per Newsletter zuerst</p>
+      <h2>Du gehörst jetzt <em>dazu.</em></h2>
+      <p>Such dir eine aus — am besten die, die dir grad am nächsten liegt. <strong>Welche gehst du zuerst?</strong>
+      Antworte mir einfach auf die Willkommens-Mail. Ich freu mich drüber und geb dir noch einen Tipp für genau die Tour.</p>
+      <a class="bs-btn" href="/touren/">Alle Hulk Hikes im Überblick →</a>
+      <div class="bs-sign">
+        <p class="hand">Man sieht sich am Berg. — Sebi</p>
+        <p class="date">VegetarianHulk · dein Berg-Starter</p>
+      </div>
     </section>
 
   </div>
 </main>
 
-<script src="/v3.js?v=182e7de3" defer></script>
+<script src="/v3.js?v=1" defer></script>
 </body>
 </html>
