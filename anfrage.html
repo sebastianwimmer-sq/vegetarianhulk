@@ -97,6 +97,27 @@
 .anf-submit:disabled { opacity: 0.6; cursor: default; }
 .anf-privacy { margin: 12px 0 0; font-size: 11.5px; line-height: 1.5; color: rgba(24,43,31,0.55); }
 .anf-privacy a { color: var(--royal); text-decoration: underline; text-underline-offset: 2px; }
+/* Consent-Haken (aktive DSGVO-Einwilligung) */
+.anf-consent { display: flex; align-items: flex-start; gap: 11px; margin: 16px 0 4px; cursor: pointer; }
+.anf-consent input { flex: 0 0 auto; width: 20px; height: 20px; margin-top: 1px; accent-color: var(--royal); cursor: pointer; }
+.anf-consent > span { font-size: 12.5px; line-height: 1.5; color: rgba(24,43,31,0.72); font-weight: 500; }
+.anf-consent a { color: var(--royal); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.anf-consent.is-err > span { color: #8a2018; }
+.anf-consent.is-err input { outline: 2px solid #8a2018; outline-offset: 2px; }
+/* Echtes Sebi-Foto (Präsenz) im Kontext */
+.anf-photo { display: inline-block; padding: 8px 8px 0; margin: 6px 0 24px; background: #FBF6EA; border-radius: 3px;
+  box-shadow: 0 20px 40px -20px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.24); transform: rotate(-2deg); max-width: 230px; }
+.anf-photo img { display: block; width: 100%; height: auto; border-radius: 1px; }
+.anf-photo figcaption { padding: 9px 4px 11px; font-family: 'Caveat', cursive; font-size: 18px; line-height: 1.15; color: #2a2118; text-align: center; }
+/* "So geht's weiter" Mini-Ablauf */
+.anf-next { margin: 26px 0 0; padding-top: 20px; border-top: 1px solid rgba(126,208,155,0.16); }
+.anf-next__k { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--leaf); }
+.anf-next ol { list-style: none; margin: 14px 0 0; padding: 0; counter-reset: anfstep; }
+.anf-next li { position: relative; padding: 0 0 14px 34px; counter-increment: anfstep; font-size: 13.5px; line-height: 1.5; color: var(--paper-dim); }
+.anf-next li::before { content: counter(anfstep); position: absolute; left: 0; top: -2px; width: 22px; height: 22px; border-radius: 50%;
+  display: grid; place-items: center; font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--leaf);
+  background: rgba(126,208,155,0.1); box-shadow: inset 0 0 0 1px rgba(126,208,155,0.3); }
+.anf-next li b { color: var(--paper); font-weight: 600; }
 .anf-error { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: rgba(160,40,30,0.1);
   border: 1px solid rgba(160,40,30,0.28); color: #8a2018; font-size: 13.5px; line-height: 1.5; }
 /* Erfolg */
@@ -144,15 +165,27 @@
       <p class="anf-sub st st3">Schreib mir, was deine Brand macht und wie du dir die Zusammenarbeit
       vorstellst — ich melde mich persönlich.</p>
       <div class="anf-figs st st3">
-        <div class="anf-fig"><b>52%</b><span>Non-Follower-Reichweite</span></div>
-        <div class="anf-fig"><b>16.040</b><span>Aufrufe (Reels/Beiträge)</span></div>
-        <div class="anf-fig"><b>+563%</b><span>Wachstum</span></div>
+        <div class="anf-fig"><b data-count-pct="62.8">62,8%</b><span>Reichweite von Nicht-Followern</span></div>
+        <div class="anf-fig"><b data-count="101397">101.397</b><span>Aufrufe (30 Tage)</span></div>
+        <div class="anf-fig"><b data-count="35515">35.515</b><span>erreichte Konten</span></div>
       </div>
       <ul class="anf-points st st4">
         <li>Du schreibst direkt mit mir — kein Team, kein Funnel dazwischen.</li>
         <li>Nur Brands, die ich auch privat nutzen würde.</li>
         <li>DACH-Audience, real &amp; kaufbereit.</li>
       </ul>
+      <figure class="anf-photo st st4">
+        <img src="/berg-starter/img/sebi-flex.jpg" alt="Sebi (@vegetarianhulk) am Berg" loading="lazy">
+        <figcaption>Hier landet's direkt bei mir.</figcaption>
+      </figure>
+      <div class="anf-next st st4">
+        <p class="anf-next__k">So geht's weiter</p>
+        <ol>
+          <li><b>Du schickst ab</b> — dauert keine zwei Minuten.</li>
+          <li><b>Ich melde mich persönlich</b> — kein Team, kein Funnel dazwischen.</li>
+          <li><b>Wir klären Idee &amp; Rahmen</b> — ehrlich, ohne Agentur-Blabla.</li>
+        </ol>
+      </div>
     </aside>
 
     <!-- Formular (Creme) -->
@@ -234,9 +267,11 @@
             <input type="text" id="bf-hp" name="_honey" tabindex="-1" autocomplete="off">
           </div>
 
+          <label class="anf-consent"><input type="checkbox" id="bf-consent">
+            <span>Ich bin einverstanden, dass Sebi meine Angaben zur Bearbeitung dieser Anfrage verarbeitet und mich dazu kontaktiert. Mehr in der <a href="/datenschutz.html">Datenschutzerkl&auml;rung</a>.</span>
+          </label>
           <button type="submit" class="anf-submit">Anfrage senden →</button>
-          <p class="anf-privacy">Mit dem Absenden verarbeite ich deine Angaben ausschließlich zur Bearbeitung
-          deiner Anfrage. Mehr dazu in der <a href="/datenschutz.html">Datenschutzerklärung</a>.</p>
+          <p class="anf-privacy">Deine Angaben nutze ich ausschließlich für deine Anfrage — kein Newsletter, keine Weitergabe an Dritte.</p>
         </form>
         <div class="anf-error" id="formError" hidden role="alert"></div>
       </div>
@@ -304,6 +339,17 @@ async function submitBrandInquiry(e) {
   errBox.hidden = true;
   if (!brand || !email) return false; // Pflicht: nur Brand + E-Mail
 
+  // DSGVO: Consent-Haken ist Pflicht
+  const consent = document.getElementById('bf-consent');
+  const consentBox = document.querySelector('.anf-consent');
+  if (consent && !consent.checked) {
+    if (consentBox) consentBox.classList.add('is-err');
+    errBox.hidden = false;
+    errBox.textContent = 'Bitte setz kurz den Datenschutz-Haken, dann kann ich deine Anfrage bearbeiten.';
+    (consentBox || errBox).scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return false;
+  }
+
   const payload = {
     brand: brand,
     link: get('bf-link'),
@@ -315,6 +361,7 @@ async function submitBrandInquiry(e) {
     email: email,
     contact: checked('contact'),
     handle: get('bf-handle'),
+    consent: true,
     _honey: get('bf-hp')
   };
 
@@ -368,5 +415,44 @@ async function submitBrandInquiry(e) {
 })();
 </script>
 <script src="/v3.js?v=182e7de3" defer></script>
+<script>
+/* Consent-Fehler zurücksetzen beim Ankreuzen */
+(function () {
+  var c = document.getElementById('bf-consent');
+  if (c) c.addEventListener('change', function () {
+    if (c.checked) { var box = document.querySelector('.anf-consent'); if (box) box.classList.remove('is-err'); }
+  });
+})();
+/* Count-Up der Kontext-Zahlen beim Reinscrollen (animiert + live-Gefühl) */
+(function () {
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function fmtInt(n) { return n.toLocaleString('de-DE'); }
+  function fmtPct(n) { return n.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%'; }
+  var nums = document.querySelectorAll('[data-count], [data-count-pct]');
+  function run(el) {
+    var pct = el.hasAttribute('data-count-pct');
+    var target = parseFloat(pct ? el.dataset.countPct : el.dataset.count);
+    var fmt = pct ? fmtPct : fmtInt;
+    if (reduce) { el.textContent = fmt(target); return; }
+    var t0 = null, DUR = 1400;
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / DUR);
+      var e = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(pct ? Math.round(target * e * 10) / 10 : Math.round(target * e));
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  if ('IntersectionObserver' in window && nums.length) {
+    if (!reduce) nums.forEach(function (el) { el.textContent = el.hasAttribute('data-count-pct') ? fmtPct(0) : fmtInt(0); });
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) { if (en.isIntersecting) { run(en.target); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -12% 0px' });
+    nums.forEach(function (el) { io.observe(el); });
+  } else { nums.forEach(run); }
+})();
+</script>
 </body>
 </html>
