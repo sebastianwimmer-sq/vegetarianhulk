@@ -66,7 +66,14 @@
     '  .msg--info { background: #efe5cf; border: 1px solid #cfbf9d; color: #1a1410; }' +
     '  .msg--error { background: rgba(179, 54, 31, 0.06); border: 1px solid rgba(179, 54, 31, 0.3); color: #b3361f; }' +
     '  .msg strong { font-weight: 700; }' +
-    '  :host([data-state="success"]) .row, :host([data-state="success"]) .submit, :host([data-state="success"]) .trust { display: none; }' +
+    '  :host([data-state="success"]) .row, :host([data-state="success"]) .submit, :host([data-state="success"]) .trust, :host([data-state="success"]) .consent { display: none; }' +
+    '  .consent { display: flex; align-items: flex-start; gap: 10px; margin: 2px 0 0; cursor: pointer; }' +
+    '  .consent input { flex: 0 0 auto; width: 19px; height: 19px; margin-top: 1px; accent-color: #045927; cursor: pointer; }' +
+    '  .consent > span { font-family: "Inter", system-ui, sans-serif; font-size: 12.5px; line-height: 1.5; color: #5c513f; font-weight: 500; }' +
+    '  .consent a { color: #045927; font-weight: 600; }' +
+    '  .consent.is-err > span { color: #b3361f; }' +
+    '  .consent.is-err input { outline: 2px solid #b3361f; outline-offset: 2px; }' +
+    '  .hp { position: absolute !important; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }' +
     '  @media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 1400ms; } .submit, .arrow, .field { transition: none; } }' +
     '</style>' +
     '<form novalidate aria-label="Newsletter-Signup">' +
@@ -83,7 +90,12 @@
     '      </button>' +
     '    </div>' +
     '  </div>' +
-    '  <p class="trust">Kein Spam &middot; Aussteigen jederzeit. Mit der Anmeldung bekommst du den Berg-Starter und ab und zu den Letter &mdash; mehr in der <a href="/datenschutz.html">Datenschutzerkl&auml;rung</a>.</p>' +
+    '  <label class="sr" for="vhnf-hp">Dieses Feld bitte leer lassen</label>' +
+    '  <input id="vhnf-hp" class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />' +
+    '  <label class="consent"><input id="vhnf-consent" type="checkbox" />' +
+    '    <span>Ja, schick mir den Berg-Starter und ab und zu den Letter. Ich best&auml;tige per Mail (Double-Opt-In) und kann mich jederzeit abmelden. Mehr in der <a href="/datenschutz.html">Datenschutzerkl&auml;rung</a>.</span>' +
+    '  </label>' +
+    '  <p class="trust">Kein Spam &middot; Aussteigen mit einem Klick.</p>' +
     '  <div class="msg" role="status" aria-live="polite"></div>' +
     '</form>';
 
@@ -121,6 +133,9 @@
     this._arrow = root.querySelector('.arrow');
     this._spinner = root.querySelector('.spinner');
     this._msg = root.querySelector('.msg');
+    this._hp = root.querySelector('#vhnf-hp');
+    this._consent = root.querySelector('#vhnf-consent');
+    this._consentBox = root.querySelector('.consent');
 
     var self = this;
     this._form.addEventListener('submit', function (ev) {
@@ -129,6 +144,9 @@
     });
     this._email.addEventListener('input', function () {
       if (self.dataset.state === 'error') self.resetState();
+    });
+    this._consent.addEventListener('change', function () {
+      if (self._consent.checked) self._consentBox.classList.remove('is-err');
     });
   };
 
@@ -173,11 +191,20 @@
   };
 
   VhForm.prototype.handleSubmit = function () {
+    // Honeypot: von Bots ausgefüllt → still abbrechen (nicht verraten)
+    if (this._hp && this._hp.value) { this.showState('success'); return; }
     var email = (this._email.value || '').trim().toLowerCase();
     var firstName = (this._first.value || '').trim().slice(0, 40);
     var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     if (!valid) {
       this.showState('error', 'E-Mail-Adresse pr&uuml;fen.');
+      return;
+    }
+    // Datenschutz-Einwilligung (DSGVO): Haken ist Pflicht
+    if (this._consent && !this._consent.checked) {
+      this._consentBox.classList.add('is-err');
+      this.showState('error');
+      this._msg.innerHTML = 'Bitte setz kurz den Datenschutz-Haken &mdash; dann geht&apos;s los.';
       return;
     }
     this.showState('sending');
@@ -186,7 +213,7 @@
     fetch(ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, brand: BRAND, firstName: firstName })
+      body: JSON.stringify({ email: email, brand: BRAND, firstName: firstName, consent: true, consentText: 'Newsletter + Berg-Starter, Double-Opt-In, Abmeldung jederzeit' })
     })
       .then(function (res) {
         return res.json().catch(function () { return {}; }).then(function (data) {
