@@ -3,8 +3,11 @@
 (function () {
   'use strict';
   function go() { requestAnimationFrame(function () { document.body.classList.add('loaded'); }); }
-  if (document.readyState === 'complete') go();
-  else window.addEventListener('load', go);
+  // Früh + zuverlässig: sobald DOM geparst ist (nicht erst nach allen Bildern).
+  if (document.readyState !== 'loading') go();
+  else document.addEventListener('DOMContentLoaded', go);
+  // Sicherheitsnetz: falls etwas hakt, spätestens nach 2,5 s alles sichtbar machen.
+  setTimeout(go, 2500);
 })();
 
 /* Wordmark-Invert über hellen Inseln */

@@ -204,6 +204,7 @@
     if (this._consent && !this._consent.checked) {
       this._consentBox.classList.add('is-err');
       this.showState('error');
+      this._email.removeAttribute('aria-invalid'); // nicht die Mail, der Haken fehlt
       this._msg.innerHTML = 'Bitte setz kurz den Datenschutz-Haken &mdash; dann geht&apos;s los.';
       return;
     }

@@ -20,7 +20,7 @@
    ============================================================ */
 :root {
   --mint: #D1F2EB; --emerald: #50C878; --royal: #0B6E4F; --evergreen: #013220;
-  --alabaster: #E9E0CF; --gold: #BA9B5F; --sage: #5E775E; --forest: #132B23;
+  --alabaster: #E9E0CF; --gold: #BA9B5F; --gold-ink: #7d600f; --sage: #5E775E; --forest: #132B23;
 
   --bg-deep: #06231A;
   --paper: #F3EBD9; --paper-dim: rgba(243,235,217,0.68); --paper-faint: rgba(243,235,217,0.45);
@@ -865,6 +865,10 @@ footer .legal a:hover { color: var(--paper); }
   45% { transform: scale(1.09) translateY(-2px) rotate(-2deg); }
   55% { transform: scale(1.09) translateY(-2px) rotate(2deg); } }
 
+/* Sicherheitsnetz: JS aus → Reveal-Elemente sofort sichtbar (nie leere Formulare/Seiten) */
+@media (scripting: none) {
+  .rv, .st { opacity: 1 !important; transform: none !important; filter: none !important; }
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .bg, .bg2 { animation: none !important; }
