@@ -23,7 +23,7 @@
   --alabaster: #E9E0CF; --gold: #BA9B5F; --gold-ink: #7d600f; --sage: #5E775E; --forest: #132B23;
 
   --bg-deep: #06231A;
-  --paper: #F3EBD9; --paper-dim: rgba(243,235,217,0.68); --paper-faint: rgba(243,235,217,0.45);
+  --paper: #F3EBD9; --paper-dim: rgba(243,235,217,0.68); --paper-faint: rgba(243,235,217,0.58);
   --card-cream: #F5EEDE; --ink: #182B1F; --ink-soft: #5E6B5E;
   --leaf: #7ED09B; --meta-green: #9BD9B4;
 
@@ -777,7 +777,8 @@ footer .legal a:hover { color: var(--paper); }
     0 46px 100px -30px rgba(0,0,0,0.6); }
 .nav::after { content: ""; position: absolute; inset: 0; border-radius: 16px;
   background-image: var(--grain); opacity: 0.5; pointer-events: none; }
-.nav a { position: relative; padding: 8px 6px; min-width: 48px; text-align: center;
+.nav a { position: relative; display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 8px; min-width: 48px; min-height: 44px; text-align: center;
   font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
   color: #6B5F4A; transition: color 400ms var(--ease-lux), transform 400ms var(--ease-lux); }
 .nav a:hover { color: var(--forest); transform: translateY(-2px); }
@@ -864,6 +865,11 @@ footer .legal a:hover { color: var(--paper); }
 @keyframes smashylive { 0%,100% { transform: scale(1) translateY(0) rotate(0deg); }
   45% { transform: scale(1.09) translateY(-2px) rotate(-2deg); }
   55% { transform: scale(1.09) translateY(-2px) rotate(2deg); } }
+
+/* Tastatur-Fokus sichtbar (auch auf den clip-path-Winkel-Buttons) */
+.th-btn:focus-visible, .tour-btn:focus-visible, .bs-btn:focus-visible, .anf-submit:focus-visible {
+  outline: 3px solid var(--leaf); outline-offset: 3px; border-radius: 3px; }
+.nav a:focus-visible { outline: 2px solid var(--forest); outline-offset: 2px; border-radius: 6px; }
 
 /* Sicherheitsnetz: JS aus → Reveal-Elemente sofort sichtbar (nie leere Formulare/Seiten) */
 @media (scripting: none) {
