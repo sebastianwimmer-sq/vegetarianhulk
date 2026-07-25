@@ -394,9 +394,22 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 /* ---- Zitat: auf der Fläche ---- */
 .hero .cta { margin-bottom: 26px; }
 .closing .cta { margin-bottom: 26px; }
-.quote { margin-top: 92px; padding-left: 20px; border-left: 2px solid rgba(126,208,155,0.5); }
-.quote p { font-size: 17px; line-height: 1.7; color: var(--paper-dim); max-width: 46ch; }
-.quote strong { color: var(--paper); font-weight: 700; }
+/* Editorial-Pull-Quote (kein Side-Stripe-Slop, Playfair) */
+.quote { position: relative; margin: 96px auto 0; max-width: 34ch; padding-top: 34px; }
+.quote::before { content: "\201E"; position: absolute; top: -14px; left: -6px;
+  font-family: 'Playfair Display', serif; font-weight: 700; font-size: 92px; line-height: 1; color: rgba(126,208,155,0.24); }
+.quote p { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 500;
+  font-size: clamp(21px, 3.2vw, 29px); line-height: 1.42; color: var(--paper-dim); }
+.quote strong { color: var(--paper); font-weight: 600; font-style: normal; }
+
+/* Hero-Scroll-Cue (Einladung nach unten) */
+.hero-scroll { display: flex; flex-direction: column; align-items: center; gap: 9px; width: max-content;
+  margin: clamp(34px, 6vh, 64px) auto 0; text-decoration: none;
+  font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--paper-faint);
+  transition: color 400ms var(--ease-lux); }
+.hero-scroll:hover { color: var(--leaf); }
+.hero-scroll__chev { width: 22px; height: 22px; color: var(--leaf); animation: heroScrollBob 2.2s ease-in-out infinite; }
+@keyframes heroScrollBob { 0%,100% { transform: translateY(0); opacity: 0.55; } 50% { transform: translateY(6px); opacity: 1; } }
 
 /* ---- Sektions-Kopf ---- */
 .shead { margin: 100px 0 28px; }
@@ -821,8 +834,7 @@ footer .legal a:hover { color: var(--paper); }
   .hero-copy { grid-column: 1; grid-row: 1; margin-top: 0; }
   .arch { grid-column: 2; grid-row: 1; width: min(100%, 420px); margin-inline: 0 auto; }
   .hero-rule { max-width: 320px; }
-  .quote { margin-top: 130px; }
-  .quote p { font-size: 18px; max-width: 58ch; }
+  .quote { margin-top: 130px; max-width: 40ch; }
   .idx-row { grid-template-columns: 90px 260px 1fr; }
   .idx-row .num { grid-row: auto; }
   .idx-row p { justify-self: end; text-align: left; }
@@ -884,6 +896,7 @@ footer .legal a:hover { color: var(--paper); }
   .cta:hover .arr, .nav a:hover { transform: none; }
   .grat-smashy { transition: none; animation: none !important; opacity: 1 !important; }
   .route-head::after { animation: none !important; }
+  .hero-scroll__chev { animation: none !important; }
 
   .live-dot { animation: none !important; }
   .tk-live__dot, .tour-now__dot { animation: none !important; }
