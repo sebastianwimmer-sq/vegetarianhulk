@@ -110,7 +110,8 @@
   color: var(--paper-faint); }
 .tour-svg { width: 100%; height: clamp(120px, 20vh, 168px); color: var(--leaf); overflow: visible; display: block; }
 .tour-svg .fill { fill: rgba(80,200,120,0.12); opacity: 0; transition: opacity 900ms var(--ease-lux) 500ms; }
-.tour-svg .line { fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round;
+.tour-svg .line { fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
   filter: drop-shadow(0 0 5px rgba(80,200,120,0.4));
   stroke-dasharray: 1400; stroke-dashoffset: 1400; }
 .tour-svg .peak-dot { fill: var(--emerald); opacity: 0; filter: drop-shadow(0 0 6px rgba(80,200,120,0.9));

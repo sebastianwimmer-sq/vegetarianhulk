@@ -70,21 +70,17 @@
   @media (prefers-reduced-motion: reduce) { .pp-sign__mascot { animation: none; } }
 
   /* ---- Affiliate-Disclosure: heller data-light-Hinweis, klar sichtbar ---- */
-  .pp-disclosure { width: min(1040px, 92vw); margin: 26px 0 8px;
+  /* Transparenter Legal-Hinweis (kein schwerer Beige-Kasten) */
+  .pp-disclosure { width: min(1040px, 92vw); margin: 22px 0 8px;
     margin-left: calc((100% - min(1040px, 92vw)) / 2);
-    display: flex; align-items: center; gap: 16px;
-    padding: 16px clamp(18px, 3vw, 26px); border-radius: 14px; position: relative; overflow: hidden;
-    background: linear-gradient(158deg, #F5EEDE, #E9DFC6); box-shadow: var(--shadow-paper); }
-  .pp-disclosure::after { content: ""; position: absolute; inset: 0; background-image: var(--grain);
-    opacity: 0.5; pointer-events: none; }
-  .pp-disclosure__tag { position: relative; z-index: 1; flex: none;
-    font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 1.6px;
+    display: flex; align-items: center; gap: 13px;
+    padding: 12px 2px; position: relative; }
+  .pp-disclosure__tag { flex: none; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.6px;
     text-transform: uppercase; color: #14100A; align-self: flex-start;
-    background: linear-gradient(180deg, #E8BF25, #D4A918); padding: 6px 13px;
-    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%); }
-  .pp-disclosure__text { position: relative; z-index: 1; margin: 0;
-    font-size: 13px; line-height: 1.55; color: rgba(24,43,31,0.86); }
-  .pp-disclosure__text strong { color: #14281C; font-weight: 700; }
+    background: linear-gradient(180deg, #E8BF25, #D4A918); padding: 5px 11px;
+    clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%); }
+  .pp-disclosure__text { margin: 0; font-size: 12.5px; line-height: 1.55; color: var(--paper-dim); }
+  .pp-disclosure__text strong { color: var(--paper); font-weight: 700; }
 
   /* ---- Sektions-Grids ---- */
   .pp-grid { display: grid; gap: 16px; margin-top: 4px;
@@ -219,7 +215,7 @@
     </section>
 
     <!-- Affiliate-Disclosure (rechtlich, klar sichtbar) -->
-    <aside class="pp-disclosure rv" data-light aria-label="Werbekennzeichnung">
+    <aside class="pp-disclosure rv" aria-label="Werbekennzeichnung">
       <span class="pp-disclosure__tag">Werbung</span>
       <p class="pp-disclosure__text"><strong>Affiliate-Links.</strong> Über meine Codes und Links kaufst
       du zum selben Preis wie sonst — ich erhalte eine Provision. Für dich entstehen dadurch keine Mehrkosten.</p>

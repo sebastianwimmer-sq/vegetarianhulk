@@ -38,12 +38,13 @@
 .tk-lead strong { color: var(--paper); font-weight: 600; }
 /* Persönliche Feldaufnahmen (echte Sebi-Fotos, verbindet mit /berg-starter) */
 .tk-me { margin-top: clamp(22px, 4vh, 40px); display: flex; align-items: center; gap: clamp(18px, 3.5vw, 40px); flex-wrap: wrap; }
-.tk-me__shots { display: flex; flex: 0 0 auto; padding-left: 10px; }
-.tk-me__shots figure { margin: 0; padding: 7px 7px 0; background: #FBF6EA; border-radius: 3px; width: 152px;
+.tk-me__shots { display: flex; flex: 0 0 auto; padding: 20px 10px 20px 14px; }
+.tk-me__shots figure { margin: 0; padding: 7px 7px 0; background: #FBF6EA; border-radius: 3px; width: 150px;
   box-shadow: 0 18px 34px -18px rgba(0,0,0,0.62), 0 2px 5px rgba(0,0,0,0.22); }
 .tk-me__shots figure img { display: block; width: 100%; height: auto; border-radius: 1px; }
-.tk-me__shots figure:nth-child(1) { transform: rotate(-3deg); z-index: 1; }
-.tk-me__shots figure:nth-child(2) { transform: rotate(2.6deg); margin-left: -26px; }
+.tk-me__shots figure:nth-child(1) { transform: rotate(-4.5deg); z-index: 2; margin-top: -8px; }
+.tk-me__shots figure:nth-child(2) { transform: rotate(3.5deg); margin-left: -46px; margin-top: 20px; z-index: 1; }
+.tk-me__shots figure:hover { z-index: 3; }
 .tk-me__line { font-family: 'Caveat', cursive; font-size: 24px; line-height: 1.28; color: var(--paper-dim); max-width: 26ch; }
 .tk-me__line b { color: var(--leaf); }
 @media (max-width: 600px) { .tk-me__shots figure { width: 122px; } .tk-me__line { font-size: 21px; } }
