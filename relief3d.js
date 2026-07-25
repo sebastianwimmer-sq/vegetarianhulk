@@ -352,7 +352,7 @@ function init(DEM) {
   const center = new THREE.Vector3();
   const v = new THREE.Vector3();
   function frame() {
-    p += (target - p) * 0.075;
+    p += (target - p) * 0.06;  /* smootheres Gleiten (war 0.075) */
     const sp0 = curve.getPointAt(Math.min(0.999, Math.max(0.001, p)));
     /* Kamera zieht ins Geschehen: Blickpunkt lerpt zur Route,
        Radius dollyt in der Wegmitte nah ran */
