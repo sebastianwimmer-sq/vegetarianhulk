@@ -665,11 +665,13 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   text-transform: uppercase; color: var(--paper-faint); text-align: center; margin-bottom: 20px;
   text-shadow: 0 1px 2px rgba(3,15,9,0.6); }
 .gb-buch { position: relative; display: grid; grid-template-columns: 1fr 1fr;
-  transform: rotate(-0.6deg);
+  transform: rotate(-0.7deg);
   background: linear-gradient(100deg, #F1E8D4 0%, #EDE4CE 49.5%, #DFD5BD 50%, #F5EDDC 50.6%, #EDE4CE 100%);
   border-radius: 5px 12px 12px 5px;
+  /* gestapelte Papier-Kanten (= echtes Buch, nicht flacher Block) + Falz-Schatten + Tiefe */
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(60,50,30,0.18),
-    0 34px 64px -22px rgba(2,10,6,0.6), 0 5px 12px rgba(2,10,6,0.28); }
+    2px 3px 0 -1px #ECE2CB, 4px 6px 0 -2px #E4DABF, 6px 9px 0 -3px #DCD1B2, 8px 12px 0 -4px #D4C9A6,
+    0 36px 66px -22px rgba(2,10,6,0.62), 0 6px 14px rgba(2,10,6,0.3); }
 .gb-buch::after { content: ""; position: absolute; inset: 0; border-radius: inherit;
   background-image: var(--grain); opacity: 0.55; pointer-events: none; }
 /* Falz */
