@@ -11,55 +11,66 @@
 <noscript><meta http-equiv="refresh" content="2;url=https://nature-heart.de/sebastian11377224"></noscript>
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
 <style>
-  /* Forest-Family-Interstitial — self-contained (lebt nur ~2 s, kein style.css).
-     Keine Cookies, kein Tracking — Klick-Zählung kommt später via Worker. */
+  /* v3 Editorial-Dark-Interstitial — self-contained (lebt nur ~2 s, kein v3.css). */
   :root {
-    --vanilla: #f7efde;
-    --ink: #1a1410;
-    --ink-2: #5c513f;
-    --forest-primary: #045927;
-    --forest-anchor: #122d1c;
+    --bg-deep: #06231A; --paper: #F3EBD9; --paper-dim: rgba(243,235,217,0.68);
+    --leaf: #7ED09B; --royal: #045927; --gold: #E8BF25;
+    --ease-lux: cubic-bezier(0.16,1,0.3,1);
   }
   * { box-sizing: border-box; margin: 0; }
-  body {
-    min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    background: var(--vanilla); color: var(--ink); text-align: center;
-    font-family: 'Inter', -apple-system, system-ui, sans-serif; padding: 24px;
-  }
-  .wordmark {
-    font-size: 13px; font-weight: 800; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--forest-anchor);
-  }
-  .wordmark .accent { color: var(--forest-primary); }
-  h1 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(26px, 5vw, 34px);
-    color: var(--forest-anchor); margin: 18px 0 10px;
-  }
-  .msg { max-width: 420px; margin: 0 auto; color: var(--ink-2); font-size: 15.5px; line-height: 1.55; }
-  .msg strong { color: var(--forest-primary); }
-  .redirect-note { margin-top: 14px; font-size: 12.5px; color: var(--ink-2); }
-  .go {
-    display: inline-block; margin-top: 20px; padding: 13px 28px;
-    background: linear-gradient(180deg, var(--forest-primary), var(--forest-anchor));
-    color: var(--vanilla); text-decoration: none; font-weight: 800; font-size: 15px;
-    border-radius: 12px; box-shadow: 0 8px 20px -8px rgba(4, 89, 39, 0.4);
-  }
-  .go:focus-visible { outline: 3px solid var(--forest-primary); outline-offset: 2px; }
-  .fallback { margin-top: 18px; font-size: 12.5px; line-height: 1.5; color: var(--ink-2); }
-  .fallback a { color: var(--forest-primary); }
+  body { min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; justify-content: center;
+    padding: 24px; color: var(--paper); text-align: center;
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    background:
+      radial-gradient(60% 40% at 80% 12%, rgba(201,169,106,0.22), transparent 70%),
+      radial-gradient(66% 50% at 16% 30%, rgba(15,126,91,0.4), transparent 72%),
+      radial-gradient(70% 50% at 78% 80%, rgba(63,191,128,0.24), transparent 72%),
+      #06231A; }
+  .card { position: relative; width: min(440px, 92vw); padding: clamp(30px, 6vw, 46px) clamp(24px, 5vw, 40px);
+    border-radius: 22px; background: linear-gradient(158deg, rgba(19,54,35,0.55), rgba(6,26,17,0.55));
+    border: 1px solid rgba(126,208,155,0.16);
+    box-shadow: inset 0 1px 0 rgba(209,242,235,0.06), 0 30px 64px -30px rgba(0,0,0,0.72); }
+  .wordmark { font-family: ui-monospace, Menlo, monospace; font-size: 11px; font-weight: 700; letter-spacing: 2.4px;
+    text-transform: uppercase; color: var(--paper-dim); }
+  .wordmark b { color: var(--leaf); }
+  .mtn { width: 34px; height: 24px; margin: 20px auto 0; color: var(--leaf);
+    animation: mtnBob 2.4s ease-in-out infinite; }
+  @keyframes mtnBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+  h1 { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(28px, 6vw, 38px);
+    line-height: 1.05; color: var(--paper); margin: 12px 0 8px; }
+  .msg { max-width: 34ch; margin: 0 auto; color: var(--paper-dim); font-size: 15px; line-height: 1.55; }
+  .msg strong { color: var(--leaf); font-weight: 600; }
+  /* 2-s-Progress (synct mit dem Redirect) */
+  .bar { width: min(230px, 70%); height: 3px; margin: 24px auto 4px; border-radius: 2px;
+    background: rgba(126,208,155,0.18); overflow: hidden; }
+  .bar::after { content: ""; display: block; height: 100%; width: 0;
+    background: linear-gradient(90deg, var(--leaf), var(--royal)); animation: fill 2s linear forwards; }
+  @keyframes fill { to { width: 100%; } }
+  .redirect-note { margin-top: 12px; font-family: ui-monospace, Menlo, monospace; font-size: 10px;
+    letter-spacing: 1.4px; text-transform: uppercase; color: rgba(243,235,217,0.45); }
+  .go { display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; padding: 13px 24px; border-radius: 13px;
+    font-family: ui-monospace, Menlo, monospace; font-size: 12px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+    color: #14100A; text-decoration: none;
+    background: linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 12px 24px -10px rgba(0,0,0,0.5);
+    transition: transform 240ms var(--ease-lux); }
+  .go:hover { transform: translateY(-2px); }
+  .go:focus-visible { outline: 3px solid var(--leaf); outline-offset: 3px; }
+  .fallback { margin-top: 18px; font-size: 12px; line-height: 1.5; color: rgba(243,235,217,0.5); }
+  .fallback a { color: var(--leaf); }
+  @media (prefers-reduced-motion: reduce) { .mtn { animation: none; } .bar::after { animation: none; width: 100%; } }
 </style>
 </head>
 <body>
-<main>
-  <p class="wordmark">Vegetarian<span class="accent">hulk</span></p>
+<main class="card">
+  <p class="wordmark">VEGETARIAN<b>HULK</b></p>
+  <svg class="mtn" viewBox="0 0 24 16" fill="currentColor" aria-hidden="true"><path d="M1.5 15 9 3.2l3.4 5L15.8 4l6.7 11z"/></svg>
   <h1>Danke dir!</h1>
-  <p class="msg">Vergiss nicht: Code <strong>VEGETARIANHULK</strong> im Warenkorb eingeben = 10&nbsp;% Rabatt.</p>
-  <p class="redirect-note">Du wirst gleich zu Nature Heart weitergeleitet …</p>
+  <p class="msg">Nicht vergessen: Code <strong>VEGETARIANHULK</strong> im Warenkorb eingeben = 10&nbsp;% Rabatt.</p>
+  <div class="bar" aria-hidden="true"></div>
+  <p class="redirect-note">Weiter zu Nature Heart …</p>
   <a class="go" id="go-link" href="https://nature-heart.de/sebastian11377224" rel="sponsored noopener">Direkt weiter →</a>
-  <p class="fallback">Link funktioniert nicht? Direkt zum Shop:
-    <a href="https://nature-heart.de" rel="sponsored noopener">nature-heart.de</a>
-    — Code VEGETARIANHULK nicht vergessen.</p>
+  <p class="fallback">Link klemmt? Direkt zu <a href="https://nature-heart.de" rel="sponsored noopener">nature-heart.de</a> — Code VEGETARIANHULK nicht vergessen.</p>
 </main>
 <script src="/codes/partners.js?v=f9bebed4"></script>
 <script>
@@ -67,7 +78,6 @@
   'use strict';
   var SLUG = 'nature-heart';
   var REDIRECT_MS = 2000;
-  // partners.js = Quelle der Wahrheit; statisches href bleibt Fallback
   var partner = (typeof VH_PARTNERS !== 'undefined')
     ? VH_PARTNERS.filter(function (p) { return p.slug === SLUG; })[0]
     : null;
