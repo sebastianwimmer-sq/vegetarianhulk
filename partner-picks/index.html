@@ -383,7 +383,9 @@
     if (isPending(p.url)) {
       card.appendChild(el('span', 'pp-pending', 'Link folgt in Kürze'));
     } else {
-      var cta = el('a', 'th-btn th-btn--gelb pp-cta', 'Auf Amazon ansehen'); cta.href = p.url; cta.target = '_blank'; cta.rel = 'sponsored noopener'; cta.appendChild(arrow());
+      var cta = el('a', 'th-btn th-btn--gelb pp-cta', 'Auf Amazon ansehen');
+      cta.href = '/go/amazon/?to=' + encodeURIComponent(p.url) + '&name=' + encodeURIComponent(p.name);
+      cta.target = '_blank'; cta.rel = 'sponsored noopener'; cta.appendChild(arrow());
       card.appendChild(cta);
     }
 
