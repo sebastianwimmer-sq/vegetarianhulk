@@ -758,7 +758,16 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .brands-line a:hover { border-color: var(--leaf); }
 
 /* ---- Footer ---- */
-footer { position: relative; z-index: 1; margin-top: 120px; text-align: center; color: var(--paper); }
+/* Homepage-Abschluss-CTA (verbindet die Seite, statt abrupt auf Legal-Footer) */
+.home-outro { position: relative; z-index: 1; width: min(100% - 36px, 620px); margin: 130px auto 0; text-align: center; }
+.home-outro__k { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf); }
+.home-outro h2 { margin: 14px 0 24px; font-family: 'Playfair Display', serif; font-weight: 600;
+  font-size: clamp(28px, 5vw, 44px); line-height: 1.06; color: var(--paper); }
+.home-outro h2 em { font-style: italic; color: var(--leaf); }
+.home-outro__social { margin-top: 20px; font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; }
+.home-outro__social a { color: var(--paper-faint); text-decoration: none; border-bottom: 1px solid rgba(126,208,155,0.3); transition: color 300ms var(--ease-lux); }
+.home-outro__social a:hover { color: var(--leaf); }
+footer { position: relative; z-index: 1; margin-top: 64px; text-align: center; color: var(--paper); }
 footer .inner { width: min(100% - 36px, 560px); margin-inline: auto;
   border-top: 1px solid rgba(243,235,217,0.14); padding: 36px 8px 0; }
 footer .wordmark { color: var(--paper); }
