@@ -13,7 +13,7 @@ const sticky = document.querySelector('.grat-sticky');
 const track = document.querySelector('.grat-track');
 
 if (section && canvas && sticky && track) {
-  fetch('watzmann-dem.json?v=hd2')
+  fetch('watzmann-dem.json?v=hd3')
     .then(r => r.ok ? r.json() : Promise.reject())
     .then(dem => init(dem))
     .catch(() => section.classList.add('no3d'));
@@ -46,7 +46,7 @@ function init(DEM) {
   scene.add(fill);
 
   /* ---- Echtes Terrain: bilineares DEM-Sampling ---- */
-  const SIZE = 10, SEG = 254;
+  const SIZE = 10, SEG = 380;   /* höher aufgelöst (384er-DEM, schärfere Grate) */
   const SPAN = DEM.max - DEM.min;
   const V_SCALE = SIZE * (SPAN / (DEM.km * 1000)) * 1.35;   /* leichte Modell-Überhöhung */
   function demAt(ix, iy) {
@@ -68,27 +68,33 @@ function init(DEM) {
   const pos = geo.attributes.position;
   for (let i = 0; i < pos.count; i++) pos.setY(i, height(pos.getX(i), pos.getZ(i)));
   geo.computeVertexNormals();
-  /* Farben: Höhe + Hangneigung (steil = Fels, hoch + flach = Schnee) */
+  /* Farben: Höhe + Hangneigung + SAISONALE Schneegrenze (wandert mit dem Jahr,
+     Live-Wetter kann sie senken). paintTerrain() ist wiederverwendbar. */
   const nrm = geo.attributes.normal;
   const colors = new Float32Array(pos.count * 3);
   const cTal = new THREE.Color('#0C2416'), cHang = new THREE.Color('#2A6A40'),
         cFels = new THREE.Color('#8A9282'), cSchnee = new THREE.Color('#F2EFE3'),
         cAtmo = new THREE.Color('#0E3A28');
   const tmp = new THREE.Color();
-  for (let i = 0; i < pos.count; i++) {
-    const t = pos.getY(i) / V_SCALE;
-    const ny = nrm.getY(i);
-    const sm = x => { x = Math.min(1, Math.max(0, x)); return x * x * (3 - 2 * x); };
-    tmp.lerpColors(cTal, cHang, sm(t / 0.5));
-    tmp.lerp(cFels, sm((0.74 - ny) / 0.32) * 0.85);
-    /* Schnee mit WEICHER Grenze (hartes Ja/Nein erzeugte Klotz-Muster) */
-    tmp.lerp(cSchnee, sm((t - 0.6) / 0.22) * sm((ny - 0.42) / 0.34));
-    /* Rand-Zone: Farbe laeuft in den Atmosphaeren-Ton, damit der Alpha-Fade
-       nicht helle Flaechen (Schnee) vor hellem BG aufleuchten laesst */
-    const ex = Math.max(Math.abs(pos.getX(i)), Math.abs(pos.getZ(i))) / (SIZE / 2);
-    tmp.lerp(cAtmo, sm((ex - 0.4) / 0.3));
-    colors[i * 3] = tmp.r; colors[i * 3 + 1] = tmp.g; colors[i * 3 + 2] = tmp.b;
+  const smc = x => { x = Math.min(1, Math.max(0, x)); return x * x * (3 - 2 * x); };
+  /* Schneegrenze pro Monat (0..1 norm. Höhe): Winter tief, Sommer nur am Gipfel */
+  const SNOW_BY_MONTH = [0.44, 0.44, 0.52, 0.60, 0.66, 0.74, 0.80, 0.78, 0.68, 0.60, 0.52, 0.46];
+  let snowLine = SNOW_BY_MONTH[new Date().getMonth()];
+  function paintTerrain(snow) {
+    for (let i = 0; i < pos.count; i++) {
+      const t = pos.getY(i) / V_SCALE, ny = nrm.getY(i);
+      tmp.lerpColors(cTal, cHang, smc(t / 0.5));
+      tmp.lerp(cFels, smc((0.74 - ny) / 0.32) * 0.85);
+      /* Schnee mit WEICHER Grenze (hartes Ja/Nein erzeugte Klotz-Muster) */
+      tmp.lerp(cSchnee, smc((t - snow) / 0.22) * smc((ny - 0.42) / 0.34));
+      /* Rand-Zone laeuft in den Atmosphaeren-Ton (Alpha-Fade zum Rand) */
+      const ex = Math.max(Math.abs(pos.getX(i)), Math.abs(pos.getZ(i))) / (SIZE / 2);
+      tmp.lerp(cAtmo, smc((ex - 0.4) / 0.3));
+      colors[i * 3] = tmp.r; colors[i * 3 + 1] = tmp.g; colors[i * 3 + 2] = tmp.b;
+    }
+    if (geo.attributes.color) geo.attributes.color.needsUpdate = true;
   }
+  paintTerrain(snowLine);
   geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   /* Rand-Fade: das Terrain loest sich zum Rand hin in die Atmosphaere auf
      statt als geschnittene Platte zu enden (alphaMap = drei.js green channel) */
@@ -435,6 +441,12 @@ function init(DEM) {
           + IC[icoKey(d.current.weather_code)] + '</svg>';
         chip.querySelector('[data-w-meta]').textContent = s ? 'Sonne bis ' + s : 'Live';
         chip.hidden = false;
+        /* Live-Wetter senkt die Schneegrenze, wenn's am Watzmann grad schneit/friert */
+        var wc = d.current.weather_code;
+        if (typeof paintTerrain === 'function' && ((wc >= 71 && wc <= 77) || d.current.temperature_2m <= 0)) {
+          snowLine = Math.max(0.4, snowLine - 0.1);
+          paintTerrain(snowLine);
+        }
       })
       .catch(() => {});
   }
