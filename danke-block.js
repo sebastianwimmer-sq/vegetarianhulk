@@ -29,10 +29,13 @@
        darin statt oben anzukleben; padding symmetrisch (oben=unten). */
     '    display: flex; flex-direction: column; align-items: center; justify-content: center;' +
     '    min-height: 416px; padding: 30px 24px;' +
-    '    background: linear-gradient(180deg, #ffffff 0%, #efe5cf 100%);' +
-    '    border: 1px solid #cfbf9d; border-radius: 18px;' +
-    '    box-shadow: 0 1px 3px rgba(4,89,39,0.05), 0 12px 30px -16px rgba(4,89,39,0.16);' +
+    '    position: relative; overflow: hidden;' +
+    '    background: linear-gradient(158deg, #F8F2E2 0%, #F0E7D2 55%, #E4D8BC 100%);' +
+    '    border: 1px solid rgba(24,43,31,0.1); border-radius: 20px;' +
+    '    box-shadow: inset 0 1px 0 rgba(255,255,255,0.75), 0 2px 6px rgba(20,40,28,0.06), 0 30px 60px -30px rgba(4,89,39,0.34);' +
     '  }' +
+    '  .wrap::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px;' +
+    '    background: linear-gradient(90deg, transparent, rgba(4,89,39,0.5), transparent); }' +
     '  @media (min-width: 600px) { .wrap { min-height: 398px; } }' +
     '  .mascot {' +
     '    width: 150px; aspect-ratio: 1 / 1; margin: 0 auto 14px;' +
