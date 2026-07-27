@@ -1,35 +1,37 @@
 <!--
   ============================================================
-  VegetarianHulk — Willkommens-Mail „Berg-Starter" (v3, Premium/Editorial + Tiefe)
+  VegetarianHulk — Willkommens-Mail „Berg-Starter" (v5)
+  Forest-Frame (dunkelgrün) + Foto-Hero + ausgebauter Footer.
   Brevo HTML-Editor: kompletten Code (ab erstem <table> bis letztem </table>) einfügen.
   Betreff:      Dein Berg-Starter ist da.
   Vorschautext: Deine 3 Touren zum Reinkommen — und wie ich selbst angefangen hab.
   Merge-Tag:    {{ contact.VORNAME | default : "du" }}   ·   Pflicht: {{ unsubscribe }}
-  Link-Ziel:    https://vegetarianhulk.de/berg-starter/ (erst nach v3-Launch live)
-  Tiefe: Gradients + Schatten als Progressive Enhancement (Apple/iOS/Gmail-App),
-         überall solide background-color als Outlook-Fallback davor.
+  FOTO:         src -> Brevo-Upload-URL eintragen ODER Site-URL (live ab Launch).
+                Aktuell: Site-URL (zeigt im Test evtl. Platzhalter, live ab Launch ok).
   ============================================================
 -->
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0;padding:0;background-color:#E4D8BE;background-image:radial-gradient(120% 80% at 50% 0%,#EFE4CB 0%,#E4D8BE 60%);">
-<tr><td align="center" style="padding:34px 12px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0;padding:0;background-color:#0A1E13;background-image:linear-gradient(180deg,#0C2417 0%,#071710 100%);">
+<tr><td align="center" style="padding:36px 12px;">
 
-<div style="display:none;max-height:0;overflow:hidden;opacity:0;mso-hide:all;font-size:1px;line-height:1px;color:#E4D8BE;">Deine 3 Touren zum Reinkommen — und wie ich selbst angefangen hab.</div>
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;mso-hide:all;font-size:1px;line-height:1px;color:#0A1E13;">Deine 3 Touren zum Reinkommen — und wie ich selbst angefangen hab.</div>
 
-<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background-color:#FBF6EA;border-radius:24px;overflow:hidden;border:1px solid #D8C6A0;box-shadow:0 24px 60px -22px rgba(11,36,24,0.45);">
+<!-- KARTE -->
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background-color:#FBF6EA;border-radius:24px;overflow:hidden;box-shadow:0 30px 70px -24px rgba(0,0,0,0.6);">
 
-  <!-- Masthead: kompakte Wortmarke -->
-  <tr><td align="center" style="background-color:#0B2418;background-image:linear-gradient(158deg,#134026 0%,#0B2418 52%,#05130C 100%);padding:20px 24px 18px 24px;">
-    <div style="font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.36em;color:#F3EBD9;">VEGETARIAN<span style="color:#7ED09B;">HULK</span></div>
-  </td></tr>
-
-  <!-- Hero-Foto (Magazin-Cover) -->
+  <!-- Hero-Foto -->
   <tr><td style="font-size:0;line-height:0;background-color:#0B2418;">
     <img src="https://vegetarianhulk.de/email-templates/assets/hero-berg-mail.jpg" width="600" alt="Berg über Schneizlreuth — Almhütte, Grat, Kaisergebirge im Dunst" style="display:block;width:100%;max-width:600px;height:auto;border:0;">
+  </td></tr>
+
+  <!-- Masthead -->
+  <tr><td align="center" style="background-color:#0B2418;background-image:linear-gradient(158deg,#134026 0%,#0B2418 60%,#05130C 100%);padding:18px 24px 16px 24px;">
+    <div style="font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.36em;color:#F3EBD9;">VEGETARIAN<span style="color:#7ED09B;">HULK</span></div>
+    <div style="margin-top:7px;font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:12.5px;color:#8FB79C;">aus den Bergen · seit 2016</div>
   </td></tr>
   <tr><td style="height:3px;background-color:#C9A227;background-image:linear-gradient(90deg,#B8901E,#F0CB4B,#B8901E);line-height:3px;font-size:0;">&nbsp;</td></tr>
 
   <!-- Intro -->
-  <tr><td style="background-color:#FBF6EA;background-image:linear-gradient(180deg,#FDFAF1 0%,#FBF6EA 40%);padding:44px 46px 0 46px;">
+  <tr><td style="background-color:#FBF6EA;background-image:linear-gradient(180deg,#FDFAF1 0%,#FBF6EA 40%);padding:40px 46px 0 46px;">
     <div style="font-family:Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#9A7A10;">Willkommen · dein Berg-Starter</div>
     <h1 style="margin:14px 0 0 0;font-family:Georgia,'Times New Roman',serif;font-size:38px;line-height:1.08;font-weight:700;color:#14281C;letter-spacing:-0.5px;">Schön, dass du <span style="font-style:italic;color:#1a7340;">da bist.</span></h1>
     <p style="margin:22px 0 0 0;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:1.66;color:#3f4b42;">Hey {{ contact.VORNAME | default : "du" }}, wie versprochen — dein <strong style="color:#14281C;">Berg-Starter</strong>. Drei Touren zum Reinkommen, was wirklich in den Rucksack gehört, und ehrlich, wie ich selbst angefangen hab (mit viel zu schwerem Zeug und Baumwoll-Shirt am Grat).</p>
@@ -44,12 +46,10 @@
     </tr></table>
   </td></tr>
 
-  <!-- Touren-Teaser: eigenes Surface, Gradient + Doppel-Schatten (Tiefe) -->
+  <!-- Touren-Teaser -->
   <tr><td style="padding:18px 46px 0 46px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F3E9D2;background-image:linear-gradient(180deg,#F7EED9 0%,#EEE1C2 100%);border:1px solid #E2D3A9;border-radius:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.7),0 12px 26px -16px rgba(11,36,24,0.3);">
       <tr><td style="padding:22px 24px;">
-
-        <!-- 01 -->
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
           <td width="48" valign="top" style="font-family:Georgia,'Times New Roman',serif;font-size:28px;font-weight:700;color:#C39B1E;line-height:0.9;">01</td>
           <td valign="top">
@@ -58,8 +58,6 @@
           </td>
         </tr></table>
         <div style="height:1px;background-color:#E2D3A9;font-size:0;line-height:1px;margin:16px 0;">&nbsp;</div>
-
-        <!-- 02 -->
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
           <td width="48" valign="top" style="font-family:Georgia,'Times New Roman',serif;font-size:28px;font-weight:700;color:#C39B1E;line-height:0.9;">02</td>
           <td valign="top">
@@ -68,8 +66,6 @@
           </td>
         </tr></table>
         <div style="height:1px;background-color:#E2D3A9;font-size:0;line-height:1px;margin:16px 0;">&nbsp;</div>
-
-        <!-- 03 -->
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
           <td width="48" valign="top" style="font-family:Georgia,'Times New Roman',serif;font-size:28px;font-weight:700;color:#C39B1E;line-height:0.9;">03</td>
           <td valign="top">
@@ -77,12 +73,11 @@
             <div style="margin-top:3px;font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5;color:#5a6a5f;">Weitblick übers Umland, Latschen-Grat.</div>
           </td>
         </tr></table>
-
       </td></tr>
     </table>
   </td></tr>
 
-  <!-- CTA: Gold-Gradient + Schatten -->
+  <!-- CTA -->
   <tr><td align="center" style="padding:32px 46px 6px 46px;">
     <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
       <td align="center" bgcolor="#E4B824" style="border-radius:13px;background-color:#E4B824;background-image:linear-gradient(180deg,#F4CE3C 0%,#E4B824 52%,#C99C12 100%);box-shadow:0 12px 24px -8px rgba(176,133,12,0.55);">
@@ -98,25 +93,52 @@
   </td></tr>
 
   <!-- Signatur -->
-  <tr><td style="padding:26px 46px 38px 46px;">
+  <tr><td style="padding:26px 46px 40px 46px;">
     <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:20px;line-height:1.4;color:#14281C;">Man sieht sich am Berg.</p>
-    <p style="margin:8px 0 0 0;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.04em;color:#045927;">— Sebi &nbsp;·&nbsp; <a href="https://www.instagram.com/vegetarianhulk/" target="_blank" style="color:#045927;text-decoration:none;">@vegetarianhulk</a></p>
-  </td></tr>
-
-  <!-- Anker-Vers: dunkler Gradient-Moment -->
-  <tr><td style="background-color:#0B2418;background-image:linear-gradient(158deg,#0F3320 0%,#0B2418 60%,#05130C 100%);padding:28px 46px;" align="center">
-    <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:17px;line-height:1.5;color:#EDE4CF;">„Der Gerechte fällt siebenmal — und steht wieder auf."</p>
-    <p style="margin:10px 0 0 0;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#7ED09B;">Sprüche 24,16 · Schlachter 2000</p>
+    <p style="margin:8px 0 0 0;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.04em;color:#045927;">— Sebi</p>
   </td></tr>
 
 </table>
 
-<!-- Footer / Pflicht -->
+<!-- ===================== FOOTER (auf Forest-BG) ===================== -->
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;">
-  <tr><td style="padding:24px 30px 8px 30px;" align="center">
-    <p style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#8a8069;">Du bekommst diese Mail, weil du dich für den Berg-Starter eingetragen hast.<br>VegetarianHulk · Sebastian Wimmer · <a href="https://vegetarianhulk.de/impressum.html" target="_blank" style="color:#8a8069;">Impressum</a></p>
-    <p style="margin:10px 0 0 0;font-family:Helvetica,Arial,sans-serif;font-size:12px;color:#8a8069;"><a href="{{ unsubscribe }}" target="_blank" style="color:#8a8069;text-decoration:underline;">Abmelden</a></p>
+
+  <!-- Anker-Vers -->
+  <tr><td align="center" style="padding:34px 40px 26px 40px;">
+    <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:17px;line-height:1.5;color:#D9E4D6;">„Der Gerechte fällt siebenmal — und steht wieder auf."</p>
+    <p style="margin:9px 0 0 0;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#7ED09B;">Sprüche 24,16 · Schlachter 2000</p>
   </td></tr>
+
+  <!-- Gold-Trenner -->
+  <tr><td align="center" style="padding:0 40px;"><div style="width:44px;height:2px;background-color:#C9A227;font-size:0;line-height:2px;margin:0 auto;">&nbsp;</div></td></tr>
+
+  <!-- Wortmarke + Links -->
+  <tr><td align="center" style="padding:24px 40px 0 40px;">
+    <div style="font-family:Helvetica,Arial,sans-serif;font-size:13px;font-weight:700;letter-spacing:0.32em;color:#EDE4CF;">VEGETARIAN<span style="color:#7ED09B;">HULK</span></div>
+    <div style="margin-top:14px;font-family:Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;letter-spacing:0.02em;color:#9FB6A4;">
+      <a href="https://www.instagram.com/vegetarianhulk/" target="_blank" style="color:#9FB6A4;text-decoration:none;">Instagram</a>
+      &nbsp;&nbsp;·&nbsp;&nbsp;
+      <a href="https://vegetarianhulk.de/touren/" target="_blank" style="color:#9FB6A4;text-decoration:none;">Hulk Hikes</a>
+      &nbsp;&nbsp;·&nbsp;&nbsp;
+      <a href="https://vegetarianhulk.de/kooperationen.html" target="_blank" style="color:#9FB6A4;text-decoration:none;">Kooperationen</a>
+    </div>
+  </td></tr>
+
+  <!-- Adresse / Pflicht -->
+  <tr><td align="center" style="padding:22px 40px 8px 40px;">
+    <p style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:11.5px;line-height:1.7;color:#6E7F73;">
+      Du bekommst diese Mail, weil du dich für den Berg-Starter eingetragen hast.<br>
+      Sebastian Wimmer · Burghauser Straße 35 · 84533 Haiming · <a href="mailto:info@vegetarianhulk.de" style="color:#6E7F73;">info@vegetarianhulk.de</a>
+    </p>
+    <p style="margin:12px 0 0 0;font-family:Helvetica,Arial,sans-serif;font-size:11.5px;color:#6E7F73;">
+      <a href="https://vegetarianhulk.de/impressum.html" target="_blank" style="color:#8FB79C;text-decoration:none;">Impressum</a>
+      &nbsp;·&nbsp;
+      <a href="https://vegetarianhulk.de/datenschutz.html" target="_blank" style="color:#8FB79C;text-decoration:none;">Datenschutz</a>
+      &nbsp;·&nbsp;
+      <a href="{{ unsubscribe }}" target="_blank" style="color:#8FB79C;text-decoration:underline;">Abmelden</a>
+    </p>
+  </td></tr>
+
 </table>
 
 </td></tr></table>
