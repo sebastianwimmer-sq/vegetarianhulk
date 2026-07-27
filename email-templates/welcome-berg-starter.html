@@ -1,0 +1,115 @@
+<!--
+  ============================================================
+  VegetarianHulk — Willkommens-Mail „Berg-Starter"
+  Verwendung in Brevo:
+    1. Automation „Willkommensnachricht" -> Mail-Design öffnen
+    2. Alle Vorlagen-Blöcke löschen -> EINEN "HTML"-Block reinziehen
+    3. Kompletten Code unten (ab <table ...> bis </table>) reinkopieren
+       -- ODER: beim Mail-Erstellen "HTML importieren" wählen und
+       diese Datei komplett hochladen.
+  Betreff:      Dein Berg-Starter ist da.
+  Vorschautext: Deine 3 Touren zum Reinkommen — und wie ich selbst angefangen hab.
+  Merge-Tag:    {{ contact.VORNAME | default : "du" }}  (Vorname, sonst "du")
+  Pflicht:      {{ unsubscribe }} bleibt drin (Abmelde-Link, gesetzlich).
+  Link-Ziel:    https://vegetarianhulk.de/berg-starter/  (erst nach v3-Launch live!)
+  Email-sicher: Tabellen-Layout, Inline-CSS, web-sichere Fonts (Georgia/Arial).
+  ============================================================
+-->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0;padding:0;background-color:#E7DCC4;">
+  <tr>
+    <td align="center" style="padding:28px 12px;">
+
+      <!-- Preheader (versteckter Vorschautext) -->
+      <div style="display:none;max-height:0;overflow:hidden;opacity:0;mso-hide:all;font-size:1px;line-height:1px;color:#E7DCC4;">
+        Deine 3 Touren zum Reinkommen — und wie ich selbst angefangen hab.
+      </div>
+
+      <!-- Karte -->
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background-color:#FBF6EA;border-radius:20px;overflow:hidden;border:1px solid #DCCBA6;">
+
+        <!-- Kopf-Band -->
+        <tr>
+          <td align="center" style="background-color:#0B2418;padding:22px 24px;">
+            <span style="font-family:Helvetica,Arial,sans-serif;font-size:15px;font-weight:700;letter-spacing:0.32em;color:#F3EBD9;">VEGETARIAN<span style="color:#7ED09B;">HULK</span></span>
+          </td>
+        </tr>
+
+        <!-- Grüner Haarstrich -->
+        <tr><td style="height:4px;background-color:#045927;line-height:4px;font-size:0;">&nbsp;</td></tr>
+
+        <!-- Inhalt -->
+        <tr>
+          <td style="padding:44px 44px 8px 44px;">
+
+            <!-- Headline -->
+            <h1 style="margin:0 0 6px 0;font-family:Georgia,'Times New Roman',serif;font-size:34px;line-height:1.12;font-weight:700;color:#14281C;letter-spacing:-0.4px;">
+              Schön, dass du <span style="font-style:italic;color:#1a7340;">da bist.</span>
+            </h1>
+
+            <!-- Gruß -->
+            <p style="margin:22px 0 0 0;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:1.62;color:#3a4a3f;">
+              Hey {{ contact.VORNAME | default : "du" }},
+            </p>
+
+            <p style="margin:14px 0 0 0;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:1.66;color:#3a4a3f;">
+              wie versprochen: dein <strong style="color:#14281C;">Berg-Starter</strong>. Meine 3 Touren zum Reinkommen, was wirklich in den Rucksack gehört — und ehrlich, wie ich selbst angefangen hab (mit viel zu schwerem Zeug und Baumwoll-Shirt am Grat).
+            </p>
+          </td>
+        </tr>
+
+        <!-- CTA-Button -->
+        <tr>
+          <td align="center" style="padding:30px 44px 6px 44px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td align="center" bgcolor="#E4B824" style="border-radius:12px;">
+                  <a href="https://vegetarianhulk.de/berg-starter/" target="_blank" style="display:inline-block;padding:16px 34px;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#14100A;text-decoration:none;border-radius:12px;">
+                    Berg-Starter öffnen &nbsp;&rarr;
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Absatz 2 -->
+        <tr>
+          <td style="padding:24px 44px 0 44px;">
+            <p style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:1.66;color:#3a4a3f;">
+              Ab jetzt meldet sich ab und zu ein kurzer Brief von mir: neue Touren zuerst, ehrliche Gedanken, ab und zu ein Vers, der mich trägt. Kein Spam, kein Verkaufs-Blabla.
+            </p>
+          </td>
+        </tr>
+
+        <!-- Signatur -->
+        <tr>
+          <td style="padding:28px 44px 40px 44px;">
+            <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:19px;line-height:1.4;color:#14281C;">
+              Man sieht sich am Berg.
+            </p>
+            <p style="margin:8px 0 0 0;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.04em;color:#045927;">
+              — Sebi &nbsp;·&nbsp; <a href="https://www.instagram.com/vegetarianhulk/" target="_blank" style="color:#045927;text-decoration:none;">@vegetarianhulk</a>
+            </p>
+          </td>
+        </tr>
+
+      </table>
+
+      <!-- Footer / Pflicht -->
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;">
+        <tr>
+          <td style="padding:22px 30px 8px 30px;" align="center">
+            <p style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#8a8069;">
+              Du bekommst diese Mail, weil du dich für den Berg-Starter eingetragen hast.<br>
+              VegetarianHulk · Sebastian Wimmer · <a href="https://vegetarianhulk.de/impressum.html" target="_blank" style="color:#8a8069;">Impressum</a>
+            </p>
+            <p style="margin:10px 0 0 0;font-family:Helvetica,Arial,sans-serif;font-size:12px;color:#8a8069;">
+              <a href="{{ unsubscribe }}" target="_blank" style="color:#8a8069;text-decoration:underline;">Abmelden</a>
+            </p>
+          </td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+</table>
