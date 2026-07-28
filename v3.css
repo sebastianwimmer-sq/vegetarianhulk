@@ -782,10 +782,12 @@ footer .legal a:hover { color: var(--paper); }
    ============================================================ */
 .nav.no-t { transition: none !important; }
 .nav.nav-out { opacity: 0; }
-.nav.pre:not(.at-top) { translate: -50% calc(100vh - 100% + 30px) !important; }
-.nav.pre.at-top { translate: -50% -10px !important; }
-.nav { position: fixed; left: 50%; top: 0; z-index: 70;
-  translate: -50% calc(100vh - 100% - 18px);
+.nav.pre:not(.at-top) { translate: -50% 30px !important; }
+.nav.pre.at-top { top: 0; bottom: auto; translate: -50% -10px !important; }
+/* Bottom-verankert (kein 100vh!) — bleibt stabil, wenn die mobile URL-Leiste
+   ein-/ausblendet. Fixed + bottom folgt dem sichtbaren Viewport (Insta/WhatsApp). */
+.nav { position: fixed; left: 50%; top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); z-index: 70;
+  translate: -50% 0;
   transition: translate 480ms var(--ease-lux), opacity 200ms ease;
   display: flex; align-items: center; gap: clamp(4px, 2.6vw, 24px); padding: 10px clamp(18px, 3.4vw, 34px);
   border: 1px solid rgba(150,130,92,0.55); border-radius: 16px;
@@ -815,7 +817,7 @@ footer .legal a:hover { color: var(--paper); }
 
 /* Nav oben-Zustand (Desktop, vor dem ersten Scroll): normale Zeile */
 @media (min-width: 900px) {
-  .nav.at-top { translate: -50% 22px;
+  .nav.at-top { top: 0; bottom: auto; translate: -50% 22px;
     -webkit-backdrop-filter: blur(16px) saturate(1.35);
             backdrop-filter: blur(16px) saturate(1.35);
     background:
