@@ -21,6 +21,9 @@
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
 <link rel="stylesheet" href="/v3.css?v=c42f291c">
 <style>
+  /* Deko-BG-Layer bei langer Seite abklemmen (kein Mobile-Overflow) */
+  html, body { overflow-x: clip; max-width: 100%; }
+  .bg-wrap, .bg2-wrap { overflow: clip; }
   /* ============================================================
      LEGAL v3 — ruhiges Editorial-Dokument auf der dunklen Shell.
      Langer Rechtstext sitzt in einem hellen Creme-„Blatt" (data-light)
@@ -53,14 +56,14 @@
     font-size: 16px; letter-spacing: 0.2px; color: var(--l-ink); margin: 26px 0 8px; }
   .legal-doc h4 { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.6px;
     text-transform: uppercase; color: var(--royal); margin: 22px 0 6px; }
-  .legal-doc p { font-size: 16px; line-height: 1.72; color: var(--l-body); max-width: 68ch; margin: 0 0 14px; }
+  .legal-doc p { font-size: 16px; line-height: 1.72; color: var(--l-body); max-width: 68ch; margin: 0 0 14px; overflow-wrap: anywhere; }
   .legal-doc strong { color: var(--l-ink); font-weight: 700; }
   .legal-doc a { color: var(--royal); font-weight: 600; text-decoration: underline;
     text-decoration-thickness: 1px; text-underline-offset: 2px; word-break: break-word;
     transition: color 300ms var(--ease-lux); }
   .legal-doc a:hover { color: var(--emerald); }
   .legal-doc ul { margin: 6px 0 16px; padding-left: 22px; max-width: 68ch; }
-  .legal-doc li { font-size: 16px; line-height: 1.6; color: var(--l-body); margin-bottom: 8px; }
+  .legal-doc li { font-size: 16px; line-height: 1.6; color: var(--l-body); margin-bottom: 8px; overflow-wrap: anywhere; }
   .legal-doc li::marker { color: var(--royal); }
   .legal-stand { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 1px;
     text-transform: uppercase; color: var(--l-soft); margin-top: 32px; }
