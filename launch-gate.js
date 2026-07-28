@@ -98,8 +98,8 @@
       ov.innerHTML =
         '<p class="wm">VEGETARIAN<b>HULK</b></p>' +
         '<svg class="mtn" viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 50 26 14l11 17 8-12 23 31"/></svg>' +
-        '<p class="eye">Die neue Höhe</p>' +
-        '<h1>Etwas wächst <em>am Berg.</em></h1>' +
+        '<p class="eye">Bald live</p>' +
+        '<h1>Der Berg <em>wächst.</em></h1>' +
         '<div class="cd" id="lg-cd" role="timer" aria-live="off">' +
           '<div class="u"><div class="n" id="lg-d">–</div><div class="l">Tage</div></div>' +
           '<div class="u"><div class="n" id="lg-h">–</div><div class="l">Std</div></div>' +
@@ -107,7 +107,7 @@
           '<div class="u"><div class="n" id="lg-s">–</div><div class="l">Sek</div></div>' +
         '</div>' +
         '<p class="when">' + LAUNCH_LABEL + '</p>' +
-        '<p class="sub">Die neue VegetarianHulk-Seite geht bald auf. Trag dich ein — dann bist du dabei, wenn’s losgeht (plus der Berg-Starter gratis).</p>' +
+        '<p class="sub">Die neue VegetarianHulk-Seite geht bald live. Trag dich ein — dann bist du als Erste:r dabei, wenn der Berg aufgeht.</p>' +
         '<form id="lg-form" novalidate>' +
           '<input id="lg-email" type="email" inputmode="email" autocomplete="email" placeholder="deine@email.de" aria-label="Deine E-Mail-Adresse" required>' +
           '<button type="submit">Sei dabei</button>' +

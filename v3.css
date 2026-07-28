@@ -341,7 +341,7 @@ body.loaded .st { opacity: 1; transform: translateY(0); filter: blur(0); }
 .stage-frame::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); pointer-events: none; }
 .stage-mtn { position: absolute; left: -6%; bottom: -4%; width: 74%; height: auto;
   color: rgba(209,242,235,0.38); }
-.stage-cut { position: relative; z-index: 2; display: block; width: 88%; margin-inline: auto;
+.stage-cut { position: relative; z-index: 2; display: block; width: 88%; height: auto; margin-inline: auto;
   filter: drop-shadow(0 34px 54px rgba(0,0,0,0.6)) drop-shadow(0 6px 14px rgba(0,0,0,0.35)); }
 .social-link { border-bottom: 1px solid rgba(126,208,155,0.4); padding-bottom: 1px;
   transition: color 400ms var(--ease-lux), border-color 400ms var(--ease-lux); }
