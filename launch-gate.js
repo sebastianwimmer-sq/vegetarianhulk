@@ -31,7 +31,11 @@
     var qs;
     try { qs = new URLSearchParams(location.search); } catch (e) { qs = null; }
     if (qs && qs.get('vorschau')) {
-      try { localStorage.setItem('vhLaunchPreview', qs.get('vorschau')); } catch (e) {}
+      var vparam = qs.get('vorschau');
+      try {
+        if (vparam === 'aus' || vparam === 'off') localStorage.removeItem('vhLaunchPreview'); // Gate wieder anzeigen
+        else localStorage.setItem('vhLaunchPreview', vparam);
+      } catch (e) {}
     }
     var isPreview = false;
     try { isPreview = localStorage.getItem('vhLaunchPreview') === PREVIEW_SECRET; } catch (e) {}
