@@ -77,7 +77,11 @@
     box-shadow:0 14px 30px -8px rgba(0,0,0,.6);transition:transform .2s}
   .cd-form button:hover{transform:translateY(-2px)}
   .cd-form button:active{transform:translateY(0)}
-  .cd-note{margin-top:12px;font-size:12px;color:#B7C7B8;text-shadow:0 1px 10px rgba(3,12,8,.7);animation-delay:.76s}
+  .cd-consent{display:flex;gap:9px;align-items:flex-start;text-align:left;max-width:400px;margin:14px auto 0;
+    font-size:12.5px;line-height:1.5;color:#BFCFC0;text-shadow:0 1px 10px rgba(3,12,8,.7);animation-delay:.73s;cursor:pointer}
+  .cd-consent input{flex:0 0 auto;width:17px;height:17px;margin-top:1px;accent-color:#7ED09B;cursor:pointer}
+  .cd-consent a{color:#8FE0AC;text-decoration:underline;text-underline-offset:2px;font-weight:600}
+  .cd-note{margin-top:12px;font-size:12px;color:#B7C7B8;text-shadow:0 1px 10px rgba(3,12,8,.7);animation-delay:.8s}
   .cd-note a{color:#8FE0AC;text-decoration:none;font-weight:700}
   .cd-foot{margin-top:26px;font-size:11.5px;color:#8AA093;animation-delay:.82s}
   .cd-foot a{color:#B7C7B8;text-decoration:none}
@@ -85,7 +89,7 @@
 
   /* Self-Healing-Zustand bei 0 */
   .cd-launching .cd-eye,.cd-launching .cd-h1,.cd-launching .cd-story,.cd-launching .cd-cd,
-  .cd-launching .cd-when,.cd-launching .cd-sub,.cd-launching .cd-form,.cd-launching .cd-note{display:none}
+  .cd-launching .cd-when,.cd-launching .cd-sub,.cd-launching .cd-form,.cd-launching .cd-consent,.cd-launching .cd-note{display:none}
   .cd-live{display:none;margin:20px 0 0;animation-delay:.1s}
   .cd-launching .cd-live{display:block}
   .cd-live h2{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(30px,6vw,52px);color:#8FE0AC;text-shadow:0 3px 28px rgba(3,12,8,.85)}
@@ -126,7 +130,11 @@
       <input id="cd-email" type="email" inputmode="email" autocomplete="email" placeholder="deine@email.de" aria-label="Deine E-Mail-Adresse" required>
       <button type="submit">Sei dabei</button>
     </form>
-    <p class="cd-note" id="cd-note">Kein Spam. Abmeldung jederzeit. &nbsp;·&nbsp; <a href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">@vegetarianhulk</a></p>
+    <label class="cd-consent" for="cd-consent-cb">
+      <input type="checkbox" id="cd-consent-cb" required>
+      <span>Ich möchte Launch-Infos &amp; den Newsletter per E-Mail und stimme der <a href="/datenschutz.html">Datenschutzerklärung</a> zu. Abmeldung jederzeit.</span>
+    </label>
+    <p class="cd-note" id="cd-note">Kein Spam, kein Weitergeben. &nbsp;·&nbsp; <a href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">@vegetarianhulk</a></p>
 
     <!-- Self-Healing: erscheint bei 0, lädt automatisch neu bis v3 live ist -->
     <div class="cd-live" role="status" aria-live="polite">
@@ -175,10 +183,12 @@
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var email=(document.getElementById('cd-email').value||'').trim().toLowerCase();
+    var consentBox=document.getElementById('cd-consent-cb');
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ note.textContent='E-Mail-Adresse prüfen.'; return; }
+    if(!consentBox.checked){ note.textContent='Bitte kurz den Datenschutz bestätigen.'; consentBox.focus(); return; }
     note.textContent='Wird eingetragen …';
     fetch(NL_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email:email,brand:'vegetarianhulk',firstName:'',consent:true,consentText:'Launch-Benachrichtigung + Newsletter, Abmeldung jederzeit'})})
+      body:JSON.stringify({email:email,brand:'vegetarianhulk',firstName:'',consent:true,consentText:'Launch-Infos + Newsletter (Countdown-Seite), Datenschutz bestätigt, Abmeldung jederzeit'})})
       .then(function(r){return r.json().catch(function(){return {};});})
       .then(function(){ form.style.display='none'; note.innerHTML='<strong style="color:#8FE0AC">Du bist dabei.</strong> Wir sehen uns oben. 🏔️'; })
       .catch(function(){ note.textContent='Hat nicht geklappt — später nochmal.'; });
