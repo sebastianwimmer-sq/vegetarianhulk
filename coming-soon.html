@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VegetarianHulk — bald live</title>
+<meta name="description" content="Zehn Jahre am Berg. Die neue VegetarianHulk-Seite geht am 15. August live. Trag dich ein und sei als Erste:r dabei.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#06120C">
+<meta name="color-scheme" content="dark">
+<!-- Open Graph (Insta / WhatsApp / Link-Sharing) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VegetarianHulk">
+<meta property="og:title" content="Der Berg wächst — bald live.">
+<meta property="og:description" content="Zehn Jahre am Berg, jetzt die nächste Höhe. Neue Seite am 15. August 2026, 18:00. Sei als Erste:r dabei.">
+<meta property="og:image" content="https://vegetarianhulk.de/assets/countdown-berg.jpg">
+<meta property="og:url" content="https://vegetarianhulk.de/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 56'%3E%3Cpath d='M4 50 26 14l11 17 8-12 23 31' fill='none' stroke='%237ED09B' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preload" as="image" href="/assets/countdown-berg.jpg" fetchpriority="high">
+<style>
+  /* --- self-hosted fonts (nur was der Countdown braucht) --- */
+  @font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/playfair-normal-latin.woff2) format('woff2')}
+  @font-face{font-family:'Playfair Display';font-style:italic;font-weight:700;font-display:swap;src:url(/fonts/playfair-italic-latin.woff2) format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2')}
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    font-family:'Inter',-apple-system,Helvetica,Arial,sans-serif;
+    color:#F3EBD9;background:#06120C;overflow:hidden;
+  }
+  /* echtes Bergfoto full-bleed + langsamer Ken-Burns-Zoom */
+  .cd-bg{position:fixed;inset:0;background:#06120C;z-index:0}
+  .cd-bg img{width:100%;height:100%;object-fit:cover;opacity:.58;
+    animation:cdZoom 26s cubic-bezier(.16,1,.3,1) forwards}
+  @keyframes cdZoom{from{transform:scale(1.12)}to{transform:scale(1)}}
+  .cd-bg::after{content:"";position:absolute;inset:0;
+    background:
+      linear-gradient(180deg,rgba(6,20,12,.82) 0%,rgba(7,26,16,.5) 32%,rgba(5,18,11,.72) 74%,rgba(4,14,9,.96) 100%),
+      radial-gradient(80% 60% at 50% 40%,rgba(126,208,155,.10),transparent 66%)}
+  .cd-grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.22;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E")}
+
+  .cd-core{position:relative;z-index:3;min-height:100dvh;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;
+    padding:calc(env(safe-area-inset-top,0px) + 40px) 22px calc(env(safe-area-inset-bottom,0px) + 34px)}
+  .cd-core>*{opacity:0;transform:translateY(16px);animation:cdUp .9s cubic-bezier(.16,1,.3,1) forwards}
+  @keyframes cdUp{to{opacity:1;transform:none}}
+
+  .cd-wm{font-size:14px;font-weight:700;letter-spacing:.36em;color:#F3EBD9;text-shadow:0 2px 18px rgba(3,12,8,.8);animation-delay:.05s}
+  .cd-wm b{color:#7ED09B}
+  .cd-mk{width:52px;height:38px;margin:22px 0 16px;color:#7ED09B;filter:drop-shadow(0 6px 22px rgba(4,89,39,.6));animation-delay:.15s}
+  .cd-mk path{stroke-dasharray:190;stroke-dashoffset:190;animation:cdDraw 1.5s cubic-bezier(.16,1,.3,1) .4s forwards}
+  @keyframes cdDraw{to{stroke-dashoffset:0}}
+  .cd-eye{font-size:11px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:#E7C25A;text-shadow:0 2px 14px rgba(3,12,8,.7);animation-delay:.25s}
+  .cd-h1{margin:14px 0 0;font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(38px,7.6vw,72px);
+    line-height:1.02;letter-spacing:-.6px;color:#F7F0E1;text-shadow:0 3px 34px rgba(3,12,8,.85);animation-delay:.3s}
+  .cd-h1 em{font-style:italic;color:#8FE0AC}
+  .cd-story{margin:16px 0 0;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:clamp(15px,2.2vw,18px);color:#C7D6C4;text-shadow:0 2px 16px rgba(3,12,8,.8);animation-delay:.4s}
+
+  .cd-cd{display:flex;gap:clamp(12px,3.4vw,30px);margin:32px 0 4px;animation-delay:.5s}
+  .cd-cd .u{min-width:56px}
+  .cd-cd .n{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(40px,8.8vw,66px);line-height:1;color:#F7F0E1;text-shadow:0 3px 24px rgba(3,12,8,.85);font-variant-numeric:tabular-nums}
+  .cd-cd .l{margin-top:9px;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#A7C0AD}
+  .cd-when{margin-top:12px;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:14px;color:#9FB6A4;text-shadow:0 2px 12px rgba(3,12,8,.7);animation-delay:.55s}
+
+  .cd-sub{margin:24px 0 0;font-size:15px;line-height:1.6;color:#E4ECE2;text-shadow:0 2px 14px rgba(3,12,8,.7);max-width:34ch;animation-delay:.62s}
+  .cd-form{margin:16px auto 0;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:400px;width:100%;animation-delay:.7s}
+  .cd-form input{flex:1;min-width:190px;padding:14px 16px;border-radius:11px;border:1px solid rgba(126,208,155,.34);
+    background:rgba(5,16,10,.62);color:#F3EBD9;font-size:16px;font-family:inherit;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+  .cd-form input::placeholder{color:#8AA093}
+  .cd-form input:focus{outline:2px solid #7ED09B;outline-offset:1px}
+  .cd-form button{padding:14px 26px;border:0;border-radius:11px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:700;
+    letter-spacing:.06em;text-transform:uppercase;color:#14100A;background-image:linear-gradient(180deg,#F6D24A,#E4B824 55%,#C6980F);
+    box-shadow:0 14px 30px -8px rgba(0,0,0,.6);transition:transform .2s}
+  .cd-form button:hover{transform:translateY(-2px)}
+  .cd-form button:active{transform:translateY(0)}
+  .cd-note{margin-top:12px;font-size:12px;color:#B7C7B8;text-shadow:0 1px 10px rgba(3,12,8,.7);animation-delay:.76s}
+  .cd-note a{color:#8FE0AC;text-decoration:none;font-weight:700}
+  .cd-foot{margin-top:26px;font-size:11.5px;color:#8AA093;animation-delay:.82s}
+  .cd-foot a{color:#B7C7B8;text-decoration:none}
+  .cd-foot a:hover{color:#E4ECE2}
+
+  /* Self-Healing-Zustand bei 0 */
+  .cd-launching .cd-eye,.cd-launching .cd-h1,.cd-launching .cd-story,.cd-launching .cd-cd,
+  .cd-launching .cd-when,.cd-launching .cd-sub,.cd-launching .cd-form,.cd-launching .cd-note{display:none}
+  .cd-live{display:none;margin:20px 0 0;animation-delay:.1s}
+  .cd-launching .cd-live{display:block}
+  .cd-live h2{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(30px,6vw,52px);color:#8FE0AC;text-shadow:0 3px 28px rgba(3,12,8,.85)}
+  .cd-live p{margin-top:14px;font-size:15px;color:#E4ECE2}
+  .cd-spin{width:34px;height:34px;margin:22px auto 0;border-radius:50%;border:3px solid rgba(126,208,155,.25);border-top-color:#8FE0AC;animation:cdSpin 1s linear infinite}
+  @keyframes cdSpin{to{transform:rotate(360deg)}}
+
+  @media (prefers-reduced-motion:reduce){
+    .cd-bg img{animation:none;transform:none}
+    .cd-core>*{animation:none;opacity:1;transform:none}
+    .cd-mk path{stroke-dashoffset:0}
+    .cd-spin{animation:none;border-top-color:rgba(126,208,155,.25)}
+  }
+</style>
+</head>
+<body>
+  <div class="cd-bg"><img src="/assets/countdown-berg.jpg" alt="" fetchpriority="high"></div>
+  <div class="cd-grain"></div>
+
+  <main class="cd-core">
+    <p class="cd-wm">VEGETARIAN<b>HULK</b></p>
+    <svg class="cd-mk" viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 50 26 14l11 17 8-12 23 31"/></svg>
+
+    <p class="cd-eye">Bald live</p>
+    <h1 class="cd-h1">Der Berg <em>wächst.</em></h1>
+    <p class="cd-story">Zehn Jahre am Berg — jetzt die nächste Höhe.</p>
+
+    <div class="cd-cd" role="timer" aria-live="off">
+      <div class="u"><div class="n" id="cd-d">–</div><div class="l">Tage</div></div>
+      <div class="u"><div class="n" id="cd-h">–</div><div class="l">Std</div></div>
+      <div class="u"><div class="n" id="cd-m">–</div><div class="l">Min</div></div>
+      <div class="u"><div class="n" id="cd-s">–</div><div class="l">Sek</div></div>
+    </div>
+    <p class="cd-when">15. August 2026, 18:00</p>
+
+    <p class="cd-sub">Die neue VegetarianHulk-Seite geht bald live. Trag dich ein — dann bist du als Erste:r dabei, wenn der Berg aufgeht.</p>
+    <form class="cd-form" id="cd-form" novalidate>
+      <input id="cd-email" type="email" inputmode="email" autocomplete="email" placeholder="deine@email.de" aria-label="Deine E-Mail-Adresse" required>
+      <button type="submit">Sei dabei</button>
+    </form>
+    <p class="cd-note" id="cd-note">Kein Spam. Abmeldung jederzeit. &nbsp;·&nbsp; <a href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">@vegetarianhulk</a></p>
+
+    <!-- Self-Healing: erscheint bei 0, lädt automatisch neu bis v3 live ist -->
+    <div class="cd-live" role="status" aria-live="polite">
+      <p class="cd-eye">Der Moment ist da</p>
+      <h2>Wir schalten frei …</h2>
+      <div class="cd-spin" aria-hidden="true"></div>
+      <p>Gleich ist die neue Seite hier. Diese Seite lädt sich von selbst neu.</p>
+    </div>
+
+    <p class="cd-foot"><a href="/impressum.html">Impressum</a> &nbsp;·&nbsp; <a href="/datenschutz.html">Datenschutz</a></p>
+  </main>
+
+<script>
+(function(){
+  'use strict';
+  var LAUNCH_TS = Date.parse('2026-08-15T18:00:00+02:00');
+  var NL_ENDPOINT = 'https://peaking-ai-api.peaking.workers.dev/newsletter/subscribe';
+  function pad(n){return (n<10?'0':'')+n;}
+
+  var dE=document.getElementById('cd-d'),hE=document.getElementById('cd-h'),mE=document.getElementById('cd-m'),sE=document.getElementById('cd-s');
+  var launched=false;
+
+  function selfHeal(){
+    // Seite lädt sich neu, bis der Server v3 ausliefert (statt dieser Countdown-Seite).
+    document.body.classList.add('cd-launching');
+    var tries=0;
+    (function loop(){
+      tries++;
+      // Cache-Buster, damit der In-App-Browser nicht die alte Countdown-Seite zeigt
+      setTimeout(function(){ location.replace('/?launched=' + Date.now()); }, tries===1 ? 4000 : 7000);
+    })();
+  }
+
+  function tick(){
+    var diff = LAUNCH_TS - Date.now();
+    if(diff<=0){ if(!launched){launched=true; clearInterval(timer); selfHeal();} return; }
+    var s=Math.floor(diff/1000);
+    dE.textContent=Math.floor(s/86400);
+    hE.textContent=pad(Math.floor(s/3600)%24);
+    mE.textContent=pad(Math.floor(s/60)%60);
+    sE.textContent=pad(s%60);
+  }
+  tick(); var timer=setInterval(tick,1000);
+
+  var form=document.getElementById('cd-form'), note=document.getElementById('cd-note');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var email=(document.getElementById('cd-email').value||'').trim().toLowerCase();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ note.textContent='E-Mail-Adresse prüfen.'; return; }
+    note.textContent='Wird eingetragen …';
+    fetch(NL_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email,brand:'vegetarianhulk',firstName:'',consent:true,consentText:'Launch-Benachrichtigung + Newsletter, Abmeldung jederzeit'})})
+      .then(function(r){return r.json().catch(function(){return {};});})
+      .then(function(){ form.style.display='none'; note.innerHTML='<strong style="color:#8FE0AC">Du bist dabei.</strong> Wir sehen uns oben. 🏔️'; })
+      .catch(function(){ note.textContent='Hat nicht geklappt — später nochmal.'; });
+  });
+})();
+</script>
+</body>
+</html>
