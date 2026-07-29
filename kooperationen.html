@@ -60,12 +60,9 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 @keyframes koopDraw { to { stroke-dashoffset: 0; } }
 .koop-lead { font-size: 16.5px; line-height: 1.7; color: var(--paper-dim); max-width: 46ch; }
 .koop-lead strong { color: var(--paper); font-weight: 700; }
-.koop-trust { margin-top: 26px; display: flex; align-items: center; gap: 10px 20px; flex-wrap: wrap;
-  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.8px;
-  text-transform: uppercase; color: var(--paper-faint); }
-.koop-trust span { display: inline-flex; align-items: center; gap: 8px; }
-.koop-ic { width: 15px; height: 15px; color: var(--leaf); flex-shrink: 0; }
-.koop-ic-btn { width: 15px; height: 15px; vertical-align: -2px; margin-right: 5px; }
+.koop-trust { margin-top: 26px; font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+  letter-spacing: 1.8px; text-transform: uppercase; color: var(--paper-faint); line-height: 1.95; }
+.koop-trust .dot { color: var(--leaf); margin: 0 11px; font-weight: 700; }
 .koop-hero-cta { margin-top: 30px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; }
 .koop-note { font-family: var(--mono); font-size: 9.5px; font-weight: 600; letter-spacing: 1.2px;
   text-transform: uppercase; color: var(--paper-faint); }
@@ -81,7 +78,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-stage__frame::after { content: ""; position: absolute; inset: 0; border-radius: inherit;
   background-image: var(--grain); opacity: 0.5; pointer-events: none; }
 .koop-stage figure { position: relative; z-index: 2; margin: 0; }
-.koop-stage img { display: block; width: 100%; height: auto; border-radius: 16px;
+.koop-stage img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 16px;
   box-shadow: 0 32px 54px -26px rgba(0,0,0,0.62), 0 6px 14px rgba(0,0,0,0.34); }
 .koop-stage figcaption { margin-top: 16px; text-align: center; font-family: var(--mono);
   font-size: 10px; font-weight: 600; letter-spacing: 2.2px; text-transform: uppercase; color: var(--paper-faint); }
@@ -206,16 +203,23 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-yield-signal .lbl { display: inline-flex; align-items: center; gap: 9px;
   font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.6px;
   text-transform: uppercase; color: var(--leaf); }
-.koop-yield-signal .lbl svg { width: 15px; height: 15px; stroke: var(--leaf); fill: none; }
 .koop-yield-signal p { margin-top: 9px; font-size: 13.5px; line-height: 1.55; color: var(--paper); }
 .koop-yield-signal p b { color: var(--leaf); font-weight: 700; }
 
 /* ============================================================
-   WALKABLE ABLAUF — antippbarer Etappen-Walk (ported grat-panel:
-   Ghost-Ziffer · DAV-Zeit-Schild · Panel-Nav mit Ticks).
-   Insights-Report = Gold-Payoff.
+   ABLAUF — scroll-driven Etappen-Progression (Scrollytelling).
+   Sticky Rail = Nodes + füllende Linie; Panels aktivieren beim
+   Durchscrollen. Insights-Report = Gold-Payoff.
    ============================================================ */
-.koop-flow { margin-top: 26px; }
+.koop-flow { position: relative; margin-top: 30px; }
+.koop-flow__rail { position: sticky; top: clamp(10px, 3vh, 22px); z-index: 6;
+  padding: 18px clamp(4px, 2vw, 18px) 20px; border-radius: 18px;
+  background: linear-gradient(180deg, rgba(6,24,16,0.9) 0%, rgba(6,24,16,0.66) 100%);
+  box-shadow: 0 20px 40px -30px rgba(0,0,0,0.8), inset 0 1px 0 rgba(209,242,235,0.06); }
+@supports (backdrop-filter: blur(8px)) {
+  .koop-flow__rail { background: linear-gradient(180deg, rgba(6,24,16,0.8), rgba(6,24,16,0.52));
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+}
 .koop-flow__track { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
 .koop-flow__line, .koop-flow__fill { position: absolute; left: 10%; right: 10%; top: 24px; height: 2px; z-index: 0; }
 .koop-flow__line { background: rgba(243,235,217,0.15); }
@@ -248,67 +252,52 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
   box-shadow: 0 0 0 5px rgba(228,184,36,0.16), 0 14px 28px -10px rgba(228,184,36,0.5); }
 .koop-flow__step--pay.is-active .koop-flow__name { color: #E4B824; }
 
-/* Detail-Panel: stacked grid = self-sizing Cross-Fade */
-.koop-flow__panels { margin-top: 30px; display: grid; }
-.koop-ab-panel { grid-area: 1 / 1; position: relative; overflow: hidden;
-  padding: clamp(26px, 3.6vw, 40px); border-radius: 18px;
+/* Panels — vertikal gestapelt, aktivieren beim Durchscrollen */
+.koop-flow__panels { position: relative; margin: 8px 0 0; padding: 0; list-style: none; }
+.koop-ab-panel { position: relative; overflow: hidden;
+  min-height: clamp(300px, 44vh, 400px); margin-top: 20px;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(28px, 4vw, 46px); border-radius: 18px;
   background: linear-gradient(158deg, rgba(19,54,35,0.52), rgba(6,26,17,0.6));
   border: 1px solid rgba(126,208,155,0.14);
   box-shadow: inset 0 1px 0 rgba(209,242,235,0.06), 0 26px 54px -30px rgba(0,0,0,0.72);
-  opacity: 0; visibility: hidden; transform: translateY(16px); filter: blur(6px);
-  transition: opacity 460ms var(--ease-lux), transform 460ms var(--ease-lux),
-    filter 460ms var(--ease-lux), visibility 0s linear 460ms; }
-.koop-ab-panel.is-in { opacity: 1; visibility: visible; transform: none; filter: none;
-  transition: opacity 460ms var(--ease-lux), transform 460ms var(--ease-lux), filter 460ms var(--ease-lux); }
-.koop-ab-panel::before { content: attr(data-big); position: absolute; right: 0.04em; top: -0.44em; z-index: 0;
+  opacity: 0.3; transform: translateY(24px) scale(0.985);
+  transition: opacity 640ms var(--ease-lux), transform 640ms var(--ease-lux), border-color 640ms var(--ease-lux); }
+.koop-ab-panel.is-in { opacity: 1; transform: none; border-color: rgba(126,208,155,0.3); }
+.koop-ab-panel::before { content: attr(data-big); position: absolute; right: 0.04em; top: -0.28em; z-index: 0;
   font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;
-  font-size: clamp(120px, 15vw, 200px); line-height: 1; color: rgba(126,208,155,0.09); pointer-events: none; }
-.koop-ab-panel--pay { border-color: rgba(228,184,36,0.28); }
-.koop-ab-panel--pay::before { color: rgba(228,184,36,0.11); }
+  font-size: clamp(120px, 15vw, 210px); line-height: 1; color: rgba(126,208,155,0.09); pointer-events: none; }
+.koop-ab-panel--pay { border-color: rgba(228,184,36,0.28);
+  background: linear-gradient(158deg, rgba(46,38,12,0.5), rgba(20,16,8,0.62)); }
+.koop-ab-panel--pay.is-in { border-color: rgba(228,184,36,0.5); }
+.koop-ab-panel--pay::before { color: rgba(228,184,36,0.12); }
 .koop-ab-panel > * { position: relative; z-index: 1; }
 .koop-ab-idx { font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 2px;
   text-transform: uppercase; color: var(--leaf); }
 .koop-ab-panel--pay .koop-ab-idx { color: #E4B824; }
-.koop-ab-headrow { margin-top: 10px; display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.koop-ab-headrow { margin-top: 12px; display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
 .koop-ab-title { font-family: 'Playfair Display', serif; font-weight: 600;
-  font-size: clamp(22px, 2.8vw, 30px); line-height: 1.08; color: var(--paper); }
+  font-size: clamp(24px, 3.2vw, 34px); line-height: 1.06; color: var(--paper); }
 .koop-ab-time { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.4px;
   text-transform: uppercase; color: #14100A; background: linear-gradient(180deg, #E8BF25, #D4A918);
   padding: 4px 14px 4px 12px;
   clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%); }
-.koop-ab-desc { margin-top: 14px; font-size: 15px; line-height: 1.65; color: var(--paper-dim); max-width: 54ch; }
+.koop-ab-desc { margin-top: 15px; font-size: 15.5px; line-height: 1.65; color: var(--paper-dim); max-width: 54ch; }
 .koop-ab-desc strong { color: var(--paper); font-weight: 700; }
-.koop-ab-paytag { display: inline-block; margin-top: 16px; font-family: var(--mono); font-size: 8.5px;
+.koop-ab-paytag { display: inline-block; margin-top: 18px; font-family: var(--mono); font-size: 8.5px;
   font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #14100A;
-  background: linear-gradient(180deg, #F4CE3C, #E4B824); padding: 4px 11px; border-radius: 20px; }
-
-/* Panel-Nav (ported .panel-nav Ticks + Prev/Next) */
-.koop-flow__nav { margin-top: 20px; display: flex; align-items: center; gap: 16px; }
-.koop-flow__ticks { display: flex; gap: 6px; }
-.koop-flow__ticks i { width: 16px; height: 2px; background: rgba(243,235,217,0.2);
-  transition: background 400ms var(--ease-lux); }
-.koop-flow__ticks i.on { background: var(--leaf); }
-.koop-flow__hint { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.6px;
-  text-transform: uppercase; color: var(--paper-faint); }
-.koop-flow__btns { margin-left: auto; display: flex; gap: 8px; }
-.koop-flow__btns button { width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
-  display: grid; place-items: center; color: var(--paper-dim);
-  background: linear-gradient(158deg, rgba(19,54,35,0.6), rgba(6,26,17,0.6));
-  border: 1px solid rgba(126,208,155,0.2);
-  transition: color 300ms var(--ease-lux), border-color 300ms var(--ease-lux), transform 300ms var(--ease-lux); }
-.koop-flow__btns button:hover:not(:disabled) { color: var(--leaf); border-color: var(--leaf); transform: translateY(-2px); }
-.koop-flow__btns button:disabled { opacity: 0.32; cursor: default; }
-.koop-flow__btns button:focus-visible { outline: 3px solid var(--leaf); outline-offset: 3px; }
-.koop-flow__btns svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+  background: linear-gradient(180deg, #F4CE3C, #E4B824); padding: 5px 13px; border-radius: 20px; }
 .koop-tl-note { margin-top: 24px; font-family: var(--mono); font-size: 10px; font-weight: 600;
   letter-spacing: 0.6px; color: var(--paper-faint); }
 .koop-tl-note strong { color: var(--paper-dim); }
 
 @media (max-width: 640px) {
+  .koop-flow__rail { top: 8px; }
   .koop-flow__line, .koop-flow__fill { top: 22px; }
-  .koop-flow__node { width: 44px; height: 44px; font-size: 20px; }
-  .koop-flow__node svg { width: 19px; height: 19px; }
-  .koop-flow__name { font-size: 8px; letter-spacing: 1px; }
+  .koop-flow__node { width: 42px; height: 42px; font-size: 19px; }
+  .koop-flow__node svg { width: 18px; height: 18px; }
+  .koop-flow__name { font-size: 7.5px; letter-spacing: 0.8px; max-width: 9ch; }
+  .koop-ab-panel { min-height: clamp(260px, 52vh, 360px); }
 }
 
 /* ============================================================
@@ -404,11 +393,9 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-cred-t b { color: var(--paper); font-weight: 700; }
 
 /* Sebis Notiz — Handschrift-Marginalie (kein Side-Stripe) */
-.koop-notiz { position: relative; margin: 30px 0 0; padding: 20px 22px 20px 52px; border-radius: 16px;
+.koop-notiz { position: relative; margin: 30px 0 0; padding: 22px 24px; border-radius: 16px;
   background: linear-gradient(158deg, rgba(19,54,35,0.4), rgba(6,26,17,0.46));
   border: 1px solid rgba(126,208,155,0.14); box-shadow: 0 16px 34px -26px rgba(0,0,0,0.7); }
-.koop-notiz::before { content: "\270E"; position: absolute; left: 20px; top: 18px; font-size: 20px;
-  color: var(--leaf); opacity: 0.85; }
 .koop-notiz b { display: block; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.6px;
   text-transform: uppercase; color: var(--leaf); margin-bottom: 8px; }
 .koop-notiz p { font-family: 'Caveat', cursive; font-size: 22px; line-height: 1.32; color: var(--paper); }
@@ -428,28 +415,52 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-faq details[open] summary::after { transform: rotate(45deg); }
 .koop-faq-body { padding: 0 22px 18px; font-size: 14px; line-height: 1.65; color: var(--paper-dim); max-width: 60ch; }
 
-/* ---- Bereit? (Creme, zentriert) -------------------------- */
-.koop-ready { text-align: center; }
-.koop-ready .koop-head { margin-inline: auto; }
-.koop-ready .koop-head .kicker::after { display: none; }
-.koop-ready .koop-head .kicker { justify-content: center; }
-.koop-ready .koop-body { margin: 0 auto; text-align: center; }
-.koop-ready-cta { margin-top: 26px; }
-.koop-ready-alt { margin-top: 22px; font-size: 14px; color: rgba(24,43,31,0.7); }
-.koop-ready-alt a { font-weight: 700; color: var(--royal); border-bottom: 1px solid rgba(11,110,79,0.4);
+/* ---- Bereit? — dunkler, fotografischer Schluss-Moment ----- */
+.koop-close { margin-top: clamp(74px, 11vh, 116px); }
+.koop-close__card { position: relative; overflow: hidden; border-radius: 26px;
+  min-height: clamp(470px, 64vh, 660px); display: flex; align-items: flex-end;
+  padding: clamp(30px, 5vw, 66px);
+  box-shadow: 0 48px 100px -48px rgba(0,0,0,0.9), inset 0 1px 0 rgba(209,242,235,0.08); }
+.koop-close__photo { position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 62% 22%; z-index: 0;
+  transform: scale(1.03); transition: transform 1200ms var(--ease-lux); }
+.koop-close__card:hover .koop-close__photo { transform: scale(1.07); }
+.koop-close__scrim { position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(6,26,17,0.44) 0%, rgba(6,26,17,0.1) 26%, rgba(5,20,13,0.82) 70%, rgba(3,14,9,0.97) 100%),
+    linear-gradient(86deg, rgba(4,18,12,0.86) 0%, rgba(4,18,12,0.36) 48%, transparent 80%); }
+.koop-close__scrim::after { content: ""; position: absolute; inset: 0; background-image: var(--grain);
+  opacity: 0.5; mix-blend-mode: overlay; pointer-events: none; }
+.koop-close__inner { position: relative; z-index: 2; max-width: 600px; }
+.koop-close__k { font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
+  letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf); }
+.koop-close h2 { margin: 14px 0 0; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(34px, 6vw, 62px); line-height: 1.0; letter-spacing: -0.5px; color: var(--paper);
+  text-shadow: 0 2px 22px rgba(3,15,9,0.62); }
+.koop-close h2 em { font-style: italic; color: var(--leaf); }
+.koop-close__lead { margin: 20px 0 30px; font-size: 16px; line-height: 1.66; color: var(--paper-dim);
+  max-width: 44ch; text-shadow: 0 1px 8px rgba(3,15,9,0.5); }
+.koop-close__lead strong { color: var(--paper); font-weight: 700; }
+.koop-close__alt { margin-top: 22px; font-size: 14px; color: var(--paper-dim); }
+.koop-close__alt a { font-weight: 700; color: var(--leaf); border-bottom: 1px solid rgba(126,208,155,0.42);
   padding-bottom: 1px; transition: border-color 350ms var(--ease-lux); }
-.koop-ready-alt a:hover { border-color: var(--royal); }
-.koop-ready-meta { margin-top: 22px; font-family: var(--mono); font-size: 10.5px; line-height: 1.6;
-  letter-spacing: 0.4px; color: rgba(24,43,31,0.55); }
-.koop-ready-meta a { color: var(--royal); font-weight: 700; border-bottom: 1px solid rgba(11,110,79,0.4); }
-.koop-sign { margin: 28px auto 0; padding-top: 22px; border-top: 1px solid rgba(24,43,31,0.16);
+.koop-close__alt a:hover { border-color: var(--leaf); }
+.koop-close__meta { margin-top: 18px; font-family: var(--mono); font-size: 10px; line-height: 1.6;
+  letter-spacing: 0.4px; color: var(--paper-faint); }
+.koop-close__meta a { color: var(--leaf); font-weight: 700; border-bottom: 1px solid rgba(126,208,155,0.35); }
+.koop-sign { margin: 30px 0 0; padding-top: 22px; border-top: 1px solid rgba(209,242,235,0.16);
   display: inline-flex; align-items: center; gap: 15px; text-align: left; }
-.koop-sign__mascot { width: 58px; height: auto; flex: 0 0 auto;
-  filter: drop-shadow(0 8px 15px rgba(20,40,28,0.35)); animation: koopMascot 4.5s ease-in-out infinite; }
+.koop-sign__mascot { width: 60px; height: auto; flex: 0 0 auto;
+  filter: drop-shadow(0 8px 15px rgba(0,0,0,0.45)); animation: koopMascot 4.5s ease-in-out infinite; }
 @keyframes koopMascot { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-5px) rotate(1.5deg); } }
-.koop-sign .hand { font-family: 'Caveat', cursive; font-size: 27px; line-height: 1.05; color: var(--royal); }
+.koop-sign .hand { font-family: 'Caveat', cursive; font-size: 28px; line-height: 1.05; color: var(--leaf); }
 .koop-sign .date { margin-top: 4px; font-family: var(--mono); font-size: 9px; font-weight: 700;
-  letter-spacing: 1.6px; text-transform: uppercase; color: rgba(24,43,31,0.5); }
+  letter-spacing: 1.6px; text-transform: uppercase; color: var(--paper-faint); }
+@media (max-width: 560px) {
+  .koop-close__photo { object-position: 64% 18%; }
+  .koop-close__scrim { background:
+    linear-gradient(180deg, rgba(6,26,17,0.4) 0%, rgba(6,26,17,0.16) 24%, rgba(5,20,13,0.86) 64%, rgba(3,14,9,0.98) 100%); }
+}
 
 /* ---- Responsive ------------------------------------------ */
 @media (max-width: 860px) {
@@ -466,7 +477,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
   .koop-phone-stage.in .koop-reel__act--like svg { animation: none; }
   .koop-sign__mascot { animation: none; }
   .koop-flow__fill, .koop-flow__node { transition: none; }
-  .koop-ab-panel { transition: none; }
+  .koop-ab-panel { transition: none; opacity: 1; transform: none; }
   .koop-scribble path { stroke-dashoffset: 0; animation: none; }
 }
 </style>
@@ -501,20 +512,16 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
           <p class="kicker st st1">Für Brands · Kooperationen</p>
           <h1 id="koop-title" class="st st2">Dein Produkt,<br>echt in meinem <em>Feed.<svg class="koop-scribble" viewBox="0 0 220 14" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M3 10 C 40 4, 75 12, 110 7 S 180 3, 217 8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></em></h1>
           <p class="koop-lead st st3">Ich bin <strong>Sebi (@vegetarianhulk)</strong> — Disziplin, Faith, vegetarisch-stark. Ehrlicher Content für Brands, die ich auch privat nutzen würde.</p>
-          <p class="koop-trust st st4">
-            <span><svg class="koop-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> DACH</span>
-            <span><svg class="koop-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M2.8 20a6.2 6.2 0 0 1 12.4 0M16 5.2a3.2 3.2 0 0 1 0 5.6M17.5 20a6.2 6.2 0 0 0-3-5.3"/></svg> 2.091 Follower</span>
-            <span><svg class="koop-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg> Persönliche Antwort, kein Agentur-Filter</span>
-          </p>
+          <p class="koop-trust st st4">DACH<span class="dot">·</span>2.091 Follower<span class="dot">·</span>Persönliche Antwort, kein Agentur-Filter</p>
           <p class="koop-hero-cta st st4">
-            <a class="th-btn th-btn--gelb th-btn--lg" href="/anfrage.html"><svg class="koop-ic-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg> Anfrage senden →</a>
+            <a class="th-btn th-btn--gelb th-btn--lg" href="/anfrage.html">Anfrage senden →</a>
             <span class="koop-note">Mail oder DM · Antwort direkt von mir</span>
           </p>
         </div>
         <div class="koop-stage st st3">
           <div class="koop-stage__frame" aria-hidden="true"></div>
           <figure>
-            <img src="/berg-starter/img/sebi-flex.jpg" alt="Sebi am Berg" width="360" height="450" loading="eager" fetchpriority="high">
+            <img src="/berg-starter/img/sebi-flex.jpg" alt="Sebi am Berg" width="768" height="1024" loading="eager" fetchpriority="high">
             <figcaption>Real, nicht gestellt · <a class="social-link" href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">@vegetarianhulk</a></figcaption>
           </figure>
         </div>
@@ -533,7 +540,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
         <div class="koop-phone-stage rv" data-phone>
           <div class="koop-phone" role="img" aria-label="Beispiel-Reel: Sebi am Gipfelkreuz, mit platzierter Marke DEINE MARKE im Feed.">
             <div class="koop-phone__screen">
-              <img src="/berg-starter/img/sebi-kreuz.jpg" alt="" width="282" height="605" loading="lazy" decoding="async">
+              <img src="/berg-starter/img/sebi-kreuz.jpg" alt="" width="768" height="1024" loading="lazy" decoding="async">
               <div class="koop-reel__scrim"></div>
               <div class="koop-reel__top">
                 <span>Reel</span>
@@ -579,10 +586,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
             </div>
           </div>
           <div class="koop-yield-signal">
-            <span class="lbl">
-              <svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>
-              Gespeichert &amp; geteilt
-            </span>
+            <span class="lbl">Gespeichert &amp; geteilt</span>
             <p><b>Saves &amp; Shares = echtes Interesse.</b> Geteilt wird nur, was Leute wirklich kaufen oder Freunden zeigen wollen. Genau das reporte ich dir.</p>
           </div>
         </div>
@@ -592,75 +596,68 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
     <!-- 3 · HOW IT WORKS — walkable Ablauf -->
     <section class="koop-sec rv" aria-labelledby="flow-title">
       <div class="koop-shead">
-        <p class="kicker">So läuft's ab · antippen</p>
+        <p class="kicker">So läuft's ab · einfach scrollen</p>
         <h2 id="flow-title">In fünf Schritten <em>zum Report.</em></h2>
       </div>
-      <p class="koop-body-dark">Tipp dich durch die Etappen — von der Anfrage bis zum ROI-Beweis. Strukturiert, transparent, ohne Überraschungen.</p>
+      <p class="koop-body-dark">Scroll dich durch die Etappen — von der Anfrage bis zum ROI-Beweis. Jede leuchtet auf, während du dich durch die Zusammenarbeit bewegst.</p>
 
       <div class="koop-flow" data-ablauf>
-        <div class="koop-flow__track" role="tablist" aria-label="Ablauf einer Kooperation">
-          <span class="koop-flow__line" aria-hidden="true"></span>
-          <span class="koop-flow__fill" data-fill aria-hidden="true"></span>
+        <nav class="koop-flow__rail" aria-label="Ablauf einer Kooperation">
+          <div class="koop-flow__track">
+            <span class="koop-flow__line" aria-hidden="true"></span>
+            <span class="koop-flow__fill" data-fill aria-hidden="true"></span>
 
-          <button class="koop-flow__step" type="button" role="tab" data-step aria-controls="ab-p0" id="ab-t0">
-            <span class="koop-flow__node">1</span>
-            <span class="koop-flow__name">Anfrage</span>
-          </button>
-          <button class="koop-flow__step" type="button" role="tab" data-step aria-controls="ab-p1" id="ab-t1">
-            <span class="koop-flow__node">2</span>
-            <span class="koop-flow__name">Brief &amp; Vertrag</span>
-          </button>
-          <button class="koop-flow__step" type="button" role="tab" data-step aria-controls="ab-p2" id="ab-t2">
-            <span class="koop-flow__node">3</span>
-            <span class="koop-flow__name">Production</span>
-          </button>
-          <button class="koop-flow__step" type="button" role="tab" data-step aria-controls="ab-p3" id="ab-t3">
-            <span class="koop-flow__node">4</span>
-            <span class="koop-flow__name">Live</span>
-          </button>
-          <button class="koop-flow__step koop-flow__step--pay" type="button" role="tab" data-step aria-controls="ab-p4" id="ab-t4">
-            <span class="koop-flow__node"><svg viewBox="0 0 24 24" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M6 21V11"/><path d="M12 21V4"/><path d="M18 21v-7"/></svg></span>
-            <span class="koop-flow__name">Insights-Report</span>
-          </button>
-        </div>
+            <button class="koop-flow__step" type="button" data-step data-target="ab-p0" aria-label="Zu Etappe 1: Anfrage">
+              <span class="koop-flow__node">1</span>
+              <span class="koop-flow__name">Anfrage</span>
+            </button>
+            <button class="koop-flow__step" type="button" data-step data-target="ab-p1" aria-label="Zu Etappe 2: Brief und Vertrag">
+              <span class="koop-flow__node">2</span>
+              <span class="koop-flow__name">Brief &amp; Vertrag</span>
+            </button>
+            <button class="koop-flow__step" type="button" data-step data-target="ab-p2" aria-label="Zu Etappe 3: Production">
+              <span class="koop-flow__node">3</span>
+              <span class="koop-flow__name">Production</span>
+            </button>
+            <button class="koop-flow__step" type="button" data-step data-target="ab-p3" aria-label="Zu Etappe 4: Live">
+              <span class="koop-flow__node">4</span>
+              <span class="koop-flow__name">Live</span>
+            </button>
+            <button class="koop-flow__step koop-flow__step--pay" type="button" data-step data-target="ab-p4" aria-label="Zu Etappe 5: Insights-Report">
+              <span class="koop-flow__node"><svg viewBox="0 0 24 24" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M6 21V11"/><path d="M12 21V4"/><path d="M18 21v-7"/></svg></span>
+              <span class="koop-flow__name">Insights-Report</span>
+            </button>
+          </div>
+        </nav>
 
-        <div class="koop-flow__panels">
-          <div class="koop-ab-panel" data-panel data-big="01" id="ab-p0" role="tabpanel" aria-labelledby="ab-t0">
+        <ol class="koop-flow__panels">
+          <li class="koop-ab-panel" data-panel data-big="01" id="ab-p0">
             <p class="koop-ab-idx">Etappe 01 / 05</p>
             <div class="koop-ab-headrow"><h3 class="koop-ab-title">Anfrage</h3><span class="koop-ab-time">Heute</span></div>
             <p class="koop-ab-desc">Form oder DM: Brand, Idee, Zeitrahmen, Budget-Range. Du bekommst <strong>persönlich Antwort</strong> — kein Agentur-Filter dazwischen.</p>
-          </div>
-          <div class="koop-ab-panel" data-panel data-big="02" id="ab-p1" role="tabpanel" aria-labelledby="ab-t1">
+          </li>
+          <li class="koop-ab-panel" data-panel data-big="02" id="ab-p1">
             <p class="koop-ab-idx">Etappe 02 / 05</p>
             <div class="koop-ab-headrow"><h3 class="koop-ab-title">Brief &amp; Vertrag</h3><span class="koop-ab-time">3–5 Tage</span></div>
             <p class="koop-ab-desc">Kurzer Call wenn nötig. Danach steht das Briefing-Doc — <strong>Honorar &amp; Timeline fix</strong>, schwarz auf weiß.</p>
-          </div>
-          <div class="koop-ab-panel" data-panel data-big="03" id="ab-p2" role="tabpanel" aria-labelledby="ab-t2">
+          </li>
+          <li class="koop-ab-panel" data-panel data-big="03" id="ab-p2">
             <p class="koop-ab-idx">Etappe 03 / 05</p>
             <div class="koop-ab-headrow"><h3 class="koop-ab-title">Production</h3><span class="koop-ab-time">5–10 Tage</span></div>
             <p class="koop-ab-desc">Ich produziere, du siehst den Draft. <strong>Eine Feedback-Runde</strong> ist drin — in meiner Voice, damit's echt bleibt.</p>
-          </div>
-          <div class="koop-ab-panel" data-panel data-big="04" id="ab-p3" role="tabpanel" aria-labelledby="ab-t3">
+          </li>
+          <li class="koop-ab-panel" data-panel data-big="04" id="ab-p3">
             <p class="koop-ab-idx">Etappe 04 / 05</p>
             <div class="koop-ab-headrow"><h3 class="koop-ab-title">Live</h3><span class="koop-ab-time">Wunschtermin</span></div>
             <p class="koop-ab-desc">Live-Schaltung zur abgestimmten Zeit, <strong>Story-Push am selben Tag</strong>. Dein Produkt landet bei meinen Leuten.</p>
-          </div>
-          <div class="koop-ab-panel koop-ab-panel--pay" data-panel data-big="05" id="ab-p4" role="tabpanel" aria-labelledby="ab-t4">
+          </li>
+          <li class="koop-ab-panel koop-ab-panel--pay" data-panel data-big="05" id="ab-p4">
             <p class="koop-ab-idx">Etappe 05 / 05 · Der Payoff</p>
             <div class="koop-ab-headrow"><h3 class="koop-ab-title">Insights-Report</h3><span class="koop-ab-time">nach 7 Tagen</span></div>
             <p class="koop-ab-desc">Reach, Impressions, Engagement, <strong>Saves &amp; Shares</strong> — direkt aus Instagram. Schwarz auf weiß, was es gebracht hat.</p>
             <span class="koop-ab-paytag">Dein ROI-Beweis</span>
-          </div>
-        </div>
-
-        <div class="koop-flow__nav">
-          <span class="koop-flow__ticks" aria-hidden="true"><i data-tick></i><i data-tick></i><i data-tick></i><i data-tick></i><i data-tick></i></span>
-          <span class="koop-flow__hint">Etappe antippen</span>
-          <span class="koop-flow__btns">
-            <button type="button" data-nav="prev" aria-label="Vorherige Etappe"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
-            <button type="button" data-nav="next" aria-label="Nächste Etappe"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
-          </span>
-        </div>
+          </li>
+        </ol>
       </div>
       <p class="koop-tl-note">Von Anfrage bis Live: <strong>~10–14 Tage</strong>. Long-Term-Partnerships starten sofort und laufen 3 Monate — Report dann monatlich.</p>
     </section>
@@ -793,24 +790,26 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
       </div>
     </section>
 
-    <!-- 6 · CTA -->
-    <section class="koop-sec koop-ready rv" id="anfrage" aria-labelledby="ready-title">
-      <div class="koop-cream" data-light>
-        <div class="koop-head">
-          <p class="kicker">Los geht's</p>
-          <h2 id="ready-title">So startet's.</h2>
-        </div>
-        <p class="koop-body">Schreib kurz, was deine Brand macht und wie du dir die Zusammenarbeit vorstellst — du bekommst eine persönliche Antwort, direkt von mir.</p>
-        <p class="koop-ready-cta">
-          <a class="th-btn th-btn--gelb th-btn--lg" href="/anfrage.html"><svg class="koop-ic-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg> Anfrage senden →</a>
-        </p>
-        <p class="koop-ready-alt">Lieber locker per DM? <a href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">@vegetarianhulk auf Insta →</a></p>
-        <p class="koop-ready-meta">Aktive Partner-Kooperationen mit Rabattcode liste ich öffentlich auf <a href="/partner-picks/">vegetarianhulk.de/partner-picks</a>.</p>
-        <div class="koop-sign">
-          <img class="koop-sign__mascot" src="/assets/img/smashy-maskottchen.png" alt="Smashy, das VegetarianHulk-Maskottchen" loading="lazy">
-          <div>
-            <p class="hand">Freu mich auf deine Nachricht. — Sebi</p>
-            <p class="date">VegetarianHulk · @vegetarianhulk</p>
+    <!-- 6 · CTA — dunkler, fotografischer Schluss-Moment -->
+    <section class="koop-sec koop-close rv" id="anfrage" aria-labelledby="ready-title">
+      <div class="koop-close__card">
+        <img class="koop-close__photo" src="/berg-starter/img/sebi-poles.jpg" alt="" width="768" height="1024" loading="lazy" decoding="async" aria-hidden="true">
+        <div class="koop-close__scrim" aria-hidden="true"></div>
+        <div class="koop-close__inner">
+          <p class="koop-close__k">Los geht's</p>
+          <h2 id="ready-title">Bring dein Produkt <em>an den Berg.</em></h2>
+          <p class="koop-close__lead">Schreib kurz, was deine Brand macht und wie du dir die Zusammenarbeit vorstellst — du bekommst eine <strong>persönliche Antwort, direkt von mir</strong>.</p>
+          <p>
+            <a class="th-btn th-btn--gelb th-btn--lg" href="/anfrage.html">Anfrage senden →</a>
+          </p>
+          <p class="koop-close__alt">Lieber locker per DM? <a href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">@vegetarianhulk auf Insta →</a></p>
+          <p class="koop-close__meta">Aktive Partner-Kooperationen mit Rabattcode liste ich öffentlich auf <a href="/partner-picks/">vegetarianhulk.de/partner-picks</a>.</p>
+          <div class="koop-sign">
+            <img class="koop-sign__mascot" src="/assets/img/smashy-maskottchen.png" alt="Smashy, das VegetarianHulk-Maskottchen" width="60" height="60" loading="lazy">
+            <div>
+              <p class="hand">Freu mich auf deine Nachricht. — Sebi</p>
+              <p class="date">VegetarianHulk · @vegetarianhulk</p>
+            </div>
           </div>
         </div>
       </div>
@@ -882,56 +881,59 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
   } else { nums.forEach(run); }
 })();
 
-/* Walkable Ablauf — antippbarer Etappen-Walk (Tabs + Progress-Fill) */
+/* Scroll-driven Ablauf — Etappen aktivieren beim Durchscrollen (IntersectionObserver) */
 (function () {
   'use strict';
   var root = document.querySelector('[data-ablauf]');
   if (!root) return;
-  var tabs = Array.prototype.slice.call(root.querySelectorAll('[data-step]'));
+  var steps = Array.prototype.slice.call(root.querySelectorAll('[data-step]'));
   var panels = Array.prototype.slice.call(root.querySelectorAll('[data-panel]'));
-  var ticks = Array.prototype.slice.call(root.querySelectorAll('[data-tick]'));
   var fill = root.querySelector('[data-fill]');
-  var prev = root.querySelector('[data-nav="prev"]');
-  var next = root.querySelector('[data-nav="next"]');
-  var n = tabs.length;
-  if (!n || panels.length !== n) return;
-  var cur = 0, maxSeen = 0;
+  var n = panels.length;
+  if (!n || steps.length !== n) return;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var maxSeen = 0, cur = -1;
 
-  function show(i, focus) {
-    i = Math.max(0, Math.min(n - 1, i));
+  function setActive(i) {
+    if (i === cur) return;
     cur = i;
     if (i > maxSeen) maxSeen = i;
-    tabs.forEach(function (t, k) {
-      t.classList.toggle('is-active', k === i);
-      t.classList.toggle('is-done', k <= maxSeen);
-      t.setAttribute('aria-selected', k === i ? 'true' : 'false');
-      t.tabIndex = k === i ? 0 : -1;
+    steps.forEach(function (s, k) {
+      s.classList.toggle('is-active', k === i);
+      s.classList.toggle('is-done', k <= maxSeen);
+      s.setAttribute('aria-current', k === i ? 'step' : 'false');
     });
-    panels.forEach(function (p, k) {
-      var on = k === i;
-      p.classList.toggle('is-in', on);
-      p.setAttribute('aria-hidden', on ? 'false' : 'true');
-    });
-    ticks.forEach(function (t, k) { t.classList.toggle('on', k <= i); });
+    panels.forEach(function (p, k) { p.classList.toggle('is-in', k === i); });
     if (fill) fill.style.setProperty('--fill', (maxSeen / (n - 1)).toFixed(4));
-    if (prev) prev.disabled = i === 0;
-    if (next) next.disabled = i === n - 1;
-    if (focus) tabs[i].focus();
   }
 
-  tabs.forEach(function (t, i) {
-    t.addEventListener('click', function () { show(i); });
-    t.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); show(i + 1, true); }
-      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); show(i - 1, true); }
-      else if (e.key === 'Home') { e.preventDefault(); show(0, true); }
-      else if (e.key === 'End') { e.preventDefault(); show(n - 1, true); }
+  /* Node antippen → sanft zur Etappe scrollen (Tastatur-fähig) */
+  steps.forEach(function (s, i) {
+    s.addEventListener('click', function () {
+      var id = s.getAttribute('data-target');
+      var target = id && document.getElementById(id);
+      if (target) target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      else setActive(i);
     });
   });
-  if (prev) prev.addEventListener('click', function () { show(cur - 1); });
-  if (next) next.addEventListener('click', function () { show(cur + 1); });
 
-  show(0);
+  if (!('IntersectionObserver' in window)) {
+    maxSeen = n - 1;
+    panels.forEach(function (p) { p.classList.add('is-in'); });
+    setActive(n - 1);
+    return;
+  }
+
+  setActive(0);
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) {
+        var idx = panels.indexOf(en.target);
+        if (idx > -1) setActive(idx);
+      }
+    });
+  }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+  panels.forEach(function (p) { io.observe(p); });
 })();
 </script>
 </body>
