@@ -23,7 +23,6 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type":"Question","name":"Wie schnell läuft eine Kooperation durch?","acceptedAnswer":{"@type":"Answer","text":"Standardfall: ~10-14 Tage von Anfrage bis Live (3-5 Tage Brief + 5-10 Tage Production + Posting). Long-Term-Partnerships starten bei der ersten Anfrage und laufen 3 Monate."}},
     {"@type":"Question","name":"Bekomme ich Performance-Reports nach dem Posting?","acceptedAnswer":{"@type":"Answer","text":"Ja, nach 7 Tagen Insights-Report direkt aus Instagram: Reach, Impressions, Engagement-Rate, Saves, Shares, Stories-Outbound. Bei Long-Term-Partnership monatlich."}},
     {"@type":"Question","name":"Was wenn das Reel nicht performt wie erhofft?","acceptedAnswer":{"@type":"Answer","text":"Keine Erfolgs-Garantie. Aber Re-Use-Optionen sind im Paket: Reel als Story-Boost recyceln, alternative Caption testen oder organischer Repost nach 2-4 Wochen."}}
   ]
@@ -164,73 +163,80 @@
 .koop-veggie { display: inline-block; font-family: var(--mono); font-weight: 700; color: var(--leaf);
   font-variant-numeric: tabular-nums; letter-spacing: 0.3px; white-space: nowrap; }
 
-/* ---- Pakete (Creme-Tiles) ---- */
-/* Leistungen als editoriale Tarif-Liste (statt Emoji-Karten-Raster) */
-/* ---- Leistungen: Hero-Paket (empfohlen) + à-la-carte-Menü ---- */
+/* ---- Pakete: value-forward (Deliverables führen, Preis sekundär) ---- */
 .koop-tiers { margin-top: 26px; }
 
-/* Hero: das empfohlene Long-Term-Paket als herausgehobene dunkle Karte */
+/* Hero: das empfohlene Long-Term-Paket — premium, herausgehoben */
 .koop-pkg-hero { position: relative; overflow: hidden; border-radius: 18px;
-  padding: clamp(24px, 3vw, 34px); display: grid; grid-template-columns: 1fr auto;
-  align-items: end; gap: 22px 30px;
-  background: linear-gradient(152deg, #143a24 0%, #0a2417 76%);
-  box-shadow: inset 0 1px 0 rgba(209,242,235,0.09), 0 26px 54px -28px rgba(0,0,0,0.6);
+  padding: clamp(26px, 3.4vw, 40px);
+  background: linear-gradient(152deg, #164027 0%, #0a2417 78%);
+  box-shadow: inset 0 1px 0 rgba(209,242,235,0.1), 0 30px 60px -30px rgba(0,0,0,0.62);
   transition: transform 550ms var(--ease-lux), box-shadow 550ms var(--ease-lux); }
 .koop-pkg-hero::after { content: ""; position: absolute; inset: 0; background-image: var(--grain);
   opacity: 0.4; mix-blend-mode: overlay; pointer-events: none; }
-.koop-pkg-hero:hover { transform: translateY(-3px);
-  box-shadow: inset 0 1px 0 rgba(209,242,235,0.12), 0 34px 64px -28px rgba(0,0,0,0.66); }
+.koop-pkg-hero:hover { transform: translateY(-4px);
+  box-shadow: inset 0 1px 0 rgba(209,242,235,0.14), 0 40px 74px -30px rgba(0,0,0,0.7); }
 .koop-pkg-hero > * { position: relative; z-index: 1; }
-.koop-pkg-flag { display: inline-flex; align-items: center; font-family: var(--mono); font-size: 8.5px;
+.koop-pkg-flag { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 8.5px;
   font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #14100A;
-  background: linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%); padding: 5px 13px 5px 10px;
-  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%);
+  background: linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%); padding: 5px 13px; border-radius: 20px;
   filter: drop-shadow(0 1px 0 rgba(255,255,255,0.35)) drop-shadow(0 4px 8px rgba(0,0,0,0.35)); }
-.koop-pkg-name { margin: 14px 0 0; font-family: 'Playfair Display', serif; font-weight: 700;
-  font-size: clamp(26px, 3.4vw, 34px); line-height: 1.05; color: var(--paper); }
-.koop-pkg-meta { margin-top: 7px; font-family: var(--mono); font-size: 10px; font-weight: 700;
+.koop-pkg-name { margin: 15px 0 0; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(27px, 3.4vw, 35px); line-height: 1.04; color: var(--paper); }
+.koop-pkg-meta { margin-top: 8px; font-family: var(--mono); font-size: 10px; font-weight: 700;
   letter-spacing: 1.4px; text-transform: uppercase; color: var(--leaf); }
-.koop-pkg-desc { margin-top: 12px; font-size: 14.5px; line-height: 1.6; color: var(--paper-dim); max-width: 42ch; }
-.koop-pkg-pricewrap { text-align: right; white-space: nowrap; }
-.koop-pkg-pricewrap .lbl { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
-  text-transform: uppercase; color: var(--paper-faint); }
-.koop-pkg-pricewrap b { display: block; margin-top: 4px; font-family: 'Playfair Display', serif; font-weight: 700;
-  font-size: clamp(40px, 6vw, 58px); line-height: 0.92; letter-spacing: -1.5px; color: var(--paper); }
-.koop-pkg-pricewrap small { display: block; margin-top: 4px; font-family: var(--mono); font-size: 11px;
-  font-weight: 600; letter-spacing: 0.5px; color: var(--leaf); }
+.koop-pkg-desc { margin-top: 13px; font-size: 14.5px; line-height: 1.6; color: var(--paper-dim); max-width: 50ch; }
 
-/* Menü: die drei Einzel-Optionen */
-.koop-menu-lbl { display: flex; align-items: center; gap: 12px; margin: 30px 0 4px;
+/* Deliverables-Checkliste (Wert führt) */
+.koop-deliv-lbl { margin-top: 22px; font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 1.8px; text-transform: uppercase; color: var(--paper-faint); }
+.koop-deliv { list-style: none; padding: 0; margin: 13px 0 0; display: grid; gap: 11px 22px;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.koop-deliv li { display: grid; grid-template-columns: auto 1fr; gap: 11px; align-items: start;
+  font-size: 14px; line-height: 1.45; color: var(--paper); }
+.koop-deliv li b { color: var(--paper); font-weight: 700; }
+.koop-deliv svg { width: 18px; height: 18px; stroke: var(--leaf); fill: none; flex: 0 0 auto; margin-top: 1px; }
+
+/* Preis — klein, sekundär, unten */
+.koop-pkg-foot { margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(126,208,155,0.16);
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 14px; }
+.koop-pkg-price { font-family: var(--mono); font-size: 12.5px; font-weight: 700; letter-spacing: 0.5px;
+  color: var(--paper-dim); }
+.koop-pkg-price b { color: var(--paper); }
+.koop-pkg-price .cur { color: var(--paper-faint); font-weight: 600; text-transform: uppercase;
+  font-size: 10px; letter-spacing: 1.2px; margin-right: 3px; }
+.koop-pkg-hint { font-family: var(--mono); font-size: 9.5px; font-weight: 600; letter-spacing: 0.9px;
+  text-transform: uppercase; color: var(--paper-faint); }
+
+/* À-la-carte: drei value-forward Karten auf Creme */
+.koop-menu-lbl { display: flex; align-items: center; gap: 12px; margin: 30px 0 14px;
   font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
   color: rgba(24,43,31,0.5); }
 .koop-menu-lbl::after { content: ""; flex: 1; height: 1px; background: rgba(24,43,31,0.16); }
-.koop-menu { border-top: 1px solid rgba(24,43,31,0.14); }
-.koop-tier { position: relative; display: grid; align-items: baseline;
-  grid-template-columns: 1fr auto; column-gap: 24px;
-  padding: 20px 6px 20px 0; border-bottom: 1px solid rgba(24,43,31,0.12);
-  transition: padding-left 450ms var(--ease-lux), background 450ms var(--ease-lux); }
-.koop-tier:hover { padding-left: 12px; background: linear-gradient(90deg, rgba(11,110,79,0.05), transparent 72%); }
-.koop-tier-name { font-family: 'Playfair Display', serif; font-weight: 600; font-size: clamp(19px, 2.2vw, 23px);
-  line-height: 1.12; color: #14281C; }
-.koop-tier-meta { margin-top: 5px; font-family: var(--mono); font-size: 9.5px; font-weight: 700;
-  letter-spacing: 1.4px; text-transform: uppercase; color: rgba(24,43,31,0.5); }
-.koop-tier-desc { margin-top: 9px; font-size: 13.5px; line-height: 1.55; color: rgba(24,43,31,0.75); max-width: 48ch; }
-.koop-tier-price { font-family: 'Playfair Display', serif; font-size: 14px; color: rgba(24,43,31,0.5);
-  text-align: right; white-space: nowrap; padding-top: 2px; }
-.koop-tier-price b { display: block; font-weight: 700; font-size: clamp(22px, 2.6vw, 27px);
-  letter-spacing: -0.5px; color: var(--royal); }
-.koop-price-note { margin-top: 18px; font-family: var(--mono); font-size: 10px; line-height: 1.6;
+.koop-offers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.koop-offer { position: relative; display: flex; flex-direction: column; padding: 22px 22px 20px;
+  border-radius: 14px; border: 1px solid rgba(24,43,31,0.08);
+  background: linear-gradient(158deg, #FBF6EA, #F2E9D3);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 16px 34px -24px rgba(20,40,28,0.5);
+  transition: transform 500ms var(--ease-lux), box-shadow 500ms var(--ease-lux); }
+.koop-offer:hover { transform: translateY(-4px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 26px 46px -24px rgba(20,40,28,0.55); }
+.koop-offer-name { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 21px;
+  line-height: 1.1; color: #14281C; }
+.koop-offer-meta { margin-top: 6px; font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 1.3px; text-transform: uppercase; color: rgba(24,43,31,0.5); }
+.koop-offer-check { list-style: none; padding: 0; margin: 15px 0 0; display: grid; gap: 9px; }
+.koop-offer-check li { display: grid; grid-template-columns: auto 1fr; gap: 9px; align-items: start;
+  font-size: 13px; line-height: 1.42; color: rgba(24,43,31,0.82); }
+.koop-offer-check li b { color: #14281C; font-weight: 700; }
+.koop-offer-check svg { width: 15px; height: 15px; stroke: var(--royal); fill: none; flex: 0 0 auto; margin-top: 2px; }
+.koop-offer-foot { margin-top: auto; padding-top: 16px; }
+.koop-offer-price { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.8px;
+  text-transform: uppercase; color: rgba(24,43,31,0.5); }
+.koop-offer-price b { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700;
+  color: var(--royal); letter-spacing: -0.3px; text-transform: none; margin-left: 2px; }
+.koop-price-note { margin-top: 20px; font-family: var(--mono); font-size: 10px; line-height: 1.6;
   letter-spacing: 0.4px; color: rgba(24,43,31,0.55); }
-
-/* First-Brand-Bonus — Gold-akzentuierte Sub-Karte auf Creme */
-.koop-bonus { margin-top: 22px; padding: 22px 24px; border-radius: 14px; position: relative; overflow: hidden;
-  background: linear-gradient(158deg, #14281C, #061c12);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 16px 34px -20px rgba(0,0,0,0.6); }
-.koop-bonus-eyebrow { font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 1.8px;
-  text-transform: uppercase; color: var(--gold); }
-.koop-bonus-title { margin-top: 8px; font-family: 'Playfair Display', serif; font-weight: 600;
-  font-size: clamp(18px, 2.4vw, 22px); line-height: 1.2; color: var(--paper); }
-.koop-bonus-body { margin-top: 8px; font-size: 13.5px; line-height: 1.6; color: var(--paper-dim); max-width: 52ch; }
 
 /* ---- Mid-CTA-Band (dunkel) ---- */
 .koop-cta-band { margin-top: 80px; text-align: center; display: flex; flex-direction: column;
@@ -239,7 +245,7 @@
   font-size: clamp(22px, 3.4vw, 30px); color: var(--paper); }
 
 /* ---- Reichweite: editorial Zahlen (dunkel) ---- */
-.koop-reach-figs { margin-top: 28px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.koop-reach-figs { margin-top: 24px; display: grid; grid-template-columns: repeat(2, minmax(0, 210px)); gap: 14px 44px; }
 .koop-reach-fig { border-top: 1px solid rgba(243,235,217,0.16); padding-top: 12px; }
 .koop-reach-fig .koop-rf-num { display: block; font-family: 'Playfair Display', serif; font-weight: 700;
   font-size: clamp(26px, 3.6vw, 38px); line-height: 1; letter-spacing: -1px; color: var(--leaf); }
@@ -324,14 +330,12 @@
 .koop-ready-meta a { color: var(--royal); font-weight: 700; border-bottom: 1px solid rgba(11,110,79,0.4); }
 
 /* ---- Responsive ---- */
+@media (max-width: 860px) {
+  .koop-offers { grid-template-columns: 1fr; }
+}
 @media (max-width: 720px) {
   .koop-cards { grid-template-columns: 1fr; }
-  .koop-pkg-hero { grid-template-columns: 1fr; align-items: start; gap: 18px; }
-  .koop-pkg-pricewrap { text-align: left; }
-  .koop-pkg-pricewrap b { display: inline-block; }
-  .koop-tier { grid-template-columns: 1fr; row-gap: 4px; }
-  .koop-tier-price { text-align: left; margin-top: 10px; }
-  .koop-tier-price b { display: inline; }
+  .koop-deliv { grid-template-columns: 1fr; }
   .koop-fig-row { grid-template-columns: 1fr; }
   .koop-reach-figs { grid-template-columns: 1fr 1fr; }
 }
@@ -648,35 +652,25 @@
         Sie kaufen mit, lesen bis zum Schluss und vertrauen mir.
       </p>
       <p class="koop-themes-line">
-        <strong>Meine vier Themen:</strong> Disziplin · Faith · Vegetarisch-stark · Build-in-Public —
-        mehrmals pro Woche, dazu fast täglich Stories — 1st-person &amp; raw.
+        <strong>Vier Themen:</strong> Disziplin · Faith · Vegetarisch-stark · Build-in-Public —
+        mehrmals pro Woche, dazu fast täglich Stories. 1st-person &amp; raw.
       </p>
 
       <div class="koop-notiz">
         <b>Sebis Notiz</b>
-        <p>Ich sag ehrlich mehr Anfragen ab als ich mache. Wenn ich was zeig, nutz ich's auch privat — sonst merken's meine Leute sofort, und dann ist das Vertrauen weg. Das ist mir mehr wert als jeder schnelle Deal.</p>
+        <p>Ich sag mehr Anfragen ab als ich mache. Was ich zeig, nutz ich auch privat — sonst merken's meine Leute sofort, und dann ist das Vertrauen weg.</p>
       </div>
 
       <ul class="koop-cards">
         <li class="koop-card koop-card--live rv" style="--d: 0ms">
           <span class="koop-card-stat">10 Jahre</span>
           <h3 class="koop-card-head">Vegetarisch — live, jeden Tag</h3>
-          <p class="koop-card-body">Seit 15.08.2016 — heute <b class="koop-veggie" data-gb-tag>Tag …</b>, und zählt live weiter. Kein Trend-Hopping, kein Reset. Glaubwürdigkeit aus Zeit.</p>
+          <p class="koop-card-body">Seit 15.08.2016 — heute <b class="koop-veggie" data-gb-tag>Tag …</b>, zählt live weiter. Kein Trend-Hopping, kein Reset. Glaubwürdigkeit aus Zeit.</p>
         </li>
         <li class="koop-card rv" style="--d: 90ms">
-          <span class="koop-card-stat">DACH</span>
-          <h3 class="koop-card-head">Kein Streuverlust</h3>
-          <p class="koop-card-body">Meine Leute sitzen im deutschsprachigen Raum — kein DACH-USA-Mix. Wenn DACH dein Markt ist, passt's.</p>
-        </li>
-        <li class="koop-card rv" style="--d: 180ms">
-          <span class="koop-card-stat">18–34</span>
-          <h3 class="koop-card-head">Junger Kern</h3>
-          <p class="koop-card-body">Mein Kern ist jung und kaufkräftig, eher männlich geprägt — die Zielgruppe, die Disziplin, Berg und ehrlichen Content lebt.</p>
-        </li>
-        <li class="koop-card rv" style="--d: 270ms">
           <span class="koop-card-stat">Loyal</span>
           <h3 class="koop-card-head">Christ-Foundation</h3>
-          <p class="koop-card-body">Bibel als Anker, Glaube als Kompass. Meine Leute vertrauen mir grad bei Faith-Themen — da bin ich echt, nicht performativ.</p>
+          <p class="koop-card-body">Bibel als Anker, Glaube als Kompass. Grad bei Faith-Themen vertrauen mir meine Leute — echt, nicht performativ.</p>
         </li>
       </ul>
     </section>
@@ -691,42 +685,56 @@
         <p class="koop-body">Startpunkte für die Zusammenarbeit — der finale Preis ist immer individuell, je nach Aufwand, Umfang und Laufzeit.</p>
 
         <div class="koop-tiers">
-          <!-- Empfohlen: herausgehobenes Hero-Paket -->
+          <!-- Empfohlen: Long-Term-Partnership — Deliverables führen, Preis sekundär -->
           <div class="koop-pkg-hero rv">
-            <div class="koop-pkg-main">
-              <span class="koop-pkg-flag">Empfohlen</span>
-              <h3 class="koop-pkg-name">Long-Term-Partnership</h3>
-              <p class="koop-pkg-meta">3 Monate · 4–6 Posts/Mo</p>
-              <p class="koop-pkg-desc">Echte Integration in meinen Alltag — die Brand wird Teil meiner Story, nicht „Werbung im Kalender". Hier entsteht der Effekt, den One-Shots nicht liefern.</p>
+            <span class="koop-pkg-flag">★ Empfohlen</span>
+            <h3 class="koop-pkg-name">Long-Term-Partnership</h3>
+            <p class="koop-pkg-meta">3 Monate · 4–6 Posts / Monat</p>
+            <p class="koop-pkg-desc">Echte Integration in meinen Alltag — die Brand wird Teil meiner Story, nicht „Werbung im Kalender". Hier entsteht der Effekt, den One-Shots nicht liefern.</p>
+            <p class="koop-deliv-lbl">Das bekommst du</p>
+            <ul class="koop-deliv">
+              <li><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><b>4–6 Posts pro Monat</b>, über 3 Monate laufend</span></li>
+              <li><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Echte Integration statt Einzel-Werbung</span></li>
+              <li><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><b>Insights-Report monatlich</b> — dein ROI schwarz auf weiß</span></li>
+              <li><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Re-Use-Optionen inklusive</span></li>
+            </ul>
+            <div class="koop-pkg-foot">
+              <span class="koop-pkg-price"><span class="cur">ab</span><b>1.500&nbsp;€</b> / Monat</span>
+              <span class="koop-pkg-hint">Laufzeit 3 Monate</span>
             </div>
-            <p class="koop-pkg-pricewrap"><span class="lbl">ab</span><b>1.500&nbsp;€</b><small>pro Monat</small></p>
           </div>
 
-          <p class="koop-menu-lbl">Oder einzeln</p>
-          <div class="koop-menu">
-            <div class="koop-tier rv" style="--d: 0ms">
-              <div class="koop-tier-main">
-                <p class="koop-tier-name">Story-Set</p>
-                <p class="koop-tier-meta">5–7 Slides · 24 h live</p>
-                <p class="koop-tier-desc">Story-Reihe zu deinem Produkt — in meiner Voice, mit klarem Mehrwert für meine Audience.</p>
-              </div>
-              <p class="koop-tier-price">ab <b>250&nbsp;€</b></p>
+          <p class="koop-menu-lbl">Oder einzeln buchen</p>
+          <div class="koop-offers">
+            <div class="koop-offer rv" style="--d: 0ms">
+              <p class="koop-offer-name">Story-Set</p>
+              <p class="koop-offer-meta">5–7 Slides · 24 h live</p>
+              <ul class="koop-offer-check">
+                <li><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><b>5–7 Story-Slides</b> zu deinem Produkt</span></li>
+                <li><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>In meiner Voice, mit klarem Mehrwert</span></li>
+                <li><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>24 h live in meinen Stories</span></li>
+              </ul>
+              <div class="koop-offer-foot"><p class="koop-offer-price">ab <b>250&nbsp;€</b></p></div>
             </div>
-            <div class="koop-tier rv" style="--d: 90ms">
-              <div class="koop-tier-main">
-                <p class="koop-tier-name">Reel-Feature</p>
-                <p class="koop-tier-meta">1 Reel · +24 h Story-Boost</p>
-                <p class="koop-tier-desc">Skript gemeinsam abgestimmt, Schnitt selbstgemacht. Reel + 1 Story-Push am Reel-Tag.</p>
-              </div>
-              <p class="koop-tier-price">ab <b>600&nbsp;€</b></p>
+            <div class="koop-offer rv" style="--d: 90ms">
+              <p class="koop-offer-name">Reel-Feature</p>
+              <p class="koop-offer-meta">1 Reel · +24 h Story-Boost</p>
+              <ul class="koop-offer-check">
+                <li><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><b>1 Reel</b> — Skript gemeinsam abgestimmt</span></li>
+                <li><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Schnitt selbstgemacht, in meiner Voice</span></li>
+                <li><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><b>+24 h Story-Push</b> am Reel-Tag</span></li>
+              </ul>
+              <div class="koop-offer-foot"><p class="koop-offer-price">ab <b>600&nbsp;€</b></p></div>
             </div>
-            <div class="koop-tier rv" style="--d: 180ms">
-              <div class="koop-tier-main">
-                <p class="koop-tier-name">Custom</p>
-                <p class="koop-tier-meta">Nach Bedarf</p>
-                <p class="koop-tier-desc">Event-Coverage, Test-Drive, Live-Story von einem Brand-Day — schreib's in die Anfrage.</p>
-              </div>
-              <p class="koop-tier-price">auf&nbsp;<b>Anfrage</b></p>
+            <div class="koop-offer rv" style="--d: 180ms">
+              <p class="koop-offer-name">Custom</p>
+              <p class="koop-offer-meta">Nach Bedarf</p>
+              <ul class="koop-offer-check">
+                <li><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Event-Coverage oder Test-Drive</span></li>
+                <li><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Live-Story von einem Brand-Day</span></li>
+                <li><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Auf dein Ziel zugeschnitten</span></li>
+              </ul>
+              <div class="koop-offer-foot"><p class="koop-offer-price">auf <b>Anfrage</b></p></div>
             </div>
           </div>
         </div>
@@ -745,22 +753,21 @@
         <h2 id="reach-title">Wer mir <em>folgt.</em></h2>
       </div>
       <p class="koop-body-dark">
-        Aktuell folgen mir <strong>2.091</strong> Menschen — hauptsächlich aus der DACH-Region.
-        <strong>62,8% meiner Aufrufe kommen von Nicht-Followern</strong> — ich erreiche aktiv weit über meine eigene Bubble hinaus.
+        Klein, aber <strong>echt</strong>: kein DACH-USA-Mix, keine gekauften Zahlen.
+        Meine Leute sind jung, sitzen im deutschsprachigen Raum — und <strong>sie kaufen mit</strong>.
       </p>
 
       <div class="koop-reach-figs">
         <div class="koop-reach-fig rv" style="--d: 0ms"><span class="koop-rf-num" data-count="2091">2.091</span><span class="koop-rf-label">Follower</span></div>
-        <div class="koop-reach-fig rv" style="--d: 90ms"><span class="koop-rf-num" data-count="101397">101.397</span><span class="koop-rf-label">Aufrufe (30 Tage)</span></div>
-        <div class="koop-reach-fig rv" style="--d: 180ms"><span class="koop-rf-num" data-count="35515">35.515</span><span class="koop-rf-label">erreichte Konten</span></div>
-        <div class="koop-reach-fig rv" style="--d: 270ms"><span class="koop-rf-num" data-count="55937">55.937</span><span class="koop-rf-label">Reel-Aufrufe</span></div>
+        <div class="koop-reach-fig rv" style="--d: 90ms"><span class="koop-rf-num" data-count="55937">55.937</span><span class="koop-rf-label">Reel-Aufrufe (30 Tage)</span></div>
       </div>
 
       <p class="koop-sub-h">Wer das ist</p>
-      <p class="koop-body-dark" style="margin-top: 8px;">
-        Hauptsächlich <strong>DACH</strong>, junger Kern (<strong>18–34</strong>), eher männlich geprägt —
-        Menschen, die Disziplin, Berg und ehrlichen Content mögen.
-      </p>
+      <div class="koop-pills">
+        <span class="koop-pill"><b>DACH</b> · deutschsprachiger Raum</span>
+        <span class="koop-pill"><b>18–34</b> · junger, kaufkräftiger Kern</span>
+        <span class="koop-pill">eher <b>männlich</b> geprägt</span>
+      </div>
 
       <p class="koop-sub-h">Aufrufe nach Format</p>
       <div class="koop-pills">
@@ -769,10 +776,6 @@
         <span class="koop-pill">Beiträge 7%</span>
       </div>
 
-      <p class="koop-body-dark" style="margin-top: 24px;">
-        Kurz gesagt: klein, aber <strong>echt</strong> — jung, DACH, und aktiv über die eigene Bubble hinaus.
-        Genau die Leute, die wirklich zuhören statt nur durchzuscrollen.
-      </p>
       <p class="koop-meta">
         Alle Zahlen aus Instagram-Insights · <strong>letzte 30 Tage</strong>.
       </p>
@@ -786,7 +789,7 @@
           <h2 id="fit-title">Mit wem ich <em>gerne arbeite.</em></h2>
         </div>
         <p class="koop-body">
-          Offen für ehrliche Anfragen — egal ob Newcomer oder große Brand. Es zählt nur: passt's zu meinen Themen, passt's zu meiner Audience.
+          Offen für ehrliche Anfragen — Newcomer oder große Brand. Es zählt nur: passt's zu meinen Themen und meiner Audience?
         </p>
 
         <p class="koop-fit-h yes">✓ Themen die zu mir passen</p>
@@ -798,9 +801,7 @@
           <span class="koop-fit-pill">Habit / Discipline-Tools</span>
           <span class="koop-fit-pill">Journaling</span>
           <span class="koop-fit-pill">Coffee / No-Alcohol</span>
-          <span class="koop-fit-pill">Faith-Books</span>
-          <span class="koop-fit-pill">Bible-Apps</span>
-          <span class="koop-fit-pill">Vegetarier-freundliche Brands</span>
+          <span class="koop-fit-pill">Faith-Books &amp; Bible-Apps</span>
         </div>
 
         <p class="koop-fit-h no">✗ Lieber nicht</p>
@@ -812,7 +813,7 @@
           <span class="koop-fit-pill anti">Hard-Sell ohne Story</span>
         </div>
         <p class="koop-fit-foot">
-          Da bin ich raus — nicht wegen dir, sondern weil's nicht zu meiner Audience passt.
+          Passt's nicht, sag ich ehrlich ab — nicht wegen dir, sondern wegen meiner Audience.
         </p>
       </div>
     </section>
@@ -876,10 +877,6 @@
         <h2 id="faq-title">Häufige <em>Fragen.</em></h2>
       </div>
       <div class="koop-faq">
-        <details>
-          <summary>Wie schnell läuft eine Kooperation durch?</summary>
-          <div class="koop-faq-body">Standardfall: ~10-14 Tage von Anfrage bis Live (3-5 Tage Brief + 5-10 Tage Production + Posting). Long-Term-Partnerships starten bei der ersten Anfrage und laufen 3 Monate.</div>
-        </details>
         <details>
           <summary>Bekomme ich Performance-Reports nach dem Posting?</summary>
           <div class="koop-faq-body">Ja, nach 7 Tagen Insights-Report direkt aus Instagram: Reach, Impressions, Engagement-Rate, Saves, Shares, Stories-Outbound. Bei Long-Term-Partnership monatlich.</div>
