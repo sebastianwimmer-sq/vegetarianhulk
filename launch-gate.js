@@ -13,10 +13,10 @@
   'use strict';
   try {
     /* ===================== CONFIG (nur hier ändern) ===================== */
-    var LAUNCH_TS = Date.parse('2026-08-11T18:00:00+02:00'); // ⏰ PLATZHALTER — Wunsch-Datum
+    var LAUNCH_TS = Date.parse('2026-08-15T18:00:00+02:00'); // 🎂 Launch-Event zu Sebis Geburtstag
     var PREVIEW_SECRET = 'bergauf2026';                       // 🔑 ?vorschau=bergauf2026
     var ALLOWLIST = ['/impressum.html', '/datenschutz.html'];
-    var LAUNCH_LABEL = '11. August 2026, 18:00';
+    var LAUNCH_LABEL = '15. August 2026, 18:00';
     var NL_ENDPOINT = 'https://peaking-ai-api.peaking.workers.dev/newsletter/subscribe';
     var BG_IMAGE = 'https://vegetarianhulk.de/email-templates/assets/hero-berg-mail.jpg'; // echtes Bergfoto (live)
     /* =================================================================== */

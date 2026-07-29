@@ -395,12 +395,14 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .hero .cta { margin-bottom: 26px; }
 .closing .cta { margin-bottom: 26px; }
 /* Editorial-Pull-Quote (kein Side-Stripe-Slop, Playfair) */
-.quote { position: relative; margin: 96px auto 0; max-width: 34ch; padding-top: 34px; }
-.quote::before { content: "\201E"; position: absolute; top: -14px; left: -6px;
-  font-family: 'Playfair Display', serif; font-weight: 700; font-size: 92px; line-height: 1; color: rgba(126,208,155,0.24); }
+.quote { position: relative; margin: 52px auto 0; max-width: 42ch; padding-top: 44px; text-align: center; }
+.quote::before { content: "\201E"; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  font-family: 'Playfair Display', serif; font-weight: 700; font-size: 68px; line-height: 0.5; color: rgba(126,208,155,0.30); }
 .quote p { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 500;
-  font-size: clamp(21px, 3.2vw, 29px); line-height: 1.42; color: var(--paper-dim); }
-.quote strong { color: var(--paper); font-weight: 600; font-style: normal; }
+  font-size: clamp(20px, 2.4vw, 28px); line-height: 1.46; color: #D6E0D3; }
+.quote strong { color: #8FE0AC; font-weight: 600; font-style: normal; }
+.quote__by { display: block; margin-top: 26px; font-family: var(--mono); font-size: 11px; font-weight: 700;
+  letter-spacing: 2.2px; text-transform: uppercase; color: var(--leaf); }
 
 /* Hero-Scroll-Cue (Einladung nach unten) */
 .hero-scroll { display: flex; flex-direction: column; align-items: center; gap: 9px; width: max-content;
@@ -847,7 +849,7 @@ footer .legal a:hover { color: var(--paper); }
   .hero-copy { grid-column: 1; grid-row: 1; margin-top: 0; }
   .arch { grid-column: 2; grid-row: 1; width: min(100%, 420px); margin-inline: 0 auto; }
   .hero-rule { max-width: 320px; }
-  .quote { margin-top: 130px; max-width: 40ch; }
+  .quote { margin-top: 72px; max-width: 44ch; }
   .idx-row { grid-template-columns: 90px 260px 1fr; }
   .idx-row .num { grid-row: auto; }
   .idx-row p { justify-self: end; text-align: left; }
