@@ -1,12 +1,19 @@
 /* ============================================================
-   vh-forms — Brand-Anfrage-Endpoint für vegetarianhulk.de
-   POST /brand-inquiry  →  Mail via Brevo Transactional API
-   an info@vegetarianhulk.de (Ersatz für FormSubmit/US-Drittanbieter).
+   vh-forms — Formular-Endpoints für vegetarianhulk.de
+   POST /brand-inquiry        →  Mail via Brevo Transactional API
+                                 an info@vegetarianhulk.de
+   POST /newsletter/subscribe →  Double-Opt-In via Brevo Contacts API
+                                 (Bestätigungs-Mail = eigene Vorlage,
+                                 Kontakt landet erst NACH Klick in der Liste)
 
    Schutz: Honeypot (_honey) + best-effort Rate-Limit pro IP
    (in-memory pro Isolate — bewusst ohne KV, reicht gegen simple Bots).
    Ohne BREVO_API_KEY-Secret antwortet der Worker 503 — das Frontend
    fällt dann auf den mailto-Flow zurück.
+   Newsletter-Config in wrangler.toml [vars]:
+     NL_LIST_ID          Brevo-Listen-ID (z.B. 5)
+     NL_DOI_TEMPLATE_ID  ID der DOI-Vorlage („VH DOI Bestätigung")
+     NL_REDIRECT_URL     Ziel nach Bestätigungs-Klick
    ============================================================ */
 
 const ALLOWED_ORIGINS = new Set([
@@ -104,6 +111,55 @@ async function sendViaBrevo(apiKey, fields) {
   }
 }
 
+/* Double-Opt-In: Brevo verschickt unsere Bestätigungs-Vorlage; der Kontakt
+   landet erst nach dem Klick in der Liste. 2xx = Mail ist raus. */
+async function subscribeViaDoi(env, email) {
+  const res = await fetch('https://api.brevo.com/v3/contacts/doubleOptinConfirmation', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'api-key': env.BREVO_API_KEY },
+    body: JSON.stringify({
+      email,
+      includeListIds: [Number(env.NL_LIST_ID)],
+      templateId: Number(env.NL_DOI_TEMPLATE_ID),
+      redirectionUrl: env.NL_REDIRECT_URL || 'https://vegetarianhulk.de/',
+    }),
+  });
+  if (!res.ok) {
+    const detail = await res.text().catch(() => '');
+    throw new Error(`Brevo DOI ${res.status}: ${detail.slice(0, 200)}`);
+  }
+}
+
+async function handleNewsletter(request, env, origin) {
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ ok: false, error: 'invalid json' }, 400, origin);
+  }
+
+  // Honeypot: Bots bekommen ein stilles "ok" — keine Mail
+  if (cleanField(body._honey)) {
+    return json({ ok: true }, 200, origin);
+  }
+
+  const email = cleanField(body.email).toLowerCase();
+  if (!EMAIL_RE.test(email)) {
+    return json({ ok: false, error: 'Gültige E-Mail ist Pflicht.' }, 400, origin);
+  }
+  if (!env.BREVO_API_KEY || !Number(env.NL_DOI_TEMPLATE_ID) || !Number(env.NL_LIST_ID)) {
+    return json({ ok: false, error: 'newsletter not configured' }, 503, origin);
+  }
+
+  try {
+    await subscribeViaDoi(env, email);
+    return json({ ok: true }, 200, origin);
+  } catch (err) {
+    console.error('vh-forms newsletter failed:', err.message || err);
+    return json({ ok: false, error: 'Anmeldung fehlgeschlagen — bitte später nochmal.' }, 502, origin);
+  }
+}
+
 export default {
   async fetch(request, env) {
     const origin = request.headers.get('Origin') || '';
@@ -111,6 +167,13 @@ export default {
 
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: corsHeaders(origin) });
+    }
+    if (request.method === 'POST' && url.pathname === '/newsletter/subscribe') {
+      const nlIp = request.headers.get('CF-Connecting-IP') || 'unknown';
+      if (isRateLimited(nlIp)) {
+        return json({ ok: false, error: 'rate limited' }, 429, origin);
+      }
+      return handleNewsletter(request, env, origin);
     }
     if (request.method !== 'POST' || url.pathname !== '/brand-inquiry') {
       return json({ ok: false, error: 'not found' }, 404, origin);
