@@ -8,8 +8,7 @@ workers_dev = true
 
 [vars]
 NL_LIST_ID = "5"              # Brevo-Liste vegetarianhulk-discipline-reset (#5)
-NL_DOI_TEMPLATE_ID = "0"      # 0 = Worker legt die Vorlage selbst in Brevo an (self-provisioning)
-NL_REDIRECT_URL = "https://vegetarianhulk.de/"
+NL_REDIRECT_URL = "https://vegetarianhulk.de/"   # Ziel nach Bestätigungs-Klick
 
 # doi-template.html als Text importierbar machen (Quelle: email-templates/confirm-doi.html)
 [[rules]]

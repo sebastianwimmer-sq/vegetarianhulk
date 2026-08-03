@@ -150,8 +150,8 @@
 (function(){
   'use strict';
   var LAUNCH_TS = Date.parse('2026-08-15T18:00:00+02:00');
-  // Brevo-Formular "VH Launch Signup" — natives Double-Opt-In (Bestätigungsmail von Brevo)
-  var NL_ENDPOINT = 'https://087794f3.sibforms.com/serve/MUIFAEnWEiMaYiKzNt27_ZG6oxqNeBKazAQynEOJ_8y0eqowNDGIFhT2vTnZI4P86SBn8iL6FM2i2XKOBO_FiT8tG6MbQXb-zEA1xt-DoeNQ9-_Rj41wBPCSXWxIZETBlPEjhdEZD9f5PSQLGY2V6M1EhQ6yydBYCJIgPWmHCMIqnZqnBJWN3S3T8BrdKQgeJiFdkZIGw-4iLZlzuA==?isAjax=1';
+  // Eigener vh-forms-Worker — Double-Opt-In selbst gebaut (signierter Link + Brevo-Versand)
+  var NL_ENDPOINT = 'https://vh-forms.peaking.workers.dev/newsletter/subscribe';
   function pad(n){return (n<10?'0':'')+n;}
 
   var dE=document.getElementById('cd-d'),hE=document.getElementById('cd-h'),mE=document.getElementById('cd-m'),sE=document.getElementById('cd-s');
@@ -180,6 +180,20 @@
   tick(); var timer=setInterval(tick,1000);
 
   var form=document.getElementById('cd-form'), note=document.getElementById('cd-note');
+
+  // Rückkehr vom Bestätigungs-Link (?bestaetigung=ok|abgelaufen|fehler)
+  try {
+    var st=new URLSearchParams(location.search).get('bestaetigung');
+    if(st==='ok'){
+      form.style.display='none';
+      var cl=document.querySelector('.cd-consent'); if(cl) cl.style.display='none';
+      note.innerHTML='<strong style="color:#8FE0AC">Bestätigt — du bist fix dabei.</strong> Wir sehen uns am 15. August. 🏔️';
+    } else if(st==='abgelaufen'){
+      note.textContent='Dein Bestätigungs-Link war abgelaufen — trag dich einfach nochmal ein.';
+    } else if(st==='fehler'){
+      note.textContent='Da ging was schief — probier die Anmeldung bitte nochmal.';
+    }
+  } catch(e){}
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var email=(document.getElementById('cd-email').value||'').trim().toLowerCase();
@@ -187,14 +201,11 @@
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ note.textContent='E-Mail-Adresse prüfen.'; return; }
     if(!consentBox.checked){ note.textContent='Bitte kurz den Datenschutz bestätigen.'; consentBox.focus(); return; }
     note.textContent='Wird eingetragen …';
-    var data=new URLSearchParams();
-    data.append('EMAIL',email);
-    data.append('email_address_check','');   // Honeypot: muss leer bleiben
-    data.append('locale','de');
-    fetch(NL_ENDPOINT,{method:'POST',body:data})
+    fetch(NL_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email,_honey:''})})
       .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json().catch(function(){return {};}); })
       .then(function(res){
-        if(res && res.success===false) throw new Error('rejected');
+        if(res && res.ok===false) throw new Error('rejected');
         form.style.display='none';
         var c=document.querySelector('.cd-consent'); if(c) c.style.display='none';
         note.innerHTML='<strong style="color:#8FE0AC">Fast geschafft!</strong> Check dein Postfach und bestätige kurz deine Mail — dann bist du fix dabei. 🏔️';

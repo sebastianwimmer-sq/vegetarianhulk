@@ -2,9 +2,10 @@
    vh-forms — Formular-Endpoints für vegetarianhulk.de
    POST /brand-inquiry        →  Mail via Brevo Transactional API
                                  an info@vegetarianhulk.de
-   POST /newsletter/subscribe →  Double-Opt-In via Brevo Contacts API
-                                 (Bestätigungs-Mail = eigene Vorlage,
-                                 Kontakt landet erst NACH Klick in der Liste)
+   POST /newsletter/subscribe →  eigenes Double-Opt-In: signierter Link (HMAC)
+                                 + Bestätigungs-Mail via Brevo Transactional
+   GET  /newsletter/confirm    →  Link-Klick: Signatur prüfen → Kontakt in
+                                 Liste → Redirect zur Website
 
    Schutz: Honeypot (_honey) + best-effort Rate-Limit pro IP
    (in-memory pro Isolate — bewusst ohne KV, reicht gegen simple Bots).
@@ -114,70 +115,114 @@ async function sendViaBrevo(apiKey, fields) {
   }
 }
 
-/* --- DOI-Vorlage: legt sich selbst in Brevo an (kein manueller Schritt) --- */
-const DOI_TEMPLATE_NAME = 'VH DOI Bestätigung (auto)';
-const DOI_TEMPLATE_SUBJECT = 'Fast dabei — einmal bestätigen 🏔️';
+/* --- Double-Opt-In, komplett selbst gebaut ---
+   Brevos DOI-API verlangt einen Spezial-Vorlagen-Typ, der per API nicht
+   anlegbar ist. Deshalb eigener Flow:
+     1. POST /newsletter/subscribe → signierter Bestätigungs-Link (HMAC)
+        + Mail über Brevos normalen Transactional-Versand (wie brand-inquiry)
+     2. GET  /newsletter/confirm?t=… → Signatur prüfen → Kontakt in Liste
+        → Redirect auf die Website
+   Der Kontakt landet erst NACH dem Klick in der Liste = echtes DOI. */
+const DOI_SUBJECT = 'Fast dabei — einmal bestätigen 🏔️';
 const DOI_SENDER = { name: 'Sebi · VegetarianHulk', email: 'info@vegetarianhulk.de' };
-
-let doiTemplateIdCache = 0; // pro Isolate — spart die Suche bei Folge-Anmeldungen
+const DOI_TOKEN_TTL_MS = 7 * 24 * 60 * 60 * 1000; // Link 7 Tage gültig
 
 async function brevo(env, path, init = {}) {
-  const res = await fetch(`https://api.brevo.com/v3${path}`, {
+  return fetch(`https://api.brevo.com/v3${path}`, {
     ...init,
     headers: { 'Content-Type': 'application/json', 'api-key': env.BREVO_API_KEY, ...(init.headers || {}) },
   });
-  return res;
 }
 
-/* Vorlage per Name suchen, sonst aus doi-template.html anlegen. */
-async function ensureDoiTemplate(env) {
-  const configured = Number(env.NL_DOI_TEMPLATE_ID);
-  if (configured > 0) return configured;
-  if (doiTemplateIdCache > 0) return doiTemplateIdCache;
+function b64url(bytes) {
+  return btoa(String.fromCharCode(...new Uint8Array(bytes)))
+    .replaceAll('+', '-').replaceAll('/', '_').replaceAll('=', '');
+}
 
-  const list = await brevo(env, '/smtp/templates?limit=50&offset=0');
-  if (list.ok) {
-    const data = await list.json().catch(() => ({}));
-    const found = (data.templates || []).find((t) => t.name === DOI_TEMPLATE_NAME);
-    if (found) { doiTemplateIdCache = found.id; return found.id; }
+function b64urlDecode(str) {
+  const pad = str.replaceAll('-', '+').replaceAll('_', '/');
+  return Uint8Array.from(atob(pad + '='.repeat((4 - (pad.length % 4)) % 4)), (c) => c.charCodeAt(0));
+}
+
+/* Signier-Schlüssel aus dem Brevo-Key abgeleitet — kein zweites Secret nötig. */
+async function doiKey(env) {
+  const raw = new TextEncoder().encode('vh-doi-v1:' + env.BREVO_API_KEY);
+  const hash = await crypto.subtle.digest('SHA-256', raw);
+  return crypto.subtle.importKey('raw', hash, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign', 'verify']);
+}
+
+async function makeDoiToken(env, email) {
+  const payload = new TextEncoder().encode(`${email}|${Date.now() + DOI_TOKEN_TTL_MS}`);
+  const sig = await crypto.subtle.sign('HMAC', await doiKey(env), payload);
+  return `${b64url(payload)}.${b64url(sig)}`;
+}
+
+/* Gibt die E-Mail zurück, wenn Token gültig + nicht abgelaufen — sonst null. */
+async function verifyDoiToken(env, token) {
+  try {
+    const [p, s] = String(token).split('.');
+    if (!p || !s) return null;
+    const payload = b64urlDecode(p);
+    const valid = await crypto.subtle.verify('HMAC', await doiKey(env), b64urlDecode(s), payload);
+    if (!valid) return null;
+    const [email, exp] = new TextDecoder().decode(payload).split('|');
+    if (!EMAIL_RE.test(email) || Date.now() > Number(exp)) return null;
+    return email;
+  } catch {
+    return null;
   }
+}
 
-  const created = await brevo(env, '/smtp/templates', {
+async function sendDoiMail(env, email, confirmUrl) {
+  const html = DOI_HTML
+    .replaceAll('{{ doubleoptin }}', confirmUrl)
+    .replaceAll('{{ contact.VORNAME | default : "du" }}', 'du')
+    .replaceAll('{{ unsubscribe }}', 'mailto:info@vegetarianhulk.de?subject=Abmelden');
+  const res = await brevo(env, '/smtp/email', {
     method: 'POST',
     body: JSON.stringify({
-      templateName: DOI_TEMPLATE_NAME,
-      subject: DOI_TEMPLATE_SUBJECT,
       sender: DOI_SENDER,
-      htmlContent: DOI_HTML,
-      isActive: true,
-    }),
-  });
-  if (!created.ok) {
-    const detail = await created.text().catch(() => '');
-    throw new Error(`Brevo Template ${created.status}: ${detail.slice(0, 200)}`);
-  }
-  const body = await created.json().catch(() => ({}));
-  if (!body.id) throw new Error('Brevo Template: keine ID erhalten');
-  doiTemplateIdCache = body.id;
-  return body.id;
-}
-
-/* Double-Opt-In: Brevo verschickt unsere Bestätigungs-Vorlage; der Kontakt
-   landet erst nach dem Klick in der Liste. 2xx = Mail ist raus. */
-async function subscribeViaDoi(env, email) {
-  const templateId = await ensureDoiTemplate(env);
-  const res = await brevo(env, '/contacts/doubleOptinConfirmation', {
-    method: 'POST',
-    body: JSON.stringify({
-      email,
-      includeListIds: [Number(env.NL_LIST_ID)],
-      templateId,
-      redirectionUrl: env.NL_REDIRECT_URL || 'https://vegetarianhulk.de/',
+      to: [{ email }],
+      subject: DOI_SUBJECT,
+      htmlContent: html,
     }),
   });
   if (!res.ok) {
     const detail = await res.text().catch(() => '');
-    throw new Error(`Brevo DOI ${res.status}: ${detail.slice(0, 200)}`);
+    throw new Error(`Brevo Mail ${res.status}: ${detail.slice(0, 200)}`);
+  }
+}
+
+/* Nach Bestätigungs-Klick: Kontakt in die Liste (idempotent). */
+async function addContactToList(env, email) {
+  const res = await brevo(env, '/contacts', {
+    method: 'POST',
+    body: JSON.stringify({
+      email,
+      listIds: [Number(env.NL_LIST_ID)],
+      updateEnabled: true,
+    }),
+  });
+  if (!res.ok) {
+    const detail = await res.text().catch(() => '');
+    throw new Error(`Brevo Contact ${res.status}: ${detail.slice(0, 200)}`);
+  }
+}
+
+async function handleNewsletterConfirm(request, env) {
+  const redirect = env.NL_REDIRECT_URL || 'https://vegetarianhulk.de/';
+  const token = new URL(request.url).searchParams.get('t');
+  const email = await verifyDoiToken(env, token);
+  if (!email || !env.BREVO_API_KEY) {
+    // abgelaufen/ungültig → freundlich zur Seite (dort kann man sich neu eintragen)
+    return Response.redirect(redirect + '?bestaetigung=abgelaufen', 302);
+  }
+  try {
+    await addContactToList(env, email);
+    return Response.redirect(redirect + '?bestaetigung=ok', 302);
+  } catch (err) {
+    console.error('vh-forms confirm failed:', err.message || err);
+    return Response.redirect(redirect + '?bestaetigung=fehler', 302);
   }
 }
 
@@ -198,13 +243,14 @@ async function handleNewsletter(request, env, origin) {
   if (!EMAIL_RE.test(email)) {
     return json({ ok: false, error: 'Gültige E-Mail ist Pflicht.' }, 400, origin);
   }
-  // NL_DOI_TEMPLATE_ID darf 0 sein — dann legt ensureDoiTemplate die Vorlage selbst an
   if (!env.BREVO_API_KEY || !Number(env.NL_LIST_ID)) {
     return json({ ok: false, error: 'newsletter not configured' }, 503, origin);
   }
 
   try {
-    await subscribeViaDoi(env, email);
+    const token = await makeDoiToken(env, email);
+    const confirmUrl = new URL(request.url).origin + '/newsletter/confirm?t=' + encodeURIComponent(token);
+    await sendDoiMail(env, email, confirmUrl);
     return json({ ok: true }, 200, origin);
   } catch (err) {
     console.error('vh-forms newsletter failed:', err.message || err);
@@ -226,6 +272,9 @@ export default {
         return json({ ok: false, error: 'rate limited' }, 429, origin);
       }
       return handleNewsletter(request, env, origin);
+    }
+    if (request.method === 'GET' && url.pathname === '/newsletter/confirm') {
+      return handleNewsletterConfirm(request, env);
     }
     if (request.method !== 'POST' || url.pathname !== '/brand-inquiry') {
       return json({ ok: false, error: 'not found' }, 404, origin);
