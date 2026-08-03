@@ -198,7 +198,8 @@ async function handleNewsletter(request, env, origin) {
   if (!EMAIL_RE.test(email)) {
     return json({ ok: false, error: 'Gültige E-Mail ist Pflicht.' }, 400, origin);
   }
-  if (!env.BREVO_API_KEY || !Number(env.NL_DOI_TEMPLATE_ID) || !Number(env.NL_LIST_ID)) {
+  // NL_DOI_TEMPLATE_ID darf 0 sein — dann legt ensureDoiTemplate die Vorlage selbst an
+  if (!env.BREVO_API_KEY || !Number(env.NL_LIST_ID)) {
     return json({ ok: false, error: 'newsletter not configured' }, 503, origin);
   }
 
