@@ -16,6 +16,9 @@
      NL_REDIRECT_URL     Ziel nach Bestätigungs-Klick
    ============================================================ */
 
+// Bestätigungs-Mail-Design (Quelle: email-templates/confirm-doi.html — bei Änderung neu rüberkopieren)
+import DOI_HTML from './doi-template.html';
+
 const ALLOWED_ORIGINS = new Set([
   'https://vegetarianhulk.de',
   'https://www.vegetarianhulk.de',
@@ -111,16 +114,64 @@ async function sendViaBrevo(apiKey, fields) {
   }
 }
 
+/* --- DOI-Vorlage: legt sich selbst in Brevo an (kein manueller Schritt) --- */
+const DOI_TEMPLATE_NAME = 'VH DOI Bestätigung (auto)';
+const DOI_TEMPLATE_SUBJECT = 'Fast dabei — einmal bestätigen 🏔️';
+const DOI_SENDER = { name: 'Sebi · VegetarianHulk', email: 'info@vegetarianhulk.de' };
+
+let doiTemplateIdCache = 0; // pro Isolate — spart die Suche bei Folge-Anmeldungen
+
+async function brevo(env, path, init = {}) {
+  const res = await fetch(`https://api.brevo.com/v3${path}`, {
+    ...init,
+    headers: { 'Content-Type': 'application/json', 'api-key': env.BREVO_API_KEY, ...(init.headers || {}) },
+  });
+  return res;
+}
+
+/* Vorlage per Name suchen, sonst aus doi-template.html anlegen. */
+async function ensureDoiTemplate(env) {
+  const configured = Number(env.NL_DOI_TEMPLATE_ID);
+  if (configured > 0) return configured;
+  if (doiTemplateIdCache > 0) return doiTemplateIdCache;
+
+  const list = await brevo(env, '/smtp/templates?limit=50&offset=0');
+  if (list.ok) {
+    const data = await list.json().catch(() => ({}));
+    const found = (data.templates || []).find((t) => t.name === DOI_TEMPLATE_NAME);
+    if (found) { doiTemplateIdCache = found.id; return found.id; }
+  }
+
+  const created = await brevo(env, '/smtp/templates', {
+    method: 'POST',
+    body: JSON.stringify({
+      templateName: DOI_TEMPLATE_NAME,
+      subject: DOI_TEMPLATE_SUBJECT,
+      sender: DOI_SENDER,
+      htmlContent: DOI_HTML,
+      isActive: true,
+    }),
+  });
+  if (!created.ok) {
+    const detail = await created.text().catch(() => '');
+    throw new Error(`Brevo Template ${created.status}: ${detail.slice(0, 200)}`);
+  }
+  const body = await created.json().catch(() => ({}));
+  if (!body.id) throw new Error('Brevo Template: keine ID erhalten');
+  doiTemplateIdCache = body.id;
+  return body.id;
+}
+
 /* Double-Opt-In: Brevo verschickt unsere Bestätigungs-Vorlage; der Kontakt
    landet erst nach dem Klick in der Liste. 2xx = Mail ist raus. */
 async function subscribeViaDoi(env, email) {
-  const res = await fetch('https://api.brevo.com/v3/contacts/doubleOptinConfirmation', {
+  const templateId = await ensureDoiTemplate(env);
+  const res = await brevo(env, '/contacts/doubleOptinConfirmation', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'api-key': env.BREVO_API_KEY },
     body: JSON.stringify({
       email,
       includeListIds: [Number(env.NL_LIST_ID)],
-      templateId: Number(env.NL_DOI_TEMPLATE_ID),
+      templateId,
       redirectionUrl: env.NL_REDIRECT_URL || 'https://vegetarianhulk.de/',
     }),
   });
