@@ -8,7 +8,7 @@ name: 🏔️ Launch Reveal (v3 live schalten)
 
 on:
   schedule:
-    - cron: '0 16 15 8 *'   # 15. August 16:00 UTC = 18:00 Europe/Berlin (CEST)
+    - cron: '40 15 15 8 *'   # 15. August 15:40 UTC = 17:40 CEST (still, 20 Min vor Story-Moment 18:00)
   workflow_dispatch:
     inputs:
       mode:
@@ -26,7 +26,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  TARGET_UTC: '2026-08-15T16:00:00Z'   # 18:00 CEST — Cron darf nicht früher deployen
+  TARGET_UTC: '2026-08-15T15:40:00Z'   # 17:40 CEST — Cron darf nicht früher deployen
   ENC_FILE: release/v3.tar.gz.enc
 
 jobs:
