@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' https: data:; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="noindex,nofollow">
+<title>3-Tage-Reset · Das Blatt · VegetarianHulk</title>
+<meta name="description" content="Drei Sachen für deinen Morgen. Eine Frage für deinen Abend. Drucken, aufhängen, vergessen.">
+<meta name="theme-color" content="#efe5cf">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
+
+<link rel="stylesheet" href="/fonts.css?v=1e2010e0">
+<link rel="stylesheet" href="/style.css?v=b94cd5c2">
+
+<style>
+  :root {
+    --vanilla: #f7efde;
+    --beige-1: #efe5cf;
+    --earth: #cfbf9d;
+    --earth-2: #a89372;
+    /* Hybrid Forest Family v31 — siehe style.css :root für globale Family */
+    --forest-1: #045927;  /* = --forest-primary (Brand-CTAs) */
+    --forest-2: #122d1c;  /* = --forest-anchor (Body-Text-Emphasis) */
+    --forest-3: #1a7340;  /* = --forest-accent (Saturated Highlight) */
+    --ink: #1a1410;
+    --ink-2: #4a3f33;
+    --ink-3: #807260;
+    --ink-4: #b3a385;
+    --font-body: 'Inter', -apple-system, system-ui, sans-serif;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--beige-1); font-family: var(--font-body); color: var(--ink); }
+
+  /* ── Help-Bar (nur Screen, beim Print versteckt) ── */
+  .help-bar {
+    background: var(--ink);
+    color: var(--vanilla);
+    padding: 16px 24px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 16px; justify-content: center;
+    text-align: center;
+  }
+  .help-bar strong { color: var(--vanilla); font-weight: 700; }
+  .help-bar em { font-style: italic; color: var(--ink-4); font-weight: 400; }
+  .help-bar kbd {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--vanilla);
+    font-weight: 600;
+  }
+  .help-bar .print-btn {
+    background: var(--forest-3);
+    color: var(--vanilla); /* v31.5: WCAG-AA — vanilla on forest-3 = 5.4 (war ink on forest-3 = 1.5) */
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .help-bar .print-btn:hover { background: var(--vanilla); color: var(--ink); }
+
+  /* ── Page Container ── */
+  .page-wrap {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+
+  /* ── A4-Page (the "Blatt") ── */
+  .blatt {
+    background: var(--vanilla);
+    border: 1px solid var(--earth);
+    border-radius: 4px;
+    padding: 72px 64px 64px;
+    position: relative;
+    box-shadow: 0 24px 60px -20px rgba(26,20,16,0.25);
+    background-image:
+      radial-gradient(55% 30% at 50% 0%, rgba(45,106,62,0.06), transparent 70%),
+      radial-gradient(40% 30% at 0% 100%, rgba(207,191,157,0.4), transparent 70%);
+  }
+
+  .brand-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .brand-dot {
+    width: 9px; height: 9px; border-radius: 50%; background: var(--forest-1);
+  }
+  .brand-name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--forest-1);
+    letter-spacing: -0.4px;
+  }
+  .brand-name em { font-style: italic; font-weight: 400; color: var(--ink); }
+
+  .eyebrow {
+    margin-top: 28px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.8px;
+    text-transform: uppercase;
+    color: var(--forest-1);
+  }
+
+  .h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(40px, 5.5vw, 64px);
+    line-height: 1.0;
+    letter-spacing: -1.6px;
+    color: var(--ink);
+    margin: 18px 0 28px;
+    text-wrap: balance;
+  }
+  .h1 em { font-style: italic; font-weight: 500; color: var(--forest-1); }
+
+  .lede {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.35;
+    color: var(--ink-2);
+    margin: 0 0 56px;
+    text-wrap: balance;
+    max-width: 540px;
+  }
+
+  /* ── Section Headers ── */
+  .section-h {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--earth);
+  }
+  .section-h .num {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--forest-3);
+    letter-spacing: -1px;
+  }
+  .section-h .label {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .section-h .title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: -0.6px;
+    color: var(--ink);
+    margin-left: auto;
+    line-height: 1;
+  }
+  .section-h .title em { font-style: italic; font-weight: 400; color: var(--forest-1); }
+
+  /* ── Sachen-List ── */
+  .sachen {
+    list-style: none;
+    margin: 0 0 56px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .sache {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 20px;
+    align-items: baseline;
+  }
+  .sache .n {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 1;
+    color: var(--forest-1);
+    letter-spacing: -1px;
+  }
+  .sache .meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .sache .ttl {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: -0.4px;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .sache .ttl em { font-style: italic; font-weight: 400; color: var(--forest-1); }
+  .sache .sub {
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+  .sache .sub strong { color: var(--ink); font-weight: 600; }
+
+  /* ── Frage-Box ── */
+  .frage {
+    margin: 0 0 48px;
+    padding: 36px 32px;
+    border-top: 3px solid var(--forest-1);
+    border-bottom: 3px solid var(--forest-1);
+    background: rgba(45,106,62,0.04);
+    text-align: center;
+  }
+  .frage .eyebrow {
+    margin: 0 0 14px;
+    color: var(--forest-1);
+  }
+  .frage .q {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+    color: var(--ink);
+    margin: 0;
+    text-wrap: balance;
+  }
+  .frage .q em { font-style: italic; font-weight: 400; color: var(--forest-1); }
+
+  /* ── Verse ── */
+  .verse {
+    margin: 0 0 56px;
+    padding: 28px 32px;
+    background: var(--beige-1);
+    border: 1px solid var(--earth);
+    border-radius: 4px;
+    position: relative;
+  }
+  .verse::before {
+    content: "Sprüche 24,16 · Schlachter 2000";
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background: var(--vanilla);
+    padding: 0 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--forest-1);
+  }
+  .verse .v {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.45;
+    color: var(--ink);
+    margin: 0;
+    text-wrap: balance;
+  }
+  .verse .note {
+    margin-top: 10px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--ink-3);
+  }
+
+  /* ── Sign-off ── */
+  .signoff {
+    margin-top: 56px;
+    padding-top: 28px;
+    border-top: 1px dashed var(--earth);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .signoff .name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 32px;
+    letter-spacing: -0.6px;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .signoff .name em { font-style: italic; font-weight: 400; color: var(--forest-1); }
+  .signoff .where {
+    margin-top: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .signoff .url {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--forest-1);
+    letter-spacing: -0.2px;
+    text-decoration: none;
+  }
+  .signoff .url:hover { color: var(--forest-2); }
+
+  /* ── Quote at the end ── */
+  .closing-quote {
+    margin-top: 48px;
+    text-align: center;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.3;
+    color: var(--forest-1);
+    letter-spacing: -0.4px;
+    text-wrap: balance;
+  }
+
+  /* ── Legal-Footer (v31.5 Brand-Konsistenz · DSGVO-Compliance) ── */
+  .legal-footer {
+    max-width: 720px;
+    margin: 28px auto 48px;
+    padding: 0 24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 18px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    color: var(--ink-3);
+  }
+  .legal-footer a {
+    color: var(--ink-3);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .legal-footer a:hover, .legal-footer a:focus-visible { color: var(--forest-1); }
+  .legal-footer .sep { opacity: 0.5; }
+
+  /* ── Print Styles ── */
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+  @media print {
+    html, body { background: #ffffff !important; }
+    .help-bar, .legal-footer, .vh-footer { display: none !important; }
+    .page-wrap { margin: 0; padding: 0; max-width: 100%; }
+    .blatt {
+      box-shadow: none;
+      border: none;
+      border-radius: 0;
+      padding: 12mm 14mm;
+      page-break-inside: avoid;
+    }
+    .h1 { font-size: 44px !important; }
+    .lede { font-size: 17px; margin-bottom: 32px; }
+    .sache .ttl { font-size: 19px; }
+    .sache .sub { font-size: 12.5px; }
+    .frage { padding: 24px; margin-bottom: 32px; }
+    .frage .q { font-size: 22px; }
+    .verse { padding: 20px 24px; }
+    .verse .v { font-size: 15px; }
+    .closing-quote { font-size: 17px; margin-top: 28px; }
+    .signoff .name { font-size: 26px; }
+    .sachen { margin-bottom: 32px; gap: 14px; }
+  }
+
+  /* ── Responsive Web ── */
+  @media (max-width: 640px) {
+    .blatt { padding: 40px 28px; }
+    .section-h { flex-wrap: wrap; }
+    .section-h .title { margin-left: 0; font-size: 22px; }
+    .sache { grid-template-columns: 36px 1fr; gap: 14px; }
+    .sache .n { font-size: 28px; }
+    .sache .ttl { font-size: 19px; }
+    .frage .q { font-size: 22px; }
+    .signoff { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="help-bar">
+  <span><strong>📄 Das Blatt — drucken oder als PDF speichern</strong></span>
+  <span><em>Cmd+P (Mac) · Strg+P (Windows)</em></span>
+  <button class="print-btn" onclick="window.print()">Drucken / Als PDF →</button>
+</div>
+
+<div class="page-wrap" role="main">
+  <article class="blatt">
+
+    <div class="brand-row">
+      <span class="brand-dot"></span>
+      <span class="brand-name">vegetarian<em>hulk</em></span>
+    </div>
+
+    <div class="eyebrow reveal" style="--reveal-delay:0ms">— Das Blatt · Drei Sachen · Eine Frage —</div>
+
+    <h1 class="h1 reveal reveal-hero" style="--reveal-delay:80ms">
+      Disziplin ist kein Talent.<br/>
+      Sie ist <em>ein Ritual.</em>
+    </h1>
+
+    <p class="lede reveal" style="--reveal-delay:160ms">
+      Drei Sachen für deinen Morgen. Eine Frage für deinen Abend. Häng's an deinen Spiegel, an den Kühlschrank, in dein Notizbuch. Lies es jeden Tag bis du's nicht mehr brauchst.
+    </p>
+
+    <div class="section-h">
+      <span class="num">3</span>
+      <span class="label">Sachen für deinen Morgen</span>
+      <span class="title"><em>Architektur</em> statt Willenskraft.</span>
+    </div>
+
+    <ol class="sachen">
+      <li class="sache">
+        <span class="n">01</span>
+        <div class="meta">
+          <div class="ttl">Wecker <em>2 Meter</em> vom Bett.</div>
+          <div class="sub">
+            Du musst aufstehen, um ihn auszumachen. <strong>Eine Bewegung — und du bist raus.</strong> Handy aus dem Schlafzimmer. Snooze-Knopf existiert nicht mehr.
+          </div>
+        </div>
+      </li>
+      <li class="sache">
+        <span class="n">02</span>
+        <div class="meta">
+          <div class="ttl">Mini-Version <em>für Scheißtage</em>.</div>
+          <div class="sub">
+            Für jede Habit — was ist die kleinste Version, die du <strong>auch an einem Scheißtag</strong> durchziehst? Gym wird 5 Liegestütze. Lesen wird 1 Seite. Bibel wird 1 Vers. <em>Nie zwei Tage in Folge null.</em>
+          </div>
+        </div>
+      </li>
+      <li class="sache">
+        <span class="n">03</span>
+        <div class="meta">
+          <div class="ttl">Setup <em>vor</em> Motivation.</div>
+          <div class="sub">
+            Gym-Klamotten am Abend rausgelegt. Kühlschrank ohne Müll drin. Bibel auf den Frühstückstisch. <strong>Das Spielfeld bauen, damit die richtige Wahl die einfache ist.</strong>
+          </div>
+        </div>
+      </li>
+    </ol>
+
+    <div class="frage">
+      <div class="eyebrow">— Eine Frage für deinen Abend —</div>
+      <p class="q">
+        Wer war ich <em>heute?</em><br/>
+        Wer will ich <em>morgen</em> sein?
+      </p>
+    </div>
+
+    <div class="verse">
+      <p class="v">„Denn siebenmal fällt der Gerechte und steht wieder auf."</p>
+      <p class="note">
+        Dass du fällst, ist nicht das Problem. Dass du aufstehst, ist die Definition.
+      </p>
+    </div>
+
+    <p class="closing-quote">
+      „Mach hin — oder lass es. Beides ist okay."
+    </p>
+
+    <div class="signoff">
+      <div>
+        <div class="name">Sebi<em>.</em></div>
+        <div class="where">@vegetarianhulk · Bayern · seit 10 Jahren vegetarisch</div>
+      </div>
+      <a class="url" href="https://vegetarianhulk.de" target="_blank">vegetarianhulk.de</a>
+    </div>
+
+  </article>
+</div>
+
+<!-- Footer-Editorial v31.11.1 — A2 Asymmetric Editorial (Single-Layout, hidden in print) -->
+<footer class="vh-footer footer-a2" role="contentinfo" aria-label="Site footer">
+  <div class="grid">
+    <div class="col col-brand">
+      <div class="vh-wordmark wordmark">VEGETARIAN<span class="accent">HULK</span></div>
+      <div class="vh-tagline tagline">Builder &amp; Creator. Disziplin über Hype.</div>
+      <a class="vh-link vh-ig ig" href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener" aria-label="Instagram @vegetarianhulk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+          <circle cx="12" cy="12" r="4"></circle>
+          <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle>
+        </svg>
+        <span>@vegetarianhulk</span>
+      </a>
+    </div>
+    <nav class="col" aria-label="Brand navigation">
+      <p class="vh-col-label">Explore</p>
+      <ul>
+        <li><a class="vh-link" href="/">Startseite</a></li>
+        <li><a class="vh-link" href="/newsletter">Newsletter</a></li>
+        <li><a class="vh-link" href="/kooperationen.html">Kooperationen</a></li>
+      </ul>
+    </nav>
+    <nav class="col" aria-label="Rechtliches">
+      <p class="vh-col-label">Legal</p>
+      <ul>
+        <li><a class="vh-link" href="/impressum.html">Impressum</a></li>
+        <li><a class="vh-link" href="/datenschutz.html">Datenschutz</a></li>
+      </ul>
+    </nav>
+  </div>
+  <hr class="vh-hairline" />
+  <div class="bottom">
+    <span class="vh-copyright">© <span id="footer-year">2026</span> Sebastian Wimmer</span>
+  </div>
+</footer>
+
+<script>
+  // Auto-trigger print dialog if URL contains ?print=1 (für Direct-Download-Use-Case)
+  if (new URLSearchParams(location.search).get('print') === '1') {
+    setTimeout(() => window.print(), 600);
+  }
+</script>
+
+<script src="/motion-reveal.js?v=d3baa308" defer></script></body>
+</html>

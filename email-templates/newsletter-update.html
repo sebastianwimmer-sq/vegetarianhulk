@@ -1,0 +1,110 @@
+<!--
+  ============================================================
+  VegetarianHulk — UPDATE-/NEWSLETTER-VORLAGE (wiederverwendbar)
+  Für laufende Sends an eingetragene Leute (neue Tour, Gedanken, News).
+  Gleiche Design-Sprache wie die Willkommens-Mail (Forest-Gradient-Flow).
+
+  SO NUTZEN (pro Ausgabe nur die [ ]-Stellen tauschen):
+    [BILD-URL]      Hero-Bild dieser Ausgabe (Querformat, z.B. neues Tour-Foto).
+                    Weglassen? Dann die ganze Foto-Zeile löschen.
+    [EYEBROW]       Kleines Label, z.B. "NEUE TOUR" / "GEDANKEN" / "AUSGABE 02".
+    [ÜBERSCHRIFT]   Titel der Ausgabe.
+    [ABSATZ 1/2]    Dein Text.
+    [BUTTON-TEXT]   z.B. "Tour ansehen".
+    [BUTTON-URL]    Ziel-Link (https://vegetarianhulk.de/...).
+    Smashie-Zeile   optional — Tipp/Kommentar; sonst löschen.
+  Pflicht bleibt: {{ unsubscribe }} + Adresse im Footer.
+  ============================================================
+-->
+<meta name="color-scheme" content="dark">
+<meta name="supported-color-schemes" content="dark">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;600;700&display=swap');
+:root { color-scheme: dark; supported-color-schemes: dark; }
+</style>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0;padding:0;background-color:#06140D;">
+<tr><td align="center" style="padding:34px 12px;">
+
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;mso-hide:all;font-size:1px;line-height:1px;color:#06140D;">[VORSCHAUTEXT — 1 Satz, macht neugierig.]</div>
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;background-color:#0B2418;background-image:radial-gradient(90% 40% at 50% 8%, rgba(126,208,155,0.12) 0%, rgba(126,208,155,0) 60%), linear-gradient(168deg,#164A2B 0%,#0F3520 20%,#0B2418 46%,#0A2016 72%,#07180E 100%);border-radius:24px;overflow:hidden;box-shadow:0 30px 70px -24px rgba(0,0,0,0.7);">
+
+  <!-- Masthead oben -->
+  <tr><td align="center" style="padding:26px 24px 20px 24px;">
+    <div style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.36em;color:#F3EBD9;">VEGETARIAN<span style="color:#7ED09B;">HULK</span></div>
+    <div style="margin-top:7px;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:12.5px;color:#8FB79C;">aus den Bergen · seit 2016</div>
+  </td></tr>
+
+  <!-- Hero-Bild dieser Ausgabe (optional: ganze Zeile + Gold-Linie löschen) -->
+  <tr><td style="font-size:0;line-height:0;background-color:#0B2418;">
+    <img src="[BILD-URL]" width="600" alt="[Bildbeschreibung]" style="display:block;width:100%;max-width:600px;height:auto;border:0;">
+  </td></tr>
+  <tr><td style="height:3px;background-color:#C9A227;background-image:linear-gradient(90deg,#B8901E,#F0CB4B,#B8901E);line-height:3px;font-size:0;">&nbsp;</td></tr>
+
+  <!-- Eyebrow + Überschrift -->
+  <tr><td style="padding:32px 46px 0 46px;">
+    <div style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#D8B24A;">[EYEBROW]</div>
+    <h1 style="margin:14px 0 0 0;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:36px;line-height:1.1;font-weight:700;color:#F5EEDD;letter-spacing:-0.5px;">[ÜBERSCHRIFT — <span style="font-style:italic;color:#7ED09B;">Akzent kursiv.</span>]</h1>
+  </td></tr>
+
+  <!-- Text -->
+  <tr><td style="padding:22px 46px 0 46px;">
+    <p style="margin:0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:16px;line-height:1.68;color:#DDE5DB;">[ABSATZ 1 — Hey {{ contact.VORNAME | default : "du" }}, …]</p>
+    <p style="margin:16px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:16px;line-height:1.68;color:#DDE5DB;">[ABSATZ 2 — worum geht's, warum lohnt sich der Klick.]</p>
+  </td></tr>
+
+  <!-- Smashie-Kommentar (optional — sonst diese Zeile löschen) -->
+  <tr><td style="padding:26px 46px 0 46px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+      <td width="80" valign="top" style="padding-right:16px;">
+        <img src="https://vegetarianhulk.de/assets/img/smashy-maskottchen.png" width="72" alt="Smashie" style="display:block;width:72px;height:auto;border:0;">
+      </td>
+      <td valign="middle">
+        <div style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#7ED09B;">Smashie sagt</div>
+        <div style="margin-top:6px;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:16.5px;line-height:1.5;color:#F1E9D5;">„[Kurzer Kommentar / Tipp von Smashie.]" 🌱</div>
+      </td>
+    </tr></table>
+  </td></tr>
+
+  <!-- CTA -->
+  <tr><td align="center" style="padding:32px 46px 6px 46px;">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+      <td align="center" bgcolor="#E4B824" style="border-radius:13px;background-color:#E4B824;background-image:linear-gradient(180deg,#F6D24A 0%,#E4B824 52%,#C6980F 100%);box-shadow:0 14px 30px -8px rgba(230,184,36,0.4);">
+        <a href="[BUTTON-URL]" target="_blank" style="display:inline-block;padding:17px 40px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#14100A;text-decoration:none;border-radius:13px;">[BUTTON-TEXT] &nbsp;&rarr;</a>
+      </td>
+    </tr></table>
+  </td></tr>
+
+  <!-- Signatur -->
+  <tr><td style="padding:30px 46px 0 46px;">
+    <p style="margin:0;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:21px;line-height:1.4;color:#F5EEDD;">Man sieht sich am Berg.</p>
+    <p style="margin:8px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.04em;color:#7ED09B;">— Sebi</p>
+  </td></tr>
+
+  <!-- Vers (optional wiederkehrend) -->
+  <tr><td align="center" style="padding:34px 46px 6px 46px;">
+    <div style="width:34px;height:1px;background-color:#2C513A;margin:0 auto 20px;font-size:0;line-height:1px;">&nbsp;</div>
+    <p style="margin:0;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:16px;line-height:1.5;color:#D0DACE;">„Der Gerechte fällt siebenmal — und steht wieder auf."</p>
+    <p style="margin:9px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#6F9A7C;">Sprüche 24,16 · Schlachter 2000</p>
+  </td></tr>
+
+  <!-- Footer (Pflicht) -->
+  <tr><td align="center" style="padding:30px 40px 34px 40px;">
+    <div style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.02em;color:#8FB79C;">
+      <a href="https://www.instagram.com/vegetarianhulk/" target="_blank" style="color:#8FB79C;text-decoration:none;">Instagram</a>
+      &nbsp;·&nbsp; <a href="https://vegetarianhulk.de/touren/" target="_blank" style="color:#8FB79C;text-decoration:none;">Hulk Hikes</a>
+      &nbsp;·&nbsp; <a href="https://vegetarianhulk.de/kooperationen.html" target="_blank" style="color:#8FB79C;text-decoration:none;">Kooperationen</a>
+    </div>
+    <p style="margin:18px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11.5px;line-height:1.7;color:#5E7267;">
+      Du bekommst diese Mail, weil du dich beim VegetarianHulk-Newsletter eingetragen hast.<br>
+      Sebastian Wimmer · Burghauser Straße 35 · 84533 Haiming · <a href="mailto:info@vegetarianhulk.de" style="color:#5E7267;">info@vegetarianhulk.de</a>
+    </p>
+    <p style="margin:11px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11.5px;color:#5E7267;">
+      <a href="https://vegetarianhulk.de/impressum.html" target="_blank" style="color:#8FB79C;text-decoration:none;">Impressum</a>
+      &nbsp;·&nbsp; <a href="https://vegetarianhulk.de/datenschutz.html" target="_blank" style="color:#8FB79C;text-decoration:none;">Datenschutz</a>
+      &nbsp;·&nbsp; <a href="{{ unsubscribe }}" target="_blank" style="color:#8FB79C;text-decoration:underline;">Abmelden</a>
+    </p>
+  </td></tr>
+
+</table>
+</td></tr></table>

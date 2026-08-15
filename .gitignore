@@ -1,0 +1,42 @@
+# === macOS ===
+.DS_Store
+._*
+
+# === Editors ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# === Logs + Backup ===
+*.log
+*.bak
+
+# === Secrets (NIEMALS committen!) ===
+.env
+.env.*
+*.pem
+*.key
+*.cert
+secrets/
+
+# === Node (falls je verwendet) ===
+node_modules/
+
+# === Cloudflare Wrangler (Preview-Deploys, lokaler State) ===
+.wrangler/
+
+# === Design-Archive — Claude-Design ZIPs lokal (oft groß), Asset-Versionierungen im Repo ===
+design-archives/*.zip
+
+# === Pre-Merge Audit Reports — lokale JSON-Snapshots (oft groß, regenerierbar) ===
+audit-reports/
+
+# === Interne Dev-Doku — lokal behalten, NICHT auf GitHub Pages ausliefern (Info-Disclosure) ===
+/CLAUDE.md
+/README.md
+/design-history.md
+
+# === Audit-Report — lokaler Analyse-Snapshot, nicht deployen ===
+audit/

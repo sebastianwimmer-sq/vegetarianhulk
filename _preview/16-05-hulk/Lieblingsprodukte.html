@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>vegetarianhulk · /lieblingsprodukte</title>
+
+<link rel="stylesheet" href="colors_and_type.css" />
+<link rel="stylesheet" href="lieblingsprodukte.css" />
+
+<style>
+  html, body { margin: 0; background: #efe9dd; }
+  /* The artboards' inner pages cap their own width — the artboard
+     itself just hosts. Let the page extend with the artboard. */
+  .dc-host { font-family: var(--font-body); }
+  .lp-page { min-height: 100%; }
+</style>
+
+<!-- React + Babel — pinned versions with integrity hashes. -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" src="design-canvas.jsx"></script>
+  <script type="text/babel" src="products.jsx"></script>
+
+  <script type="text/babel">
+    const { DesignCanvas, DCSection, DCArtboard } = window;
+
+    function DesktopBoard() {
+      return (
+        <div className="dc-host" style={{width: '100%', height: '100%', overflow: 'hidden'}}>
+          <div className="lp-page lp--desktop">
+            <LpNav />
+            <main className="lp-main">
+              <LpHero />
+              <DisclosureNotice />
+              <CategorySection cat={PRODUCTS.fruehstueck} anchor="fruehstueck" />
+              <CategorySection cat={PRODUCTS.gym} anchor="gym" />
+              <PullQuote />
+              <CategorySection cat={PRODUCTS.faith} anchor="faith" />
+              <CategorySection cat={PRODUCTS.daily} anchor="daily" />
+              <LpFooter />
+            </main>
+          </div>
+        </div>
+      );
+    }
+
+    function MobileBoard() {
+      return (
+        <div className="dc-host" style={{width: '100%', height: '100%', overflow: 'hidden'}}>
+          <div className="lp-page lp--mobile">
+            <LpNav />
+            <main className="lp-main">
+              <LpHero />
+              <DisclosureNotice />
+              <CategorySection cat={PRODUCTS.fruehstueck} anchor="fruehstueck" />
+              <CategorySection cat={PRODUCTS.gym} anchor="gym" />
+              <PullQuote />
+              <CategorySection cat={PRODUCTS.faith} anchor="faith" />
+              <CategorySection cat={PRODUCTS.daily} anchor="daily" />
+              <LpFooter />
+            </main>
+          </div>
+        </div>
+      );
+    }
+
+    function App() {
+      return (
+        <DesignCanvas>
+          <DCSection
+            id="lieblingsprodukte"
+            title="vegetarianhulk.de / lieblingsprodukte"
+            subtitle="Authentische Recommendations-Page · 12 items · 4 Kategorien · Magazine-editorial · 1× Desktop (1440) + 1× Mobile (375)"
+          >
+            <DCArtboard id="desktop" label="Desktop · 1440" width={1440} height={6400}>
+              <DesktopBoard />
+            </DCArtboard>
+            <DCArtboard id="mobile" label="Mobile · 375" width={375} height={10400}>
+              <MobileBoard />
+            </DCArtboard>
+          </DCSection>
+        </DesignCanvas>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

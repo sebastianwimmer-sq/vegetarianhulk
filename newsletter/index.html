@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: https://peaking-ai-api.peaking.workers.dev" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#06231A" />
+<meta name="robots" content="index,follow" />
+<title>Newsletter — Berg-Starter gratis + neue Touren zuerst | VegetarianHulk</title>
+<meta name="description" content="Trag dich ein: sofort meinen gratis Berg-Starter (3 Einsteiger-Touren + Packliste), danach jede neue Hulk Hike vor allen anderen und ab und zu ein ehrlicher Gedanke. Kein Spam, Double-Opt-In, DSGVO." />
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://vegetarianhulk.de/newsletter" />
+<meta property="og:title" content="Sei zuerst am Gipfel — VegetarianHulk Newsletter" />
+<meta property="og:description" content="Gratis Berg-Starter zum Eintragen, danach neue Touren zuerst. Kein Spam, kein Coaching-Sprech." />
+<meta property="og:image" content="https://vegetarianhulk.de/hero.jpg?v=v31.6.1" />
+<meta property="og:locale" content="de_DE" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Sei zuerst am Gipfel — VegetarianHulk Newsletter" />
+<meta name="twitter:description" content="Gratis Berg-Starter + neue Touren zuerst." />
+<meta name="twitter:image" content="https://vegetarianhulk.de/hero.jpg?v=v31.6.1" />
+
+<link rel="canonical" href="https://vegetarianhulk.de/newsletter" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://peaking-ai-api.peaking.workers.dev" />
+
+<link rel="stylesheet" href="/fonts.css?v=1e2010e0" />
+<link rel="stylesheet" href="/v3.css?v=8e9c0d2d" />
+<style>
+/* ============================================================
+   /newsletter — Conversion-Seite v3 (Freebie + laufender Letter)
+   form.js-Hooks erhalten: .hero .repeat .sticky-cta .reveal(.is-in)
+   .signup-mount + body.variant-hand
+   ============================================================ */
+.nl-wide { width: min(1000px, 94vw); margin-left: calc((100% - min(1000px, 94vw)) / 2); }
+
+/* ---- Hero ---- */
+.hero.nl-hero { display: block; grid-template-columns: none; margin: clamp(38px, 7vh, 78px) 0 0; }
+.nl-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono);
+  font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #14100A;
+  background: linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%); padding: 6px 13px 6px 11px;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4)) drop-shadow(0 2px 1px rgba(120,88,10,0.4)) drop-shadow(0 8px 14px rgba(0,0,0,0.3)); }
+.nl-hero h1 { margin: 20px 0 16px; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(44px, 10vw, 86px); line-height: 0.96; letter-spacing: -1px; color: var(--paper); }
+.nl-hero h1 em { font-style: italic; color: var(--leaf); }
+.nl-sub { font-size: 17px; line-height: 1.65; color: var(--paper-dim); max-width: 48ch; }
+.nl-sub strong { color: var(--paper); font-weight: 600; }
+.nl-hero__grid { margin-top: clamp(26px, 4vw, 40px); display: grid; grid-template-columns: 1fr 0.9fr;
+  gap: 22px; align-items: stretch; }
+@media (max-width: 820px) { .nl-hero__grid { grid-template-columns: 1fr; } }
+
+/* Signup-Panel (Creme, data-light) */
+.nl-signup { position: relative; overflow: hidden; border-radius: 20px;
+  padding: clamp(26px, 3.4vw, 38px);
+  background: radial-gradient(120% 120% at 12% 0%, #F8F2E2, #E9DFC6 72%); box-shadow: var(--shadow-paper); }
+.nl-signup::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.5; pointer-events: none; }
+.nl-signup > * { position: relative; z-index: 1; }
+.nl-signup__k { font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 2.2px;
+  text-transform: uppercase; color: var(--gold-ink); display: inline-flex; align-items: center; }
+.nl-signup__h { margin: 9px 0 4px; font-family: 'Playfair Display', serif; font-weight: 600;
+  font-size: clamp(21px, 2.6vw, 26px); line-height: 1.08; color: #14281C; }
+.nl-signup__p { font-size: 14px; line-height: 1.55; color: rgba(24,43,31,0.72); margin-bottom: 16px; }
+.nl-trust { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px 14px;
+  font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+  color: rgba(24,43,31,0.55); }
+.nl-trust span { display: inline-flex; align-items: center; gap: 6px; }
+.nl-trust svg { width: 12px; height: 12px; color: var(--royal); }
+
+/* Freebie-Objekt: der Berg-Starter als Booklet */
+.nl-freebie { position: relative; overflow: hidden; border-radius: 20px; padding: clamp(24px, 3vw, 34px);
+  display: flex; flex-direction: column; justify-content: center;
+  background: linear-gradient(158deg, rgba(19,54,35,0.55), rgba(6,26,17,0.62));
+  border: 1px solid rgba(126,208,155,0.16); box-shadow: inset 0 1px 0 rgba(209,242,235,0.06), 0 24px 50px -30px rgba(0,0,0,0.65); }
+.nl-freebie__tag { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.8px;
+  text-transform: uppercase; color: var(--leaf); }
+.nl-book { margin: 16px 0; display: flex; gap: 16px; align-items: center; }
+.nl-book__cover { flex: 0 0 auto; width: 94px; height: 128px; border-radius: 4px 8px 8px 4px; overflow: hidden;
+  position: relative; transform: rotate(-3deg);
+  box-shadow: inset 2px 0 0 rgba(0,0,0,0.25), 0 14px 26px -10px rgba(0,0,0,0.7); }
+.nl-book__cover img { width: 100%; height: 100%; object-fit: cover; }
+.nl-book__cover::after { content: "BERG-STARTER"; position: absolute; left: 8px; right: 8px; bottom: 10px;
+  font-family: var(--mono); font-size: 7.5px; font-weight: 700; letter-spacing: 1px; color: #F3EBD9;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.9); }
+.nl-book__meta b { display: block; font-family: 'Playfair Display', serif; font-weight: 700; font-size: 22px;
+  color: var(--paper); line-height: 1.05; }
+.nl-book__meta span { display: block; margin-top: 4px; font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 1.4px; text-transform: uppercase; color: var(--paper-faint); }
+.nl-book__list { list-style: none; margin: 4px 0 0; padding: 0; }
+.nl-book__list li { display: flex; align-items: flex-start; gap: 9px; padding: 8px 0;
+  border-top: 1px solid rgba(126,208,155,0.12); font-size: 13.5px; color: var(--paper-dim); }
+.nl-book__list li:first-child { border-top: 0; }
+.nl-book__list svg { flex: 0 0 auto; width: 15px; height: 15px; color: var(--leaf); margin-top: 1px; }
+.nl-book__foot { margin-top: 6px; font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase; color: var(--leaf); }
+
+/* ---- Was danach reinkommt ---- */
+.nl-after { margin-top: clamp(72px, 12vh, 120px); }
+.nl-after .section-eyebrow { display: flex; align-items: center; gap: 12px; font-family: var(--mono);
+  font-size: var(--t-label); font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: var(--leaf); }
+.nl-after .section-eyebrow .line { width: 30px; height: 1px; background: rgba(126,208,155,0.4); }
+.nl-after h2 { margin-top: 14px; font-family: 'Playfair Display', serif; font-weight: 600;
+  font-size: var(--t-h2); line-height: 1.1; color: var(--paper); max-width: 24ch; }
+.nl-after h2 em { font-style: italic; color: var(--leaf); }
+.nl-benefits { margin-top: 34px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 760px) { .nl-benefits { grid-template-columns: 1fr; } }
+.nl-benefit { position: relative; overflow: hidden; padding: 26px 24px 28px; border-radius: 16px;
+  background: linear-gradient(158deg, rgba(19,54,35,0.5), rgba(6,26,17,0.55));
+  border: 1px solid rgba(126,208,155,0.14); box-shadow: inset 0 1px 0 rgba(209,242,235,0.06), 0 18px 40px -26px rgba(0,0,0,0.7);
+  transition: transform 550ms var(--ease-lux), border-color 550ms var(--ease-lux); }
+.nl-benefit::before { content: ""; position: absolute; left: 0; top: 0; height: 2px; width: 0;
+  background: linear-gradient(90deg, var(--emerald), transparent); transition: width 650ms var(--ease-lux); }
+.nl-benefit:hover { transform: translateY(-4px); border-color: rgba(126,208,155,0.32); }
+.nl-benefit:hover::before { width: 55%; }
+.nl-benefit__n { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; font-size: 15px; color: var(--leaf); }
+.nl-benefit h3 { margin: 10px 0 8px; font-family: 'Playfair Display', serif; font-weight: 600;
+  font-size: 20px; line-height: 1.15; color: var(--paper); }
+.nl-benefit p { font-size: 14px; line-height: 1.6; color: var(--paper-dim); }
+
+/* ---- Kein Bullshit (anti-hype) ---- */
+.anti { margin-top: clamp(72px, 12vh, 120px); }
+.anti-inner { position: relative; overflow: hidden; border-radius: 20px; padding: clamp(32px, 5vw, 54px);
+  background: linear-gradient(158deg, rgba(19,54,35,0.55), rgba(6,26,17,0.6));
+  border: 1px solid rgba(126,208,155,0.14); box-shadow: inset 0 1px 0 rgba(209,242,235,0.06), 0 28px 62px -32px rgba(0,0,0,0.72); }
+.anti-eyebrow { display: flex; align-items: center; gap: 12px; font-family: var(--mono);
+  font-size: var(--t-label); font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: var(--leaf); }
+.anti-eyebrow .line { width: 34px; height: 1px; background: rgba(126,208,155,0.4); }
+.statements { margin-top: 28px; display: grid; gap: 22px; }
+.statement { position: relative; padding-left: 52px; font-family: 'Playfair Display', serif;
+  font-weight: 500; font-size: clamp(20px, 3.2vw, 28px); line-height: 1.3; color: var(--paper); }
+.statement::before { content: attr(data-n); position: absolute; left: 0; top: 6px; font-family: var(--mono);
+  font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--leaf); opacity: 0.72; }
+.statement .strike { text-decoration: line-through; text-decoration-color: rgba(126,208,155,0.65);
+  text-decoration-thickness: 2px; color: var(--paper-faint); }
+.statement .accent { color: var(--leaf); font-style: italic; }
+.anti-foot { margin-top: 32px; padding-top: 18px; border-top: 1px solid rgba(243,235,217,0.14);
+  display: flex; align-items: baseline; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+  font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 1.6px; text-transform: uppercase; color: var(--paper-faint); }
+.anti-foot .sig { font-family: 'Caveat', cursive; font-style: normal; font-size: 30px; letter-spacing: 0;
+  text-transform: none; color: var(--leaf); }
+
+/* ---- Repeat (zweites Signup) — muss .repeat heißen (form.js) ---- */
+.repeat { margin-top: clamp(72px, 12vh, 120px); }
+.repeat-inner { position: relative; overflow: hidden; text-align: center; border-radius: 22px;
+  padding: clamp(42px, 6vw, 68px) clamp(26px, 5vw, 52px);
+  background: radial-gradient(90% 80% at 50% -20%, rgba(186,155,95,0.16), transparent 60%),
+    linear-gradient(175deg, #F8F2E2 0%, #EBE2CC 100%);
+  box-shadow: var(--shadow-paper); }
+.repeat-inner::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.55; pointer-events: none; }
+.repeat-inner > * { position: relative; z-index: 1; }
+.verse { max-width: 26ch; margin: 0 auto; font-family: 'Playfair Display', serif; font-style: italic;
+  font-weight: 500; font-size: clamp(20px, 3.2vw, 26px); line-height: 1.4; color: var(--forest); }
+.verse-attr { margin-top: 12px; font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 2.2px; text-transform: uppercase; color: var(--gold-ink); }
+.repeat-inner h2 { margin: 26px 0 8px; font-family: 'Playfair Display', serif; font-weight: 600;
+  font-size: clamp(28px, 5vw, 42px); line-height: 1.08; color: #14281C; }
+.repeat-inner h2 em { font-style: italic; color: var(--royal); }
+.repeat-inner .repeat-sub { font-size: 15px; line-height: 1.6; color: rgba(24,43,31,0.72); max-width: 42ch; margin: 0 auto 24px; }
+.repeat .signup-mount { display: block; max-width: 440px; margin: 0 auto; }
+
+/* ---- Sticky-CTA (form.js .is-visible) ---- */
+.sticky-cta { position: fixed; left: 50%; bottom: 150px; z-index: 65; transform: translate(-50%, 18px);
+  display: inline-flex; align-items: center; gap: 12px; padding: 13px 22px; border-radius: 14px;
+  font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--paper);
+  background: linear-gradient(180deg, rgba(21,58,38,0.97), rgba(6,22,14,0.97)); border: 1px solid rgba(126,208,155,0.32);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 20px 44px -16px rgba(0,0,0,0.72);
+  opacity: 0; visibility: hidden; pointer-events: none; text-decoration: none;
+  transition: opacity 420ms var(--ease-lux), transform 420ms var(--ease-lux); }
+.sticky-cta.is-visible { opacity: 1; visibility: visible; pointer-events: auto; transform: translate(-50%, 0); }
+.sticky-cta:hover { transform: translate(-50%, -2px); }
+.sticky-cta .arrow { color: var(--leaf); }
+
+/* ---- Reveal (form.js .is-in) ---- */
+.reveal { opacity: 0; transform: translateY(26px); filter: blur(6px);
+  transition: opacity 820ms var(--ease-lux), transform 820ms var(--ease-lux), filter 820ms var(--ease-lux); }
+.reveal.is-in { opacity: 1; transform: none; filter: blur(0); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
+  .nl-benefit, .sticky-cta { transition: none; }
+}
+</style>
+
+<script src="/newsletter-form.js?v=fd2b79c2" defer></script>
+<script src="form.js?v=55eda1f5" defer></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "url": "https://vegetarianhulk.de/newsletter",
+  "name": "VegetarianHulk Newsletter — Berg-Starter + neue Touren zuerst",
+  "description": "Gratis Berg-Starter (3 Einsteiger-Touren + Packliste) zum Eintragen, danach neue Hulk Hikes zuerst und ehrliche Gedanken von Sebi. Double-Opt-In, DSGVO.",
+  "inLanguage": "de-DE",
+  "author": { "@type": "Person", "name": "Sebi (VegetarianHulk)", "url": "https://vegetarianhulk.de" },
+  "publisher": { "@type": "Organization", "name": "VegetarianHulk", "url": "https://vegetarianhulk.de" }
+}
+</script>
+</head>
+<body class="th-page nl-page variant-hand">
+<div class="bg-wrap" aria-hidden="true"><div class="bg"></div></div>
+<div class="bg2-wrap" aria-hidden="true"><div class="bg2"></div></div>
+
+<div class="rail rail--l" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">2713 hm</span></div>
+</div>
+<div class="rail rail--r" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">2713 hm</span></div>
+</div>
+
+<main>
+  <div class="wrap">
+    <header class="topbar" data-screen-label="Newsletter · Topbar">
+      <span class="brandbox">
+        <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+        <span class="wordmark wordmark--invert" aria-hidden="true" data-invert-layer>VEGETARIAN<b>HULK</b></span>
+      </span>
+    </header>
+
+    <!-- SECTION 1 · Hero + Form (form.js beobachtet .hero) -->
+    <section class="hero nl-hero" data-screen-label="Newsletter · 01 Hero + Form">
+      <span class="nl-eyebrow">Gratis Berg-Starter · dann ab und zu ein Brief</span>
+      <h1>Sei zuerst<br><em>am Gipfel.</em></h1>
+      <p class="nl-sub">Trag dich ein — du bekommst sofort meinen <strong>Berg-Starter</strong> aufs Handy,
+      und danach jede neue Hulk Hike <strong>vor allen anderen</strong>. Kein Coaching-Sprech, kein Spam.</p>
+
+      <div class="nl-hero__grid">
+        <!-- Signup -->
+        <div class="nl-signup" data-light>
+          <p class="nl-signup__k">Jetzt eintragen</p>
+          <p class="nl-signup__h">Guide holen &amp; dabei sein.</p>
+          <p class="nl-signup__p">E-Mail rein, kurz bestätigen (Double-Opt-In) — der Berg-Starter kommt sofort.</p>
+          <vh-newsletter-form class="signup-mount"></vh-newsletter-form>
+        </div>
+
+        <!-- Freebie-Objekt -->
+        <div class="nl-freebie">
+          <p class="nl-freebie__tag">Dein Willkommens-Guide</p>
+          <div class="nl-book">
+            <span class="nl-book__cover"><img src="/touren/assets/eng-gruenstein.jpg" alt="" loading="lazy"></span>
+            <span class="nl-book__meta"><b>Der Berg-Starter</b><span>PDF · kostenlos</span></span>
+          </div>
+          <ul class="nl-book__list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 20 9 8l4 7 3-5 5 10z"/></svg> Meine 3 Touren zum Reinkommen — ehrlich eingestuft</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 2h9l3 3v17H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg> Packliste, die wirklich reicht — nix zu viel</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Wie ich reingekommen bin — vom Sofa auf den Gipfel</li>
+          </ul>
+          <p class="nl-book__foot">→ Sofort nach dem Eintragen im Postfach</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2 · Was danach reinkommt -->
+    <section class="nl-after reveal" data-screen-label="Newsletter · 02 Was danach">
+      <div class="section-eyebrow"><span class="line"></span>Und danach?</div>
+      <h2>Kein Funnel. <em>Ein echter Brief</em> ab und zu.</h2>
+      <div class="nl-benefits">
+        <div class="nl-benefit reveal" style="transition-delay:60ms">
+          <p class="nl-benefit__n">i.</p>
+          <h3>Neue Touren zuerst</h3>
+          <p>Jede neue Hulk Hike — mit Foto, echtem Höhenprofil und meiner ehrlichen Einschätzung — landet bei dir, bevor sie sonst wo auftaucht.</p>
+        </div>
+        <div class="nl-benefit reveal" style="transition-delay:130ms">
+          <p class="nl-benefit__n">ii.</p>
+          <h3>Ehrliche Gedanken</h3>
+          <p>Ab und zu, wie ich das mit Disziplin, Glauben und vegetarisch-stark wirklich lebe. Kein Coaching-Sprech, keine Plastik-Sprüche.</p>
+        </div>
+        <div class="nl-benefit reveal" style="transition-delay:200ms">
+          <p class="nl-benefit__n">iii.</p>
+          <h3>Ein Anker</h3>
+          <p>Manchmal ein Vers oder ein Satz, der bei mir hängen geblieben ist. Kurz, echt, ohne Zeigefinger.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3 · Kein Bullshit -->
+    <section class="anti" data-screen-label="Newsletter · 03 Kein Bullshit">
+      <div class="anti-inner">
+        <div class="anti-eyebrow reveal"><span class="line"></span>Was nicht passiert</div>
+        <div class="statements">
+          <p class="statement reveal" data-n="01" style="transition-delay:60ms">
+            Kein <span class="strike">Zuspammen.</span> Nur, wenn's wirklich was zu sagen gibt.
+          </p>
+          <p class="statement reveal" data-n="02" style="transition-delay:140ms">
+            Keine <span class="strike">Verkaufs-Trichter</span> hinten dran. Nur echter Inhalt.
+          </p>
+          <p class="statement reveal" data-n="03" style="transition-delay:220ms">
+            Ein Klick und du bist <span class="accent">wieder raus.</span> Ohne Nachfragen.
+          </p>
+        </div>
+        <div class="anti-foot reveal" style="transition-delay:280ms">
+          <span>Double-Opt-In · DSGVO · abbestellen jederzeit</span>
+          <span class="sig">— Sebi</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4 · Repeat-Signup + Anker (form.js beobachtet .repeat) -->
+    <section class="repeat" data-screen-label="Newsletter · 04 Repeat + Vers">
+      <div class="repeat-inner" data-light>
+        <p class="verse reveal">„Denn der Gerechte fällt siebenmal und steht wieder auf."</p>
+        <p class="verse-attr reveal" style="transition-delay:60ms">Sprüche 24,16 · mein Anker</p>
+        <h2 class="reveal" style="transition-delay:100ms">Hol dir den <em>Berg-Starter.</em></h2>
+        <vh-newsletter-form id="signup-repeat" class="signup-mount reveal" style="transition-delay:130ms;"></vh-newsletter-form>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="inner">
+    <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+    <p class="claim">Builder &amp; Creator. Disziplin über Hype.</p>
+    <nav class="legal" aria-label="Rechtliches">
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+      <span>© 2026 Sebastian Wimmer</span>
+    </nav>
+  </div>
+</footer>
+
+<nav class="nav" aria-label="Hauptnavigation">
+  <a href="/">Start</a>
+  <a href="/partner-picks/">P&amp;P</a>
+  <a class="center" href="/touren/">
+    <span class="mtn"><svg viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 50 26 16l10 16 8-12 22 30"/>
+      <path d="M22 23.5 26 20l4 5" opacity="0.85"/>
+      <path d="M40.5 25.5 44 21.5l3.5 5" opacity="0.85"/>
+      <circle cx="58" cy="11" r="4.5" opacity="0.9"/>
+      <path d="M12 50c8-4 16-3.4 22 0" opacity="0.45"/>
+    </svg></span>
+    Hulk&nbsp;Hikes
+  </a>
+  <a href="/newsletter" aria-current="page">News</a>
+  <a href="/kooperationen.html">Brands</a>
+</nav>
+
+<!-- Sticky-CTA -->
+<a class="sticky-cta" href="#signup-repeat" aria-label="Zum Newsletter-Signup springen">
+  <span class="label">Berg-Starter holen</span>
+  <span class="arrow" aria-hidden="true">→</span>
+</a>
+
+<script src="/v3.js?v=fa23a246" defer></script>
+</body>
+</html>

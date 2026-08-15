@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>VH Home v3 — Prototyp (Iteration 2)</title>
+<link rel="stylesheet" href="/fonts.css">
+<style>
+/* ============================================================
+   VH HOME v3 — PROTOTYP, Iteration 2 (Sebi-Feedback 10.07.):
+   1) Anti-Slop: asymmetrisches Bento, gemischte Radien, Serif↔Mono-
+      Pairing, Scribble-Akzent, keine Uniform-Karten
+   2) Organische, langsam driftende Hintergrund-Formen (statt Tupfer)
+   3) Nav-Pille dunkel + Glow — klarer Anker fürs Auge
+   4) Echtes Invert-Gefühl: Wordmark klebt oben und kippt auf Creme,
+      sobald er über dunkle Flächen fährt (Clip-Technik)
+   Farbfamilien fix: Forest Luxury · Warm Editorial
+   ============================================================ */
+:root {
+  --mint: #D1F2EB; --emerald: #50C878; --royal: #0B6E4F; --evergreen: #013220;
+  --alabaster: #E9E0CF; --gold: #BA9B5F; --sage: #5E775E; --forest: #132B23;
+
+  --cream: #F2EAD7; --card-cream: #F5EEDE;
+  --ink: #182B1F; --ink-soft: #5E6B5E;
+  --paper: #F3EBD9; --paper-dim: rgba(243,235,217,0.72);
+  --leaf: #7ED09B; --meta-green: #9BD9B4;
+
+  --shadow-forest:
+    inset 0 1px 1px rgba(255,255,255,0.14),
+    0 0 0 1px rgba(209,242,235,0.12),
+    0 26px 60px -28px rgba(4,32,19,0.62);
+  --shadow-paper:
+    inset 0 1px 0 rgba(255,255,255,0.85),
+    0 0 0 1px rgba(94,119,94,0.16),
+    0 16px 40px -24px rgba(19,43,35,0.28);
+  --ring-forest: 1px solid rgba(209,242,235,0.16);
+  --ring-paper: 1px solid rgba(186,155,95,0.28);
+  --ease-lux: cubic-bezier(0.32, 0.72, 0, 1);
+  --mono: ui-monospace, 'SF Mono', Menlo, monospace;
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { overflow-x: clip; scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  padding-bottom: 130px;
+}
+a { color: inherit; text-decoration: none; }
+body::after { content: ""; position: fixed; inset: 0; background-image: var(--grain); pointer-events: none; z-index: 80; }
+
+/* ============================================================
+   HINTERGRUND ALS FLÄCHE (s2s-Technik): EIN komponierter Verlauf,
+   dessen Töne über Sage in die Creme AUSLAUFEN — Farbe ist Teil der
+   Oberfläche, kein Overlay. Fixe Ebene = wirkt wie Raumlicht, der
+   Content scrollt darüber. Zeitlupen-Drift nur über transform.
+   ============================================================ */
+.bg { position: fixed; inset: -7%; width: 114%; height: 114%; z-index: -1; pointer-events: none;
+  background-color: var(--cream);
+  background-image: url(mesh-bg.svg);
+  background-size: cover;
+  background-position: center;
+  animation: bgdrift 90s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  will-change: transform;
+}
+@keyframes bgdrift {
+  from { transform: translate(0, 0) rotate(0deg) scale(1); }
+  to   { transform: translate(-1.6%, 1.2%) rotate(0.8deg) scale(1.045); }
+}
+@media (prefers-reduced-motion: reduce) { .bg { animation: none; } }
+
+main { position: relative; z-index: 1; }
+.rv { opacity: 0; transform: translateY(52px); filter: blur(8px);
+  transition: opacity 900ms var(--ease-lux), transform 900ms var(--ease-lux), filter 900ms var(--ease-lux); }
+.rv.in { opacity: 1; transform: translateY(0); filter: blur(0); }
+@media (prefers-reduced-motion: reduce) { .rv { opacity: 1; transform: none; filter: none; transition: none; } }
+.wrap { width: min(100% - 36px, 560px); margin-inline: auto; }
+
+/* ============================================================
+   TOPBAR — sticky, Wordmark invertiert über dunklen Flächen
+   ============================================================ */
+.topbar { position: sticky; top: 0; z-index: 60; display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 0 14px; }
+.brandbox { position: relative; display: inline-block; }
+.wordmark { font-weight: 900; letter-spacing: 3px; font-size: 15px; color: var(--forest); }
+.wordmark b { color: var(--royal); }
+/* Invert-Ebene: creme Klon, per clip-path nur über dunklen Zonen sichtbar */
+.wordmark--invert { position: absolute; inset: 0; color: var(--paper); clip-path: inset(0 100% 0 0); pointer-events: none; }
+.wordmark--invert b { color: var(--leaf); }
+
+/* ============================================================
+   HERO — eine große dunkelgrüne Karte (Mockup 2)
+   ============================================================ */
+.hero-card, .quote-card, .wcard, .bibel-card, .nl-card, footer .inner {
+  outline: var(--ring-paper); outline-offset: 6px; }
+.hero-card, .wcard--feature, .bibel-card, .nl-card, footer .inner { outline: var(--ring-forest); }
+.hero-card { margin-top: 16px; border-radius: 28px; overflow: hidden; position: relative;
+  background:
+    radial-gradient(120% 60% at 50% -4%, rgba(126,208,155,0.26), transparent 55%),
+    linear-gradient(178deg, #35714A 0%, #1C4A30 44%, #123524 70%, #0E2C1D 100%);
+  box-shadow: var(--shadow-forest); }
+.hero-card::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); pointer-events: none; }
+.hero-photo { display: block; width: 100%; height: auto; aspect-ratio: 4 / 4.4; object-fit: cover; object-position: top center;
+  -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
+          mask-image: linear-gradient(180deg, #000 78%, transparent 100%); }
+.hero-body { padding: 6px 30px 38px; position: relative; }
+.hero-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 56px; line-height: 1.05; color: var(--paper); }
+.hero-handle { margin-top: 6px; font-size: 15px; color: var(--paper-dim); letter-spacing: 0.4px; }
+.hero-meta { margin-top: 20px; display: flex; flex-wrap: wrap; column-gap: 14px; row-gap: 10px; align-items: center;
+  font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase; color: var(--meta-green); }
+.hero-meta .dot { color: rgba(155,217,180,0.45); }
+.hero-meta svg { width: 14px; height: 14px; vertical-align: -2px; margin-right: 5px; }
+.hero-rule { margin: 26px 0 28px; height: 1px; background: rgba(243,235,217,0.22); border: 0; }
+.hero-tagline { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 42px; line-height: 1.12; color: var(--paper); letter-spacing: -0.01em; }
+.hero-tagline em { display: inline-block; position: relative; font-weight: 600; font-style: italic; color: var(--leaf); }
+/* Scribble unterm „Ritual." — handgezogen, leicht schief */
+.hero-tagline .scribble { position: absolute; left: 2%; bottom: -12px; width: 96%; height: 14px; color: var(--emerald); opacity: 0.85; }
+.hero-cta { margin-top: 38px; display: inline-flex; align-items: center; gap: 14px; padding: 10px 12px 10px 26px;
+  background: var(--paper); color: #0C2418; font-weight: 800; font-size: 15px; border-radius: 999px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 12px 28px -12px rgba(0,0,0,0.45);
+  transition: transform 500ms var(--ease-lux), background 500ms var(--ease-lux); }
+.hero-cta:hover { transform: translateY(-2px); background: #fff; }
+.hero-cta:active { transform: scale(0.98); }
+.hero-cta .orb { width: 36px; height: 36px; border-radius: 999px; background: #0E2C1D; color: var(--leaf);
+  display: grid; place-items: center; font-weight: 700;
+  transition: transform 500ms var(--ease-lux); }
+.hero-cta:hover .orb { transform: translate(2px, -1px) scale(1.06); }
+.hero-cta .mono { font-family: var(--mono); font-weight: 600; font-size: 12px; letter-spacing: 1px; opacity: 0.65; margin-left: 10px; }
+
+/* ============================================================
+   ZITAT — creme, leicht gedreht, Linie links (Mockup 1)
+   ============================================================ */
+.quote-card { margin-top: 22px; background: var(--card-cream); border-radius: 28px;
+  padding: 30px 28px; box-shadow: var(--shadow-paper);
+}
+.quote-card p { border-left: 2px solid rgba(94,119,94,0.45); padding-left: 18px;
+  font-size: 16.5px; line-height: 1.65; color: var(--ink-soft); }
+.quote-card strong { color: var(--forest); font-weight: 700; }
+
+/* ============================================================
+   SEKTIONS-KOPF — Mono-Kicker (Serif↔Mono-Pairing)
+   ============================================================ */
+.shead { margin: 72px 0 24px; }
+.shead .kicker { font-family: var(--mono); font-size: 11.5px; font-weight: 600; letter-spacing: 2.2px; text-transform: uppercase; color: var(--royal);
+  display: flex; align-items: center; gap: 12px; }
+.shead .kicker::after { content: ""; flex: 1; height: 1px; background: rgba(94,119,94,0.35); }
+.shead h2 { margin-top: 10px; font-family: 'Playfair Display', serif; font-weight: 600; font-size: 36px; line-height: 1.1; color: var(--forest); }
+.shead h2 em { font-style: italic; color: var(--royal); }
+
+/* ============================================================
+   VIER WERTE — asymmetrisches Bento statt Uniform-Grid:
+   01 = dunkle Feature-Karte (breit) · 02/03 = creme, ungleiche
+   Radien · 04 = flache Quer-Karte mit Gold-Akzent
+   ============================================================ */
+.werte { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.wcard { padding: 22px 20px; box-shadow: var(--shadow-paper); }
+.wcard .num { font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 2px; color: var(--gold); }
+.wcard h3 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 19px; margin: 6px 0 10px; color: var(--forest); }
+.wcard p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.55; }
+.wcard--feature { grid-column: 1 / -1; padding: 28px 26px; border-radius: 28px; position: relative; overflow: hidden;
+  background:
+    radial-gradient(90% 70% at 82% -8%, rgba(126,208,155,0.22), transparent 58%),
+    linear-gradient(165deg, #1C4A30 0%, #123524 55%, #0E2C1D 100%);
+  box-shadow: var(--shadow-forest); }
+.wcard--feature::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); pointer-events: none; }
+.wcard--feature .num { color: var(--leaf); }
+.wcard--feature h3 { color: var(--paper); font-size: 24px; }
+.wcard--feature p { color: var(--paper-dim); font-size: 14.5px; max-width: 40ch; }
+.wcard--a { border-radius: 28px;
+  background: linear-gradient(170deg, #D9F3EC 0%, #C6E9DE 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 0 0 1px rgba(11,110,79,0.14), 0 16px 40px -24px rgba(19,43,35,0.28); }
+.wcard--a .num { color: var(--royal); }
+.wcard--a h3 { color: #0E3A2B; border: 0; }
+.wcard--a p { color: #33604F; }
+.wcard--b { background: var(--card-cream); border-radius: 28px; margin-top: 18px; }
+.wcard--wide { grid-column: 1 / -1; background: var(--card-cream); border-radius: 28px;
+  display: flex; align-items: baseline; gap: 16px; padding-block: 18px; }
+.wcard--wide h3 { margin: 0; white-space: nowrap; }
+.wcard--wide p { margin-left: auto; text-align: right; }
+
+/* ============================================================
+   BIBEL-ANKER — dunkle Invert-Karte, Mono-Label
+   ============================================================ */
+.bibel-card { margin-top: 72px; border-radius: 28px; text-align: center; padding: 52px 30px 44px; position: relative; overflow: hidden;
+  background:
+    radial-gradient(85% 80% at 50% 112%, rgba(80,200,120,0.28), transparent 68%),
+    linear-gradient(165deg, #1C4A30 0%, #123524 55%, #0E2C1D 100%);
+  box-shadow: var(--shadow-forest); color: var(--paper); }
+.bibel-card::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); pointer-events: none; }
+.bibel-card .label { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 2.4px; text-transform: uppercase; color: var(--mint); }
+.bibel-card blockquote { margin: 22px auto 18px; max-width: 26ch; font-family: 'Playfair Display', serif; font-style: italic;
+  font-weight: 500; font-size: 27px; line-height: 1.35; color: var(--paper); }
+.bibel-card .sig { font-size: 14px; font-weight: 700; color: var(--leaf); display: flex; align-items: center; justify-content: center; gap: 14px; }
+.bibel-card .sig::before, .bibel-card .sig::after { content: ""; width: 34px; height: 1px; background: rgba(209,242,235,0.35); }
+
+/* ============================================================
+   CLOSING — bewusst ungleich: 1 dunkle Karte + 1 Textzeile
+   ============================================================ */
+.closing { margin-top: 72px; }
+.nl-card { display: block; border-radius: 28px; padding: 30px 28px; position: relative; overflow: hidden;
+  background:
+    radial-gradient(110% 90% at 88% -12%, rgba(80,200,120,0.35), transparent 55%),
+    linear-gradient(160deg, #12805B 0%, #0B6E4F 45%, #084C37 100%);
+  box-shadow: var(--shadow-forest); color: var(--paper);
+  transition: transform 500ms var(--ease-lux); }
+.nl-card:hover { transform: translateY(-3px); }
+.nl-card::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); pointer-events: none; }
+.nl-card h3 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 24px; }
+.nl-card p { margin: 8px 0 18px; font-size: 14.5px; color: var(--paper-dim); max-width: 44ch; }
+.nl-card .go { display: inline-block; background: var(--paper); color: #0C2418; font-weight: 800; font-size: 14px;
+  padding: 12px 22px; border-radius: 14px; }
+.koop-line { margin-top: 22px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+  padding: 0 6px; font-size: 15px; color: var(--ink-soft); }
+.koop-line .go { font-weight: 800; color: var(--royal); border-bottom: 2px solid rgba(11,110,79,0.35); padding-bottom: 2px; }
+.koop-line .go:hover { border-bottom-color: var(--royal); }
+
+/* ============================================================
+   FOOTER — liegt auf dem dunklen Boden
+   ============================================================ */
+footer { position: relative; z-index: 1; margin-top: 96px; text-align: center; color: var(--paper); }
+footer .inner { width: min(100% - 36px, 560px); margin-inline: auto; padding: 44px 28px 32px;
+  border-radius: 28px; position: relative; overflow: hidden;
+  background:
+    radial-gradient(90% 70% at 82% -8%, rgba(126,208,155,0.22), transparent 58%),
+    linear-gradient(165deg, #1C4A30 0%, #123524 55%, #0E2C1D 100%);
+  box-shadow: var(--shadow-forest); }
+footer .inner::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); pointer-events: none; }
+footer .inner > * { position: relative; z-index: 1; }
+@media (min-width: 900px) { footer .inner { width: min(100% - 64px, 1060px); } }
+footer .wordmark { color: var(--paper); }
+footer .wordmark b { color: var(--leaf); }
+footer .claim { margin-top: 10px; font-size: 14px; color: rgba(243,235,217,0.78); }
+footer .legal { margin-top: 20px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.4px; color: rgba(243,235,217,0.6);
+  display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+footer .legal a:hover { color: var(--paper); }
+
+/* ============================================================
+   FLOATING NAV — dunkel + Emerald-Glow: DER Anker fürs Auge
+   ============================================================ */
+.nav { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 70;
+  display: flex; align-items: center; gap: clamp(6px, 3vw, 28px); padding: 7px clamp(16px, 3vw, 32px);
+  border: 1px solid rgba(126,208,155,0.35); border-radius: 16px;
+  background: linear-gradient(180deg, #1B4A30 0%, #0F3320 60%, #0B2A19 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(209,242,235,0.18),
+    0 2px 6px rgba(4,32,19,0.35),
+    0 14px 34px -10px rgba(4,32,19,0.55),
+    0 0 28px -4px rgba(80,200,120,0.35); }
+.nav a { display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 54px; padding: 6px 4px 4px;
+  color: rgba(243,235,217,0.66); font-size: 10px; font-weight: 600; letter-spacing: 0.5px;
+  transition: color 400ms var(--ease-lux); }
+.nav a:hover { color: var(--paper); }
+.nav a svg { width: 22px; height: 22px; }
+.nav .center { color: var(--leaf); font-weight: 700; }
+.nav .center .mtn { width: 62px; height: 50px; margin-top: -40px;
+  filter: drop-shadow(0 1px 1px rgba(4,25,14,0.5)) drop-shadow(0 8px 14px rgba(4,32,19,0.45)); }
+.nav a[aria-current] { color: var(--mint); }
+.nav a[aria-current]::after { content: ""; width: 4px; height: 4px; border-radius: 50%; background: var(--emerald); margin-top: 1px; }
+
+/* ============================================================
+   DESKTOP
+   ============================================================ */
+@media (min-width: 900px) {
+  .wrap { width: min(100% - 64px, 1060px); }
+  .topbar { padding-top: 30px; }
+  .hero-card { display: grid; grid-template-columns: 46% 1fr; align-items: stretch; }
+  .hero-photo { height: 100%; aspect-ratio: auto;
+    -webkit-mask-image: linear-gradient(90deg, #000 80%, transparent 100%);
+            mask-image: linear-gradient(90deg, #000 80%, transparent 100%); }
+  .hero-body { padding: 56px 56px 56px 12px; align-self: center; }
+  .hero-name { font-size: 72px; }
+  .hero-tagline { font-size: 54px; }
+  .quote-card { padding: 38px 44px; }
+  .quote-card p { font-size: 18px; max-width: 62ch; }
+  .werte { grid-template-columns: repeat(3, 1fr); }
+  .wcard--feature { grid-column: 1 / 3; }
+  .wcard--a { grid-column: 3; margin-top: 26px; border-radius: 28px; }
+  .wcard--b { grid-column: 1; margin-top: -26px; }
+  .wcard--wide { grid-column: 2 / 4; }
+  .shead h2 { font-size: 46px; }
+  .bibel-card blockquote { font-size: 34px; max-width: 30ch; }
+  .closing-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 26px; align-items: end; }
+  .koop-line { margin-top: 0; padding-bottom: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-cta:hover, .nl-card:hover { transform: none; }
+}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+
+<main>
+  <div class="wrap">
+
+    <header class="topbar">
+      <span class="brandbox">
+        <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+        <span class="wordmark wordmark--invert" aria-hidden="true" data-invert-layer>VEGETARIAN<b>HULK</b></span>
+      </span>
+    </header>
+
+    <!-- HERO (Sebi-Mockup 2) -->
+    <section class="hero-card rv" aria-label="Sebi — Vegetarianhulk" data-dark>
+      <img class="hero-photo" src="/hero.jpg" alt="Sebi, Founder vegetarianhulk" fetchpriority="high">
+      <div class="hero-body">
+        <h1 class="hero-name">Sebi</h1>
+        <p class="hero-handle">Sebastian &nbsp;·&nbsp; @vegetarianhulk</p>
+        <p class="hero-meta">
+          <span>25</span><span class="dot">·</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4C10 4 4.5 9 4.5 14.5A5.5 5.5 0 0 0 10 20c6.5 0 10-6 10-16z"/><path d="M4.5 20C8 14 12.5 10.5 17 8"/></svg>Vegetarisch seit 2016</span><span class="dot">·</span>
+          <span>✝ Christ</span><span class="dot">·</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 20 10 7l4 6.5L17 9l4 11z"/></svg>Bergsportler</span>
+        </p>
+        <hr class="hero-rule">
+        <p class="hero-tagline">Disziplin ist kein&nbsp;Talent.
+          <em>Sie ist ein Ritual.
+            <svg class="scribble" viewBox="0 0 220 14" fill="none" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M3 10 C 40 4, 75 12, 110 7 S 180 3, 217 8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+            </svg>
+          </em>
+        </p>
+        <a class="hero-cta" href="/3-tage-reset/">3-Tage-Reset holen<span class="mono">3 Tage · 0 €</span><span class="orb">→</span></a>
+      </div>
+    </section>
+
+    <!-- Zitat (Sebi-Mockup 1) -->
+    <section class="quote-card rv" aria-label="Warum ich das mache">
+      <p><strong>Ich war jemand der hundertmal</strong> angefangen und nie durchgezogen hat.
+      Heute lebe ich anders. Durch Disziplin. Durch Glauben. Durch bewusste Entscheidungen.
+      <strong>Und ich helfe dir, das auch zu tun.</strong></p>
+    </section>
+
+    <!-- Vier Werte — Bento -->
+    <div class="shead rv">
+      <p class="kicker">Sebi DNA · Was mich antreibt</p>
+      <h2>Vier Werte, <em>ein Leben.</em></h2>
+    </div>
+    <section class="werte rv" aria-label="Vier Werte">
+      <div class="wcard wcard--feature" data-dark>
+        <span class="num">01 / Disziplin</span>
+        <h3>Ritual statt Willenskraft.</h3>
+        <p>Architektur die trägt — jeden Morgen, auch wenn keiner hinschaut. 4:50 Uhr, Bibel, Gym. Seit Jahren.</p>
+      </div>
+      <div class="wcard wcard--a">
+        <span class="num">02 / Faith</span>
+        <h3>Bibel-grounded</h3>
+        <p>Schlachter 2000 · jeden Morgen.</p>
+      </div>
+      <div class="wcard wcard--b">
+        <span class="num">03 / Vegetarisch</span>
+        <h3>Stark ohne Fleisch</h3>
+        <p>Beweis seit 2016 — beides geht.</p>
+      </div>
+      <div class="wcard wcard--wide">
+        <span class="num">04 / Fitness</span>
+        <h3>Gym seit 2017</h3>
+        <p>4-5×/Woche · Lifting + Cardio</p>
+      </div>
+    </section>
+
+    <!-- Bibel-Anker -->
+    <section class="bibel-card rv" aria-label="Bibel-Anker" data-dark>
+      <p class="label">Sprüche 24,16 · Schlachter 2000</p>
+      <blockquote>„Denn siebenmal fällt der Gerechte und steht wieder auf."</blockquote>
+      <p class="sig">Mein Anker.</p>
+    </section>
+
+    <!-- Closing: 1 dunkle Karte + 1 Textzeile (bewusst ungleich) -->
+    <section class="closing rv" aria-label="Wie es weitergeht">
+      <div class="shead rv">
+        <p class="kicker">Wie es weitergeht</p>
+        <h2>Bleib dabei — oder lass uns <em>zusammenarbeiten.</em></h2>
+      </div>
+      <div class="closing-grid">
+        <a class="nl-card" href="/newsletter" data-dark>
+          <h3>Newsletter</h3>
+          <p>Disziplin, Glaube, vegetarische Kraft — direkt ins Postfach.</p>
+          <span class="go">→ 3-Tage-Reset holen</span>
+        </a>
+        <p class="koop-line">Brand oder Partner? <a class="go" href="/kooperationen.html">→ Anfrage stellen</a></p>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="inner">
+    <p class="wordmark">VEGETARIAN<b>HULK</b></p>
+    <p class="claim">Builder &amp; Creator. Disziplin über Hype.</p>
+    <nav class="legal" aria-label="Rechtliches">
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+      <span>© 2026 Sebastian Wimmer</span>
+    </nav>
+  </div>
+</footer>
+
+<!-- Floating Nav — dunkel, mit Glow -->
+<nav class="nav" aria-label="Hauptnavigation">
+  <a href="/" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 5l8 6.5"/><path d="M6 10.5V19h12v-8.5"/><path d="M10 19v-4h4v4"/></svg>Start</a>
+  <a href="/partner-picks/"><span style="font-family:'Playfair Display',serif;font-size:14px;font-weight:600;height:22px;display:grid;place-items:center">P&amp;P</span>Partner</a>
+  <a class="center" href="/touren/">
+    <span class="mtn"><svg viewBox="0 0 72 56" fill="none"><defs><linearGradient id="m" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f9457"/><stop offset="1" stop-color="#0f2a1a"/></linearGradient></defs><path d="M0 55 17 27l11 12 9-9 15 15 20-9v20z" fill="#347e4f" opacity=".5"/><path d="M4 55 27 13l10 16 7-10 24 36z" fill="url(#m)"/><path d="M27 13l4.6 7.5-4.6 2.6-4.3-2.1z" fill="#f4ead4"/><path d="M44 19l3.3 5-3.3 1.9-3-1.5z" fill="#f4ead4"/></svg></span>
+    Hulk&nbsp;Hikes
+  </a>
+  <a href="/newsletter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="m3.6 7 8.4 6 8.4-6"/></svg>News</a>
+  <a href="/kooperationen.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="11.5" rx="2"/><path d="M8.5 7.5V6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v1.5"/><path d="M3 12.5h18"/></svg>Brands</a>
+</nav>
+
+<script>
+/* Wordmark-Invert: creme Klon wird per clip-path genau dort sichtbar,
+   wo der Schriftzug eine dunkle Fläche ([data-dark]) überlappt.
+   Gleiche Technik wie nav.js auf der Live-Site. */
+(function () {
+  'use strict';
+  var base = document.querySelector('.brandbox .wordmark:not(.wordmark--invert)');
+  var layer = document.querySelector('[data-invert-layer]');
+  if (!base || !layer) return;
+  var darks = document.querySelectorAll('[data-dark]');
+  function update() {
+    var r = base.getBoundingClientRect();
+    var lo = r.right, hi = r.left, covered = false;
+    for (var i = 0; i < darks.length; i++) {
+      var d = darks[i].getBoundingClientRect();
+      if (d.bottom <= r.top || d.top >= r.bottom) continue;
+      var x1 = Math.max(r.left, d.left), x2 = Math.min(r.right, d.right);
+      if (x2 <= x1) continue;
+      lo = Math.min(lo, x1); hi = Math.max(hi, x2); covered = true;
+    }
+    layer.style.clipPath = covered
+      ? 'inset(-4px ' + (r.right - hi) + 'px -4px ' + (lo - r.left) + 'px)'
+      : 'inset(0 100% 0 0)';
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (!ticking) { requestAnimationFrame(function () { update(); ticking = false; }); ticking = true; }
+  }, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
+})();
+
+/* Scroll-Entry: schwerer Fade-up beim Eintritt in den Viewport */
+(function () {
+  var els = document.querySelectorAll('.rv');
+  if (!('IntersectionObserver' in window)) { els.forEach(function(e){ e.classList.add('in'); }); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, { rootMargin: '0px 0px -10% 0px' });
+  els.forEach(function (e) { io.observe(e); });
+})();
+</script>
+</body>
+</html>

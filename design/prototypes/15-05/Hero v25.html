@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sebastian Wimmer · vegetarianhulk</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  /* ── Dark palette (same family as Hook-Pool) ─────────────── */
+  :root {
+    --dk-bg:        #0f0b08;
+    --dk-surface:   #1a1410;
+    --dk-surface-2: #221a14;
+    --dk-surface-3: #2a2018;
+    --dk-line:      #3a2e22;
+    --dk-line-2:    #5a4a38;
+    --dk-vanilla:   #f7efde;
+    --dk-ink-warm:  #d4c7ad;
+    --dk-ink-mute:  #8a7a62;
+    --dk-ink-deep:  #5a4a38;
+    --dk-forest:    #4ca866;
+    --dk-forest-2:  #2d6a3e;
+    --dk-forest-3:  #6dd687;
+    --dijon:        #c08a2a;
+    --rust:         #c95a4a;
+  }
+  body {
+    margin: 0; background: var(--dk-bg); color: var(--dk-vanilla);
+    font-family: var(--font-body); min-height: 100vh;
+  }
+  *::selection { background: var(--dk-forest); color: var(--dk-bg); }
+  a { color: inherit; }
+
+  /* ── Page shell ──────────────────────────────────────────── */
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+  /* ── Top crumb / nav ─────────────────────────────────────── */
+  nav.top {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(15, 11, 8, 0.78);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid var(--dk-line);
+  }
+  nav.top .inner {
+    max-width: 1200px; margin: 0 auto; padding: 18px 32px;
+    display: flex; align-items: center; gap: 28px;
+  }
+  nav.top .brand {
+    display: inline-flex; align-items: baseline; gap: 10px;
+    font-family: var(--font-display);
+    font-weight: 700; font-size: 22px; letter-spacing: -0.5px;
+    color: var(--dk-forest-3); text-decoration: none;
+  }
+  nav.top .brand em { font-style: italic; font-weight: 400; color: var(--dk-vanilla); }
+  nav.top .brand .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--dk-forest-3);
+    box-shadow: 0 0 0 3px rgba(109,214,135,.20);
+    animation: pulse-dot 2.4s var(--ease-apple) infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.25); opacity: .7; }
+  }
+  nav.top ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 24px; flex: 1; }
+  nav.top a.lnk {
+    font-size: 14px; font-weight: 500;
+    color: var(--dk-ink-warm); text-decoration: none;
+    transition: color var(--t-fast) var(--ease-apple);
+  }
+  nav.top a.lnk:hover { color: var(--dk-forest-3); }
+  nav.top .v {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 600; letter-spacing: 1.2px;
+    color: var(--dk-ink-mute); text-transform: uppercase;
+  }
+  nav.top .v em { color: var(--dk-forest-3); font-style: normal; font-weight: 700; }
+
+  /* ── HERO ────────────────────────────────────────────────── */
+  section.hero {
+    position: relative;
+    padding: 88px 32px 96px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  /* dark aurora wash */
+  section.hero::before {
+    content: ""; position: absolute; inset: -10%; z-index: -2;
+    background:
+      radial-gradient(60% 70% at 15% 0%, rgba(76, 168, 102, 0.12), transparent 65%),
+      radial-gradient(50% 60% at 90% 30%, rgba(45, 106, 62, 0.14), transparent 70%),
+      radial-gradient(70% 60% at 50% 100%, rgba(109, 214, 135, 0.06), transparent 70%);
+    filter: blur(20px);
+    pointer-events: none;
+  }
+  /* paper grain */
+  section.hero::after {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    opacity: 0.32; pointer-events: none; mix-blend-mode: screen;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.40 0 0 0 0 0.36 0 0 0 0 0.28 0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  .hero-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 64px;
+    align-items: center;
+  }
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  }
+
+  /* ── Photo column ────────────────────────────────────────── */
+  .photo-col { position: relative; }
+  .photo-frame {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: 28px;
+    overflow: hidden;
+    background: radial-gradient(120% 80% at 35% 25%, #4a3a2a 0%, #2a1d12 55%, #0a0805 110%);
+    border: 1px solid var(--dk-line-2);
+    box-shadow: 0 40px 80px -30px rgba(0,0,0,.6),
+                0 0 0 1px rgba(247, 239, 222, 0.04) inset;
+    animation: photo-pulse 5.2s var(--ease-apple) infinite alternate;
+  }
+  @keyframes photo-pulse {
+    0%   { box-shadow: 0 40px 80px -30px rgba(0,0,0,.6), 0 0 0 1px rgba(247,239,222,.04) inset, 0 0 0 0 rgba(76, 168, 102, 0); }
+    100% { box-shadow: 0 40px 80px -30px rgba(0,0,0,.6), 0 0 0 1px rgba(247,239,222,.04) inset, 0 0 0 6px rgba(76, 168, 102, 0.06); }
+  }
+  /* faux portrait — soft silhouette */
+  .photo-frame::before {
+    content: "";
+    position: absolute;
+    left: 50%; top: 38%;
+    transform: translate(-50%, -50%);
+    width: 64%; height: 56%;
+    background:
+      radial-gradient(ellipse 52% 40% at 50% 32%, #6b5a48 0%, #382920 65%, transparent 72%),
+      radial-gradient(ellipse 70% 60% at 50% 80%, #382920 0%, transparent 70%);
+    opacity: 0.78;
+    filter: blur(2px);
+  }
+  /* film-grain wash on photo only */
+  .photo-frame::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,8,5,.10) 0%, rgba(10,8,5,.55) 100%);
+  }
+  .ph-stamp {
+    position: absolute;
+    bottom: 22px; left: 22px; right: 22px;
+    display: flex; align-items: center; justify-content: space-between;
+    color: var(--dk-vanilla);
+    z-index: 2;
+  }
+  .ph-stamp .who {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--dk-vanilla);
+    text-shadow: 0 2px 8px rgba(0,0,0,.4);
+  }
+  .ph-stamp .where {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 700; letter-spacing: 1.6px;
+    color: rgba(247,239,222,.75);
+    text-transform: uppercase;
+    background: rgba(15, 11, 8, .55);
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(247,239,222,.15);
+  }
+  .ph-placeholder-tag {
+    position: absolute; top: 22px; left: 22px;
+    z-index: 2;
+    padding: 6px 12px;
+    background: rgba(15,11,8,.55);
+    border: 1px solid rgba(247,239,222,.15);
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700; letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: rgba(247,239,222,.7);
+  }
+
+  /* Float chips around the photo */
+  .float-chip {
+    position: absolute;
+    z-index: 4;
+    padding: 14px 18px;
+    border-radius: 14px;
+    background: var(--dk-surface);
+    border: 1px solid var(--dk-line-2);
+    box-shadow: 0 18px 40px -18px rgba(0,0,0,.5);
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .float-chip.day {
+    right: -32px; top: 32px;
+    transform: rotate(3deg);
+  }
+  .float-chip.verse {
+    left: -32px; bottom: 84px;
+    transform: rotate(-2.2deg);
+    background: var(--dk-vanilla);
+    border-color: var(--dk-vanilla);
+    color: var(--ink);
+    width: 220px;
+  }
+  .float-chip .lbl {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700; letter-spacing: 1.6px;
+    color: var(--dk-ink-mute);
+    text-transform: uppercase;
+  }
+  .float-chip.verse .lbl { color: var(--forest-1); }
+  .float-chip .num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--dk-forest-3);
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+  .float-chip .sub {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.4px;
+    color: var(--dk-ink-warm);
+    text-transform: uppercase;
+  }
+  .float-chip.verse .v-text {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.35;
+    color: var(--ink);
+    margin-top: 4px;
+  }
+  .float-chip.verse .v-ref {
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    color: var(--forest-1);
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  /* ── Hero text column ────────────────────────────────────── */
+  .text-col { display: flex; flex-direction: column; gap: 28px; }
+  .pre-row {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .pre-row .live {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--dk-forest-3);
+    box-shadow: 0 0 0 4px rgba(109,214,135,.22);
+    animation: pulse-dot 2.4s var(--ease-apple) infinite;
+  }
+  .pre-row .pre {
+    font-family: var(--font-body);
+    font-size: 11px; font-weight: 800; letter-spacing: 2.4px;
+    color: var(--dk-forest-3);
+    text-transform: uppercase;
+  }
+  .pre-row .sep { color: var(--dk-line-2); }
+  .pre-row .v25 {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 600; letter-spacing: 1.2px;
+    color: var(--dk-ink-mute);
+    text-transform: uppercase;
+  }
+  .pre-row .v25 em { color: var(--dk-forest-3); font-style: normal; font-weight: 700; }
+
+  h1.name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(64px, 8vw, 116px);
+    line-height: 0.94;
+    letter-spacing: -3px;
+    color: var(--dk-vanilla);
+    margin: 0;
+    text-wrap: balance;
+  }
+  h1.name .first { display: block; }
+  h1.name .last {
+    display: block;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--dk-forest-3);
+  }
+  p.sub {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(22px, 2.2vw, 30px);
+    line-height: 1.4;
+    color: var(--dk-ink-warm);
+    margin: 0;
+    text-wrap: pretty;
+    max-width: 620px;
+    border-left: 3px solid var(--dk-forest);
+    padding-left: 22px;
+  }
+  p.sub em {
+    font-style: normal;
+    font-weight: 800;
+    font-family: var(--font-body);
+    color: var(--dk-vanilla);
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    font-size: 0.6em;
+    background: rgba(76, 168, 102, 0.15);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 4px;
+  }
+
+  .meta-row {
+    display: flex; gap: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--dk-line);
+    flex-wrap: wrap;
+  }
+  .meta-cell .n {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 38px;
+    color: var(--dk-forest-3);
+    line-height: 1;
+    letter-spacing: -1.2px;
+  }
+  .meta-cell .n em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--dk-ink-warm);
+    font-size: 22px;
+  }
+  .meta-cell .l {
+    font-family: var(--font-body);
+    font-size: 11px; font-weight: 700; letter-spacing: 1.8px;
+    color: var(--dk-ink-mute);
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  /* ── PILLARS ────────────────────────────────────────────── */
+  section.pillars {
+    padding: 96px 32px 96px;
+    position: relative;
+    border-top: 1px solid var(--dk-line);
+  }
+  .pillars-head {
+    max-width: 1200px; margin: 0 auto 56px;
+    display: flex; align-items: end; justify-content: space-between;
+    gap: 32px; flex-wrap: wrap;
+  }
+  .pillars-head .left { max-width: 640px; }
+  .pillars-head .eyebrow-row { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+  .pillars-head .eyebrow-row .n { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--dk-forest-3); }
+  .pillars-head .eyebrow-row .dash { flex: 0 0 56px; height: 1px; background: var(--dk-forest); }
+  .pillars-head .eyebrow-row .lbl {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.8px;
+    color: var(--dk-forest-3); text-transform: uppercase;
+  }
+  .pillars-head h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(36px, 4vw, 56px);
+    letter-spacing: -1.4px;
+    line-height: 1.02;
+    color: var(--dk-vanilla);
+    margin: 0;
+    text-wrap: balance;
+  }
+  .pillars-head h2 em { font-style: italic; font-weight: 400; color: var(--dk-forest-3); }
+  .pillars-head p {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 20px;
+    color: var(--dk-ink-warm);
+    margin: 16px 0 0;
+    line-height: 1.5;
+    max-width: 540px;
+  }
+  .pillars-head .stamp {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 600; letter-spacing: 0.6px;
+    color: var(--dk-ink-mute); text-transform: uppercase;
+    text-align: right;
+  }
+  .pillars-head .stamp .big {
+    font-family: var(--font-display); font-style: italic; font-weight: 700;
+    font-size: 44px; color: var(--dk-forest-3); line-height: 1;
+    text-transform: none;
+  }
+
+  .pillar-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 1080px) { .pillar-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px)  { .pillar-grid { grid-template-columns: 1fr; } }
+
+  .pillar {
+    position: relative;
+    background: var(--dk-surface);
+    border: 1px solid var(--dk-line);
+    border-radius: 22px;
+    padding: 28px 26px 26px;
+    display: flex; flex-direction: column;
+    gap: 18px;
+    min-height: 380px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition:
+      transform var(--t-fast) var(--ease-apple),
+      background var(--t-fast) var(--ease-apple),
+      border-color var(--t-fast) var(--ease-apple),
+      box-shadow var(--t-med) var(--ease-apple);
+  }
+  .pillar:hover {
+    transform: translateY(-6px);
+    background: var(--dk-surface-2);
+    border-color: var(--accent);
+    box-shadow: 0 28px 56px -28px rgba(0,0,0,.6),
+                0 0 0 1px var(--accent) inset;
+  }
+  .pillar::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent);
+    opacity: 0.9;
+  }
+  /* Per-pillar accent */
+  .pillar[data-p="disziplin"] { --accent: var(--dk-forest); }
+  .pillar[data-p="faith"]     { --accent: var(--dijon); }
+  .pillar[data-p="vegi"]      { --accent: var(--dk-forest-3); }
+  .pillar[data-p="solo"]      { --accent: var(--rust); }
+
+  .pillar .roman {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: -4px;
+  }
+
+  /* Visual block — distinct per pillar */
+  .pillar .vis {
+    position: relative;
+    height: 130px;
+    border-radius: 14px;
+    background: var(--dk-surface-3);
+    border: 1px solid var(--dk-line);
+    overflow: hidden;
+  }
+
+  /* Pillar 1 · Disziplin — mountain SVG + day counter */
+  .pillar[data-p="disziplin"] .vis {
+    background: linear-gradient(180deg, var(--dk-surface-3) 0%, #1a1410 100%);
+  }
+  .pillar[data-p="disziplin"] .vis .mtns {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 80%;
+  }
+  .pillar[data-p="disziplin"] .vis .glyph {
+    position: absolute; top: 16px; right: 16px;
+    font-family: var(--font-display);
+    font-style: italic; font-weight: 700;
+    font-size: 18px; color: var(--accent);
+  }
+  .pillar[data-p="disziplin"] .vis .counter {
+    position: absolute; bottom: 14px; left: 16px;
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 36px; letter-spacing: -1.2px;
+    color: var(--dk-vanilla); line-height: 1;
+  }
+  .pillar[data-p="disziplin"] .vis .counter em {
+    font-style: italic; font-weight: 400; color: var(--accent);
+    font-size: 18px; margin-left: 4px;
+  }
+
+  /* Pillar 2 · Faith — bible page + verse stamp */
+  .pillar[data-p="faith"] .vis {
+    background: linear-gradient(180deg, var(--dk-surface-3) 0%, #211a14 100%);
+    display: flex; align-items: center; justify-content: center;
+    padding: 18px;
+  }
+  .pillar[data-p="faith"] .vis .book {
+    width: 100%; height: 100%;
+    background: linear-gradient(180deg, #2a2018 0%, #1a1410 100%);
+    border: 1px solid var(--dk-line-2);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pillar[data-p="faith"] .vis .book::before {
+    /* page lines */
+    content: ""; position: absolute;
+    left: 14%; right: 14%; top: 22%; bottom: 22%;
+    background-image: linear-gradient(180deg, transparent 0px, transparent 7px, var(--dk-line-2) 7px, var(--dk-line-2) 8px);
+    background-size: 100% 8px;
+    opacity: 0.5;
+  }
+  .pillar[data-p="faith"] .vis .book::after {
+    /* spine shadow */
+    content: ""; position: absolute;
+    left: 50%; top: 8%; bottom: 8%; width: 1px;
+    background: var(--dk-line-2);
+  }
+  .pillar[data-p="faith"] .vis .stamp {
+    position: absolute;
+    right: 14px; bottom: 14px;
+    transform: rotate(-6deg);
+    padding: 6px 10px;
+    background: var(--accent);
+    color: var(--dk-bg);
+    border-radius: 3px;
+    font-family: var(--font-body);
+    font-size: 9px; font-weight: 800; letter-spacing: 1.6px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 6px rgba(0,0,0,.3);
+  }
+  .pillar[data-p="faith"] .vis .ref {
+    position: absolute; top: 14px; left: 14px;
+    font-family: var(--font-display); font-style: italic;
+    font-size: 16px; font-weight: 700;
+    color: var(--accent);
+  }
+
+  /* Pillar 3 · Vegi+Stark — leaf + dumbbell + 10y stamp */
+  .pillar[data-p="vegi"] .vis {
+    background:
+      radial-gradient(80% 60% at 30% 30%, rgba(76,168,102,.10), transparent 60%),
+      linear-gradient(180deg, var(--dk-surface-3), #1a1410);
+    display: flex; align-items: center; justify-content: center;
+    padding: 12px;
+  }
+  .pillar[data-p="vegi"] .vis .yr {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 72px;
+    color: var(--dk-vanilla);
+    line-height: 1;
+    letter-spacing: -3px;
+  }
+  .pillar[data-p="vegi"] .vis .yr em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    font-size: 36px;
+    margin-left: 4px;
+    vertical-align: top;
+  }
+  .pillar[data-p="vegi"] .vis .leaf {
+    position: absolute;
+    top: 18px; left: 18px;
+    color: var(--accent);
+  }
+  .pillar[data-p="vegi"] .vis .dumb {
+    position: absolute;
+    bottom: 18px; right: 18px;
+    color: var(--dk-vanilla);
+    opacity: 0.7;
+  }
+
+  /* Pillar 4 · Solo — tribe avatars + tag */
+  .pillar[data-p="solo"] .vis {
+    background:
+      radial-gradient(80% 60% at 70% 30%, rgba(201,90,74,.10), transparent 60%),
+      linear-gradient(180deg, var(--dk-surface-3), #1a1410);
+    padding: 18px;
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+  }
+  .pillar[data-p="solo"] .tribe-row {
+    display: flex; align-items: center;
+    margin-top: 8px;
+  }
+  .pillar[data-p="solo"] .tribe-row .av {
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 2px solid var(--dk-surface);
+    margin-left: -10px;
+    display: grid; place-items: center;
+    color: var(--dk-vanilla);
+    font-family: var(--font-display); font-style: italic; font-weight: 700;
+    font-size: 14px;
+  }
+  .pillar[data-p="solo"] .tribe-row .av:first-child { margin-left: 0; }
+  .pillar[data-p="solo"] .tribe-row .av:nth-child(1) { background: linear-gradient(135deg, #4ca866, #2d6a3e); }
+  .pillar[data-p="solo"] .tribe-row .av:nth-child(2) { background: linear-gradient(135deg, var(--dijon), #8b6f4a); }
+  .pillar[data-p="solo"] .tribe-row .av:nth-child(3) { background: linear-gradient(135deg, var(--rust), #8b3520); }
+  .pillar[data-p="solo"] .tribe-row .av:nth-child(4) { background: linear-gradient(135deg, #6dd687, #2d6a3e); }
+  .pillar[data-p="solo"] .tribe-row .av:nth-child(5) { background: linear-gradient(135deg, #d4c7ad, #5a4a38); color: var(--dk-bg); }
+  .pillar[data-p="solo"] .tribe-row .count {
+    margin-left: 12px;
+    font-family: var(--font-body);
+    font-size: 11px; font-weight: 700; letter-spacing: 1.4px;
+    color: var(--accent); text-transform: uppercase;
+  }
+  .pillar[data-p="solo"] .vis .label {
+    font-family: var(--font-body);
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    color: var(--dk-ink-mute); text-transform: uppercase;
+  }
+  .pillar[data-p="solo"] .vis .nums {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--dk-vanilla);
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+  .pillar[data-p="solo"] .vis .nums em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    font-size: 18px;
+  }
+
+  /* Card body */
+  .pillar .head-row {
+    display: flex; align-items: baseline; gap: 12px;
+  }
+  .pillar .emo {
+    font-size: 28px; line-height: 1;
+  }
+  .pillar h3 {
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: 24px;
+    letter-spacing: -0.4px;
+    color: var(--dk-vanilla);
+    margin: 0;
+    line-height: 1.1;
+  }
+  .pillar p.cap {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 1.35;
+    color: var(--dk-ink-warm);
+    margin: 0;
+    flex: 1;
+    text-wrap: balance;
+  }
+  .pillar p.cap em { font-style: normal; font-weight: 700; color: var(--accent); }
+  .pillar .foot {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--dk-line);
+  }
+  .pillar .foot .meta {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+    color: var(--dk-ink-mute); text-transform: uppercase;
+  }
+  .pillar .foot .more {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-body);
+    font-size: 11px; font-weight: 800; letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--accent);
+    transition: gap var(--t-fast) var(--ease-apple);
+  }
+  .pillar:hover .foot .more { gap: 14px; }
+
+  /* ── TAGLINE RIBBON ─────────────────────────────────────── */
+  section.tagline {
+    padding: 64px 32px;
+    position: relative;
+    border-top: 1px solid var(--dk-line);
+    border-bottom: 1px solid var(--dk-line);
+    background: var(--dk-surface);
+    overflow: hidden;
+  }
+  section.tagline::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(70% 80% at 50% 50%, rgba(76,168,102,.10), transparent 70%);
+    pointer-events: none;
+  }
+  .tagline-inner {
+    max-width: 1100px; margin: 0 auto; text-align: center;
+    position: relative;
+  }
+  .tagline-inner .quote-mark {
+    font-family: var(--font-display);
+    font-style: italic; font-weight: 700;
+    font-size: 88px; line-height: 0.5;
+    color: var(--dk-forest);
+    opacity: 0.7;
+  }
+  .tagline-inner .quote {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(32px, 4.4vw, 56px);
+    line-height: 1.06;
+    letter-spacing: -1.2px;
+    color: var(--dk-vanilla);
+    margin: 24px 0 28px;
+    text-wrap: balance;
+  }
+  .tagline-inner .quote em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--dk-forest-3);
+  }
+  .tagline-inner .attr {
+    display: inline-flex; align-items: center; gap: 16px;
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 800; letter-spacing: 2.4px;
+    color: var(--dk-forest-3); text-transform: uppercase;
+  }
+  .tagline-inner .attr .line { width: 40px; height: 1.5px; background: var(--dk-forest); }
+
+  /* ── CTA TRIO ───────────────────────────────────────────── */
+  section.cta {
+    padding: 80px 32px 96px;
+  }
+  .cta-head {
+    max-width: 1200px; margin: 0 auto 40px;
+    display: flex; align-items: end; justify-content: space-between;
+    gap: 24px; flex-wrap: wrap;
+  }
+  .cta-head h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(28px, 3vw, 40px);
+    color: var(--dk-vanilla);
+    line-height: 1.05;
+    letter-spacing: -0.8px;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .cta-head h2 em { font-style: italic; font-weight: 400; color: var(--dk-forest-3); }
+  .cta-head .micro {
+    font-family: var(--font-display); font-style: italic;
+    color: var(--dk-ink-mute); font-size: 16px;
+    max-width: 360px; text-align: right;
+  }
+
+  .cta-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 18px;
+  }
+  @media (max-width: 880px) { .cta-grid { grid-template-columns: 1fr; } }
+
+  .cta-card {
+    position: relative;
+    padding: 28px 28px 26px;
+    border-radius: 20px;
+    text-decoration: none; color: inherit;
+    display: flex; flex-direction: column; gap: 16px;
+    overflow: hidden;
+    transition: transform var(--t-fast) var(--ease-apple),
+                box-shadow var(--t-med) var(--ease-apple);
+  }
+  .cta-card:hover { transform: translateY(-3px); }
+
+  .cta-card.primary {
+    background: linear-gradient(135deg, var(--dk-forest) 0%, var(--dk-forest-2) 100%);
+    color: var(--dk-bg);
+    box-shadow: 0 20px 44px -20px rgba(76,168,102,.45);
+  }
+  .cta-card.primary:hover {
+    box-shadow: 0 28px 56px -24px rgba(76,168,102,.6);
+  }
+  .cta-card.secondary {
+    background: var(--dk-surface);
+    border: 1px solid var(--dk-line-2);
+    color: var(--dk-vanilla);
+  }
+  .cta-card.secondary:hover {
+    background: var(--dk-surface-2);
+    border-color: var(--dk-forest);
+  }
+  .cta-card .lbl {
+    font-family: var(--font-body);
+    font-size: 11px; font-weight: 800; letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+  .cta-card.primary .lbl { color: var(--dk-bg); }
+  .cta-card .h {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1.05;
+    letter-spacing: -0.6px;
+    color: inherit;
+    text-wrap: balance;
+  }
+  .cta-card .h em { font-style: italic; font-weight: 400; }
+  .cta-card .cap {
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.4;
+    color: inherit;
+    opacity: 0.75;
+  }
+  .cta-card .go {
+    margin-top: auto;
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 800; letter-spacing: 1.8px;
+    text-transform: uppercase;
+  }
+  .cta-card .go .arr {
+    font-family: var(--font-display); font-style: italic;
+    font-size: 20px; font-weight: 700;
+    text-transform: none; letter-spacing: -0.5px;
+    transition: transform var(--t-fast) var(--ease-apple);
+  }
+  .cta-card:hover .go .arr { transform: translateX(6px); }
+
+  .cta-card.primary .go { color: var(--dk-bg); }
+  .cta-card.secondary .go { color: var(--dk-forest-3); }
+
+  /* CTA-card type lockup */
+  .cta-card .nm {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--dk-forest-3);
+    letter-spacing: -0.2px;
+  }
+  .cta-card.primary .nm { color: var(--dk-bg); opacity: .65; }
+
+  /* faint backgrounds per CTA */
+  .cta-card.primary::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(60% 80% at 90% 100%, rgba(15,11,8,.18), transparent 60%);
+  }
+
+  /* Footer ribbon */
+  footer.foot {
+    border-top: 1px solid var(--dk-line);
+    padding: 32px;
+  }
+  footer .inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; flex-wrap: wrap;
+    color: var(--dk-ink-mute); font-size: 12px;
+  }
+  footer .brand-mini {
+    font-family: var(--font-display); font-style: italic;
+    color: var(--dk-forest-3); font-size: 16px;
+    font-weight: 700;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .photo-frame, nav.top .brand .dot, .pre-row .live { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="top" data-screen-label="Hero v25 · Nav">
+  <div class="inner">
+    <a class="brand" href="#"><span class="dot"></span> vegetarian<em>hulk</em></a>
+    <ul>
+      <li><a class="lnk" href="#manifest">Manifest</a></li>
+      <li><a class="lnk" href="#saeulen">Säulen</a></li>
+      <li><a class="lnk" href="#journal">Journal</a></li>
+      <li><a class="lnk" href="#smash">SMASH</a></li>
+    </ul>
+    <span class="v">v<em>25</em> · 14. Mai 2026</span>
+  </div>
+</nav>
+
+<!-- ── HERO TOP ── -->
+<section class="hero" data-screen-label="Hero v25 · Top">
+  <div class="hero-grid">
+
+    <!-- Photo col -->
+    <div class="photo-col">
+      <div class="photo-frame">
+        <span class="ph-placeholder-tag">📷 PORTRAIT · PLATZHALTER</span>
+        <div class="ph-stamp">
+          <span class="who">— Sebi · 5:42 Uhr</span>
+          <span class="where">Bayern · Wald</span>
+        </div>
+      </div>
+      <div class="float-chip day">
+        <span class="lbl">Tag · Plant‑Based</span>
+        <span class="num">1.252</span>
+        <span class="sub">seit 14.03.16</span>
+      </div>
+      <div class="float-chip verse">
+        <span class="lbl">Tag‑Anker · 14.05</span>
+        <span class="v-text">„Alles vermag ich durch den, der mich stark macht."</span>
+        <span class="v-ref">Phil. 4,13 · Schl. 2000</span>
+      </div>
+    </div>
+
+    <!-- Text col -->
+    <div class="text-col">
+      <div class="pre-row">
+        <span class="live"></span>
+        <span class="pre">Personal Brand · Sebastian Wimmer</span>
+        <span class="sep">·</span>
+        <span class="v25">v<em>25</em> · live</span>
+      </div>
+
+      <h1 class="name">
+        <span class="first">Sebastian</span>
+        <span class="last">Wimmer.</span>
+      </h1>
+
+      <p class="sub">
+        <em>10 J. veggi</em><em>8 J. gym</em><em>2 J. founder</em>
+        Christ, Macher, Plant‑Based seit dem 14. März 2016 — und immer noch <strong style="color:var(--dk-vanilla);font-weight:600;font-style:italic">der gleiche</strong> stur am Morgen um 5:42.
+      </p>
+
+      <div class="meta-row">
+        <div class="meta-cell"><div class="n">1.252 <em>Tage</em></div><div class="l">Plant‑Based · ohne Pause</div></div>
+        <div class="meta-cell"><div class="n">5:42 <em>Uhr</em></div><div class="l">Gebet · jeden Morgen</div></div>
+        <div class="meta-cell"><div class="n">66 <em>Streak</em></div><div class="l">Aktuell · in SMASH</div></div>
+        <div class="meta-cell"><div class="n">v<em>0.4</em></div><div class="l">SMASH App · build in public</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── PILLARS ── -->
+<section class="pillars" id="saeulen" data-screen-label="Hero v25 · Pillars">
+  <div class="wrap">
+
+    <div class="pillars-head">
+      <div class="left">
+        <div class="eyebrow-row">
+          <span class="n">01</span>
+          <span class="dash"></span>
+          <span class="lbl">Säulen · 4 Inhalts‑Pillars</span>
+        </div>
+        <h2>Was ich schreibe, <em>warum.</em></h2>
+        <p>Vier Themen. Kein Content‑Kalender. Jede Säule ist gelebt, nicht gelesen.</p>
+      </div>
+      <div class="stamp">
+        <div class="big">04</div>
+        <div>Pillars · live since 2016</div>
+      </div>
+    </div>
+
+    <div class="pillar-grid">
+
+      <!-- Disziplin -->
+      <a class="pillar" data-p="disziplin" href="#p-disziplin">
+        <span class="roman">i.</span>
+        <div class="vis">
+          <svg class="mtns" viewBox="0 0 220 100" preserveAspectRatio="none" fill="none">
+            <path d="M0 100 L40 50 L70 70 L110 30 L160 60 L200 40 L220 55 L220 100 Z" fill="#2a2018"/>
+            <path d="M0 100 L50 70 L90 82 L130 55 L170 78 L220 65 L220 100 Z" fill="#3a2e22"/>
+            <path d="M110 30 L120 38 L130 32 L122 28 Z" fill="#4ca866"/>
+          </svg>
+          <span class="glyph">↑</span>
+          <span class="counter">1.252<em>d</em></span>
+        </div>
+        <div class="head-row">
+          <span class="emo">🏔</span>
+          <h3>Disziplin</h3>
+        </div>
+        <p class="cap">Ritual statt <em>Willenskraft.</em> Wie ich Tage baue, an denen ich nicht reiße.</p>
+        <div class="foot">
+          <span class="meta">12 Artikel · 48 Reels</span>
+          <span class="more">Mehr lesen <span class="arr">→</span></span>
+        </div>
+      </a>
+
+      <!-- Faith -->
+      <a class="pillar" data-p="faith" href="#p-faith">
+        <span class="roman">ii.</span>
+        <div class="vis">
+          <div class="book">
+            <span class="ref">Phil. 4</span>
+            <span class="stamp">TAG‑ANKER</span>
+          </div>
+        </div>
+        <div class="head-row">
+          <span class="emo">✝️</span>
+          <h3>Faith</h3>
+        </div>
+        <p class="cap">Schlachter‑2000 als <em>täglicher Anker.</em> Ein Vers, ein Tag, leise gelebt.</p>
+        <div class="foot">
+          <span class="meta">365 Verse · 1 / Tag</span>
+          <span class="more">Heute lesen <span class="arr">→</span></span>
+        </div>
+      </a>
+
+      <!-- Vegi + Stark -->
+      <a class="pillar" data-p="vegi" href="#p-vegi">
+        <span class="roman">iii.</span>
+        <div class="vis">
+          <svg class="leaf" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19.2 2.96c1 1.51 1.79 4.04 1.79 6.04A8.78 8.78 0 0 1 11 20z"/>
+            <path d="M2 21c2.5-2.5 6-6 8-8"/>
+          </svg>
+          <svg class="dumb" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 4v16M2 8v8M18 4v16M22 8v8M6 12h12"/>
+          </svg>
+          <span class="yr">10<em>J</em></span>
+        </div>
+        <div class="head-row">
+          <span class="emo">🌿</span>
+          <h3>Vegi + Stark</h3>
+        </div>
+        <p class="cap">10 Jahre <em>live‑Beweis.</em> Pflanzlich, ohne Mission. Stark, ohne Lautstärke.</p>
+        <div class="foot">
+          <span class="meta">Rezepte · Macros · Lifts</span>
+          <span class="more">Stack ansehen <span class="arr">→</span></span>
+        </div>
+      </a>
+
+      <!-- Solo-Macher -->
+      <a class="pillar" data-p="solo" href="#p-solo">
+        <span class="roman">iv.</span>
+        <div class="vis">
+          <div>
+            <span class="label">Tribe · live</span>
+            <div class="nums">247 <em>/ 5.000</em></div>
+          </div>
+          <div class="tribe-row">
+            <span class="av">S</span>
+            <span class="av">M</span>
+            <span class="av">J</span>
+            <span class="av">L</span>
+            <span class="av">+</span>
+            <span class="count">+ 242 mehr</span>
+          </div>
+        </div>
+        <div class="head-row">
+          <span class="emo">🛠</span>
+          <h3>Solo‑Macher</h3>
+        </div>
+        <p class="cap"><em>Tribe</em> &gt; Coach. <em>Numbers</em> &gt; Hype. Build in public, ehrlich.</p>
+        <div class="foot">
+          <span class="meta">Build · SMASH v0.4</span>
+          <span class="more">Logbuch lesen <span class="arr">→</span></span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── TAGLINE RIBBON ── -->
+<section class="tagline" data-screen-label="Hero v25 · Tagline">
+  <div class="tagline-inner">
+    <div class="quote-mark">„</div>
+    <div class="quote">
+      Disziplin ist <em>kein Talent.</em><br/>
+      Sie ist ein Ritual.
+    </div>
+    <div class="attr">
+      <span class="line"></span>
+      <span>Sebi · Bayern · Tag 1.252</span>
+      <span class="line"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA TRIO ── -->
+<section class="cta" data-screen-label="Hero v25 · CTA">
+  <div class="wrap">
+
+    <div class="cta-head">
+      <h2>Drei Wege, <em>näher dran.</em></h2>
+      <span class="micro">— ich antworte selbst, kein Funnel, kein Auto‑Reply.</span>
+    </div>
+
+    <div class="cta-grid">
+
+      <!-- Newsletter · PRIMARY -->
+      <a class="cta-card primary" href="#newsletter">
+        <span class="lbl">↳ 01 · Wöchentlich</span>
+        <span class="h">Newsletter</span>
+        <span class="nm">Sonntag · 19:42</span>
+        <span class="cap">Ein Vers, eine Reflexion, ein konkretes Ritual für die Woche. Kein Pitch, keine Affiliates.</span>
+        <span class="go">Eintragen <span class="arr">→</span></span>
+      </a>
+
+      <!-- 1:1 Call · SECONDARY -->
+      <a class="cta-card secondary" href="#call">
+        <span class="lbl">↳ 02 · 30 Min</span>
+        <span class="h">1:1‑Call</span>
+        <span class="nm">Donnerstag · 18:00</span>
+        <span class="cap">Du hast eine Frage zu Plant‑Based, Glaube oder Build‑in‑Public. Wir reden. Ehrlich, ohne Coaching‑Funnel.</span>
+        <span class="go">Slot buchen <span class="arr">→</span></span>
+      </a>
+
+      <!-- Insta · SECONDARY -->
+      <a class="cta-card secondary" href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">
+        <span class="lbl">↳ 03 · Täglich</span>
+        <span class="h">Insta</span>
+        <span class="nm">@vegetarianhulk</span>
+        <span class="cap">Reels, Stories, Hook‑Pool, Tag‑Anker. Der lauteste, ehrlichste Kanal — DMs lese ich selbst.</span>
+        <span class="go">Folgen <span class="arr">→</span></span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="foot">
+  <div class="inner">
+    <span class="brand-mini">vegetarian<em style="font-style:normal;color:var(--dk-vanilla);font-weight:400">hulk</em></span>
+    <span>© 2026 Sebastian Wimmer · Bayern</span>
+    <span>v25 · 14. Mai 2026 · Schlachter‑2000 · Tag 1.252</span>
+  </div>
+</footer>
+
+</body>
+</html>

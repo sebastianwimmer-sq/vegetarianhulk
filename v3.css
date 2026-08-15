@@ -1,0 +1,932 @@
+/* Brand-Trenner: kleine Berg-Silhouette statt · (Sebi-Wunsch eigenes Icon) */
+.hsep { display: inline-block; width: 13px; height: 9px; margin: 0 9px; vertical-align: 1px;
+  background: currentColor; opacity: 0.5; flex: 0 0 auto;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 9'%3E%3Cpath d='M0.5 8.5 L4.3 1.6 L6.2 4.8 L7.8 2.6 L12.5 8.5 Z'/%3E%3C/svg%3E") center/contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 9'%3E%3Cpath d='M0.5 8.5 L4.3 1.6 L6.2 4.8 L7.8 2.6 L12.5 8.5 Z'/%3E%3C/svg%3E") center/contain no-repeat; }
+/* VH v3 — Editorial Dark (aus design/prototypes/home-v3.html portiert) */
+@font-face {
+  font-family: 'Caveat';
+  src: url('/fonts/caveat-latin.woff2') format('woff2');
+  font-weight: 400 700; font-style: normal; font-display: swap;
+}
+/* ============================================================
+   VH HOME v3 — EDITORIAL DARK (QA-Runde Sebi 10.07. abends)
+   Fixes: 1) Kontrast-Choreografie — nie gleiche Fläche neben
+   gleicher (Raum → Papier → Royal → Mint → Typo-Zeile)
+   2) KI-Vokabular raus: keine Pill+Orb-CTAs, keine Standard-Icons —
+   CTA = Mono-Text mit handgezogenem Kringel, Nav typografisch
+   3) Hero ohne Box: Foto löst sich in den Raum auf, Typo überlappt
+   4) Bibel-Anker = hellste Fläche (der Anker als Licht-Moment)
+   ============================================================ */
+:root {
+  --mint: #D1F2EB; --emerald: #50C878; --royal: #0B6E4F; --evergreen: #013220;
+  --alabaster: #E9E0CF; --gold: #BA9B5F; --gold-ink: #7d600f; --sage: #5E775E; --forest: #132B23;
+
+  --bg-deep: #06231A;
+  --paper: #F3EBD9; --paper-dim: rgba(243,235,217,0.68); --paper-faint: rgba(243,235,217,0.58);
+  --card-cream: #F5EEDE; --ink: #182B1F; --ink-soft: #5E6B5E;
+  --leaf: #7ED09B; --meta-green: #9BD9B4;
+
+  /* Typo-Scale — 5 Größen */
+  --t-display: clamp(64px, 19vw, 130px);
+  --t-h2: clamp(32px, 8vw, 48px);
+  --t-h3: 21px;
+  --t-body: 16px;
+  --t-label: 11.5px;
+
+  --shadow-paper:
+    inset 0 1px 0 rgba(255,255,255,0.85),
+    0 0 0 1px rgba(186,155,95,0.22),
+    0 30px 64px -28px rgba(0,0,0,0.6);
+  --shadow-mid:
+    inset 0 1px 1px rgba(255,255,255,0.14),
+    0 0 0 1px rgba(209,242,235,0.16),
+    0 26px 60px -28px rgba(0,0,0,0.65);
+  --ease-lux: cubic-bezier(0.32, 0.72, 0, 1);
+  --mono: ui-monospace, 'SF Mono', Menlo, monospace;
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { overflow-x: clip; scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg-deep);
+  color: var(--paper);
+  font-size: var(--t-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  padding-bottom: 130px;
+  color-scheme: dark;
+}
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--emerald); color: #05130C; }
+body::after { content: ""; position: fixed; inset: 0; background-image: var(--grain); pointer-events: none; z-index: 80; }
+
+/* ---- Raumlicht = Messstation: Instrumente fix, die Landschaft
+   (2 Mesh-Ebenen, 214vh/170vh hoch) faehrt beim Scrollen durch.
+   CSS-Radials als Sicherheitsnetz unter dem transparenten SVG —
+   Lichtzonen fest ueber die ganze Bahn verteilt, nie tote Zonen. ---- */
+.bg-wrap { position: fixed; top: 0; left: -6%; width: 112%; height: 214vh; z-index: -1;
+  pointer-events: none; will-change: transform; }
+.bg2-wrap { position: fixed; top: -30vh; left: -12%; width: 124%; height: 170vh; z-index: -1;
+  pointer-events: none; will-change: transform; }
+.bg { position: absolute; inset: 0;
+  background-color: var(--bg-deep);
+  background-image:
+    url(mesh-bg-dark.svg),
+    radial-gradient(70% 26% at 82% 6%,  rgba(201,169,106,0.5),  transparent 70%),
+    radial-gradient(64% 22% at 14% 18%, rgba(15,126,91,0.8),    transparent 70%),
+    radial-gradient(70% 24% at 78% 38%, rgba(63,191,128,0.6),   transparent 70%),
+    radial-gradient(58% 20% at 18% 55%, rgba(209,242,235,0.16), transparent 70%),
+    radial-gradient(72% 24% at 80% 72%, rgba(15,126,91,0.7),    transparent 70%),
+    radial-gradient(66% 22% at 22% 88%, rgba(69,204,138,0.55),  transparent 70%),
+    radial-gradient(80% 18% at 50% 100%, rgba(3,18,11,0.9),     transparent 75%);
+  background-size: cover, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  background-position: center;
+  animation: lava1 58s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  will-change: transform; }
+.bg2 { position: absolute; inset: 0;
+  background-image:
+    radial-gradient(52% 30% at 70% 20%, rgba(80,200,120,0.5), transparent 72%),
+    radial-gradient(46% 26% at 22% 62%, rgba(201,169,106,0.32), transparent 70%),
+    radial-gradient(56% 30% at 74% 90%, rgba(15,126,91,0.55), transparent 72%);
+  mix-blend-mode: screen; opacity: 0.65;
+  animation: lava2 44s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  will-change: transform; }
+@keyframes lava1 {
+  from { transform: translate(0, 0) rotate(0deg) scale(1.02); }
+  to   { transform: translate(-2%, 1.5%) rotate(1.4deg) scale(1.07); }
+}
+@keyframes lava2 {
+  from { transform: translate(1.5%, -2%) rotate(4deg) scale(1); }
+  to   { transform: translate(-3%, 3%) rotate(-3deg) scale(1.12); }
+}
+
+main { position: relative; z-index: 1; }
+.wrap { width: min(100% - 36px, 560px); margin-inline: auto; }
+
+/* ============================================================
+   HULK HIKES — /touren/  (v3, dark editorial)
+   Breakout: breitere Sektionen brechen aus der 560er .wrap aus.
+   ============================================================ */
+/* Breakout ohne transform (transform gehört der .rv-Reveal-Animation) */
+.th-break { width: min(1040px, 92vw); margin-left: calc((100% - min(1040px, 92vw)) / 2); }
+/* Hero */
+.th-hero { margin: clamp(48px, 9vh, 96px) 0 12px; }
+.th-hero .kicker { font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
+  letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf);
+  display: flex; align-items: center; gap: 12px; }
+.th-hero .kicker::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.24); }
+.th-hero h1 { margin: 16px 0 20px; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(44px, 11vw, 84px); line-height: 0.98; color: var(--paper); letter-spacing: -0.5px; }
+.th-hero h1 em { font-style: italic; color: var(--leaf); }
+.th-lead { font-size: 16.5px; line-height: 1.7; color: var(--paper-dim); max-width: 52ch; }
+.th-meta { margin-top: 22px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--paper-faint); }
+.th-meta i { color: var(--leaf); font-style: normal; }
+
+/* Flagship — Watzmann (Topo-Karte, cream/data-light) */
+.th-flag { width: min(1040px, 92vw); margin: 56px 0 0; margin-left: calc((100% - min(1040px, 92vw)) / 2);
+  border-radius: 22px; overflow: hidden; position: relative;
+  padding: 7px; /* aeussere Schale fuer Doppelrand */
+  background: linear-gradient(158deg, rgba(24,43,31,0.1), rgba(24,43,31,0.03));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.5),
+    0 0 0 1px rgba(186,155,95,0.28),
+    0 44px 80px -34px rgba(0,0,0,0.66), 0 8px 22px -12px rgba(0,0,0,0.4); }
+.th-flag__grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.1fr 0.9fr;
+  border-radius: 16px; overflow: hidden;
+  background:
+    repeating-linear-gradient(93deg, rgba(24,43,31,0.028) 0 1px, transparent 1px 10px),
+    linear-gradient(158deg, #F5EEDE 0%, #EFE7D2 58%, #E7DDC4 100%);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.7), inset 0 0 0 1px rgba(186,155,95,0.18); }
+.th-flag__grid::after { content: ""; position: absolute; inset: 0; background-image: var(--grain);
+  opacity: 0.5; pointer-events: none; }
+.th-flag__body { position: relative; z-index: 1; padding: clamp(30px, 4vw, 48px); }
+.th-flag__body h2 em { font-style: italic; color: var(--royal); }
+.th-badge { display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: #14100A;
+  background: linear-gradient(180deg, #E8BF25, #D4A918); padding: 5px 12px;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%); }
+.th-flag__body h2 { margin: 16px 0 12px; font-family: 'Playfair Display', serif; font-weight: 600;
+  font-size: clamp(26px, 3.4vw, 36px); line-height: 1.06; color: #14281C; }
+.th-flag__copy { font-size: 15px; line-height: 1.65; color: rgba(24,43,31,0.82); max-width: 42ch; }
+.th-facts { margin: 26px 0 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: rgba(24,43,31,0.12); border: 1px solid rgba(24,43,31,0.12); border-radius: 8px; overflow: hidden; }
+.th-facts > div { background: rgba(245,238,222,0.7); padding: 12px 16px; }
+.th-facts dt { font-family: var(--mono); font-size: 8.5px; font-weight: 700; letter-spacing: 1.8px;
+  text-transform: uppercase; color: rgba(24,43,31,0.5); }
+.th-facts dd { margin-top: 3px; font-size: 16px; font-weight: 600; color: #14281C; }
+.th-facts dd span { font-weight: 400; color: rgba(24,43,31,0.55); font-size: 13px; }
+.th-flag__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; }
+.th-note { font-family: var(--mono); font-size: 9.5px; font-weight: 600; letter-spacing: 1.2px;
+  text-transform: uppercase; color: rgba(24,43,31,0.5); }
+/* Aside: Höhenprofil auf dunkler Karte im hellen Blatt */
+.th-flag__aside { padding: clamp(30px, 4vw, 46px) clamp(26px, 3vw, 40px);
+  background: linear-gradient(158deg, #0C2416, #061c12);
+  display: flex; flex-direction: column; justify-content: center; }
+.th-profile__label { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--paper-faint); margin-bottom: 16px; }
+.th-profile { width: 100%; height: auto; color: var(--leaf); overflow: visible; }
+.th-profile__fill { fill: rgba(80,200,120,0.12); opacity: 0;
+  transition: opacity 900ms var(--ease-lux) 500ms; }
+.th-profile__line { fill: none; stroke-dasharray: 100; stroke-dashoffset: 100;
+  filter: drop-shadow(0 0 5px rgba(80,200,120,0.4)); }
+.th-profile__dot { fill: var(--emerald); opacity: 0;
+  filter: drop-shadow(0 0 5px rgba(80,200,120,0.9)); transition: opacity 400ms 300ms; }
+.th-profile__cross { color: var(--paper); opacity: 0; transition: opacity 500ms 1300ms; }
+.th-profile__marks text { fill: rgba(243,235,217,0.55); opacity: 0; transition: opacity 700ms 900ms; }
+/* Draw-on, sobald die Flagship-Karte im Viewport ist */
+.th-flag.in .th-profile__line { animation: thDraw 1500ms var(--ease-lux) 300ms forwards; }
+.th-flag.in .th-profile__fill,
+.th-flag.in .th-profile__dot,
+.th-flag.in .th-profile__cross,
+.th-flag.in .th-profile__marks text { opacity: 1; }
+@keyframes thDraw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .th-profile__line { stroke-dashoffset: 0; animation: none; }
+  .th-profile__fill, .th-profile__dot, .th-profile__cross, .th-profile__marks text { opacity: 1; transition: none; }
+}
+.th-profile__foot { margin-top: 14px; font-family: var(--mono); font-size: 11px; font-weight: 700;
+  letter-spacing: 1.5px; color: var(--mint); }
+
+/* Button */
+.th-btn { position: relative; display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+  font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.6px;
+  text-transform: uppercase; color: #221803; padding: 13px 24px;
+  /* geprägtes Emaille-Schild: Sheen oben, Koerper, dunkle Unterkante */
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.55) 0, rgba(255,255,255,0) 42%),
+    linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+  transition: transform 400ms var(--ease-lux), filter 400ms var(--ease-lux), background 400ms var(--ease-lux);
+  filter:
+    drop-shadow(0 1px 0 rgba(255,255,255,0.4))
+    drop-shadow(0 2px 1px rgba(120,88,10,0.5))
+    drop-shadow(0 10px 16px rgba(0,0,0,0.34)); }
+.th-btn:hover { background:
+    linear-gradient(180deg, rgba(255,255,255,0.6) 0, rgba(255,255,255,0) 42%),
+    linear-gradient(180deg, #F8D648 0%, #EBBE28 46%, #CFA114 100%); }
+.th-btn--gelb:hover { transform: translateX(4px) translateY(-2px);
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4)) drop-shadow(0 2px 1px rgba(120,88,10,0.5)) drop-shadow(0 16px 24px rgba(0,0,0,0.4)) drop-shadow(0 0 18px rgba(232,191,37,0.4)); }
+.th-btn--lg { font-size: 12px; padding: 15px 30px; }
+
+/* Nächste Touren — dunkle Karten */
+.th-next { margin-top: 96px; }
+.th-next__copy { font-size: 15px; line-height: 1.65; color: var(--paper-dim); max-width: 52ch; margin-bottom: 26px; }
+.th-cards { list-style: none; display: grid; gap: 16px; padding: 0;
+  width: min(1040px, 92vw); margin: 0 0 0 calc((100% - min(1040px, 92vw)) / 2);
+  grid-template-columns: repeat(3, 1fr); }
+.th-card { position: relative; overflow: hidden; padding: 26px 24px 54px;
+  background: linear-gradient(158deg, rgba(19,54,35,0.5), rgba(6,26,17,0.55));
+  border: 1px solid rgba(126,208,155,0.14); border-radius: 14px;
+  box-shadow: inset 0 1px 0 rgba(209,242,235,0.06), 0 18px 40px -26px rgba(0,0,0,0.7);
+  transition: transform 550ms var(--ease-lux), border-color 550ms var(--ease-lux), box-shadow 550ms var(--ease-lux); }
+/* Gipfelgrat-Akzent, waechst beim Hover von links */
+.th-card::before { content: ""; position: absolute; left: 0; top: 0; height: 2px; width: 0;
+  background: linear-gradient(90deg, var(--emerald), transparent);
+  transition: width 650ms var(--ease-lux); }
+.th-card:hover { transform: translateY(-5px); border-color: rgba(126,208,155,0.34);
+  box-shadow: inset 0 1px 0 rgba(209,242,235,0.1), 0 30px 54px -26px rgba(0,0,0,0.75); }
+.th-card:hover::before { width: 60%; }
+.th-card__no { position: absolute; right: 16px; top: 8px;
+  font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; font-size: 56px;
+  line-height: 1; color: rgba(126,208,155,0.09); pointer-events: none;
+  transition: color 550ms var(--ease-lux); }
+.th-card:hover .th-card__no { color: rgba(126,208,155,0.16); }
+.th-card__region { position: relative; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--leaf); }
+.th-card h3 { position: relative; margin: 10px 0 8px; font-family: 'Playfair Display', serif; font-weight: 600;
+  font-size: 20px; line-height: 1.15; color: var(--paper); max-width: 15ch; }
+.th-card__fact { position: relative; font-family: var(--mono); font-size: 11px; letter-spacing: 0.4px; color: var(--paper-faint); }
+/* Echte, gegangene Tour — klickbare Karte */
+.th-card--real { padding: 0; border-color: rgba(126,208,155,0.26); }
+.th-card__link { display: block; padding: 26px 24px 54px; text-decoration: none; color: inherit; border-radius: inherit; }
+.th-card--real::before { background: linear-gradient(90deg, #E8BF25, transparent); }
+.th-card--real:hover::before { width: 55%; }
+.th-card__state--live { color: #14100A; background: linear-gradient(180deg, #E8BF25, #D4A918);
+  border: 0; border-radius: 0; padding: 5px 12px;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%);
+  transition: transform 400ms var(--ease-lux); }
+.th-card--real:hover .th-card__state--live { transform: translateX(4px); }
+.th-card__state { position: absolute; left: 24px; bottom: 20px;
+  font-family: var(--mono); font-size: 8.5px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
+  color: var(--mint); background: rgba(126,208,155,0.12); border: 1px solid rgba(126,208,155,0.28);
+  padding: 4px 11px; border-radius: 20px; }
+
+/* Newsletter-Hook — cream */
+.th-hook { width: min(760px, 92vw); margin: 96px 0 40px; margin-left: calc((100% - min(760px, 92vw)) / 2);
+  text-align: center; padding: clamp(40px, 6vw, 64px) clamp(28px, 5vw, 56px); border-radius: 20px;
+  position: relative; overflow: hidden;
+  background: linear-gradient(158deg, #F5EEDE, #E9DFC6); box-shadow: var(--shadow-paper); }
+.th-hook::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.5; pointer-events: none; }
+.th-hook > * { position: relative; z-index: 1; }
+.th-hook h2 { font-family: 'Playfair Display', serif; font-weight: 600;
+  font-size: clamp(26px, 4vw, 38px); line-height: 1.08; color: #14281C; }
+.th-hook p { margin: 16px auto 26px; max-width: 46ch; font-size: 15px; line-height: 1.65; color: rgba(24,43,31,0.75); }
+
+@media (max-width: 720px) {
+  .th-flag__grid { grid-template-columns: 1fr; }
+  .th-flag__aside { order: -1; }
+  .th-facts { grid-template-columns: 1fr 1fr; }
+  .th-cards { grid-template-columns: 1fr; }
+}
+
+/* ---- Motion ---- */
+.rv { opacity: 0; transform: translateY(52px); filter: blur(8px);
+  transition: opacity 900ms var(--ease-lux), transform 900ms var(--ease-lux), filter 900ms var(--ease-lux);
+  transition-delay: var(--d, 0ms); }
+.rv.in { opacity: 1; transform: translateY(0); filter: blur(0); }
+.st { opacity: 0; transform: translateY(26px); filter: blur(6px);
+  transition: opacity 800ms var(--ease-lux), transform 800ms var(--ease-lux), filter 800ms var(--ease-lux); }
+body.loaded .st { opacity: 1; transform: translateY(0); filter: blur(0); }
+.st1 { transition-delay: 100ms; } .st2 { transition-delay: 240ms; } .st3 { transition-delay: 360ms; }
+.st4 { transition-delay: 500ms; } .st5 { transition-delay: 660ms; }
+
+/* ---- Altimeter-Rails: volle Höhe, gespiegelt, Berg-Bezug.
+   Tick-Skala wie am Höhenmesser + durchlaufender Mono-Ticker +
+   Gipfel-Marker, der mit dem Scroll-Fortschritt aufsteigt. ---- */
+.rail { display: none; }
+@media (min-width: 1200px) {
+  .rail { display: block; position: fixed; top: 0; bottom: 0; width: 40px; z-index: 5; pointer-events: none; }
+  .rail--l { left: 10px; }
+  .rail--r { right: 10px; }
+  /* Tick-Skala über die volle Höhe */
+  .rail::before { content: ""; position: absolute; top: 0; bottom: 0; width: 7px;
+    background: repeating-linear-gradient(180deg, rgba(243,235,217,0.28) 0 1px, transparent 1px 26px); }
+  .rail--l::before { left: 8px; }
+  .rail--r::before { right: 8px; }
+  .rail::before { top: 42px; }
+  .rail-cross { position: absolute; top: 16px; width: 18px; height: 18px; color: rgba(243,235,217,0.55); }
+  .rail--l .rail-cross { left: 0; }
+  .rail--r .rail-cross { right: 0; }
+  /* Gipfel-Marker: klettert mit Scroll-Fortschritt (JS setzt --p 0..1) */
+  .rail-peak { position: absolute; width: 30px; top: calc(10% + (78% * var(--p, 0)));
+    display: grid; justify-items: center; gap: 3px;
+    transition: top 300ms var(--ease-lux); }
+  .rail--l .rail-peak { left: -3px; }
+  .rail--r .rail-peak { right: -3px; }
+  .rail-peak svg { width: 13px; height: 10px; color: var(--leaf); }
+  .rail-peak .hm { font-family: var(--mono); font-size: 8.5px; font-weight: 700; letter-spacing: 1px; color: var(--leaf); }
+}
+
+/* ---- Topbar ---- */
+.topbar { position: sticky; top: 0; z-index: 60; display: flex; align-items: center; padding: 22px 0 14px;
+  transition: transform 500ms var(--ease-lux), opacity 500ms var(--ease-lux); }
+.topbar.is-hidden { transform: translateY(-130%); opacity: 0; }
+.brandbox { position: relative; display: inline-block; }
+.wordmark { font-weight: 900; letter-spacing: 3px; font-size: 15px; color: var(--paper); }
+.wordmark b { color: var(--leaf); }
+.wordmark--invert { position: absolute; inset: 0; color: var(--forest); clip-path: inset(0 100% 0 0); pointer-events: none; }
+.wordmark--invert b { color: var(--royal); }
+
+/* ============================================================
+   HERO — geordnete Editorial-Spalte + Bogen-Fenster-Portrait
+   (Kapellenbogen: klare Kante, Doppellinie, Mono-Caption).
+   ============================================================ */
+.hero { position: relative; margin-top: 24px; }
+.stage { width: min(82vw, 400px); margin-inline: auto; position: relative; }
+/* Rahmen sitzt versetzt HINTER dem Freisteller — er ragt oben raus */
+.stage-frame { position: absolute; left: 7%; right: -5%; top: 17%; bottom: 44px;
+  border-radius: 24px; overflow: hidden;
+  outline: 1px solid rgba(209,242,235,0.22); outline-offset: 7px;
+  background:
+    radial-gradient(80% 62% at 50% 78%, rgba(80,200,120,0.34), rgba(11,110,79,0.12) 55%, transparent 80%),
+    linear-gradient(170deg, rgba(16,58,38,0.85), rgba(7,29,19,0.9));
+  box-shadow: 0 0 0 1px rgba(209,242,235,0.14), 0 40px 80px -40px rgba(0,0,0,0.8); }
+.stage-frame::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); pointer-events: none; }
+.stage-mtn { position: absolute; left: -6%; bottom: -4%; width: 74%; height: auto;
+  color: rgba(209,242,235,0.38); }
+.stage-cut { position: relative; z-index: 2; display: block; width: 88%; height: auto; margin-inline: auto;
+  filter: drop-shadow(0 34px 54px rgba(0,0,0,0.6)) drop-shadow(0 6px 14px rgba(0,0,0,0.35)); }
+.social-link { border-bottom: 1px solid rgba(126,208,155,0.4); padding-bottom: 1px;
+  transition: color 400ms var(--ease-lux), border-color 400ms var(--ease-lux); }
+.social-link:hover { color: var(--leaf); border-color: var(--leaf); }
+.stage-caption { margin-top: 16px; text-align: center; font-family: var(--mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 2.2px; text-transform: uppercase; color: var(--paper-faint); }
+.hero-copy { margin-top: 56px; }
+.hero-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: var(--t-display); line-height: 0.95;
+  color: var(--paper); letter-spacing: -0.015em; }
+.hero-handle { margin-top: 14px; font-size: var(--t-body); color: var(--paper-dim); letter-spacing: 0.4px; }
+.hero-meta { margin-top: 22px; font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--meta-green); line-height: 2; }
+.hero-meta .dot { display: inline-block; width: 1px; height: 10px; margin: 0 10px; vertical-align: -1px; background: rgba(155,217,180,0.4); font-size: 0; }
+.hero-live { margin-top: 16px; display: flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
+  letter-spacing: 1.8px; text-transform: uppercase; color: var(--leaf); }
+.live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--emerald);
+  box-shadow: 0 0 8px rgba(80,200,120,0.7); animation: livepulse 2.4s ease-in-out infinite; }
+@keyframes livepulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+.hero-rule { margin: 36px 0; height: 1px; border: 0; max-width: 280px;
+  background: linear-gradient(90deg, rgba(243,235,217,0.35), rgba(243,235,217,0.05)); }
+.hero-tagline { font-family: 'Playfair Display', serif; font-weight: 700; font-size: var(--t-h2); line-height: 1.12;
+  color: var(--paper); letter-spacing: -0.01em; max-width: 14ch; }
+.hero-tagline em { display: inline-block; position: relative; font-weight: 600; font-style: italic; color: var(--leaf); }
+.scribble { position: absolute; left: 2%; bottom: -12px; width: 96%; height: 14px; color: var(--emerald); opacity: 0.9; }
+.scribble path { stroke-dasharray: 240; stroke-dashoffset: 240; }
+body.loaded .scribble path { animation: draw 1100ms var(--ease-lux) 1000ms forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+/* ============================================================
+   CTA — GEPARKT 10.07. (Reset-Angebot im Archiv, Sebi-Entscheid)
+   Kringel-Technik bleibt dokumentiert für spätere Angebote.
+   CTA — kein Pill-Button: Mono-Wort mit handgezogenem Kringel
+   (Scribble-Sprache), der sich beim Laden selbst zeichnet.
+   ============================================================ */
+.cta { position: relative; display: inline-block; margin-top: 44px; padding: 16px 30px;
+  font-family: var(--mono); font-weight: 700; font-size: 14px; letter-spacing: 2.4px; text-transform: uppercase;
+  color: var(--paper); }
+.cta .arr { display: inline-block; margin-left: 10px; transition: transform 500ms var(--ease-lux); }
+.cta:hover .arr { transform: translateX(6px); }
+.cta .sub { position: absolute; left: 30px; top: calc(100% + 10px); white-space: nowrap;
+  font-size: 10px; font-weight: 600; letter-spacing: 2px; color: var(--paper-faint); }
+.cta .ring { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--leaf); }
+.cta .ring path { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round;
+  stroke-dasharray: 900; stroke-dashoffset: 900; }
+body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms forwards; }
+@keyframes draw-ring { to { stroke-dashoffset: 0; } }
+.cta:hover .ring { color: var(--emerald); }
+
+/* ---- Zitat: auf der Fläche ---- */
+.hero .cta { margin-bottom: 26px; }
+.closing .cta { margin-bottom: 26px; }
+/* Editorial-Pull-Quote (kein Side-Stripe-Slop, Playfair) */
+.quote { position: relative; margin: 52px auto 0; max-width: 42ch; padding-top: 44px; text-align: center; }
+.quote::before { content: "\201E"; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  font-family: 'Playfair Display', serif; font-weight: 700; font-size: 68px; line-height: 0.5; color: rgba(126,208,155,0.30); }
+.quote p { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 500;
+  font-size: clamp(20px, 2.4vw, 28px); line-height: 1.46; color: #D6E0D3; }
+.quote strong { color: #8FE0AC; font-weight: 600; font-style: normal; }
+.quote__by { display: block; margin-top: 26px; font-family: var(--mono); font-size: 11px; font-weight: 700;
+  letter-spacing: 2.2px; text-transform: uppercase; color: var(--leaf); }
+
+/* Hero-Scroll-Cue (Einladung nach unten) */
+.hero-scroll { display: flex; flex-direction: column; align-items: center; gap: 9px; width: max-content;
+  margin: clamp(34px, 6vh, 64px) auto 0; text-decoration: none;
+  font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--paper-faint);
+  transition: color 400ms var(--ease-lux); }
+.hero-scroll:hover { color: var(--leaf); }
+.hero-scroll__chev { width: 22px; height: 22px; color: var(--leaf); animation: heroScrollBob 2.2s ease-in-out infinite; }
+@keyframes heroScrollBob { 0%,100% { transform: translateY(0); opacity: 0.55; } 50% { transform: translateY(6px); opacity: 1; } }
+
+/* ---- Sektions-Kopf ---- */
+.shead { margin: 100px 0 28px; }
+.shead .kicker { font-family: var(--mono); font-size: var(--t-label); font-weight: 600; letter-spacing: 2.2px; text-transform: uppercase; color: var(--leaf);
+  display: flex; align-items: center; gap: 12px; }
+.shead .kicker::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.25); }
+.shead h2 { margin-top: 12px; font-family: 'Playfair Display', serif; font-weight: 600; font-size: var(--t-h2); line-height: 1.1; color: var(--paper); }
+.shead h2 em { font-style: italic; color: var(--leaf); }
+
+/* ============================================================
+   VIER WERTE — DER BERG (3D-Scrollytelling): prozeduraler
+   Low-Poly-Berg (Three.js, self-hosted). Scroll = Aufstieg:
+   Weg waechst, Smashy wandert, der Berg dreht sich ~90 Grad.
+   Overlays (Schilder/POIs/Wetterstation) sind HTML, projiziert.
+   ============================================================ */
+.grat-wrap { margin-top: 8px; }
+.grat-track { height: 380vh; }
+.grat-sticky { position: sticky; top: 0; height: 100vh; overflow: clip; }
+.berg-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 92%, transparent 100%),
+                      linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  -webkit-mask-composite: source-in;
+          mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 92%, transparent 100%),
+                      linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+          mask-composite: intersect; }
+.berg-overlays { position: absolute; inset: 0; pointer-events: none; }
+.berg-overlays .wp { pointer-events: auto; }
+.scroll-hint { position: absolute; right: max(24px, calc(50vw - 530px)); bottom: 100px;
+  font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 2.4px;
+  text-transform: uppercase; color: var(--paper-faint);
+  display: flex; align-items: center; gap: 10px; }
+.scroll-hint::after { content: ""; width: 1.5px; height: 26px;
+  background: linear-gradient(180deg, var(--leaf), transparent);
+  animation: hintdrop 1.8s var(--ease-lux) infinite; }
+@keyframes hintdrop { 0% { transform: translateY(-6px); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(8px); opacity: 0; } }
+/* Karten-Labels (swisstopo-Prinzip): gesperrter Mono-Text mit Halo,
+   Punkt-Anker auf der Route, feine Anker-Linie — keine Boxen */
+.wp { position: absolute; transform: translate(-50%, -100%);
+  width: auto; height: auto; padding: 0 6px 26px; border: 0; cursor: pointer; background: transparent; }
+.wp::after { content: ""; position: absolute; left: 50%; bottom: 6px; transform: translateX(-50%);
+  width: 1px; height: 18px; background: rgba(243,235,217,0.55); }
+.wp::before { content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+  width: 7px; height: 7px; border-radius: 50%; box-sizing: border-box;
+  background: rgba(7,31,20,0.9); border: 1.5px solid rgba(243,235,217,0.75);
+  transition: background 400ms var(--ease-lux), border-color 400ms var(--ease-lux), box-shadow 400ms var(--ease-lux); }
+.wp .wp-num { display: block; white-space: nowrap;
+  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
+  color: #14100A;
+  /* DAV-Gelb wie am echten Wegweiser, mit schwarzem Punkt wie auf den Schildern */
+  background:
+    radial-gradient(circle at 11px 50%, #14100A 2.2px, transparent 3px),
+    linear-gradient(180deg, #E8BF25, #D4A918);
+  padding: 5px 16px 5px 20px;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
+  filter: drop-shadow(0 0 0.8px rgba(20,16,5,0.75)) drop-shadow(0 1.5px 1.5px rgba(2,10,6,0.85)) drop-shadow(0 6px 12px rgba(0,0,0,0.5));
+  transition: filter 400ms var(--ease-lux), background 400ms var(--ease-lux); }
+.wp:hover .wp-num { background:
+    radial-gradient(circle at 11px 50%, #14100A 2.2px, transparent 3px),
+    linear-gradient(180deg, #F4CE33, #E0B51E); }
+.wp:hover::before { border-color: var(--leaf); }
+.wp { transition: opacity 500ms var(--ease-lux); }
+.berg-overlays.reading .wp:not(.on) { opacity: 0.12; }
+.poi { transition: opacity 500ms var(--ease-lux); }
+.berg-overlays.reading .poi:not(.poi--kreuz) { opacity: 0.15; }
+/* Pro Stopp leuchtet das passende Kartensymbol */
+.berg-overlays.reading[data-stop="0"] .poi[data-poi="start"],
+.berg-overlays.reading[data-stop="0"] .poi[data-poi="kapelle"],
+.berg-overlays.reading[data-stop="2"] .poi[data-poi="huette"] { opacity: 1; }
+.berg-overlays.reading .wp:not(.on):hover { opacity: 1; }
+.wp.on::before { background: var(--emerald); border-color: var(--emerald);
+  box-shadow: 0 0 10px rgba(80,200,120,0.7); animation: wpping 900ms var(--ease-lux) 1; }
+.wp.on .wp-num { background:
+    radial-gradient(circle at 11px 50%, #14100A 2.2px, transparent 3px),
+    linear-gradient(180deg, #F8D63A, #E7BC1F);
+  filter: drop-shadow(0 0 0.8px rgba(20,16,5,0.75)) drop-shadow(0 1.5px 1.5px rgba(2,10,6,0.85)) drop-shadow(0 0 14px rgba(232,191,37,0.45)); }
+/* POIs: Screen-Space Miniaturen */
+.poi { position: absolute; transform: translate(-50%, -100%); pointer-events: none;
+  color: rgba(243,235,217,0.92); }
+.poi svg { display: block; width: 100%; height: auto; }
+.poi--kreuz { color: rgba(243,235,217,0.85); transition: color 600ms var(--ease-lux), filter 600ms var(--ease-lux); }
+.grat-wrap.summit .poi--kreuz { color: var(--leaf); filter: drop-shadow(0 0 8px rgba(80,200,120,0.65)); }
+/* Bergstation-HUD: Instrument oben rechts (bergfex/Apple-Weather-Prinzip:
+   grosser Messwert, klare Hairline-Karte) */
+.wetter-hud { position: absolute; top: 26px; right: max(24px, calc(50vw - 530px)); z-index: 3;
+  min-width: 168px; padding: 16px 18px 14px; border-radius: 14px;
+  background: rgba(4,18,12,0.88); border: 1px solid rgba(243,235,217,0.24);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 0 0 1px rgba(3,15,9,0.5), 0 16px 34px -14px rgba(0,0,0,0.6); }
+.hud-label { display: flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.8px;
+  text-transform: uppercase; color: var(--paper-faint); }
+.hud-temp { margin-top: 8px; font-family: var(--mono); font-weight: 700; font-size: 38px;
+  line-height: 1; color: var(--paper); letter-spacing: -1px;
+  display: flex; align-items: center; }
+.hud-icon { margin-left: auto; padding-left: 14px; color: rgba(243,235,217,0.9); }
+.hud-icon svg { display: block; width: 30px; height: 30px; }
+.hud-unit { font-size: 16px; font-weight: 600; color: var(--leaf); margin-left: 3px; }
+.hud-cond { margin-top: 4px; font-family: var(--mono); font-size: 11px; font-weight: 700;
+  letter-spacing: 1.8px; text-transform: uppercase; color: var(--mint); }
+.hud-src { display: inline-block; margin-top: 9px; font-family: var(--mono); font-size: 8px; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase; color: var(--paper-faint); text-decoration: none;
+  transition: color 300ms var(--ease-lux); }
+.hud-src:hover { color: var(--leaf); }
+.hud-meta { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(243,235,217,0.14);
+  font-family: var(--mono); font-size: 9px; font-weight: 600; letter-spacing: 1.6px;
+  text-transform: uppercase; color: var(--paper-faint); }
+/* Strava-Puls am Routenkopf */
+.route-head { position: absolute; width: 12px; height: 12px; transform: translate(-50%, -50%);
+  border-radius: 50%; background: var(--emerald); pointer-events: none; z-index: 1;
+  box-shadow: 0 0 0 1.5px rgba(3,15,9,0.7), 0 0 12px rgba(80,200,120,0.8); }
+.route-head::after { content: ""; position: absolute; inset: -4px; border-radius: 50%;
+  border: 1.5px solid rgba(80,200,120,0.7); animation: headping 1.6s var(--ease-lux) infinite; }
+@keyframes headping { from { transform: scale(0.6); opacity: 1; } to { transform: scale(2.1); opacity: 0; } }
+
+/* Smashy: folgt der Kurve, hopst beim Wandern */
+.grat-smashy { position: absolute; width: 34px; height: auto; z-index: 2; pointer-events: none;
+  transform: translate(-50%, -96%);
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); }
+@keyframes smashyhop {
+  0%, 100% { transform: translate(-50%, -96%) translateY(0) rotate(-2deg); }
+  50% { transform: translate(-50%, -96%) translateY(-6px) rotate(2deg); }
+}
+.grat-smashy.walking { animation: smashyhop 340ms ease-in-out infinite; }
+/* Panel: liegt unten links AUF der Szene */
+.grat-panel { position: absolute; bottom: 0; z-index: 3;
+  /* Doku-Bauchbinde jetzt UNTEN RECHTS — weg vom Weg (der zieht links hoch) */
+  right: calc((100% - 100vw) / 2); left: auto;
+  width: min(900px, 100vw); text-align: right;
+  padding: clamp(110px, 20vh, 190px) calc(max(10vw, 50vw - 460px)) 92px clamp(56px, 9vw, 150px);
+  transform-origin: 100% 100%;
+  transition: opacity 500ms var(--ease-lux), transform 700ms var(--ease-lux);
+  /* Kino-Scrim aus der unteren RECHTEN Bildkante + warme Eck-Vignette fuer Tiefe */
+  background:
+    radial-gradient(120% 100% at 100% 100%, rgba(120,92,40,0.16) 0%, rgba(120,92,40,0) 34%),
+    radial-gradient(150% 150% at 100% 100%,
+      rgba(244,236,218,0.98) 0%, rgba(243,235,217,0.94) 34%, rgba(243,235,217,0.8) 47%,
+      rgba(243,235,217,0.4) 60%, rgba(243,235,217,0) 72%); }
+/* Hairline-Anker RECHTS der Typo, faedet nach unten aus */
+.grat-panel::before { content: ""; position: absolute;
+  right: calc(max(10vw, 50vw - 460px) - 18px); top: clamp(106px, calc(20vh - 4px), 186px); bottom: 92px;
+  width: 1px; background: linear-gradient(180deg, rgba(11,110,79,0.5), rgba(11,110,79,0.05)); }
+/* Waehrend der Fahrt eingeklappt — pflanzt sich am Etappen-Stopp ein */
+.grat-panel.traveling { opacity: 0; transform: translateY(28px); pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .grat-panel.traveling { opacity: 1; transform: none; pointer-events: auto; } }
+
+/* Etappen-Kopf: Mono + vier Ticks, Blaettern als stille Zeichen */
+.panel-nav { display: flex; align-items: center; gap: 14px; margin-bottom: 14px;
+  padding-bottom: 12px;
+  background: linear-gradient(90deg, rgba(24,43,31,0.22), rgba(24,43,31,0)) left bottom / 100% 1px no-repeat; }
+.panel-nav .steps { order: 1; font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 2.6px; text-transform: uppercase; color: var(--paper-faint); }
+.panel-nav .steps b { display: inline-block; padding: 2px 9px 2px 6px; margin: 0 3px;
+  color: #14100A; font-weight: 700;
+  background: linear-gradient(180deg, #E8BF25, #D4A918);
+  clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 50%, calc(100% - 5px) 100%, 0 100%); }
+.panel-ticks { order: 2; display: flex; gap: 5px; margin-left: 2px; }
+.panel-ticks i { width: 14px; height: 2px; background: rgba(24,43,31,0.22);
+  transition: background 400ms var(--ease-lux); }
+.panel-ticks i.on { background: var(--royal); }
+.panel-nav button { order: 3; width: auto; height: auto; border: 0; border-radius: 0;
+  background: transparent; cursor: pointer; padding: 4px 8px;
+  font-family: var(--mono); font-size: 15px; line-height: 1; color: rgba(24,43,31,0.5);
+  transition: color 300ms var(--ease-lux), transform 300ms var(--ease-lux); }
+.panel-nav button:hover { color: var(--royal); transform: none; }
+.panel-nav button:first-of-type { order: 3; margin-left: auto; }
+.panel-nav button:last-of-type { order: 4; }
+/* Hoehenprofil der echten Route, Marker laeuft mit dem Scroll */
+.panel-spark { display: none; }
+.panel-spark polyline[data-spark-fill] { fill: rgba(80,200,120,0.08); stroke: none; }
+.panel-spark polyline[data-spark-line] { fill: none; stroke: rgba(126,208,155,0.6); stroke-width: 1.2; }
+.panel-spark circle { fill: var(--emerald); filter: drop-shadow(0 0 4px rgba(80,200,120,0.8)); }
+.panel-spark text { font-family: ui-monospace, Menlo, monospace; font-size: 7.5px; letter-spacing: 1px;
+  fill: rgba(243,235,217,0.4); text-transform: uppercase; }
+.grat-panel .num { font-family: var(--mono); font-size: var(--t-label); font-weight: 600; letter-spacing: 2px; color: var(--royal); }
+.grat-panel .p-ort { margin-top: 4px; font-family: var(--mono); font-size: 9.5px; font-weight: 600;
+  letter-spacing: 1.6px; text-transform: uppercase; color: rgba(10,59,34,0.66); white-space: nowrap; }
+/* Anker-Vers (Faith) / Leitsatz (Gipfel): Serifen-Zitat mit ausfaedelnder Hairline */
+.grat-panel .p-vers { margin-top: 14px; padding-top: 12px; max-width: 42ch;
+  background: linear-gradient(90deg, rgba(24,43,31,0.3), rgba(24,43,31,0)) left top / 130px 1px no-repeat;
+  font-family: 'Playfair Display', serif; font-style: italic; font-size: 16.5px; line-height: 1.5;
+  color: rgba(9,72,47,0.94); }
+.grat-panel .p-vers b { display: block; margin-top: 6px; font-family: var(--mono); font-style: normal;
+  font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #8A6F2F; }
+/* Gipfel-Payoff: CTA als DAV-Schild zu den Hulk Hikes */
+.grat-panel .p-cta { display: inline-block; margin-top: 16px;
+  font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase;
+  color: #14100A; text-decoration: none; padding: 9px 20px 9px 21px;
+  background:
+    radial-gradient(circle at 10px 50%, #14100A 2px, transparent 2.7px),
+    linear-gradient(180deg, #E8BF25, #D4A918);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
+  filter: drop-shadow(0 2px 3px rgba(2,10,6,0.7));
+  transition: filter 300ms var(--ease-lux), transform 300ms var(--ease-lux); }
+.grat-panel .p-cta:hover { transform: translateX(3px);
+  filter: drop-shadow(0 2px 3px rgba(2,10,6,0.7)) drop-shadow(0 0 14px rgba(232,191,37,0.55)); }
+.grat-panel .p-cta[hidden] { display: none; }
+.grat-panel h3 { margin: 8px 0 10px; font-family: 'Playfair Display', serif; font-weight: 600;
+  font-size: clamp(26px, 2.6vw + 6px, 42px); line-height: 1.08; color: #0A3B22; }
+.grat-panel p { font-size: 15px; line-height: 1.65; color: rgba(13,43,27,0.84); max-width: 44ch; }
+.grat-panel .inner { position: relative; opacity: 1; translate: 0 0; filter: blur(0);
+  transition: opacity 380ms var(--ease-lux), translate 380ms var(--ease-lux), filter 380ms var(--ease-lux); }
+.grat-panel .inner.swap-out { opacity: 0; translate: -22px 0; filter: blur(5px); }
+.grat-panel .inner.swap-in { opacity: 0; translate: 22px 0; filter: blur(5px); transition: none; }
+/* Ghost-Ziffer: die Etappe steht riesig und gruen-transparent hinter der Typo */
+.grat-panel .inner::before { content: attr(data-big); position: absolute; z-index: -1;
+  left: -0.06em; top: -0.52em; pointer-events: none;
+  font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;
+  font-size: clamp(130px, 15vw, 210px); line-height: 1;
+  color: rgba(11,110,79,0.13); }
+/* Fallback ohne WebGL */
+.grat-wrap.no3d .grat-track { height: auto; }
+.grat-wrap.no3d .grat-sticky { position: static; height: auto; min-height: 320px; }
+.grat-wrap.no3d .berg-canvas, .grat-wrap.no3d .berg-overlays, .grat-wrap.no3d .scroll-hint { display: none; }
+.grat-wrap.no3d .grat-panel { position: static; width: auto; margin-top: 24px; }
+
+/* ============================================================
+   BIBEL-ANKER — der Anker ist der LICHT-Moment: hellste Fläche
+   der Seite, Gold-Label, Forest-Vers.
+   ============================================================ */
+.bibel-card { margin-top: 100px; border-radius: 24px; text-align: center; padding: 58px 32px 50px; position: relative; overflow: hidden;
+  background:
+    radial-gradient(90% 80% at 50% -20%, rgba(186,155,95,0.18), transparent 60%),
+    linear-gradient(175deg, #F8F2E2 0%, #F0E7D2 100%);
+  box-shadow: var(--shadow-paper); }
+.bibel-card::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.7; pointer-events: none; }
+.bibel-card .label { font-family: var(--mono); font-size: var(--t-label); font-weight: 600; letter-spacing: 2.4px; text-transform: uppercase; color: var(--gold); }
+.bibel-card blockquote { margin: 24px auto 20px; max-width: 26ch; font-family: 'Playfair Display', serif; font-style: italic;
+  font-weight: 500; font-size: 27px; line-height: 1.35; color: var(--forest); }
+.bibel-card .sig { font-size: 14px; font-weight: 700; color: var(--royal); display: flex; align-items: center; justify-content: center; gap: 14px; }
+.bibel-card .sig::before, .bibel-card .sig::after { content: ""; width: 34px; height: 1px; background: rgba(19,43,35,0.25); }
+
+/* ---- Hulk-Hikes-Teaser: editorial auf der Fläche ---- */
+.hikes { position: relative; margin-top: 100px; }
+.hikes-copy { font-size: 16px; line-height: 1.65; color: var(--paper-dim); max-width: 48ch; }
+.hikes-stats { margin-top: 24px; font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--meta-green); }
+.hikes-stats .dot { display: inline-block; width: 1px; height: 10px; margin: 0 9px; vertical-align: -1px; background: rgba(155,217,180,0.4); font-size: 0; }
+.hikes-mtn { position: absolute; right: 0; top: 8px; width: clamp(90px, 14vw, 150px); height: auto;
+  color: rgba(243,235,217,0.3); }
+.hikes-profile { display: block; width: min(100%, 560px); height: auto; margin-top: 26px;
+  color: var(--leaf); overflow: visible; }
+.hikes-profile .hp-line { stroke-dasharray: 100; stroke-dashoffset: 100; }
+.hikes.rv.in .hp-line { animation: gratdraw 1600ms var(--ease-lux) 300ms forwards; stroke-dasharray: 100; }
+.hikes-facts { margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; max-width: 620px; }
+.hikes-facts div { border-top: 1px solid rgba(243,235,217,0.16); padding-top: 10px; }
+.hikes-facts dt { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 1.8px;
+  text-transform: uppercase; color: var(--paper-faint); }
+.hikes-facts dd { margin-top: 4px; font-size: 14px; color: var(--paper-dim); }
+
+/* ---- Closing ---- */
+/* ---- Gipfelbuch: aufgeschlagene Doppelseite (ersetzt die Bibel-Karte) ---- */
+.gipfelbuch { margin: 120px auto 0; width: min(880px, 92vw); }
+.gb-kopf { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--paper-faint); text-align: center; margin-bottom: 20px;
+  text-shadow: 0 1px 2px rgba(3,15,9,0.6); }
+.gb-buch { position: relative; display: grid; grid-template-columns: 1fr 1fr;
+  transform: rotate(-0.7deg);
+  background: linear-gradient(100deg, #F1E8D4 0%, #EDE4CE 49.5%, #DFD5BD 50%, #F5EDDC 50.6%, #EDE4CE 100%);
+  border-radius: 5px 12px 12px 5px;
+  /* gestapelte Papier-Kanten (= echtes Buch, nicht flacher Block) + Falz-Schatten + Tiefe */
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(60,50,30,0.18),
+    2px 3px 0 -1px #ECE2CB, 4px 6px 0 -2px #E4DABF, 6px 9px 0 -3px #DCD1B2, 8px 12px 0 -4px #D4C9A6,
+    0 36px 66px -22px rgba(2,10,6,0.62), 0 6px 14px rgba(2,10,6,0.3); }
+.gb-buch::after { content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background-image: var(--grain); opacity: 0.55; pointer-events: none; }
+/* Falz */
+.gb-buch::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 38px;
+  transform: translateX(-50%); pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(60,50,30,0.12) 44%, rgba(30,24,12,0.26) 50%, rgba(60,50,30,0.12) 56%, transparent); }
+.gb-seite { padding: 46px 46px 36px; }
+.gb-seite--links blockquote { margin: 0 0 18px; max-width: 17ch;
+  font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600;
+  font-size: clamp(20px, 2.5vw, 28px); line-height: 1.42; color: #14281C; }
+.gb-quelle { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 2.2px;
+  text-transform: uppercase; color: #8A6F2F; }
+.gb-anker { margin-top: 8px; font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 15px; color: var(--royal); }
+/* rechte Seite: liniert wie ein echtes Buch, Eintrag sitzt auf den Linien */
+.gb-seite--rechts { position: relative;
+  background: repeating-linear-gradient(180deg, transparent 0 29px, rgba(70,95,70,0.14) 29px 30px);
+  background-position: 0 12px; }
+.gb-datum { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: rgba(20,40,28,0.55); margin: 0 0 18px; }
+.gb-eintrag { margin: 0; font-family: 'Caveat', cursive; font-weight: 600;
+  font-size: clamp(24px, 2.6vw, 30px); line-height: 30px; color: #1E3A2A;
+  letter-spacing: 0.5px; transform: rotate(-0.8deg); }
+.gb-eintrag [data-gb-tag] { color: var(--royal); }
+.gb-sig { margin: 14px 8px 0 0; text-align: right;
+  font-family: 'Caveat', cursive; font-weight: 700;
+  font-size: 34px; color: #0B4A2E; transform: rotate(-3deg); }
+.gb-cta { grid-column: 1 / -1; justify-self: stretch; position: relative; z-index: 1;
+  margin: 0 46px 30px; padding: 2px 30px 4px 4px;
+  font-family: 'Caveat', cursive; font-weight: 600; font-size: 23px;
+  text-decoration: none; color: rgba(11,110,79,0.78);
+  border-bottom: 1.5px dashed rgba(30,58,42,0.45);
+  transition: color 400ms var(--ease-lux), border-color 400ms var(--ease-lux); }
+.gb-cta::after { content: "\2192"; position: absolute; right: 6px; }
+.gb-cta:hover { color: #0A3B22; border-bottom-color: rgba(11,110,79,0.7); }
+@media (max-width: 700px) { .gb-cta { margin: 0 30px 26px; } }
+@media (max-width: 700px) {
+  .gb-buch { grid-template-columns: 1fr; }
+  .gb-buch::before { display: none; }
+  .gb-seite { padding: 34px 30px 26px; }
+  .gb-seite--rechts { border-top: 1px solid rgba(60,50,30,0.2); }
+}
+
+.closing { margin-top: 100px; }
+/* Weggabelung: Pfahl mit zwei Richtungsschildern (DAV-Sprache der Berg-Sektion) */
+.gabelung { position: relative; width: min(720px, 92vw); margin: 48px auto 22px;
+  display: flex; flex-direction: column; gap: 16px;
+  /* zwei Abzweigungen, die raeumlich in ihre Wegrichtung kippen */
+  perspective: 900px; }
+.gab-schild { position: relative; z-index: 1; display: block; width: fit-content;
+  padding: 11px 34px 11px 18px;
+  font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.8px;
+  text-transform: uppercase; text-decoration: none; white-space: nowrap;
+  transition: transform 450ms var(--ease-lux), filter 450ms var(--ease-lux); }
+/* rechtsweisend, DAV-Gelb — haengt rechts am Pfahl */
+.gab-schild--gelb { margin-left: calc(50% - 46px); color: #221803; text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+  transform: rotateY(-26deg) rotateZ(-1.2deg); transform-origin: left center;
+  background:
+    radial-gradient(circle at 12px 50%, #14100A 2.2px, transparent 3px),
+    linear-gradient(180deg, rgba(255,255,255,0.5) 0, rgba(255,255,255,0) 44%),
+    linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%);
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%);
+  filter: drop-shadow(0 2px 2px rgba(2,10,6,0.8)) drop-shadow(0 12px 24px rgba(0,0,0,0.4)); }
+.gab-schild--gelb:hover { transform: rotateY(-18deg) rotateZ(-1.2deg) translateX(6px); }
+/* linksweisend, Panel-Dunkel — haengt links am Pfahl */
+.gab-schild--dunkel { margin-left: auto; margin-right: calc(50% - 46px);
+  transform: rotateY(26deg) rotateZ(1.2deg); transform-origin: right center;
+  color: rgba(243,235,217,0.94); text-align: right;
+  padding: 11px 18px 11px 34px;
+  background:
+    radial-gradient(circle at calc(100% - 12px) 50%, rgba(243,235,217,0.85) 2.2px, transparent 3px),
+    linear-gradient(180deg, rgba(21,58,38,0.97), rgba(6,22,14,0.97));
+  clip-path: polygon(16px 0, 100% 0, 100% 100%, 16px 100%, 0 50%);
+  filter: drop-shadow(0 0 0.8px rgba(243,235,217,0.6)) drop-shadow(0 2px 2px rgba(2,10,6,0.85)) drop-shadow(0 12px 24px rgba(0,0,0,0.4)); }
+.gab-schild--dunkel:hover { transform: rotateY(18deg) rotateZ(1.2deg) translateX(-6px); }
+@media (max-width: 760px) {
+  .gab-schild, .gab-schild--gelb, .gab-schild--dunkel { margin-left: auto; margin-right: auto; width: fit-content; max-width: 88vw; white-space: normal; text-align: center; }
+  .gab-schild--gelb { transform: rotateY(-14deg) rotateZ(-1deg); }
+  .gab-schild--dunkel { transform: rotateY(14deg) rotateZ(1deg); }
+}
+.brands-line { margin-top: 30px; font-size: 15px; color: var(--paper-faint); }
+.brands-line a { font-weight: 700; color: var(--leaf); border-bottom: 1px solid rgba(126,208,155,0.4); padding-bottom: 2px;
+  transition: border-color 400ms var(--ease-lux); }
+.brands-line a:hover { border-color: var(--leaf); }
+
+/* ---- Footer ---- */
+/* Homepage-Abschluss-CTA (verbindet die Seite, statt abrupt auf Legal-Footer) */
+.home-outro { position: relative; z-index: 1; width: min(100% - 36px, 620px); margin: 130px auto 0; text-align: center; }
+.home-outro__k { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf); }
+.home-outro h2 { margin: 14px 0 24px; font-family: 'Playfair Display', serif; font-weight: 600;
+  font-size: clamp(28px, 5vw, 44px); line-height: 1.06; color: var(--paper); }
+.home-outro h2 em { font-style: italic; color: var(--leaf); }
+.home-outro__social { margin-top: 20px; font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; }
+.home-outro__social a { color: var(--paper-faint); text-decoration: none; border-bottom: 1px solid rgba(126,208,155,0.3); transition: color 300ms var(--ease-lux); }
+.home-outro__social a:hover { color: var(--leaf); }
+footer { position: relative; z-index: 1; margin-top: 64px; text-align: center; color: var(--paper); }
+footer .inner { width: min(100% - 36px, 560px); margin-inline: auto;
+  border-top: 1px solid rgba(243,235,217,0.14); padding: 36px 8px 0; }
+footer .wordmark { color: var(--paper); }
+footer .claim { margin-top: 10px; font-size: 14px; color: var(--paper-dim); }
+footer .legal { margin-top: 20px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.4px; color: var(--paper-faint);
+  display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+footer .legal a:hover { color: var(--paper); }
+
+/* ============================================================
+   NAV — helle Papier-Pille, TYPOGRAFISCH (keine Standard-Icons).
+   Nur der Berg bleibt — er ist Brand, nicht Icon-Set.
+   ============================================================ */
+.nav.no-t { transition: none !important; }
+.nav.nav-out { opacity: 0; }
+.nav.pre:not(.at-top) { translate: -50% 30px !important; }
+.nav.pre.at-top { top: 0; bottom: auto; translate: -50% -10px !important; }
+/* Bottom-verankert (kein 100vh!) — bleibt stabil, wenn die mobile URL-Leiste
+   ein-/ausblendet. Fixed + bottom folgt dem sichtbaren Viewport (Insta/WhatsApp). */
+.nav { position: fixed; left: 50%; top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); z-index: 70;
+  translate: -50% 0;
+  transition: translate 480ms var(--ease-lux), opacity 200ms ease;
+  display: flex; align-items: center; gap: clamp(4px, 2.6vw, 24px); padding: 10px clamp(18px, 3.4vw, 34px);
+  border: 1px solid rgba(150,130,92,0.55); border-radius: 16px;
+  background: linear-gradient(180deg, #F8F0E0 0%, #EDDFC5 100%);
+  box-shadow:
+    inset 0 0 0 3px rgba(247,239,222,1),
+    inset 0 0 0 3.5px rgba(150,130,92,0.55),
+    inset 0 -10px 16px -12px rgba(120,100,60,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.7),
+    0 1px 0 rgba(255,255,255,0.14),
+    0 4px 10px rgba(0,0,0,0.42),
+    0 22px 46px -14px rgba(0,0,0,0.72),
+    0 46px 100px -30px rgba(0,0,0,0.6); }
+.nav::after { content: ""; position: absolute; inset: 0; border-radius: 16px;
+  background-image: var(--grain); opacity: 0.5; pointer-events: none; }
+.nav a { position: relative; display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 8px; min-width: 48px; min-height: 44px; text-align: center;
+  font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
+  color: #6B5F4A; transition: color 400ms var(--ease-lux), transform 400ms var(--ease-lux); }
+.nav a:hover { color: var(--forest); transform: translateY(-2px); }
+.nav .center { color: #045927; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.nav .center .mtn { width: 60px; height: 48px; margin-top: -38px;
+  filter: drop-shadow(0 1px 1px rgba(15,42,26,0.35)) drop-shadow(0 8px 14px rgba(0,0,0,0.4)); }
+.nav a[aria-current] { color: #045927; }
+.nav a[aria-current]::after { content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+  width: 16px; height: 2px; border-radius: 2px; background: #045927; }
+
+/* Kompakt-Stufe: kleine iPhones (SE/Mini) — Pille muss in 320px passen,
+   WebKit misst Mono breiter als Chromium. Touch-Targets bleiben ≥44px hoch. */
+@media (max-width: 430px) {
+  .nav { gap: 4px; padding: 8px 12px; max-width: calc(100vw - 16px); }
+  .nav a { padding: 12px 4px; min-width: 44px; font-size: 9.5px; letter-spacing: 1px; }
+  .nav .center .mtn { width: 52px; height: 42px; margin-top: -34px; }
+}
+
+/* Nav oben-Zustand (Desktop, vor dem ersten Scroll): normale Zeile */
+@media (min-width: 900px) {
+  .nav.at-top { top: 0; bottom: auto; translate: -50% 22px;
+    -webkit-backdrop-filter: blur(16px) saturate(1.35);
+            backdrop-filter: blur(16px) saturate(1.35);
+    background:
+      linear-gradient(180deg, rgba(18,58,40,0.72), rgba(6,26,17,0.66));
+    border-color: rgba(126,208,155,0.42);
+    box-shadow:
+      inset 0 1px 0 rgba(209,242,235,0.22),
+      inset 0 0 22px -6px rgba(80,200,120,0.18),
+      0 0 0 1px rgba(3,15,9,0.4),
+      0 2px 0 rgba(126,208,155,0.12),
+      0 16px 40px -14px rgba(0,0,0,0.7),
+      0 0 34px -8px rgba(80,200,120,0.28); }
+  .nav.at-top::after { opacity: 0.18; }
+  .nav.at-top a { color: rgba(243,235,217,0.9); }
+  .nav.at-top a:hover { color: var(--paper); }
+  .nav.at-top a[aria-current] { color: var(--mint); }
+  .nav.at-top a[aria-current]::after { background: var(--leaf); box-shadow: 0 0 8px rgba(126,208,155,0.7); }
+  .nav.at-top .center { color: var(--leaf); }
+  .nav.at-top .center .mtn { color: var(--leaf); filter: drop-shadow(0 0 8px rgba(80,200,120,0.4)); }
+}
+
+/* ---- Desktop ---- */
+@media (min-width: 900px) {
+  .wrap { width: min(100% - 64px, 1060px); }
+  .topbar { padding-top: 30px; }
+  .hero { display: grid; grid-template-columns: 1fr 0.9fr; align-items: center; column-gap: 64px; margin-top: 40px; }
+  .hero-copy { grid-column: 1; grid-row: 1; margin-top: 0; }
+  .arch { grid-column: 2; grid-row: 1; width: min(100%, 420px); margin-inline: 0 auto; }
+  .hero-rule { max-width: 320px; }
+  .quote { margin-top: 72px; max-width: 44ch; }
+  .idx-row { grid-template-columns: 90px 260px 1fr; }
+  .idx-row .num { grid-row: auto; }
+  .idx-row p { justify-self: end; text-align: left; }
+  .bibel-card blockquote { font-size: 36px; max-width: 30ch; }
+}
+/* Tablet: mehr Breite nutzen, Bogen begrenzen */
+@media (min-width: 640px) and (max-width: 899px) {
+  .wrap { width: min(100% - 64px, 680px); }
+  .stage { width: min(52vw, 380px); }
+}
+/* XL: Bühne größer, Typo skaliert über clamp mit */
+@media (min-width: 1440px) {
+  .wrap { width: min(100% - 120px, 1220px); }
+  .hero { column-gap: 96px; }
+  .stage { width: min(100%, 470px); }
+}
+
+/* ============================================================
+   KONTRAST-PASS: weicher dunkler Halo unter allen Schriften auf
+   der wandernden Licht-Landschaft, Kanten fuer Schilder/Icons.
+   ============================================================ */
+.hero-name, .shead h2, .hero-tagline { text-shadow: 0 2px 10px rgba(3,15,9,0.65), 0 0 44px rgba(3,15,9,0.5); }
+.quote p, .hero-handle, .brands-line { text-shadow: 0 1px 3px rgba(3,15,9,0.55); }
+.shead .kicker, .hero-meta, footer .legal, footer .claim, .stage-caption, .scroll-hint { text-shadow: 0 1px 2px rgba(3,15,9,0.6); }
+.grat-panel h3, .grat-panel p, .grat-panel .num, .grat-panel .p-ort, .grat-panel .p-vers { text-shadow: 0 1px 6px rgba(243,235,217,0.5); }
+.wordmark { text-shadow: 0 1px 3px rgba(3,15,9,0.55); }
+
+/* Fineline-Icons bekommen eine echte dunkle Kontur (4-Richtungs-Shadow) */
+.poi svg, .rail-cross, .rail-peak svg { filter:
+  drop-shadow(0.8px 0 0 rgba(3,15,9,0.85)) drop-shadow(-0.8px 0 0 rgba(3,15,9,0.85))
+  drop-shadow(0 0.8px 0 rgba(3,15,9,0.85)) drop-shadow(0 -0.8px 0 rgba(3,15,9,0.85)); }
+.grat-smashy { filter:
+  drop-shadow(0.8px 0 0 rgba(3,15,9,0.7)) drop-shadow(-0.8px 0 0 rgba(3,15,9,0.7))
+  drop-shadow(0 0.8px 0 rgba(3,15,9,0.7)) drop-shadow(0 5px 9px rgba(0,0,0,0.5)); }
+.rail-peak .hm, .rail .wp-num { text-shadow: 0 1px 2px rgba(3,15,9,0.7); }
+.live-dot { width: 22px; height: 22px; display: inline-block; flex: 0 0 auto;
+  background: url("/assets/img/smashy-maskottchen.png") center/contain no-repeat;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5));
+  transform-origin: 50% 100%; animation: smashylive 2.8s ease-in-out infinite; }
+@keyframes smashylive { 0%,100% { transform: scale(1) translateY(0) rotate(0deg); }
+  45% { transform: scale(1.09) translateY(-2px) rotate(-2deg); }
+  55% { transform: scale(1.09) translateY(-2px) rotate(2deg); } }
+
+/* Tastatur-Fokus sichtbar (auch auf den clip-path-Winkel-Buttons) */
+.th-btn:focus-visible, .tour-btn:focus-visible, .bs-btn:focus-visible, .anf-submit:focus-visible {
+  outline: 3px solid var(--leaf); outline-offset: 3px; border-radius: 3px; }
+.nav a:focus-visible { outline: 2px solid var(--forest); outline-offset: 2px; border-radius: 6px; }
+
+/* Sicherheitsnetz: JS aus → Reveal-Elemente sofort sichtbar (nie leere Formulare/Seiten) */
+@media (scripting: none) {
+  .rv, .st { opacity: 1 !important; transform: none !important; filter: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .bg, .bg2 { animation: none !important; }
+  .bg-wrap, .bg2-wrap { transform: none !important; }
+  .rv, .st { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
+  .scribble path, .cta .ring path { stroke-dashoffset: 0 !important; animation: none !important; }
+  .cta:hover .arr, .nav a:hover { transform: none; }
+  .grat-smashy { transition: none; animation: none !important; opacity: 1 !important; }
+  .route-head::after { animation: none !important; }
+  .hero-scroll__chev { animation: none !important; }
+
+  .live-dot { animation: none !important; }
+  .tk-live__dot, .tour-now__dot { animation: none !important; }
+  .nav { transition: none !important; }
+  .grat-track { height: auto !important; }
+  .grat-sticky { position: relative !important; height: 76vh !important; }
+  .scroll-hint { display: none !important; }
+
+  .wp.on::before { animation: none !important; }
+}

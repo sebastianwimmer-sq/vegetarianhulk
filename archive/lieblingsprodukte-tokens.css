@@ -1,0 +1,202 @@
+/* ============================================================
+   vegetarianhulk — Colors & Type tokens
+   Source of truth: README.md
+   Light-mode-only, warm-vanilla canvas + forest-hulk green.
+   This is NOT SMASH. Forest-Hulk, not Smash-Hulk.
+   ============================================================ */
+
+@import url('/fonts.css');
+
+:root {
+  /* ── BRAND COLORS · FOREST ────────────────── */
+  --forest-1: #2d6a3e;     /* Primary Forest — dark mossy green */
+  --forest-2: #1f4d2c;     /* Deeper Forest — gradient end, hover */
+  --forest-3: #3d8a52;     /* Lighter Forest — aurora tint, soft accents */
+  --forest-wash: #2d6a3e1a; /* 10% — chips, badges, soft fills */
+
+  /* ── SURFACES · WARM VANILLA ──────────────── */
+  --vanilla: #f7efde;      /* App canvas — warm vanilla beige */
+  --beige-1: #efe5cf;      /* Card / surface */
+  --beige-2: #e6d9bd;      /* Hover / elevated surface */
+  --earth:   #cfbf9d;      /* Hairline border, warm brown */
+  --earth-2: #a89372;      /* Stronger border / divider */
+
+  /* ── TEXT ─────────────────────────────────── */
+  --ink:     #1a1410;      /* Primary text — warm near-black */
+  --ink-2:   #4a3f33;      /* Secondary — warm graphite */
+  --ink-3:   #807260;      /* Tertiary — muted brown */
+  --ink-4:   #b3a385;      /* Faint stamps, captions */
+
+  /* ── STATE (reserved, never decorative) ───── */
+  --danger:  #b3361f;      /* warm rust, not corp red */
+  --warning: #c08a2a;      /* dijon */
+  --info:    #3a5a7a;      /* slate blue */
+
+  /* ── SEMANTIC ─────────────────────────────── */
+  --fg: var(--ink);
+  --fg-muted: var(--ink-3);
+  --fg-accent: var(--forest-1);
+  --bg-app: var(--vanilla);
+  --bg-card: var(--beige-1);
+  --bg-card-hover: var(--beige-2);
+  --border: var(--earth);
+
+  /* ── RADII ────────────────────────────────── */
+  --r-card: 20px;
+  --r-btn: 12px;
+  --r-pill: 999px;
+  --r-chip: 8px;
+  --r-image: 24px;
+
+  /* ── SHADOWS / GLOWS ──────────────────────── */
+  --shadow-cta: 0 12px 32px -8px rgba(45, 106, 62, 0.35);
+  --shadow-cta-hover: 0 18px 44px -10px rgba(45, 106, 62, 0.50);
+  --shadow-card: 0 1px 0 rgba(26, 20, 16, 0.04), 0 8px 24px -16px rgba(26, 20, 16, 0.20);
+  --shadow-card-hover: 0 1px 0 rgba(26, 20, 16, 0.04), 0 18px 36px -18px rgba(26, 20, 16, 0.30);
+  --shadow-modal: 0 40px 80px -20px rgba(26, 20, 16, 0.30);
+
+  /* ── GRADIENTS ─────────────────────────────── */
+  --gradient-forest: linear-gradient(135deg, var(--forest-1), var(--forest-2));
+  --gradient-aurora: radial-gradient(60% 80% at 20% 0%, rgba(61, 138, 82, 0.22), transparent 60%),
+                     radial-gradient(50% 70% at 90% 20%, rgba(45, 106, 62, 0.18), transparent 65%),
+                     radial-gradient(70% 60% at 50% 100%, rgba(207, 191, 157, 0.40), transparent 70%);
+
+  /* ── LAYOUT ───────────────────────────────── */
+  --container: 1200px;
+  --container-narrow: 720px;
+  --gutter: 24px;
+
+  /* ── TYPE: FAMILIES ───────────────────────── */
+  --font-body:    'Inter', -apple-system, system-ui, sans-serif;
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-mono:    ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ── TYPE: SCALE ──────────────────────────── */
+  /* Display (Playfair) */
+  --d1-size: 96px; --d1-weight: 700; --d1-tracking: -2.5px; --d1-line: 0.95;
+  --d2-size: 64px; --d2-weight: 700; --d2-tracking: -1.5px; --d2-line: 1.00;
+  --d3-size: 44px; --d3-weight: 600; --d3-tracking: -0.8px; --d3-line: 1.10;
+
+  /* Headings (mixed — H1 display, H2/H3 body for UI density) */
+  --h1-size: 56px; --h1-weight: 700; --h1-tracking: -1.2px; --h1-line: 1.05;
+  --h2-size: 36px; --h2-weight: 600; --h2-tracking: -0.6px; --h2-line: 1.15;
+  --h3-size: 22px; --h3-weight: 700; --h3-tracking: -0.2px; --h3-line: 1.30;
+
+  /* Body */
+  --body-lg-size: 19px; --body-lg-weight: 400; --body-lg-line: 1.55;
+  --body-size:    16px; --body-weight:    400; --body-line:    1.60;
+  --body-sm-size: 14px; --body-sm-weight: 500; --body-sm-line: 1.55;
+
+  /* UI */
+  --ui-size: 13px;   --ui-weight: 600;
+  --small-size: 12px; --small-weight: 600;
+  --micro-size: 11px; --micro-weight: 700; --micro-tracking: 1.6px;
+
+  /* Bible verse — a deliberate editorial flourish */
+  --verse-size: 24px; --verse-weight: 400; --verse-line: 1.45;
+  --verse-italic: italic;
+
+  /* ── SPACING SCALE ────────────────────────── */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-7: 32px;
+  --sp-8: 40px;
+  --sp-9: 56px;
+  --sp-10: 80px;
+  --sp-11: 120px;
+
+  /* ── MOTION ───────────────────────────────── */
+  --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);   /* Apple-easing — the only easing */
+  --ease-out:   cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast:  220ms;
+  --t-med:   420ms;
+  --t-slow:  720ms;
+  --t-aurora: 14s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --t-fast: 0ms;
+    --t-med: 0ms;
+    --t-slow: 0ms;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ── BASE ──────────────────────────────────── */
+html, body {
+  background: var(--bg-app);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-line);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  margin: 0;
+}
+::selection { background: var(--forest-1); color: var(--vanilla); }
+
+/* ── SEMANTIC PRESETS ─────────────────────── */
+.display-1, .d1 { font-family: var(--font-display); font-size: var(--d1-size); font-weight: var(--d1-weight); letter-spacing: var(--d1-tracking); line-height: var(--d1-line); }
+.display-2, .d2 { font-family: var(--font-display); font-size: var(--d2-size); font-weight: var(--d2-weight); letter-spacing: var(--d2-tracking); line-height: var(--d2-line); }
+.display-3, .d3 { font-family: var(--font-display); font-size: var(--d3-size); font-weight: var(--d3-weight); letter-spacing: var(--d3-tracking); line-height: var(--d3-line); }
+
+h1, .h1 { font-family: var(--font-display); font-size: var(--h1-size); font-weight: var(--h1-weight); letter-spacing: var(--h1-tracking); line-height: var(--h1-line); margin: 0; }
+h2, .h2 { font-family: var(--font-display); font-size: var(--h2-size); font-weight: var(--h2-weight); letter-spacing: var(--h2-tracking); line-height: var(--h2-line); margin: 0; }
+h3, .h3 { font-family: var(--font-body);    font-size: var(--h3-size); font-weight: var(--h3-weight); letter-spacing: var(--h3-tracking); line-height: var(--h3-line); margin: 0; }
+
+p, .body { font-size: var(--body-size); font-weight: var(--body-weight); line-height: var(--body-line); color: var(--ink-2); margin: 0; }
+.body-lg { font-size: var(--body-lg-size); font-weight: var(--body-lg-weight); line-height: var(--body-lg-line); color: var(--ink-2); }
+.body-sm { font-size: var(--body-sm-size); font-weight: var(--body-sm-weight); line-height: var(--body-sm-line); color: var(--ink-2); }
+
+.muted     { color: var(--ink-3); }
+.ink       { color: var(--ink); }
+.forest    { color: var(--forest-1); }
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--micro-size);
+  font-weight: var(--micro-weight);
+  letter-spacing: var(--micro-tracking);
+  color: var(--forest-1);
+  text-transform: uppercase;
+}
+
+.verse {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--verse-size);
+  font-weight: var(--verse-weight);
+  line-height: var(--verse-line);
+  color: var(--ink);
+}
+.verse-attribution {
+  font-family: var(--font-body);
+  font-size: var(--small-size);
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--forest-1);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--forest-1);
+}
+.wordmark-italic {
+  font-style: italic;
+  font-weight: 400;
+}
+
+code, .mono { font-family: var(--font-mono); font-size: 13px; }

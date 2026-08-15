@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>vegetarianhulk — Design System</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  body { background: var(--vanilla); }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 80px 32px 120px; }
+  header.ds-head { display: flex; flex-direction: column; gap: 18px; margin-bottom: 64px; }
+  header.ds-head .eyebrow { font-size: 12px; letter-spacing: 1.8px; }
+  header.ds-head h1 {
+    font-size: clamp(48px, 6vw, 80px);
+    font-weight: 700; letter-spacing: -2px; line-height: 1;
+    color: var(--ink); text-wrap: balance;
+  }
+  header.ds-head h1 em { font-style: italic; font-weight: 400; color: var(--forest-1); }
+  header.ds-head p.lead {
+    font-size: 19px; line-height: 1.55; color: var(--ink-2);
+    max-width: 640px; text-wrap: pretty;
+  }
+  .stamp-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+  .stamp {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px; border-radius: 999px;
+    background: var(--beige-1); border: 1px solid var(--earth);
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--ink-2); letter-spacing: 0.3px;
+  }
+  .stamp .v { color: var(--forest-1); font-weight: 700; }
+
+  section.ds-block { margin-bottom: 80px; }
+  .block-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 24px; }
+  .block-head .n { font-family: var(--font-mono); font-size: 13px; color: var(--forest-1); font-weight: 600; }
+  .block-head h2 { font-size: 36px; }
+  .block-head h2 em { font-style: italic; font-weight: 400; color: var(--forest-1); }
+  .block-head p { flex: 1; text-align: right; color: var(--ink-3); font-size: 14px; max-width: 320px; margin-left: auto; }
+
+  .card-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  .ds-card {
+    background: var(--beige-1);
+    border: 1px solid var(--earth);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform var(--t-fast) var(--ease-apple), box-shadow var(--t-fast) var(--ease-apple);
+    display: flex; flex-direction: column;
+    text-decoration: none; color: inherit;
+  }
+  .ds-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-card-hover); }
+  .ds-card .frame { background: var(--vanilla); border-bottom: 1px solid var(--earth); }
+  .ds-card iframe { width: 700px; max-width: 100%; height: 420px; border: 0; display: block; margin: 0 auto; }
+  .ds-card .legend {
+    padding: 16px 20px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .ds-card .legend .nm { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--ink); letter-spacing: -0.2px; }
+  .ds-card .legend .sub { font-size: 12px; color: var(--ink-3); margin-left: auto; }
+
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 720px) { .pair { grid-template-columns: 1fr; } }
+
+  .hero-link {
+    display: flex; align-items: center; gap: 20px;
+    padding: 28px 32px;
+    background: linear-gradient(135deg, var(--forest-1), var(--forest-2));
+    color: var(--vanilla);
+    border-radius: var(--r-card);
+    text-decoration: none;
+    margin-bottom: 80px;
+    transition: transform var(--t-fast) var(--ease-apple), box-shadow var(--t-fast) var(--ease-apple);
+    box-shadow: var(--shadow-cta);
+  }
+  .hero-link:hover { transform: translateY(-2px); box-shadow: var(--shadow-cta-hover); }
+  .hero-link .ic {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: rgba(247,239,222,.12); border: 1px solid rgba(247,239,222,.18);
+    display: grid; place-items: center;
+    font-family: var(--font-display); font-style: italic;
+    font-size: 22px; color: var(--vanilla);
+  }
+  .hero-link .txt { flex: 1; }
+  .hero-link .h { font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+  .hero-link .s { font-size: 13px; color: rgba(247,239,222,.7); margin-top: 2px; }
+  .hero-link .arrow { font-family: var(--font-body); font-weight: 800; letter-spacing: 1.6px; font-size: 12px; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="ds-head">
+    <span class="eyebrow">Design System · v1 · Mai 2026</span>
+    <h1>vegetarian<em>hulk</em></h1>
+    <p class="lead">Sebi's öffentliche Personal‑Brand. Forest‑Hulk + Vanille‑Beige · Inter + Playfair Display · Apple‑Easing. Bewusst die warme, magazinige Schwester von SMASH — light mode, Bibel‑Anker, Anti‑Coach‑Bro.</p>
+    <div class="stamp-row">
+      <span class="stamp"><span class="v">PRIMARY</span> #2D6A3E</span>
+      <span class="stamp"><span class="v">CANVAS</span> #F7EFDE</span>
+      <span class="stamp"><span class="v">TYPE</span> Inter + Playfair</span>
+      <span class="stamp"><span class="v">EASING</span> cubic‑bezier(0.16, 1, 0.3, 1)</span>
+    </div>
+  </header>
+
+  <a class="hero-link" href="Hero.html">
+    <span class="ic">i.</span>
+    <span class="txt">
+      <div class="h">Hero‑Mockup · vegetarianhulk.de</div>
+      <div class="s">Volle Reference‑Page — Nav, Hero, Manifest, Säulen, Vers, Journal, SMASH cross‑link.</div>
+    </span>
+    <span class="arrow">ÖFFNEN →</span>
+  </a>
+
+  <section class="ds-block">
+    <div class="block-head">
+      <span class="n">01</span>
+      <h2>Colors</h2>
+      <p>Forest greens · vanilla canvas · earth borders · warm ink. Niemals Smash‑Hulk #00FF6A.</p>
+    </div>
+    <div class="card-grid">
+      <a class="ds-card" href="preview/colors-core.html">
+        <div class="frame"><iframe src="preview/colors-core.html" loading="lazy"></iframe></div>
+        <div class="legend"><span class="nm">Core palette</span><span class="sub">12 Tokens · Forest + Vanilla</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="ds-block">
+    <div class="block-head">
+      <span class="n">02</span>
+      <h2><em>Type</em></h2>
+      <p>Playfair Display für Headlines + Bibelverse (immer italic 400 für Verse). Inter für Body und UI.</p>
+    </div>
+    <div class="pair">
+      <a class="ds-card" href="preview/type-display.html">
+        <div class="frame"><iframe src="preview/type-display.html" loading="lazy"></iframe></div>
+        <div class="legend"><span class="nm">Display &amp; Verse</span><span class="sub">Playfair</span></div>
+      </a>
+      <a class="ds-card" href="preview/type-body.html">
+        <div class="frame"><iframe src="preview/type-body.html" loading="lazy"></iframe></div>
+        <div class="legend"><span class="nm">Body &amp; UI</span><span class="sub">Inter scale</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="ds-block">
+    <div class="block-head">
+      <span class="n">03</span>
+      <h2>Spacing &amp; <em>Radii</em></h2>
+      <p>8pt rhythm bis 120. Radien 8 / 12 / 20 / 24 / 999.</p>
+    </div>
+    <div class="card-grid">
+      <a class="ds-card" href="preview/spacing-radii.html">
+        <div class="frame"><iframe src="preview/spacing-radii.html" loading="lazy"></iframe></div>
+        <div class="legend"><span class="nm">Radii &amp; Scale</span><span class="sub">8pt</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="ds-block">
+    <div class="block-head">
+      <span class="n">04</span>
+      <h2>Components</h2>
+      <p>Buttons, Cards, Verse‑Treatment. Apple‑Easing auf jeder Transition. prefers‑reduced‑motion respektiert.</p>
+    </div>
+    <div class="card-grid">
+      <a class="ds-card" href="preview/component-buttons.html">
+        <div class="frame"><iframe src="preview/component-buttons.html" loading="lazy"></iframe></div>
+        <div class="legend"><span class="nm">Buttons</span><span class="sub">Primary · Ghost · Pill · Link</span></div>
+      </a>
+      <a class="ds-card" href="preview/component-cards.html">
+        <div class="frame"><iframe src="preview/component-cards.html" loading="lazy"></iframe></div>
+        <div class="legend"><span class="nm">Cards</span><span class="sub">Verse · Day‑stamp · Story</span></div>
+      </a>
+      <a class="ds-card" href="preview/component-verse.html">
+        <div class="frame"><iframe src="preview/component-verse.html" loading="lazy"></iframe></div>
+        <div class="legend"><span class="nm">Verse hero</span><span class="sub">Aurora wash</span></div>
+      </a>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anfrage senden — Für Brands · VegetarianHulk</title>
+<meta name="description" content="Brand-Anfrage an @vegetarianhulk — kurz ausfüllen, ich melde mich persönlich.">
+<meta name="theme-color" content="#0B2418">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://vegetarianhulk.de/anfrage.html">
+
+<meta property="og:title" content="Anfrage senden — Für Brands · VegetarianHulk">
+<meta property="og:description" content="Interesse an einer Kooperation? Kurz ausfüllen — ich melde mich persönlich.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vegetarianhulk.de/anfrage.html">
+<meta property="og:image" content="https://vegetarianhulk.de/hero.jpg?v=v31.6.1">
+<meta property="og:locale" content="de_DE">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
+
+<link rel="stylesheet" href="/fonts.css?v=1e2010e0">
+<link rel="stylesheet" href="/v3.css?v=8e9c0d2d">
+<style>
+/* ============================================================
+   /anfrage.html — v3 Editorial-Dark Port (page-scoped .anf-)
+   Kontext links (dunkel) · Formular rechts (Creme data-light).
+   Formular-Logik + vh-forms-Endpoint unveraendert.
+   ============================================================ */
+.anf-layout { width: min(1040px, 92vw); margin: clamp(40px, 8vh, 90px) 0 0;
+  margin-left: calc((100% - min(1040px, 92vw)) / 2);
+  display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 22px; align-items: start; }
+.anf-layout > * { min-width: 0; }
+@media (max-width: 880px) { .anf-layout { grid-template-columns: 1fr; gap: 18px; } }
+
+/* ---- Kontext-Panel (dunkel) ---- */
+.anf-ctx { padding: 8px 6px 0; }
+.anf-eyebrow { font-family: var(--mono); font-size: var(--t-label); font-weight: 700; letter-spacing: 2.4px;
+  text-transform: uppercase; color: var(--leaf); display: flex; align-items: center; gap: 12px; }
+.anf-eyebrow::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.24); }
+.anf-ctx h1 { margin: 18px 0 16px; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(34px, 6vw, 54px); line-height: 1.0; color: var(--paper); letter-spacing: -0.5px; }
+.anf-ctx h1 em { font-style: italic; color: var(--leaf); }
+.anf-sub { font-size: 16px; line-height: 1.68; color: var(--paper-dim); max-width: 42ch; }
+.anf-figs { margin: 30px 0 26px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px;
+  background: rgba(126,208,155,0.16); border: 1px solid rgba(126,208,155,0.16); border-radius: 12px; overflow: hidden; }
+.anf-fig { background: linear-gradient(158deg, rgba(19,54,35,0.5), rgba(6,26,17,0.55)); padding: 16px 14px; }
+.anf-fig b { display: block; font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(20px, 3vw, 27px); line-height: 1; letter-spacing: -0.5px; color: var(--leaf); }
+.anf-fig span { display: block; margin-top: 6px; font-family: var(--mono); font-size: 8.5px; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase; color: var(--paper-faint); line-height: 1.35; }
+.anf-points { list-style: none; margin: 0; padding: 0; }
+.anf-points li { position: relative; padding-left: 27px; margin: 13px 0; font-size: 14.5px; line-height: 1.55; color: var(--paper-dim); }
+.anf-points li::before { content: ""; position: absolute; left: 0; top: 3px; width: 16px; height: 16px; background: var(--leaf);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/contain no-repeat; }
+
+/* ---- Formular-Card (Creme, data-light) ---- */
+.anf-card { position: relative; overflow: hidden; border-radius: 22px;
+  padding: clamp(26px, 3.6vw, 44px);
+  background: linear-gradient(158deg, #F8F2E2 0%, #F0E7D2 60%, #E9DFC6 100%); box-shadow: var(--shadow-paper); }
+.anf-card::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.5; pointer-events: none; }
+.anf-card > * { position: relative; z-index: 1; }
+.anf-row { margin: 0 0 16px; }
+.anf-row label, .anf-flabel { display: block; font-size: 13px; font-weight: 700; color: #14281C; margin: 0 0 7px; }
+.anf-hint { font-weight: 400; color: rgba(24,43,31,0.55); font-size: 12px; }
+.anf-req { color: var(--royal); }
+.anf-card input[type="text"], .anf-card input[type="email"], .anf-card textarea {
+  width: 100%; box-sizing: border-box; font: inherit; font-size: 15px; color: #14281C;
+  padding: 11px 14px; border-radius: 11px; background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(24,43,31,0.2); transition: border-color 220ms var(--ease-lux), box-shadow 220ms var(--ease-lux); }
+.anf-card textarea { resize: vertical; line-height: 1.5; }
+.anf-card input::placeholder, .anf-card textarea::placeholder { color: rgba(24,43,31,0.4); }
+.anf-card input:focus, .anf-card textarea:focus { outline: none; border-color: var(--royal);
+  box-shadow: 0 0 0 3px rgba(11,110,79,0.14); }
+/* Auswahl-Chips */
+.anf-group { margin: 0 0 18px; }
+.anf-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.anf-chip { position: relative; cursor: pointer; user-select: none; }
+.anf-chip input { position: absolute; opacity: 0; width: 0; height: 0; }
+.anf-chip span { display: inline-block; padding: 11px 16px; border-radius: 999px; font-size: 13px; font-weight: 600;
+  color: #14281C; background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.58));
+  border: 1px solid rgba(24,43,31,0.2); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 1px 2px rgba(24,43,31,0.05);
+  transition: background 180ms var(--ease-lux), border-color 180ms var(--ease-lux), color 180ms var(--ease-lux), transform 180ms var(--ease-lux), box-shadow 180ms var(--ease-lux); }
+.anf-chip:hover span { border-color: var(--royal); transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 5px 12px -5px rgba(11,110,79,0.3); }
+.anf-chip input:checked + span { background: var(--royal); color: #F3EBD9; border-color: var(--royal);
+  box-shadow: 0 6px 16px -8px rgba(11,110,79,0.6); transform: translateY(-1px); }
+.anf-chip input:focus-visible + span { outline: 3px solid var(--emerald); outline-offset: 2px; }
+/* Honeypot */
+.anf-hp { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; overflow: hidden; opacity: 0; }
+/* Submit (gelb, wie die Site-CTAs) */
+.anf-submit { width: 100%; margin-top: 6px; cursor: pointer; border: 0;
+  font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
+  color: #221803; padding: 15px 24px; text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+  background: linear-gradient(180deg, rgba(255,255,255,0.5) 0, rgba(255,255,255,0) 44%), linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4)) drop-shadow(0 2px 1px rgba(120,88,10,0.45)) drop-shadow(0 10px 16px rgba(0,0,0,0.32)); transition: transform 300ms var(--ease-lux), filter 300ms var(--ease-lux); }
+.anf-submit:hover:not(:disabled) { transform: translateY(-2px); filter: drop-shadow(0 6px 16px rgba(232,191,37,0.4)); }
+.anf-submit:disabled { opacity: 0.6; cursor: default; }
+.anf-privacy { margin: 12px 0 0; font-size: 12px; line-height: 1.5; color: rgba(24,43,31,0.78); }
+.anf-privacy a { color: var(--royal); text-decoration: underline; text-underline-offset: 2px; }
+/* Consent-Haken (aktive DSGVO-Einwilligung) */
+.anf-consent { display: flex; align-items: flex-start; gap: 11px; margin: 16px 0 4px; cursor: pointer; }
+.anf-consent input { flex: 0 0 auto; width: 20px; height: 20px; margin-top: 1px; accent-color: var(--royal); cursor: pointer; }
+.anf-consent > span { font-size: 12.5px; line-height: 1.5; color: rgba(24,43,31,0.72); font-weight: 500; }
+.anf-consent a { color: var(--royal); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.anf-consent.is-err > span { color: #8a2018; }
+.anf-consent.is-err input { outline: 2px solid #8a2018; outline-offset: 2px; }
+/* Echtes Sebi-Foto (Präsenz) im Kontext */
+.anf-photo { display: inline-block; padding: 8px 8px 0; margin: 6px 0 24px; background: #FBF6EA; border-radius: 3px;
+  box-shadow: 0 20px 40px -20px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.24); transform: rotate(-2deg); max-width: 230px; }
+.anf-photo img { display: block; width: 100%; height: auto; border-radius: 1px; }
+.anf-photo figcaption { padding: 9px 4px 11px; font-family: 'Caveat', cursive; font-size: 18px; line-height: 1.15; color: #2a2118; text-align: center; }
+/* "So geht's weiter" Mini-Ablauf */
+.anf-next { margin: 26px 0 0; padding-top: 20px; border-top: 1px solid rgba(126,208,155,0.16); }
+.anf-next__k { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--leaf); }
+.anf-next ol { list-style: none; margin: 14px 0 0; padding: 0; counter-reset: anfstep; }
+.anf-next li { position: relative; padding: 0 0 14px 34px; counter-increment: anfstep; font-size: 13.5px; line-height: 1.5; color: var(--paper-dim); }
+.anf-next li::before { content: counter(anfstep); position: absolute; left: 0; top: -2px; width: 22px; height: 22px; border-radius: 50%;
+  display: grid; place-items: center; font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--leaf);
+  background: rgba(126,208,155,0.1); box-shadow: inset 0 0 0 1px rgba(126,208,155,0.3); }
+.anf-next li b { color: var(--paper); font-weight: 600; }
+.anf-error { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: rgba(160,40,30,0.1);
+  border: 1px solid rgba(160,40,30,0.28); color: #8a2018; font-size: 13.5px; line-height: 1.5; }
+/* Erfolg */
+.anf-success { text-align: center; padding: 20px 4px; }
+.anf-success-badge { width: 60px; height: 60px; margin: 0 auto 18px; border-radius: 50%; display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--royal), var(--evergreen)); box-shadow: 0 12px 28px -10px rgba(4,89,39,0.5); }
+.anf-success-badge svg { width: 26px; height: 26px; color: #F3EBD9; }
+.anf-success h2 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(24px, 4vw, 32px);
+  color: #14281C; margin: 0 0 10px; }
+.anf-success p { font-size: 15px; line-height: 1.6; color: rgba(24,43,31,0.75); margin: 0 auto; max-width: 40ch; }
+.anf-close { width: min(1040px, 92vw); margin: 44px auto 56px; margin-left: calc((100% - min(1040px, 92vw)) / 2);
+  padding-top: 26px; border-top: 1px solid rgba(126,208,155,0.14); text-align: center; }
+.anf-close__direct { font-size: 14px; color: var(--paper-dim); margin: 0 0 14px; }
+.anf-close__direct a { color: var(--leaf); font-weight: 600; text-decoration: none; border-bottom: 1px solid rgba(126,208,155,0.4); }
+.anf-close__direct a:hover { border-color: var(--leaf); }
+.anf-back { text-align: center; margin: 0; font-family: var(--mono); font-size: 11px;
+  letter-spacing: 1.4px; text-transform: uppercase; }
+.anf-back a { color: var(--paper-faint); text-decoration: none; transition: color 300ms var(--ease-lux); }
+.anf-back a:hover { color: var(--leaf); }
+</style>
+</head>
+<body class="anf-page">
+<div class="bg-wrap" aria-hidden="true"><div class="bg"></div></div>
+<div class="bg2-wrap" aria-hidden="true"><div class="bg2"></div></div>
+
+<div class="rail rail--l" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">2713 hm</span></div>
+</div>
+<div class="rail rail--r" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">2713 hm</span></div>
+</div>
+
+<main>
+  <div class="wrap">
+    <header class="topbar">
+      <span class="brandbox">
+        <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+        <span class="wordmark wordmark--invert" aria-hidden="true" data-invert-layer>VEGETARIAN<b>HULK</b></span>
+      </span>
+    </header>
+  </div>
+
+  <section class="anf-layout">
+    <!-- Kontext (dunkel) -->
+    <aside class="anf-ctx st">
+      <p class="anf-eyebrow st st1">Für Brands · Anfrage</p>
+      <h1 class="st st2">Interesse?<br><em>Kurz ausfüllen.</em></h1>
+      <p class="anf-sub st st3">Schreib mir, was deine Brand macht und wie du dir die Zusammenarbeit
+      vorstellst — ich melde mich persönlich.</p>
+      <div class="anf-figs st st3">
+        <div class="anf-fig"><b data-count-pct="62.8">62,8%</b><span>Reichweite von Nicht-Followern</span></div>
+        <div class="anf-fig"><b data-count="101397">101.397</b><span>Aufrufe (30 Tage)</span></div>
+        <div class="anf-fig"><b data-count="35515">35.515</b><span>erreichte Konten</span></div>
+      </div>
+      <ul class="anf-points st st4">
+        <li>Du schreibst direkt mit mir — kein Team, kein Funnel dazwischen.</li>
+        <li>Nur Brands, die ich auch privat nutzen würde.</li>
+        <li>DACH-Audience, real &amp; kaufbereit.</li>
+      </ul>
+      <figure class="anf-photo st st4">
+        <img src="/berg-starter/img/sebi-flex.jpg" alt="Sebi (@vegetarianhulk) am Berg" loading="lazy">
+        <figcaption>Hier landet's direkt bei mir.</figcaption>
+      </figure>
+      <div class="anf-next st st4">
+        <p class="anf-next__k">So geht's weiter</p>
+        <ol>
+          <li><b>Du schickst ab</b> — dauert keine zwei Minuten.</li>
+          <li><b>Ich melde mich persönlich</b> — kein Team, kein Funnel dazwischen.</li>
+          <li><b>Wir klären Idee &amp; Rahmen</b> — ehrlich, ohne Agentur-Blabla.</li>
+        </ol>
+      </div>
+    </aside>
+
+    <!-- Formular (Creme) -->
+    <div class="anf-card" data-light>
+      <div id="formCard">
+        <form class="anf-form" id="brandForm" onsubmit="return submitBrandInquiry(event)">
+          <div class="anf-row">
+            <label for="bf-brand">Brand-Name <span class="anf-req">*</span></label>
+            <input type="text" id="bf-brand" required autocomplete="organization">
+          </div>
+          <div class="anf-row">
+            <label for="bf-link">Webseite oder Insta <span class="anf-hint">(optional)</span></label>
+            <input type="text" id="bf-link" placeholder="instagram.com/… oder https://…">
+          </div>
+          <div class="anf-row">
+            <label for="bf-what">Was macht ihr? <span class="anf-hint">(optional)</span></label>
+            <textarea id="bf-what" rows="2" placeholder="1–2 Sätze über euer Produkt"></textarea>
+          </div>
+
+          <div class="anf-group">
+            <span class="anf-flabel">Art der Zusammenarbeit <span class="anf-hint">(Mehrfachauswahl)</span></span>
+            <div class="anf-chips">
+              <label class="anf-chip"><input type="checkbox" name="type" value="Reel"><span>Reel</span></label>
+              <label class="anf-chip"><input type="checkbox" name="type" value="Story-Set"><span>Story-Set</span></label>
+              <label class="anf-chip"><input type="checkbox" name="type" value="Beitrag"><span>Beitrag</span></label>
+              <label class="anf-chip"><input type="checkbox" name="type" value="Produkttest"><span>Produkttest</span></label>
+              <label class="anf-chip"><input type="checkbox" name="type" value="Long-Term-Partnership"><span>Long-Term-Partnership</span></label>
+              <label class="anf-chip"><input type="checkbox" name="type" value="Event"><span>Event</span></label>
+            </div>
+          </div>
+
+          <div class="anf-group">
+            <span class="anf-flabel">Budget-Range <span class="anf-hint">(optional)</span></span>
+            <div class="anf-chips">
+              <label class="anf-chip"><input type="radio" name="budget" value="&lt; 500 €"><span>&lt; 500 €</span></label>
+              <label class="anf-chip"><input type="radio" name="budget" value="500–1.500 €"><span>500–1.500 €</span></label>
+              <label class="anf-chip"><input type="radio" name="budget" value="1.500–5.000 €"><span>1.500–5.000 €</span></label>
+              <label class="anf-chip"><input type="radio" name="budget" value="&gt; 5.000 €"><span>&gt; 5.000 €</span></label>
+              <label class="anf-chip"><input type="radio" name="budget" value="Auf Anfrage"><span>Auf Anfrage</span></label>
+            </div>
+          </div>
+
+          <div class="anf-group">
+            <span class="anf-flabel">Zeitrahmen <span class="anf-hint">(optional)</span></span>
+            <div class="anf-chips">
+              <label class="anf-chip"><input type="radio" name="time" value="Asap"><span>Asap</span></label>
+              <label class="anf-chip"><input type="radio" name="time" value="1–3 Monate"><span>1–3 Monate</span></label>
+              <label class="anf-chip"><input type="radio" name="time" value="Dieses Quartal"><span>Dieses Quartal</span></label>
+              <label class="anf-chip"><input type="radio" name="time" value="Flexibel"><span>Flexibel</span></label>
+            </div>
+          </div>
+
+          <div class="anf-row">
+            <label for="bf-idea">Eure Idee <span class="anf-hint">(optional — ergänze frei)</span></label>
+            <textarea id="bf-idea" rows="3" placeholder="Was schwebt euch konkret vor? (optional)"></textarea>
+          </div>
+          <div class="anf-row">
+            <label for="bf-email">Eure E-Mail <span class="anf-req">*</span></label>
+            <input type="email" id="bf-email" name="email" required placeholder="kontakt@brand.de" autocomplete="email">
+          </div>
+
+          <div class="anf-group">
+            <span class="anf-flabel">Bevorzugte Kontaktform <span class="anf-hint">(optional)</span></span>
+            <div class="anf-chips">
+              <label class="anf-chip"><input type="radio" name="contact" value="Mail"><span>Mail</span></label>
+              <label class="anf-chip"><input type="radio" name="contact" value="Call"><span>Call</span></label>
+              <label class="anf-chip"><input type="radio" name="contact" value="WhatsApp"><span>WhatsApp</span></label>
+              <label class="anf-chip"><input type="radio" name="contact" value="Instagram-DM"><span>Instagram-DM</span></label>
+            </div>
+          </div>
+          <div class="anf-row">
+            <label for="bf-handle">Telefon / WhatsApp / @handle <span class="anf-hint">(optional)</span></label>
+            <input type="text" id="bf-handle" placeholder="z.B. +49 … oder @brand" autocomplete="off">
+          </div>
+
+          <!-- Honeypot (für Menschen unsichtbar; Bots füllen es) -->
+          <div class="anf-hp" aria-hidden="true">
+            <label for="bf-hp">Dieses Feld bitte freilassen</label>
+            <input type="text" id="bf-hp" name="_honey" tabindex="-1" autocomplete="off">
+          </div>
+
+          <label class="anf-consent"><input type="checkbox" id="bf-consent">
+            <span>Ich bin einverstanden, dass Sebi meine Angaben zur Bearbeitung dieser Anfrage verarbeitet und mich dazu kontaktiert. Mehr in der <a href="/datenschutz.html">Datenschutzerkl&auml;rung</a>.</span>
+          </label>
+          <button type="submit" class="anf-submit">Anfrage senden →</button>
+          <p class="anf-privacy">Deine Angaben nutze ich ausschließlich für deine Anfrage — kein Newsletter, keine Weitergabe an Dritte.</p>
+        </form>
+        <div class="anf-error" id="formError" hidden role="alert"></div>
+      </div>
+
+      <!-- Erfolg: Inline-Danke-State -->
+      <div class="anf-success" id="successState" hidden role="status" aria-live="polite">
+        <div class="anf-success-badge" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <h2>Danke — deine Anfrage ist da.</h2>
+        <p>Ich schau sie mir persönlich an und melde mich direkt bei dir.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="anf-close">
+    <p class="anf-close__direct">Lieber direkt? <a href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">@vegetarianhulk</a> &nbsp;·&nbsp; <a href="mailto:info@vegetarianhulk.de">info@vegetarianhulk.de</a></p>
+    <p class="anf-back"><a href="/kooperationen.html">← Zurück zu Für Brands</a></p>
+  </div>
+</main>
+
+<footer>
+  <div class="inner">
+    <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+    <p class="claim">Builder &amp; Creator. Disziplin über Hype.</p>
+    <nav class="legal" aria-label="Rechtliches">
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+      <span>© <span id="footer-year">2026</span> Sebastian Wimmer</span>
+    </nav>
+  </div>
+</footer>
+
+<nav class="nav" aria-label="Hauptnavigation">
+  <a href="/">Start</a>
+  <a href="/partner-picks/">P&amp;P</a>
+  <a class="center" href="/touren/">
+    <span class="mtn"><svg viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 50 26 16l10 16 8-12 22 30"/>
+      <path d="M22 23.5 26 20l4 5" opacity="0.85"/>
+      <path d="M40.5 25.5 44 21.5l3.5 5" opacity="0.85"/>
+      <circle cx="58" cy="11" r="4.5" opacity="0.9"/>
+      <path d="M12 50c8-4 16-3.4 22 0" opacity="0.45"/>
+    </svg></span>
+    Hulk&nbsp;Hikes
+  </a>
+  <a href="/newsletter">News</a>
+  <a href="/kooperationen.html" aria-current="page">Brands</a>
+</nav>
+
+<script>
+// Brand-Anfrage → eigener Cloudflare-Worker (vh-forms, Repo: workers/vh-forms)
+// → Brevo Transactional → info@vegetarianhulk.de.
+const FORMS_ENDPOINT = 'https://vh-forms.smashtheapp.workers.dev/brand-inquiry';
+
+async function submitBrandInquiry(e) {
+  e.preventDefault();
+  const form = document.getElementById('brandForm');
+  const get = id => (document.getElementById(id).value || '').trim();
+  const checked = name => {
+    const el = document.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value : '';
+  };
+  const brand = get('bf-brand');
+  const email = get('bf-email');
+
+  const errBox = document.getElementById('formError');
+  errBox.hidden = true;
+  if (!brand || !email) return false; // Pflicht: nur Brand + E-Mail
+
+  // DSGVO: Consent-Haken ist Pflicht
+  const consent = document.getElementById('bf-consent');
+  const consentBox = document.querySelector('.anf-consent');
+  if (consent && !consent.checked) {
+    if (consentBox) consentBox.classList.add('is-err');
+    errBox.hidden = false;
+    errBox.textContent = 'Bitte setz kurz den Datenschutz-Haken, dann kann ich deine Anfrage bearbeiten.';
+    (consentBox || errBox).scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return false;
+  }
+
+  const payload = {
+    brand: brand,
+    link: get('bf-link'),
+    what: get('bf-what'),
+    types: Array.from(document.querySelectorAll('input[name="type"]:checked')).map(i => i.value),
+    budget: checked('budget'),
+    time: checked('time'),
+    idea: get('bf-idea'),
+    email: email,
+    contact: checked('contact'),
+    handle: get('bf-handle'),
+    consent: true,
+    _honey: get('bf-hp')
+  };
+
+  const btn = form.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  const original = btn.textContent;
+  btn.textContent = 'Wird gesendet …';
+
+  try {
+    const res = await fetch(FORMS_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.ok && data.ok) {
+      document.getElementById('formCard').hidden = true;
+      const ok = document.getElementById('successState');
+      ok.hidden = false;
+      ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return false;
+    }
+    // 503 = Worker live, Mail-API (noch) nicht konfiguriert → mailto-Fallback
+    if (res.status === 503) {
+      const subject = encodeURIComponent('Brand-Anfrage: ' + brand);
+      const body = encodeURIComponent(
+        'Brand: ' + brand + '\nWebseite/Insta: ' + (payload.link || '—') +
+        '\nIdee: ' + (payload.idea || '—') + '\nKontakt: ' + email
+      );
+      window.location.href = 'mailto:info@vegetarianhulk.de?subject=' + subject + '&body=' + body;
+      btn.disabled = false;
+      btn.textContent = original;
+      errBox.textContent = 'Mail-App geöffnet — schick die Anfrage direkt ab, ich melde mich persönlich.';
+      errBox.hidden = false;
+      return false;
+    }
+    throw new Error(data.error || ('Status ' + res.status));
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = original;
+    errBox.textContent = 'Konnte nicht senden: ' + (err.message || err) + ' — bitte schreib mir direkt an info@vegetarianhulk.de.';
+    errBox.hidden = false;
+  }
+  return false;
+}
+
+// Footer-Year
+(function () {
+  var y = new Date().getFullYear();
+  document.querySelectorAll('#footer-year').forEach(function (el) { el.textContent = y; });
+})();
+</script>
+<script src="/v3.js?v=fa23a246" defer></script>
+<script>
+/* Consent-Fehler zurücksetzen beim Ankreuzen */
+(function () {
+  var c = document.getElementById('bf-consent');
+  if (c) c.addEventListener('change', function () {
+    if (c.checked) { var box = document.querySelector('.anf-consent'); if (box) box.classList.remove('is-err'); }
+  });
+})();
+/* Count-Up der Kontext-Zahlen beim Reinscrollen (animiert + live-Gefühl) */
+(function () {
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function fmtInt(n) { return n.toLocaleString('de-DE'); }
+  function fmtPct(n) { return n.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%'; }
+  var nums = document.querySelectorAll('[data-count], [data-count-pct]');
+  function run(el) {
+    var pct = el.hasAttribute('data-count-pct');
+    var target = parseFloat(pct ? el.dataset.countPct : el.dataset.count);
+    var fmt = pct ? fmtPct : fmtInt;
+    if (reduce) { el.textContent = fmt(target); return; }
+    var t0 = null, DUR = 1400;
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / DUR);
+      var e = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(pct ? Math.round(target * e * 10) / 10 : Math.round(target * e));
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  if ('IntersectionObserver' in window && nums.length) {
+    if (!reduce) nums.forEach(function (el) { el.textContent = el.hasAttribute('data-count-pct') ? fmtPct(0) : fmtInt(0); });
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) { if (en.isIntersecting) { run(en.target); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -12% 0px' });
+    nums.forEach(function (el) { io.observe(el); });
+  } else { nums.forEach(run); }
+})();
+</script>
+</body>
+</html>

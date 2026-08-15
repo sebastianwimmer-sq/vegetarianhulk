@@ -1,102 +1,107 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex">
 <title>Impressum — vegetarianhulk.de</title>
+<meta name="description" content="Impressum und Anbieterkennzeichnung gemäß § 5 DDG.">
+<meta name="theme-color" content="#0B2418">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://vegetarianhulk.de/impressum.html">
+<meta property="og:title" content="Impressum — VegetarianHulk">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:url" content="https://vegetarianhulk.de/impressum.html">
+<meta property="og:image" content="https://vegetarianhulk.de/hero.jpg">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
+
+<link rel="stylesheet" href="/fonts.css?v=1e2010e0">
+<link rel="stylesheet" href="/v3.css?v=8e9c0d2d">
 <style>
-  :root {
-    --page: #faf7ef;
-    --ink: #1c1a15;
-    --ink-soft: #4a4640;
-    --rule: #ddd6c4;
-    --link: #245c39;
-  }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
-  body {
-    background: var(--page);
-    color: var(--ink);
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 17px;
-    line-height: 1.7;
-    -webkit-text-size-adjust: 100%;
-  }
-  .wrap {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 32px 20px 64px;
-  }
-  header.top {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 8px 20px;
-    padding-bottom: 16px;
-    margin-bottom: 8px;
-    border-bottom: 1px solid var(--rule);
-  }
-  .wordmark {
-    font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: 0.02em;
-    color: var(--ink);
-  }
-  .home-link, .home-link:visited {
-    font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-    font-size: 14px;
-    color: var(--link);
-    text-decoration: none;
-  }
-  .home-link:hover, .home-link:focus { text-decoration: underline; }
-  h1 {
-    font-size: 30px;
-    line-height: 1.2;
-    margin: 28px 0 6px;
-    font-weight: 700;
-  }
-  h2 {
-    font-size: 21px;
-    line-height: 1.25;
-    margin: 34px 0 6px;
-    font-weight: 700;
-  }
-  p { margin: 0 0 14px; overflow-wrap: anywhere; }
-  a { color: var(--link); overflow-wrap: anywhere; }
-  a:hover, a:focus { text-decoration: none; }
-  strong { font-weight: 700; }
-  .bottom-nav {
-    margin-top: 48px;
-    padding-top: 20px;
-    border-top: 1px solid var(--rule);
-    font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-    font-size: 14px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 20px;
-  }
-  .bottom-nav a { text-decoration: none; }
-  .bottom-nav a:hover, .bottom-nav a:focus { text-decoration: underline; }
-  footer.copy {
-    margin-top: 24px;
-    font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-    font-size: 13px;
-    color: var(--ink-soft);
-  }
+  /* ============================================================
+     LEGAL v3 — ruhiges Editorial-Dokument auf der dunklen Shell.
+     Langer Rechtstext sitzt in einem hellen Creme-„Blatt" (data-light)
+     für maximale Lesbarkeit; Playfair für den Titel, Mono für Kicker,
+     Inter für den Fließtext.
+     ============================================================ */
+  .legal-hero { margin: clamp(44px, 9vh, 88px) 0 30px; }
+  .legal-hero .kicker { font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
+    letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf);
+    display: flex; align-items: center; gap: 12px; }
+  .legal-hero .kicker::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.24); }
+  .legal-hero h1 { margin-top: 16px; font-family: 'Playfair Display', serif; font-weight: 700;
+    font-size: clamp(40px, 9vw, 72px); line-height: 1; letter-spacing: -0.5px; color: var(--paper); }
+
+  /* Creme-Blatt: das eigentliche Dokument */
+  .legal-doc { width: min(780px, 100%); margin: 0 auto 40px; position: relative; overflow: hidden;
+    border-radius: 20px; padding: clamp(30px, 5vw, 64px) clamp(24px, 5vw, 60px);
+    background: linear-gradient(168deg, #F5EEDE 0%, #EFE7D2 100%);
+    box-shadow: var(--shadow-paper);
+    --l-ink: #14281C; --l-body: #33453a; --l-soft: #5c6b5e; }
+  .legal-doc::after { content: ""; position: absolute; inset: 0; background-image: var(--grain);
+    opacity: 0.5; pointer-events: none; }
+  .legal-doc > * { position: relative; z-index: 1; }
+
+  .legal-doc h2 { font-family: 'Playfair Display', serif; font-weight: 600;
+    font-size: clamp(22px, 3.2vw, 30px); line-height: 1.14; color: var(--l-ink);
+    margin: 42px 0 14px; padding-top: 28px; border-top: 1px solid rgba(24,43,31,0.14); }
+  .legal-doc > h2:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+  .legal-doc h3 { font-family: 'Inter', system-ui, sans-serif; font-weight: 700;
+    font-size: 16px; letter-spacing: 0.2px; color: var(--l-ink); margin: 26px 0 8px; }
+  .legal-doc h4 { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.6px;
+    text-transform: uppercase; color: var(--royal); margin: 22px 0 6px; }
+  .legal-doc p { font-size: 16px; line-height: 1.72; color: var(--l-body); max-width: 68ch; margin: 0 0 14px; }
+  .legal-doc strong { color: var(--l-ink); font-weight: 700; }
+  .legal-doc a { color: var(--royal); font-weight: 600; text-decoration: underline;
+    text-decoration-thickness: 1px; text-underline-offset: 2px; word-break: break-word;
+    transition: color 300ms var(--ease-lux); }
+  .legal-doc a:hover { color: var(--emerald); }
+  .legal-doc ul { margin: 6px 0 16px; padding-left: 22px; max-width: 68ch; }
+  .legal-doc li { font-size: 16px; line-height: 1.6; color: var(--l-body); margin-bottom: 8px; }
+  .legal-doc li::marker { color: var(--royal); }
+  .legal-stand { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--l-soft); margin-top: 32px; }
+
+  .legal-back { width: min(780px, 100%); margin: 0 auto 56px; text-align: center; }
+  .legal-back a { display: inline-block; font-family: var(--mono); font-size: 11px; font-weight: 700;
+    letter-spacing: 1.6px; text-transform: uppercase; color: var(--paper-dim);
+    border-bottom: 1px solid rgba(243,235,217,0.3); padding-bottom: 3px;
+    transition: color 300ms var(--ease-lux), border-color 300ms var(--ease-lux); }
+  .legal-back a:hover { color: var(--paper); border-color: var(--paper); }
 </style>
 </head>
-<body>
+<body class="legal-page">
+<div class="bg-wrap" aria-hidden="true"><div class="bg"></div></div>
+<div class="bg2-wrap" aria-hidden="true"><div class="bg2"></div></div>
+
+<div class="rail rail--l" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">2713 hm</span></div>
+</div>
+<div class="rail rail--r" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">2713 hm</span></div>
+</div>
+
+<main>
   <div class="wrap">
-    <header class="top">
-      <span class="wordmark">VegetarianHulk</span>
-      <a class="home-link" href="/">← vegetarianhulk.de</a>
+
+    <header class="topbar">
+      <span class="brandbox">
+        <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+        <span class="wordmark wordmark--invert" aria-hidden="true" data-invert-layer>VEGETARIAN<b>HULK</b></span>
+      </span>
     </header>
 
-    <main>
-      <h1>Impressum</h1>
+    <section class="legal-hero st" aria-labelledby="legal-title">
+      <p class="kicker st st1">Rechtliches · § 5 DDG</p>
+      <h1 id="legal-title" class="st st2">Impressum</h1>
+    </section>
+
+    <article class="legal-doc rv" data-light>
 
       <h2>Angaben gemäß § 5 DDG</h2>
       <p>
@@ -156,14 +161,43 @@
       <p>
         Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.
       </p>
-    </main>
 
-    <nav class="bottom-nav" aria-label="Rechtliches">
-      <a href="/datenschutz.html">Datenschutzerklärung</a>
-      <a href="/">← Startseite</a>
-    </nav>
+    </article>
 
-    <footer class="copy">© 2026 Sebastian Wimmer</footer>
+    <p class="legal-back"><a href="/">← Zurück zur Startseite</a></p>
+
   </div>
+</main>
+
+<footer>
+  <div class="inner">
+    <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+    <p class="claim">Builder &amp; Creator. Disziplin über Hype.</p>
+    <nav class="legal" aria-label="Rechtliches">
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+      <span>© 2026 Sebastian Wimmer</span>
+    </nav>
+  </div>
+</footer>
+
+<nav class="nav" aria-label="Hauptnavigation">
+  <a href="/">Start</a>
+  <a href="/partner-picks/">P&amp;P</a>
+  <a class="center" href="/touren/">
+    <span class="mtn"><svg viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 50 26 16l10 16 8-12 22 30"/>
+      <path d="M22 23.5 26 20l4 5" opacity="0.85"/>
+      <path d="M40.5 25.5 44 21.5l3.5 5" opacity="0.85"/>
+      <circle cx="58" cy="11" r="4.5" opacity="0.9"/>
+      <path d="M12 50c8-4 16-3.4 22 0" opacity="0.45"/>
+    </svg></span>
+    Hulk&nbsp;Hikes
+  </a>
+  <a href="/newsletter">News</a>
+  <a href="/kooperationen.html">Brands</a>
+</nav>
+
+<script src="/v3.js?v=fa23a246" defer></script>
 </body>
 </html>

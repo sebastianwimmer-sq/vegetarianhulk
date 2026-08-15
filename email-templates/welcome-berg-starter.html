@@ -1,0 +1,142 @@
+<!--
+  ============================================================
+  VegetarianHulk — Willkommens-Mail „Berg-Starter" (v6)
+  Durchgehender Forest-Gradient-Flow · KEINE Boxen/Bubbles · editorial.
+  Brevo HTML-Editor: kompletten Code (ab erstem <table> bis letztem </table>) einfügen.
+  Betreff:      Willkommen — dein Berg-Starter ist da 🏔️
+  Vorschautext: Deine 3 Touren zum Reinkommen, die Packliste, und wie ich selbst angefangen hab.
+  Merge-Tag:    {{ contact.VORNAME | default : "du" }}   ·   Pflicht: {{ unsubscribe }}
+  Gradient = Progressive Enhancement (Apple/iOS/Gmail-App); solide bg-color als Outlook-Fallback.
+  ============================================================
+-->
+<meta name="color-scheme" content="dark">
+<meta name="supported-color-schemes" content="dark">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;600;700&display=swap');
+:root { color-scheme: dark; supported-color-schemes: dark; }
+</style>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0;padding:0;background-color:#06140D;">
+<tr><td align="center" style="padding:34px 12px;">
+
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;mso-hide:all;font-size:1px;line-height:1px;color:#06140D;">Deine 3 Touren zum Reinkommen, die Packliste, und wie ich selbst angefangen hab.</div>
+
+<!-- KARTE = ein Gradient-Flow -->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;background-color:#0B2418;background-image:radial-gradient(90% 40% at 50% 8%, rgba(126,208,155,0.12) 0%, rgba(126,208,155,0) 60%), linear-gradient(168deg,#164A2B 0%,#0F3520 20%,#0B2418 46%,#0A2016 72%,#07180E 100%);border-radius:24px;overflow:hidden;box-shadow:0 30px 70px -24px rgba(0,0,0,0.7);">
+
+  <!-- Masthead OBEN (wie Website-Header überm Hero) -->
+  <tr><td align="center" style="padding:26px 24px 20px 24px;">
+    <div style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.36em;color:#F3EBD9;">VEGETARIAN<span style="color:#7ED09B;">HULK</span></div>
+    <div style="margin-top:7px;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:12.5px;color:#8FB79C;">aus den Bergen · seit 2016</div>
+  </td></tr>
+
+  <!-- Foto-Collage (Hero) -->
+  <tr><td style="font-size:0;line-height:0;background-color:#0B2418;">
+    <img src="https://vegetarianhulk.de/email-templates/assets/hero-collage-mail.jpg?v=3" width="600" alt="Sebi am Berg — Panorama, Gipfelkreuz, Flex" style="display:block;width:100%;max-width:600px;height:auto;border:0;">
+  </td></tr>
+  <tr><td style="height:3px;background-color:#C9A227;background-image:linear-gradient(90deg,#B8901E,#F0CB4B,#B8901E);line-height:3px;font-size:0;">&nbsp;</td></tr>
+
+  <!-- Intro -->
+  <tr><td style="padding:30px 46px 0 46px;">
+    <div style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#D8B24A;">Willkommen · dein Berg-Starter</div>
+    <h1 style="margin:14px 0 0 0;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:39px;line-height:1.08;font-weight:700;color:#F5EEDD;letter-spacing:-0.5px;">Schön, dass du <span style="font-style:italic;color:#7ED09B;">da bist.</span></h1>
+    <p style="margin:22px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:16px;line-height:1.68;color:#DDE5DB;">Hey {{ contact.VORNAME | default : "du" }}, wie versprochen — dein <strong style="color:#F5EEDD;">Berg-Starter</strong>. Drei Touren zum Reinkommen, was wirklich in den Rucksack gehört, und ehrlich, wie ich selbst angefangen hab (mit viel zu schwerem Zeug und Baumwoll-Shirt am Grat).</p>
+  </td></tr>
+
+  <!-- Touren-Eyebrow -->
+  <tr><td style="padding:34px 46px 0 46px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+      <td width="26" style="padding-right:12px;"><div style="height:2px;background-color:#C9A227;font-size:0;line-height:2px;">&nbsp;</div></td>
+      <td style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#D8B24A;">Deine 3 Touren zum Reinkommen</td>
+      <td style="padding-left:12px;width:100%;"><div style="height:1px;background-color:#254A34;font-size:0;line-height:1px;">&nbsp;</div></td>
+    </tr></table>
+  </td></tr>
+
+  <!-- Touren als editoriale Liste (KEINE Box) -->
+  <tr><td style="padding:20px 46px 0 46px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+      <td width="52" valign="top" style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:30px;font-weight:700;color:#D8B24A;line-height:0.9;">01</td>
+      <td valign="top">
+        <div style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:20px;font-weight:700;color:#F3EBD9;">Grünstein <span style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.06em;color:#8FB79C;">1.304 m · Berchtesgaden</span></div>
+        <div style="margin-top:3px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:14px;line-height:1.55;color:#C6D1C6;">Hütte, Postkarten-Blick über den Königssee.</div>
+      </td>
+    </tr></table>
+    <div style="height:1px;background-color:#213E2C;font-size:0;line-height:1px;margin:17px 0;">&nbsp;</div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+      <td width="52" valign="top" style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:30px;font-weight:700;color:#D8B24A;line-height:0.9;">02</td>
+      <td valign="top">
+        <div style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:20px;font-weight:700;color:#F3EBD9;">Zinnkopf <span style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.06em;color:#8FB79C;">1.227 m · Chiemgau</span></div>
+        <div style="margin-top:3px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:14px;line-height:1.55;color:#C6D1C6;">Einsam, Gipfelkreuz — zum Runterkommen.</div>
+      </td>
+    </tr></table>
+    <div style="height:1px;background-color:#213E2C;font-size:0;line-height:1px;margin:17px 0;">&nbsp;</div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+      <td width="52" valign="top" style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:30px;font-weight:700;color:#D8B24A;line-height:0.9;">03</td>
+      <td valign="top">
+        <div style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:20px;font-weight:700;color:#F3EBD9;">Dürrnbachhorn <span style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.06em;color:#8FB79C;">1.776 m · Chiemgau</span></div>
+        <div style="margin-top:3px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:14px;line-height:1.55;color:#C6D1C6;">Weitblick übers Umland, Latschen-Grat.</div>
+      </td>
+    </tr></table>
+  </td></tr>
+
+  <!-- Smashie spricht — KEINE Box, nur Figur + Zitat -->
+  <tr><td style="padding:30px 46px 0 46px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+      <td width="80" valign="top" style="padding-right:16px;">
+        <img src="https://vegetarianhulk.de/assets/img/smashy-maskottchen.png" width="72" alt="Smashie, das VegetarianHulk-Maskottchen" style="display:block;width:72px;height:auto;border:0;">
+      </td>
+      <td valign="middle">
+        <div style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#7ED09B;">Smashie sagt</div>
+        <div style="margin-top:6px;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:16.5px;line-height:1.5;color:#F1E9D5;">„Fang mit <span style="color:#F5EEDD;font-style:normal;font-weight:700;">Grünstein</span> an — Hütte oben, Blick über den Königssee. Wir sehen uns da." 🌱</div>
+      </td>
+    </tr></table>
+  </td></tr>
+
+  <!-- CTA -->
+  <tr><td align="center" style="padding:32px 46px 6px 46px;">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+      <td align="center" bgcolor="#E4B824" style="border-radius:13px;background-color:#E4B824;background-image:linear-gradient(180deg,#F6D24A 0%,#E4B824 52%,#C6980F 100%);box-shadow:0 14px 30px -8px rgba(230,184,36,0.4);">
+        <a href="https://vegetarianhulk.de/berg-starter/" target="_blank" style="display:inline-block;padding:17px 40px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#14100A;text-decoration:none;border-radius:13px;">Alle 3 Touren öffnen &nbsp;&rarr;</a>
+      </td>
+    </tr></table>
+    <div style="margin-top:13px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:12px;color:#A2B3A3;">Plus Packliste &amp; wie ich selbst reingekommen bin.</div>
+  </td></tr>
+
+  <!-- Close -->
+  <tr><td style="padding:30px 46px 0 46px;">
+    <p style="margin:0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:16px;line-height:1.68;color:#DDE5DB;">Ab jetzt meldet sich ab und zu ein kurzer Brief von mir: neue Touren zuerst, ehrliche Gedanken, ab und zu ein Vers, der mich trägt. Kein Spam, kein Verkaufs-Blabla.</p>
+  </td></tr>
+
+  <!-- Signatur -->
+  <tr><td style="padding:26px 46px 0 46px;">
+    <p style="margin:0;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:21px;line-height:1.4;color:#F5EEDD;">Man sieht sich am Berg.</p>
+    <p style="margin:8px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.04em;color:#7ED09B;">— Sebi</p>
+  </td></tr>
+
+  <!-- Vers -->
+  <tr><td align="center" style="padding:34px 46px 6px 46px;">
+    <div style="width:34px;height:1px;background-color:#2C513A;margin:0 auto 20px;font-size:0;line-height:1px;">&nbsp;</div>
+    <p style="margin:0;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:16px;line-height:1.5;color:#D0DACE;">„Der Gerechte fällt siebenmal — und steht wieder auf."</p>
+    <p style="margin:9px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#6F9A7C;">Sprüche 24,16 · Schlachter 2000</p>
+  </td></tr>
+
+  <!-- Footer (im Flow) -->
+  <tr><td align="center" style="padding:30px 40px 34px 40px;">
+    <div style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.02em;color:#8FB79C;">
+      <a href="https://www.instagram.com/vegetarianhulk/" target="_blank" style="color:#8FB79C;text-decoration:none;">Instagram</a>
+      &nbsp;·&nbsp; <a href="https://vegetarianhulk.de/touren/" target="_blank" style="color:#8FB79C;text-decoration:none;">Hulk Hikes</a>
+      &nbsp;·&nbsp; <a href="https://vegetarianhulk.de/kooperationen.html" target="_blank" style="color:#8FB79C;text-decoration:none;">Kooperationen</a>
+    </div>
+    <p style="margin:18px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11.5px;line-height:1.7;color:#5E7267;">
+      Du bekommst diese Mail, weil du dich für den Berg-Starter eingetragen hast.<br>
+      Sebastian Wimmer · Burghauser Straße 35 · 84533 Haiming · <a href="mailto:info@vegetarianhulk.de" style="color:#5E7267;">info@vegetarianhulk.de</a>
+    </p>
+    <p style="margin:11px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11.5px;color:#5E7267;">
+      <a href="https://vegetarianhulk.de/impressum.html" target="_blank" style="color:#8FB79C;text-decoration:none;">Impressum</a>
+      &nbsp;·&nbsp; <a href="https://vegetarianhulk.de/datenschutz.html" target="_blank" style="color:#8FB79C;text-decoration:none;">Datenschutz</a>
+      &nbsp;·&nbsp; <a href="{{ unsubscribe }}" target="_blank" style="color:#8FB79C;text-decoration:underline;">Abmelden</a>
+    </p>
+  </td></tr>
+
+</table>
+
+</td></tr></table>

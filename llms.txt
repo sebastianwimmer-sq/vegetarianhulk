@@ -1,0 +1,11 @@
+# VegetarianHulk
+> Sebi (Sebastian Wimmer) — vegetarische Fitness, Glaube und eigene Bergtouren im Chiemgau/Berchtesgadener Land. Deutschsprachig, DACH-Zielgruppe 16-34. Leitsatz: „Disziplin ist kein Talent — sie ist ein Ritual."
+
+## Pages
+- [Start](https://vegetarianhulk.de/): Wer Sebi ist, Werte, Positionierung.
+- [Hulk Hikes](https://vegetarianhulk.de/touren/): Selbst gegangene Bergtouren mit Höhenprofil, Gehzeit, Startpunkt.
+- [Ristfeuchthorn](https://vegetarianhulk.de/touren/ristfeuchthorn/): Beispiel-Tourbericht mit echten Watch-Daten und ehrlicher Einschätzung.
+- [Kooperationen](https://vegetarianhulk.de/kooperationen.html): Brand-Kooperationen, Reichweite, Pakete, FAQ.
+- [Partner & Picks](https://vegetarianhulk.de/partner-picks/): Partner-Codes und genutzte Ausrüstung.
+- [Newsletter](https://vegetarianhulk.de/newsletter): Gratis Berg-Starter + laufende Updates.
+- [Impressum](https://vegetarianhulk.de/impressum.html) · [Datenschutz](https://vegetarianhulk.de/datenschutz.html)

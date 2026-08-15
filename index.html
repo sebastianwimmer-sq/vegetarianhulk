@@ -1,218 +1,255 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>VegetarianHulk — bald live</title>
-<meta name="description" content="Zehn Jahre am Berg. Die neue VegetarianHulk-Seite geht am 15. August live. Trag dich ein und sei als Erste:r dabei.">
-<meta name="robots" content="noindex">
-<meta name="theme-color" content="#06120C">
-<meta name="color-scheme" content="dark">
-<!-- Open Graph (Insta / WhatsApp / Link-Sharing) -->
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="VegetarianHulk">
-<meta property="og:title" content="Der Berg wächst — bald live.">
-<meta property="og:description" content="Zehn Jahre am Berg, jetzt die nächste Höhe. Neue Seite am 15. August 2026, 18:00. Sei als Erste:r dabei.">
-<meta property="og:image" content="https://vegetarianhulk.de/assets/countdown-berg.jpg">
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VegetarianHulk — Sebi.</title>
+<meta name="description" content="Sebi (VegetarianHulk): vegetarische Fitness, Glaube und eigene Bergtouren im Chiemgau & Berchtesgadener Land. Disziplin ist kein Talent — sie ist ein Ritual.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://vegetarianhulk.de/">
+<meta name="theme-color" content="#0B2418">
+
+<meta property="og:title" content="VegetarianHulk — Sebi.">
+<meta property="og:description" content="Disziplin ist kein Talent. Sie ist ein Ritual. 10 Jahre vegetarisch live.">
+<meta property="og:type" content="profile">
+<meta property="og:locale" content="de_DE">
 <meta property="og:url" content="https://vegetarianhulk.de/">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png?v=2">
-<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=2">
-<link rel="preload" as="image" href="/assets/countdown-berg.jpg" fetchpriority="high">
-<style>
-  /* --- self-hosted fonts (nur was der Countdown braucht) --- */
-  @font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/playfair-normal-latin.woff2) format('woff2')}
-  @font-face{font-family:'Playfair Display';font-style:italic;font-weight:700;font-display:swap;src:url(/fonts/playfair-italic-latin.woff2) format('woff2')}
-  @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2')}
-  @font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2')}
+<meta property="og:image" content="https://vegetarianhulk.de/hero.jpg?v=v31.6.1">
 
-  *{margin:0;padding:0;box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    font-family:'Inter',-apple-system,Helvetica,Arial,sans-serif;
-    color:#F3EBD9;background:#06120C;overflow:hidden;
-  }
-  /* echtes Bergfoto full-bleed + langsamer Ken-Burns-Zoom */
-  .cd-bg{position:fixed;inset:0;background:#06120C;z-index:0}
-  .cd-bg img{width:100%;height:100%;object-fit:cover;opacity:.58;
-    animation:cdZoom 26s cubic-bezier(.16,1,.3,1) forwards}
-  @keyframes cdZoom{from{transform:scale(1.12)}to{transform:scale(1)}}
-  .cd-bg::after{content:"";position:absolute;inset:0;
-    background:
-      linear-gradient(180deg,rgba(6,20,12,.82) 0%,rgba(7,26,16,.5) 32%,rgba(5,18,11,.72) 74%,rgba(4,14,9,.96) 100%),
-      radial-gradient(80% 60% at 50% 40%,rgba(126,208,155,.10),transparent 66%)}
-  .cd-grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.22;mix-blend-mode:overlay;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E")}
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
-  .cd-core{position:relative;z-index:3;min-height:100dvh;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;text-align:center;
-    padding:calc(env(safe-area-inset-top,0px) + 40px) 22px calc(env(safe-area-inset-bottom,0px) + 34px)}
-  .cd-core>*{opacity:0;transform:translateY(16px);animation:cdUp .9s cubic-bezier(.16,1,.3,1) forwards}
-  @keyframes cdUp{to{opacity:1;transform:none}}
+<script src="/launch-gate.js?v=4"></script>
+<link rel="stylesheet" href="/fonts.css?v=1e2010e0">
+<link rel="stylesheet" href="v3.css?v=8e9c0d2d">
+<link rel="preload" href="hero-cutout.png" as="image" fetchpriority="high">
 
-  .cd-wm{font-size:14px;font-weight:700;letter-spacing:.36em;color:#F3EBD9;text-shadow:0 2px 18px rgba(3,12,8,.8);animation-delay:.05s}
-  .cd-wm b{color:#7ED09B}
-  .cd-mk{width:clamp(78px,17vw,100px);height:auto;margin:16px 0 10px;
-    filter:drop-shadow(0 12px 26px rgba(4,89,39,.55)) drop-shadow(0 3px 10px rgba(3,12,8,.6));animation-delay:.15s}
-  .cd-eye{font-size:11px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:#E7C25A;text-shadow:0 2px 14px rgba(3,12,8,.7);animation-delay:.25s}
-  .cd-h1{margin:14px 0 0;font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(38px,7.6vw,72px);
-    line-height:1.02;letter-spacing:-.6px;color:#F7F0E1;text-shadow:0 3px 34px rgba(3,12,8,.85);animation-delay:.3s}
-  .cd-h1 em{font-style:italic;color:#8FE0AC}
-  .cd-story{margin:16px 0 0;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:clamp(15px,2.2vw,18px);color:#C7D6C4;text-shadow:0 2px 16px rgba(3,12,8,.8);animation-delay:.4s}
-
-  .cd-cd{display:flex;gap:clamp(12px,3.4vw,30px);margin:32px 0 4px;animation-delay:.5s}
-  .cd-cd .u{min-width:56px}
-  .cd-cd .n{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(40px,8.8vw,66px);line-height:1;color:#F7F0E1;text-shadow:0 3px 24px rgba(3,12,8,.85);font-variant-numeric:tabular-nums}
-  .cd-cd .l{margin-top:9px;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#A7C0AD}
-  .cd-when{margin-top:12px;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:14px;color:#9FB6A4;text-shadow:0 2px 12px rgba(3,12,8,.7);animation-delay:.55s}
-
-  .cd-sub{margin:24px 0 0;font-size:15px;line-height:1.6;color:#E4ECE2;text-shadow:0 2px 14px rgba(3,12,8,.7);max-width:34ch;animation-delay:.62s}
-  .cd-form{margin:16px auto 0;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:400px;width:100%;animation-delay:.7s}
-  .cd-form input{flex:1;min-width:190px;padding:14px 16px;border-radius:11px;border:1px solid rgba(126,208,155,.34);
-    background:rgba(5,16,10,.62);color:#F3EBD9;font-size:16px;font-family:inherit;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
-  .cd-form input::placeholder{color:#8AA093}
-  .cd-form input:focus{outline:2px solid #7ED09B;outline-offset:1px}
-  .cd-form button{padding:14px 26px;border:0;border-radius:11px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:700;
-    letter-spacing:.06em;text-transform:uppercase;color:#14100A;background-image:linear-gradient(180deg,#F6D24A,#E4B824 55%,#C6980F);
-    box-shadow:0 14px 30px -8px rgba(0,0,0,.6);transition:transform .2s}
-  .cd-form button:hover{transform:translateY(-2px)}
-  .cd-form button:active{transform:translateY(0)}
-  .cd-consent{display:flex;gap:9px;align-items:flex-start;text-align:left;max-width:400px;margin:14px auto 0;
-    font-size:12.5px;line-height:1.5;color:#BFCFC0;text-shadow:0 1px 10px rgba(3,12,8,.7);animation-delay:.73s;cursor:pointer}
-  .cd-consent input{flex:0 0 auto;width:17px;height:17px;margin-top:1px;accent-color:#7ED09B;cursor:pointer}
-  .cd-consent a{color:#8FE0AC;text-decoration:underline;text-underline-offset:2px;font-weight:600}
-  .cd-note{margin-top:12px;font-size:12px;color:#B7C7B8;text-shadow:0 1px 10px rgba(3,12,8,.7);animation-delay:.8s}
-  .cd-note a{color:#8FE0AC;text-decoration:none;font-weight:700}
-  .cd-foot{margin-top:26px;font-size:11.5px;color:#8AA093;animation-delay:.82s}
-  .cd-foot a{color:#B7C7B8;text-decoration:none}
-  .cd-foot a:hover{color:#E4ECE2}
-
-  /* Self-Healing-Zustand bei 0 */
-  .cd-launching .cd-eye,.cd-launching .cd-h1,.cd-launching .cd-story,.cd-launching .cd-cd,
-  .cd-launching .cd-when,.cd-launching .cd-sub,.cd-launching .cd-form,.cd-launching .cd-consent,.cd-launching .cd-note{display:none}
-  .cd-live{display:none;margin:20px 0 0;animation-delay:.1s}
-  .cd-launching .cd-live{display:block}
-  .cd-live h2{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(30px,6vw,52px);color:#8FE0AC;text-shadow:0 3px 28px rgba(3,12,8,.85)}
-  .cd-live p{margin-top:14px;font-size:15px;color:#E4ECE2}
-  .cd-spin{width:34px;height:34px;margin:22px auto 0;border-radius:50%;border:3px solid rgba(126,208,155,.25);border-top-color:#8FE0AC;animation:cdSpin 1s linear infinite}
-  @keyframes cdSpin{to{transform:rotate(360deg)}}
-
-  @media (prefers-reduced-motion:reduce){
-    .cd-bg img{animation:none;transform:none}
-    .cd-core>*{animation:none;opacity:1;transform:none}
-    .cd-spin{animation:none;border-top-color:rgba(126,208,155,.25)}
-  }
-</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Sebastian Wimmer",
+  "alternateName": "VegetarianHulk",
+  "url": "https://vegetarianhulk.de/",
+  "image": "https://vegetarianhulk.de/hero.jpg",
+  "sameAs": ["https://www.instagram.com/vegetarianhulk/"],
+  "jobTitle": "Creator",
+  "description": "Vegetarische Fitness, Glaube und eigene Bergtouren im Chiemgau & Berchtesgadener Land — Content von Sebi (VegetarianHulk)."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "VegetarianHulk",
+  "url": "https://vegetarianhulk.de/",
+  "inLanguage": "de-DE",
+  "publisher": { "@type": "Person", "name": "Sebastian Wimmer" }
+}
+</script>
 </head>
 <body>
-  <div class="cd-bg"><img src="/assets/countdown-berg.jpg" alt="" fetchpriority="high"></div>
-  <div class="cd-grain"></div>
+<div class="bg-wrap" aria-hidden="true"><div class="bg"></div></div>
+<div class="bg2-wrap" aria-hidden="true"><div class="bg2"></div></div>
 
-  <main class="cd-core">
-    <p class="cd-wm">VEGETARIAN<b>HULK</b></p>
-    <img class="cd-mk" src="/assets/img/smashy-maskottchen.png" width="100" height="100" alt="Smashie, das VegetarianHulk-Maskottchen, auf dem Gipfel" fetchpriority="high">
+<div class="rail rail--l" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm" data-hm>2713 hm</span></div>
+</div>
+<div class="rail rail--r" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm" data-hm>2713 hm</span></div>
+</div>
 
-    <p class="cd-eye">Bald live</p>
-    <h1 class="cd-h1">Der Berg <em>wächst.</em></h1>
-    <p class="cd-story">Zehn Jahre am Berg — jetzt die nächste Höhe.</p>
+<main>
+  <div class="wrap">
 
-    <div class="cd-cd" role="timer" aria-live="off">
-      <div class="u"><div class="n" id="cd-d">–</div><div class="l">Tage</div></div>
-      <div class="u"><div class="n" id="cd-h">–</div><div class="l">Std</div></div>
-      <div class="u"><div class="n" id="cd-m">–</div><div class="l">Min</div></div>
-      <div class="u"><div class="n" id="cd-s">–</div><div class="l">Sek</div></div>
+    <header class="topbar">
+      <span class="brandbox">
+        <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+        <span class="wordmark wordmark--invert" aria-hidden="true" data-invert-layer>VEGETARIAN<b>HULK</b></span>
+      </span>
+    </header>
+
+    <!-- HERO — Bogen-Fenster + geordnete Editorial-Spalte -->
+    <section class="hero" aria-label="Sebi — Vegetarianhulk">
+      <figure class="stage st">
+        <div class="stage-frame">
+          <svg class="stage-mtn" viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 50 26 16l10 16 8-12 22 30"/>
+            <path d="M22 23.5 26 20l4 5"/>
+            <path d="M40.5 25.5 44 21.5l3.5 5"/>
+            <circle cx="58" cy="11" r="4.5"/>
+          </svg>
+        </div>
+        <img class="stage-cut" src="hero-cutout.png" alt="Sebi, Founder vegetarianhulk" width="880" height="1011" fetchpriority="high">
+        <figcaption class="stage-caption"><a class="social-link" href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">@vegetarianhulk</a> · Bayern</figcaption>
+      </figure>
+      <div class="hero-copy">
+      <h1 class="hero-name st st1">Sebi</h1>
+      <p class="hero-handle st st2">Sebastian &nbsp;·&nbsp; <a class="social-link" href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">@vegetarianhulk</a></p>
+      <p class="hero-meta st st2">25<span class="dot">·</span>Vegetarisch seit 2016<span class="dot">·</span>Christ<span class="dot">·</span>Bergsportler</p>
+      <hr class="hero-rule st st3">
+      <p class="hero-tagline st st4">Disziplin ist kein&nbsp;Talent.
+        <em>Sie ist ein Ritual.
+          <svg class="scribble" viewBox="0 0 220 14" fill="none" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M3 10 C 40 4, 75 12, 110 7 S 180 3, 217 8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+          </svg>
+        </em>
+      </p>
+      </div>
+    </section>
+
+    <a class="hero-scroll rv" href="#warum" aria-label="Weiter nach unten">
+      <span>Warum ich das mach</span>
+      <svg class="hero-scroll__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+    </a>
+
+    <!-- Zitat -->
+    <section class="quote rv" id="warum" aria-label="Warum ich das mache">
+      <p>Ich hab <strong>hundertmal angefangen</strong> und wieder aufgehört. Was geblieben ist,
+      war nicht Motivation — sondern <strong>Disziplin</strong>. Und der Glaube, dass es sich lohnt,
+      dranzubleiben. Kein Hack, kein Reset. <strong>Einfach jeden Tag.</strong></p>
+      <span class="quote__by">— Sebi</span>
+    </section>
+
+    <!-- Vier Werte — Kontrast-Choreografie -->
+    <div class="shead rv">
+      <p class="kicker">Sebi DNA · Was mich antreibt</p>
+      <h2>Vier Werte, <em>ein Leben.</em></h2>
     </div>
-    <p class="cd-when">15. August 2026, 18:00</p>
+    <section class="grat-wrap" aria-label="Vier Werte — Der Berg">
+      <div class="grat-track">
+        <div class="grat-sticky">
+          <canvas class="berg-canvas" aria-hidden="true"></canvas>
+          <div class="berg-overlays" aria-hidden="false">
+            <div class="poi" data-poi="start" style="width: 15px" aria-hidden="true" title="Wimbachbr&#252;cke, Parkplatz">
+              <svg viewBox="0 0 16 16"><rect x="0.75" y="0.75" width="14.5" height="14.5" rx="2.5" fill="rgba(7,31,20,0.95)" stroke="currentColor" stroke-width="1.2"/><text x="8" y="12" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-weight="700" font-size="11" fill="currentColor" stroke="none">P</text></svg>
+            </div>
+            <div class="poi" data-poi="kapelle" style="width: 13px" aria-hidden="true" title="Kapelle">
+              <svg viewBox="0 0 14 20"><circle cx="7" cy="13" r="5.2" fill="rgba(7,31,20,0.9)" stroke="currentColor" stroke-width="1.3"/><path d="M7 7.8 V 1 M 4.2 3.8 h 5.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            </div>
+            <div class="poi" data-poi="huette" style="width: 15px" aria-hidden="true" title="Watzmannhaus">
+              <svg viewBox="0 0 16 14"><path d="M1 13 V 6.5 L 8 1 L 15 6.5 V 13 Z" fill="currentColor"/><path d="M6.4 13 v -4.4 h 3.2 v 4.4" fill="rgba(7,31,20,0.95)"/></svg>
+            </div>
+            <div class="poi poi--kreuz" data-poi="kreuz" style="width: 15px" aria-hidden="true" title="Watzmann-Mittelspitze">
+              <svg viewBox="0 0 16 22" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"><path d="M8 22 V 3"/><path d="M3.5 7.5 h 9"/><circle cx="8" cy="22" r="1.6" fill="currentColor" stroke="none"/></svg>
+            </div>
+            <button class="wp on" type="button" data-i="0" aria-label="Faith — Bibel-grounded"><span class="wp-num">01 · Wimbachbrücke</span></button>
+            <button class="wp" type="button" data-i="1" aria-label="Disziplin"><span class="wp-num">02 · 1420 hm</span></button>
+            <button class="wp" type="button" data-i="2" aria-label="Vegetarisch + Stark"><span class="wp-num">03 · 1930 hm</span></button>
+            <button class="wp" type="button" data-i="3" aria-label="Fitness"><span class="wp-num">04 · 2713 hm</span></button>
+            <span class="route-head" aria-hidden="true"></span>
+            <img class="grat-smashy" src="/assets/img/smashy-maskottchen.png" alt="">
+          </div>
+          <div class="grat-panel" aria-live="polite">
+            <div class="panel-nav">
+              <span class="panel-ticks" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></span>
+              <button type="button" data-step="-1" aria-label="Vorherige Etappe">&#8249;</button>
+              <button type="button" data-step="1" aria-label="N&#228;chste Etappe">&#8250;</button>
+            </div>
+            <svg class="panel-spark" viewBox="0 0 220 34" aria-hidden="true">
+              <polyline data-spark-fill points=""/>
+              <polyline data-spark-line points=""/>
+              <circle data-spark-dot cx="0" cy="31" r="3"/>
+              <text x="0" y="10">2713 hm</text>
+              <text x="176" y="32">8,4 km</text>
+            </svg>
+            <div class="inner" data-big="01">
+              <p class="num" data-p-num>01 / Faith</p>
+              <p class="p-ort" data-p-ort>Wimbachbr&#252;cke &#183; 630 m &#183; Start</p>
+              <h3 data-p-title>Bibel-grounded. W&#246;rtlich.</h3>
+              <p data-p-text>Das Fundament, bevor irgendwas anderes kommt: Schlachter 2000, jeden Morgen &#8212; bevor das Handy angeht. Hinfallen geh&#246;rt dazu, liegen bleiben nicht.</p>
+              <p class="p-vers" data-p-vers hidden></p>
+              <a class="p-cta" data-p-cta href="/touren/" hidden>Hulk Hikes &#183; Die Touren dahinter</a>
+            </div>
+          </div>
+          <aside class="wetter-hud" hidden aria-label="Bedingungen am Berg">
+            <p class="hud-label">Bergstation · Watzmann</p>
+            <p class="hud-temp"><span data-w-temp>–</span><span class="hud-unit">°C</span><span class="hud-icon" data-w-icon aria-hidden="true"></span></p>
+            <p class="hud-cond" data-w-cond></p>
+            <p class="hud-meta" data-w-meta></p>
+            <a class="hud-src" href="https://open-meteo.com/" target="_blank" rel="noopener">Quelle: Open-Meteo <span aria-hidden="true">↗</span></a>
+          </aside>
+          <p class="scroll-hint">Scroll &#183; Der Berg dreht sich</p>
+        </div>
+      </div>
+    </section>
 
-    <p class="cd-sub">Die neue VegetarianHulk-Seite geht bald live. Trag dich ein — dann bist du als Erste:r dabei, wenn der Berg aufgeht.</p>
-    <form class="cd-form" id="cd-form" novalidate>
-      <input id="cd-email" type="email" inputmode="email" autocomplete="email" placeholder="deine@email.de" aria-label="Deine E-Mail-Adresse" required>
-      <button type="submit">Sei dabei</button>
-    </form>
-    <label class="cd-consent" for="cd-consent-cb">
-      <input type="checkbox" id="cd-consent-cb" required>
-      <span>Ich möchte Launch-Infos &amp; den Newsletter per E-Mail und stimme der <a href="/datenschutz.html">Datenschutzerklärung</a> zu. Abmeldung jederzeit.</span>
-    </label>
-    <p class="cd-note" id="cd-note">Kein Spam, kein Weitergeben. &nbsp;·&nbsp; <a href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">@vegetarianhulk</a></p>
+    <!-- Gipfelbuch: der Licht-Moment — Vers links, taegliches Ritual rechts -->
+    <section class="gipfelbuch rv" aria-label="Gipfelbuch" data-light>
+      <p class="gb-kopf">Gipfelbuch &#183; Watzmann &#183; 2713 m</p>
+      <div class="gb-buch">
+        <div class="gb-seite gb-seite--links">
+          <blockquote>&#8222;Denn siebenmal f&#228;llt der Gerechte und steht wieder auf.&#8220;</blockquote>
+          <p class="gb-quelle">Spr&#252;che 24,16 &#183; Schlachter 2000</p>
+          <p class="gb-anker">Mein Anker.</p>
+        </div>
+        <div class="gb-seite gb-seite--rechts">
+          <p class="gb-datum" data-gb-datum>Heute</p>
+          <p class="gb-eintrag">4:50 Uhr. Bibel. Gym.<br><span data-gb-tag>Tag 3.800</span> vegetarisch.</p>
+          <p class="gb-sig">&#8212; Sebi</p>
+        </div>
+        <a class="gb-cta" href="/newsletter">Deine Zeile ist noch frei &#8212; trag dich ein</a>
+      </div>
+    </section>
 
-    <!-- Self-Healing: erscheint bei 0, lädt automatisch neu bis v3 live ist -->
-    <div class="cd-live" role="status" aria-live="polite">
-      <p class="cd-eye">Der Moment ist da</p>
-      <h2>Wir schalten frei …</h2>
-      <div class="cd-spin" aria-hidden="true"></div>
-      <p>Gleich ist die neue Seite hier. Diese Seite lädt sich von selbst neu.</p>
-    </div>
+    <!-- Closing -->
+    <section class="closing rv" aria-label="Wie es weitergeht">
+      <div class="shead" style="margin-bottom: 0;">
+        <p class="kicker">Wie es weitergeht</p>
+        <h2>Die Gabelung <em>nach der Tour.</em></h2>
+      </div>
+      <!-- Weggabelung: ein Pfahl, zwei Richtungen — das Ende jeder Tour -->
+      <nav class="gabelung" aria-label="Zwei Wege">
+        <a class="gab-schild gab-schild--gelb" href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">Bleib dabei &#183; @vegetarianhulk</a>
+        <a class="gab-schild gab-schild--dunkel" href="/kooperationen.html">Zusammenarbeiten &#183; Anfrage</a>
+      </nav>
+    </section>
 
-    <p class="cd-foot"><a href="/impressum.html">Impressum</a> &nbsp;·&nbsp; <a href="/datenschutz.html">Datenschutz</a></p>
-  </main>
+  </div>
+</main>
 
-<script>
-(function(){
-  'use strict';
-  var LAUNCH_TS = Date.parse('2026-08-15T18:00:00+02:00');
-  // Eigener vh-forms-Worker — Double-Opt-In selbst gebaut (signierter Link + Brevo-Versand)
-  var NL_ENDPOINT = 'https://vh-forms.peaking.workers.dev/newsletter/subscribe';
-  function pad(n){return (n<10?'0':'')+n;}
+    <section class="home-outro rv" aria-label="Newsletter">
+      <p class="home-outro__k">Bleib dran</p>
+      <h2>Sei beim nächsten Gipfel <em>zuerst dabei.</em></h2>
+      <a class="th-btn th-btn--gelb th-btn--lg" href="/newsletter">Newsletter holen →</a>
+      <p class="home-outro__social"><a href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">@vegetarianhulk</a></p>
+    </section>
 
-  var dE=document.getElementById('cd-d'),hE=document.getElementById('cd-h'),mE=document.getElementById('cd-m'),sE=document.getElementById('cd-s');
-  var launched=false;
+<footer>
+  <div class="inner">
+    <p class="wordmark">VEGETARIAN<b>HULK</b></p>
+    <p class="claim">Builder &amp; Creator. Disziplin über Hype.</p>
+    <nav class="legal" aria-label="Rechtliches">
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+      <span>© 2026 Sebastian Wimmer</span>
+    </nav>
+  </div>
+</footer>
 
-  function selfHeal(){
-    // Seite lädt sich neu, bis der Server v3 ausliefert (statt dieser Countdown-Seite).
-    document.body.classList.add('cd-launching');
-    var tries=0;
-    (function loop(){
-      tries++;
-      // Cache-Buster, damit der In-App-Browser nicht die alte Countdown-Seite zeigt
-      setTimeout(function(){ location.replace('/?launched=' + Date.now()); }, tries===1 ? 4000 : 7000);
-    })();
-  }
+<!-- Floating Nav — typografisch, nur der Berg bleibt -->
+<nav class="nav" aria-label="Hauptnavigation">
+  <a href="/" aria-current="page">Start</a>
+  <a href="/partner-picks/">P&amp;P</a>
+  <a class="center" href="/touren/">
+    <span class="mtn"><svg viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 50 26 16l10 16 8-12 22 30"/>
+      <path d="M22 23.5 26 20l4 5" opacity="0.85"/>
+      <path d="M40.5 25.5 44 21.5l3.5 5" opacity="0.85"/>
+      <circle cx="58" cy="11" r="4.5" opacity="0.9"/>
+      <path d="M12 50c8-4 16-3.4 22 0" opacity="0.45"/>
+    </svg></span>
+    Hulk&nbsp;Hikes
+  </a>
+  <a href="/newsletter">News</a>
+  <a href="/kooperationen.html">Brands</a>
+</nav>
 
-  function tick(){
-    var diff = LAUNCH_TS - Date.now();
-    if(diff<=0){ if(!launched){launched=true; clearInterval(timer); selfHeal();} return; }
-    var s=Math.floor(diff/1000);
-    dE.textContent=Math.floor(s/86400);
-    hE.textContent=pad(Math.floor(s/3600)%24);
-    mE.textContent=pad(Math.floor(s/60)%60);
-    sE.textContent=pad(s%60);
-  }
-  tick(); var timer=setInterval(tick,1000);
 
-  var form=document.getElementById('cd-form'), note=document.getElementById('cd-note');
-
-  // Rückkehr vom Bestätigungs-Link (?bestaetigung=ok|abgelaufen|fehler)
-  try {
-    var st=new URLSearchParams(location.search).get('bestaetigung');
-    if(st==='ok'){
-      form.style.display='none';
-      var cl=document.querySelector('.cd-consent'); if(cl) cl.style.display='none';
-      note.innerHTML='<strong style="color:#8FE0AC">Bestätigt — du bist fix dabei.</strong> Wir sehen uns am 15. August. 🏔️';
-    } else if(st==='abgelaufen'){
-      note.textContent='Dein Bestätigungs-Link war abgelaufen — trag dich einfach nochmal ein.';
-    } else if(st==='fehler'){
-      note.textContent='Da ging was schief — probier die Anmeldung bitte nochmal.';
-    }
-  } catch(e){}
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var email=(document.getElementById('cd-email').value||'').trim().toLowerCase();
-    var consentBox=document.getElementById('cd-consent-cb');
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ note.textContent='E-Mail-Adresse prüfen.'; return; }
-    if(!consentBox.checked){ note.textContent='Bitte kurz den Datenschutz bestätigen.'; consentBox.focus(); return; }
-    note.textContent='Wird eingetragen …';
-    fetch(NL_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email:email,_honey:''})})
-      .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json().catch(function(){return {};}); })
-      .then(function(res){
-        if(res && res.ok===false) throw new Error('rejected');
-        form.style.display='none';
-        var c=document.querySelector('.cd-consent'); if(c) c.style.display='none';
-        note.innerHTML='<strong style="color:#8FE0AC">Fast geschafft!</strong> Check dein Postfach und bestätige kurz deine Mail — dann bist du fix dabei. 🏔️';
-      })
-      .catch(function(){ note.textContent='Hat nicht geklappt — später nochmal.'; });
-  });
-})();
-</script>
+<script src="v3.js?v=fa23a246" defer></script>
+<script type="module" src="relief3d.js?v=9ab17ba8"></script>
 </body>
 </html>

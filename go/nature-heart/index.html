@@ -2,80 +2,107 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Weiter zu Nature Heart … | VegetarianHulk</title>
-<!-- Kein-JS-Fallback: meta refresh ist inert solange JS den Redirect übernimmt.
+<!-- Kein-JS-Fallback (nur ohne JS aktiv; JS-setTimeout ist der barrierefreie Hauptweg).
      ⚠️ URL-Sync mit codes/partners.js (shopUrl, slug "nature-heart"). -->
 <noscript><meta http-equiv="refresh" content="2;url=https://nature-heart.de/sebastian11377224"></noscript>
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
+<link rel="preload" as="image" href="/go/img/sebi-gym.jpg">
 <style>
-  /* Forest-Family-Interstitial — self-contained (lebt nur ~2 s, kein style.css).
-     Keine Cookies, kein Tracking — Klick-Zählung kommt später via Worker. */
-  :root {
-    --vanilla: #f7efde;
-    --ink: #1a1410;
-    --ink-2: #5c513f;
-    --forest-primary: #045927;
-    --forest-anchor: #122d1c;
-  }
+  /* Premium „Forest Editorial"-Bridge — full-bleed Foto + Editorial-Typo, kein Karten-Slop. */
+  :root { --paper:#F3EBD9; --dim:rgba(243,235,217,0.72); --leaf:#7ED09B; --royal:#045927;
+    --gold:#E4B824; --ease:cubic-bezier(0.16,1,0.3,1);
+    --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"); }
   * { box-sizing: border-box; margin: 0; }
-  body {
-    min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    background: var(--vanilla); color: var(--ink); text-align: center;
-    font-family: 'Inter', -apple-system, system-ui, sans-serif; padding: 24px;
+  html, body { height: 100%; }
+  body { min-height: 100dvh; display: flex; flex-direction: column; color: var(--paper);
+    font-family: 'Inter', -apple-system, system-ui, sans-serif; background: #06120C; overflow: hidden; }
+  .bg { position: fixed; inset: 0; z-index: 0; background: #06120C; }
+  .bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; animation: bgZoom 8s var(--ease) forwards; }
+  @keyframes bgZoom { from { transform: scale(1.08); } to { transform: scale(1); } }
+  .bg::after { content: ""; position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(6,18,12,0.6) 0%, rgba(6,20,13,0.35) 34%, rgba(4,16,10,0.78) 78%, rgba(3,12,8,0.96) 100%),
+      radial-gradient(80% 60% at 50% 42%, transparent, rgba(4,16,10,0.5)); }
+  .bg .grain { position: absolute; inset: 0; background-image: var(--grain); opacity: 0.28; mix-blend-mode: overlay; }
+  .stage { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: space-between; text-align: center; padding: clamp(30px,6vh,64px) 24px; }
+  .wm { font-family: ui-monospace, Menlo, monospace; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--dim); }
+  .wm b { color: var(--leaf); }
+  .core { max-width: 620px; display: flex; flex-direction: column; align-items: center; margin: auto 0; }
+  .mark { width: 60px; height: 44px; color: var(--leaf); margin-bottom: 22px; filter: drop-shadow(0 6px 20px rgba(4,89,39,0.5)); }
+  .mark path { stroke-dasharray: 200; stroke-dashoffset: 200; animation: draw 1100ms var(--ease) 120ms forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .head { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; letter-spacing: -0.5px;
+    font-size: clamp(30px, 6.4vw, 52px); line-height: 1.04; text-shadow: 0 2px 24px rgba(3,12,8,0.7);
+    opacity: 0; animation: rise 800ms var(--ease) 320ms forwards; }
+  .head em { font-style: italic; color: var(--leaf); }
+  .reassure { margin: 18px auto 0; max-width: 42ch; font-size: 15.5px; line-height: 1.6; color: var(--dim);
+    opacity: 0; animation: rise 800ms var(--ease) 460ms forwards; }
+  .reassure b { color: var(--paper); font-weight: 600; }
+  .deal { margin-top: 20px; display: inline-flex; align-items: center; gap: 8px; padding: 0;
+    font-family: ui-monospace, Menlo, monospace; font-size: 12px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+    color: var(--leaf); background: none; border: 0; box-shadow: none; opacity: 0; animation: rise 700ms var(--ease) 640ms forwards; }
+  .deal .chk { width: 15px; height: 15px; color: var(--leaf); opacity: 0; transform: scale(0.4);
+    transition: opacity 400ms var(--ease), transform 400ms var(--ease); }
+  .deal.done .chk { opacity: 1; transform: scale(1); }
+  .go { margin-top: 30px; display: inline-flex; align-items: center; gap: 10px; padding: 15px 28px; border-radius: 14px;
+    font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+    color: #14100A; text-decoration: none; background: linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 16px 34px -14px rgba(0,0,0,0.6);
+    opacity: 0; animation: rise 700ms var(--ease) 780ms forwards; transition: transform 240ms var(--ease); }
+  .go:hover { transform: translateY(-2px); }
+  .go:focus-visible { outline: 3px solid var(--leaf); outline-offset: 3px; }
+  .auto { margin-top: 16px; font-family: ui-monospace, Menlo, monospace; font-size: 9.5px; font-weight: 600;
+    letter-spacing: 1.6px; text-transform: uppercase; color: rgba(243,235,217,0.45);
+    opacity: 0; animation: rise 700ms var(--ease) 900ms forwards; }
+  .foot { font-family: 'Caveat', cursive; font-size: 22px; line-height: 1.25; color: var(--dim); max-width: 30ch;
+    opacity: 0; animation: rise 800ms var(--ease) 1040ms forwards; }
+  .foot b { color: var(--leaf); }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .bg img { animation: none; transform: none; }
+    .mark path { animation: none; stroke-dashoffset: 0; }
+    .head, .reassure, .deal, .go, .auto, .foot { animation: none; opacity: 1; }
+    .deal .chk { opacity: 1; transform: none; transition: none; }
   }
-  .wordmark {
-    font-size: 13px; font-weight: 800; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--forest-anchor);
-  }
-  .wordmark .accent { color: var(--forest-primary); }
-  h1 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(26px, 5vw, 34px);
-    color: var(--forest-anchor); margin: 18px 0 10px;
-  }
-  .msg { max-width: 420px; margin: 0 auto; color: var(--ink-2); font-size: 15.5px; line-height: 1.55; }
-  .msg strong { color: var(--forest-primary); }
-  .redirect-note { margin-top: 14px; font-size: 12.5px; color: var(--ink-2); }
-  .go {
-    display: inline-block; margin-top: 20px; padding: 13px 28px;
-    background: linear-gradient(180deg, var(--forest-primary), var(--forest-anchor));
-    color: var(--vanilla); text-decoration: none; font-weight: 800; font-size: 15px;
-    border-radius: 12px; box-shadow: 0 8px 20px -8px rgba(4, 89, 39, 0.4);
-  }
-  .go:focus-visible { outline: 3px solid var(--forest-primary); outline-offset: 2px; }
-  .fallback { margin-top: 18px; font-size: 12.5px; line-height: 1.5; color: var(--ink-2); }
-  .fallback a { color: var(--forest-primary); }
 </style>
 </head>
 <body>
-<main>
-  <p class="wordmark">Vegetarian<span class="accent">hulk</span></p>
-  <h1>Danke dir!</h1>
-  <p class="msg">Vergiss nicht: Code <strong>VEGETARIANHULK</strong> im Warenkorb eingeben = 10&nbsp;% Rabatt.</p>
-  <p class="redirect-note">Du wirst gleich zu Nature Heart weitergeleitet …</p>
-  <a class="go" id="go-link" href="https://nature-heart.de/sebastian11377224" rel="sponsored noopener">Direkt weiter →</a>
-  <p class="fallback">Link funktioniert nicht? Direkt zum Shop:
-    <a href="https://nature-heart.de" rel="sponsored noopener">nature-heart.de</a>
-    — Code VEGETARIANHULK nicht vergessen.</p>
+<div class="bg" aria-hidden="true"><img src="/go/img/sebi-gym.jpg" alt=""><div class="grain"></div></div>
+<main class="stage">
+  <p class="wm">VEGETARIAN<b>HULK</b></p>
+  <div class="core">
+    <svg class="mark" viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 50 26 14l11 17 8-12 23 31"/></svg>
+    <h1 class="head">Danke, dass du über <em>meinen Link</em> gehst.</h1>
+    <p class="reassure">Für dich bleibt der Preis <b>exakt gleich</b> — ich bekomme eine kleine Provision, und die hält VegetarianHulk am Laufen.</p>
+    <span class="deal" id="deal"><span id="deal-t">Dein Rabatt wird vorbereitet …</span><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+    <a class="go" id="go-link" href="https://nature-heart.de/sebastian11377224" rel="sponsored noopener">Weiter zu Nature Heart →</a>
+    <p class="auto" id="auto" aria-live="polite">Leitet automatisch weiter …</p>
+  </div>
+  <p class="foot">Meine Supplements hol ich von denen — <b>jeden Tag dabei.</b></p>
 </main>
-<script src="/codes/partners.js?v=3fcfc0c4"></script>
+<script src="/codes/partners.js?v=f9bebed4"></script>
 <script>
 (function () {
   'use strict';
-  var SLUG = 'nature-heart';
-  var REDIRECT_MS = 2000;
-  // partners.js = Quelle der Wahrheit; statisches href bleibt Fallback
-  var partner = (typeof VH_PARTNERS !== 'undefined')
-    ? VH_PARTNERS.filter(function (p) { return p.slug === SLUG; })[0]
-    : null;
+  var SLUG = 'nature-heart', REDIRECT_MS = 2200;
+  var partner = (typeof VH_PARTNERS !== 'undefined') ? VH_PARTNERS.filter(function (p) { return p.slug === SLUG; })[0] : null;
   var link = document.getElementById('go-link');
   var url = (partner && partner.shopUrl) || (link && link.href);
-  if (!url) return;
-  if (link) link.href = url;
-  setTimeout(function () { window.location.href = url; }, REDIRECT_MS);
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (link && url) link.href = url;
+  /* Nature Heart: Code muss in den Warenkorb → das sagt der Chip klar */
+  var deal = document.getElementById('deal'), dealT = document.getElementById('deal-t');
+  setTimeout(function () {
+    if (dealT) dealT.textContent = 'Code VEGETARIANHULK im Warenkorb = 10 %';
+    if (deal) deal.classList.add('done');
+    var a = document.getElementById('auto'); if (a) a.textContent = 'Weiter zu Nature Heart …';
+  }, reduce ? 0 : 900);
+  if (url) setTimeout(function () { window.location.href = url; }, REDIRECT_MS);
 })();
 </script>
 </body>

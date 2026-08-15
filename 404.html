@@ -1,218 +1,194 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>VegetarianHulk — bald live</title>
-<meta name="description" content="Zehn Jahre am Berg. Die neue VegetarianHulk-Seite geht am 15. August live. Trag dich ein und sei als Erste:r dabei.">
-<meta name="robots" content="noindex">
-<meta name="theme-color" content="#06120C">
-<meta name="color-scheme" content="dark">
-<!-- Open Graph (Insta / WhatsApp / Link-Sharing) -->
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="VegetarianHulk">
-<meta property="og:title" content="Der Berg wächst — bald live.">
-<meta property="og:description" content="Zehn Jahre am Berg, jetzt die nächste Höhe. Neue Seite am 15. August 2026, 18:00. Sei als Erste:r dabei.">
-<meta property="og:image" content="https://vegetarianhulk.de/assets/countdown-berg.jpg">
-<meta property="og:url" content="https://vegetarianhulk.de/">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png?v=2">
-<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=2">
-<link rel="preload" as="image" href="/assets/countdown-berg.jpg" fetchpriority="high">
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 · Verstiegen — VegetarianHulk</title>
+<meta name="description" content="Diese Route gibt's nicht. Kein Drama — wir drehen um und finden den Steig zurück.">
+<meta name="theme-color" content="#06231A">
+<meta name="robots" content="noindex,follow">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
+
+<link rel="stylesheet" href="/fonts.css?v=1e2010e0">
+<link rel="stylesheet" href="/v3.css?v=8e9c0d2d">
+
 <style>
-  /* --- self-hosted fonts (nur was der Countdown braucht) --- */
-  @font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/playfair-normal-latin.woff2) format('woff2')}
-  @font-face{font-family:'Playfair Display';font-style:italic;font-weight:700;font-display:swap;src:url(/fonts/playfair-italic-latin.woff2) format('woff2')}
-  @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2')}
-  @font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2')}
+  /* ── 404 · Verstiegen — dark editorial, Wegweiser-Sprache ── */
+  .err-hero { margin: clamp(56px, 12vh, 120px) 0 8px; }
+  .err-hero .kicker { font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
+    letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf);
+    display: flex; align-items: center; gap: 12px; }
+  .err-hero .kicker::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.24); }
+  .err-hero h1 { margin: 20px 0 22px; font-family: 'Playfair Display', serif; font-weight: 700;
+    font-size: clamp(48px, 12vw, 92px); line-height: 0.96; color: var(--paper); letter-spacing: -0.6px; }
+  .err-hero h1 em { font-style: italic; color: var(--leaf); }
 
-  *{margin:0;padding:0;box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    font-family:'Inter',-apple-system,Helvetica,Arial,sans-serif;
-    color:#F3EBD9;background:#06120C;overflow:hidden;
-  }
-  /* echtes Bergfoto full-bleed + langsamer Ken-Burns-Zoom */
-  .cd-bg{position:fixed;inset:0;background:#06120C;z-index:0}
-  .cd-bg img{width:100%;height:100%;object-fit:cover;opacity:.58;
-    animation:cdZoom 26s cubic-bezier(.16,1,.3,1) forwards}
-  @keyframes cdZoom{from{transform:scale(1.12)}to{transform:scale(1)}}
-  .cd-bg::after{content:"";position:absolute;inset:0;
+  /* DAV-Wegweiser mit durchgestrichenem, tot geglaubtem Steig */
+  .err-sign { display: inline-flex; align-items: center; gap: 9px; max-width: 100%;
+    font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.8px;
+    text-transform: uppercase; color: #14100A;
     background:
-      linear-gradient(180deg,rgba(6,20,12,.82) 0%,rgba(7,26,16,.5) 32%,rgba(5,18,11,.72) 74%,rgba(4,14,9,.96) 100%),
-      radial-gradient(80% 60% at 50% 40%,rgba(126,208,155,.10),transparent 66%)}
-  .cd-grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.22;mix-blend-mode:overlay;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E")}
+      radial-gradient(circle at 11px 50%, #14100A 2.2px, transparent 3px),
+      linear-gradient(180deg, #E8BF25, #D4A918);
+    padding: 6px 26px 6px 22px; transform: rotate(-1.4deg);
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+    filter: drop-shadow(0 2px 3px rgba(2,10,6,0.6)) drop-shadow(0 8px 18px rgba(0,0,0,0.35)); }
+  .err-sign .err-path { overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    max-width: min(52vw, 320px); text-decoration: line-through; text-decoration-thickness: 1.6px;
+    opacity: 0.82; }
 
-  .cd-core{position:relative;z-index:3;min-height:100dvh;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;text-align:center;
-    padding:calc(env(safe-area-inset-top,0px) + 40px) 22px calc(env(safe-area-inset-bottom,0px) + 34px)}
-  .cd-core>*{opacity:0;transform:translateY(16px);animation:cdUp .9s cubic-bezier(.16,1,.3,1) forwards}
-  @keyframes cdUp{to{opacity:1;transform:none}}
+  .err-lead { margin-top: 26px; font-size: 16.5px; line-height: 1.7; color: var(--paper-dim); max-width: 46ch; }
 
-  .cd-wm{font-size:14px;font-weight:700;letter-spacing:.36em;color:#F3EBD9;text-shadow:0 2px 18px rgba(3,12,8,.8);animation-delay:.05s}
-  .cd-wm b{color:#7ED09B}
-  .cd-mk{width:clamp(78px,17vw,100px);height:auto;margin:16px 0 10px;
-    filter:drop-shadow(0 12px 26px rgba(4,89,39,.55)) drop-shadow(0 3px 10px rgba(3,12,8,.6));animation-delay:.15s}
-  .cd-eye{font-size:11px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:#E7C25A;text-shadow:0 2px 14px rgba(3,12,8,.7);animation-delay:.25s}
-  .cd-h1{margin:14px 0 0;font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(38px,7.6vw,72px);
-    line-height:1.02;letter-spacing:-.6px;color:#F7F0E1;text-shadow:0 3px 34px rgba(3,12,8,.85);animation-delay:.3s}
-  .cd-h1 em{font-style:italic;color:#8FE0AC}
-  .cd-story{margin:16px 0 0;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:clamp(15px,2.2vw,18px);color:#C7D6C4;text-shadow:0 2px 16px rgba(3,12,8,.8);animation-delay:.4s}
+  .err-cta { margin-top: 34px; }
+  .err-links { margin-top: 26px; display: flex; align-items: center; gap: 12px 16px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: 1.6px;
+    text-transform: uppercase; color: var(--paper-faint); }
+  .err-links b { color: var(--paper-faint); font-weight: 700; }
+  .err-links a { color: var(--leaf); border-bottom: 1px solid rgba(126,208,155,0.34); padding-bottom: 2px;
+    transition: color 400ms var(--ease-lux), border-color 400ms var(--ease-lux); }
+  .err-links a:hover { color: var(--mint); border-color: var(--mint); }
+  .err-links i { color: rgba(126,208,155,0.4); font-style: normal; }
 
-  .cd-cd{display:flex;gap:clamp(12px,3.4vw,30px);margin:32px 0 4px;animation-delay:.5s}
-  .cd-cd .u{min-width:56px}
-  .cd-cd .n{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(40px,8.8vw,66px);line-height:1;color:#F7F0E1;text-shadow:0 3px 24px rgba(3,12,8,.85);font-variant-numeric:tabular-nums}
-  .cd-cd .l{margin-top:9px;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#A7C0AD}
-  .cd-when{margin-top:12px;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:14px;color:#9FB6A4;text-shadow:0 2px 12px rgba(3,12,8,.7);animation-delay:.55s}
+  /* Anker-Vers = hellste Fläche, der Licht-Moment (data-light für Wordmark-Invert) */
+  .err-anker { width: min(560px, 92vw); margin: 60px 0 40px;
+    margin-left: calc((100% - min(560px, 92vw)) / 2);
+    text-align: center; border-radius: 22px; position: relative; overflow: hidden;
+    padding: 46px 32px 40px;
+    background:
+      radial-gradient(90% 80% at 50% -20%, rgba(186,155,95,0.18), transparent 60%),
+      linear-gradient(175deg, #F8F2E2 0%, #F0E7D2 100%);
+    box-shadow: var(--shadow-paper); }
+  .err-anker::after { content: ""; position: absolute; inset: 0; background-image: var(--grain);
+    opacity: 0.65; pointer-events: none; }
+  .err-anker > * { position: relative; z-index: 1; }
+  .err-anker__label { font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
+    letter-spacing: 2.4px; text-transform: uppercase; color: var(--gold); }
+  .err-anker blockquote { margin: 22px auto 16px; max-width: 24ch;
+    font-family: 'Playfair Display', serif; font-style: italic; font-weight: 500;
+    font-size: clamp(21px, 4.4vw, 27px); line-height: 1.36; color: var(--forest); }
+  .err-anker__note { font-size: 13.5px; font-weight: 600; color: var(--royal);
+    display: flex; align-items: center; justify-content: center; gap: 12px; }
+  .err-anker__note::before, .err-anker__note::after { content: ""; width: 28px; height: 1px;
+    background: rgba(19,43,35,0.25); }
 
-  .cd-sub{margin:24px 0 0;font-size:15px;line-height:1.6;color:#E4ECE2;text-shadow:0 2px 14px rgba(3,12,8,.7);max-width:34ch;animation-delay:.62s}
-  .cd-form{margin:16px auto 0;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:400px;width:100%;animation-delay:.7s}
-  .cd-form input{flex:1;min-width:190px;padding:14px 16px;border-radius:11px;border:1px solid rgba(126,208,155,.34);
-    background:rgba(5,16,10,.62);color:#F3EBD9;font-size:16px;font-family:inherit;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
-  .cd-form input::placeholder{color:#8AA093}
-  .cd-form input:focus{outline:2px solid #7ED09B;outline-offset:1px}
-  .cd-form button{padding:14px 26px;border:0;border-radius:11px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:700;
-    letter-spacing:.06em;text-transform:uppercase;color:#14100A;background-image:linear-gradient(180deg,#F6D24A,#E4B824 55%,#C6980F);
-    box-shadow:0 14px 30px -8px rgba(0,0,0,.6);transition:transform .2s}
-  .cd-form button:hover{transform:translateY(-2px)}
-  .cd-form button:active{transform:translateY(0)}
-  .cd-consent{display:flex;gap:9px;align-items:flex-start;text-align:left;max-width:400px;margin:14px auto 0;
-    font-size:12.5px;line-height:1.5;color:#BFCFC0;text-shadow:0 1px 10px rgba(3,12,8,.7);animation-delay:.73s;cursor:pointer}
-  .cd-consent input{flex:0 0 auto;width:17px;height:17px;margin-top:1px;accent-color:#7ED09B;cursor:pointer}
-  .cd-consent a{color:#8FE0AC;text-decoration:underline;text-underline-offset:2px;font-weight:600}
-  .cd-note{margin-top:12px;font-size:12px;color:#B7C7B8;text-shadow:0 1px 10px rgba(3,12,8,.7);animation-delay:.8s}
-  .cd-note a{color:#8FE0AC;text-decoration:none;font-weight:700}
-  .cd-foot{margin-top:26px;font-size:11.5px;color:#8AA093;animation-delay:.82s}
-  .cd-foot a{color:#B7C7B8;text-decoration:none}
-  .cd-foot a:hover{color:#E4ECE2}
-
-  /* Self-Healing-Zustand bei 0 */
-  .cd-launching .cd-eye,.cd-launching .cd-h1,.cd-launching .cd-story,.cd-launching .cd-cd,
-  .cd-launching .cd-when,.cd-launching .cd-sub,.cd-launching .cd-form,.cd-launching .cd-consent,.cd-launching .cd-note{display:none}
-  .cd-live{display:none;margin:20px 0 0;animation-delay:.1s}
-  .cd-launching .cd-live{display:block}
-  .cd-live h2{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(30px,6vw,52px);color:#8FE0AC;text-shadow:0 3px 28px rgba(3,12,8,.85)}
-  .cd-live p{margin-top:14px;font-size:15px;color:#E4ECE2}
-  .cd-spin{width:34px;height:34px;margin:22px auto 0;border-radius:50%;border:3px solid rgba(126,208,155,.25);border-top-color:#8FE0AC;animation:cdSpin 1s linear infinite}
-  @keyframes cdSpin{to{transform:rotate(360deg)}}
-
-  @media (prefers-reduced-motion:reduce){
-    .cd-bg img{animation:none;transform:none}
-    .cd-core>*{animation:none;opacity:1;transform:none}
-    .cd-spin{animation:none;border-top-color:rgba(126,208,155,.25)}
+  @media (max-width: 560px) {
+    .err-hero { margin-top: 40px; }
   }
 </style>
 </head>
-<body>
-  <div class="cd-bg"><img src="/assets/countdown-berg.jpg" alt="" fetchpriority="high"></div>
-  <div class="cd-grain"></div>
+<body class="err-page">
+<div class="bg-wrap" aria-hidden="true"><div class="bg"></div></div>
+<div class="bg2-wrap" aria-hidden="true"><div class="bg2"></div></div>
 
-  <main class="cd-core">
-    <p class="cd-wm">VEGETARIAN<b>HULK</b></p>
-    <img class="cd-mk" src="/assets/img/smashy-maskottchen.png" width="100" height="100" alt="Smashie, das VegetarianHulk-Maskottchen, auf dem Gipfel" fetchpriority="high">
+<div class="rail rail--l" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm" data-hm>2713 hm</span></div>
+</div>
+<div class="rail rail--r" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm" data-hm>2713 hm</span></div>
+</div>
 
-    <p class="cd-eye">Bald live</p>
-    <h1 class="cd-h1">Der Berg <em>wächst.</em></h1>
-    <p class="cd-story">Zehn Jahre am Berg — jetzt die nächste Höhe.</p>
+<main>
+  <div class="wrap">
 
-    <div class="cd-cd" role="timer" aria-live="off">
-      <div class="u"><div class="n" id="cd-d">–</div><div class="l">Tage</div></div>
-      <div class="u"><div class="n" id="cd-h">–</div><div class="l">Std</div></div>
-      <div class="u"><div class="n" id="cd-m">–</div><div class="l">Min</div></div>
-      <div class="u"><div class="n" id="cd-s">–</div><div class="l">Sek</div></div>
-    </div>
-    <p class="cd-when">15. August 2026, 18:00</p>
+    <header class="topbar">
+      <span class="brandbox">
+        <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+        <span class="wordmark wordmark--invert" aria-hidden="true" data-invert-layer>VEGETARIAN<b>HULK</b></span>
+      </span>
+    </header>
 
-    <p class="cd-sub">Die neue VegetarianHulk-Seite geht bald live. Trag dich ein — dann bist du als Erste:r dabei, wenn der Berg aufgeht.</p>
-    <form class="cd-form" id="cd-form" novalidate>
-      <input id="cd-email" type="email" inputmode="email" autocomplete="email" placeholder="deine@email.de" aria-label="Deine E-Mail-Adresse" required>
-      <button type="submit">Sei dabei</button>
-    </form>
-    <label class="cd-consent" for="cd-consent-cb">
-      <input type="checkbox" id="cd-consent-cb" required>
-      <span>Ich möchte Launch-Infos &amp; den Newsletter per E-Mail und stimme der <a href="/datenschutz.html">Datenschutzerklärung</a> zu. Abmeldung jederzeit.</span>
-    </label>
-    <p class="cd-note" id="cd-note">Kein Spam, kein Weitergeben. &nbsp;·&nbsp; <a href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">@vegetarianhulk</a></p>
+    <section class="err-hero" aria-labelledby="err-title">
+      <p class="kicker st st1">Fehler 404 · Verstiegen</p>
+      <h1 id="err-title" class="st st2">Diese Route<br><em>gibt's nicht.</em></h1>
+      <p class="st st3"><span class="err-sign"><span aria-hidden="true">✗</span> <span class="err-path" data-err-path>kein steig</span></span></p>
+      <p class="err-lead st st4">Du hast dich verstiegen — kann am Berg passieren, kein Drama. Wir drehen um,
+      nehmen den nächsten markierten Steig und du bist gleich wieder auf Kurs.</p>
+      <div class="err-cta st st4">
+        <a class="th-btn th-btn--gelb th-btn--lg" href="/">→ Zurück ins Tal (Start)</a>
+      </div>
+      <p class="err-links st st5">
+        <b>Wegweiser</b><i>·</i>
+        <a href="/touren/">Hulk Hikes</a><i>·</i>
+        <a href="/newsletter">Newsletter</a><i>·</i>
+        <a href="/kooperationen.html">Für Brands</a><i>·</i>
+        <a href="https://instagram.com/vegetarianhulk" target="_blank" rel="noopener">@vegetarianhulk</a>
+      </p>
+    </section>
 
-    <!-- Self-Healing: erscheint bei 0, lädt automatisch neu bis v3 live ist -->
-    <div class="cd-live" role="status" aria-live="polite">
-      <p class="cd-eye">Der Moment ist da</p>
-      <h2>Wir schalten frei …</h2>
-      <div class="cd-spin" aria-hidden="true"></div>
-      <p>Gleich ist die neue Seite hier. Diese Seite lädt sich von selbst neu.</p>
-    </div>
+    <section class="err-anker rv" data-light aria-label="Anker-Vers">
+      <p class="err-anker__label">Sprüche 24,16 · Schlachter 2000</p>
+      <blockquote>„Denn siebenmal fällt der Gerechte und steht wieder auf."</blockquote>
+      <p class="err-anker__note">Mein Anker. Auch hier.</p>
+    </section>
 
-    <p class="cd-foot"><a href="/impressum.html">Impressum</a> &nbsp;·&nbsp; <a href="/datenschutz.html">Datenschutz</a></p>
-  </main>
+  </div>
+</main>
+
+<footer>
+  <div class="inner">
+    <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+    <p class="claim">Builder &amp; Creator. Disziplin über Hype.</p>
+    <nav class="legal" aria-label="Rechtliches">
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+      <span>© <span data-year>2026</span> Sebastian Wimmer</span>
+    </nav>
+  </div>
+</footer>
+
+<nav class="nav" aria-label="Hauptnavigation">
+  <a href="/">Start</a>
+  <a href="/partner-picks/">P&amp;P</a>
+  <a class="center" href="/touren/">
+    <span class="mtn"><svg viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 50 26 16l10 16 8-12 22 30"/>
+      <path d="M22 23.5 26 20l4 5" opacity="0.85"/>
+      <path d="M40.5 25.5 44 21.5l3.5 5" opacity="0.85"/>
+      <circle cx="58" cy="11" r="4.5" opacity="0.9"/>
+      <path d="M12 50c8-4 16-3.4 22 0" opacity="0.45"/>
+    </svg></span>
+    Hulk&nbsp;Hikes
+  </a>
+  <a href="/newsletter">News</a>
+  <a href="/kooperationen.html">Brands</a>
+</nav>
 
 <script>
-(function(){
-  'use strict';
-  var LAUNCH_TS = Date.parse('2026-08-15T18:00:00+02:00');
-  // Eigener vh-forms-Worker — Double-Opt-In selbst gebaut (signierter Link + Brevo-Versand)
-  var NL_ENDPOINT = 'https://vh-forms.peaking.workers.dev/newsletter/subscribe';
-  function pad(n){return (n<10?'0':'')+n;}
+  // Footer-Jahr dynamisch
+  (function () {
+    var y = new Date().getFullYear();
+    document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = y; });
+  })();
 
-  var dE=document.getElementById('cd-d'),hE=document.getElementById('cd-h'),mE=document.getElementById('cd-m'),sE=document.getElementById('cd-s');
-  var launched=false;
-
-  function selfHeal(){
-    // Seite lädt sich neu, bis der Server v3 ausliefert (statt dieser Countdown-Seite).
-    document.body.classList.add('cd-launching');
-    var tries=0;
-    (function loop(){
-      tries++;
-      // Cache-Buster, damit der In-App-Browser nicht die alte Countdown-Seite zeigt
-      setTimeout(function(){ location.replace('/?launched=' + Date.now()); }, tries===1 ? 4000 : 7000);
-    })();
-  }
-
-  function tick(){
-    var diff = LAUNCH_TS - Date.now();
-    if(diff<=0){ if(!launched){launched=true; clearInterval(timer); selfHeal();} return; }
-    var s=Math.floor(diff/1000);
-    dE.textContent=Math.floor(s/86400);
-    hE.textContent=pad(Math.floor(s/3600)%24);
-    mE.textContent=pad(Math.floor(s/60)%60);
-    sE.textContent=pad(s%60);
-  }
-  tick(); var timer=setInterval(tick,1000);
-
-  var form=document.getElementById('cd-form'), note=document.getElementById('cd-note');
-
-  // Rückkehr vom Bestätigungs-Link (?bestaetigung=ok|abgelaufen|fehler)
-  try {
-    var st=new URLSearchParams(location.search).get('bestaetigung');
-    if(st==='ok'){
-      form.style.display='none';
-      var cl=document.querySelector('.cd-consent'); if(cl) cl.style.display='none';
-      note.innerHTML='<strong style="color:#8FE0AC">Bestätigt — du bist fix dabei.</strong> Wir sehen uns am 15. August. 🏔️';
-    } else if(st==='abgelaufen'){
-      note.textContent='Dein Bestätigungs-Link war abgelaufen — trag dich einfach nochmal ein.';
-    } else if(st==='fehler'){
-      note.textContent='Da ging was schief — probier die Anmeldung bitte nochmal.';
+  // Verstiegen-Wegweiser: getippten Pfad anzeigen (textContent = safe)
+  (function () {
+    var el = document.querySelector('[data-err-path]');
+    if (el) {
+      var path = (location.pathname || '/') + (location.search || '');
+      if (path.length > 48) path = path.slice(0, 47) + '…';
+      el.textContent = path;
     }
-  } catch(e){}
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var email=(document.getElementById('cd-email').value||'').trim().toLowerCase();
-    var consentBox=document.getElementById('cd-consent-cb');
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ note.textContent='E-Mail-Adresse prüfen.'; return; }
-    if(!consentBox.checked){ note.textContent='Bitte kurz den Datenschutz bestätigen.'; consentBox.focus(); return; }
-    note.textContent='Wird eingetragen …';
-    fetch(NL_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email:email,_honey:''})})
-      .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json().catch(function(){return {};}); })
-      .then(function(res){
-        if(res && res.ok===false) throw new Error('rejected');
-        form.style.display='none';
-        var c=document.querySelector('.cd-consent'); if(c) c.style.display='none';
-        note.innerHTML='<strong style="color:#8FE0AC">Fast geschafft!</strong> Check dein Postfach und bestätige kurz deine Mail — dann bist du fix dabei. 🏔️';
-      })
-      .catch(function(){ note.textContent='Hat nicht geklappt — später nochmal.'; });
-  });
-})();
+  })();
+
+  // Self-Service-404-Debug: console.warn + sessionStorage-Log (max 20)
+  (function () {
+    try {
+      var path = location.pathname + location.search;
+      var ref = document.referrer || 'direct';
+      console.warn('[vh:404] Path:', path, '· From:', ref);
+      var log = JSON.parse(sessionStorage.getItem('vh:404:log') || '[]');
+      log.push({ ts: Date.now(), path: path, from: ref });
+      if (log.length > 20) log = log.slice(-20);
+      sessionStorage.setItem('vh:404:log', JSON.stringify(log));
+    } catch (e) { /* sessionStorage disabled — ignore */ }
+  })();
 </script>
+
+<script src="/v3.js?v=fa23a246" defer></script>
 </body>
 </html>
