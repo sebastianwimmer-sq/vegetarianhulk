@@ -21,7 +21,7 @@
   var BRAND = 'vegetarianhulk';
   // Cloudflare Turnstile: Sitekey eintragen → CAPTCHA aktiv (Widget vor dem Submit).
   // Leer = Schicht aus. Server-Gegenstück: TURNSTILE_SECRET im vh-forms-Worker.
-  var TURNSTILE_SITEKEY = '';
+  var TURNSTILE_SITEKEY = '0x4AAAAAAEUfGlaYARQSJ-Co';
   var LS_KEY = 'vegetarianhulk_newsletterSubscribed';
   var CONTACT = 'info@vegetarianhulk.de';
 
