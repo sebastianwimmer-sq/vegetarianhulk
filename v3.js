@@ -141,7 +141,7 @@
     entries.forEach(function (en) {
       if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
     });
-  }, { rootMargin: '0px 0px -10% 0px' });
+  }, { rootMargin: '0px 0px -4% 0px' }); /* war -10%: bei schnellem Scroll wirkten Sektionen als Lücke */
   els.forEach(function (e) { io.observe(e); });
 })();
 

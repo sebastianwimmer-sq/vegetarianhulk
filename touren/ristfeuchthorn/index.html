@@ -45,7 +45,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
-<link rel="stylesheet" href="/v3.css?v=8e9c0d2d">
+<link rel="stylesheet" href="/v3.css?v=13e17a16">
 <style>
 /* ============================================================
    /touren/<slug>/ — Hulk-Hike Detail-Vorlage (page-scoped .tour-)
@@ -74,7 +74,7 @@
   text-transform: uppercase; color: rgba(243,235,217,0.72); text-shadow: 0 1px 3px rgba(3,15,9,0.7); }
 .tour-crumb a { color: var(--leaf); text-decoration: none; }
 .tour-badge { display: inline-flex; margin-top: 14px; align-items: center; gap: 7px;
-  font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
+  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
   color: #14100A; background: linear-gradient(180deg, #E8BF25, #D4A918); padding: 5px 13px 5px 10px;
   clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%);
   filter: drop-shadow(0 2px 4px rgba(3,15,9,0.5)); }
@@ -93,7 +93,7 @@
 .tour-hero__facts b { font-family: 'Playfair Display', serif; font-weight: 700;
   font-size: clamp(19px, 2.4vw, 26px); line-height: 1; letter-spacing: -0.5px; color: var(--paper);
   text-shadow: 0 1px 6px rgba(3,15,9,0.7); }
-.tour-hero__facts span { font-family: var(--mono); font-size: 8.5px; font-weight: 700;
+.tour-hero__facts span { font-family: var(--mono); font-size: 10px; font-weight: 700;
   letter-spacing: 1.5px; text-transform: uppercase; color: rgba(243,235,217,0.62); }
 
 
@@ -109,12 +109,10 @@
 
 /* Live-"Jetzt"-Fakt im Hero-Strip (integriert, Leaf-Akzent) */
 .tour-now b { display: inline-flex; align-items: center; gap: 6px; color: var(--leaf) !important; }
-.tour-now__dot { width: 17px; height: 17px; flex: 0 0 auto;
-  background: url("/assets/img/smashy-maskottchen.png") center/contain no-repeat;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)); transform-origin: 50% 100%;
-  animation: smashylive3 2.8s ease-in-out infinite; vertical-align: -3px; }
-@keyframes smashylive3 { 0%,100% { transform: scale(1) translateY(0) rotate(0deg); }
-  50% { transform: scale(1.1) translateY(-1.5px) rotate(2deg); } }
+/* Live-Puls statt Mini-Smashy (unter 24px unlesbar, wirkte wie Fremd-Icon) */
+.tour-now__dot { width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%;
+  background: var(--emerald); box-shadow: 0 0 8px rgba(80,200,120,0.7);
+  animation: tnpulse 2.4s ease-in-out infinite; }
 .tour-now__ico { display: inline-flex; color: rgba(243,235,217,0.85); margin-left: 1px; }
 .tour-now__ico svg { width: 18px; height: 18px; }
 .tour-now span:last-child { color: rgba(126,208,155,0.85) !important; }
@@ -154,19 +152,21 @@
   background: radial-gradient(120% 120% at 12% 0%, #F8F2E2, #E9DFC6 70%); box-shadow: var(--shadow-paper); }
 .tour-note::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.5; pointer-events: none; }
 .tour-note > * { position: relative; z-index: 1; }
-.tour-note__kicker { font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 2.4px;
+.tour-note__kicker { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2.4px;
   text-transform: uppercase; color: var(--gold); }
+/* Fließtext lesbar in Inter — Handschrift (Caveat) bleibt der Signatur vorbehalten,
+   ganze Absätze in Schreibschrift lasen sich auf dem Handy wie Deko statt Inhalt */
 .tour-note__body { margin: 12px 0 16px; max-width: 46ch;
-  font-family: 'Caveat', cursive; font-weight: 600; font-size: clamp(19px, 2.1vw, 23px); line-height: 1.38; color: #1E3A2A; }
+  font-size: 16px; line-height: 1.65; color: #1E3A2A; }
 .tour-note__sig { font-family: 'Caveat', cursive; font-weight: 700; font-size: 26px; color: #0B4A2E; transform: rotate(-3deg); }
 /* Aktivitäts-Beweise (echt gegangen) */
 .tour-proof { margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(24,43,31,0.16);
   display: flex; flex-wrap: wrap; gap: 10px 26px; }
 .tour-proof div { display: flex; flex-direction: column; }
 .tour-proof b { font-family: var(--mono); font-size: 16px; font-weight: 700; color: #14281C; letter-spacing: 0.5px; }
-.tour-proof span { margin-top: 3px; font-family: var(--mono); font-size: 8.5px; font-weight: 700;
+.tour-proof span { margin-top: 3px; font-family: var(--mono); font-size: 10px; font-weight: 700;
   letter-spacing: 1.4px; text-transform: uppercase; color: rgba(24,43,31,0.5); }
-.tour-proof .src { width: 100%; margin-top: 10px; font-family: var(--mono); font-size: 9px; letter-spacing: 1px;
+.tour-proof .src { width: 100%; margin-top: 10px; font-family: var(--mono); font-size: 10px; letter-spacing: 1px;
   text-transform: uppercase; color: rgba(24,43,31,0.4); }
 
 /* Foto-Slot (pending) */
@@ -184,7 +184,7 @@
 .tour-panel--cream::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.5; pointer-events: none; }
 .tour-panel--cream > * { position: relative; z-index: 1; }
 /* gemeinsamer Panel-Header */
-.tour-panel__kicker { font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 2.2px;
+.tour-panel__kicker { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2.2px;
   text-transform: uppercase; color: var(--leaf); display: inline-flex; align-items: center; }
 .tour-panel--cream .tour-panel__kicker { color: var(--gold); }
 .tour-panel__title { margin-top: 9px; font-family: 'Playfair Display', serif; font-weight: 600;
@@ -196,7 +196,7 @@
 .tour-row { display: grid; grid-template-columns: 86px 1fr; gap: 3px 16px; padding: 14px 0;
   border-top: 1px solid rgba(126,208,155,0.13); }
 .tour-row:first-child { border-top: 0; padding-top: 2px; }
-.tour-row dt { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.6px;
+.tour-row dt { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.6px;
   text-transform: uppercase; color: var(--leaf); padding-top: 3px; }
 .tour-row dd { margin: 0; font-size: 14px; line-height: 1.55; color: var(--paper-dim); }
 .tour-row dd strong { color: var(--paper); font-weight: 700; }
@@ -442,6 +442,6 @@
     .catch(function () {});
 })();
 </script>
-<script src="/v3.js?v=fa23a246" defer></script>
+<script src="/v3.js?v=64d0bdfd" defer></script>
 </body>
 </html>

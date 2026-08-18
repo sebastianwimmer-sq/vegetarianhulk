@@ -27,7 +27,9 @@ function init(DEM) {
     section.classList.add('no3d');
     return;
   }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2.5));
+  /* Mobile: DPR deckeln — Retina-3x mal Fullscreen-Canvas ist der Akku-/FPS-Killer */
+  const isSmall = window.matchMedia('(max-width: 699px)').matches;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isSmall ? 1.6 : 2.5));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.12;
 
@@ -303,6 +305,9 @@ function init(DEM) {
     const vh = window.innerHeight;
     const vis = Math.min(1, Math.max(0, 1 - r.top / (vh * 0.7)));
     sticky.style.opacity = (0.05 + 0.95 * vis * vis).toFixed(3);
+    /* Instrumente (HUD/Schilder/Hint) erst, wenn die Szene wirklich steht —
+       vorher ragten sie halb transparent in die Sektions-Headline (Mobile-Bug) */
+    section.classList.toggle('engaged', r.top <= vh * 0.08 && r.bottom > vh);
     /* Panel pflanzt sich am Etappen-Stopp ein, waehrend der Fahrt ist die
        Route frei sichtbar */
     const raw = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
@@ -313,6 +318,7 @@ function init(DEM) {
       overlaysEl.classList.toggle('reading', atStop);
       if (atStop) overlaysEl.dataset.stop = si;
     }
+    section.classList.toggle('reading', atStop);
   }
   /* Scroll-Dramaturgie: Anlauf -> 4 Stopps an festen Scroll-Positionen -> Auslauf.
      Smoothstep-Rampen = Seilbahn-Gefuehl statt linearem Ruck */
@@ -332,6 +338,8 @@ function init(DEM) {
   if (!reduce) {
     window.addEventListener('scroll', readScroll, { passive: true });
     readScroll();
+  } else {
+    section.classList.add('engaged'); /* statische Ansicht: Instrumente direkt zeigen */
   }
   function goTo(i) {
     i = Math.max(0, Math.min(3, i));
@@ -367,7 +375,10 @@ function init(DEM) {
     center.copy(baseCenter).lerp(sp0, 0.12 + 0.42 * mid + 0.25 * p);
     const az = -2.35 + p * 1.75;
     const el = 0.52 - mid * 0.14;
-    const R = 9.6 - mid * 3.4 - p * 0.8;
+    let R = 9.6 - mid * 3.4 - p * 0.8;
+    /* Portrait (Handy): Kamera deutlich weiter raus — sonst füllt der Hang
+       den Screen als unscharfe grüne Wand statt als Massiv */
+    if (camera.aspect < 0.8) R *= 1.55;
     camera.position.set(
       center.x + R * Math.cos(el) * Math.sin(az),
       center.y + R * Math.sin(el),
@@ -402,15 +413,42 @@ function init(DEM) {
     const w = renderer.domElement.clientWidth, h2 = renderer.domElement.clientHeight;
     for (const a of anchors) {
       v.copy(a.v3).project(camera);
-      const x = (v.x * 0.5 + 0.5) * w, y = (-v.y * 0.5 + 0.5) * h2;
+      let x = (v.x * 0.5 + 0.5) * w;
+      const y = (-v.y * 0.5 + 0.5) * h2;
+      /* Wegweiser-Schilder nie am Displayrand abschneiden (Mobile) —
+         translate(-50%) heißt: halbe Schildbreite einrechnen */
+      if (a.el.classList && a.el.classList.contains('wp')) {
+        const hw = (a.el.offsetWidth || 160) / 2;
+        x = Math.min(w - hw - 8, Math.max(hw + 8, x));
+      }
       a.el.style.left = x.toFixed(1) + 'px';
       a.el.style.top = (y + a.oy).toFixed(1) + 'px';
       a.el.style.visibility = v.z < 1 ? 'visible' : 'hidden';
     }
     renderer.render(scene, camera);
-    requestAnimationFrame(frame);
+    rafId = active ? requestAnimationFrame(frame) : 0;
   }
-  requestAnimationFrame(frame);
+  /* Render-Loop nur, wenn die Sektion in Viewport-Nähe ist — vorher lief das
+     3D-Rendering permanent über die GANZE Seite (Haupt-Perf-Fresser mobil).
+     Zusätzlich Pause, wenn der Tab in den Hintergrund geht. */
+  let rafId = 0, active = false;
+  function setActive(on) {
+    if (on === active) return;
+    active = on;
+    if (active && !rafId) rafId = requestAnimationFrame(frame);
+    if (!active && rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      setActive(entries[0].isIntersecting && !document.hidden);
+    }, { rootMargin: '25% 0px' }).observe(track);
+  } else {
+    setActive(true);
+  }
+  document.addEventListener('visibilitychange', function () {
+    const r = track.getBoundingClientRect();
+    setActive(!document.hidden && r.bottom > -window.innerHeight * 0.25 && r.top < window.innerHeight * 1.25);
+  });
   section.classList.add('gl-ready');
 
   /* ---- Bergstation: Open-Meteo am Watzmann ---- */

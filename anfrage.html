@@ -21,7 +21,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
-<link rel="stylesheet" href="/v3.css?v=8e9c0d2d">
+<link rel="stylesheet" href="/v3.css?v=13e17a16">
 <style>
 /* ============================================================
    /anfrage.html — v3 Editorial-Dark Port (page-scoped .anf-)
@@ -48,7 +48,7 @@
 .anf-fig { background: linear-gradient(158deg, rgba(19,54,35,0.5), rgba(6,26,17,0.55)); padding: 16px 14px; }
 .anf-fig b { display: block; font-family: 'Playfair Display', serif; font-weight: 700;
   font-size: clamp(20px, 3vw, 27px); line-height: 1; letter-spacing: -0.5px; color: var(--leaf); }
-.anf-fig span { display: block; margin-top: 6px; font-family: var(--mono); font-size: 8.5px; font-weight: 700;
+.anf-fig span { display: block; margin-top: 6px; font-family: var(--mono); font-size: 10px; font-weight: 700;
   letter-spacing: 1.2px; text-transform: uppercase; color: var(--paper-faint); line-height: 1.35; }
 .anf-points { list-style: none; margin: 0; padding: 0; }
 .anf-points li { position: relative; padding-left: 27px; margin: 13px 0; font-size: 14.5px; line-height: 1.55; color: var(--paper-dim); }
@@ -67,13 +67,18 @@
 .anf-hint { font-weight: 400; color: rgba(24,43,31,0.55); font-size: 12px; }
 .anf-req { color: var(--royal); }
 .anf-card input[type="text"], .anf-card input[type="email"], .anf-card textarea {
-  width: 100%; box-sizing: border-box; font: inherit; font-size: 15px; color: #14281C;
-  padding: 11px 14px; border-radius: 11px; background: rgba(255,255,255,0.72);
-  border: 1px solid rgba(24,43,31,0.2); transition: border-color 220ms var(--ease-lux), box-shadow 220ms var(--ease-lux); }
+  /* 16px Pflicht: darunter zoomt iOS beim Fokus in die Seite (wirkte wie ein Bug).
+     Feld in warmem Papier statt Reinweiß — gehört zur Creme-Karte statt darauf zu kleben. */
+  width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; color: #14281C;
+  padding: 13px 15px; min-height: 50px; border-radius: 12px; background: #FBF6EA;
+  border: 1.5px solid rgba(24,43,31,0.22);
+  box-shadow: inset 0 1.5px 3px rgba(24,43,31,0.07), inset 0 0 0 1px rgba(255,255,255,0.5);
+  transition: border-color 220ms var(--ease-lux), box-shadow 220ms var(--ease-lux), background 220ms var(--ease-lux); }
+.anf-card input:hover:not(:focus), .anf-card textarea:hover:not(:focus) { border-color: rgba(24,43,31,0.34); }
 .anf-card textarea { resize: vertical; line-height: 1.5; }
 .anf-card input::placeholder, .anf-card textarea::placeholder { color: rgba(24,43,31,0.4); }
-.anf-card input:focus, .anf-card textarea:focus { outline: none; border-color: var(--royal);
-  box-shadow: 0 0 0 3px rgba(11,110,79,0.14); }
+.anf-card input:focus, .anf-card textarea:focus { outline: none; border-color: var(--royal); background: #FFFDF6;
+  box-shadow: inset 0 1.5px 3px rgba(24,43,31,0.05), 0 0 0 4px rgba(11,110,79,0.14); }
 /* Auswahl-Chips */
 .anf-group { margin: 0 0 18px; }
 .anf-chips { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -103,7 +108,21 @@
 .anf-privacy a { color: var(--royal); text-decoration: underline; text-underline-offset: 2px; }
 /* Consent-Haken (aktive DSGVO-Einwilligung) */
 .anf-consent { display: flex; align-items: flex-start; gap: 11px; margin: 16px 0 4px; cursor: pointer; }
-.anf-consent input { flex: 0 0 auto; width: 20px; height: 20px; margin-top: 1px; accent-color: var(--royal); cursor: pointer; }
+/* Custom-Haken statt grauem Browser-Kasten — gleiche Papier-Sprache wie die Felder */
+.anf-consent input { flex: 0 0 auto; appearance: none; -webkit-appearance: none;
+  width: 22px; height: 22px; margin-top: 1px; cursor: pointer; border-radius: 7px;
+  background: #FBF6EA; border: 1.5px solid rgba(24,43,31,0.3);
+  box-shadow: inset 0 1.5px 3px rgba(24,43,31,0.07);
+  display: grid; place-items: center;
+  transition: background 200ms var(--ease-lux), border-color 200ms var(--ease-lux), box-shadow 200ms var(--ease-lux); }
+.anf-consent input::before { content: ""; width: 12px; height: 12px; transform: scale(0);
+  transition: transform 200ms var(--ease-lux); background: #F3EBD9;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M1.5 6.5 4.5 9.5 10.5 2.5' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M1.5 6.5 4.5 9.5 10.5 2.5' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat; }
+.anf-consent input:checked { background: var(--royal); border-color: var(--royal);
+  box-shadow: 0 4px 10px -4px rgba(11,110,79,0.5); }
+.anf-consent input:checked::before { transform: scale(1); }
+.anf-consent input:focus-visible { outline: 3px solid var(--emerald); outline-offset: 2px; }
 .anf-consent > span { font-size: 12.5px; line-height: 1.5; color: rgba(24,43,31,0.72); font-weight: 500; }
 .anf-consent a { color: var(--royal); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
 .anf-consent.is-err > span { color: #8a2018; }
@@ -115,7 +134,7 @@
 .anf-photo figcaption { padding: 9px 4px 11px; font-family: 'Caveat', cursive; font-size: 18px; line-height: 1.15; color: #2a2118; text-align: center; }
 /* "So geht's weiter" Mini-Ablauf */
 .anf-next { margin: 26px 0 0; padding-top: 20px; border-top: 1px solid rgba(126,208,155,0.16); }
-.anf-next__k { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--leaf); }
+.anf-next__k { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--leaf); }
 .anf-next ol { list-style: none; margin: 14px 0 0; padding: 0; counter-reset: anfstep; }
 .anf-next li { position: relative; padding: 0 0 14px 34px; counter-increment: anfstep; font-size: 13.5px; line-height: 1.5; color: var(--paper-dim); }
 .anf-next li::before { content: counter(anfstep); position: absolute; left: 0; top: -2px; width: 22px; height: 22px; border-radius: 50%;
@@ -426,7 +445,7 @@ async function submitBrandInquiry(e) {
   document.querySelectorAll('#footer-year').forEach(function (el) { el.textContent = y; });
 })();
 </script>
-<script src="/v3.js?v=fa23a246" defer></script>
+<script src="/v3.js?v=64d0bdfd" defer></script>
 <script>
 /* Consent-Fehler zurücksetzen beim Ankreuzen */
 (function () {
