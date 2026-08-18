@@ -115,6 +115,35 @@ async function sendViaBrevo(apiKey, fields) {
   }
 }
 
+/* --- Turnstile (Cloudflare CAPTCHA) ---
+   Aktiv, sobald das Secret gesetzt ist (wrangler secret put TURNSTILE_SECRET).
+   Ohne Secret wird die Schicht übersprungen — so lässt sich der Worker
+   deployen, bevor das Widget existiert. Mit Secret: fail-closed, d.h.
+   kaputte Antwort von Cloudflare = kein Durchlass (Muster aus s2s protect.js). */
+async function verifyTurnstile(env, token, ip) {
+  if (!env.TURNSTILE_SECRET) return true; // Schicht (noch) nicht konfiguriert
+  if (!token) return false;
+  try {
+    const body = new URLSearchParams();
+    body.append('secret', env.TURNSTILE_SECRET);
+    body.append('response', String(token));
+    if (ip && ip !== 'unknown') body.append('remoteip', ip);
+    const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      body,
+    });
+    if (!res.ok) {
+      console.error('vh-forms turnstile: HTTP', res.status);
+      return false; // fail-closed
+    }
+    const data = await res.json();
+    return !!data.success;
+  } catch (err) {
+    console.error('vh-forms turnstile failed:', err.message || err);
+    return false; // fail-closed
+  }
+}
+
 /* --- Double-Opt-In, komplett selbst gebaut ---
    Brevos DOI-API verlangt einen Spezial-Vorlagen-Typ, der per API nicht
    anlegbar ist. Deshalb eigener Flow:
@@ -237,6 +266,12 @@ async function handleNewsletter(request, env, origin) {
   // Honeypot: Bots bekommen ein stilles "ok" — keine Mail
   if (cleanField(body._honey)) {
     return json({ ok: true }, 200, origin);
+  }
+
+  const clientIp = request.headers.get('CF-Connecting-IP') || 'unknown';
+  const turnstileOk = await verifyTurnstile(env, body.turnstileToken, clientIp);
+  if (!turnstileOk) {
+    return json({ ok: false, error: 'Sicherheitsprüfung fehlgeschlagen — bitte Seite neu laden.' }, 403, origin);
   }
 
   const email = cleanField(body.email).toLowerCase();

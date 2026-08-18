@@ -17,8 +17,11 @@
 (function () {
   'use strict';
 
-  var ENDPOINT = 'https://peaking-ai-api.peaking.workers.dev/newsletter/subscribe';
+  var ENDPOINT = 'https://vh-forms.peaking.workers.dev/newsletter/subscribe';
   var BRAND = 'vegetarianhulk';
+  // Cloudflare Turnstile: Sitekey eintragen → CAPTCHA aktiv (Widget vor dem Submit).
+  // Leer = Schicht aus. Server-Gegenstück: TURNSTILE_SECRET im vh-forms-Worker.
+  var TURNSTILE_SITEKEY = '';
   var LS_KEY = 'vegetarianhulk_newsletterSubscribed';
   var CONTACT = 'info@vegetarianhulk.de';
 
@@ -90,6 +93,7 @@
     '      </button>' +
     '    </div>' +
     '  </div>' +
+    '  <slot name="captcha"></slot>' +
     '  <label class="sr" for="vhnf-hp">Dieses Feld bitte leer lassen</label>' +
     '  <input id="vhnf-hp" class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />' +
     '  <label class="consent"><input id="vhnf-consent" type="checkbox" />' +
@@ -98,6 +102,23 @@
     '  <p class="trust">Kein Spam &middot; Aussteigen mit einem Klick.</p>' +
     '  <div class="msg" role="status" aria-live="polite"></div>' +
     '</form>';
+
+  /* Turnstile rendert nicht in Shadow DOM — deshalb Light-DOM-Kind am Host,
+     das über <slot name="captcha"> an der richtigen Stelle erscheint. */
+  var turnstileReady = null;
+  function loadTurnstile() {
+    if (turnstileReady) return turnstileReady;
+    turnstileReady = new Promise(function (resolve) {
+      if (window.turnstile) { resolve(window.turnstile); return; }
+      var s = document.createElement('script');
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=__vhTurnstileOnload';
+      s.async = true;
+      s.defer = true;
+      window.__vhTurnstileOnload = function () { resolve(window.turnstile); };
+      document.head.appendChild(s);
+    });
+    return turnstileReady;
+  }
 
   function setLocalStorageSubscribed() {
     try { localStorage.setItem(LS_KEY, 'true'); } catch (e) { /* private mode */ }
@@ -148,6 +169,22 @@
     this._consent.addEventListener('change', function () {
       if (self._consent.checked) self._consentBox.classList.remove('is-err');
     });
+
+    // CAPTCHA-Schicht (nur mit Sitekey aktiv)
+    this._turnstileWidgetId = null;
+    if (TURNSTILE_SITEKEY) {
+      var holder = document.createElement('div');
+      holder.setAttribute('slot', 'captcha');
+      this.appendChild(holder);
+      loadTurnstile().then(function (turnstile) {
+        self._turnstileWidgetId = turnstile.render(holder, {
+          sitekey: TURNSTILE_SITEKEY,
+          theme: 'light',
+          size: 'flexible',
+          action: 'newsletter-signup',
+        });
+      });
+    }
   };
 
   VhForm.prototype.resetState = function () {
@@ -208,13 +245,23 @@
       this._msg.innerHTML = 'Bitte setz kurz den Datenschutz-Haken &mdash; dann geht&apos;s los.';
       return;
     }
+    // CAPTCHA: Token einsammeln (nur wenn Schicht aktiv)
+    var turnstileToken = '';
+    if (TURNSTILE_SITEKEY && window.turnstile && this._turnstileWidgetId !== null) {
+      turnstileToken = window.turnstile.getResponse(this._turnstileWidgetId) || '';
+      if (!turnstileToken) {
+        this.showState('error', 'Bitte kurz die Sicherheitspr&uuml;fung l&ouml;sen.');
+        this._email.removeAttribute('aria-invalid');
+        return;
+      }
+    }
     this.showState('sending');
     var self = this;
 
     fetch(ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, brand: BRAND, firstName: firstName, consent: true, consentText: 'Newsletter + Berg-Starter, Double-Opt-In, Abmeldung jederzeit' })
+      body: JSON.stringify({ email: email, brand: BRAND, firstName: firstName, turnstileToken: turnstileToken, consent: true, consentText: 'Newsletter + Berg-Starter, Double-Opt-In, Abmeldung jederzeit' })
     })
       .then(function (res) {
         return res.json().catch(function () { return {}; }).then(function (data) {
@@ -245,6 +292,10 @@
         throw new Error(r.data.error || ('Status ' + r.res.status));
       })
       .catch(function (err) {
+        // Turnstile-Token ist verbraucht → Widget zurücksetzen für neuen Versuch
+        if (self._turnstileWidgetId !== null && window.turnstile) {
+          try { window.turnstile.reset(self._turnstileWidgetId); } catch (e) { /* noop */ }
+        }
         self.showState('error', 'Konnt nicht senden. Schreib mir direkt: ' + CONTACT);
         if (window.console) console.error('[newsletter] submit failed:', err);
       });

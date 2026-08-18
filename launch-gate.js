@@ -17,7 +17,7 @@
     var PREVIEW_SECRET = 'bergauf2026';                       // 🔑 ?vorschau=bergauf2026
     var ALLOWLIST = ['/impressum.html', '/datenschutz.html'];
     var LAUNCH_LABEL = '15. August 2026, 18:00';
-    var NL_ENDPOINT = 'https://peaking-ai-api.peaking.workers.dev/newsletter/subscribe';
+    var NL_ENDPOINT = 'https://vh-forms.peaking.workers.dev/newsletter/subscribe';
     var BG_IMAGE = 'https://vegetarianhulk.de/email-templates/assets/hero-berg-mail.jpg'; // echtes Bergfoto (live)
     /* =================================================================== */
 

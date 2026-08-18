@@ -1,7 +1,7 @@
 <!--
   ============================================================
   VegetarianHulk — Double-Opt-In-Bestätigung „Fast dabei" (v1)
-  Für Countdown-Anmeldungen zum Launch (15. August) + Letter.
+  Für Newsletter-Anmeldungen (Letter + Start-Geschenk).
   Ein Job: Klick auf „Bestätigen" → {{ doubleoptin }}.
   Brevo: als BESTÄTIGUNGS-Template der Liste hinterlegen (Double-Opt-In).
   WICHTIG: Nur zwei Bilder existieren live während Coming-Soon:
@@ -9,7 +9,7 @@
     · https://vegetarianhulk.de/assets/countdown-berg.jpg
   KEINE /email-templates/assets/ Bilder (404 im Coming-Soon-Fenster).
   Betreff:      Fast dabei — einmal bestätigen 🏔️
-  Vorschautext: Ein Klick, dann bist du beim Launch am 15. August fix dabei.
+  Vorschautext: Ein Klick, dann bist du dabei — und dein Start-Geschenk ist unterwegs.
   Merge-Tag:    {{ contact.VORNAME | default : "du" }}  ·  DOI: {{ doubleoptin }}  ·  Pflicht: {{ unsubscribe }}
   Gradient = Progressive Enhancement (Apple/iOS/Gmail-App); solide bg-color als Outlook-Fallback.
   ============================================================
@@ -24,7 +24,7 @@
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0;padding:0;background-color:#06140D;">
 <tr><td align="center" style="padding:34px 12px;">
 
-<div style="display:none;max-height:0;overflow:hidden;opacity:0;mso-hide:all;font-size:1px;line-height:1px;color:#06140D;">Ein Klick, dann bist du beim Launch am 15. August fix dabei.</div>
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;mso-hide:all;font-size:1px;line-height:1px;color:#06140D;">Ein Klick, dann bist du dabei — und dein Start-Geschenk ist unterwegs.</div>
 
 <!-- KARTE = ein Gradient-Flow -->
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;background-color:#0B2418;background-image:radial-gradient(90% 40% at 50% 8%, rgba(126,208,155,0.12) 0%, rgba(126,208,155,0) 60%), linear-gradient(168deg,#164A2B 0%,#0F3520 20%,#0B2418 46%,#0A2016 72%,#07180E 100%);border-radius:24px;overflow:hidden;box-shadow:0 30px 70px -24px rgba(0,0,0,0.7);">
@@ -53,7 +53,7 @@
 
   <!-- Text -->
   <tr><td style="padding:22px 46px 0 46px;">
-    <p style="margin:0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:16px;line-height:1.68;color:#F2F6F1;">Hey {{ contact.VORNAME | default : "du" }}, du hast dich für den <strong style="color:#FFFFFF;">VegetarianHulk-Launch am 15. August</strong> und den Letter eingetragen. Stark.</p>
+    <p style="margin:0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:16px;line-height:1.68;color:#F2F6F1;">Hey {{ contact.VORNAME | default : "du" }}, du hast dich für den <strong style="color:#FFFFFF;">VegetarianHulk-Letter</strong> samt Start-Geschenk eingetragen. Stark.</p>
     <p style="margin:16px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:16px;line-height:1.68;color:#F2F6F1;">Bestätig kurz, dass du das wirklich warst — dann bist du fix dabei und ich meld mich, sobald der Berg offen ist.</p>
   </td></tr>
 
@@ -98,7 +98,7 @@
       &nbsp;·&nbsp; <a href="https://vegetarianhulk.de/" target="_blank" style="color:#AACDB5;text-decoration:none;">vegetarianhulk.de</a>
     </div>
     <p style="margin:18px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11.5px;line-height:1.7;color:#8FA495;">
-      Du bekommst diese Mail, weil du dich auf vegetarianhulk.de für den Launch eingetragen hast.<br>
+      Du bekommst diese Mail, weil du dich auf vegetarianhulk.de für den Letter eingetragen hast.<br>
       Sebastian Wimmer · Burghauser Straße 35 · 84533 Haiming · <a href="mailto:info@vegetarianhulk.de" style="color:#8FA495;">info@vegetarianhulk.de</a>
     </p>
     <p style="margin:11px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11.5px;color:#8FA495;">
