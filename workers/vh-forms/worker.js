@@ -332,6 +332,12 @@ export default {
       return json({ ok: true }, 200, origin);
     }
 
+    // Echtheits-Check (gleiche Schicht wie Newsletter, fail-closed sobald Secret gesetzt)
+    const inquiryTurnstileOk = await verifyTurnstile(env, body.turnstileToken, ip);
+    if (!inquiryTurnstileOk) {
+      return json({ ok: false, error: 'Sicherheitsprüfung fehlgeschlagen — bitte Seite neu laden und nochmal senden.' }, 403, origin);
+    }
+
     const fields = {
       brand: cleanField(body.brand),
       link: cleanField(body.link),

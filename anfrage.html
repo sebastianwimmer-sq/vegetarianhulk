@@ -127,6 +127,7 @@
 .anf-consent a { color: var(--royal); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
 .anf-consent.is-err > span { color: #8a2018; }
 .anf-consent.is-err input { outline: 2px solid #8a2018; outline-offset: 2px; }
+.anf-turnstile { margin: 18px 0 4px; min-height: 65px; }
 /* Echtes Sebi-Foto (Präsenz) im Kontext */
 .anf-photo { display: inline-block; padding: 8px 8px 0; margin: 6px 0 24px; background: #FBF6EA; border-radius: 3px;
   box-shadow: 0 20px 40px -20px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.24); transform: rotate(-2deg); max-width: 230px; }
@@ -295,6 +296,9 @@
             <input type="text" id="bf-hp" name="_honey" tabindex="-1" autocomplete="off">
           </div>
 
+          <!-- Echtheits-Check (Cloudflare Turnstile) — Server prüft fail-closed -->
+          <div class="cf-turnstile anf-turnstile" data-sitekey="0x4AAAAAAEUfGlaYARQSJ-Co" data-action="brand-inquiry" data-theme="light"></div>
+
           <label class="anf-consent"><input type="checkbox" id="bf-consent">
             <span>Ich bin einverstanden, dass Sebi meine Angaben zur Bearbeitung dieser Anfrage verarbeitet und mich dazu kontaktiert. Mehr in der <a href="/datenschutz.html">Datenschutzerkl&auml;rung</a>.</span>
           </label>
@@ -393,6 +397,7 @@ async function submitBrandInquiry(e) {
     contact: checked('contact'),
     handle: get('bf-handle'),
     consent: true,
+    turnstileToken: (window.turnstile && window.turnstile.getResponse()) || '',
     _honey: get('bf-hp')
   };
 
@@ -415,6 +420,8 @@ async function submitBrandInquiry(e) {
       ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return false;
     }
+    // Token verbraucht/fehlgeschlagen → Widget zurücksetzen für neuen Versuch
+    if (window.turnstile) { try { window.turnstile.reset(); } catch (e) { /* noop */ } }
     // 503 = Worker live, Mail-API (noch) nicht konfiguriert → mailto-Fallback
     if (res.status === 503) {
       const subject = encodeURIComponent('Brand-Anfrage: ' + brand);
@@ -485,5 +492,6 @@ async function submitBrandInquiry(e) {
   } else { nums.forEach(run); }
 })();
 </script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </body>
 </html>
