@@ -26,7 +26,8 @@ Parallel hält ein **Logbuch** von Sebis Apple Watch die Seite zwischen den Tour
 
 | Thema | Entscheidung |
 |---|---|
-| Zugang | Konto per **E-Mail-Bestätigung** (DOI-Mechanik), kein Passwort. Newsletter = **freiwilliges Häkchen** auf demselben Formular |
+| Zugang | Konto per **E-Mail-Bestätigung** (DOI-Mechanik), kein Passwort. Newsletter = **aktive Wahl über zwei gleichwertige Buttons** (siehe 5.2), nicht vorangehakt |
+| Trennung | **PEAKING und VH strikt getrennt** — keine `*.peaking.workers.dev`-Adressen mehr im VH-Kontext (siehe 6.2) |
 | Tourseite | **Fotos ja, GPX nein.** Kein Höhenprofil, keine Karte in Stufe 1 |
 | Freigabe | Eigene Seite **sofort öffentlich** und teilbar. Haupt-Feed und `/touren/` sind **von Sebi kuratiert** |
 | Identität | **Frei wählbarer Anzeigename + Handle**, optional verlinktes Instagram. E-Mail nie öffentlich |
@@ -182,7 +183,7 @@ workers/vh-portal/
 Alle Dateien unter 400 Zeilen. Bindings: D1 `vh-portal`, R2 `vh-portal-fotos`, KV `vh-portal-rl`
 (Rate-Limits mit TTL). Alles Cloudflare Free Tier.
 
-### 6.3 Datenmodell (D1)
+### 6.4 Datenmodell (D1)
 
 ```sql
 accounts(
@@ -225,7 +226,7 @@ reports(id TEXT PRIMARY KEY, tour_id TEXT NOT NULL, reason TEXT,
 
 Kein Feld für IP-Adressen. Rate-Limiting nutzt einen gehashten Kurzzeit-Schlüssel in KV mit TTL.
 
-### 6.4 Endpunkte
+### 6.5 Endpunkte
 
 Alle unter `/gipfelbuch/`.
 
@@ -249,7 +250,8 @@ Alle unter `/gipfelbuch/`.
 ## 7. Subsystem A — Zugang
 
 Registrierung: E-Mail, Anzeigename, Handle, Pflicht-Häkchen Nutzungsbedingungen und
-Datenschutz, optionales Häkchen Newsletter, Turnstile. Antwort ist immer identisch, egal ob die
+Datenschutz, Turnstile — abgeschlossen über die beiden gleichwertigen Buttons aus 5.2
+(„Konto anlegen und Newsletter dazu“ / „Nur Konto anlegen“). Antwort ist immer identisch, egal ob die
 Mail schon existiert (keine Konto-Aufzählung). Bestätigungsmail über Brevo mit Einmal-Token,
 24 Stunden gültig. Klick aktiviert das Konto und setzt die Session.
 
@@ -418,7 +420,7 @@ gebündelt mit dem nächsten Website-Release. Gearbeitet wird auf einem frischen
 
 | # | Paket | Inhalt |
 |---|---|---|
-| T0 | Fundament | Zone-Umzug, Worker-Skelett, D1, R2, KV, Migrationen, Testaufbau |
+| T0 | Fundament | Zone-Umzug, PEAKING-Entflechtung (`vh-forms` von peaking.workers.dev lösen), Worker-Skelett, D1, R2, KV, Migrationen, Testaufbau |
 | T1 | Logbuch | Kurzbefehl-Aufnahme, öffentliches Band, Summen. Erster sichtbarer Wert |
 | T2 | Zugang | Registrierung, Bestätigung, Magic Link, Konto, Export, Löschung |
 | T3 | Tourenbuch | Tour anlegen, Fotos, eigene Seite, Sichtbarkeit, Teilen und OG |
@@ -429,9 +431,13 @@ gebündelt mit dem nächsten Website-Release. Gearbeitet wird auf einem frischen
 
 1. **Nameserver bei united-domains auf Cloudflare umstellen.** Blockiert T0. Abgleichliste aller
    bestehenden Records liefere ich vorher.
-2. **Kurzbefehl auf dem iPhone einrichten.** Blockiert T1. Anleitung kommt von mir.
-3. **Nutzungsbedingungen absegnen.** Blockiert T5. Entwurf kommt von mir.
-4. **Entscheiden, ob der Strava-Embed** auf einzelnen Highlight-Touren noch in Stufe 1 soll oder in
+2. **Entscheiden: eigener Cloudflare-Account für vegetarianhulk** oder ein Account mit strikter
+   Custom-Domain-Disziplin. Blockiert T0, folgt aus der Trennungsregel in 6.2.
+3. **`hotfix/command-key-leak` pushen** (Commit `a60615c`) — entfernt `/command/` aus dem
+   öffentlichen Repo.
+4. **Kurzbefehl auf dem iPhone einrichten.** Blockiert T1. Anleitung kommt von mir.
+5. **Nutzungsbedingungen absegnen.** Blockiert T5. Entwurf kommt von mir.
+6. **Entscheiden, ob der Strava-Embed** auf einzelnen Highlight-Touren noch in Stufe 1 soll oder in
    Stufe 2 bleibt.
 
 ## 18. Stufe 2 (geparkt)
