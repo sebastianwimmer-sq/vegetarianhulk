@@ -78,8 +78,21 @@ Tourenbuch nicht erforderlich. Deshalb getrennt:
 
 - **Registrierung = E-Mail bestätigen.** Liefert die gewünschte Sicherheit (verifizierte Identität,
   kein anonymes Reinschreiben, kein Bot). Rechtsgrundlage Art. 6 Abs. 1 lit. b.
-- **Newsletter = optionales Häkchen** auf demselben Formular, ungesetzt vorbelegt.
-  Rechtsgrundlage Art. 6 Abs. 1 lit. a, eigene DOI-Strecke wie bisher.
+- **Newsletter = eigene, aktive Wahl.** Rechtsgrundlage Art. 6 Abs. 1 lit. a, eigene DOI-Strecke
+  wie bisher.
+
+**Mechanik der Newsletter-Wahl (Sebi-Wunsch „wie bei Cookies"):** Ein **vorangehaktes** Kästchen ist
+keine wirksame Einwilligung (EuGH C-673/17 „Planet49", 01.10.2019). Was bei Cookie-Bannern
+funktioniert, ist etwas anderes — ein **bewusster Klick** auf eine Sammel-Zustimmung. Das bauen wir
+nach: statt Checkbox zwei Buttons am Formularende, **gleich prominent und gleich leicht
+erreichbar** (Anforderung der Aufsichtsbehörden an Cookie-Banner, hier übernommen).
+
+- „Konto anlegen und Newsletter dazu"
+- „Nur Konto anlegen"
+
+Kein Dark Pattern, keine versteckte Ablehnung. Konvertiert erfahrungsgemäß besser als eine
+Checkbox, die überlesen wird, und ist der sauberere Nachweis: die Wahl ist als bewusste Handlung
+protokolliert, nicht als unterlassener Klick.
 
 ### 5.3 Nutzergenerierte Inhalte
 
@@ -118,11 +131,35 @@ Vor dem Umzug wird die vorhandene Zonendatei bei united-domains 1:1 als Abgleich
 `localStorage` mit `Authorization`-Header und CORS. Funktioniert, ist aber XSS-anfälliger, hat
 hässliche URLs und schwächeres Teilen. Nicht empfohlen.
 
-### 6.2 Komponenten
+### 6.2 Trennung PEAKING ↔ vegetarianhulk (Standing Rule ab 23.08.2026)
 
-Neuer Worker **`vh-portal`** unter `workers/vh-portal/`. `vh-forms` bleibt unangetastet — saubere
-Grenze: Formulare verschicken Mails, Portal hält Daten. (`vh-forms` liegt mit 369 Zeilen ohnehin nah
-an der Datei-Obergrenze.)
+Sebi-Vorgabe: PEAKING und vegetarianhulk gehören künftig **überall strikt getrennt**. Für dieses
+Projekt heißt das verbindlich:
+
+- **`vh-portal` läuft nie unter `*.peaking.workers.dev`.** Es wird ausschließlich über die
+  Zonen-Route `vegetarianhulk.de/gipfelbuch/*` erreicht; `workers_dev` bleibt aus.
+- **D1, R2 und KV** werden im VH-Kontext angelegt, nicht im PEAKING-Topf.
+- **`vh-forms` ist Altlast.** Der Endpunkt `vh-forms.peaking.workers.dev` wandert im Zuge des
+  Zonen-Umzugs auf eine VH-eigene Fläche. Nachzuziehen sind `newsletter-form.js`, `anfrage.html`
+  und `launch-gate.js`, danach `./scripts/bump-asset-versions.sh`. Eigenes Paket in T0, nicht
+  nebenbei.
+
+> ⚠️ Stand 23.08. existiert nur **ein** Cloudflare-Account (`Sebi.wimmer30@gmail.com's Account`,
+> `1e724fd9fe4e603d8ec7bf32aafbac72`), dessen workers.dev-Subdomain „peaking" heißt. Echte Trennung
+> heißt entweder **eigener Cloudflare-Account für VH** oder konsequent Custom Domains ohne jede
+> workers.dev-Adresse nach außen. Sebi entscheidet — siehe 17.
+
+**Bereits erledigter Nebenbefund:** `/command/` (PEAKING-Kommandozentrale) lag im öffentlichen
+VH-Repo und war unter `vegetarianhulk.de/command/` erreichbar. Entfernt als `a60615c` auf
+`hotfix/command-key-leak`. Der darin enthaltene `pk_peaking_…`-Schlüssel ist allerdings auch auf
+`peaking.world` öffentlich — Rotation wäre wirkungslos, die Absicherung des Endpunkts ist eine
+PEAKING-Aufgabe außerhalb dieser Spec.
+
+### 6.3 Komponenten
+
+Neuer Worker **`vh-portal`** unter `workers/vh-portal/`. `vh-forms` bleibt funktional unangetastet
+— saubere Grenze: Formulare verschicken Mails, Portal hält Daten. (`vh-forms` liegt mit 369 Zeilen
+ohnehin nah an der Datei-Obergrenze.)
 
 ```
 workers/vh-portal/
