@@ -1,0 +1,17 @@
+{
+  "name": "vh-portal",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "dev": "wrangler dev",
+    "e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.9.0",
+    "@playwright/test": "^1.50.0",
+    "vitest": "^3.0.0",
+    "wrangler": "^4.90.0"
+  }
+}

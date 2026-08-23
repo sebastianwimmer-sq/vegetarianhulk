@@ -1,0 +1,21 @@
+# vh-portal — Berg-Portal (Logbuch) fuer vegetarianhulk.de
+#
+# Bewusst OHNE workers.dev: PEAKING und VH bleiben getrennt (Spec 6.2).
+# Die workers.dev-Subdomain dieses Cloudflare-Accounts heisst "peaking" —
+# jeder VH-Endpunkt haengt deshalb an vegetarianhulk.de, sonst gar nicht.
+#
+# Deploy erst nach dem Cloudflare-Zonenumzug, siehe docs/dns-umzug-cloudflare.md
+# Secret:  wrangler secret put LOG_SECRET   (Header X-VH-Log-Secret im Kurzbefehl)
+name = "vh-portal"
+main = "worker.js"
+compatibility_date = "2026-06-01"
+workers_dev = false
+
+[[d1_databases]]
+binding = "DB"
+database_name = "vh-portal"
+database_id = "PLACEHOLDER_WIRD_IN_TASK_10_GESETZT"
+migrations_dir = "migrations"
+
+[vars]
+PORTAL_WRITES = "on"
