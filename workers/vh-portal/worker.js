@@ -1,5 +1,6 @@
 import { errorResponse, jsonResponse } from "./lib/http.js";
 import { handleActivityIngest, handleLogbookRead } from "./routes/logbook.js";
+import { handleGipfelbuchPage } from "./routes/page.js";
 
 const PREFIX = "/gipfelbuch";
 
@@ -22,6 +23,10 @@ async function route(request, env, ctx) {
   }
 
   const path = url.pathname.slice(PREFIX.length) || "/";
+
+  if (request.method === "GET" && (path === "/" || path === "")) {
+    return handleGipfelbuchPage(request, env);
+  }
 
   if (request.method === "GET" && path === "/api/health") {
     return jsonResponse({ ok: true, service: "vh-portal" });
