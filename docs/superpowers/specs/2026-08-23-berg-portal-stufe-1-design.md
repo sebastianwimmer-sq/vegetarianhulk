@@ -145,10 +145,10 @@ Projekt heißt das verbindlich:
   und `launch-gate.js`, danach `./scripts/bump-asset-versions.sh`. Eigenes Paket in T0, nicht
   nebenbei.
 
-> ⚠️ Stand 23.08. existiert nur **ein** Cloudflare-Account (`Sebi.wimmer30@gmail.com's Account`,
-> `1e724fd9fe4e603d8ec7bf32aafbac72`), dessen workers.dev-Subdomain „peaking" heißt. Echte Trennung
-> heißt entweder **eigener Cloudflare-Account für VH** oder konsequent Custom Domains ohne jede
-> workers.dev-Adresse nach außen. Sebi entscheidet — siehe 17.
+> **Entschieden am 23.08. (Sebi): alles bleibt auf einem Cloudflare-Account.** Die workers.dev-
+> Subdomain dieses Accounts heißt „peaking" — deshalb läuft die Trennung konsequent über Custom
+> Domains: **keine einzige workers.dev-Adresse nach außen**, jeder VH-Endpunkt hängt an
+> `vegetarianhulk.de`. Das ist ab sofort Abnahmekriterium, nicht Empfehlung.
 
 **Bereits erledigter Nebenbefund:** `/command/` (PEAKING-Kommandozentrale) lag im öffentlichen
 VH-Repo und war unter `vegetarianhulk.de/command/` erreichbar. Entfernt als `a60615c` auf
@@ -431,13 +431,9 @@ gebündelt mit dem nächsten Website-Release. Gearbeitet wird auf einem frischen
 
 1. **Nameserver bei united-domains auf Cloudflare umstellen.** Blockiert T0. Abgleichliste aller
    bestehenden Records liefere ich vorher.
-2. **Entscheiden: eigener Cloudflare-Account für vegetarianhulk** oder ein Account mit strikter
-   Custom-Domain-Disziplin. Blockiert T0, folgt aus der Trennungsregel in 6.2.
-3. **`hotfix/command-key-leak` pushen** (Commit `a60615c`) — entfernt `/command/` aus dem
-   öffentlichen Repo.
-4. **Kurzbefehl auf dem iPhone einrichten.** Blockiert T1. Anleitung kommt von mir.
-5. **Nutzungsbedingungen absegnen.** Blockiert T5. Entwurf kommt von mir.
-6. **Entscheiden, ob der Strava-Embed** auf einzelnen Highlight-Touren noch in Stufe 1 soll oder in
+2. **Kurzbefehl auf dem iPhone einrichten.** Blockiert T1. Anleitung kommt von mir.
+3. **Nutzungsbedingungen absegnen.** Blockiert T5. Entwurf kommt von mir.
+4. **Entscheiden, ob der Strava-Embed** auf einzelnen Highlight-Touren noch in Stufe 1 soll oder in
    Stufe 2 bleibt.
 
 ## 18. Stufe 2 (geparkt)
