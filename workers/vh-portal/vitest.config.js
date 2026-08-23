@@ -4,6 +4,10 @@ const migrations = await readD1Migrations("./migrations");
 
 export default defineWorkersConfig({
   test: {
+    // e2e/ gehoert Playwright. Ohne diese Grenze sammelt Vitest die Specs mit
+    // ein, scheitert an deren @playwright/test-Import und meldet rote Dateien
+    // bei gruenen Tests — ein Dauerfehlalarm.
+    include: ["test/**/*.test.js"],
     setupFiles: ["./test/setup.js"],
     poolOptions: {
       workers: {

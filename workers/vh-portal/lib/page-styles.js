@@ -43,10 +43,10 @@ export const PAGE_STYLES = `
 }
 
 /* ---- Die eine grosse Zahl ---- */
+/* Keine eigene Unterkante: die Oberkante der ersten Registerzeile ist die
+   Trennlinie. Zwei Haarlinien mit Luft dazwischen lesen sich als Versehen. */
 .gb-hero{
   display:flex; flex-wrap:wrap; align-items:flex-end; gap:clamp(20px,5vw,56px);
-  padding-bottom:clamp(26px,4vh,40px);
-  border-bottom:1px solid rgba(186,155,95,.28);
 }
 .gb-hero__main{flex:0 0 auto}
 .gb-hero__label{
@@ -85,14 +85,14 @@ export const PAGE_STYLES = `
 }
 
 /* ---- Register ---- */
-.gb-rows{list-style:none; margin:clamp(34px,6vh,56px) 0 0; padding:0}
+.gb-rows{list-style:none; margin:clamp(30px,5vh,48px) 0 0; padding:0}
 .gb-row{
   display:grid; grid-template-columns:74px 1fr auto; align-items:baseline;
   gap:16px; padding:15px 12px 15px 4px;
   border-bottom:1px solid rgba(243,235,217,.09);
   transition:background .32s var(--ease-lux), border-color .32s var(--ease-lux);
 }
-.gb-row:first-child{border-top:1px solid rgba(243,235,217,.09)}
+.gb-row:first-child{border-top:1px solid rgba(186,155,95,.28)}
 .gb-row:hover{
   background:rgba(243,235,217,.035);
   border-bottom-color:rgba(186,155,95,.42);
@@ -118,7 +118,10 @@ export const PAGE_STYLES = `
 }
 
 /* ---- Leerzustand: handschriftlich, keine graue Box ---- */
+/* Breite an den Text gebunden: eine volle Kastenbreite mit einem Drittel
+   Inhalt liest sich als Platzhalter, nicht als eingelegte Notiz. */
 .gb-empty{
+  display:inline-block; max-width:100%;
   margin:clamp(34px,6vh,56px) 0 0; padding:clamp(26px,5vw,44px) clamp(22px,4vw,40px);
   border:1px dashed rgba(186,155,95,.34); border-radius:2px;
   background:rgba(243,235,217,.028);
