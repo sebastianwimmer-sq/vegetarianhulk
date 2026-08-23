@@ -1,4 +1,5 @@
 import { errorResponse, jsonResponse } from "./lib/http.js";
+import { handleActivityIngest } from "./routes/logbook.js";
 
 const PREFIX = "/gipfelbuch";
 
@@ -24,6 +25,10 @@ async function route(request, env, ctx) {
 
   if (request.method === "GET" && path === "/api/health") {
     return jsonResponse({ ok: true, service: "vh-portal" });
+  }
+
+  if (request.method === "POST" && path === "/api/logbook/activity") {
+    return handleActivityIngest(request, env);
   }
 
   return errorResponse(404, "not_found", "Diese Seite gibt es hier nicht.");
