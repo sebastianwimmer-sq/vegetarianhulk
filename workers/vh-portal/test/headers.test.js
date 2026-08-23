@@ -23,10 +23,13 @@ describe("Sicherheits-Header", () => {
     });
   }
 
-  it("die Seite verbietet das Einbetten auch per CSP", async () => {
-    const html = await (await SELF.fetch("https://vegetarianhulk.de/gipfelbuch/")).text();
+  it("die Seite verbietet das Einbetten per CSP-Header, nicht per Meta", async () => {
+    const response = await SELF.fetch("https://vegetarianhulk.de/gipfelbuch/");
 
-    expect(html).toContain("frame-ancestors 'none'");
+    expect(response.headers.get("Content-Security-Policy")).toContain("frame-ancestors 'none'");
+
+    // Im Meta-Tag wird die Direktive ignoriert und loggt nur einen Fehler.
+    expect(await response.text()).not.toContain("frame-ancestors");
   });
 
   it("erlaubt keine fremden Ursprünge per CORS", async () => {

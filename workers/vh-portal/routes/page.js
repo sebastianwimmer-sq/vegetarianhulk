@@ -5,6 +5,21 @@ import { loadLogbook } from "./logbook.js";
 
 const CACHE_SECONDS = 120;
 
+// Als echter Header, nicht nur als Meta-Tag: frame-ancestors wird in einem
+// <meta> ignoriert und loggt dort nur einen Konsolenfehler. Der Worker kann —
+// anders als GitHub Pages — richtige Header senden, also nutzen wir das.
+const PAGE_CSP = [
+  "default-src 'self' https:",
+  "script-src 'self' https:",
+  "style-src 'self' 'unsafe-inline' https:",
+  "img-src 'self' data: blob: https:",
+  "font-src 'self' data: https:",
+  "connect-src 'self' https:",
+  "frame-ancestors 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+].join("; ");
+
 // /v3.css und /fonts.css bewusst OHNE ?v=-Hash: bump-asset-versions.sh
 // schliesst workers/ aus (reine Static-Site-Pipeline). GitHub Pages liefert
 // max-age=600, ein veraltetes Stylesheet haelt also hoechstens zehn Minuten.
@@ -73,7 +88,7 @@ export function renderGipfelbuchPage({ activities, totals, year }) {
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gipfelbuch — VegetarianHulk</title>
@@ -105,6 +120,9 @@ export async function handleGipfelbuchPage(request, env) {
   const data = await loadLogbook(env.DB, new Date());
 
   return htmlResponse(renderGipfelbuchPage(data), {
-    headers: { "Cache-Control": `public, max-age=${CACHE_SECONDS}` },
+    headers: {
+      "Cache-Control": `public, max-age=${CACHE_SECONDS}`,
+      "Content-Security-Policy": PAGE_CSP,
+    },
   });
 }
