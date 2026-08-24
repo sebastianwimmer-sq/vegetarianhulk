@@ -9,7 +9,7 @@
     "e2e": "playwright test",
     "db:local": "wrangler d1 migrations apply vh-portal --local",
     "seed:local": "wrangler d1 execute vh-portal --local --file=seed-demo.sql",
-    "ansehen": "npm run db:local && npm run seed:local && wrangler dev --port 8787 --local"
+    "ansehen": "npm run db:local && npm run seed:local && wrangler dev --port 8787 --local --var DEV_SHELL_PROXY:on"
   },
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "^0.9.0",

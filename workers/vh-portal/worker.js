@@ -1,6 +1,7 @@
 import { errorResponse, jsonResponse } from "./lib/http.js";
 import { handleActivityIngest, handleLogbookRead } from "./routes/logbook.js";
 import { handleGipfelbuchPage } from "./routes/page.js";
+import { handleShellRequest } from "./lib/dev-shell.js";
 
 const PREFIX = "/gipfelbuch";
 
@@ -32,6 +33,10 @@ async function route(request, env, ctx, method) {
   const url = new URL(request.url);
 
   if (!url.pathname.startsWith(PREFIX)) {
+    // Nur lokal aktiv, siehe lib/dev-shell.js. Produktiv immer null.
+    const shell = await handleShellRequest(request, env);
+    if (shell) return shell;
+
     return errorResponse(404, "not_found", "Diese Seite gibt es hier nicht.");
   }
 
