@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.open-meteo.com; base-uri 'none'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kneifelspitze (1.188 m) — Sonnenaufgang | Hulk Hike | VegetarianHulk</title>
@@ -46,7 +46,7 @@
 
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
 <link rel="stylesheet" href="/v3.css?v=13e17a16">
-<link rel="stylesheet" href="/touren/tour.css?v=fcd09727">
+<link rel="stylesheet" href="/touren/tour.css?v=19bda36a">
 <style>
   /* Nur was diese eine Tour ausmacht: der Bildausschnitt des Nacht-Heros.
      Alles andere kommt aus /touren/tour.css. */
@@ -190,9 +190,11 @@
     <div class="tour-profil__flaeche">
     <span class="tour-profil__zeiger" aria-hidden="true"></span>
     <span class="tour-profil__wert" aria-hidden="true"></span>
+    <span class="tour-profil__achse" aria-hidden="true"></span>
     <svg class="tour-svg" viewBox="0 0 900 270" preserveAspectRatio="none" fill="none"
          aria-label="Höhenprofil Kneifelspitze: von 735 m stetig auf 1.188 m, dann zurück"
          data-punkte="0,735 0.15,745 0.30,775 0.50,810 0.75,855 1.00,890 1.25,930 1.50,960 1.75,995 2.00,1020 2.20,1055 2.45,1100 2.70,1150 2.98,1188 3.23,1160 3.48,1105 3.73,1050 3.98,1000 4.28,955 4.58,910 4.88,870 5.18,840 5.48,800 5.78,765 6.06,735">
+      <defs><linearGradient id="tourVerlauf" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(80,200,120,0.34)"/><stop offset="100%" stop-color="rgba(80,200,120,0.03)"/></linearGradient></defs>
       <line class="tour-profil__gridline" x1="0" y1="70" x2="900" y2="70"/>
       <line class="tour-profil__gridline" x1="0" y1="140" x2="900" y2="140"/>
       <line class="tour-profil__gridline" x1="0" y1="210" x2="900" y2="210"/>
@@ -202,11 +204,11 @@
       <circle class="sun-dot" cx="443" cy="18" r="4.5"/>
       <circle class="peak-dot" cx="0" cy="254" r="4"/>
     </svg>
-    <span class="tour-profil__marke tour-profil__marke--start">735 m · Maria Gern</span>
     <span class="tour-profil__marke tour-profil__marke--gipfel tour-profil__marke--sonne"
           style="left: calc(49.2% + 12px);">Kneifelspitze · 1.188 m</span>
     </div>
-    <p class="tour-profil__hint">Fahr über das Profil — es zeigt dir Höhe und Distanz an jeder Stelle.</p>
+    <p class="tour-profil__hint">Fahr über das Profil — Höhe und Distanz an jeder Stelle.
+    Werte aus der Strava-Aufzeichnung.</p>
       </section>
 
       <!-- der Moment, auf den die ganze Tour zuläuft — neben dem Profil -->
@@ -267,7 +269,7 @@
   <a href="/kooperationen.html">Brands</a>
 </nav>
 
-<script src="/touren/tour.js?v=937a0d72" defer></script>
+<script src="/touren/tour.js?v=350d609e" defer></script>
 <script src="/v3.js?v=64d0bdfd" defer></script>
 </body>
 </html>

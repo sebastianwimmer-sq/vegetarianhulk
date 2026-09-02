@@ -81,6 +81,15 @@ pruefe "Kodex Regel 4: eigener border-radius in der Seite" \
 pruefe "Kodex Regel 1: eigene Flaeche in der Seite" \
   's{(\.tour-hero \{ --hero-fokus)}{.tour-arc { background: linear-gradient(122deg, #0A1526, #7C4A18); }\n  $1}' \
   "touren/$SLUG/index.html"
+pruefe "Paritaet: Tour ohne Achsenbeschriftung" \
+  's{<span class="tour-profil__achse"[^>]*></span>\n}{}' \
+  "touren/$SLUG/index.html"
+pruefe "Paritaet: Tour ohne Messpunkte" \
+  's{ data-punkte="[^"]*"}{}' \
+  "touren/$SLUG/index.html"
+pruefe "Paritaet: Tour ohne Verlaufsfuellung" \
+  's{<linearGradient id="tourVerlauf"}{<linearGradient id="anderer"}' \
+  "touren/$SLUG/index.html"
 
 echo
 echo "Positivtest (MUSS gruen bleiben):"
