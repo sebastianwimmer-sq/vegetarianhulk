@@ -11,6 +11,12 @@
 
   var sanftBevorzugt = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* Diagramm-Geometrie. MUSS vor dem ersten Aufruf stehen — `var`-Zuweisungen
+     werden nicht gehoistet, und ein undefined hier macht jede Koordinate zu NaN,
+     ohne einen Fehler zu werfen. */
+  var SVG_NS = 'http://www.w3.org/2000/svg';
+  var BREITE = 900, HOEHE = 270, OBEN = 18, UNTEN = 254;
+
   /* ---------- Hoehenprofil: zeichnet sich beim Sichtbarwerden ---------- */
   var profil = document.querySelector('.tour-profil');
   if (profil) {
@@ -26,23 +32,32 @@
     }
   }
 
-  /* ---------- Hoehenprofil ablesen ----------
-     Das SVG traegt die echten Messpunkte als data-punkte="km,hoehe km,hoehe …".
-     Bewusst NICHT aus den SVG-Koordinaten zurueckgerechnet: die sind fuers Auge
-     geglaettet, die Zahl am Zeiger soll aber stimmen. Zwischen zwei Punkten
-     wird linear interpoliert. */
-  (function ablesenAktivieren() {
+  /* ---------- Hoehenprofil ----------
+     `data-punkte="km,hoehe km,hoehe …"` am SVG ist die EINZIGE Quelle. Daraus
+     zeichnet dieses Skript Kurve, Flaeche, beschriftete Hoehenachse, Kilometer-
+     achse und die Gipfelmarke — und macht das Diagramm ablesbar.
+
+     Warum hier und nicht im HTML: vorher stand der Pfad handgeschrieben in jeder
+     Tour-Datei. Jede Verbesserung am Diagramm haette dann pro Tour nachgezogen
+     werden muessen, und genau so entstand der Zustand, dass eine Tour Achsen und
+     Ablesen hatte und die andere eine nackte Linie im leeren Kasten.
+
+     Der statische Pfad im HTML bleibt als Fallback fuer den Fall ohne JS. */
+  (function diagramm() {
     if (!profil) return;
     var svg = profil.querySelector('.tour-svg');
     var zeiger = profil.querySelector('.tour-profil__zeiger');
     var wert = profil.querySelector('.tour-profil__wert');
-    if (!svg || !zeiger || !wert || !svg.dataset.punkte) return;
+    if (!svg || !svg.dataset.punkte) return;
 
     var punkte = svg.dataset.punkte.trim().split(/\s+/).map(function (paar) {
       var t = paar.split(',');
       return { km: parseFloat(t[0]), hoehe: parseFloat(t[1]) };
     }).filter(function (p) { return isFinite(p.km) && isFinite(p.hoehe); });
     if (punkte.length < 2) return;
+
+    zeichneDiagramm(svg, punkte);
+    if (!zeiger || !wert) return;
 
     var gesamtKm = punkte[punkte.length - 1].km;
     if (!(gesamtKm > 0)) return;
@@ -99,6 +114,109 @@
     svg.addEventListener('pointercancel', zeigerAus);
     window.addEventListener('blur', zeigerAus);
   })();
+
+
+  /* Zeichnet Kurve, Flaeche und beide Achsen aus den Messpunkten.
+     viewBox 0 0 900 270 · preserveAspectRatio="none" — deshalb steht KEIN Text im
+     SVG: er wuerde mitverzerrt. Die Achsenbeschriftung kommt als HTML obendrauf. */
+  function zeichneDiagramm(svg, punkte) {
+    var kmMax = punkte[punkte.length - 1].km;
+    var hoehen = punkte.map(function (p) { return p.hoehe; });
+    var hMin = Math.min.apply(null, hoehen), hMax = Math.max.apply(null, hoehen);
+    if (!(kmMax > 0) || !(hMax > hMin)) return;
+
+    var x = function (km) { return km / kmMax * BREITE; };
+    var y = function (h) { return UNTEN - (h - hMin) / (hMax - hMin) * (UNTEN - OBEN); };
+
+    // Kurve und Flaeche aus den echten Punkten neu setzen
+    var d = punkte.map(function (p, i) {
+      return (i ? 'L' : 'M') + x(p.km).toFixed(1) + ',' + y(p.hoehe).toFixed(1);
+    }).join(' ');
+    var linie = svg.querySelector('.line'), flaeche = svg.querySelector('.fill');
+    if (linie) linie.setAttribute('d', d);
+    if (flaeche) flaeche.setAttribute('d', d + ' L' + BREITE + ',' + HOEHE + ' L0,' + HOEHE + ' Z');
+
+    // Hoehenachse: die feinste runde Stufe nehmen, die hoechstens 4 Marken ergibt.
+    // Eine feste Teilung durch 3 lieferte je nach Spanne mal 2, mal 5 Marken.
+    var marken = achsenMarken(hMin, hMax, 4);
+
+    [].forEach.call(svg.querySelectorAll('.tour-profil__gridline'), function (l) { l.remove(); });
+    var achse = profil.querySelector('.tour-profil__achse');
+    if (achse) achse.innerHTML = '';
+
+    marken.forEach(function (h) {
+      var linieY = y(h);
+      var g = document.createElementNS(SVG_NS, 'line');
+      g.setAttribute('class', 'tour-profil__gridline');
+      g.setAttribute('x1', 0); g.setAttribute('x2', BREITE);
+      g.setAttribute('y1', linieY); g.setAttribute('y2', linieY);
+      svg.insertBefore(g, svg.firstChild);
+      if (achse) {
+        var t = document.createElement('span');
+        t.className = 'tour-profil__tick tour-profil__tick--y';
+        t.style.top = (linieY / HOEHE * 100) + '%';
+        t.textContent = h.toLocaleString('de-DE') + ' m';
+        achse.appendChild(t);
+      }
+    });
+
+    // Kilometerachse
+    if (achse) {
+      var kmSchritt = grobeStufe(kmMax / 4);
+      for (var km = kmSchritt; km < kmMax - kmSchritt * 0.4; km += kmSchritt) {
+        var k = document.createElement('span');
+        k.className = 'tour-profil__tick tour-profil__tick--x';
+        k.style.left = (x(km) / BREITE * 100) + '%';
+        k.textContent = km.toLocaleString('de-DE') + ' km';
+        achse.appendChild(k);
+      }
+    }
+
+    // Gipfelmarke sitzt auf dem Hochpunkt — nicht mehr pro Tour von Hand gesetzt
+    var gipfel = punkte.reduce(function (a, b) { return b.hoehe > a.hoehe ? b : a; });
+    var marke = profil.querySelector('.tour-profil__marke--gipfel');
+    if (marke) {
+      var anteil = x(gipfel.km) / BREITE;
+      marke.style.left = 'calc(' + (anteil * 100).toFixed(1) + '% + 12px)';
+      marke.style.top = Math.max(0, y(gipfel.hoehe) / HOEHE * 100 - 6) + '%';
+      // am rechten Rand wuerde die Marke hinauslaufen: dann nach links kippen
+      if (anteil > 0.62) {
+        marke.style.left = 'auto';
+        marke.style.right = 'calc(' + ((1 - anteil) * 100).toFixed(1) + '% + 12px)';
+        marke.style.flexDirection = 'row-reverse';
+      }
+    }
+
+    var punktGipfel = svg.querySelector('.sun-dot, .peak-marker');
+    if (punktGipfel) { punktGipfel.setAttribute('cx', x(gipfel.km)); punktGipfel.setAttribute('cy', y(gipfel.hoehe)); }
+    var kreuz = svg.querySelector('.peak-x');
+    if (kreuz) kreuz.setAttribute('d', 'M' + x(gipfel.km) + ',' + y(gipfel.hoehe) + ' V' + (y(gipfel.hoehe) - 14) +
+      ' M' + (x(gipfel.km) - 6) + ',' + (y(gipfel.hoehe) - 9) + ' h12');
+    var startPunkt = svg.querySelector('.peak-dot');
+    if (startPunkt) { startPunkt.setAttribute('cx', 0); startPunkt.setAttribute('cy', y(punkte[0].hoehe)); }
+  }
+
+  /* Runde Zwischenwerte zwischen min und max, hoechstens `maximal` Stueck.
+     Probiert die Stufen von fein nach grob und nimmt die erste, die passt. */
+  function achsenMarken(min, max, maximal) {
+    var stufen = [10, 20, 25, 50, 100, 200, 250, 500, 1000];
+    for (var i = 0; i < stufen.length; i++) {
+      var werte = [];
+      for (var h = Math.ceil(min / stufen[i]) * stufen[i]; h < max; h += stufen[i]) werte.push(h);
+      if (werte.length <= maximal) return werte;
+    }
+    return [];
+  }
+
+  /* Runde Stufe (100/200/250/500 …) statt krummer Zwischenwerte auf der Achse */
+  function grobeStufe(roh) {
+    var groessen = [0.5, 1, 2, 2.5, 5, 10, 25, 50, 100, 200, 250, 500, 1000];
+    var zehner = Math.pow(10, Math.floor(Math.log10(Math.max(roh, 0.001))));
+    for (var i = 0; i < groessen.length; i++) {
+      if (groessen[i] * zehner >= roh) return groessen[i] * zehner;
+    }
+    return roh;
+  }
 
   /* ---------- Hero-Zahlen: Count-up ---------- */
   document.querySelectorAll('[data-count]').forEach(function (el) {

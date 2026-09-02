@@ -214,6 +214,59 @@ function pruefeHub(slugs) {
     meld(fehler, 'hub', `Pinned zeigt "${pin}", neueste gegangene Tour ist aber "${gegangen[0].name.split(' ')[0]}"`);
 }
 
+
+/* ---------- Level-Parität ----------
+   Sebis Anforderung: eine Verbesserung muss auf ALLE Touren greifen, nicht nur
+   auf die zuletzt gebaute. Genau das war schiefgegangen — die Kneifelspitze hatte
+   ein ablesbares Profil mit Achsen, das Ristfeuchthorn eine nackte Linie im leeren
+   Kasten. Kein Tor hat das gemeldet, weil beide Seiten fuer sich gueltig waren.
+
+   PFLICHT = jede Tour muss den Baustein haben (Fehler, blockt).
+   OPTIONAL = haengt vom Material ab, wird nur berichtet (kein Fehler). */
+const PFLICHT = [
+  ['/touren/tour.css',            'gemeinsames Stylesheet'],
+  ['/touren/tour.js',             'gemeinsames Verhalten'],
+  ['tour-bento',                  'Bento-Raster'],
+  ['flaeche-wald',                'Wald-Flaeche (Kodex Regel 1)'],
+  ['tour-profil',                 'Hoehenprofil'],
+  ['data-punkte="',               'Messpunkte — ohne sie kein Ablesen und keine Achsen'],
+  ['tour-profil__achse',          'Achsenbeschriftung'],
+  ['tour-profil__zeiger',         'Ablese-Zeiger'],
+  ['tour-profil__wert',           'Ablese-Wert'],
+  ['tour-profil__hint',           'Hinweis, dass man ablesen kann'],
+  ['id="tourVerlauf"',            'Verlaufsfuellung unter der Kurve'],
+  ['tour-fakt--live',             'Live-Fakt am Gipfel'],
+];
+const OPTIONAL = [
+  ['tour-arc',   'Zeitachse (nur wenn die Uhrzeit die Geschichte ist)'],
+  ['tour-shot',  'Fotos im Raster'],
+];
+
+function pruefeParitaet(slugs) {
+  // Kommentare raus, BEVOR gesucht wird. Sonst faellt der Check auf den eigenen
+  // erklaerenden Kommentar herein: ein entferntes data-punkte-Attribut blieb
+  // unentdeckt, weil "data-punkte" noch im Kommentar darueber stand.
+  const ohneKommentare = h => h.replace(/<!--[\s\S]*?-->/g, '');
+  const seiten = slugs
+    .map(slug => ({ slug, datei: join(TOUREN, slug, 'index.html') }))
+    .filter(s => existsSync(s.datei))
+    .map(s => ({ ...s, html: ohneKommentare(readFileSync(s.datei, 'utf8')) }));
+  if (seiten.length < 1) return;
+
+  for (const [muster, was] of PFLICHT) {
+    for (const s of seiten) {
+      if (!s.html.includes(muster))
+        meld(fehler, s.slug, `fehlt: ${was} (${muster}) — andere Touren haben es`);
+    }
+  }
+  for (const [muster, was] of OPTIONAL) {
+    const mit = seiten.filter(s => s.html.includes(muster)).map(s => s.slug);
+    const ohne = seiten.filter(s => !s.html.includes(muster)).map(s => s.slug);
+    if (mit.length && ohne.length)
+      meld(hinweise, 'parität', `${was}: ${mit.join(', ')} hat es, ${ohne.join(', ')} nicht`);
+  }
+}
+
 /* ---------- Hilfen ---------- */
 function alleSlugs() {
   const { readdirSync } = require('node:fs');
@@ -236,6 +289,7 @@ if (!ziele.length) { console.error('Kein Slug angegeben. Nutzung: tour-check.mjs
 
 for (const slug of ziele) pruefeDetail(slug);
 pruefeHub(ziele);
+pruefeParitaet(ziele);
 
 const geprueft = ziele.join(', ');
 if (hinweise.length) {

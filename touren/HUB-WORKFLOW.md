@@ -122,14 +122,17 @@ Pro Tour dieses Set. **Fett = Pflicht**, Rest optional/ableitbar.
    liest den Tag, dreht die Pixel genau einmal und speichert **ohne exif**.
    Danach das Bild **ansehen**, nicht nur die Ausgabe lesen.
 3. **Daten tauschen** (§3) in Hero, Fakten, Split-Zeilen, Notiz, Proof, Datum, Badge.
-4. **Höhenprofil-SVG:** Pfad-Punkte aus dem Bergfex-/Strava-Profil nachzeichnen
-   (viewBox 0 0 900 270, `preserveAspectRatio="none"`), Peak-Marker setzen.
-   **Beschriftung NIE als `<text>` ins SVG** — `preserveAspectRatio="none"` verzerrt sie mit:
-   bei 900er viewBox auf 180px Höhe schrumpft 11px-Schrift auf gut 7px und wird zugleich
-   horizontal gestreckt. Stattdessen `.tour-profil__marke` als HTML über dem Diagramm.
-   **Zum Ablesen** (Höhe/Distanz am Zeiger, wie in den Tourenportalen): `data-punkte="km,höhe …"`
-   ans SVG. Nur setzen, wenn echte Messwerte vorliegen — bei Ristfeuchthorn ist der Pfad aus
-   dem Bergfex-Bild nachgezeichnet, dort gibt es bewusst kein Ablesen statt hergeleiteter Zahlen.
+4. **Höhenprofil:** Du setzt nur **`data-punkte="km,höhe km,höhe …"`** ans SVG. Sonst nichts.
+   `tour.js` zeichnet daraus Kurve, Verlaufsfüllung, beschriftete Höhenachse, Kilometerachse
+   und die Gipfelmarke. Der Pfad im HTML ist nur noch der Fallback ohne JS.
+   **Das ist der Grund, warum Verbesserungen am Diagramm auf ALLE Touren greifen.**
+   Vorher stand der Pfad handgeschrieben pro Seite — so entstand der Zustand, dass eine Tour
+   Achsen und Ablesen hatte und die andere eine nackte Linie im leeren Kasten.
+   **Kein `<text>` ins SVG** — `preserveAspectRatio="none"` verzerrt es mit (11px-Schrift
+   schrumpft auf gut 7px und wird horizontal gestreckt). Alle Beschriftung ist HTML.
+   Stehen keine Rohdaten zur Verfügung, dürfen die Punkte aus einem nachgezeichneten Profil
+   abgeleitet werden — dann auf 10 m runden und die **Herkunft in den Hinweistext schreiben**
+   (Ristfeuchthorn: „Werte aus dem Bergfex-Profil nachgezeichnet, auf 10 m gerundet").
 5. **Wetter:** in beiden Wetter-Skripten `elevation=<Gipfelhöhe>` (lat/lon = Bergregion) setzen.
    Muster: WMO-Code → Fineline-Icon-Map (aus Vorlage übernehmen).
 6. **Liste eintragen** (`touren/index.html`): Pinned-Highlight = neueste gegangene Tour;
@@ -141,7 +144,11 @@ Pro Tour dieses Set. **Fett = Pflicht**, Rest optional/ableitbar.
 7. **Cache-Busting:** `./scripts/bump-asset-versions.sh`. Neue seiten-eigene Assets brauchen
    kein `?v=` (sind im Ordner).
 8. **Prüfen:** `node scripts/tour-check.mjs <slug>` — muss grün sein, sonst nicht ausliefern.
-   Nach Änderungen AM TOR selbst: `./scripts/tour-check-fixtures.sh` (12 Negativtests + Positivtest).
+   Enthält einen **Level-Paritäts-Check**: hat eine Tour einen Pflicht-Baustein nicht, den die
+   anderen haben (Achsen, Messpunkte, Ablesen, Verlaufsfüllung, Live-Fakt, Bento, gemeinsames
+   CSS/JS), wird das zum Fehler. Optionale Bausteine (Zeitachse, Fotos) erscheinen nur als
+   Hinweis — nicht jede Tour hat Material dafür.
+   Nach Änderungen AM TOR selbst: `./scripts/tour-check-fixtures.sh` (22 Negativtests + Positivtest).
 9. **Verifizieren:** `node scripts/tour-visual.mjs <slug>` — startet sich seinen eigenen
    HTTP-Server, misst in 4 Engines (WebKit 390/768, Firefox 1024, Chromium 1440) und legt
    Screenshots in `.tour-visual/` ab. Prüft Überlauf, JS-Fehler, nicht geladene Bilder **und
@@ -152,9 +159,15 @@ Pro Tour dieses Set. **Fett = Pflicht**, Rest optional/ableitbar.
    ⚠️ Was **kein** Tor findet, sondern nur das eigene Auge: der `<ol>`-Listmarker der
    Zeitachse („1. 2. 3. 4." vor den Uhrzeiten) und ein Foto, dessen Beschnitt das Motiv
    zerstört.
-10. **Datenschutz:** Neue Drittanbieter-Calls (Karten-Embed etc.) IMMER in `datenschutz.html`
+10. **CSP:** Tour-Seiten tragen `script-src 'self'` **ohne** `'unsafe-inline'` — es gibt kein
+    ausführbares Inline-Script mehr, alles liegt in `tour.js`. Wer wieder ein `<script>` in eine
+    Tour-Datei schreibt, bricht die Seite. `style-src` behält `'unsafe-inline'` für den
+    zweizeiligen `--hero-fokus`-Block. `frame-ancestors` steht bewusst NICHT drin: per `<meta>`
+    wird es ignoriert und erzeugt nur eine Konsolen-Warnung — Clickjacking-Schutz bräuchte
+    einen HTTP-Header, den GitHub Pages nicht zulässt.
+11. **Datenschutz:** Neue Drittanbieter-Calls (Karten-Embed etc.) IMMER in `datenschutz.html`
     §4+§5 + Quell-Link am Widget. Open-Meteo ist bereits drin.
-11. **Branch:** von `origin/main` abzweigen, nicht vom aktuellen Arbeitsbranch. Sonst hängt die
+12. **Branch:** von `origin/main` abzweigen, nicht vom aktuellen Arbeitsbranch. Sonst hängt die
     Tour an einem ungemergten Feature (Stand 09/2026: `feat/berg-portal-t0-t1` wartet auf den DNS-Umzug).
 
 ---

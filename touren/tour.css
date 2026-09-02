@@ -302,7 +302,7 @@
   width: 100%; height: clamp(132px, 21vh, 180px); color: var(--leaf);
   overflow: visible; display: block; touch-action: pan-y;
 }
-.tour-svg .fill { fill: rgba(80,200,120,0.12); opacity: 0; transition: opacity 900ms var(--ease-lux) 500ms; }
+.tour-svg .fill { fill: url(#tourVerlauf); opacity: 0; transition: opacity 900ms var(--ease-lux) 500ms; }
 .tour-svg .line {
   fill: none; stroke: currentColor; stroke-width: 2;
   stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke;
@@ -329,7 +329,6 @@
   /* Halo statt Kasten: die Profillinie laeuft hinter der Schrift durch */
   text-shadow: 0 0 3px #123524, 0 0 8px #123524, 0 1px 2px rgba(6,26,17,0.9);
 }
-.tour-profil__marke--start { left: 0; bottom: 6px; }
 .tour-profil__marke--gipfel {
   /* linksbuendig NEBEN dem Gipfel, nicht mittig darauf — sonst liegt der Text
      genau auf der Spitze der Kurve */
@@ -359,7 +358,7 @@
 /* Alles, was sich auf das Diagramm bezieht — Zeiger, Wert, Marken — sitzt in
    diesem Wrapper. Vorher hingen sie an der Karte und damit im Polster:
    die Startmarke stiess unten an den Hinweistext. */
-.tour-profil__flaeche { position: relative; }
+.tour-profil__flaeche { position: relative; padding-bottom: 16px; }
 .tour-profil__zeiger {
   position: absolute; top: 0; bottom: 0; width: 1px; pointer-events: none;
   background: rgba(243,235,217,0.5); opacity: 0;
@@ -380,6 +379,24 @@
 .tour-profil__hint {
   margin-top: 18px; font-family: var(--mono); font-size: 10px; letter-spacing: 1.2px;
   text-transform: uppercase; color: var(--paper-faint);
+}
+
+
+/* Achsen. Die Beschriftung liegt als HTML ueber dem Diagramm, weil
+   preserveAspectRatio="none" jeden SVG-Text mitverzerren wuerde.
+   Gezeichnet wird sie von tour.js aus data-punkte — damit hat JEDE Tour
+   dieselben Achsen, ohne dass jemand sie pro Seite pflegen muss. */
+.tour-profil__achse { position: absolute; inset: 0; pointer-events: none; }
+.tour-profil__tick {
+  position: absolute; font-family: var(--mono); font-size: 9.5px; font-weight: 700;
+  letter-spacing: 1px; color: rgba(243,235,217,0.45); white-space: nowrap;
+  text-shadow: 0 0 3px #123524, 0 0 6px #123524;
+}
+.tour-profil__tick--y { left: 0; transform: translateY(-50%); }
+.tour-profil__tick--x { bottom: -4px; transform: translateX(-50%); }
+@media (max-width: 560px) {
+  /* schmal wird die Kilometerachse zum Gedraengel */
+  .tour-profil__tick--x { display: none; }
 }
 
 /* ---------- FOTOS IM RASTER ----------

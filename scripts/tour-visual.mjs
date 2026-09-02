@@ -84,15 +84,28 @@ for (const slug of slugs) {
           const r = i.getBoundingClientRect();
           return r.width === 0 || r.height === 0;
         }).map(i => i.getAttribute('src').split('/').pop()),
+        // Ein Hoehenprofil ohne gezeichnete Kurve sah fuer das Werkzeug "sauber" aus:
+        // ein NaN in den Koordinaten wirft keinen Fehler, es zeichnet nur nichts.
+        profilLeer: (() => {
+          const linie = document.querySelector('.tour-profil .line');
+          if (!linie) return null;
+          const d = linie.getAttribute('d') || '';
+          if (/NaN|undefined/.test(d)) return 'Koordinaten enthalten NaN';
+          try { if (linie.getTotalLength() < 50) return 'Kurve zu kurz'; } catch { return 'Pfad unlesbar'; }
+          const achsen = document.querySelectorAll('.tour-profil__tick').length;
+          if (document.querySelector('.tour-svg[data-punkte]') && !achsen) return 'keine Achsenbeschriftung';
+          return null;
+        })(),
       };
     });
 
-    const schlecht = mess.ueberlauf > 0 || mess.leer.length || mess.ohneFlaeche.length || jsFehler.length;
+    const schlecht = mess.ueberlauf > 0 || mess.leer.length || mess.ohneFlaeche.length || jsFehler.length || mess.profilLeer;
     if (schlecht) befunde++;
     const details = [
       mess.ueberlauf > 0 ? `Ueberlauf ${mess.ueberlauf}px` : null,
       mess.leer.length ? `nicht geladen: ${mess.leer.join(', ')}` : null,
       mess.ohneFlaeche.length ? `0x0 gross: ${mess.ohneFlaeche.join(', ')}` : null,
+      mess.profilLeer ? `Hoehenprofil: ${mess.profilLeer}` : null,
       jsFehler.length ? `JS: ${jsFehler[0].slice(0, 70)}` : null,
     ].filter(Boolean).join(' · ');
     console.log(`${schlecht ? '🔴' : '🟢'} ${slug.padEnd(16)} ${name.padEnd(15)} ${details || 'sauber'}`);
