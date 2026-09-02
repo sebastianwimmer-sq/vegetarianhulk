@@ -201,6 +201,27 @@ function pruefeHub(slugs) {
   if (zaehler && Number(zaehler) !== zeilen.length)
     meld(fehler, 'hub', `tkCount sagt ${zaehler}, die Liste hat ${zeilen.length} Zeilen`);
 
+
+  // Der Hub gehoert ins selbe System wie die Detailseiten. Er war eine Insel:
+  // 296 Zeilen eigenes CSS, vier verschiedene Radien (20/16/14/999px) und eigene
+  // Flaechen — waehrend die Detailseiten laengst auf den Kodex-Tokens liefen.
+  for (const [muster, was] of [
+    ['/touren/tour.css', 'gemeinsames Stylesheet'],
+    ['/touren/tour.js',  'gemeinsames Verhalten'],
+  ]) {
+    if (!html.includes(muster)) meld(fehler, 'hub', `${was} (${muster}) nicht eingebunden`);
+  }
+  const hubStil = (html.match(/<style>([\s\S]*?)<\/style>/) || [])[1] || '';
+  const harteRadien = [...new Set((hubStil.match(/border-radius:\s*(\d+)px/g) || []))]
+    .filter(r => !/:\s*(1|2|3)px/.test(r));   // Haarlinien-Radien an Polaroids sind ok
+  if (harteRadien.length)
+    meld(fehler, 'hub', `feste Radien im Hub (${harteRadien.join(', ')}) — Kodex Regel 4 kennt nur --r-karte und --r-control`);
+  if (/border-radius:\s*999px/.test(hubStil))
+    meld(fehler, 'hub', 'Pillen-Radius (999px) — im Kodex nicht vorgesehen');
+  // Hartkodierte Kennzahlen veralten still, sobald eine Tour dazukommt
+  if (/<b data-count="\d+">0<\/b><span>Touren/.test(html))
+    meld(fehler, 'hub', 'Kennzahl "Touren" ohne data-zahl — wird nicht aus der Liste gerechnet und veraltet');
+
   // Pinned = die neueste gegangene Tour (data-date als YYYYMMDD; Empfehlungen sind negativ)
   const gegangen = zeilen
     .map(a => ({

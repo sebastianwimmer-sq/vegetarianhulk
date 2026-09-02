@@ -218,6 +218,44 @@
     return roh;
   }
 
+
+  /* ---------- Hub: Zahlen aus der Liste statt aus der Hand ----------
+     Der Block "Der Guide in Zahlen" stand hartkodiert im HTML und war beim
+     Hinzufuegen der Kneifelspitze still falsch geworden (7 Touren / 5.668 hm,
+     waehrend die Liste schon 8 zeigte). Jetzt kommen die Werte aus denselben
+     data-Attributen, die auch Filter und Sortierung benutzen — eine neue Tour
+     zieht sie automatisch mit. Die Zahlen im HTML bleiben Fallback ohne JS. */
+  (function guideZahlen() {
+    var zeilen = document.querySelectorAll('.tk-row');
+    if (!zeilen.length || !document.querySelector('[data-zahl]')) return;
+
+    var hoehen = [];
+    var summeHm = 0;
+    [].forEach.call(zeilen, function (zeile) {
+      var hm = parseInt(zeile.dataset.thm, 10);
+      if (isFinite(hm)) summeHm += hm;
+      // Gipfelhoehe steht sichtbar in der Zeile ("1.776 m")
+      var alt = zeile.querySelector('.tk-row__alt');
+      var treffer = alt && alt.textContent.match(/([\d.]+)\s*m/);
+      if (treffer) {
+        var meter = parseInt(treffer[1].replace(/\./g, ''), 10);
+        if (isFinite(meter)) hoehen.push(meter);
+      }
+    });
+
+    var werte = {
+      touren: zeilen.length,
+      hm: summeHm,
+      gipfel: hoehen.length ? Math.max.apply(null, hoehen) : null
+    };
+    document.querySelectorAll('[data-zahl]').forEach(function (el) {
+      var wert = werte[el.dataset.zahl];
+      if (wert == null) return;
+      // data-count treibt das Count-up, das gleich danach laeuft
+      el.dataset.count = String(wert);
+    });
+  })();
+
   /* ---------- Hero-Zahlen: Count-up ---------- */
   document.querySelectorAll('[data-count]').forEach(function (el) {
     var ziel = parseInt(el.dataset.count, 10);

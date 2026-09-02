@@ -23,6 +23,7 @@
 <script src="/launch-gate.js?v=4"></script>
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
 <link rel="stylesheet" href="/v3.css?v=13e17a16">
+<link rel="stylesheet" href="/touren/tour.css?v=8eeff712">
 <style>
 /* ============================================================
    /touren/ — Hulk-Hikes FORUM-LISTE (page-scoped .tk-)
@@ -54,7 +55,7 @@
 .tk-wide { width: min(1080px, 94vw); margin-left: calc((100% - min(1080px, 94vw)) / 2); }
 
 /* ---- Pinned Highlight: zuletzt gegangene Tour ---- */
-.tk-pin { margin-top: clamp(40px, 6vh, 64px); position: relative; overflow: hidden; border-radius: 20px;
+.tk-pin { margin-top: clamp(40px, 6vh, 64px); position: relative; overflow: hidden; border-radius: var(--r-karte);
   display: grid; grid-template-columns: 1.25fr 1fr;
   background:
     repeating-linear-gradient(96deg, rgba(24,43,31,0.022) 0 1px, transparent 1px 11px),
@@ -88,23 +89,38 @@
 .tk-pin__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
   transition: transform 1200ms var(--ease-lux); }
 .tk-pin:hover .tk-pin__photo img { transform: scale(1.04); }
-.tk-pin__photo::after { content: ""; position: absolute; inset: 0;
-  background: linear-gradient(90deg, rgba(238,229,209,1) 0, rgba(238,229,209,0) 14%); }
+/* Das Foto wird in die Papierflaeche EINGEARBEITET, nicht daraufgesetzt.
+   Vorher lief der Verlauf nur ueber 14% der Breite — links weich, an den drei
+   anderen Kanten eine harte Fotokante mitten in der Karte. Jetzt blendet es
+   nach allen Seiten aus und traegt eine leichte Vignette, damit es in der
+   Flaeche liegt statt darauf. */
+.tk-pin__photo::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(238,229,209,1) 0, rgba(238,229,209,0.55) 16%, rgba(238,229,209,0) 44%),
+    linear-gradient(180deg, rgba(238,229,209,0.85) 0, rgba(238,229,209,0) 22%),
+    linear-gradient(0deg, rgba(238,229,209,0.85) 0, rgba(238,229,209,0) 22%);
+}
+/* Innenschatten bettet die Kante ein — die Karte liegt ueber dem Foto, nicht daneben */
+.tk-pin__photo::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  box-shadow: inset 0 0 34px 2px rgba(238,229,209,0.2); }
 @media (max-width: 860px) {
   .tk-pin { grid-template-columns: 1fr; }
   .tk-pin__photo { min-height: 210px; order: -1; }
-  .tk-pin__photo::after { background: linear-gradient(0deg, rgba(238,229,209,1) 0, rgba(238,229,209,0) 22%); }
+  .tk-pin__photo::after { background:
+    linear-gradient(0deg, rgba(238,229,209,1) 0, rgba(238,229,209,0.5) 18%, rgba(238,229,209,0) 46%),
+    linear-gradient(90deg, rgba(238,229,209,0.7) 0, rgba(238,229,209,0) 20%),
+    linear-gradient(270deg, rgba(238,229,209,0.7) 0, rgba(238,229,209,0) 20%); }
 }
 
 /* ---- Toolbar: Suche · Filter · Sortierung (Instrument-Sprache) ---- */
 .tk-bar { margin-top: clamp(44px, 7vh, 72px); position: relative; z-index: 4;
   display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px;
-  padding: 14px 16px; border-radius: 16px;
-  background: linear-gradient(158deg, rgba(19,54,35,0.62), rgba(6,26,17,0.68));
+  padding: 14px 16px; border-radius: var(--r-karte);
+  background: var(--flaeche-wald);
   border: 1px solid rgba(126,208,155,0.18);
   box-shadow: inset 0 1px 0 rgba(209,242,235,0.07), 0 22px 48px -26px rgba(0,0,0,0.7); }
 .tk-search { flex: 1 1 200px; display: flex; align-items: center; gap: 9px;
-  padding: 9px 13px; border-radius: 10px;
+  padding: 9px 13px; border-radius: var(--r-control);
   background: rgba(3,15,9,0.5); border: 1px solid rgba(126,208,155,0.18);
   transition: border-color 300ms var(--ease-lux), box-shadow 300ms var(--ease-lux); }
 .tk-search:focus-within { border-color: rgba(126,208,155,0.55); box-shadow: 0 0 0 3px rgba(80,200,120,0.12); }
@@ -115,7 +131,7 @@
 .tk-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .tk-group__label { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.6px;
   text-transform: uppercase; color: var(--paper-faint); margin-right: 2px; }
-.tk-chip { cursor: pointer; border: 1px solid rgba(126,208,155,0.22); border-radius: 999px;
+.tk-chip { cursor: pointer; border: 1px solid rgba(126,208,155,0.22); border-radius: var(--r-control);
   background: transparent; padding: 7px 14px;
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
   color: var(--paper-dim);
@@ -125,7 +141,7 @@
   border-color: transparent; transform: translateY(-1px); }
 .tk-sort { position: relative; }
 .tk-sort select { appearance: none; -webkit-appearance: none; cursor: pointer;
-  padding: 8px 30px 8px 14px; border-radius: 999px;
+  padding: 8px 30px 8px 14px; border-radius: var(--r-control);
   background: rgba(3,15,9,0.5); border: 1px solid rgba(126,208,155,0.22);
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
   color: var(--paper-dim); outline: none;
@@ -139,7 +155,7 @@
 
 /* ---- Forum-Liste ---- */
 .tk-list { margin-top: 18px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
-.tk-row { position: relative; overflow: hidden; border-radius: 14px;
+.tk-row { position: relative; overflow: hidden; border-radius: var(--r-karte);
   background:
     repeating-linear-gradient(96deg, rgba(24,43,31,0.02) 0 1px, transparent 1px 11px),
     linear-gradient(168deg, #F6EFDF 0%, #F0E8D3 66%, #EAE0C8 100%);
@@ -174,7 +190,7 @@
   font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.3px; color: rgba(24,43,31,0.78); }
 .tk-row__facts i { display: inline-block; width: 1px; height: 9px; margin: 0 5px; vertical-align: -1px; background: rgba(24,43,31,0.26); font-size: 0; }
 .tk-region { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--royal);
-  border: 1px solid rgba(11,110,79,0.32); border-radius: 999px; padding: 2px 9px; }
+  border: 1px solid rgba(11,110,79,0.32); border-radius: var(--r-control); padding: 2px 9px; }
 .tk-dots { display: inline-flex; gap: 3.5px; }
 .tk-dots b { width: 6.5px; height: 6.5px; border-radius: 50%; border: 1.3px solid var(--royal); box-sizing: border-box; }
 .tk-dots b.on { background: var(--royal); }
@@ -204,7 +220,7 @@
 /* Sekundaer-Button: gepraegter Papier-Chip statt flacher Outline-Bubble */
 .tk-minibtn { display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase;
-  color: #14281C; border-radius: 10px; padding: 9px 15px; border: 1px solid rgba(24,43,31,0.16);
+  color: #14281C; border-radius: var(--r-control); padding: 9px 15px; border: 1px solid rgba(24,43,31,0.16);
   background: linear-gradient(180deg, #FBF6E9 0%, #EFE6CE 100%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), inset 0 -2px 3px rgba(120,100,60,0.12),
     0 2px 3px rgba(60,50,30,0.14), 0 8px 16px -8px rgba(0,0,0,0.35);
@@ -236,7 +252,7 @@
 }
 
 /* Leerzustand */
-.tk-empty { display: none; margin-top: 18px; padding: 34px 22px; text-align: center; border-radius: 14px;
+.tk-empty { display: none; margin-top: 18px; padding: 34px 22px; text-align: center; border-radius: var(--r-karte);
   border: 1px dashed rgba(126,208,155,0.3); color: var(--paper-dim); }
 .tk-empty p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 19px; }
 .tk-empty button { margin-top: 12px; cursor: pointer; background: none; border: 0;
@@ -245,7 +261,7 @@
 
 /* Watzmann-Verweis */
 .tk-watz { margin-top: 34px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
-  padding: 16px 20px; border-radius: 14px;
+  padding: 16px 20px; border-radius: var(--r-karte);
   background: linear-gradient(158deg, rgba(19,54,35,0.4), rgba(6,26,17,0.5));
   border: 1px solid rgba(126,208,155,0.14); }
 .tk-watz p { font-size: 13.5px; color: var(--paper-dim); }
@@ -255,7 +271,7 @@
 /* ---- Abschluss: Bilanz + Live ---- */
 .tk-close { margin-top: clamp(48px, 8vh, 80px); margin-bottom: 56px;
   display: grid; grid-template-columns: 1.4fr 1fr; gap: 18px; align-items: stretch; }
-.tk-close__stats { position: relative; overflow: hidden; border-radius: 20px;
+.tk-close__stats { position: relative; overflow: hidden; border-radius: var(--r-karte);
   padding: clamp(26px, 3.4vw, 42px);
   background:
     repeating-linear-gradient(96deg, rgba(24,43,31,0.022) 0 1px, transparent 1px 11px),
@@ -276,8 +292,8 @@
 .tk-close__foot a { color: var(--royal); text-decoration: none; font-weight: 600; }
 .tk-close__side { display: flex; flex-direction: column; gap: 14px; }
 /* Live-Widget (Instrument, wie Bergstation-HUD) */
-.tk-live { display: block; text-decoration: none; color: inherit; flex: 1; border-radius: 16px; padding: 20px 22px;
-  background: linear-gradient(158deg, rgba(19,54,35,0.62), rgba(6,26,17,0.68));
+.tk-live { display: block; text-decoration: none; color: inherit; flex: 1; border-radius: var(--r-karte); padding: 20px 22px;
+  background: var(--flaeche-wald);
   border: 1px solid rgba(126,208,155,0.2);
   box-shadow: inset 0 1px 0 rgba(209,242,235,0.08), 0 22px 46px -26px rgba(0,0,0,0.7); }
 .tk-live__label { display: flex; align-items: center; gap: 9px; font-family: var(--mono);
@@ -489,7 +505,7 @@
         <span class="tk-row__eng"><img src="/touren/assets/eng-gruenstein.jpg" alt="" loading="lazy"></span>
         <span class="tk-row__main">
           <span class="tk-row__top"><h3 class="tk-row__name">Grünstein</h3><span class="tk-row__alt">1.304 m</span></span>
-          <span class="tk-row__tag">Königssee-Blick inklusive</span>
+          <span class="tk-row__tag">Kurz, mit Blick auf den Königssee</span>
           <span class="tk-row__facts">
             <span>489 hm</span><i>·</i><span>ca. 5 km</span><i>·</i><span>ca. 2:00 h</span><i>·</i>
             <span class="tk-region">Berchtesgaden</span>
@@ -521,7 +537,7 @@
         <span class="tk-row__eng"><img src="/touren/assets/eng-zinnkopf.jpg" alt="" loading="lazy"></span>
         <span class="tk-row__main">
           <span class="tk-row__top"><h3 class="tk-row__name">Zinnkopf</h3><span class="tk-row__alt">1.227 m</span></span>
-          <span class="tk-row__tag">Chiemsee-Panorama</span>
+          <span class="tk-row__tag">Aussichtsberg über dem Chiemsee</span>
           <span class="tk-row__facts">
             <span>553 hm</span><i>·</i><span>9 km</span><i>·</i><span>ca. 3:00 h</span><i>·</i>
             <span class="tk-region">Chiemgau</span>
@@ -553,7 +569,7 @@
         <span class="tk-row__eng"><img src="/touren/assets/eng-duerrnbachhorn.jpg" alt="" loading="lazy"></span>
         <span class="tk-row__main">
           <span class="tk-row__top"><h3 class="tk-row__name">Dürrnbachhorn</h3><span class="tk-row__alt">1.776 m</span></span>
-          <span class="tk-row__tag">Grat mit Weitblick</span>
+          <span class="tk-row__tag">Grat über der Winklmoosalm</span>
           <span class="tk-row__facts">
             <span>591 hm</span><i>·</i><span>8,4 km</span><i>·</i><span>ca. 3:00 h</span><i>·</i>
             <span class="tk-region">Chiemgau</span>
@@ -587,7 +603,7 @@
         <span class="tk-row__eng"><img src="/touren/assets/eng-rauschberg.jpg" alt="" loading="lazy"></span>
         <span class="tk-row__main">
           <span class="tk-row__top"><h3 class="tk-row__name">Rauschberg</h3><span class="tk-row__alt">1.645 m</span></span>
-          <span class="tk-row__tag">Ruhpoldings Hausberg</span>
+          <span class="tk-row__tag">Der Hausberg von Ruhpolding</span>
           <span class="tk-row__facts">
             <span>904 hm</span><i>·</i><span>16 km</span><i>·</i><span>ca. 5:30 h</span><i>·</i>
             <span class="tk-region">Chiemgau</span>
@@ -601,7 +617,7 @@
       </button>
       <div class="tk-row__panel"><div class="tk-row__panelin">
         <div class="tk-row__detail">
-          <p class="tk-row__desc">Ruhpoldings Hausberg als lange Runde: 16 km, stetig bergauf, oben der weite
+          <p class="tk-row__desc">Der Hausberg von Ruhpolding als lange Runde: 16 km, stetig bergauf, oben der weite
           Blick übers Ruhpoldinger Tal. <strong>Bahn und Hütte sind aktuell zu</strong> — Brotzeit und Wasser selbst mitnehmen.</p>
           <div class="tk-row__meta">
             <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Parkplatz Rauschbergbahn, Ruhpolding</p>
@@ -620,7 +636,7 @@
         <span class="tk-row__eng"><img src="/touren/assets/eng-gamsknogel.jpg" alt="" loading="lazy"></span>
         <span class="tk-row__main">
           <span class="tk-row__top"><h3 class="tk-row__name">Gamsknogel</h3><span class="tk-row__alt">1.750 m</span></span>
-          <span class="tk-row__tag">Der stille Grat</span>
+          <span class="tk-row__tag">Stiller Grat bei Inzell</span>
           <span class="tk-row__facts">
             <span>950 hm</span><i>·</i><span>9 km</span><i>·</i><span>ca. 4:30 h</span><i>·</i>
             <span class="tk-region">Chiemgau</span>
@@ -634,7 +650,7 @@
       </button>
       <div class="tk-row__panel"><div class="tk-row__panelin">
         <div class="tk-row__detail">
-          <p class="tk-row__desc">Der stille Grat der Chiemgauer Alpen: von Adlgaß bei Inzell steil hinauf,
+          <p class="tk-row__desc">Stiller Grat bei Inzell der Chiemgauer Alpen: von Adlgaß bei Inzell steil hinauf,
           oben <strong>Gratpassagen, teils seilversichert</strong>. Deutlich einsamer als die Klassiker.</p>
           <div class="tk-row__meta">
             <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Wanderparkplatz Adlgaß, Inzell</p>
@@ -653,7 +669,7 @@
         <span class="tk-row__eng"><img src="/touren/assets/eng-hochgern.jpg" alt="" loading="lazy"></span>
         <span class="tk-row__main">
           <span class="tk-row__top"><h3 class="tk-row__name">Hochgern</h3><span class="tk-row__alt">1.747 m</span></span>
-          <span class="tk-row__tag">Der Chiemgau-Klassiker</span>
+          <span class="tk-row__tag">Chiemgau-Klassiker von Unterwössen</span>
           <span class="tk-row__facts">
             <span>1.110 hm</span><i>·</i><span>15 km</span><i>·</i><span>ca. 4:30 h</span><i>·</i>
             <span class="tk-region">Chiemgau</span>
@@ -667,7 +683,7 @@
       </button>
       <div class="tk-row__panel"><div class="tk-row__panelin">
         <div class="tk-row__detail">
-          <p class="tk-row__desc">Der Chiemgau-Klassiker: lange, abwechslungsreiche Runde von Unterwössen —
+          <p class="tk-row__desc">Chiemgau-Klassiker von Unterwössen: lange, abwechslungsreiche Runde von Unterwössen —
           Wald, Almen, freier Gipfel. Kurz unterm Gipfel das <strong>Hochgernhaus</strong> zur Einkehr, oben der große Rundumblick.</p>
           <div class="tk-row__meta">
             <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Wanderparkplatz Hochgern, Unterwössen</p>
@@ -688,27 +704,27 @@
   </div>
 
   <!-- ABSCHLUSS: Guide-Bilanz (Count-up) + Live-Bedingungen + CTA -->
-  <section class="tk-close tk-wide rv" aria-label="Der Guide in Zahlen und aktuelle Bedingungen">
+  <section class="tk-close tk-wide rv" aria-label="Was bisher zusammenkam und aktuelle Bedingungen">
     <div class="tk-close__stats">
-      <p class="tk-close__label">Der Guide in Zahlen</p>
+      <p class="tk-close__label">Was bisher zusammenkam</p>
       <div class="tk-close__nums">
-        <div><b data-count="7">0</b><span>Touren</span></div>
-        <div><b data-count="5668">0</b><span>Höhenmeter gesamt</span></div>
-        <div><b data-count="1765">0</b><span>m höchster Punkt</span></div>
+        <div><b data-count="8" data-zahl="touren">0</b><span>Touren</span></div>
+        <div><b data-count="6124" data-zahl="hm">0</b><span>Höhenmeter gesamt</span></div>
+        <div><b data-count="1776" data-zahl="gipfel">0</b><span>m höchster Punkt</span></div>
       </div>
-      <p class="tk-close__foot">Jede davon selbst ausgesucht — die gegangenen mit echten Daten.
+      <p class="tk-close__foot">Jede selbst ausgesucht, die gegangenen mit echten Daten.
       Der Watzmann-Normalweg läuft als <a href="/#grat">3D-Erlebnis auf der Startseite</a>.</p>
     </div>
     <div class="tk-close__side">
       <a class="tk-live" data-tklive hidden href="https://open-meteo.com/" target="_blank" rel="noopener"
-         aria-label="Aktuelle Bedingungen im Revier — Datenquelle Open-Meteo öffnen">
-        <p class="tk-live__label"><span class="tk-live__dot"></span>Bedingungen im Revier</p>
+         aria-label="Aktuelle Jetzt am Berg — Datenquelle Open-Meteo öffnen">
+        <p class="tk-live__label"><span class="tk-live__dot"></span>Jetzt am Berg</p>
         <p class="tk-live__temp"><span data-lv-temp>–</span><span class="tk-live__unit">°C</span><span class="tk-live__ico" data-lv-ico aria-hidden="true"></span></p>
         <p class="tk-live__cond" data-lv-cond></p>
         <p class="tk-live__meta" data-lv-meta></p>
         <span class="tk-live__src">Quelle: Open-Meteo <span aria-hidden="true">↗</span></span>
       </a>
-      <a class="tk-close__cta" href="/newsletter">→ Neue Touren zuerst erfahren</a>
+      <a class="tk-close__cta" href="/newsletter">→ Trag dich ein</a>
     </div>
   </section>
 </main>
@@ -754,9 +770,9 @@
     {"@type":"ListItem","position":1,"name":"Kneifelspitze (1.188 m) — Sonnenaufgang über Maria Gern","url":"https://vegetarianhulk.de/touren/kneifelspitze/"},
     {"@type":"ListItem","position":2,"name":"Ristfeuchthorn (1.569 m) — Rundtour über Schneizlreuth","url":"https://vegetarianhulk.de/touren/ristfeuchthorn/"},
     {"@type":"ListItem","position":3,"name":"Grünstein (1.304 m) — Königssee-Blick"},
-    {"@type":"ListItem","position":4,"name":"Zinnkopf (1.227 m) — Chiemsee-Panorama"},
+    {"@type":"ListItem","position":4,"name":"Zinnkopf (1.227 m) — Aussichtsberg über dem Chiemsee"},
     {"@type":"ListItem","position":5,"name":"Dürrnbachhorn (1.776 m) — Grat über der Winklmoosalm"},
-    {"@type":"ListItem","position":6,"name":"Rauschberg (1.645 m) — Ruhpoldings Hausberg"},
+    {"@type":"ListItem","position":6,"name":"Rauschberg (1.645 m) — Der Hausberg von Ruhpolding"},
     {"@type":"ListItem","position":7,"name":"Gamsknogel (1.750 m) — stiller Grat bei Inzell"},
     {"@type":"ListItem","position":8,"name":"Hochgern (1.747 m) — Chiemgau-Klassiker von Unterwössen"}
   ]
@@ -914,6 +930,7 @@
   }
 })();
 </script>
+<script src="/touren/tour.js?v=577c0583" defer></script>
 <script src="/v3.js?v=64d0bdfd" defer></script>
 </body>
 </html>
