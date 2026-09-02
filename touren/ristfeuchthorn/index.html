@@ -46,7 +46,7 @@
 
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
 <link rel="stylesheet" href="/v3.css?v=13e17a16">
-<link rel="stylesheet" href="/touren/tour.css?v=c2d1f684">
+<link rel="stylesheet" href="/touren/tour.css?v=fcd09727">
 <style>
   /* Nur der Bildausschnitt dieses Heros — alles andere aus /touren/tour.css. */
   .tour-hero { --hero-fokus: center 38%; }
@@ -103,11 +103,10 @@
     </div>
   </section>
 
-  <!-- SPLIT: Vorm Start (Praxis) | Persönliche Meinung -->
-  <section class="tour-sektion tour-split st st3">
-    <div class="tour-split__grid">
+  <!-- BENTO: asymmetrisch statt zwei gleiche Spalten — die Meinung traegt mehr Text. -->
+  <div class="tour-sektion tour-bento st st3">
 
-      <div class="tour-panel flaeche-wald">
+      <div class="tour-panel flaeche-wald" style="--span: 5">
         <p class="tour-panel__kicker">Vorm Start</p>
         <h2 class="tour-panel__title">Kurz fürs <em>Rucksack-Hirn.</em></h2>
         <dl class="tour-rows">
@@ -121,7 +120,7 @@
         <a href="https://www.google.com/maps/search/Wurzenwirt+Schneizlreuth" target="_blank" rel="noopener">Startpunkt in Maps</a>.</p>
       </div>
 
-      <div class="tour-panel flaeche-papier" data-light>
+      <div class="tour-panel flaeche-papier" data-light style="--span: 7">
         <p class="tour-panel__kicker">Gegangen<span class="hsep" aria-hidden="true"></span>17.07.</p>
         <h2 class="tour-panel__title">Meine <em>Meinung.</em></h2>
         <p class="tour-note__body">Sehr naturnah, abgelegen und teils richtig verwachsen — kein Autobahn-Wanderweg.
@@ -138,13 +137,10 @@
         </div>
       </div>
 
-    </div>
-  </section>
-
-  <!-- HÖHENPROFIL — ohne data-punkte: der Pfad ist aus dem Bergfex-Profil
-       nachgezeichnet, nicht aus Rohdaten. Zahlen zum Ablesen gibt es erst,
-       wenn das GPX vorliegt; lieber keine Zahl als eine hergeleitete. -->
-  <section class="tour-sektion tour-profil flaeche-wald st st3">
+      <!-- HÖHENPROFIL — ohne data-punkte: der Pfad ist aus dem Bergfex-Profil
+           nachgezeichnet, nicht aus Rohdaten. Zahlen zum Ablesen gibt es erst,
+           wenn das GPX vorliegt; lieber keine Zahl als eine hergeleitete. -->
+      <section class="tour-profil flaeche-wald" style="--span: 12">
     <div class="tour-kopf">
       <span class="tour-kopf__label">Höhenprofil<span class="hsep" aria-hidden="true"></span>Rundtour</span>
       <span class="tour-kopf__meta">Start 480 m → Gipfel 1.569 m → zurück</span>
@@ -163,7 +159,9 @@
     <span class="tour-profil__marke tour-profil__marke--gipfel"
           style="left: calc(40% + 12px);">Ristfeuchthorn · 1.569 m</span>
     </div>
-  </section>
+      </section>
+
+  </div>
 
   <!-- CTA -->
   <section class="tour-cta flaeche-papier st" data-light>

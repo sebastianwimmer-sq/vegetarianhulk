@@ -40,3 +40,6 @@ audit-reports/
 
 # === Audit-Report — lokaler Analyse-Snapshot, nicht deployen ===
 audit/
+
+# Screenshots von scripts/tour-visual.mjs
+.tour-visual/

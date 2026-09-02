@@ -40,6 +40,27 @@
 .tour-sektion + .tour-sektion { margin-top: var(--gap); }
 .tour-sektion--luft + .tour-sektion { margin-top: var(--sektion); }
 
+/* ---------- BENTO: ein durchgehendes Raster statt gestapelter Vollbreite-Karten ----------
+   Vorher war jede Sektion eine eigene, gleich breite Karte untereinander — Block,
+   Block, Block. Hier laufen Text, Daten und Bilder durch dasselbe 12-Spalten-Raster
+   und wechseln die Breite, sodass die Flaechen ineinandergreifen statt zu stapeln.
+   Kodex Regel 8: ungleiche Karten sind erlaubt, Gap bleibt 14px, keine Rotation,
+   kein Overlap ausser Foto→Karte im Hero. */
+.tour-bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gap);
+  align-items: stretch;
+}
+.tour-bento > * { grid-column: span var(--span, 12); min-width: 0; }
+/* Kacheln, die ueber zwei Zeilen laufen und damit die Reihen zusammenbinden */
+.tour-bento > .spannt-2 { grid-row: span 2; }
+@media (max-width: 860px) {
+  .tour-bento { grid-template-columns: 1fr; }
+  .tour-bento > * { grid-column: 1 / -1; }
+  .tour-bento > .spannt-2 { grid-row: auto; }
+}
+
 /* Gemeinsamer Sektionskopf: Mono-Label links, Meta rechts */
 .tour-kopf {
   display: flex; align-items: baseline; justify-content: space-between;
@@ -361,33 +382,25 @@
   text-transform: uppercase; color: var(--paper-faint);
 }
 
-/* ---------- FOTOSTRECKE: Bento, keine Kachelreihe ----------
-   Regel 8 erlaubt ungleiche Karten. Die Groessen folgen der Chronologie:
-   das lange Warten gross, der Moment breit, der Tag danach klein.
+/* ---------- FOTOS IM RASTER ----------
+   Die Bilder stehen nicht mehr als eigene "Strecke" unter der Seite, sondern
+   sitzen im Bento zwischen den Datenflaechen — dort, wo sie inhaltlich hingehoeren.
    Grid statt Scroller: WebKit/Gecko laden lazy beim horizontalen Scrollen nicht nach. */
-.tour-strip__grid {
-  display: grid; gap: var(--gap);
-  grid-template-columns: 1.15fr 1fr;
-  grid-template-rows: auto auto;
-}
 .tour-shot {
-  position: relative; min-width: 0; overflow: hidden;
-  border-radius: var(--r-karte); box-shadow: var(--shadow-mid); margin: 0;
+  position: relative; min-width: 0; overflow: hidden; margin: 0;
+  border-radius: var(--r-karte); box-shadow: var(--shadow-mid);
+  min-height: var(--shot-min, 260px);
 }
 .tour-shot img {
-  display: block; width: 100%; height: 100%; object-fit: cover;
-  transition: transform 900ms var(--ease-lux), filter 900ms var(--ease-lux);
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  object-position: var(--shot-fokus, center);
+  transition: transform 900ms var(--ease-lux);
 }
 .tour-shot:hover img { transform: scale(1.035); }
-/* das Warten: hoch, ueber beide Zeilen */
-.tour-shot--warten { grid-row: 1 / 3; }
-.tour-shot--warten img { aspect-ratio: 3 / 4.35; }
-/* der Moment: breit und flach, oben rechts */
-.tour-shot--moment img { aspect-ratio: 4 / 3; }
-/* danach: der Rest der Zeile */
-.tour-shot--danach img { aspect-ratio: 4 / 3.05; }
 .tour-shot figcaption {
-  position: absolute; left: 0; right: 0; bottom: 0; padding: 34px 18px 16px;
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 1;
+  padding: 40px 20px 18px;
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.3px;
   text-transform: uppercase; color: rgba(243,235,217,0.9);
   background: linear-gradient(180deg, rgba(3,12,20,0) 0%, rgba(3,12,20,0.85) 68%);
@@ -397,10 +410,18 @@
   font-weight: 700; letter-spacing: 0; text-transform: none;
   color: var(--paper); margin-bottom: 3px;
 }
-@media (max-width: 700px) {
-  .tour-strip__grid { grid-template-columns: 1fr; }
-  .tour-shot--warten { grid-row: auto; }
-  .tour-shot--warten img { aspect-ratio: 4 / 3.4; }
+@media (max-width: 860px) {
+  /* Gestapelt traegt das BILD das Seitenverhaeltnis und steht im Fluss.
+     Vorher lagen Bild und Bildunterschrift beide absolut — damit hatte die
+     Figure keinen Inhalt im Fluss, keine intrinsische Breite und wurde in
+     WebKit 0x0 gross. Chromium fuellte das Grid-Item trotzdem, WebKit nicht:
+     drei Fotos waren auf dem iPhone unsichtbar, obwohl sie geladen hatten. */
+  .tour-shot { min-height: 0; }
+  .tour-shot img {
+    position: static;
+    width: 100%; height: auto;
+    aspect-ratio: var(--shot-mobil, 4 / 3);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .tour-shot img { transition: none; }

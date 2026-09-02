@@ -46,7 +46,7 @@
 
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
 <link rel="stylesheet" href="/v3.css?v=13e17a16">
-<link rel="stylesheet" href="/touren/tour.css?v=c2d1f684">
+<link rel="stylesheet" href="/touren/tour.css?v=fcd09727">
 <style>
   /* Nur was diese eine Tour ausmacht: der Bildausschnitt des Nacht-Heros.
      Alles andere kommt aus /touren/tour.css. */
@@ -108,11 +108,11 @@
     </div>
   </section>
 
-  <!-- SPLIT: Vorm Start (Praxis) | Persönliche Meinung -->
-  <section class="tour-sektion tour-split st st3">
-    <div class="tour-split__grid">
+  <!-- BENTO: Text, Daten und Bilder laufen durch EIN Raster und wechseln die
+       Breite (5/7 → 4/8 → 8/4 → 12), statt als gleich breite Karten zu stapeln. -->
+  <div class="tour-sektion tour-bento st st3">
 
-      <div class="tour-panel flaeche-wald">
+      <div class="tour-panel flaeche-wald" style="--span: 5">
         <p class="tour-panel__kicker">Vorm Start</p>
         <h2 class="tour-panel__title">Kurz fürs <em>Rucksack-Hirn.</em></h2>
         <dl class="tour-rows">
@@ -126,7 +126,7 @@
         <a href="https://www.google.com/maps/search/Wallfahrtskirche+Maria+Gern+Berchtesgaden" target="_blank" rel="noopener">Startpunkt in Maps</a>.</p>
       </div>
 
-      <div class="tour-panel flaeche-papier" data-light>
+      <div class="tour-panel flaeche-papier" data-light style="--span: 7">
         <p class="tour-panel__kicker">Gegangen<span class="hsep" aria-hidden="true"></span>30.08.</p>
         <h2 class="tour-panel__title">Meine <em>Meinung.</em></h2>
         <p class="tour-note__body">Kurz und knackig, teilweise steil, aber immer guter Weg. Oben war die Hütte
@@ -145,11 +145,16 @@
         </div>
       </div>
 
-    </div>
-  </section>
+      <!-- das lange Warten, direkt neben der Uhrzeit-Achse -->
+      <figure class="tour-shot spannt-2" style="--span: 4; --shot-fokus: center 58%; --shot-mobil: 3/4">
+        <img src="/touren/kneifelspitze/blaue-stunde.jpg" width="750" height="1000"
+             alt="Blaue Stunde über den Berchtesgadener Bergen, im Vordergrund das Dach der Paulshütte."
+             loading="lazy" decoding="async">
+        <figcaption><b>Blaue Stunde</b>Eine Stunde zwanzig warten</figcaption>
+      </figure>
 
-  <!-- ZEITACHSE: bei dieser Tour ist die Uhrzeit die Geschichte -->
-  <section class="tour-sektion tour-arc flaeche-wald st st3" aria-label="Zeitverlauf der Tour">
+      <!-- ZEITACHSE: bei dieser Tour ist die Uhrzeit die Geschichte -->
+      <section class="tour-arc flaeche-wald" style="--span: 8" aria-label="Zeitverlauf der Tour">
     <div class="tour-kopf">
       <span class="tour-kopf__label">Nacht in Tag<span class="hsep" aria-hidden="true"></span>Sonntag, 30.08.</span>
       <span class="tour-kopf__meta">Aufbruch 04:00 → zurück am Auto 08:20</span>
@@ -174,10 +179,10 @@
     </ol>
     <p class="tour-arc__note">Zwischen Gipfel und Sonnenaufgang liegt die eigentliche Tour: eine Stunde und
     zwanzig Minuten warten, bei Nacht, mit Blick auf Hohen Göll und Watzmann.</p>
-  </section>
+      </section>
 
-  <!-- HÖHENPROFIL — data-punkte trägt die echten Messwerte (km,Höhe) fürs Ablesen -->
-  <section class="tour-sektion tour-sektion--luft tour-profil flaeche-wald st st3">
+      <!-- HÖHENPROFIL — data-punkte trägt die echten Messwerte (km,Höhe) fürs Ablesen -->
+      <section class="tour-profil flaeche-wald" style="--span: 8">
     <div class="tour-kopf">
       <span class="tour-kopf__label">Höhenprofil<span class="hsep" aria-hidden="true"></span>hin &amp; zurück</span>
       <span class="tour-kopf__meta">Start 735 m → Gipfel 1.188 m → zurück</span>
@@ -202,32 +207,26 @@
           style="left: calc(49.2% + 12px);">Kneifelspitze · 1.188 m</span>
     </div>
     <p class="tour-profil__hint">Fahr über das Profil — es zeigt dir Höhe und Distanz an jeder Stelle.</p>
-  </section>
+      </section>
 
-  <!-- FOTOSTRECKE als Bento: die Größe folgt der Chronologie -->
-  <section class="tour-sektion tour-strip st st3" aria-label="Fotos der Tour">
-    <div class="tour-kopf">
-      <span class="tour-kopf__label">Vier Uhr bis acht<span class="hsep" aria-hidden="true"></span>drei Bilder</span>
-      <span class="tour-kopf__meta">alle am 30.08. selbst aufgenommen</span>
-    </div>
-    <div class="tour-strip__grid">
-      <figure class="tour-shot tour-shot--warten">
-        <img src="/touren/kneifelspitze/blaue-stunde.jpg" width="750" height="1000"
-             alt="Blaue Stunde über den Berchtesgadener Bergen, im Vordergrund das Dach der Paulshütte." loading="lazy" decoding="async">
-        <figcaption><b>Blaue Stunde</b>Eine Stunde zwanzig warten</figcaption>
-      </figure>
-      <figure class="tour-shot tour-shot--moment">
+      <!-- der Moment, auf den die ganze Tour zuläuft — neben dem Profil -->
+      <figure class="tour-shot" style="--span: 7; --shot-min: 330px; --shot-fokus: center 46%">
         <img src="/touren/kneifelspitze/sonnenaufgang.jpg" width="1000" height="750"
-             alt="Rot glühende Wolken beim Sonnenaufgang, davor die Silhouetten von Fichten." loading="lazy" decoding="async">
+             alt="Rot glühende Wolken beim Sonnenaufgang, davor die Silhouetten von Fichten."
+             loading="lazy" decoding="async">
         <figcaption><b>06:34</b>Halb hinter Bäumen, trotzdem top</figcaption>
       </figure>
-      <figure class="tour-shot tour-shot--danach">
-        <img src="/touren/kneifelspitze/watzmann-morgen.jpg" width="750" height="1000"
-             alt="Der Watzmann im ersten Morgenlicht unter blauem Himmel, davor Wiesen und Wald." loading="lazy" decoding="async">
+
+      <!-- der Tag danach, über die volle Breite als Abschluss -->
+      <figure class="tour-shot" style="--span: 5; --shot-min: 330px; --shot-fokus: center 44%; --shot-mobil: 3/4">
+        <img src="/touren/kneifelspitze/watzmann-morgen.jpg" width="1125" height="1500"
+             alt="Der Watzmann im ersten Morgenlicht unter blauem Himmel, davor Wiesen und Wald."
+             loading="lazy" decoding="async">
         <figcaption><b>Watzmann</b>Beim Abstieg, im ersten Licht</figcaption>
       </figure>
-    </div>
-  </section>
+
+  </div>
+
 
   <!-- CTA -->
   <section class="tour-cta flaeche-papier st" data-light>

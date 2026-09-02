@@ -46,7 +46,28 @@ Geschichte der Tour ist** (nachts los, oben auf das Licht warten). Referenz:
 | `.tour-strip` | Fotostrecke für Touren mit mehr als einem Bild. **Bento mit ungleichen Kacheln** (Kodex Regel 8), nicht drei gleich große — ein uniformes Karten-Grid ist der Anti-Slop-Wächter aus dem Kodex. Größe folgt der Chronologie: das lange Warten groß, der Moment breit, der Rest klein. **Grid, kein horizontaler Scroller** — WebKit/Gecko laden `loading="lazy"` beim horizontalen Scrollen nicht nach. |
 
 Die fixierte Reihenfolge aus §2 bleibt: Hero → Split → *(Nacht-Achse)* → Höhenprofil →
-*(Fotostrecke)* → CTA → Zurück-Link.
+*(Fotos)* → CTA → Zurück-Link.
+
+### 2b. Das Bento-Raster (seit 02.09.2026)
+
+Die Flächen stapeln **nicht** mehr als gleich breite Karten untereinander. Alles zwischen
+Hero und CTA läuft durch **ein** 12-Spalten-Raster (`.tour-bento`), und die Breite wechselt
+von Zeile zu Zeile, damit Text, Daten und Bilder ineinandergreifen:
+
+| Zeile | Kneifelspitze | Ristfeuchthorn |
+|---|---|---|
+| 1 | Vorm Start `--span:5` · Meinung `--span:7` | Vorm Start `5` · Meinung `7` |
+| 2 | Foto `4` **`.spannt-2`** · Zeitachse `8` | Höhenprofil `12` |
+| 3 | *(Foto läuft weiter)* · Höhenprofil `8` | — |
+| 4 | Foto `7` · Foto `5` | — |
+
+Die Kachel mit `.spannt-2` läuft über zwei Zeilen und **bindet die Flächen rechts davon
+zusammen** — das ist der Unterschied zwischen „verwoben" und „gestapelt". Sie braucht ein
+Hochformat, sonst wird der Beschnitt hässlich.
+
+Breite kommt immer über `style="--span: N"`, nie über eigene Grid-Regeln. Ab 860px klappt
+alles auf eine Spalte. Kodex Regel 8 gilt weiter: Gap bleibt 14px, keine Rotation, kein
+Overlap außer Foto→Karte im Hero.
 
 ---
 
@@ -121,14 +142,16 @@ Pro Tour dieses Set. **Fett = Pflicht**, Rest optional/ableitbar.
    kein `?v=` (sind im Ordner).
 8. **Prüfen:** `node scripts/tour-check.mjs <slug>` — muss grün sein, sonst nicht ausliefern.
    Nach Änderungen AM TOR selbst: `./scripts/tour-check-fixtures.sh` (12 Negativtests + Positivtest).
-9. **Verifizieren:** WebKit + Firefox + Chromium, 390px + 1440px.
-   ⚠️ **Über HTTP messen, nie über `file://`** — die Seite bindet `/v3.css` absolut ein, unter
-   `file://` zeigt das auf die Dateisystem-Wurzel, das Stylesheet lädt nicht und jede
-   Overflow-Messung ist Müll (`geraete-check.mjs` meldete so 40px Überlauf, der über
-   `python3 -m http.server` 0px war). Lazy-Bilder erst NACH dem Durchscrollen zählen,
-   sonst zählt man normales Lazy-Verhalten als Defekt.
-   **Screenshots selbst ansehen** — der `<ol>`-Listmarker der Nacht-Achse („1. 2. 3. 4."
-   vor den Uhrzeiten) stand in keinem Tor, nur im Bild.
+9. **Verifizieren:** `node scripts/tour-visual.mjs <slug>` — startet sich seinen eigenen
+   HTTP-Server, misst in 4 Engines (WebKit 390/768, Firefox 1024, Chromium 1440) und legt
+   Screenshots in `.tour-visual/` ab. Prüft Überlauf, JS-Fehler, nicht geladene Bilder **und
+   Bilder mit 0x0-Box**. Danach die Screenshots **selbst ansehen**.
+   ⚠️ `geraete-check.mjs` misst über `file://` und ist für diese Seiten **unbrauchbar**:
+   `/v3.css` zeigt dort auf die Dateisystem-Wurzel, das Stylesheet lädt nicht, und es meldete
+   so 40px Überlauf, der über HTTP 0px ist. Dafür gibt es `tour-visual.mjs`.
+   ⚠️ Was **kein** Tor findet, sondern nur das eigene Auge: der `<ol>`-Listmarker der
+   Zeitachse („1. 2. 3. 4." vor den Uhrzeiten) und ein Foto, dessen Beschnitt das Motiv
+   zerstört.
 10. **Datenschutz:** Neue Drittanbieter-Calls (Karten-Embed etc.) IMMER in `datenschutz.html`
     §4+§5 + Quell-Link am Widget. Open-Meteo ist bereits drin.
 11. **Branch:** von `origin/main` abzweigen, nicht vom aktuellen Arbeitsbranch. Sonst hängt die
