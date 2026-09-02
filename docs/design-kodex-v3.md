@@ -33,6 +33,17 @@ Papier-Text auf dunkel `#F3EBD9` · Leaf-Akzent `#7ED09B` · Meta-Grün `#9BD9B4
 
 ## Regel 4 — Zwei Radien: Karten 28px · Controls 14px. Keine asymmetrischen Ecken.
 
+Als **Tokens in `v3.css`**, nie als Zahl in einer Seite:
+`--r-karte` (Fläche mit Inhalt) · `--r-control` (was man bedient: Button, Input, Chip, Tag).
+
+**Ausgenommen sind FORMEN** — sie bilden einen Gegenstand ab und sind weder Karte noch
+Bedienelement: `50%`-Kreise (Aufzählungspunkte, Play-Knopf, Badges), das iPhone-Mockup in
+`kooperationen.html` (44/42/37px bilden das echte Gerät nach), Checkboxen, Polaroid-Kanten
+≤ 4px. Ein blindes Suchen-und-Ersetzen zerstört genau diese Fälle.
+
+Werkzeug: `python3 scripts/kodex-radien.py --pruefen` (Tor, Exit 1 bei ungeklärten festen
+Radien) · `--schreiben` wendet die Zuordnung an. Die Zuordnung steht explizit im Skript.
+
 ## Regel 5 — Zwei Schatten (Tokens)
 ```css
 --shadow-forest: 0 26px 60px -28px rgba(4,32,19,0.62);
@@ -63,3 +74,21 @@ aktiv = Mint + Emerald-Punkt, Berg bricht oben aus. Immer sichtbar, bottom 18px.
 ## Anti-Slop-Wächter (aus learning_anti_ki_slop_websites_2026)
 Kein uniformes Karten-Grid · keine Buzzword-Copy · Spezifität („4:50 Uhr, Bibel, Gym")
 · Serif↔Mono-Pairing · Grain/Textur · ein klarer POV.
+
+## Bilder gehören IN die Fläche, nicht darauf
+Ein Foto, das mit harter Kante an einer Fläche endet, wirkt aufgeklebt. Drei Wege, je nach Ort:
+- **Hero**: das Bild maskiert sich selbst nach unten weg
+  (`mask-image: linear-gradient(180deg, #000 78%, transparent 100%)`).
+  Eine Farbblende auf `--bg-deep` ist **falsch** — sie erzeugt nur eine neue Kante, weil der
+  echte Seitengrund an der Stelle heller ist.
+- **Foto neben Text** (Pin im Hub): Verlauf zu allen vier Kanten, nicht nur zu einer.
+- **Kachel im Raster**: Kanten-Vignette im Flächenton (`inset`-Schatten).
+
+## Was macht das System aus (Stand 02.09.2026)
+Tokens in `v3.css` gelten site-weit. Eine Seite trägt **Inhalt**, kein Design-System:
+feste Radien, eigene Flächenverläufe und hartkodierte Kennzahlen gehören nicht in eine Seite.
+Kennzahlen aus vorhandenen `data-`Attributen rechnen (siehe `touren/tour.js`, „Guide in
+Zahlen") — sonst veralten sie still, sobald ein Eintrag dazukommt.
+
+Prüfen: `python3 scripts/kodex-radien.py --pruefen` · `node scripts/tour-visual.mjs --site`
+(alle v3-Seiten, 4 Engines, Screenshots in `.tour-visual/`).

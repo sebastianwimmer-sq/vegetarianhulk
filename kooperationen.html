@@ -32,7 +32,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
-<link rel="stylesheet" href="/v3.css?v=13e17a16">
+<link rel="stylesheet" href="/v3.css?v=130cf968">
 <style>
 /* ============================================================
    /kooperationen.html — v3 Editorial-Dark (page-scoped .koop-*)
@@ -69,7 +69,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 
 /* Bühnen-Fenster ums echte Foto (ported .stage-frame) */
 .koop-stage { position: relative; justify-self: center; width: min(360px, 84%); }
-.koop-stage__frame { position: absolute; inset: -16px -14px 34px -14px; border-radius: 26px;
+.koop-stage__frame { position: absolute; inset: -16px -14px 34px -14px; border-radius: var(--r-karte);
   outline: 1px solid rgba(209,242,235,0.22); outline-offset: 7px;
   background:
     radial-gradient(82% 60% at 50% 24%, rgba(80,200,120,0.30), rgba(11,110,79,0.10) 55%, transparent 82%),
@@ -78,7 +78,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-stage__frame::after { content: ""; position: absolute; inset: 0; border-radius: inherit;
   background-image: var(--grain); opacity: 0.5; pointer-events: none; }
 .koop-stage figure { position: relative; z-index: 2; margin: 0; }
-.koop-stage img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 16px;
+.koop-stage img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: var(--r-control);
   box-shadow: 0 32px 54px -26px rgba(0,0,0,0.62), 0 6px 14px rgba(0,0,0,0.34); }
 .koop-stage figcaption { margin-top: 16px; text-align: center; font-family: var(--mono);
   font-size: 10px; font-weight: 600; letter-spacing: 2.2px; text-transform: uppercase; color: var(--paper-faint); }
@@ -103,7 +103,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-body-dark strong { color: var(--paper); font-weight: 700; }
 
 /* ---- Creme-Licht-Insel (Emphase, ported bibel/gipfelbuch) - */
-.koop-cream { position: relative; overflow: hidden; border-radius: 22px;
+.koop-cream { position: relative; overflow: hidden; border-radius: var(--r-karte);
   padding: clamp(30px, 4.4vw, 56px) clamp(24px, 4vw, 52px);
   background: linear-gradient(158deg, #F8F2E2 0%, #F0E7D2 60%, #E9DFC6 100%);
   box-shadow: var(--shadow-paper); }
@@ -165,7 +165,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
   filter: drop-shadow(0 1px 2px rgba(0,0,0,0.55)); }
 .koop-reel__foot { position: absolute; left: 16px; right: 62px; bottom: 20px; z-index: 4; }
 .koop-reel__brandchip { display: inline-flex; align-items: center; gap: 8px;
-  padding: 5px 11px 5px 5px; border-radius: 22px;
+  padding: 5px 11px 5px 5px; border-radius: var(--r-control);
   background: rgba(10,14,12,0.42); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.24); }
 .koop-reel__logo { width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center;
   background: linear-gradient(135deg, #7ED09B, #0B6E4F); color: #05130c;
@@ -196,7 +196,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
   color: var(--leaf); font-variant-numeric: tabular-nums; min-width: 3.4ch; }
 .koop-yield-lbl { font-size: 12.5px; line-height: 1.45; color: var(--paper-dim); }
 .koop-yield-lbl b { color: var(--paper); font-weight: 700; }
-.koop-yield-signal { margin-top: 22px; padding: 17px 19px; border-radius: 14px; position: relative; overflow: hidden;
+.koop-yield-signal { margin-top: 22px; padding: 17px 19px; border-radius: var(--r-control); position: relative; overflow: hidden;
   background: linear-gradient(158deg, rgba(19,54,35,0.6), rgba(6,26,17,0.62));
   border: 1px solid rgba(126,208,155,0.22);
   box-shadow: inset 0 1px 0 rgba(209,242,235,0.07), 0 16px 34px -22px rgba(0,0,0,0.6); }
@@ -213,7 +213,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
    ============================================================ */
 .koop-flow { position: relative; margin-top: 30px; }
 .koop-flow__rail { position: sticky; top: clamp(10px, 3vh, 22px); z-index: 6;
-  padding: 18px clamp(4px, 2vw, 18px) 20px; border-radius: 18px;
+  padding: 18px clamp(4px, 2vw, 18px) 20px; border-radius: var(--r-karte);
   background: linear-gradient(180deg, rgba(6,24,16,0.9) 0%, rgba(6,24,16,0.66) 100%);
   box-shadow: 0 20px 40px -30px rgba(0,0,0,0.8), inset 0 1px 0 rgba(209,242,235,0.06); }
 @supports (backdrop-filter: blur(8px)) {
@@ -257,7 +257,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-ab-panel { position: relative; overflow: hidden;
   min-height: clamp(300px, 44vh, 400px); margin-top: 20px;
   display: flex; flex-direction: column; justify-content: center;
-  padding: clamp(28px, 4vw, 46px); border-radius: 18px;
+  padding: clamp(28px, 4vw, 46px); border-radius: var(--r-karte);
   background: linear-gradient(158deg, rgba(19,54,35,0.52), rgba(6,26,17,0.6));
   border: 1px solid rgba(126,208,155,0.14);
   box-shadow: inset 0 1px 0 rgba(209,242,235,0.06), 0 26px 54px -30px rgba(0,0,0,0.72);
@@ -286,7 +286,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-ab-desc strong { color: var(--paper); font-weight: 700; }
 .koop-ab-paytag { display: inline-block; margin-top: 18px; font-family: var(--mono); font-size: 10px;
   font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #14100A;
-  background: linear-gradient(180deg, #F4CE3C, #E4B824); padding: 5px 13px; border-radius: 20px; }
+  background: linear-gradient(180deg, #F4CE3C, #E4B824); padding: 5px 13px; border-radius: var(--r-control); }
 .koop-tl-note { margin-top: 24px; font-size: 14px; line-height: 1.6; color: var(--paper-faint); max-width: 52ch; }
 .koop-tl-note strong { color: var(--paper-dim); }
 
@@ -303,7 +303,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
    PAKETE — value-first (Deliverables führen, Preis sekundär)
    ============================================================ */
 .koop-tiers { margin-top: 24px; }
-.koop-pkg-hero { position: relative; overflow: hidden; border-radius: 18px; padding: clamp(26px, 3.4vw, 40px);
+.koop-pkg-hero { position: relative; overflow: hidden; border-radius: var(--r-karte); padding: clamp(26px, 3.4vw, 40px);
   background: linear-gradient(152deg, #164027 0%, #0a2417 78%);
   box-shadow: inset 0 1px 0 rgba(209,242,235,0.1), 0 30px 60px -30px rgba(0,0,0,0.62);
   transition: transform 550ms var(--ease-lux), box-shadow 550ms var(--ease-lux); }
@@ -314,7 +314,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-pkg-hero > * { position: relative; z-index: 1; }
 .koop-pkg-flag { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px;
   font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #14100A;
-  background: linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%); padding: 5px 13px; border-radius: 20px;
+  background: linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%); padding: 5px 13px; border-radius: var(--r-control);
   filter: drop-shadow(0 1px 0 rgba(255,255,255,0.35)) drop-shadow(0 4px 8px rgba(0,0,0,0.35)); }
 .koop-pkg-name { margin: 15px 0 0; font-family: 'Playfair Display', serif; font-weight: 700;
   font-size: clamp(27px, 3.4vw, 35px); line-height: 1.04; color: var(--paper); }
@@ -342,7 +342,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-menu-lbl::after { content: ""; flex: 1; height: 1px; background: rgba(24,43,31,0.16); }
 .koop-offers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .koop-offer { position: relative; display: flex; flex-direction: column; padding: 22px 22px 20px;
-  border-radius: 14px; border: 1px solid rgba(24,43,31,0.08);
+  border-radius: var(--r-control); border: 1px solid rgba(24,43,31,0.08);
   background: linear-gradient(158deg, #FBF6EA, #F2E9D3);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 16px 34px -24px rgba(20,40,28,0.5);
   transition: transform 500ms var(--ease-lux), box-shadow 500ms var(--ease-lux); }
@@ -378,7 +378,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-pills { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
 .koop-pill { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.4px;
   color: var(--mint); background: rgba(126,208,155,0.1); border: 1px solid rgba(126,208,155,0.24);
-  padding: 7px 14px; border-radius: 20px; }
+  padding: 7px 14px; border-radius: var(--r-control); }
 .koop-pill b { color: var(--leaf); font-weight: 700; }
 .koop-pill.anti { color: var(--paper-faint); background: rgba(243,235,217,0.03);
   border: 1px dashed rgba(243,235,217,0.24); }
@@ -391,7 +391,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-cred-t b { color: var(--paper); font-weight: 700; }
 
 /* Sebis Notiz — Handschrift-Marginalie (kein Side-Stripe) */
-.koop-notiz { position: relative; margin: 30px 0 0; padding: 22px 24px; border-radius: 16px;
+.koop-notiz { position: relative; margin: 30px 0 0; padding: 22px 24px; border-radius: var(--r-control);
   background: linear-gradient(158deg, rgba(19,54,35,0.4), rgba(6,26,17,0.46));
   border: 1px solid rgba(126,208,155,0.14); box-shadow: 0 16px 34px -26px rgba(0,0,0,0.7); }
 .koop-notiz b { display: block; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.6px;
@@ -400,7 +400,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 
 /* ---- FAQ (dunkel, slim) ---------------------------------- */
 .koop-faq { margin-top: 22px; display: grid; gap: 10px; max-width: 760px; }
-.koop-faq details { border: 1px solid rgba(126,208,155,0.14); border-radius: 12px; overflow: hidden;
+.koop-faq details { border: 1px solid rgba(126,208,155,0.14); border-radius: var(--r-control); overflow: hidden;
   background: linear-gradient(158deg, rgba(19,54,35,0.4), rgba(6,26,17,0.48));
   transition: border-color 400ms var(--ease-lux); }
 .koop-faq details[open] { border-color: rgba(126,208,155,0.3); }
@@ -415,7 +415,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 
 /* ---- Bereit? — dunkler, fotografischer Schluss-Moment ----- */
 .koop-close { margin-top: clamp(74px, 11vh, 116px); }
-.koop-close__card { position: relative; overflow: hidden; border-radius: 26px;
+.koop-close__card { position: relative; overflow: hidden; border-radius: var(--r-karte);
   min-height: clamp(470px, 64vh, 660px); display: flex; align-items: flex-end;
   padding: clamp(30px, 5vw, 66px);
   box-shadow: 0 48px 100px -48px rgba(0,0,0,0.9), inset 0 1px 0 rgba(209,242,235,0.08); }

@@ -42,6 +42,24 @@
     inset 0 1px 1px rgba(255,255,255,0.14),
     0 0 0 1px rgba(209,242,235,0.16),
     0 26px 60px -28px rgba(0,0,0,0.65);
+  /* ---- Kodex-Tokens (docs/design-kodex-v3.md), site-weit ----
+     Regel 4: genau ZWEI Radien. Alles, was eine Flaeche mit Inhalt ist, bekommt
+     --r-karte; alles, was man bedient (Button, Input, Chip, Tag), --r-control.
+     Ausgenommen sind FORMEN: 50%-Kreise, Geraete-Mockups, Checkboxen — die
+     bilden einen Gegenstand ab und sind keine Karten.
+     Regel 8: ein Gap, ein Sektionsabstand.
+     Regel 1: zwei Flaechen, keine dritte.
+     Lagen bis 02.09.2026 nur in touren/tour.css — deshalb war der Rest der Site
+     ausserhalb des Systems und trug 33 handgesetzte Radien. */
+  --r-karte: 28px;
+  --r-control: 14px;
+  --gap: 14px;
+  --sektion: 72px;
+  --flaeche-wald:
+    radial-gradient(120% 88% at 82% -8%, rgba(126,208,155,0.16), transparent 58%),
+    linear-gradient(165deg, #1C4A30 0%, #123524 55%, #0E2C1D 100%);
+  --flaeche-papier: radial-gradient(120% 120% at 12% 0%, #F8F2E2, #E9DFC6 70%);
+
   --ease-lux: cubic-bezier(0.32, 0.72, 0, 1);
   --mono: ui-monospace, 'SF Mono', Menlo, monospace;
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
