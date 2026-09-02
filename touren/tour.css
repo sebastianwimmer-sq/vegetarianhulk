@@ -13,20 +13,9 @@
               Container min(100%-36px, 560px) / Desktop min(100%-64px, 1060px)
    ============================================================ */
 
-:root {
-  /* Regel 4 — genau zwei Radien */
-  --r-karte: 28px;
-  --r-control: 14px;
-  /* Regel 8 — ein Gap, ein Sektionsabstand */
-  --gap: 14px;
-  --sektion: 72px;
-  --tour-breite: min(100% - 36px, 560px);
-  /* Regel 1 — DIE Wald-Flaeche. Opak, nicht transluzent. */
-  --flaeche-wald:
-    radial-gradient(120% 88% at 82% -8%, rgba(126,208,155,0.16), transparent 58%),
-    linear-gradient(165deg, #1C4A30 0%, #123524 55%, #0E2C1D 100%);
-  --flaeche-papier: radial-gradient(120% 120% at 12% 0%, #F8F2E2, #E9DFC6 70%);
-}
+/* Radien, Gap, Sektionsabstand und die zwei Flaechen stehen in v3.css und
+   gelten site-weit. Hier nur noch, was allein den Touren gehoert. */
+:root { --tour-breite: min(100% - 36px, 560px); }
 @media (min-width: 900px) {
   :root { --sektion: 96px; --tour-breite: min(100% - 64px, 1060px); }
 }

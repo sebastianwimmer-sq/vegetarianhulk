@@ -21,7 +21,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
-<link rel="stylesheet" href="/v3.css?v=13e17a16">
+<link rel="stylesheet" href="/v3.css?v=130cf968">
 <style>
 /* ============================================================
    /anfrage.html — v3 Editorial-Dark Port (page-scoped .anf-)
@@ -44,7 +44,7 @@
 .anf-ctx h1 em { font-style: italic; color: var(--leaf); }
 .anf-sub { font-size: 16px; line-height: 1.68; color: var(--paper-dim); max-width: 42ch; }
 .anf-figs { margin: 30px 0 26px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px;
-  background: rgba(126,208,155,0.16); border: 1px solid rgba(126,208,155,0.16); border-radius: 12px; overflow: hidden; }
+  background: rgba(126,208,155,0.16); border: 1px solid rgba(126,208,155,0.16); border-radius: var(--r-control); overflow: hidden; }
 .anf-fig { background: linear-gradient(158deg, rgba(19,54,35,0.5), rgba(6,26,17,0.55)); padding: 16px 14px; }
 .anf-fig b { display: block; font-family: 'Playfair Display', serif; font-weight: 700;
   font-size: clamp(20px, 3vw, 27px); line-height: 1; letter-spacing: -0.5px; color: var(--leaf); }
@@ -57,7 +57,7 @@
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/contain no-repeat; }
 
 /* ---- Formular-Card (Creme, data-light) ---- */
-.anf-card { position: relative; overflow: hidden; border-radius: 22px;
+.anf-card { position: relative; overflow: hidden; border-radius: var(--r-karte);
   padding: clamp(26px, 3.6vw, 44px);
   background: linear-gradient(158deg, #F8F2E2 0%, #F0E7D2 60%, #E9DFC6 100%); box-shadow: var(--shadow-paper); }
 .anf-card::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.5; pointer-events: none; }
@@ -70,7 +70,7 @@
   /* 16px Pflicht: darunter zoomt iOS beim Fokus in die Seite (wirkte wie ein Bug).
      Feld in warmem Papier statt Reinweiß — gehört zur Creme-Karte statt darauf zu kleben. */
   width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; color: #14281C;
-  padding: 13px 15px; min-height: 50px; border-radius: 12px; background: #FBF6EA;
+  padding: 13px 15px; min-height: 50px; border-radius: var(--r-control); background: #FBF6EA;
   border: 1.5px solid rgba(24,43,31,0.22);
   box-shadow: inset 0 1.5px 3px rgba(24,43,31,0.07), inset 0 0 0 1px rgba(255,255,255,0.5);
   transition: border-color 220ms var(--ease-lux), box-shadow 220ms var(--ease-lux), background 220ms var(--ease-lux); }
@@ -84,7 +84,7 @@
 .anf-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .anf-chip { position: relative; cursor: pointer; user-select: none; }
 .anf-chip input { position: absolute; opacity: 0; width: 0; height: 0; }
-.anf-chip span { display: inline-block; padding: 11px 16px; border-radius: 999px; font-size: 13px; font-weight: 600;
+.anf-chip span { display: inline-block; padding: 11px 16px; border-radius: var(--r-control); font-size: 13px; font-weight: 600;
   color: #14281C; background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.58));
   border: 1px solid rgba(24,43,31,0.2); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 1px 2px rgba(24,43,31,0.05);
   transition: background 180ms var(--ease-lux), border-color 180ms var(--ease-lux), color 180ms var(--ease-lux), transform 180ms var(--ease-lux), box-shadow 180ms var(--ease-lux); }
@@ -142,7 +142,7 @@
   display: grid; place-items: center; font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--leaf);
   background: rgba(126,208,155,0.1); box-shadow: inset 0 0 0 1px rgba(126,208,155,0.3); }
 .anf-next li b { color: var(--paper); font-weight: 600; }
-.anf-error { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: rgba(160,40,30,0.1);
+.anf-error { margin-top: 14px; padding: 12px 14px; border-radius: var(--r-control); background: rgba(160,40,30,0.1);
   border: 1px solid rgba(160,40,30,0.28); color: #8a2018; font-size: 13.5px; line-height: 1.5; }
 /* Erfolg */
 .anf-success { text-align: center; padding: 20px 4px; }
