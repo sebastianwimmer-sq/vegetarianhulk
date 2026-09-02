@@ -31,6 +31,21 @@ Zwei Seitentypen, beide im v3-Editorial-Dark-Look (shared `/v3.css`, `/v3.js`, `
 
 Header beider Split-Panels IMMER gleich (Mono-Kicker + Playfair-Titel), `align-items: stretch` → gleiche Höhe.
 
+### 2a. Sonnenaufgang-Variante (seit Kneifelspitze, 30.08.2026)
+
+Additiv — bestehende Touren bleiben unverändert. Nur einsetzen, wenn die **Uhrzeit die
+Geschichte der Tour ist** (nachts los, oben auf das Licht warten). Referenz:
+`touren/kneifelspitze/index.html`.
+
+| Baustein | Was es tut |
+|---|---|
+| `.tour-arc` | Zeitachse zwischen Split und Höhenprofil, Farbverlauf Nacht → Sonnenaufgang. 4 Punkte: los · oben · Sonnenaufgang · zurück. Der Sonnenaufgangs-Punkt ist der markierte. `list-style:none` nicht vergessen. |
+| `.tour-sun` | Zweiter Live-Fakt im Hero-Strip: nächster Sonnenaufgang am Gipfel, gold statt grün. Nutzt `daily=sunrise` aus demselben Open-Meteo-Call — `forecast_days=2` und Index `[1]`, weil der heutige Sonnenaufgang mittags schon vorbei ist. |
+| `.tour-strip` | Fotostrecke für Touren mit mehr als einem Bild. **Grid, kein horizontaler Scroller** — WebKit/Gecko laden `loading="lazy"` beim horizontalen Scrollen nicht nach, und ohne sichtbare Pfeile findet den Streifen am Desktop niemand. |
+
+Die fixierte Reihenfolge aus §2 bleibt: Hero → Split → *(Nacht-Achse)* → Höhenprofil →
+*(Fotostrecke)* → CTA → Zurück-Link.
+
 ---
 
 ## 3. Daten-Schema pro Tour (das brauche ich von Sebi)
@@ -69,16 +84,44 @@ Pro Tour dieses Set. **Fett = Pflicht**, Rest optional/ableitbar.
 
 ## 4. Build-Schritte (technisch, in Reihenfolge)
 
-1. **Ordner:** `mkdir touren/<slug>` · `touren/ristfeuchthorn/index.html` als Basis kopieren.
-2. **Foto (HEIC → Web):** iPhone-HEIC ist sideways + EXIF-Falle. Ablauf:
-   `sips -s format jpeg -Z 1600 IN.HEIC --out _t.jpg` → `sips -r 90 _t.jpg --out _t2.jpg` (aufrecht drehen) → Pillow: `Image.open('_t2.jpg').convert('RGB').save('<slug>/ausblick.jpg', quality=82, optimize=True)` (OHNE exif = Tag weg). **NICHT** `ImageOps.exif_transpose` auf die schon gedrehte Datei (überkorrigiert). PIL kann HEIC nicht direkt → sips als Reader.
+1. **Ordner:** `mkdir touren/<slug>` · die passendste bestehende Tour als Basis kopieren
+   (Tagestour → `ristfeuchthorn`, Sonnenaufgang/Nacht → `kneifelspitze`).
+2. **Foto (HEIC → Web):** `python3 scripts/tour-foto.py IN.heic touren/<slug>/<name>.jpg --breite 1500 --q 82`
+   Gibt die fertigen `width="…" height="…"` fürs HTML aus.
+   **Nicht mehr von Hand mit `sips -r <winkel>` drehen.** Das alte Rezept hatte eine feste
+   90°-Drehung, die nur für Ristfeuchthorn zufällig passte: bei der Kneifelspitze trugen drei
+   Fotos Orientation 6 und eins Orientation 3, die feste Drehung kippte sie nach links — und
+   `sips -r` lässt den EXIF-Tag stehen, sodass der Browser ein zweites Mal dreht. Das Skript
+   liest den Tag, dreht die Pixel genau einmal und speichert **ohne exif**.
+   Danach das Bild **ansehen**, nicht nur die Ausgabe lesen.
 3. **Daten tauschen** (§3) in Hero, Fakten, Split-Zeilen, Notiz, Proof, Datum, Badge.
-4. **Höhenprofil-SVG:** Pfad-Punkte aus dem Bergfex-Profil nachzeichnen (viewBox 0 0 900 270, `preserveAspectRatio="none"`), Peak-Marker setzen.
-5. **Wetter:** in beiden Wetter-Skripten `elevation=<Gipfelhöhe>` (lat/lon = Bergregion) setzen. Muster: WMO-Code → Fineline-Icon-Map (aus Vorlage übernehmen).
-6. **Liste eintragen** (`touren/index.html`): Pinned-Highlight = neueste gegangene Tour; Zeile mit `data-name` (lowercase, inkl. Umlaut+ASCII-Variante fürs Suchen), `data-region`, `data-diff`, `data-thm` (NICHT `data-hm` — v3.js-Altimeter überschreibt `[data-hm]`!), `data-date`.
-7. **Cache-Busting:** `./scripts/bump-asset-versions.sh` (kennt v3.css/v3.js/relief3d.js). Neue seiten-eigene Assets brauchen kein `?v=` (sind im Ordner).
-8. **Verifizieren:** WebKit + Chromium, 1000px + 375px, keine JS-Fehler, kein Overflow, Live-Widget-Ausfall = lautlos hidden. Screenshots selbst prüfen.
-9. **Datenschutz:** Neue Drittanbieter-Calls (Karten-Embed etc.) IMMER in `datenschutz.html` §4+§5 + Quell-Link am Widget. Open-Meteo ist bereits drin.
+4. **Höhenprofil-SVG:** Pfad-Punkte aus dem Bergfex-/Strava-Profil nachzeichnen
+   (viewBox 0 0 900 270, `preserveAspectRatio="none"`), Peak-Marker setzen.
+   SVG-Text kurz halten — `preserveAspectRatio="none"` staucht ihn auf Mobile mit.
+5. **Wetter:** in beiden Wetter-Skripten `elevation=<Gipfelhöhe>` (lat/lon = Bergregion) setzen.
+   Muster: WMO-Code → Fineline-Icon-Map (aus Vorlage übernehmen).
+6. **Liste eintragen** (`touren/index.html`): Pinned-Highlight = neueste gegangene Tour;
+   Zeile mit `data-name` (lowercase, inkl. Umlaut+ASCII-Variante und gängiger Falschschreibung
+   fürs Suchen), `data-region`, `data-diff`, `data-thm` (NICHT `data-hm` — v3.js-Altimeter
+   überschreibt `[data-hm]`!), `data-date`. Dazu: **`tkCount` hochzählen**, **JSON-LD ItemList
+   pflegen** und prüfen, ob es für den `data-diff`-Wert überhaupt einen **Filter-Chip** gibt —
+   sonst ist die Tour nur über „Alle" erreichbar (Fall Kneifelspitze: T1 = erster leichter Grad).
+7. **Cache-Busting:** `./scripts/bump-asset-versions.sh`. Neue seiten-eigene Assets brauchen
+   kein `?v=` (sind im Ordner).
+8. **Prüfen:** `node scripts/tour-check.mjs <slug>` — muss grün sein, sonst nicht ausliefern.
+   Nach Änderungen AM TOR selbst: `./scripts/tour-check-fixtures.sh` (12 Negativtests + Positivtest).
+9. **Verifizieren:** WebKit + Firefox + Chromium, 390px + 1440px.
+   ⚠️ **Über HTTP messen, nie über `file://`** — die Seite bindet `/v3.css` absolut ein, unter
+   `file://` zeigt das auf die Dateisystem-Wurzel, das Stylesheet lädt nicht und jede
+   Overflow-Messung ist Müll (`geraete-check.mjs` meldete so 40px Überlauf, der über
+   `python3 -m http.server` 0px war). Lazy-Bilder erst NACH dem Durchscrollen zählen,
+   sonst zählt man normales Lazy-Verhalten als Defekt.
+   **Screenshots selbst ansehen** — der `<ol>`-Listmarker der Nacht-Achse („1. 2. 3. 4."
+   vor den Uhrzeiten) stand in keinem Tor, nur im Bild.
+10. **Datenschutz:** Neue Drittanbieter-Calls (Karten-Embed etc.) IMMER in `datenschutz.html`
+    §4+§5 + Quell-Link am Widget. Open-Meteo ist bereits drin.
+11. **Branch:** von `origin/main` abzweigen, nicht vom aktuellen Arbeitsbranch. Sonst hängt die
+    Tour an einem ungemergten Feature (Stand 09/2026: `feat/berg-portal-t0-t1` wartet auf den DNS-Umzug).
 
 ---
 
