@@ -8,7 +8,8 @@ Stand fixiert 21.07.2026. Referenz-Instanz: `touren/ristfeuchthorn/index.html`.
 
 ## 1. System-Überblick
 
-Zwei Seitentypen, beide im v3-Editorial-Dark-Look (shared `/v3.css`, `/v3.js`, `/fonts.css`; Shell = bg-wrap, rails, topbar, `.nav`, footer):
+Zwei Seitentypen, beide im v3-Editorial-Dark-Look (shared `/v3.css`, `/v3.js`, `/fonts.css`;
+Tour-Detailseiten zusätzlich `/touren/tour.css` + `/touren/tour.js`; Shell = bg-wrap, rails, topbar, `.nav`, footer):
 
 | Seite | Datei | Zweck |
 |---|---|---|
@@ -23,9 +24,10 @@ Zwei Seitentypen, beide im v3-Editorial-Dark-Look (shared `/v3.css`, `/v3.js`, `
 
 1. **Foto-Hero** (`.tour-hero`) — full-bleed Foto (78vh, Zoom-in beim Laden), Overlay: Crumb, DAV-Badge, Playfair-H1, Untertitel, Lead, **Fakten-Strip** (Playfair-Zahlen auf Hairline) inkl. **Live-„Jetzt"-Fakt** (Smashy-Dot + Temp am Gipfel).
 2. **Split** (`.tour-split` → `.tour-split__grid`, 2 symmetrische Panels, ab 820px gestapelt):
-   - Links `.tour-panel--dark`: Kicker „Vorm Start" + Playfair-Titel + **Info-Tafel** (`.tour-rows` → `.tour-row` = `<dt>`Label | `<dd>`Text, Hairline-Divider; KEINE Einzel-Bubbles!) + Foot (Video/Maps-Links).
-   - Rechts `.tour-panel--cream` (`data-light`): Kicker „Gegangen ⌃ Datum" + Playfair-Titel „Meine Meinung" + handschriftliche Notiz (`.tour-note__body`, Caveat) + Signatur (`.tour-note__sig`) + **Aktivitäts-Beweise** (`.tour-proof`, unten bündig).
-3. **Höhenprofil** (`.tour-profile`) — dunkle Karte, SVG zeichnet sich beim Reveal (draw-on), kompakt (Höhe clamp 120–168px).
+   - Links `.tour-panel.flaeche-wald`: Kicker „Vorm Start" + Playfair-Titel + **Info-Tafel** (`.tour-rows` → `.tour-row` = `<dt>`Label | `<dd>`Text, Hairline-Divider; KEINE Einzel-Bubbles!) + Foot (Video/Maps-Links).
+   - Rechts `.tour-panel.flaeche-papier` (`data-light`): Kicker „Gegangen ⌃ Datum" + Playfair-Titel „Meine Meinung" + handschriftliche Notiz (`.tour-note__body`, Caveat) + Signatur (`.tour-note__sig`) + **Aktivitäts-Beweise** (`.tour-proof`, unten bündig).
+3. **Höhenprofil** (`.tour-profil`) — Wald-Fläche, SVG zeichnet sich beim Reveal (draw-on).
+   Beschriftung als HTML-Marken über dem Diagramm, mit `data-punkte` zusätzlich ablesbar.
 4. **CTA** (`.tour-cta`, `data-light`) — Newsletter, geprägter `.tour-btn`.
 5. Zurück-Link `.tour-back` → `/touren/`.
 
@@ -39,9 +41,9 @@ Geschichte der Tour ist** (nachts los, oben auf das Licht warten). Referenz:
 
 | Baustein | Was es tut |
 |---|---|
-| `.tour-arc` | Zeitachse zwischen Split und Höhenprofil, Farbverlauf Nacht → Sonnenaufgang. 4 Punkte: los · oben · Sonnenaufgang · zurück. Der Sonnenaufgangs-Punkt ist der markierte. `list-style:none` nicht vergessen. |
-| `.tour-sun` | Zweiter Live-Fakt im Hero-Strip: nächster Sonnenaufgang am Gipfel, gold statt grün. Nutzt `daily=sunrise` aus demselben Open-Meteo-Call — `forecast_days=2` und Index `[1]`, weil der heutige Sonnenaufgang mittags schon vorbei ist. |
-| `.tour-strip` | Fotostrecke für Touren mit mehr als einem Bild. **Grid, kein horizontaler Scroller** — WebKit/Gecko laden `loading="lazy"` beim horizontalen Scrollen nicht nach, und ohne sichtbare Pfeile findet den Streifen am Desktop niemand. |
+| `.tour-arc` | Zeitachse zwischen Split und Höhenprofil. 4 Punkte: los · oben · Sonnenaufgang · zurück, der Sonnenaufgang ist markiert. **Die Fläche ist Wald wie überall** (Kodex Regel 1) — der Tagesanbruch lebt in der 1px-Datenspur und den Punkten, nicht in einer dritten Hintergrundfarbe. Der erste Entwurf hatte einen Nacht→Orange-Verlauf als Fläche; genau das las sich als Template-Optik. |
+| `.tour-fakt--live[data-sonnenaufgang]` | Zweiter Live-Fakt im Hero-Strip: nächster Sonnenaufgang am Gipfel. **Gleiche Zahlenskala wie alle anderen Fakten** — der Unterschied ist die Farbe, nicht die Größe; vorher brachen kleinere Live-Zahlen den Rhythmus. Nutzt `daily=sunrise` aus demselben Open-Meteo-Call. |
+| `.tour-strip` | Fotostrecke für Touren mit mehr als einem Bild. **Bento mit ungleichen Kacheln** (Kodex Regel 8), nicht drei gleich große — ein uniformes Karten-Grid ist der Anti-Slop-Wächter aus dem Kodex. Größe folgt der Chronologie: das lange Warten groß, der Moment breit, der Rest klein. **Grid, kein horizontaler Scroller** — WebKit/Gecko laden `loading="lazy"` beim horizontalen Scrollen nicht nach. |
 
 Die fixierte Reihenfolge aus §2 bleibt: Hero → Split → *(Nacht-Achse)* → Höhenprofil →
 *(Fotostrecke)* → CTA → Zurück-Link.
@@ -86,6 +88,10 @@ Pro Tour dieses Set. **Fett = Pflicht**, Rest optional/ableitbar.
 
 1. **Ordner:** `mkdir touren/<slug>` · die passendste bestehende Tour als Basis kopieren
    (Tagestour → `ristfeuchthorn`, Sonnenaufgang/Nacht → `kneifelspitze`).
+   Die Gestaltung kommt aus **`touren/tour.css`**, das Verhalten aus **`touren/tour.js`** —
+   beide werden nur eingebunden, nie kopiert. Eine Tour-Datei traegt DATEN, kein Design:
+   erlaubt ist ein `<style>`-Block mit dem Bildausschnitt des Heros (`--hero-fokus`),
+   sonst nichts. `tour-check.mjs` blockt eigene Radien und eigene Flaechen-Verlaeufe.
 2. **Foto (HEIC → Web):** `python3 scripts/tour-foto.py IN.heic touren/<slug>/<name>.jpg --breite 1500 --q 82`
    Gibt die fertigen `width="…" height="…"` fürs HTML aus.
    **Nicht mehr von Hand mit `sips -r <winkel>` drehen.** Das alte Rezept hatte eine feste
@@ -97,7 +103,12 @@ Pro Tour dieses Set. **Fett = Pflicht**, Rest optional/ableitbar.
 3. **Daten tauschen** (§3) in Hero, Fakten, Split-Zeilen, Notiz, Proof, Datum, Badge.
 4. **Höhenprofil-SVG:** Pfad-Punkte aus dem Bergfex-/Strava-Profil nachzeichnen
    (viewBox 0 0 900 270, `preserveAspectRatio="none"`), Peak-Marker setzen.
-   SVG-Text kurz halten — `preserveAspectRatio="none"` staucht ihn auf Mobile mit.
+   **Beschriftung NIE als `<text>` ins SVG** — `preserveAspectRatio="none"` verzerrt sie mit:
+   bei 900er viewBox auf 180px Höhe schrumpft 11px-Schrift auf gut 7px und wird zugleich
+   horizontal gestreckt. Stattdessen `.tour-profil__marke` als HTML über dem Diagramm.
+   **Zum Ablesen** (Höhe/Distanz am Zeiger, wie in den Tourenportalen): `data-punkte="km,höhe …"`
+   ans SVG. Nur setzen, wenn echte Messwerte vorliegen — bei Ristfeuchthorn ist der Pfad aus
+   dem Bergfex-Bild nachgezeichnet, dort gibt es bewusst kein Ablesen statt hergeleiteter Zahlen.
 5. **Wetter:** in beiden Wetter-Skripten `elevation=<Gipfelhöhe>` (lat/lon = Bergregion) setzen.
    Muster: WMO-Code → Fineline-Icon-Map (aus Vorlage übernehmen).
 6. **Liste eintragen** (`touren/index.html`): Pinned-Highlight = neueste gegangene Tour;

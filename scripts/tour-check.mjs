@@ -93,23 +93,47 @@ function pruefeDetail(slug) {
   //    das Tor bei jeder ehrlich beschrifteten Tour rot.
   //    (Ristfeuchthorn trug 1.569 im H1 und "Gipfel 1.567 m" im Profil.)
   const gipfel = (html.match(/<p class="tour-alt[^"]*">([\d.]+)\s*m/) || [])[1]?.replace('.', '');
-  const elev = (html.match(/elevation=(\d{3,4})/) || [])[1];
-  if (!elev) meld(hinweise, slug, 'kein Live-Wetter-Widget (elevation=) gefunden');
+  const elev = (html.match(/data-hoehe="(\d{3,4})"/) || [])[1];
+  if (!elev) meld(hinweise, slug, 'kein Live-Widget (data-hoehe) gefunden');
   if (!gipfel) {
     meld(hinweise, slug, 'keine Gipfelhoehe im H1-Untertitel (.tour-alt) gefunden — nicht gegengeprueft');
   } else {
     const mitPunkt = Number(gipfel).toLocaleString('de-DE');
     if (elev && elev !== gipfel)
-      meld(fehler, slug, `Open-Meteo elevation=${elev}, H1 sagt ${mitPunkt} m — einer ist falsch`);
+      meld(fehler, slug, `data-hoehe=${elev}, H1 sagt ${mitPunkt} m — einer ist falsch`);
 
     const profilGipfel = (html.match(/Gipfel\s+([\d.]+)\s*m/) || [])[1];
     if (profilGipfel && profilGipfel.replace('.', '') !== gipfel)
       meld(fehler, slug, `Hoehenprofil beschriftet den Gipfel mit ${profilGipfel} m, H1 sagt ${mitPunkt} m`);
 
-    const svgLabel = (html.match(/<text[^>]*>[^<]*·\s*([\d.]+)\s*m/) || [])[1];
-    if (svgLabel && svgLabel.replace('.', '') !== gipfel)
-      meld(fehler, slug, `SVG-Label sagt ${svgLabel} m, H1 sagt ${mitPunkt} m`);
+    // Die Gipfelmarke liegt als HTML ueber dem Profil (nicht mehr als <text> im SVG)
+    const marke = (html.match(/marke--gipfel[\s\S]{0,160}?·\s*([\d.]+)\s*m/) || [])[1];
+    if (marke && marke.replace('.', '') !== gipfel)
+      meld(fehler, slug, `Gipfelmarke am Profil sagt ${marke} m, H1 sagt ${mitPunkt} m`);
+    if (!marke)
+      meld(hinweise, slug, 'keine Gipfelmarke am Hoehenprofil gefunden');
   }
+
+
+  // -- Design-Kodex (docs/design-kodex-v3.md): das gemeinsame Stylesheet MUSS
+  //    die Gestaltung tragen. Frueher lag es als ~230-Zeilen-Block in jeder Tour;
+  //    dabei drifteten Radien, Gaps und Flaechen gegen den Kodex.
+  for (const geteilt of ['/touren/tour.css', '/touren/tour.js']) {
+    if (!html.includes(geteilt))
+      meld(fehler, slug, `${geteilt} nicht eingebunden — die Tour traegt eigenes Design statt des gemeinsamen`);
+  }
+  const eigenesCss = (html.match(/<style>([\s\S]*?)<\/style>/) || [])[1] || '';
+  const kodexZeilen = eigenesCss.split('\n').filter(z => !z.trim().startsWith('/*') && !z.trim().startsWith('*'));
+  const eigenerBlock = kodexZeilen.join('\n');
+  // Regel 4: Radien kommen aus --r-karte / --r-control, nie als Zahl in der Seite
+  const eigeneRadien = eigenerBlock.match(/border-radius:\s*\d+px/g);
+  if (eigeneRadien)
+    meld(fehler, slug, `page-scoped border-radius (${eigeneRadien[0]}) — Kodex Regel 4 kennt nur --r-karte und --r-control`);
+  // Regel 1: zwei Flaechen, keine dritte
+  if (/background:\s*linear-gradient/.test(eigenerBlock))
+    meld(fehler, slug, 'page-scoped Flaechen-Verlauf — Kodex Regel 1 kennt nur .flaeche-wald und .flaeche-papier');
+  if (eigenerBlock.split('\n').filter(z => z.trim()).length > 12)
+    meld(hinweise, slug, 'mehr als 12 Zeilen eigenes CSS — gehoert das nicht nach touren/tour.css?');
 
   // -- Rails: statischer Text ohne data-hm wird vom Altimeter nie aktualisiert
   const railsOhne = [...html.matchAll(/<span class="hm"(?![^>]*data-hm)[^>]*>/g)];
@@ -119,9 +143,9 @@ function pruefeDetail(slug) {
   // -- Asset-Refs: versioniert UND aktuell. Ein veralteter Hash faellt sonst erst
   //    im aggressiv cachenden Insta-In-App-Browser auf. Gleicher Algorithmus wie
   //    bump-asset-versions.sh: shasum -a 256, erste 8 Zeichen.
-  for (const asset of ['v3.css', 'v3.js', 'fonts.css']) {
+  for (const asset of ['v3.css', 'v3.js', 'fonts.css', 'touren/tour.css', 'touren/tour.js']) {
     if (!html.includes(`/${asset}`)) continue;
-    const ref = (html.match(new RegExp(`/${asset.replace('.', '\\.')}\\?v=([a-f0-9]{8})`)) || [])[1];
+    const ref = (html.match(new RegExp(`/${asset.replace(/\./g, '\\.')}\\?v=([a-f0-9]{8})`)) || [])[1];
     if (!ref) {
       meld(fehler, slug, `/${asset} ohne ?v=-Hash eingebunden — bump-asset-versions.sh laufen lassen`);
       continue;

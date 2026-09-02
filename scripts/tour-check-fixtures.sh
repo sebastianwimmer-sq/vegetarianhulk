@@ -36,8 +36,8 @@ pruefe "Hero-Bild fehlt auf der Platte" \
 pruefe "width/height am Hero entfernt" \
   's{width="1125" height="1500"}{}' \
   "touren/$SLUG/index.html"
-pruefe "elevation weicht von der Gipfelhoehe ab" \
-  's{elevation=1188}{elevation=1569}' \
+pruefe "data-hoehe weicht von der Gipfelhoehe ab" \
+  's{data-hoehe="1188"}{data-hoehe="1569"}' \
   "touren/$SLUG/index.html"
 pruefe "JSON-LD kaputt" \
   's{"\@type": "Article",}{"\@type" "Article",}' \
@@ -62,6 +62,24 @@ pruefe "Tour fehlt in der JSON-LD ItemList" \
   "touren/index.html"
 pruefe "Asset ohne Cache-Bust eingebunden" \
   's{/v3\.css\?v=[a-f0-9]{8}}{/v3.css}' \
+  "touren/$SLUG/index.html"
+pruefe "veralteter Cache-Bust-Hash" \
+  's{/touren/tour\.css\?v=[a-f0-9]{8}}{/touren/tour.css?v=deadbeef}' \
+  "touren/$SLUG/index.html"
+pruefe "gemeinsames tour.css nicht eingebunden" \
+  's{<link rel="stylesheet" href="/touren/tour\.css[^>]*>}{}' \
+  "touren/$SLUG/index.html"
+pruefe "gemeinsames tour.js nicht eingebunden" \
+  's{<script src="/touren/tour\.js[^>]*></script>}{}' \
+  "touren/$SLUG/index.html"
+pruefe "Gipfelmarke widerspricht der H1-Hoehe" \
+  's{(marke--gipfel[\s\S]{0,200}?Kneifelspitze · 1\.)188( m)}{${1}166${2}}' \
+  "touren/$SLUG/index.html"
+pruefe "Kodex Regel 4: eigener border-radius in der Seite" \
+  's{(\.tour-hero \{ --hero-fokus)}{.tour-shot { border-radius: 18px; }\n  $1}' \
+  "touren/$SLUG/index.html"
+pruefe "Kodex Regel 1: eigene Flaeche in der Seite" \
+  's{(\.tour-hero \{ --hero-fokus)}{.tour-arc { background: linear-gradient(122deg, #0A1526, #7C4A18); }\n  $1}' \
   "touren/$SLUG/index.html"
 
 echo

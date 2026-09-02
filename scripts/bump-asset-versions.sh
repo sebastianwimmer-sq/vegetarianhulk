@@ -25,6 +25,8 @@ ASSETS=(
   fonts.css
   v3.css
   v3.js
+  touren/tour.css
+  touren/tour.js
   relief3d.js
   motion-reveal.js
   update-check.js
