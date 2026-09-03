@@ -19,6 +19,10 @@
 
 // Bestätigungs-Mail-Design (Quelle: email-templates/confirm-doi.html — bei Änderung neu rüberkopieren)
 import DOI_HTML from './doi-template.html';
+/* Direkt aus der Quelle importiert, nicht kopiert: doi-template.html musste
+   bisher bei jeder Änderung von Hand herübergeschoben werden — zwei Kopien
+   derselben Mail driften garantiert auseinander. */
+import WELCOME_HTML from '../../email-templates/welcome-berg-starter.html';
 
 const ALLOWED_ORIGINS = new Set([
   'https://vegetarianhulk.de',
@@ -222,6 +226,33 @@ async function sendDoiMail(env, email, confirmUrl) {
   }
 }
 
+/* Der Berg-Starter selbst. Bis 03.09.2026 versprach das Formular „dann kommt
+   der Berg-Starter“, aber nirgends im Code stand ein Sendebefehl dafür — der
+   Kontakt landete nur in der Liste. Ob eine Brevo-Automation ihn ausliefert,
+   ist von hier aus unsichtbar und damit auch im Zeitverhalten nicht zusagbar.
+   Deshalb schickt ihn der Worker jetzt selbst, direkt nach der Eintragung:
+   damit ist „wie schnell“ beantwortbar (Sekunden) und nachprüfbar. */
+const STARTER_SUBJECT = 'Dein Berg-Starter 🏔️';
+
+async function sendStarterMail(env, email) {
+  const html = WELCOME_HTML
+    .replaceAll('{{ contact.VORNAME | default : "du" }}', 'du')
+    .replaceAll('{{ unsubscribe }}', 'mailto:info@vegetarianhulk.de?subject=Abmelden');
+  const res = await brevo(env, '/smtp/email', {
+    method: 'POST',
+    body: JSON.stringify({
+      sender: DOI_SENDER,
+      to: [{ email }],
+      subject: STARTER_SUBJECT,
+      htmlContent: html,
+    }),
+  });
+  if (!res.ok) {
+    const detail = await res.text().catch(() => '');
+    throw new Error(`Brevo Starter ${res.status}: ${detail.slice(0, 200)}`);
+  }
+}
+
 /* Nach Bestätigungs-Klick: Kontakt in die Liste (idempotent). */
 async function addContactToList(env, email) {
   const res = await brevo(env, '/contacts', {
@@ -238,20 +269,46 @@ async function addContactToList(env, email) {
   }
 }
 
+/* Baut das Redirect-Ziel. Vorher wurde '?bestaetigung=…' angehaengt — das
+   ergibt eine kaputte URL, sobald NL_REDIRECT_URL selbst schon einen Query
+   traegt. Die URL-API haengt sauber an und schluckt auch einen Tippfehler
+   in der Variablen nicht still: faellt sie um, landet der Mensch auf der
+   Standard-Danke-Seite statt auf einer Fehlerseite des Browsers. */
+function bestaetigungsZiel(env, zustand) {
+  const basis = 'https://vegetarianhulk.de/danke.html';
+  let ziel;
+  try {
+    ziel = new URL(env.NL_REDIRECT_URL || basis);
+  } catch {
+    console.error('vh-forms: NL_REDIRECT_URL ist keine gueltige URL, nutze Standard');
+    ziel = new URL(basis);
+  }
+  ziel.searchParams.set('bestaetigung', zustand);
+  return ziel.toString();
+}
+
 async function handleNewsletterConfirm(request, env) {
-  const redirect = env.NL_REDIRECT_URL || 'https://vegetarianhulk.de/';
   const token = new URL(request.url).searchParams.get('t');
   const email = await verifyDoiToken(env, token);
   if (!email || !env.BREVO_API_KEY) {
-    // abgelaufen/ungültig → freundlich zur Seite (dort kann man sich neu eintragen)
-    return Response.redirect(redirect + '?bestaetigung=abgelaufen', 302);
+    // abgelaufen/ungültig → Danke-Seite erklärt es und bietet neues Eintragen an
+    return Response.redirect(bestaetigungsZiel(env, 'abgelaufen'), 302);
   }
   try {
     await addContactToList(env, email);
-    return Response.redirect(redirect + '?bestaetigung=ok', 302);
+    /* Getrennt abgefangen: die Eintragung IST gelungen, auch wenn der Versand
+       hakt. Diesen Fall als 'fehler' zu melden wäre gelogen — und ihn als 'ok'
+       zu melden hieße, jemanden auf eine Mail warten zu lassen, die nie kommt. */
+    try {
+      await sendStarterMail(env, email);
+    } catch (mailErr) {
+      console.error('vh-forms starter mail failed:', mailErr.message || mailErr);
+      return Response.redirect(bestaetigungsZiel(env, 'ok-ohne-starter'), 302);
+    }
+    return Response.redirect(bestaetigungsZiel(env, 'ok'), 302);
   } catch (err) {
     console.error('vh-forms confirm failed:', err.message || err);
-    return Response.redirect(redirect + '?bestaetigung=fehler', 302);
+    return Response.redirect(bestaetigungsZiel(env, 'fehler'), 302);
   }
 }
 

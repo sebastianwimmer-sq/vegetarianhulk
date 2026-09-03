@@ -10,7 +10,10 @@ workers_dev = true
 
 [vars]
 NL_LIST_ID = "5"              # Brevo-Liste vegetarianhulk-discipline-reset (#5)
-NL_REDIRECT_URL = "https://vegetarianhulk.de/"   # Ziel nach Bestätigungs-Klick
+# Ziel nach dem Klick in der Bestätigungsmail. MUSS eine Seite sein, die
+# ?bestaetigung=ok|abgelaufen|fehler auswertet — sonst steht der Mensch ohne
+# Rückmeldung da (bis 03.09.2026 zeigte "/" wortlos den Hero).
+NL_REDIRECT_URL = "https://vegetarianhulk.de/danke.html"
 
 # doi-template.html als Text importierbar machen (Quelle: email-templates/confirm-doi.html)
 [[rules]]

@@ -94,13 +94,24 @@ for (const slug of slugs) {
     const seite = await browser.newPage({ viewport });
     const jsFehler = [];
     const bekannt = [];
-    /* Turnstile wirft in WebKit einen cross-origin-Fehler gegen
-       challenges.cloudflare.com — auch live, auch ohne unser Zutun, und in
-       Chromium gar nicht. Der Widget-Modus laesst sich nur im
-       Cloudflare-Dashboard aendern. Als Fehler gezaehlt stuende dieses Tor
-       dauerhaft rot und wuerde nach einer Woche ignoriert; verschwiegen waere
-       es genauso falsch. Deshalb: sichtbar, aber nicht blockierend. */
-    const IST_BEKANNT = /challenges\.cloudflare\.com/;
+    /* Turnstile-Fehler sind NICHT alle gleich — die Grenze entscheidet, ob
+       dieses Tor noch etwas wert ist:
+
+       nicht blockierend (Fremdverhalten, trifft nur Automaten):
+       · cross-origin gegen challenges.cloudflare.com — WebKit meldet es,
+         Chromium nicht, auch live, auch ohne unser Zutun.
+       · Error 6xxxxx (z. B. 600010) — die Challenge liess sich nicht loesen.
+         Seit der Umstellung auf Non-Interactive am 03.09.2026 gibt es keine
+         Checkbox mehr als Ausweg, also scheitert hier JEDER automatisierte
+         Browser. Dass echte Menschen durchkommen, ist belegt: Sebis Anmeldung
+         am 03.09. lief durch bis zur Bestaetigungsmail.
+
+       blockierend (echte Fehlkonfiguration, trifft JEDEN Besucher):
+       · 110200 unbekannte Domain · 400010 falsche Sitekey · alles andere.
+       Wer pauschal jeden Turnstile-Fehler schluckt, sieht den Tag nicht, an
+       dem vegetarianhulk.de aus der Hostname-Liste faellt — und genau dann
+       kommt keine einzige Anmeldung mehr an. */
+    const IST_BEKANNT = /challenges\.cloudflare\.com|Turnstile\]\s*Error:\s*6\d{5}/;
     seite.on('pageerror', e => (IST_BEKANNT.test(e.message) ? bekannt : jsFehler).push(e.message));
 
     const url = siteModus ? `http://localhost:${PORT}${slug}` : `http://localhost:${PORT}/touren/${slug}/`;
