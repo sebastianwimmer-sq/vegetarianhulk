@@ -237,7 +237,24 @@ function pruefeImBrowser() {
     const imText = el.tagName === 'A' && el.parentElement
       && /^(P|LI|SPAN|DD|SMALL|STRONG|EM)$/.test(el.parentElement.tagName);
     if (imText) continue;
-    if (r.width < 44 || r.height < 44) zuKlein.push(`${kurz(el)} ${Math.round(r.width)}x${Math.round(r.height)}`);
+    // Checkbox/Radio mit verbundenem Label: das Label ist mitklickbar, die
+    // tatsaechliche Trefferflaeche ist also groesser als das Kaestchen.
+    if (/^(checkbox|radio)$/.test(el.type || '') && el.labels && el.labels.length) {
+      const lr = el.labels[0].getBoundingClientRect();
+      if (lr.height >= 44 || lr.width >= 44) continue;
+    }
+    /* Ein Pseudo-Element kann die Trefferflaeche vergroessern, ohne die
+       sichtbare Box aufzublaehen — genau so bleiben die Filter-Chips im Hub
+       kompakt und trotzdem 44 px treffbar. Die tatsaechliche Flaeche zaehlt. */
+    let hoehe = r.height, breite = r.width;
+    for (const pseudo of ['::after', '::before']) {
+      const ps = getComputedStyle(el, pseudo);
+      if (!ps || ps.content === 'none' || ps.position !== 'absolute') continue;
+      const ph = parseFloat(ps.height), pw = parseFloat(ps.width);
+      if (isFinite(ph) && ph > hoehe) hoehe = ph;
+      if (isFinite(pw) && pw > breite) breite = pw;
+    }
+    if (Math.round(breite) < 44 || Math.round(hoehe) < 44) zuKlein.push(`${kurz(el)} ${Math.round(r.width)}x${Math.round(r.height)}`);
   }
   if (zuKlein.length) hinweise.push(`Tippziel unter 44px: ${[...new Set(zuKlein)].slice(0, 4).join(', ')}`);
 

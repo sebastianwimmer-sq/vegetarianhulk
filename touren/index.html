@@ -22,7 +22,7 @@
 
 <script src="/launch-gate.js?v=4"></script>
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
-<link rel="stylesheet" href="/v3.css?v=0f067e59">
+<link rel="stylesheet" href="/v3.css?v=3fcd8e5a">
 <link rel="stylesheet" href="/touren/tour.css?v=b686b1fe">
 <style>
 /* ============================================================
@@ -126,17 +126,28 @@
 .tk-search:focus-within { border-color: rgba(126,208,155,0.55); box-shadow: 0 0 0 3px rgba(80,200,120,0.12); }
 .tk-search svg { width: 14px; height: 14px; color: var(--leaf); flex: 0 0 auto; }
 .tk-search input { flex: 1; min-width: 0; background: none; border: 0; outline: none; font: inherit;
+  min-height: 44px;   /* WCAG 2.5.8: war 19 px hoch */
   font-family: var(--mono); font-size: 12px; letter-spacing: 0.5px; color: var(--paper); }
 .tk-search input::placeholder { color: var(--paper-faint); }
 .tk-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .tk-group__label { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.6px;
   text-transform: uppercase; color: var(--paper-faint); margin-right: 2px; }
 .tk-chip { cursor: pointer; border: 1px solid rgba(126,208,155,0.22); border-radius: var(--r-control);
+  position: relative; display: inline-flex; align-items: center;
   background: transparent; padding: 7px 14px;
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
   color: var(--paper-dim);
   transition: background 300ms var(--ease-lux), color 300ms var(--ease-lux), border-color 300ms var(--ease-lux), transform 300ms var(--ease-lux); }
 .tk-chip:hover { border-color: rgba(126,208,155,0.5); color: var(--paper); }
+
+/* WCAG 2.5.8 ohne optischen Preis: die Trefferflaeche liegt als unsichtbares
+   Rechteck ueber dem Chip, die sichtbare Pille bleibt kompakt. Mit min-height
+   war die Filterleiste auf 390 px auf 356 px Hoehe gewachsen. */
+.tk-chip::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 50%;
+  height: 44px; transform: translateY(-50%);
+}
+.tk-sort select { min-height: 44px; }
 .tk-chip[aria-pressed="true"] { background: linear-gradient(180deg, #E8BF25, #D4A918); color: #14100A;
   border-color: transparent; transform: translateY(-1px); }
 .tk-sort { position: relative; }

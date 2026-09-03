@@ -1017,3 +1017,34 @@ vh-newsletter-form:not(:defined) { display: block; min-height: 396px; }
 @media (min-width: 520px) {
   vh-newsletter-form:not(:defined) { min-height: 297px; }
 }
+
+/* ---- Tippziele (WCAG 2.2 AA, 2.5.8 Target Size) ----
+   Gemessen lagen Footer-Wordmark (194x20) und die Rechtslinks (69x19, 84x19)
+   deutlich unter 44 px Hoehe. Geloest ueber Polster, nicht ueber Schriftgroesse:
+   die Flaeche waechst, das Schriftbild bleibt exakt wie es war.
+   Links im Fliesstext sind laut WCAG ausgenommen und bleiben unberuehrt. */
+footer .inner .wordmark,
+footer .legal a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+footer .legal { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0 clamp(10px, 3vw, 20px); }
+footer .legal a { padding-inline: 2px; }
+
+/* Weitere Tippziele unter 44 px, gemessen: Social-Links (123x13), die
+   Quellenangabe am Wetter-Widget (144x16), der Zurueck-Link auf /danke/
+   (189x20) und die Buttons, denen genau 1 px fehlte (196x43). */
+.social-link,
+.hud-src,
+.ty-back,
+.th-btn,
+.pp-copy { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; }
+.social-link, .hud-src { padding-block: 4px; }
+
+/* Pfeil-Knoepfe der Etappen-Navigation (waren 26x24), Sortierung und die
+   Mini-Buttons in den aufgeklappten Tour-Zeilen. Alle nur ueber die
+   Trefferflaeche vergroessert, das Schriftbild bleibt. */
+.panel-nav button { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+.tk-sort select { min-height: 44px; }
+.tk-minibtn { min-height: 44px; display: inline-flex; align-items: center; }
