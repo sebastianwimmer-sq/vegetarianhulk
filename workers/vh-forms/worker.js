@@ -18,10 +18,11 @@
    ============================================================ */
 
 // Bestätigungs-Mail-Design (Quelle: email-templates/confirm-doi.html — bei Änderung neu rüberkopieren)
-import DOI_HTML from './doi-template.html';
-/* Direkt aus der Quelle importiert, nicht kopiert: doi-template.html musste
-   bisher bei jeder Änderung von Hand herübergeschoben werden — zwei Kopien
-   derselben Mail driften garantiert auseinander. */
+import DOI_HTML from '../../email-templates/confirm-doi.html';
+/* Beide Vorlagen kommen direkt aus email-templates/, nicht aus einer Kopie
+   im Worker-Ordner. Die Kopie musste bisher bei jeder Änderung von Hand
+   herübergeschoben werden — und am 03.09. hatte genau sie die Dark-Mode-
+   Korrektur nicht, weil das Prüfwerkzeug nur email-templates/ ansieht. */
 import WELCOME_HTML from '../../email-templates/welcome-berg-starter.html';
 
 const ALLOWED_ORIGINS = new Set([

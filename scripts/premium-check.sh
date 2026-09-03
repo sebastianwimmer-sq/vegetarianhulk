@@ -46,6 +46,7 @@ titel "Statisch (Sekunden)"
 lauf "Design-Kodex: Radien"          python3 scripts/kodex-radien.py --pruefen
 lauf "Touren gegen die Spec"         node scripts/tour-check.mjs --alle
 lauf "Tore selbst (Fixtures)"        ./scripts/tour-check-fixtures.sh
+lauf "E-Mail-Vorlagen"               node scripts/mail-check.mjs --selbsttest
 
 if [ "$SCHNELL" -eq 0 ]; then
   titel "Im Browser (Minuten)"
