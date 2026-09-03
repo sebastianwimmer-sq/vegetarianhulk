@@ -1,7 +1,10 @@
 /* Ausgelagert aus anfrage.html am 03.09.2026.
    Grund: mit einem Inline-<script> laesst sich script-src nicht auf 'self'
    setzen — 'unsafe-inline' erlaubt sonst jedes eingeschleuste Skript.
-   Einbindung mit defer an derselben Stelle, damit das Timing gleich bleibt. */
+   Einbindung mit defer an derselben Stelle, damit das Timing gleich bleibt.
+   Quelle: der Stand aus origin/main INKLUSIVE der Turnstile-Fuehrung —
+   die frühere Auslagerung stammte aus der Fassung davor und haette 13
+   Zeilen verschluckt. */
 // Brand-Anfrage → eigener Cloudflare-Worker (vh-forms, Repo: workers/vh-forms)
 // → Brevo Transactional → info@vegetarianhulk.de.
 const FORMS_ENDPOINT = 'https://vh-forms.peaking.workers.dev/brand-inquiry';
@@ -47,6 +50,24 @@ async function submitBrandInquiry(e) {
     turnstileToken: (window.turnstile && window.turnstile.getResponse()) || '',
     _honey: get('bf-hp')
   };
+
+  // Ohne Turnstile-Token antwortet der Worker fail-closed mit 403. Den Request
+  // gar nicht erst schicken, sondern zeigen, WO der Haken fehlt — sonst liest
+  // der Nutzer nur eine Fehlermeldung und sucht die Ursache beim Formular.
+  if (!payload.turnstileToken) {
+    const widget = document.querySelector('.cf-turnstile');
+    const fehler = document.getElementById('formError');
+    if (fehler) {
+      fehler.innerHTML = '<strong>Fast fertig.</strong> Setz noch den Haken bei der Sicherheitsprüfung — dann geht\'s los.';
+      fehler.hidden = false;
+    }
+    if (widget) {
+      widget.classList.add('is-err');
+      widget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => widget.classList.remove('is-err'), 2600);
+    }
+    return;
+  }
 
   const btn = form.querySelector('button[type="submit"]');
   btn.disabled = true;
@@ -99,7 +120,6 @@ async function submitBrandInquiry(e) {
   document.querySelectorAll('#footer-year').forEach(function (el) { el.textContent = y; });
 })();
 
-/* ---- naechster Block ---- */
 
 /* Consent-Fehler zurücksetzen beim Ankreuzen */
 (function () {
