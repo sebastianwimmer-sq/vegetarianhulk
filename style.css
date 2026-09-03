@@ -2,7 +2,7 @@
    Vanille/Beige BG + Schwarze Schrift + Hulk-Green-Akzente.
    Shared across index.html, kooperationen.html, impressum.html, datenschutz.html */
 
-@import url('/fonts.css?v=1e2010e0');
+@import url('/fonts.css?v=6dafcfa7');
 
 :root {
   /* === Forest-Hulk Light-Theme (V6) ===
@@ -541,7 +541,7 @@ html { scroll-padding-top: calc(var(--topbar-h) + 12px); }
 }
 
 .identity-glass-card .identity-sub {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Inter', 'Inter Fallback', system-ui, sans-serif;
   font-size: var(--font-body);
   line-height: var(--leading-normal);
   color: var(--ink);
@@ -568,7 +568,7 @@ html { scroll-padding-top: calc(var(--topbar-h) + 12px); }
 }
 
 .hero-handle {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Inter', 'Inter Fallback', system-ui, sans-serif;
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.3px;
@@ -619,7 +619,7 @@ html { scroll-padding-top: calc(var(--topbar-h) + 12px); }
   background: var(--grad-forest);
   color: var(--vanilla);
   border-radius: 12px;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Inter', 'Inter Fallback', system-ui, sans-serif;
   font-weight: 700;
   font-size: 15px;
   letter-spacing: 0.2px;
@@ -644,7 +644,7 @@ html { scroll-padding-top: calc(var(--topbar-h) + 12px); }
   color: var(--forest-1);
   border: 2px solid var(--forest-1); /* v31.5: 1.5px → 2px für stärkere Sichtbarkeit */
   border-radius: 12px;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Inter', 'Inter Fallback', system-ui, sans-serif;
   font-weight: 700;
   font-size: 14px;
   letter-spacing: 0.2px;
@@ -823,7 +823,7 @@ html { scroll-padding-top: calc(var(--topbar-h) + 12px); }
 }
 
 .bibel-anchor-signature {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Inter', 'Inter Fallback', system-ui, sans-serif;
   font-size: 13px;
   font-weight: 600;
   color: var(--ink-2);
@@ -940,7 +940,7 @@ html { scroll-padding-top: calc(var(--topbar-h) + 12px); }
 }
 
 .lead-preview-tile-teaser {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Inter', 'Inter Fallback', system-ui, sans-serif;
   font-size: 13px;
   line-height: 1.5;
   color: var(--ink-2);
@@ -1003,7 +1003,7 @@ html { scroll-padding-top: calc(var(--topbar-h) + 12px); }
   color: var(--vanilla);
   text-align: center;
   text-decoration: none;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Inter', 'Inter Fallback', system-ui, sans-serif;
   font-weight: 700;
   font-size: 15px;
   letter-spacing: 0.2px;
@@ -2189,7 +2189,7 @@ vh-danke-block:not(:defined) { min-height: 416px; }
   margin-top: 16px;
   padding-top: 14px;
   border-top: 1px solid var(--earth);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Inter', 'Inter Fallback', system-ui, sans-serif;
   font-size: 13px;
   line-height: 1.55;
   color: var(--ink-2);
@@ -4240,7 +4240,7 @@ body::before {
 }
 .vh-nav__icon svg { width: 100%; height: 100%; display: block; }
 .vh-nav__label {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Inter', 'Inter Fallback', system-ui, sans-serif;
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.5px;
@@ -4447,7 +4447,7 @@ body { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 100px); }
 .vh-shead { margin: var(--space-lg) 0 var(--space-md); }
 .vh-shead__eyebrow {
   display: flex; align-items: center; gap: 13px;
-  font-family: 'Inter', system-ui, sans-serif; font-size: 11px; font-weight: 800;
+  font-family: 'Inter', 'Inter Fallback', system-ui, sans-serif; font-size: 11px; font-weight: 800;
   letter-spacing: 2.6px; text-transform: uppercase; color: var(--forest-primary);
   margin: 0 0 12px;
 }

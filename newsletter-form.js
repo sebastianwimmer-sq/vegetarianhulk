@@ -176,6 +176,7 @@
       var holder = document.createElement('div');
       holder.setAttribute('slot', 'captcha');
       this.appendChild(holder);
+      this._captchaHolder = holder;
       loadTurnstile().then(function (turnstile) {
         self._turnstileWidgetId = turnstile.render(holder, {
           sitekey: TURNSTILE_SITEKEY,
@@ -223,6 +224,10 @@
       this._msg.className = 'msg is-visible msg--error';
       this._email.setAttribute('aria-invalid', 'true');
       this._msg.innerHTML = '<strong>Etwas ging schief.</strong> ' + (detail || 'Versuch&apos;s nochmal.');
+    }
+    if (state === 'fehlt') {
+      this._msg.className = 'msg is-visible msg--info';
+      this._msg.innerHTML = detail || 'Da fehlt noch ein Schritt.';
       return;
     }
   };
@@ -250,8 +255,18 @@
     if (TURNSTILE_SITEKEY && window.turnstile && this._turnstileWidgetId !== null) {
       turnstileToken = window.turnstile.getResponse(this._turnstileWidgetId) || '';
       if (!turnstileToken) {
-        this.showState('error', 'Bitte kurz die Sicherheitspr&uuml;fung l&ouml;sen.');
+        this.showState('fehlt', '<strong>Fast fertig.</strong> Setz noch den Haken bei der Sicherheitspr&uuml;fung &mdash; dann geht&apos;s los.');
         this._email.removeAttribute('aria-invalid');
+        if (this._captchaHolder) {
+          this._captchaHolder.classList.add('is-err');
+          try {
+            this._captchaHolder.scrollIntoView({ block: 'center', behavior: 'smooth' });
+          } catch (e) {
+            this._captchaHolder.scrollIntoView(false);
+          }
+          var holderRef = this._captchaHolder;
+          window.setTimeout(function () { holderRef.classList.remove('is-err'); }, 2600);
+        }
         return;
       }
     }
