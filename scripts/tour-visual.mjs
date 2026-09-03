@@ -93,7 +93,15 @@ for (const slug of slugs) {
     const browser = await pw[engineName].launch();
     const seite = await browser.newPage({ viewport });
     const jsFehler = [];
-    seite.on('pageerror', e => jsFehler.push(e.message));
+    const bekannt = [];
+    /* Turnstile wirft in WebKit einen cross-origin-Fehler gegen
+       challenges.cloudflare.com — auch live, auch ohne unser Zutun, und in
+       Chromium gar nicht. Der Widget-Modus laesst sich nur im
+       Cloudflare-Dashboard aendern. Als Fehler gezaehlt stuende dieses Tor
+       dauerhaft rot und wuerde nach einer Woche ignoriert; verschwiegen waere
+       es genauso falsch. Deshalb: sichtbar, aber nicht blockierend. */
+    const IST_BEKANNT = /challenges\.cloudflare\.com/;
+    seite.on('pageerror', e => (IST_BEKANNT.test(e.message) ? bekannt : jsFehler).push(e.message));
 
     const url = siteModus ? `http://localhost:${PORT}${slug}` : `http://localhost:${PORT}/touren/${slug}/`;
     await seite.goto(url, { waitUntil: 'load' });
@@ -186,7 +194,8 @@ for (const slug of slugs) {
       jsFehler.length ? `JS: ${jsFehler[0].slice(0, 70)}` : null,
     ].filter(Boolean).join(' · ');
     const bezeichner = (siteModus ? slug : slug).padEnd(siteModus ? 26 : 16);
-    console.log(`${schlecht ? '🔴' : '🟢'} ${bezeichner} ${name.padEnd(15)} ${details || (mess.wackelig ? 'sauber (erst im 2. Anlauf)' : 'sauber')}`);
+    const anhang = bekannt.length ? `  (${bekannt.length}x bekannter Turnstile-Fremdfehler)` : '';
+    console.log(`${schlecht ? '🔴' : '🟢'} ${bezeichner} ${name.padEnd(15)} ${details || (mess.wackelig ? 'sauber (erst im 2. Anlauf)' : 'sauber')}${anhang}`);
 
     await seite.evaluate(() => window.scrollTo(0, 0));
     await seite.waitForTimeout(400);
