@@ -5,7 +5,11 @@
    Route im Strava-Look: Gradient-Kern + Glow + Puls am Kopf.
    Scroll = Aufstieg: Weg wächst, Smashy wandert, ~90° Drehung.
    ============================================================ */
-import * as THREE from './vendor/three.module.min.js';
+/* Three.js (169 kB) und das Hoehenmodell (365 kB) laden erst, wenn der Berg in
+   Sichtweite kommt. Vorher zog die Startseite beide beim Erstaufruf — zusammen
+   534 kB fuer eine Sektion, die weit unten steht.
+   rootMargin 700px: frueh genug, dass das Terrain steht, bevor jemand ankommt. */
+let THREE;
 
 const section = document.querySelector('.grat-wrap');
 const canvas = document.querySelector('.berg-canvas');
@@ -13,10 +17,38 @@ const sticky = document.querySelector('.grat-sticky');
 const track = document.querySelector('.grat-track');
 
 if (section && canvas && sticky && track) {
-  fetch('watzmann-dem.json?v=hd3')
-    .then(r => r.ok ? r.json() : Promise.reject())
-    .then(dem => init(dem))
-    .catch(() => section.classList.add('no3d'));
+  // Zwei Bedingungen, beide noetig:
+  // 1. erst NACH dem load-Event — sonst konkurrieren 534 kB mit dem LCP.
+  //    Die Sektion beginnt nur ~500px unter dem ersten Viewport, ein grosszuegiger
+  //    rootMargin allein feuerte deshalb sofort beim Seitenaufbau.
+  // 2. erst wenn der Berg in die Naehe kommt — wer nie so weit scrollt, laedt nichts.
+  nachDemLaden(() => {
+    if (!('IntersectionObserver' in window)) return laden();
+    const beobachter = new IntersectionObserver((eintraege) => {
+      if (!eintraege.some((e) => e.isIntersecting)) return;
+      beobachter.disconnect();
+      laden();
+    }, { rootMargin: '300px 0px' });
+    beobachter.observe(section);
+  });
+}
+
+function nachDemLaden(fn) {
+  if (document.readyState === 'complete') return setTimeout(fn, 0);
+  window.addEventListener('load', () => setTimeout(fn, 0), { once: true });
+}
+
+async function laden() {
+  try {
+    const [modul, dem] = await Promise.all([
+      import('./vendor/three.module.min.js'),
+      fetch('watzmann-dem.json?v=hd3').then((r) => (r.ok ? r.json() : Promise.reject(new Error('DEM')))),
+    ]);
+    THREE = modul;
+    init(dem);
+  } catch (e) {
+    section.classList.add('no3d');
+  }
 }
 
 function init(DEM) {
