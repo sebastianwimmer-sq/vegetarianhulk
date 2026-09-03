@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>404 · Verstiegen — VegetarianHulk</title>
@@ -15,7 +15,7 @@
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
-<link rel="stylesheet" href="/v3.css?v=1054675b">
+<link rel="stylesheet" href="/v3.css?v=8d643031">
 
 <style>
   /* ── 404 · Verstiegen — dark editorial, Wegweiser-Sprache ── */
@@ -24,7 +24,7 @@
     letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf);
     display: flex; align-items: center; gap: 12px; }
   .err-hero .kicker::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.24); }
-  .err-hero h1 { margin: 20px 0 22px; font-family: 'Playfair Display', serif; font-weight: 700;
+  .err-hero h1 { margin: 20px 0 22px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
     font-size: clamp(48px, 12vw, 92px); line-height: 0.96; color: var(--paper); letter-spacing: -0.6px; }
   .err-hero h1 em { font-style: italic; color: var(--leaf); }
 
@@ -67,9 +67,9 @@
     opacity: 0.65; pointer-events: none; }
   .err-anker > * { position: relative; z-index: 1; }
   .err-anker__label { font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
-    letter-spacing: 2.4px; text-transform: uppercase; color: var(--gold); }
+    letter-spacing: 2.4px; text-transform: uppercase; color: var(--gold-ink); }
   .err-anker blockquote { margin: 22px auto 16px; max-width: 24ch;
-    font-family: 'Playfair Display', serif; font-style: italic; font-weight: 500;
+    font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic; font-weight: 500;
     font-size: clamp(21px, 4.4vw, 27px); line-height: 1.36; color: var(--forest); }
   .err-anker__note { font-size: 13.5px; font-weight: 600; color: var(--royal);
     display: flex; align-items: center; justify-content: center; gap: 12px; }
@@ -160,36 +160,7 @@
   <a href="/kooperationen.html">Brands</a>
 </nav>
 
-<script>
-  // Footer-Jahr dynamisch
-  (function () {
-    var y = new Date().getFullYear();
-    document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = y; });
-  })();
-
-  // Verstiegen-Wegweiser: getippten Pfad anzeigen (textContent = safe)
-  (function () {
-    var el = document.querySelector('[data-err-path]');
-    if (el) {
-      var path = (location.pathname || '/') + (location.search || '');
-      if (path.length > 48) path = path.slice(0, 47) + '…';
-      el.textContent = path;
-    }
-  })();
-
-  // Self-Service-404-Debug: console.warn + sessionStorage-Log (max 20)
-  (function () {
-    try {
-      var path = location.pathname + location.search;
-      var ref = document.referrer || 'direct';
-      console.warn('[vh:404] Path:', path, '· From:', ref);
-      var log = JSON.parse(sessionStorage.getItem('vh:404:log') || '[]');
-      log.push({ ts: Date.now(), path: path, from: ref });
-      if (log.length > 20) log = log.slice(-20);
-      sessionStorage.setItem('vh:404:log', JSON.stringify(log));
-    } catch (e) { /* sessionStorage disabled — ignore */ }
-  })();
-</script>
+<script src="/js/404.js?v=3103bacf" defer></script>
 
 <script src="/v3.js?v=64d0bdfd" defer></script>
 </body>

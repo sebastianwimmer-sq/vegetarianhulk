@@ -242,11 +242,11 @@
 }
 .tour-proof span {
   margin-top: 3px; font-family: var(--mono); font-size: 10px; font-weight: 700;
-  letter-spacing: 1.4px; text-transform: uppercase; color: rgba(24,43,31,0.5);
+  letter-spacing: 1.4px; text-transform: uppercase; color: var(--ink-meta);
 }
 .tour-proof .src {
   width: 100%; margin-top: 10px; font-family: var(--mono); font-size: 10px;
-  letter-spacing: 1px; text-transform: uppercase; color: rgba(24,43,31,0.4);
+  letter-spacing: 1px; text-transform: uppercase; color: var(--ink-meta);
 }
 
 /* ---------- ZEITACHSE (nur Touren, bei denen die Uhrzeit die Geschichte ist) ----------

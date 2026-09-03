@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://*.challenges.cloudflare.com https://vh-forms.peaking.workers.dev; base-uri 'none'; form-action 'self'; frame-src https://challenges.cloudflare.com">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anfrage senden — Für Brands · VegetarianHulk</title>
@@ -23,7 +23,7 @@
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
-<link rel="stylesheet" href="/v3.css?v=1054675b">
+<link rel="stylesheet" href="/v3.css?v=8d643031">
 <style>
 /* ============================================================
    /anfrage.html — v3 Editorial-Dark Port (page-scoped .anf-)
@@ -41,14 +41,14 @@
 .anf-eyebrow { font-family: var(--mono); font-size: var(--t-label); font-weight: 700; letter-spacing: 2.4px;
   text-transform: uppercase; color: var(--leaf); display: flex; align-items: center; gap: 12px; }
 .anf-eyebrow::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.24); }
-.anf-ctx h1 { margin: 18px 0 16px; font-family: 'Playfair Display', serif; font-weight: 700;
+.anf-ctx h1 { margin: 18px 0 16px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
   font-size: clamp(34px, 6vw, 54px); line-height: 1.0; color: var(--paper); letter-spacing: -0.5px; }
 .anf-ctx h1 em { font-style: italic; color: var(--leaf); }
 .anf-sub { font-size: 16px; line-height: 1.68; color: var(--paper-dim); max-width: 42ch; }
 .anf-figs { margin: 30px 0 26px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px;
   background: rgba(126,208,155,0.16); border: 1px solid rgba(126,208,155,0.16); border-radius: var(--r-control); overflow: hidden; }
 .anf-fig { background: linear-gradient(158deg, rgba(19,54,35,0.5), rgba(6,26,17,0.55)); padding: 16px 14px; }
-.anf-fig b { display: block; font-family: 'Playfair Display', serif; font-weight: 700;
+.anf-fig b { display: block; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
   font-size: clamp(20px, 3vw, 27px); line-height: 1; letter-spacing: -0.5px; color: var(--leaf); }
 .anf-fig span { display: block; margin-top: 6px; font-family: var(--mono); font-size: 10px; font-weight: 700;
   letter-spacing: 1.2px; text-transform: uppercase; color: var(--paper-faint); line-height: 1.35; }
@@ -66,7 +66,7 @@
 .anf-card > * { position: relative; z-index: 1; }
 .anf-row { margin: 0 0 16px; }
 .anf-row label, .anf-flabel { display: block; font-size: 13px; font-weight: 700; color: #14281C; margin: 0 0 7px; }
-.anf-hint { font-weight: 400; color: rgba(24,43,31,0.55); font-size: 12px; }
+.anf-hint { font-weight: 400; color: var(--ink-meta); font-size: 12px; }
 .anf-req { color: var(--royal); }
 .anf-card input[type="text"], .anf-card input[type="email"], .anf-card textarea {
   /* 16px Pflicht: darunter zoomt iOS beim Fokus in die Seite (wirkte wie ein Bug).
@@ -78,7 +78,7 @@
   transition: border-color 220ms var(--ease-lux), box-shadow 220ms var(--ease-lux), background 220ms var(--ease-lux); }
 .anf-card input:hover:not(:focus), .anf-card textarea:hover:not(:focus) { border-color: rgba(24,43,31,0.34); }
 .anf-card textarea { resize: vertical; line-height: 1.5; }
-.anf-card input::placeholder, .anf-card textarea::placeholder { color: rgba(24,43,31,0.4); }
+.anf-card input::placeholder, .anf-card textarea::placeholder { color: var(--ink-meta); }
 .anf-card input:focus, .anf-card textarea:focus { outline: none; border-color: var(--royal); background: #FFFDF6;
   box-shadow: inset 0 1.5px 3px rgba(24,43,31,0.05), 0 0 0 4px rgba(11,110,79,0.14); }
 /* Auswahl-Chips */
@@ -151,7 +151,7 @@
 .anf-success-badge { width: 60px; height: 60px; margin: 0 auto 18px; border-radius: 50%; display: grid; place-items: center;
   background: linear-gradient(135deg, var(--royal), var(--evergreen)); box-shadow: 0 12px 28px -10px rgba(4,89,39,0.5); }
 .anf-success-badge svg { width: 26px; height: 26px; color: #F3EBD9; }
-.anf-success h2 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(24px, 4vw, 32px);
+.anf-success h2 { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700; font-size: clamp(24px, 4vw, 32px);
   color: #14281C; margin: 0 0 10px; }
 .anf-success p { font-size: 15px; line-height: 1.6; color: rgba(24,43,31,0.75); margin: 0 auto; max-width: 40ch; }
 .anf-close { width: min(1040px, 92vw); margin: 44px auto 56px; margin-left: calc((100% - min(1040px, 92vw)) / 2);
@@ -356,162 +356,8 @@
   <a href="/kooperationen.html" aria-current="page">Brands</a>
 </nav>
 
-<script>
-// Brand-Anfrage → eigener Cloudflare-Worker (vh-forms, Repo: workers/vh-forms)
-// → Brevo Transactional → info@vegetarianhulk.de.
-const FORMS_ENDPOINT = 'https://vh-forms.peaking.workers.dev/brand-inquiry';
-
-async function submitBrandInquiry(e) {
-  e.preventDefault();
-  const form = document.getElementById('brandForm');
-  const get = id => (document.getElementById(id).value || '').trim();
-  const checked = name => {
-    const el = document.querySelector('input[name="' + name + '"]:checked');
-    return el ? el.value : '';
-  };
-  const brand = get('bf-brand');
-  const email = get('bf-email');
-
-  const errBox = document.getElementById('formError');
-  errBox.hidden = true;
-  if (!brand || !email) return false; // Pflicht: nur Brand + E-Mail
-
-  // DSGVO: Consent-Haken ist Pflicht
-  const consent = document.getElementById('bf-consent');
-  const consentBox = document.querySelector('.anf-consent');
-  if (consent && !consent.checked) {
-    if (consentBox) consentBox.classList.add('is-err');
-    errBox.hidden = false;
-    errBox.textContent = 'Bitte setz kurz den Datenschutz-Haken, dann kann ich deine Anfrage bearbeiten.';
-    (consentBox || errBox).scrollIntoView({ behavior: 'smooth', block: 'center' });
-    return false;
-  }
-
-  const payload = {
-    brand: brand,
-    link: get('bf-link'),
-    what: get('bf-what'),
-    types: Array.from(document.querySelectorAll('input[name="type"]:checked')).map(i => i.value),
-    budget: checked('budget'),
-    time: checked('time'),
-    idea: get('bf-idea'),
-    email: email,
-    contact: checked('contact'),
-    handle: get('bf-handle'),
-    consent: true,
-    turnstileToken: (window.turnstile && window.turnstile.getResponse()) || '',
-    _honey: get('bf-hp')
-  };
-
-  // Ohne Turnstile-Token antwortet der Worker fail-closed mit 403. Den Request
-  // gar nicht erst schicken, sondern zeigen, WO der Haken fehlt — sonst liest
-  // der Nutzer nur eine Fehlermeldung und sucht die Ursache beim Formular.
-  if (!payload.turnstileToken) {
-    const widget = document.querySelector('.cf-turnstile');
-    const fehler = document.getElementById('formError');
-    if (fehler) {
-      fehler.innerHTML = '<strong>Fast fertig.</strong> Setz noch den Haken bei der Sicherheitsprüfung — dann geht\'s los.';
-      fehler.hidden = false;
-    }
-    if (widget) {
-      widget.classList.add('is-err');
-      widget.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      setTimeout(() => widget.classList.remove('is-err'), 2600);
-    }
-    return;
-  }
-
-  const btn = form.querySelector('button[type="submit"]');
-  btn.disabled = true;
-  const original = btn.textContent;
-  btn.textContent = 'Wird gesendet …';
-
-  try {
-    const res = await fetch(FORMS_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    const data = await res.json().catch(() => ({}));
-    if (res.ok && data.ok) {
-      document.getElementById('formCard').hidden = true;
-      const ok = document.getElementById('successState');
-      ok.hidden = false;
-      ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return false;
-    }
-    // Token verbraucht/fehlgeschlagen → Widget zurücksetzen für neuen Versuch
-    if (window.turnstile) { try { window.turnstile.reset(); } catch (e) { /* noop */ } }
-    // 503 = Worker live, Mail-API (noch) nicht konfiguriert → mailto-Fallback
-    if (res.status === 503) {
-      const subject = encodeURIComponent('Brand-Anfrage: ' + brand);
-      const body = encodeURIComponent(
-        'Brand: ' + brand + '\nWebseite/Insta: ' + (payload.link || '—') +
-        '\nIdee: ' + (payload.idea || '—') + '\nKontakt: ' + email
-      );
-      window.location.href = 'mailto:info@vegetarianhulk.de?subject=' + subject + '&body=' + body;
-      btn.disabled = false;
-      btn.textContent = original;
-      errBox.textContent = 'Mail-App geöffnet — schick die Anfrage direkt ab, ich melde mich persönlich.';
-      errBox.hidden = false;
-      return false;
-    }
-    throw new Error(data.error || ('Status ' + res.status));
-  } catch (err) {
-    btn.disabled = false;
-    btn.textContent = original;
-    errBox.textContent = 'Konnte nicht senden: ' + (err.message || err) + ' — bitte schreib mir direkt an info@vegetarianhulk.de.';
-    errBox.hidden = false;
-  }
-  return false;
-}
-
-// Footer-Year
-(function () {
-  var y = new Date().getFullYear();
-  document.querySelectorAll('#footer-year').forEach(function (el) { el.textContent = y; });
-})();
-</script>
 <script src="/v3.js?v=64d0bdfd" defer></script>
-<script>
-/* Consent-Fehler zurücksetzen beim Ankreuzen */
-(function () {
-  var c = document.getElementById('bf-consent');
-  if (c) c.addEventListener('change', function () {
-    if (c.checked) { var box = document.querySelector('.anf-consent'); if (box) box.classList.remove('is-err'); }
-  });
-})();
-/* Count-Up der Kontext-Zahlen beim Reinscrollen (animiert + live-Gefühl) */
-(function () {
-  'use strict';
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function fmtInt(n) { return n.toLocaleString('de-DE'); }
-  function fmtPct(n) { return n.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%'; }
-  var nums = document.querySelectorAll('[data-count], [data-count-pct]');
-  function run(el) {
-    var pct = el.hasAttribute('data-count-pct');
-    var target = parseFloat(pct ? el.dataset.countPct : el.dataset.count);
-    var fmt = pct ? fmtPct : fmtInt;
-    if (reduce) { el.textContent = fmt(target); return; }
-    var t0 = null, DUR = 1400;
-    function step(ts) {
-      if (!t0) t0 = ts;
-      var p = Math.min(1, (ts - t0) / DUR);
-      var e = 1 - Math.pow(1 - p, 3);
-      el.textContent = fmt(pct ? Math.round(target * e * 10) / 10 : Math.round(target * e));
-      if (p < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-  if ('IntersectionObserver' in window && nums.length) {
-    if (!reduce) nums.forEach(function (el) { el.textContent = el.hasAttribute('data-count-pct') ? fmtPct(0) : fmtInt(0); });
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (en) { if (en.isIntersecting) { run(en.target); io.unobserve(en.target); } });
-    }, { rootMargin: '0px 0px -12% 0px' });
-    nums.forEach(function (el) { io.observe(el); });
-  } else { nums.forEach(run); }
-})();
-</script>
+<script src="/js/anfrage.js?v=4f2e6d12" defer></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </body>
 </html>

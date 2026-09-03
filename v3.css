@@ -25,6 +25,10 @@
   --bg-deep: #06231A;
   --paper: #F3EBD9; --paper-dim: rgba(243,235,217,0.68); --paper-faint: rgba(243,235,217,0.58);
   --card-cream: #F5EEDE; --ink: #182B1F; --ink-soft: #5E6B5E;
+  /* Schwaechste Textfarbe auf Papier, die WCAG AA noch haelt (4,5:1).
+     Gerechnet gegen alle drei Papier-Toene: alpha 0,66 ergibt 4,53–4,56:1.
+     Vorher standen hier verstreut 0,4–0,6 — das ergab 2,29–3,85:1. */
+  --ink-meta: rgba(24, 43, 31, 0.66);
   --leaf: #7ED09B; --meta-green: #9BD9B4;
 
   /* Typo-Scale — 5 Größen */
@@ -147,7 +151,7 @@ main { position: relative; z-index: 1; }
 
 /* Flagship — Watzmann (Topo-Karte, cream/data-light) */
 .th-flag { width: min(1040px, 92vw); margin: 56px 0 0; margin-left: calc((100% - min(1040px, 92vw)) / 2);
-  border-radius: 22px; overflow: hidden; position: relative;
+  border-radius: var(--r-control); overflow: hidden; position: relative;
   padding: 7px; /* aeussere Schale fuer Doppelrand */
   background: linear-gradient(158deg, rgba(24,43,31,0.1), rgba(24,43,31,0.03));
   box-shadow:
@@ -155,7 +159,7 @@ main { position: relative; z-index: 1; }
     0 0 0 1px rgba(186,155,95,0.28),
     0 44px 80px -34px rgba(0,0,0,0.66), 0 8px 22px -12px rgba(0,0,0,0.4); }
 .th-flag__grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.1fr 0.9fr;
-  border-radius: 16px; overflow: hidden;
+  border-radius: var(--r-control); overflow: hidden;
   background:
     repeating-linear-gradient(93deg, rgba(24,43,31,0.028) 0 1px, transparent 1px 10px),
     linear-gradient(158deg, #F5EEDE 0%, #EFE7D2 58%, #E7DDC4 100%);
@@ -173,15 +177,15 @@ main { position: relative; z-index: 1; }
   font-size: clamp(26px, 3.4vw, 36px); line-height: 1.06; color: #14281C; }
 .th-flag__copy { font-size: 16px; line-height: 1.65; color: rgba(24,43,31,0.82); max-width: 42ch; }
 .th-facts { margin: 26px 0 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-  background: rgba(24,43,31,0.12); border: 1px solid rgba(24,43,31,0.12); border-radius: 8px; overflow: hidden; }
+  background: rgba(24,43,31,0.12); border: 1px solid rgba(24,43,31,0.12); border-radius: var(--r-control); overflow: hidden; }
 .th-facts > div { background: rgba(245,238,222,0.7); padding: 12px 16px; }
 .th-facts dt { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.8px;
-  text-transform: uppercase; color: rgba(24,43,31,0.5); }
+  text-transform: uppercase; color: var(--ink-meta); }
 .th-facts dd { margin-top: 3px; font-size: 16px; font-weight: 600; color: #14281C; }
-.th-facts dd span { font-weight: 400; color: rgba(24,43,31,0.55); font-size: 14px; }
+.th-facts dd span { font-weight: 400; color: var(--ink-meta); font-size: 14px; }
 .th-flag__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; }
 .th-note { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 1.2px;
-  text-transform: uppercase; color: rgba(24,43,31,0.5); }
+  text-transform: uppercase; color: var(--ink-meta); }
 /* Aside: Höhenprofil auf dunkler Karte im hellen Blatt */
 .th-flag__aside { padding: clamp(30px, 4vw, 46px) clamp(26px, 3vw, 40px);
   background: linear-gradient(158deg, #0C2416, #061c12);
@@ -241,7 +245,7 @@ main { position: relative; z-index: 1; }
   grid-template-columns: repeat(3, 1fr); }
 .th-card { position: relative; overflow: hidden; padding: 26px 24px 54px;
   background: linear-gradient(158deg, rgba(19,54,35,0.5), rgba(6,26,17,0.55));
-  border: 1px solid rgba(126,208,155,0.14); border-radius: 14px;
+  border: 1px solid rgba(126,208,155,0.14); border-radius: var(--r-karte);
   box-shadow: inset 0 1px 0 rgba(209,242,235,0.06), 0 18px 40px -26px rgba(0,0,0,0.7);
   transition: transform 550ms var(--ease-lux), border-color 550ms var(--ease-lux), box-shadow 550ms var(--ease-lux); }
 /* Gipfelgrat-Akzent, waechst beim Hover von links */
@@ -274,11 +278,11 @@ main { position: relative; z-index: 1; }
 .th-card__state { position: absolute; left: 24px; bottom: 20px;
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
   color: var(--mint); background: rgba(126,208,155,0.12); border: 1px solid rgba(126,208,155,0.28);
-  padding: 4px 11px; border-radius: 20px; }
+  padding: 4px 11px; border-radius: var(--r-control); }
 
 /* Newsletter-Hook — cream */
 .th-hook { width: min(760px, 92vw); margin: 96px 0 40px; margin-left: calc((100% - min(760px, 92vw)) / 2);
-  text-align: center; padding: clamp(40px, 6vw, 64px) clamp(28px, 5vw, 56px); border-radius: 20px;
+  text-align: center; padding: clamp(40px, 6vw, 64px) clamp(28px, 5vw, 56px); border-radius: var(--r-control);
   position: relative; overflow: hidden;
   background: linear-gradient(158deg, #F5EEDE, #E9DFC6); box-shadow: var(--shadow-paper); }
 .th-hook::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.5; pointer-events: none; }
@@ -363,7 +367,7 @@ body.loaded .st { opacity: 1; transform: translateY(0); filter: blur(0); }
 .stage { width: min(82vw, 400px); margin-inline: auto; position: relative; }
 /* Rahmen sitzt versetzt HINTER dem Freisteller — er ragt oben raus */
 .stage-frame { position: absolute; left: 7%; right: -5%; top: 17%; bottom: 44px;
-  border-radius: 24px; overflow: hidden;
+  border-radius: var(--r-karte); overflow: hidden;
   outline: 1px solid rgba(209,242,235,0.22); outline-offset: 7px;
   background:
     radial-gradient(80% 62% at 50% 78%, rgba(80,200,120,0.34), rgba(11,110,79,0.12) 55%, transparent 80%),
@@ -536,7 +540,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 /* Bergstation-HUD: Instrument oben rechts (bergfex/Apple-Weather-Prinzip:
    grosser Messwert, klare Hairline-Karte) */
 .wetter-hud { position: absolute; top: 26px; right: max(24px, calc(50vw - 530px)); z-index: 3;
-  min-width: 168px; padding: 16px 18px 14px; border-radius: 14px;
+  min-width: 168px; padding: 16px 18px 14px; border-radius: var(--r-control);
   background: rgba(4,18,12,0.96); border: 1px solid rgba(243,235,217,0.24);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 0 0 1px rgba(3,15,9,0.5), 0 16px 34px -14px rgba(0,0,0,0.6); }
 .hud-label { display: flex; align-items: center; gap: 8px;
@@ -612,7 +616,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .panel-ticks i.on { background: var(--royal); }
 .panel-nav button { order: 3; width: auto; height: auto; border: 0; border-radius: 0;
   background: transparent; cursor: pointer; padding: 4px 8px;
-  font-family: var(--mono); font-size: 16px; line-height: 1; color: rgba(24,43,31,0.5);
+  font-family: var(--mono); font-size: 16px; line-height: 1; color: var(--ink-meta);
   transition: color 300ms var(--ease-lux), transform 300ms var(--ease-lux); }
 .panel-nav button:hover { color: var(--royal); transform: none; }
 .panel-nav button:first-of-type { order: 3; margin-left: auto; }
@@ -669,7 +673,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   .berg-overlays.reading .wp,
   .berg-overlays.reading .wp:not(.on) { opacity: 0; pointer-events: none; }
   .wetter-hud { top: 64px; right: 14px; min-width: 0; max-width: 46vw;
-    padding: 10px 12px 9px; border-radius: 11px; }
+    padding: 10px 12px 9px; border-radius: var(--r-control); }
   .hud-temp { margin-top: 5px; font-size: 26px; }
   .hud-icon svg { width: 22px; height: 22px; }
   .hud-cond { margin-top: 3px; font-size: 10px; letter-spacing: 1.4px; }
@@ -700,7 +704,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
    BIBEL-ANKER — der Anker ist der LICHT-Moment: hellste Fläche
    der Seite, Gold-Label, Forest-Vers.
    ============================================================ */
-.bibel-card { margin-top: clamp(64px, 14vw, 100px); border-radius: 24px; text-align: center; padding: 58px 32px 50px; position: relative; overflow: hidden;
+.bibel-card { margin-top: clamp(64px, 14vw, 100px); border-radius: var(--r-karte); text-align: center; padding: 58px 32px 50px; position: relative; overflow: hidden;
   background:
     radial-gradient(90% 80% at 50% -20%, rgba(186,155,95,0.18), transparent 60%),
     linear-gradient(175deg, #F8F2E2 0%, #F0E7D2 100%);
@@ -755,7 +759,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic; font-weight: 600;
   font-size: clamp(20px, 2.5vw, 28px); line-height: 1.42; color: #14281C; }
 .gb-quelle { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2.2px;
-  text-transform: uppercase; color: #8A6F2F; }
+  text-transform: uppercase; color: var(--gold-ink); }
 .gb-anker { margin-top: 8px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic;
   font-size: 16px; color: var(--royal); }
 /* rechte Seite: liniert wie ein echtes Buch, Eintrag sitzt auf den Linien */
@@ -774,7 +778,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .gb-cta { grid-column: 1 / -1; justify-self: stretch; position: relative; z-index: 1;
   margin: 0 46px 30px; padding: 2px 30px 4px 4px;
   font-family: 'Caveat', cursive; font-weight: 600; font-size: 23px;
-  text-decoration: none; color: rgba(11,110,79,0.78);
+  text-decoration: none; color: var(--royal);
   border-bottom: 1.5px dashed rgba(30,58,42,0.45);
   transition: color 400ms var(--ease-lux), border-color 400ms var(--ease-lux); }
 .gb-cta::after { content: "\2192"; position: absolute; right: 6px; }
@@ -862,7 +866,7 @@ footer .legal a:hover { color: var(--paper); }
   translate: -50% 0;
   transition: translate 480ms var(--ease-lux), opacity 200ms ease;
   display: flex; align-items: center; gap: clamp(4px, 2.6vw, 24px); padding: 10px clamp(18px, 3.4vw, 34px);
-  border: 1px solid rgba(150,130,92,0.55); border-radius: 16px;
+  border: 1px solid rgba(150,130,92,0.55); border-radius: var(--r-karte);
   background: linear-gradient(180deg, #F8F0E0 0%, #EDDFC5 100%);
   box-shadow:
     inset 0 0 0 3px rgba(247,239,222,1),
@@ -873,7 +877,7 @@ footer .legal a:hover { color: var(--paper); }
     0 4px 10px rgba(0,0,0,0.42),
     0 22px 46px -14px rgba(0,0,0,0.72),
     0 46px 100px -30px rgba(0,0,0,0.6); }
-.nav::after { content: ""; position: absolute; inset: 0; border-radius: 16px;
+.nav::after { content: ""; position: absolute; inset: 0; border-radius: var(--r-karte);
   background-image: var(--grain); opacity: 0.5; pointer-events: none; }
 .nav a { position: relative; display: inline-flex; align-items: center; justify-content: center;
   padding: 12px 8px; min-width: 48px; min-height: 44px; text-align: center;
@@ -996,7 +1000,54 @@ footer .legal a:hover { color: var(--paper); }
   .wp.on::before { animation: none !important; }
 }
 
+/* ---- Platz fuer das Turnstile-Widget ----
+   Gemessen: das Formular ist bei 1600 ms 320 px hoch, der Captcha-Halter 0 px.
+   Bei ~2000 ms rendert Turnstile mit 72 px und schiebt alles darunter — das war
+   der grosse Teil des CLS auf /newsletter/ (0,137 von 0,151), nicht der Font.
+   Zwei Reservierungen noetig, sonst verschiebt sich der Sprung nur:
+   1. der Halter bekommt die Widget-Hoehe, sobald er existiert
+   2. das Element bekommt vor dem Upgrade schon die Endhoehe
+   Werte gemessen: 396 px unter 520 px Breite, 297 px darueber. */
+/* FESTE Hoehe, nicht min-height: Turnstile rendert sein iframe in zwei Stufen
+   und wuchs bei ~2170 ms nochmal — mit min-height durfte es das und schob das
+   Layout erneut (0,137 von 0,148). 72 px ist die gemessene Endhoehe. */
+vh-newsletter-form [slot="captcha"],
+vh-form [slot="captcha"] { display: block; height: 72px; overflow: hidden; }
+vh-newsletter-form:not(:defined) { display: block; min-height: 396px; }
+@media (min-width: 520px) {
+  vh-newsletter-form:not(:defined) { min-height: 297px; }
+}
 
+/* ---- Tippziele (WCAG 2.2 AA, 2.5.8 Target Size) ----
+   Gemessen lagen Footer-Wordmark (194x20) und die Rechtslinks (69x19, 84x19)
+   deutlich unter 44 px Hoehe. Geloest ueber Polster, nicht ueber Schriftgroesse:
+   die Flaeche waechst, das Schriftbild bleibt exakt wie es war.
+   Links im Fliesstext sind laut WCAG ausgenommen und bleiben unberuehrt. */
+footer .inner .wordmark,
+footer .legal a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+footer .legal { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0 clamp(10px, 3vw, 20px); }
+footer .legal a { padding-inline: 2px; }
+
+/* Weitere Tippziele unter 44 px, gemessen: Social-Links (123x13), die
+   Quellenangabe am Wetter-Widget (144x16), der Zurueck-Link auf /danke/
+   (189x20) und die Buttons, denen genau 1 px fehlte (196x43). */
+.social-link,
+.hud-src,
+.ty-back,
+.th-btn,
+.pp-copy { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; }
+.social-link, .hud-src { padding-block: 4px; }
+
+/* Pfeil-Knoepfe der Etappen-Navigation (waren 26x24), Sortierung und die
+   Mini-Buttons in den aufgeklappten Tour-Zeilen. Alle nur ueber die
+   Trefferflaeche vergroessert, das Schriftbild bleibt. */
+.panel-nav button { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+.tk-sort select { min-height: 44px; }
+.tk-minibtn { min-height: 44px; display: inline-flex; align-items: center; }
 /* ---- Turnstile: fehlender Haken ----
    Das Widget steht im interaktiven Modus und braucht einen Klick. Fehlt er,
    antwortet der Worker fail-closed mit 403 und es kommt keine Mail an. Bisher

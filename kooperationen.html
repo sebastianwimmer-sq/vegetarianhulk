@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Für Brands — Kooperationen mit @vegetarianhulk | VegetarianHulk</title>
@@ -34,7 +34,7 @@
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
-<link rel="stylesheet" href="/v3.css?v=1054675b">
+<link rel="stylesheet" href="/v3.css?v=8d643031">
 <style>
 /* ============================================================
    /kooperationen.html — v3 Editorial-Dark (page-scoped .koop-*)
@@ -52,7 +52,7 @@
   letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf);
   display: flex; align-items: center; gap: 12px; }
 .koop-hero .kicker::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.24); }
-.koop-hero h1 { margin: 20px 0 22px; font-family: 'Playfair Display', serif; font-weight: 700;
+.koop-hero h1 { margin: 20px 0 22px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
   font-size: clamp(42px, 8.4vw, 82px); line-height: 0.99; color: var(--paper); letter-spacing: -0.6px; }
 .koop-hero h1 em { position: relative; display: inline-block; font-style: italic; color: var(--leaf); }
 .koop-scribble { position: absolute; left: 1%; bottom: -0.16em; width: 100%; height: 0.32em;
@@ -98,7 +98,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
   letter-spacing: 2.2px; text-transform: uppercase; color: var(--leaf);
   display: flex; align-items: center; gap: 12px; }
 .koop-shead .kicker::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.25); }
-.koop-shead h2 { margin-top: 12px; font-family: 'Playfair Display', serif; font-weight: 600;
+.koop-shead h2 { margin-top: 12px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 600;
   font-size: var(--t-h2); line-height: 1.1; color: var(--paper); }
 .koop-shead h2 em { font-style: italic; color: var(--leaf); }
 .koop-body-dark { font-size: 15.5px; line-height: 1.7; color: var(--paper-dim); max-width: 56ch; }
@@ -117,7 +117,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
   letter-spacing: 2.2px; text-transform: uppercase; color: var(--gold-ink);
   display: flex; align-items: center; gap: 12px; }
 .koop-head .kicker::after { content: ""; flex: 1; height: 1px; background: rgba(138,111,47,0.28); }
-.koop-head h2 { margin-top: 12px; font-family: 'Playfair Display', serif; font-weight: 600;
+.koop-head h2 { margin-top: 12px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 600;
   font-size: var(--t-h2); line-height: 1.08; color: #14281C; }
 .koop-head h2 em { font-style: italic; color: var(--royal); }
 .koop-body { font-size: 15px; line-height: 1.7; color: rgba(24,43,31,0.82); max-width: 54ch; }
@@ -171,7 +171,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
   background: rgba(10,14,12,0.42); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.24); }
 .koop-reel__logo { width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center;
   background: linear-gradient(135deg, #7ED09B, #0B6E4F); color: #05130c;
-  font-family: 'Playfair Display', serif; font-weight: 700; font-size: 12px; }
+  font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700; font-size: 12px; }
 .koop-reel__brandname { font-family: var(--mono); font-size: 10px; font-weight: 700;
   letter-spacing: 0.4px; color: #fff; }
 .koop-reel__adtag { font-family: var(--mono); font-size: 7.5px; font-weight: 700; letter-spacing: 1px;
@@ -193,7 +193,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-yield-item { display: grid; grid-template-columns: auto 1fr; column-gap: 20px; align-items: center;
   padding: 15px 0; border-top: 1px solid rgba(243,235,217,0.14); }
 .koop-yield-item:last-of-type { border-bottom: 1px solid rgba(243,235,217,0.14); }
-.koop-yield-num { font-family: 'Playfair Display', serif; font-weight: 700;
+.koop-yield-num { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
   font-size: clamp(30px, 4.4vw, 42px); line-height: 0.94; letter-spacing: -1px;
   color: var(--leaf); font-variant-numeric: tabular-nums; min-width: 3.4ch; }
 .koop-yield-lbl { font-size: 12.5px; line-height: 1.45; color: var(--paper-dim); }
@@ -230,7 +230,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-flow__step { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center;
   gap: 12px; background: none; border: 0; cursor: pointer; padding: 0; color: inherit; text-align: center; }
 .koop-flow__node { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center;
-  font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; font-size: 22px;
+  font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic; font-weight: 700; font-size: 22px;
   color: rgba(126,208,155,0.5);
   background: linear-gradient(158deg, rgba(19,54,35,0.94), rgba(6,26,17,0.97));
   border: 1px solid rgba(126,208,155,0.22); box-shadow: 0 10px 24px -14px rgba(0,0,0,0.85);
@@ -267,7 +267,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
   transition: opacity 640ms var(--ease-lux), transform 640ms var(--ease-lux), border-color 640ms var(--ease-lux); }
 .koop-ab-panel.is-in { opacity: 1; transform: none; border-color: rgba(126,208,155,0.3); }
 .koop-ab-panel::before { content: attr(data-big); position: absolute; right: 0.04em; top: -0.28em; z-index: 0;
-  font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;
+  font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic; font-weight: 700;
   font-size: clamp(120px, 15vw, 210px); line-height: 1; color: rgba(126,208,155,0.09); pointer-events: none; }
 .koop-ab-panel--pay { border-color: rgba(228,184,36,0.28);
   background: linear-gradient(158deg, rgba(46,38,12,0.5), rgba(20,16,8,0.62)); }
@@ -278,7 +278,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
   text-transform: uppercase; color: var(--leaf); }
 .koop-ab-panel--pay .koop-ab-idx { color: #E4B824; }
 .koop-ab-headrow { margin-top: 12px; display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
-.koop-ab-title { font-family: 'Playfair Display', serif; font-weight: 600;
+.koop-ab-title { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 600;
   font-size: clamp(24px, 3.2vw, 34px); line-height: 1.06; color: var(--paper); }
 .koop-ab-time { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.4px;
   text-transform: uppercase; color: #14100A; background: linear-gradient(180deg, #E8BF25, #D4A918);
@@ -318,7 +318,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
   font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #14100A;
   background: linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%); padding: 5px 13px; border-radius: var(--r-control);
   filter: drop-shadow(0 1px 0 rgba(255,255,255,0.35)) drop-shadow(0 4px 8px rgba(0,0,0,0.35)); }
-.koop-pkg-name { margin: 15px 0 0; font-family: 'Playfair Display', serif; font-weight: 700;
+.koop-pkg-name { margin: 15px 0 0; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
   font-size: clamp(27px, 3.4vw, 35px); line-height: 1.04; color: var(--paper); }
 .koop-pkg-meta { margin-top: 8px; font-family: var(--mono); font-size: 10px; font-weight: 700;
   letter-spacing: 1.4px; text-transform: uppercase; color: var(--leaf); }
@@ -340,7 +340,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
   text-transform: uppercase; color: var(--paper-faint); }
 .koop-menu-lbl { display: flex; align-items: center; gap: 12px; margin: 30px 0 14px;
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-  color: rgba(24,43,31,0.5); }
+  color: var(--ink-meta); }
 .koop-menu-lbl::after { content: ""; flex: 1; height: 1px; background: rgba(24,43,31,0.16); }
 .koop-offers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .koop-offer { position: relative; display: flex; flex-direction: column; padding: 22px 22px 20px;
@@ -350,9 +350,9 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
   transition: transform 500ms var(--ease-lux), box-shadow 500ms var(--ease-lux); }
 .koop-offer:hover { transform: translateY(-4px);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 26px 46px -24px rgba(20,40,28,0.55); }
-.koop-offer-name { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 21px; line-height: 1.1; color: #14281C; }
+.koop-offer-name { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 600; font-size: 21px; line-height: 1.1; color: #14281C; }
 .koop-offer-meta { margin-top: 6px; font-family: var(--mono); font-size: 10px; font-weight: 700;
-  letter-spacing: 1.3px; text-transform: uppercase; color: rgba(24,43,31,0.5); }
+  letter-spacing: 1.3px; text-transform: uppercase; color: var(--ink-meta); }
 .koop-offer-check { list-style: none; padding: 0; margin: 15px 0 0; display: grid; gap: 9px; }
 .koop-offer-check li { display: grid; grid-template-columns: auto 1fr; gap: 9px; align-items: start;
   font-size: 13px; line-height: 1.42; color: rgba(24,43,31,0.82); }
@@ -360,17 +360,17 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-offer-check svg { width: 15px; height: 15px; stroke: var(--royal); fill: none; flex: 0 0 auto; margin-top: 2px; }
 .koop-offer-foot { margin-top: auto; padding-top: 16px; }
 .koop-offer-price { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.8px;
-  text-transform: uppercase; color: rgba(24,43,31,0.5); }
-.koop-offer-price b { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700;
+  text-transform: uppercase; color: var(--ink-meta); }
+.koop-offer-price b { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-size: 18px; font-weight: 700;
   color: var(--royal); letter-spacing: -0.3px; text-transform: none; margin-left: 2px; }
-.koop-price-note { margin-top: 18px; font-size: 14px; line-height: 1.6; color: var(--paper-faint); max-width: 56ch; }
+.koop-price-note { margin-top: 18px; font-size: 14px; line-height: 1.6; color: var(--ink-meta); max-width: 56ch; }
 
 /* ============================================================
    PROOF — Reichweite & Passung (dunkel, tight)
    ============================================================ */
 .koop-reach-figs { margin-top: 24px; display: grid; grid-template-columns: repeat(2, minmax(0, 210px)); gap: 14px 44px; }
 .koop-reach-fig { border-top: 1px solid rgba(243,235,217,0.16); padding-top: 12px; }
-.koop-rf-num { display: block; font-family: 'Playfair Display', serif; font-weight: 700;
+.koop-rf-num { display: block; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
   font-size: clamp(28px, 3.8vw, 40px); line-height: 1; letter-spacing: -1px; color: var(--leaf);
   font-variant-numeric: tabular-nums; }
 .koop-rf-label { display: block; margin-top: 8px; font-family: var(--mono); font-size: 10px; font-weight: 700;
@@ -386,7 +386,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
   border: 1px dashed rgba(243,235,217,0.24); }
 .koop-cred { margin-top: 34px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .koop-cred-item { border-top: 1px solid rgba(243,235,217,0.16); padding-top: 14px; }
-.koop-cred-k { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 18px; color: var(--leaf); }
+.koop-cred-k { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700; font-size: 18px; color: var(--leaf); }
 .koop-cred-k .koop-veggie { font-family: var(--mono); font-weight: 700; font-size: 14px;
   font-variant-numeric: tabular-nums; white-space: nowrap; }
 .koop-cred-t { margin-top: 7px; font-size: 13px; line-height: 1.5; color: var(--paper-dim); }
@@ -398,7 +398,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
   border: 1px solid rgba(126,208,155,0.14); box-shadow: 0 16px 34px -26px rgba(0,0,0,0.7); }
 .koop-notiz b { display: block; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.6px;
   text-transform: uppercase; color: var(--leaf); margin-bottom: 8px; }
-.koop-notiz p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 18px; line-height: 1.55; color: var(--paper); }
+.koop-notiz p { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic; font-size: 18px; line-height: 1.55; color: var(--paper); }
 
 /* ---- FAQ (dunkel, slim) ---------------------------------- */
 .koop-faq { margin-top: 22px; display: grid; gap: 10px; max-width: 760px; }
@@ -407,7 +407,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
   transition: border-color 400ms var(--ease-lux); }
 .koop-faq details[open] { border-color: rgba(126,208,155,0.3); }
 .koop-faq summary { cursor: pointer; list-style: none; padding: 17px 22px;
-  font-family: 'Playfair Display', serif; font-weight: 600; font-size: 16px; color: var(--paper);
+  font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 600; font-size: 16px; color: var(--paper);
   display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .koop-faq summary::-webkit-details-marker { display: none; }
 .koop-faq summary::after { content: "+"; font-family: var(--mono); font-weight: 700; font-size: 20px;
@@ -434,7 +434,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-close__inner { position: relative; z-index: 2; max-width: 600px; }
 .koop-close__k { font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
   letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf); }
-.koop-close h2 { margin: 14px 0 0; font-family: 'Playfair Display', serif; font-weight: 700;
+.koop-close h2 { margin: 14px 0 0; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
   font-size: clamp(34px, 6vw, 62px); line-height: 1.0; letter-spacing: -0.5px; color: var(--paper);
   text-shadow: 0 2px 22px rgba(3,15,9,0.62); }
 .koop-close h2 em { font-style: italic; color: var(--leaf); }
@@ -849,92 +849,6 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 </nav>
 
 <script src="/v3.js?v=64d0bdfd" defer></script>
-<script>
-/* Count-Up der Stat-Zahlen beim Reinscrollen (animiert + live-Gefühl) */
-(function () {
-  'use strict';
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function fmtInt(n) { return n.toLocaleString('de-DE'); }
-  function fmtPct(n) { return n.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%'; }
-  var nums = document.querySelectorAll('[data-count], [data-count-pct]');
-  function run(el) {
-    var pct = el.hasAttribute('data-count-pct');
-    var target = parseFloat(pct ? el.dataset.countPct : el.dataset.count);
-    var fmt = pct ? fmtPct : fmtInt;
-    if (reduce) { el.textContent = fmt(target); return; }
-    var t0 = null, DUR = 1400;
-    function step(ts) {
-      if (!t0) t0 = ts;
-      var p = Math.min(1, (ts - t0) / DUR);
-      var e = 1 - Math.pow(1 - p, 3);
-      el.textContent = fmt(pct ? Math.round(target * e * 10) / 10 : Math.round(target * e));
-      if (p < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-  if ('IntersectionObserver' in window && nums.length) {
-    if (!reduce) nums.forEach(function (el) { el.textContent = el.hasAttribute('data-count-pct') ? fmtPct(0) : fmtInt(0); });
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (en) { if (en.isIntersecting) { run(en.target); io.unobserve(en.target); } });
-    }, { rootMargin: '0px 0px -12% 0px' });
-    nums.forEach(function (el) { io.observe(el); });
-  } else { nums.forEach(run); }
-})();
-
-/* Scroll-driven Ablauf — Etappen aktivieren beim Durchscrollen (IntersectionObserver) */
-(function () {
-  'use strict';
-  var root = document.querySelector('[data-ablauf]');
-  if (!root) return;
-  var steps = Array.prototype.slice.call(root.querySelectorAll('[data-step]'));
-  var panels = Array.prototype.slice.call(root.querySelectorAll('[data-panel]'));
-  var fill = root.querySelector('[data-fill]');
-  var n = panels.length;
-  if (!n || steps.length !== n) return;
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var maxSeen = 0, cur = -1;
-
-  function setActive(i) {
-    if (i === cur) return;
-    cur = i;
-    if (i > maxSeen) maxSeen = i;
-    steps.forEach(function (s, k) {
-      s.classList.toggle('is-active', k === i);
-      s.classList.toggle('is-done', k <= maxSeen);
-      s.setAttribute('aria-current', k === i ? 'step' : 'false');
-    });
-    panels.forEach(function (p, k) { p.classList.toggle('is-in', k === i); });
-    if (fill) fill.style.setProperty('--fill', (maxSeen / (n - 1)).toFixed(4));
-  }
-
-  /* Node antippen → sanft zur Etappe scrollen (Tastatur-fähig) */
-  steps.forEach(function (s, i) {
-    s.addEventListener('click', function () {
-      var id = s.getAttribute('data-target');
-      var target = id && document.getElementById(id);
-      if (target) target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
-      else setActive(i);
-    });
-  });
-
-  if (!('IntersectionObserver' in window)) {
-    maxSeen = n - 1;
-    panels.forEach(function (p) { p.classList.add('is-in'); });
-    setActive(n - 1);
-    return;
-  }
-
-  setActive(0);
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (en) {
-      if (en.isIntersecting) {
-        var idx = panels.indexOf(en.target);
-        if (idx > -1) setActive(idx);
-      }
-    });
-  }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
-  panels.forEach(function (p) { io.observe(p); });
-})();
-</script>
+<script src="/js/kooperationen.js?v=3c9f0780" defer></script>
 </body>
 </html>

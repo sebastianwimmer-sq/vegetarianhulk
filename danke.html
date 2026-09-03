@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Danke · VegetarianHulk</title>
@@ -15,7 +15,7 @@
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
-<link rel="stylesheet" href="/v3.css?v=1054675b">
+<link rel="stylesheet" href="/v3.css?v=8d643031">
 
 <style>
   /* ── Danke — warmer Bestätigungsmoment, Gipfelbuch-Vibe ── */
@@ -34,8 +34,8 @@
   .ty-card > * { position: relative; z-index: 1; }
 
   .ty-kicker { font-family: var(--mono); font-size: var(--t-label); font-weight: 700;
-    letter-spacing: 2.6px; text-transform: uppercase; color: var(--gold); }
-  .ty-card h1 { margin: 16px 0 14px; font-family: 'Playfair Display', serif; font-weight: 700;
+    letter-spacing: 2.6px; text-transform: uppercase; color: var(--gold-ink); }
+  .ty-card h1 { margin: 16px 0 14px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
     font-size: clamp(46px, 12vw, 78px); line-height: 0.98; letter-spacing: -1px; color: var(--forest); }
   .ty-sub { margin: 0 auto; max-width: 44ch; font-size: 16px; line-height: 1.62;
     color: rgba(24,43,31,0.78); }
@@ -47,7 +47,7 @@
     box-shadow: inset 0 0 0 1px rgba(186,155,95,0.28), inset 0 1px 1px rgba(255,255,255,0.7); }
   .ty-detail__eyebrow { font-family: var(--mono); font-size: 10px; font-weight: 700;
     letter-spacing: 2px; text-transform: uppercase; color: var(--royal); margin-bottom: 8px; }
-  .ty-detail__headline { font-family: 'Playfair Display', serif; font-size: 21px; font-weight: 600;
+  .ty-detail__headline { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-size: 21px; font-weight: 600;
     line-height: 1.2; color: #14281C; margin-bottom: 10px; }
   .ty-detail__body { font-size: 14px; line-height: 1.66; color: rgba(24,43,31,0.78); }
 
@@ -141,45 +141,7 @@
   <a href="/kooperationen.html">Brands</a>
 </nav>
 
-<script>
-  // Footer-Jahr dynamisch
-  (function () {
-    var el = document.getElementById('footer-year');
-    if (el) el.textContent = new Date().getFullYear();
-  })();
-
-  // Pillar-Personalisierung anhand ?tag=
-  var params = new URLSearchParams(location.search);
-  var tag = params.get('tag');
-
-  var TAG_CONTENT = {
-    discipline: {
-      eyebrow: 'Pillar — Disziplin',
-      headline: 'Du willst die Architektur, die dich trägt.',
-      body: 'Disziplin ist kein Talent. Sie ist ein Ritual. Ich schick dir die nächsten Wochen das was bei mir wirklich funktioniert — Morgen-Routine, Streak-Recovery, Comeback-Patterns. Keine Coach-Bro-Sprüche.',
-    },
-    vegetarian: {
-      eyebrow: 'Pillar — Vegetarisch + Stark',
-      headline: 'Du willst den Live-Beweis sehen.',
-      body: '10 Jahre vegetarisch, 9 Jahre im Gym. Ich teile was wirklich auf dem Teller landet — Macros, einfache Routinen, was 2016 angefangen hat und heute noch trägt. Plant-based + Kraft = kein Widerspruch.',
-    },
-    faith: {
-      eyebrow: 'Pillar — Faith',
-      headline: 'Du willst den tieferen Anker.',
-      body: 'Faith trifft Disziplin. Bibel-Verse die mich tragen, Sunday-Reset-Routinen, Anker-Praxis. Schlachter 2000. Nicht performativ — gelebt. Du musst nicht christ sein um mitzulesen.',
-    },
-  };
-
-  if (tag && TAG_CONTENT[tag]) {
-    var c = TAG_CONTENT[tag];
-    document.getElementById('tag-eyebrow').textContent = c.eyebrow;
-    document.getElementById('tag-headline').textContent = c.headline;
-    document.getElementById('tag-body').textContent = c.body;
-    document.getElementById('tag-detail').style.display = 'block';
-    document.getElementById('thanks-title').textContent = 'Notiert.';
-    document.getElementById('thanks-sub').textContent = 'Ich passe meine Mails an das an, was dich gerade trägt.';
-  }
-</script>
+<script src="/js/danke.js?v=d996373c" defer></script>
 
 <script src="/v3.js?v=64d0bdfd" defer></script>
 </body>

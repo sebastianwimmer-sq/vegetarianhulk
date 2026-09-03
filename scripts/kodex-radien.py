@@ -82,9 +82,13 @@ ZUORDNUNG = {
     },
 }
 
+# Zentrale Stylesheets. v3.css laedt jede Seite, deshalb wiegt sie am schwersten.
+# style.css nur zwei Alt-Seiten, newsletter/styles.css laedt aktuell KEINE Seite.
+STYLESHEETS = ["v3.css", "touren/tour.css"]
+
 # Was stehen bleiben MUSS. Wird am Ende gegengeprueft.
 FORMEN = re.compile(
-    r"(50%|\.koop-phone|\.anf-consent input|\.koop-reel__logo"
+    r"(50%|\.koop-phone|\.anf-consent input|\.koop-reel__logo|\.gb-buch|focus-visible"
     r"|\.koop-flow__node|\.koop-reel__play|\.anf-next li::before"
     r"|\.anf-success-badge|\.bs-kopf li::before|\.tk-me__shots)"
 )
@@ -137,11 +141,16 @@ def main() -> int:
 
     # Gegenprobe: was ist an festen Radien uebrig, und ist das eine Form?
     rest = []
-    for datei in ZUORDNUNG:
+    # Zentrale Stylesheets mitpruefen — sie standen frueher nicht in ZUORDNUNG
+    # und blieben deshalb unsichtbar, obwohl v3.css auf JEDER Seite laedt.
+    for datei in list(ZUORDNUNG) + STYLESHEETS:
         pfad = WURZEL / datei
         if not pfad.exists():
             continue
-        for block in re.findall(r"<style>([\s\S]*?)</style>", pfad.read_text(encoding="utf-8")):
+        inhalt = pfad.read_text(encoding="utf-8")
+        bloecke = (re.findall(r"<style>([\s\S]*?)</style>", inhalt)
+                   if pfad.suffix == ".html" else [inhalt])
+        for block in bloecke:
             for m in re.finditer(r"([^\n{}]*)\{([^{}]*?border-radius:\s*([\d.]+)(px|rem|%))", block):
                 wert, einheit, sel = m.group(3), m.group(4), m.group(1).strip()
                 if einheit == "px" and float(wert) <= 4:

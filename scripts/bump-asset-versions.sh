@@ -27,12 +27,17 @@ ASSETS=(
   v3.js
   touren/tour.css
   touren/tour.js
+  js/404.js
+  js/danke.js
+  js/kooperationen.js
+  js/partner-picks.js
+  js/anfrage.js
+  js/touren-hub.js
   relief3d.js
   motion-reveal.js
   update-check.js
   newsletter-form.js
   danke-block.js
-  newsletter/styles.css
   newsletter/form.js
   codes/partners.js
   lieblingsprodukte/products.js
@@ -59,9 +64,9 @@ rewrite_refs() {
 }
 
 # ── 1) fonts.css zuerst: dessen Hash steckt im @import der CSS-Dateien,
-#       muss also VOR dem Hashen von style.css/newsletter/styles.css rein
+#       muss also VOR dem Hashen von style.css rein
 FONTS_HASH="$(hash8 fonts.css)"
-for css in style.css newsletter/styles.css; do
+for css in style.css; do
   sed -i '' -E "s|@import url\('/fonts\.css(\?v=[^']*)?'\);|@import url('/fonts.css?v=${FONTS_HASH}');|" "$css"
 done
 
