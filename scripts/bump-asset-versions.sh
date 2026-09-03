@@ -27,6 +27,12 @@ ASSETS=(
   v3.js
   touren/tour.css
   touren/tour.js
+  js/404.js
+  js/danke.js
+  js/kooperationen.js
+  js/partner-picks.js
+  js/anfrage.js
+  js/touren-hub.js
   relief3d.js
   motion-reveal.js
   update-check.js

@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>404 · Verstiegen — VegetarianHulk</title>
@@ -158,36 +158,7 @@
   <a href="/kooperationen.html">Brands</a>
 </nav>
 
-<script>
-  // Footer-Jahr dynamisch
-  (function () {
-    var y = new Date().getFullYear();
-    document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = y; });
-  })();
-
-  // Verstiegen-Wegweiser: getippten Pfad anzeigen (textContent = safe)
-  (function () {
-    var el = document.querySelector('[data-err-path]');
-    if (el) {
-      var path = (location.pathname || '/') + (location.search || '');
-      if (path.length > 48) path = path.slice(0, 47) + '…';
-      el.textContent = path;
-    }
-  })();
-
-  // Self-Service-404-Debug: console.warn + sessionStorage-Log (max 20)
-  (function () {
-    try {
-      var path = location.pathname + location.search;
-      var ref = document.referrer || 'direct';
-      console.warn('[vh:404] Path:', path, '· From:', ref);
-      var log = JSON.parse(sessionStorage.getItem('vh:404:log') || '[]');
-      log.push({ ts: Date.now(), path: path, from: ref });
-      if (log.length > 20) log = log.slice(-20);
-      sessionStorage.setItem('vh:404:log', JSON.stringify(log));
-    } catch (e) { /* sessionStorage disabled — ignore */ }
-  })();
-</script>
+<script src="/js/404.js?v=3103bacf" defer></script>
 
 <script src="/v3.js?v=64d0bdfd" defer></script>
 </body>
