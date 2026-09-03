@@ -144,6 +144,21 @@ function pruefeImBrowser() {
       k = k.parentElement;
     }
     if (aufBild || s.textShadow !== 'none') continue;
+    /* 3D-transformierte Elemente (die Wegweiser-Schilder auf der Startseite
+       stehen auf rotateY) lassen sich so nicht messen: die Box stimmt nicht
+       mehr mit dem gerenderten Bild ueberein, und der Grund wird vom falschen
+       Vorfahren geholt. Ergebnis war 1,29:1 fuer ein Schild, das per Auge
+       einwandfrei lesbar ist (gegengeprueft am Screenshot). */
+    if (s.transform && /matrix3d|rotate[XY]/.test(s.transform)) { nichtMessbar++; continue; }
+    // Deko: liegt hinter dem Inhalt und ist nicht anklickbar (z. B. die grosse
+    // Ziffer als Wasserzeichen auf den Partner-Picks-Karten, 9 % Deckung).
+    if (s.pointerEvents === 'none' && parseFloat(s.zIndex || '0') <= 0) continue;
+    // Flaechen aus Pseudo-Elementen: .gab-schild traegt sein Gold auf einem
+    // ::before. getComputedStyle sieht das beim Element selbst nicht — dann
+    // lieber nicht messen als falsch messen.
+    const pseudo = getComputedStyle(el, '::before');
+    if (pseudo && pseudo.content !== 'none' && pseudo.backgroundColor
+        && !/rgba\(0, 0, 0, 0\)/.test(pseudo.backgroundColor)) { nichtMessbar++; continue; }
 
     const vorn = zuRgb(s.color);
     if (!vorn) continue;
@@ -154,6 +169,14 @@ function pruefeImBrowser() {
        trifft ein Stopp zufaellig die Textfarbe, meldete der Minimal-Ansatz 1,00:1
        fuer Text, der real gut lesbar ist (dunkel auf DAV-Gelb). Weicht der
        schlechteste Stopp stark ab, kommt das als Hinweis dazu. */
+    /* Spreizen die Stopps stark (dunkles Schild mit Lichtkante), ist weder
+       Mittelwert noch Extremwert verlaesslich — dann lieber "nicht messbar".
+       Der Ansatz meldete sonst 1,29:1 fuer ein Wegweiser-Schild, das per Auge
+       einwandfrei lesbar ist. */
+    if (grund.varianten.length > 1) {
+      const hell = grund.varianten.map(leuchtkraft);
+      if (Math.max(...hell) - Math.min(...hell) > 0.25) { nichtMessbar++; continue; }
+    }
     const mittel = grund.varianten.reduce((a, f) => ({
       r: a.r + f.r / grund.varianten.length,
       g: a.g + f.g / grund.varianten.length,

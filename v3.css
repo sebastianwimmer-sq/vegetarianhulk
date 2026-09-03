@@ -25,6 +25,10 @@
   --bg-deep: #06231A;
   --paper: #F3EBD9; --paper-dim: rgba(243,235,217,0.68); --paper-faint: rgba(243,235,217,0.58);
   --card-cream: #F5EEDE; --ink: #182B1F; --ink-soft: #5E6B5E;
+  /* Schwaechste Textfarbe auf Papier, die WCAG AA noch haelt (4,5:1).
+     Gerechnet gegen alle drei Papier-Toene: alpha 0,66 ergibt 4,53–4,56:1.
+     Vorher standen hier verstreut 0,4–0,6 — das ergab 2,29–3,85:1. */
+  --ink-meta: rgba(24, 43, 31, 0.66);
   --leaf: #7ED09B; --meta-green: #9BD9B4;
 
   /* Typo-Scale — 5 Größen */
@@ -176,12 +180,12 @@ main { position: relative; z-index: 1; }
   background: rgba(24,43,31,0.12); border: 1px solid rgba(24,43,31,0.12); border-radius: var(--r-control); overflow: hidden; }
 .th-facts > div { background: rgba(245,238,222,0.7); padding: 12px 16px; }
 .th-facts dt { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.8px;
-  text-transform: uppercase; color: rgba(24,43,31,0.5); }
+  text-transform: uppercase; color: var(--ink-meta); }
 .th-facts dd { margin-top: 3px; font-size: 16px; font-weight: 600; color: #14281C; }
-.th-facts dd span { font-weight: 400; color: rgba(24,43,31,0.55); font-size: 14px; }
+.th-facts dd span { font-weight: 400; color: var(--ink-meta); font-size: 14px; }
 .th-flag__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; }
 .th-note { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 1.2px;
-  text-transform: uppercase; color: rgba(24,43,31,0.5); }
+  text-transform: uppercase; color: var(--ink-meta); }
 /* Aside: Höhenprofil auf dunkler Karte im hellen Blatt */
 .th-flag__aside { padding: clamp(30px, 4vw, 46px) clamp(26px, 3vw, 40px);
   background: linear-gradient(158deg, #0C2416, #061c12);
@@ -612,7 +616,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .panel-ticks i.on { background: var(--royal); }
 .panel-nav button { order: 3; width: auto; height: auto; border: 0; border-radius: 0;
   background: transparent; cursor: pointer; padding: 4px 8px;
-  font-family: var(--mono); font-size: 16px; line-height: 1; color: rgba(24,43,31,0.5);
+  font-family: var(--mono); font-size: 16px; line-height: 1; color: var(--ink-meta);
   transition: color 300ms var(--ease-lux), transform 300ms var(--ease-lux); }
 .panel-nav button:hover { color: var(--royal); transform: none; }
 .panel-nav button:first-of-type { order: 3; margin-left: auto; }
@@ -755,7 +759,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600;
   font-size: clamp(20px, 2.5vw, 28px); line-height: 1.42; color: #14281C; }
 .gb-quelle { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2.2px;
-  text-transform: uppercase; color: #8A6F2F; }
+  text-transform: uppercase; color: var(--gold-ink); }
 .gb-anker { margin-top: 8px; font-family: 'Playfair Display', serif; font-style: italic;
   font-size: 16px; color: var(--royal); }
 /* rechte Seite: liniert wie ein echtes Buch, Eintrag sitzt auf den Linien */
@@ -774,7 +778,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .gb-cta { grid-column: 1 / -1; justify-self: stretch; position: relative; z-index: 1;
   margin: 0 46px 30px; padding: 2px 30px 4px 4px;
   font-family: 'Caveat', cursive; font-weight: 600; font-size: 23px;
-  text-decoration: none; color: rgba(11,110,79,0.78);
+  text-decoration: none; color: var(--royal);
   border-bottom: 1.5px dashed rgba(30,58,42,0.45);
   transition: color 400ms var(--ease-lux), border-color 400ms var(--ease-lux); }
 .gb-cta::after { content: "\2192"; position: absolute; right: 6px; }
