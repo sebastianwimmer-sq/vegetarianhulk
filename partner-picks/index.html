@@ -21,7 +21,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23045927'/%3E%3Ctext x='50' y='66' font-family='Inter,sans-serif' font-size='52' font-weight='900' text-anchor='middle' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E">
 
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
-<link rel="stylesheet" href="/v3.css?v=130cf968">
+<link rel="stylesheet" href="/v3.css?v=4ca98f95">
 
 <style>
   /* ============================================================
@@ -37,7 +37,7 @@
     letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf);
     display: flex; align-items: center; gap: 12px; }
   .pp-hero .kicker::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.24); }
-  .pp-hero h1 { margin: 16px 0 20px; font-family: 'Playfair Display', serif; font-weight: 700;
+  .pp-hero h1 { margin: 16px 0 20px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
     font-size: clamp(44px, 11vw, 84px); line-height: 0.98; color: var(--paper); letter-spacing: -0.5px; }
   .pp-hero h1 em { font-style: italic; color: var(--leaf); }
   .pp-lead { font-size: 16.5px; line-height: 1.7; color: var(--paper-dim); max-width: 52ch; }
@@ -111,7 +111,7 @@
 
   /* Ghost-Ziffer — riesig, transparent hinter der Typo */
   .pp-card__no { position: absolute; right: 18px; top: 6px; z-index: 0;
-    font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; font-size: 58px;
+    font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic; font-weight: 700; font-size: 58px;
     line-height: 1; color: rgba(126,208,155,0.09); pointer-events: none;
     transition: color 550ms var(--ease-lux); }
   .pp-card:hover .pp-card__no { color: rgba(126,208,155,0.17); }
@@ -123,7 +123,7 @@
   .pp-badge { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1px;
     color: #14100A; background: linear-gradient(180deg, #E8BF25, #D4A918); padding: 4px 12px 4px 11px;
     clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%); }
-  .pp-card__name { margin: 12px 0 8px; font-family: 'Playfair Display', serif; font-weight: 600;
+  .pp-card__name { margin: 12px 0 8px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 600;
     font-size: 22px; line-height: 1.14; color: var(--paper); }
   .pp-card__text { font-size: 14.5px; line-height: 1.62; color: var(--paper-dim); }
 

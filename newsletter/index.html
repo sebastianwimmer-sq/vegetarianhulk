@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://challenges.cloudflare.com" />
 
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0" />
-<link rel="stylesheet" href="/v3.css?v=130cf968" />
+<link rel="stylesheet" href="/v3.css?v=4ca98f95" />
 <style>
 /* ============================================================
    /newsletter — Conversion-Seite v3 (Freebie + laufender Letter)
@@ -46,10 +46,17 @@
   clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%);
   text-shadow: 0 1px 0 rgba(255,255,255,0.3);
   filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4)) drop-shadow(0 2px 1px rgba(120,88,10,0.4)) drop-shadow(0 8px 14px rgba(0,0,0,0.3)); }
-.nl-hero h1 { margin: 20px 0 16px; font-family: 'Playfair Display', serif; font-weight: 700;
+.nl-hero h1 { margin: 20px 0 16px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
   font-size: clamp(44px, 10vw, 86px); line-height: 0.96; letter-spacing: -1px; color: var(--paper); }
 .nl-hero h1 em { font-style: italic; color: var(--leaf); }
-.nl-sub { font-size: 17px; line-height: 1.65; color: var(--paper-dim); max-width: 48ch; }
+/* min-height, weil dieser Absatz genau an einer Umbruchgrenze liegt: mit dem
+   Fallback-Font braucht er 4 Zeilen, mit Inter 5 — das sind 28 px, und die
+   Karte darunter sprang entsprechend (0,137 des CLS von 0,151). size-adjust
+   allein reicht hier nicht; eine Laufweiten-Angleichung von rund 5 % kann einen
+   Umbruch kippen, wenn der Text ohnehin knapp an der Grenze steht.
+   140 px = gemessene Endhoehe bei 390 px Breite. */
+.nl-sub { font-size: 17px; line-height: 1.65; color: var(--paper-dim); max-width: 48ch; min-height: 140px; }
+@media (min-width: 560px) { .nl-sub { min-height: 84px; } }  /* ab 560 px: 3 Zeilen, gemessen */
 .nl-sub strong { color: var(--paper); font-weight: 600; }
 .nl-hero__grid { margin-top: clamp(26px, 4vw, 40px); display: grid; grid-template-columns: 1fr 0.9fr;
   gap: 22px; align-items: stretch; }
@@ -63,7 +70,7 @@
 .nl-signup > * { position: relative; z-index: 1; }
 .nl-signup__k { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2.2px;
   text-transform: uppercase; color: var(--gold-ink); display: inline-flex; align-items: center; }
-.nl-signup__h { margin: 9px 0 4px; font-family: 'Playfair Display', serif; font-weight: 600;
+.nl-signup__h { margin: 9px 0 4px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 600;
   font-size: clamp(21px, 2.6vw, 26px); line-height: 1.08; color: #14281C; }
 .nl-signup__p { font-size: 14px; line-height: 1.55; color: rgba(24,43,31,0.72); margin-bottom: 16px; }
 .nl-trust { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px 14px;
@@ -87,7 +94,7 @@
 .nl-book__cover::after { content: "BERG-STARTER"; position: absolute; left: 8px; right: 8px; bottom: 10px;
   font-family: var(--mono); font-size: 7.5px; font-weight: 700; letter-spacing: 1px; color: #F3EBD9;
   text-shadow: 0 1px 3px rgba(0,0,0,0.9); }
-.nl-book__meta b { display: block; font-family: 'Playfair Display', serif; font-weight: 700; font-size: 22px;
+.nl-book__meta b { display: block; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700; font-size: 22px;
   color: var(--paper); line-height: 1.05; }
 .nl-book__meta span { display: block; margin-top: 4px; font-family: var(--mono); font-size: 10px; font-weight: 700;
   letter-spacing: 1.4px; text-transform: uppercase; color: var(--paper-faint); }
@@ -104,7 +111,7 @@
 .nl-after .section-eyebrow { display: flex; align-items: center; gap: 12px; font-family: var(--mono);
   font-size: var(--t-label); font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: var(--leaf); }
 .nl-after .section-eyebrow .line { width: 30px; height: 1px; background: rgba(126,208,155,0.4); }
-.nl-after h2 { margin-top: 14px; font-family: 'Playfair Display', serif; font-weight: 600;
+.nl-after h2 { margin-top: 14px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 600;
   font-size: var(--t-h2); line-height: 1.1; color: var(--paper); max-width: 24ch; }
 .nl-after h2 em { font-style: italic; color: var(--leaf); }
 .nl-benefits { margin-top: 34px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -117,8 +124,8 @@
   background: linear-gradient(90deg, var(--emerald), transparent); transition: width 650ms var(--ease-lux); }
 .nl-benefit:hover { transform: translateY(-4px); border-color: rgba(126,208,155,0.32); }
 .nl-benefit:hover::before { width: 55%; }
-.nl-benefit__n { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; font-size: 15px; color: var(--leaf); }
-.nl-benefit h3 { margin: 10px 0 8px; font-family: 'Playfair Display', serif; font-weight: 600;
+.nl-benefit__n { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic; font-weight: 700; font-size: 15px; color: var(--leaf); }
+.nl-benefit h3 { margin: 10px 0 8px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 600;
   font-size: 20px; line-height: 1.15; color: var(--paper); }
 .nl-benefit p { font-size: 14px; line-height: 1.6; color: var(--paper-dim); }
 
@@ -131,7 +138,7 @@
   font-size: var(--t-label); font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: var(--leaf); }
 .anti-eyebrow .line { width: 34px; height: 1px; background: rgba(126,208,155,0.4); }
 .statements { margin-top: 28px; display: grid; gap: 22px; }
-.statement { position: relative; padding-left: 52px; font-family: 'Playfair Display', serif;
+.statement { position: relative; padding-left: 52px; font-family: 'Playfair Display', 'Playfair Fallback', serif;
   font-weight: 500; font-size: clamp(20px, 3.2vw, 28px); line-height: 1.3; color: var(--paper); }
 .statement::before { content: attr(data-n); position: absolute; left: 0; top: 6px; font-family: var(--mono);
   font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--leaf); opacity: 0.72; }
@@ -153,11 +160,11 @@
   box-shadow: var(--shadow-paper); }
 .repeat-inner::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.55; pointer-events: none; }
 .repeat-inner > * { position: relative; z-index: 1; }
-.verse { max-width: 26ch; margin: 0 auto; font-family: 'Playfair Display', serif; font-style: italic;
+.verse { max-width: 26ch; margin: 0 auto; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic;
   font-weight: 500; font-size: clamp(20px, 3.2vw, 26px); line-height: 1.4; color: var(--forest); }
 .verse-attr { margin-top: 12px; font-family: var(--mono); font-size: 10px; font-weight: 700;
   letter-spacing: 2.2px; text-transform: uppercase; color: var(--gold-ink); }
-.repeat-inner h2 { margin: 26px 0 8px; font-family: 'Playfair Display', serif; font-weight: 600;
+.repeat-inner h2 { margin: 26px 0 8px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 600;
   font-size: clamp(28px, 5vw, 42px); line-height: 1.08; color: #14281C; }
 .repeat-inner h2 em { font-style: italic; color: var(--royal); }
 .repeat-inner .repeat-sub { font-size: 15px; line-height: 1.6; color: rgba(24,43,31,0.72); max-width: 42ch; margin: 0 auto 24px; }

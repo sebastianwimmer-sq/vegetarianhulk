@@ -22,7 +22,7 @@
 
 <script src="/launch-gate.js?v=4"></script>
 <link rel="stylesheet" href="/fonts.css?v=1e2010e0">
-<link rel="stylesheet" href="/v3.css?v=130cf968">
+<link rel="stylesheet" href="/v3.css?v=4ca98f95">
 <link rel="stylesheet" href="/touren/tour.css?v=c05c6a24">
 <style>
 /* ============================================================
@@ -34,7 +34,7 @@
 .tk-hero .kicker { display: flex; align-items: center; gap: 12px; font-family: var(--mono);
   font-size: var(--t-label); font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf); }
 .tk-hero .kicker::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.24); }
-.tk-hero h1 { margin: 16px 0 18px; font-family: 'Playfair Display', serif; font-weight: 700;
+.tk-hero h1 { margin: 16px 0 18px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
   font-size: clamp(42px, 10vw, 80px); line-height: 0.98; letter-spacing: -0.5px; color: var(--paper); }
 .tk-hero h1 em { font-style: italic; color: var(--leaf); }
 .tk-lead { font-size: 16.5px; line-height: 1.7; color: var(--paper-dim); max-width: 54ch; }
@@ -71,10 +71,10 @@
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
   color: #14100A; background: linear-gradient(180deg, #E8BF25, #D4A918); padding: 5px 13px 5px 10px;
   clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%); }
-.tk-pin h2 { margin: 16px 0 2px; font-family: 'Playfair Display', serif; font-weight: 700;
+.tk-pin h2 { margin: 16px 0 2px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
   font-size: clamp(30px, 4.4vw, 44px); line-height: 1; letter-spacing: -0.5px; color: #14281C; }
 .tk-pin h2 span { font-family: var(--mono); font-size: 12px; font-weight: 700; color: rgba(24,43,31,0.5); margin-left: 6px; }
-.tk-pin__tag { font-family: 'Playfair Display', serif; font-style: italic; font-size: 18px; color: var(--royal); }
+.tk-pin__tag { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic; font-size: 18px; color: var(--royal); }
 .tk-pin__note { margin: 14px 0 0; max-width: 40ch;
   font-family: 'Caveat', cursive; font-weight: 600; font-size: 21px; line-height: 1.35; color: #1E3A2A; }
 .tk-pin__facts { margin-top: auto; padding-top: 18px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px;
@@ -178,13 +178,13 @@
   background: linear-gradient(90deg, transparent 60%, rgba(243,236,222,1) 100%); }
 .tk-row__main { padding: 15px 0; min-width: 0; }
 .tk-row__top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-.tk-row__name { margin: 0; font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(19px, 2.4vw, 24px);
+.tk-row__name { margin: 0; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700; font-size: clamp(19px, 2.4vw, 24px);
   line-height: 1.05; letter-spacing: -0.3px; color: #14281C; }
 .tk-row__alt { font-family: var(--mono); font-size: 11px; font-weight: 700; color: rgba(24,43,31,0.48); }
 .tk-badge-gone { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.4px;
   text-transform: uppercase; color: #14100A; background: linear-gradient(180deg, #E8BF25, #D4A918);
   padding: 3px 9px 3px 7px; clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 50%, calc(100% - 5px) 100%, 0 100%); }
-.tk-row__tag { margin-top: 2px; font-family: 'Playfair Display', serif; font-style: italic;
+.tk-row__tag { margin-top: 2px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic;
   font-size: 14.5px; color: var(--royal); }
 .tk-row__facts { margin-top: 7px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px 9px;
   font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.3px; color: rgba(24,43,31,0.78); }
@@ -254,7 +254,7 @@
 /* Leerzustand */
 .tk-empty { display: none; margin-top: 18px; padding: 34px 22px; text-align: center; border-radius: var(--r-karte);
   border: 1px dashed rgba(126,208,155,0.3); color: var(--paper-dim); }
-.tk-empty p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 19px; }
+.tk-empty p { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic; font-size: 19px; }
 .tk-empty button { margin-top: 12px; cursor: pointer; background: none; border: 0;
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
   color: var(--leaf); text-decoration: underline; text-underline-offset: 3px; }
@@ -282,7 +282,7 @@
   text-transform: uppercase; color: var(--gold); }
 .tk-close__nums { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 14px clamp(24px, 4vw, 54px); }
 .tk-close__nums div { display: flex; flex-direction: column; gap: 5px; }
-.tk-close__nums b { font-family: 'Playfair Display', serif; font-weight: 700;
+.tk-close__nums b { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
   font-size: clamp(34px, 4.6vw, 52px); line-height: 1; letter-spacing: -1px; color: var(--royal);
   font-variant-numeric: tabular-nums; }
 .tk-close__nums span { font-family: var(--mono); font-size: 10px; font-weight: 700;
