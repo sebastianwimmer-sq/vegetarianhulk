@@ -199,7 +199,12 @@ for (const datei of liste) {
      jemand bekommt, wird GEMELDET, aber blockiert nicht — sonst stuende
      das Tor dauerhaft rot und wuerde nach einer Woche ignoriert.
      Unterdrueckt wird nichts: der Fund steht weiter da, nur anders gewichtet. */
-  const wirdVerschickt = verschickteVorlagen().includes(basename(datei));
+  /* Eine erzeugte Mail aus .mail-versand/ IST das, was rausgeht — sie muss
+     blockieren, auch wenn der Worker sie nicht importiert (sie geht als
+     Brevo-Kampagne raus). Sonst waere ausgerechnet die ausgelieferte Fassung
+     die einzige, deren Funde folgenlos bleiben. */
+  const wirdVerschickt = verschickteVorlagen().includes(basename(datei))
+                         || datei.includes('.mail-versand/');
   if (wirdVerschickt) gesamt += funde.length; else offen += funde.length;
   const zeichen = funde.length ? (wirdVerschickt ? '🔴' : '🟡') : '🟢';
   const art = wirdVerschickt ? 'verschickt' : 'Geruest';

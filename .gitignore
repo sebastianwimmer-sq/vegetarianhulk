@@ -43,3 +43,6 @@ audit/
 
 # Screenshots von scripts/tour-visual.mjs
 .tour-visual/
+
+# Erzeugte Versand-Mails (scripts/tour-mail.mjs) — Artefakt, kein Quelltext
+.mail-versand/
