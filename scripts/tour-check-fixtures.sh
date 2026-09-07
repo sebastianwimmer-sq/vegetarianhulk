@@ -15,7 +15,18 @@ pruefe() { # name, sed-ausdruck, zieldatei-relativ
   local name="$1" ausdruck="$2" ziel="$3"
   local tmp; tmp="$(mktemp -d)"
   cp -R "$WURZEL/touren" "$WURZEL/scripts" "$tmp/" 2>/dev/null
+  local vorher; vorher="$(shasum "$tmp/$ziel" | cut -d" " -f1)"
   perl -0pi -e "$ausdruck" "$tmp/$ziel" 2>/dev/null
+  # Greift das Muster nicht mehr, prueft dieses Fixture NICHTS — und meldete
+  # das bisher als "NICHT ERKANNT", was wie ein Fehler im Tor aussah.
+  # Am 07.09.2026 waren drei Muster auf die jeweils neueste Tour festgenagelt
+  # und liefen nach dem naechsten Hub-Update ins Leere.
+  if [ "$vorher" = "$(shasum "$tmp/$ziel" | cut -d" " -f1)" ]; then
+    echo "  ✗ FIXTURE GREIFT NICHT (Muster trifft nichts): $name"
+    FEHLGESCHLAGEN=1
+    rm -rf "$tmp"
+    return
+  fi
 
   if node "$tmp/scripts/tour-check.mjs" "$SLUG" >/dev/null 2>&1; then
     echo "  ✗ NICHT ERKANNT: $name"
@@ -52,13 +63,13 @@ pruefe "Filter-Chip fuer den Grad fehlt" \
   's{<button class="tk-chip" data-f="diff" data-v="1"[^>]*>Leicht</button>\s*}{}' \
   "touren/index.html"
 pruefe "tkCount passt nicht zur Liste" \
-  's{<b id="tkCount">8</b>}{<b id="tkCount">5</b>}' \
+  's{<b id="tkCount">\d+</b>}{<b id="tkCount">0</b>}' \
   "touren/index.html"
 pruefe "Pinned zeigt auf die aeltere Tour" \
-  's{<a class="tk-pin tk-wide st st3" href="/touren/kneifelspitze/"}{<a class="tk-pin tk-wide st st3" href="/touren/ristfeuchthorn/"}' \
+  's{(<a class="tk-pin[^"]*" href=")/touren/[a-z0-9-]+/}{$1/touren/ristfeuchthorn/}' \
   "touren/index.html"
 pruefe "Tour fehlt in der JSON-LD ItemList" \
-  's{\{"\@type":"ListItem","position":1,"name":"Kneifelspitze[^\}]*\},\s*}{}' \
+  "s|\\{\"\\@type\":\"ListItem\",\"position\":\\d+,[^}]*?/touren/$SLUG/\"\\},\\s*||" \
   "touren/index.html"
 pruefe "Asset ohne Cache-Bust eingebunden" \
   's{/v3\.css\?v=[a-f0-9]{8}}{/v3.css}' \

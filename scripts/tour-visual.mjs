@@ -146,8 +146,14 @@ for (const slug of slugs) {
         // Ein Hoehenprofil ohne gezeichnete Kurve sah fuer das Werkzeug "sauber" aus:
         // ein NaN in den Koordinaten wirft keinen Fehler, es zeichnet nur nichts.
         profilLeer: (() => {
-          const linie = document.querySelector('.tour-profil .line');
-          if (!linie) return null;
+          const kasten = document.querySelector('.tour-profil');
+          if (!kasten) return null;              // Seite ohne Profil — kein Befund
+          const linie = kasten.querySelector('.line');
+          // Fehlt die Kurve GANZ, ist das kein "nicht vorhanden", sondern kaputt:
+          // tour.js ueberschreibt nur ein vorhandenes <path class="line">, es legt
+          // keines an. Wer die Pfade beim Aufsetzen einer Tour weglaesst, bekommt
+          // ein leeres Diagramm — und dieses Tor meldete dafuer vier Engines gruen.
+          if (!linie) return 'Kurve fehlt komplett (kein <path class="line"> im SVG)';
           const d = linie.getAttribute('d') || '';
           if (/NaN|undefined/.test(d)) return 'Koordinaten enthalten NaN';
           try { if (linie.getTotalLength() < 50) return 'Kurve zu kurz'; } catch { return 'Pfad unlesbar'; }
@@ -180,7 +186,8 @@ for (const slug of slugs) {
       ).catch(() => {});
       const zweit = await seite.evaluate(() => {
         const bilder = [...document.images];
-        const linie = document.querySelector('.tour-profil .line');
+        const kasten = document.querySelector('.tour-profil');
+        const linie = kasten && kasten.querySelector('.line');
         return {
           leer: bilder.filter(i => !(i.complete && i.naturalWidth > 0)).length,
           ohneFlaeche: bilder.filter(i => {
@@ -188,9 +195,14 @@ for (const slug of slugs) {
             return r.width === 0 || r.height === 0;
           }).length,
           kurveKurz: linie ? linie.getTotalLength() < 50 : false,
+          // Fehlende Kurve ist deterministisch, keine Umgebungs-Schwankung —
+          // sie darf die Wiederholung NICHT ueberleben. Vorher stand hier fuer
+          // den Fall "keine Linie" ein false, und der Wiederholungslauf hat den
+          // echten Befund aus dem ersten Durchgang wieder eingesammelt.
+          kurveFehlt: kasten ? !linie : false,
         };
       });
-      if (!zweit.leer && !zweit.ohneFlaeche && !zweit.kurveKurz) {
+      if (!zweit.leer && !zweit.ohneFlaeche && !zweit.kurveKurz && !zweit.kurveFehlt) {
         schlecht = false;
         mess.leer = []; mess.ohneFlaeche = []; mess.profilLeer = null;
         mess.wackelig = true;
