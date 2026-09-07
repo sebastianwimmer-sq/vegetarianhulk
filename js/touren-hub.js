@@ -138,14 +138,25 @@
     };
     var key = function (cd) { return cd === 0 ? 'sun' : cd <= 2 ? 'suncloud' : cd === 3 ? 'cloud'
       : cd <= 48 ? 'fog' : cd <= 67 ? 'rain' : cd <= 77 ? 'snow' : cd <= 82 ? 'rain' : 'storm'; };
-    fetch('https://api.open-meteo.com/v1/forecast?latitude=47.65&longitude=12.79&elevation=1200&current=temperature_2m,weather_code&daily=sunset&timezone=Europe%2FBerlin&forecast_days=1')
+    /* Ortsangabe kommt aus dem Markup, nicht aus dem Skript: der Kasten zeigt
+       das Wetter der zuletzt gegangenen Tour. Fest verdrahtet stand hier
+       "Chiemgau/BGL · ~1.200 m" — mit der Drachenwand im Salzkammergut war
+       das schlicht falsch, ohne dass es irgendwo aufgefallen waere.
+       Fallback = die alten Werte, damit ein fehlendes Attribut nichts bricht. */
+    var lat = box.dataset.lat || '47.65';
+    var lon = box.dataset.lon || '12.79';
+    var hoehe = box.dataset.hoehe || '1200';
+    var ort = box.dataset.ort || 'Chiemgau/BGL · ~1.200 m';
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=' + encodeURIComponent(lat)
+      + '&longitude=' + encodeURIComponent(lon) + '&elevation=' + encodeURIComponent(hoehe)
+      + '&current=temperature_2m,weather_code&daily=sunset&timezone=Europe%2FBerlin&forecast_days=1')
       .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
       .then(function (d) {
         var s = (d.daily.sunset[0] || '').slice(11, 16);
         box.querySelector('[data-lv-temp]').textContent = Math.round(d.current.temperature_2m);
         box.querySelector('[data-lv-cond]').textContent = WMO(d.current.weather_code);
         box.querySelector('[data-lv-ico]').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true">' + IC[key(d.current.weather_code)] + '</svg>';
-        box.querySelector('[data-lv-meta]').textContent = 'Chiemgau/BGL · ~1.200 m' + (s ? ' · Licht bis ' + s : '');
+        box.querySelector('[data-lv-meta]').textContent = ort + (s ? ' · Licht bis ' + s : '');
         box.hidden = false;
       })
       .catch(function () {});

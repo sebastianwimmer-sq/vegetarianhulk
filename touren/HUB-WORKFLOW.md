@@ -136,7 +136,15 @@ Pro Tour dieses Set. **Fett = Pflicht**, Rest optional/ableitbar.
    Stehen keine Rohdaten zur Verfügung, dürfen die Punkte aus einem nachgezeichneten Profil
    abgeleitet werden — dann auf 10 m runden und die **Herkunft in den Hinweistext schreiben**
    (Ristfeuchthorn: „Werte aus dem Bergfex-Profil nachgezeichnet, auf 10 m gerundet").
-5. **Wetter:** in beiden Wetter-Skripten `elevation=<Gipfelhöhe>` (lat/lon = Bergregion) setzen.
+5. **Wetter — IMMER ortsspezifisch, an ZWEI Stellen:**
+   a) **Tour-Seite:** `data-lat` · `data-lon` · `data-hoehe` am Fakten-Strip (`.tour-fakten`).
+      `tour.js` liest sie von dort — im Skript ist nichts zu ändern.
+   b) **Hub** (`touren/index.html`, der „Jetzt am Berg"-Kasten): dieselben drei Attribute
+      plus **`data-ort="<Name> · <Höhe> m"`**. Der Kasten zeigt das Wetter der
+      **zuletzt gegangenen** Tour, wandert also mit dem Pin mit.
+   Bis 07.09.2026 stand im Hub-Skript fest `Chiemgau/BGL · ~1.200 m` — mit der
+   Drachenwand im Salzkammergut war das falsch, ohne dass es irgendwo aufgefallen wäre.
+   Koordinaten auf zwei Nachkommastellen reichen; `elevation` = Gipfel-/Höchsthöhe.
    Muster: WMO-Code → Fineline-Icon-Map (aus Vorlage übernehmen).
 6. **Liste eintragen** (`touren/index.html`): Pinned-Highlight = neueste gegangene Tour;
    Zeile mit `data-name` (lowercase, inkl. Umlaut+ASCII-Variante und gängiger Falschschreibung
@@ -144,6 +152,25 @@ Pro Tour dieses Set. **Fett = Pflicht**, Rest optional/ableitbar.
    überschreibt `[data-hm]`!), `data-date`. Dazu: **`tkCount` hochzählen**, **JSON-LD ItemList
    pflegen** und prüfen, ob es für den `data-diff`-Wert überhaupt einen **Filter-Chip** gibt —
    sonst ist die Tour nur über „Alle" erreichbar (Fall Kneifelspitze: T1 = erster leichter Grad).
+6b. **Newsletter — die Abonnenten erfahren von der Tour:**
+   ```
+   node scripts/tour-mail.mjs <slug>
+   node scripts/mail-check.mjs .mail-versand/<slug>.html
+   ```
+   Das erste Skript **erzeugt** die Ankündigungs-Mail aus `touren/<slug>/index.html` —
+   Name, Höhe, Region, Datum, Aufhänger, die vier Zahlen, dein O-Ton (erste zwei Sätze),
+   das Hero-Foto. Es gibt **Betreff und Vorschautext** auf der Konsole aus und schreibt
+   `.mail-versand/<slug>.html` (nicht im Repo, es ist ein Artefakt).
+   Dann in Brevo eine Kampagne anlegen, das HTML einfügen, Betreff/Vorschautext
+   übernehmen, an die Newsletter-Liste senden.
+
+   **Warum erzeugt und nicht getippt:** eine abgeschriebene Mail driftet beim ersten
+   Nachbessern von der Seite weg. So kann sie es nicht. Bleibt ein `{{ Platzhalter }}`
+   ungefüllt, bricht das Skript ab — „Hey {{ NAME }}" darf niemanden erreichen.
+   Die Überschriftgröße rechnet das Skript aus dem längsten Wort des Tournamens:
+   ein langes Wort bricht nicht um und schob die Mail sonst aus dem Rahmen.
+   Vorlage: `email-templates/neue-tour.html`.
+
 7. **Cache-Busting:** `./scripts/bump-asset-versions.sh`. Neue seiten-eigene Assets brauchen
    kein `?v=` (sind im Ordner).
 8. **Prüfen:** `node scripts/tour-check.mjs <slug>` — muss grün sein, sonst nicht ausliefern.
