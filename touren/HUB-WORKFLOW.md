@@ -122,7 +122,10 @@ Pro Tour dieses Set. **Fett = Pflicht**, Rest optional/ableitbar.
    liest den Tag, dreht die Pixel genau einmal und speichert **ohne exif**.
    Danach das Bild **ansehen**, nicht nur die Ausgabe lesen.
 3. **Daten tauschen** (§3) in Hero, Fakten, Split-Zeilen, Notiz, Proof, Datum, Badge.
-4. **Höhenprofil:** Du setzt nur **`data-punkte="km,höhe km,höhe …"`** ans SVG. Sonst nichts.
+4. **Höhenprofil:** Die Messwerte stehen in **`data-punkte="km,höhe km,höhe …"`** am SVG.
+   **Die beiden `<path class="fill">` und `<path class="line">` MÜSSEN im HTML stehen bleiben** —
+   `tour.js` überschreibt nur ihr `d`, es legt keine Pfade an. Wer sie beim Neuaufsetzen einer
+   Tour weglässt, bekommt ein leeres Diagramm ohne jede Fehlermeldung (Fall Drachenwand, 07.09.).
    `tour.js` zeichnet daraus Kurve, Verlaufsfüllung, beschriftete Höhenachse, Kilometerachse
    und die Gipfelmarke. Der Pfad im HTML ist nur noch der Fallback ohne JS.
    **Das ist der Grund, warum Verbesserungen am Diagramm auf ALLE Touren greifen.**

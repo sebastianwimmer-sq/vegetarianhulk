@@ -50,7 +50,7 @@ lauf "E-Mail-Vorlagen"               node scripts/mail-check.mjs --selbsttest
 
 if [ "$SCHNELL" -eq 0 ]; then
   titel "Im Browser (Minuten)"
-  lauf "Barrierefreiheit, 13 Seiten"   node scripts/a11y-check.mjs
+  lauf "Barrierefreiheit, alle v3-Seiten" node scripts/a11y-check.mjs
   lauf "Darstellung, 4 Engines"        node scripts/tour-visual.mjs --site
 fi
 
