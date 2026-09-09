@@ -154,32 +154,29 @@ Pro Tour dieses Set. **Fett = Pflicht**, Rest optional/ableitbar.
    sonst ist die Tour nur über „Alle" erreichbar (Fall Kneifelspitze: T1 = erster leichter Grad).
 6b. **Newsletter — die Abonnenten erfahren von der Tour:**
    ```
-   node scripts/tour-mail.mjs <slug>
+   node scripts/tour-mail.mjs <slug> [--smashie="eine Zeile von dir"]
    node scripts/mail-check.mjs .mail-versand/<slug>.html
+   node scripts/tour-mail.mjs <slug> [--smashie="…"] --entwurf
    ```
-   Das erste Skript **erzeugt** die Ankündigungs-Mail aus `touren/<slug>/index.html` —
-   Name, Höhe, Region, Datum, Aufhänger, die vier Zahlen, dein O-Ton (erste zwei Sätze),
-   das Hero-Foto. Es gibt **Betreff und Vorschautext** auf der Konsole aus und schreibt
-   `.mail-versand/<slug>.html` (nicht im Repo, es ist ein Artefakt).
-   Dann in Brevo eine Kampagne anlegen, das HTML einfügen, Betreff/Vorschautext
-   übernehmen, an die Newsletter-Liste senden.
+   Schritt 1 **erzeugt** die Mail aus `touren/<slug>/index.html` — Name, Höhe, Region, Datum,
+   Aufhänger, die vier Zahlen, O-Ton (erste zwei Sätze), Hero-Foto. Betreff und Vorschautext
+   kommen auf der Konsole. Schritt 3 legt daraus eine **Brevo-Kampagne als Entwurf** an und
+   gibt die Kampagnen-Nummer aus.
 
-   **Warum erzeugt und nicht getippt:** eine abgeschriebene Mail driftet beim ersten
-   Nachbessern von der Seite weg. So kann sie es nicht. Bleibt ein `{{ Platzhalter }}`
-   ungefüllt, bricht das Skript ab — „Hey {{ NAME }}" darf niemanden erreichen.
-   Die Überschriftgröße rechnet das Skript aus dem längsten Wort des Tournamens:
-   ein langes Wort bricht nicht um und schob die Mail sonst aus dem Rahmen.
-   Vorlage: `email-templates/neue-tour.html` — sie folgt dem v3-Stil der bestehenden
-   Mails (Masthead, Gradient-Karte, Gold-CTA, Vers, Fusszeile), nachgemessen: **keine
-   einzige Farbe ausserhalb des Bestands**.
+   **Der Versand ist bewusst NICHT Teil dieses Ablaufs.** Es gibt kein Flag dafür in
+   `tour-mail.mjs`. Ausgelöst wird er nur auf ausdrückliche Ansage — eine Mail an die ganze
+   Liste ist nicht zurückholbar, und ein Tippfehler erreicht dann alle gleichzeitig.
 
-   **Smashie ist optional und wird NICHT erfunden:**
-   ```
-   node scripts/tour-mail.mjs <slug> --smashie="eine Zeile von dir"
-   ```
-   Ohne die Angabe faellt der Block weg. Eine automatisch getextete Maskottchen-Zeile
-   je Tour waere genau die generische Fuellung, die am 07.09. angestrichen wurde —
-   lieber kein Smashie als ein erfundener.
+   **Wie der Schlüssel geschützt ist:** `BREVO_API_KEY` bleibt Worker-Secret und wird nie
+   kopiert. Das Skript spricht mit `POST /newsletter/kampagne` und weist sich mit einem
+   eigenen Token aus (`NL_ADMIN_TOKEN`, liegt in `~/.config/vh/newsletter.env`, Rechte 600,
+   außerhalb des Repos). Der Endpunkt kann **nur Entwürfe anlegen**. Senden liegt auf einem
+   eigenen Pfad, der zusätzlich zur Kampagnen-Nummer einen wortgleichen Bestätigungssatz
+   verlangt; ohne beides antwortet er 400.
+
+   Stand prüfen: `GET /newsletter/kampagne?id=<n>` liefert `status` — so lässt sich
+   *belegen*, dass ein Entwurf ein Entwurf ist, statt es zu behaupten.
+
 
 7. **Cache-Busting:** `./scripts/bump-asset-versions.sh`. Neue seiten-eigene Assets brauchen
    kein `?v=` (sind im Ordner).
