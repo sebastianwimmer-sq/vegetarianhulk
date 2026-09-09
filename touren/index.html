@@ -52,6 +52,7 @@
 .tk-me__shots figure:hover { z-index: 3; }
 .tk-me__line { font-family: 'Caveat', cursive; font-size: 24px; line-height: 1.28; color: var(--paper-dim); max-width: 26ch; }
 .tk-me__line b { color: var(--leaf); }
+@media (min-width: 820px) { .tk-bar { margin-top: 72px; } .tk-close { margin-top: 108px; } }
 @media (max-width: 600px) { .tk-me__shots figure { width: 122px; } .tk-me__line { font-size: 21px; } }
 
 .tk-wide { width: min(1080px, 94vw); margin-left: calc((100% - min(1080px, 94vw)) / 2); }
@@ -115,7 +116,11 @@
 }
 
 /* ---- Toolbar: Suche · Filter · Sortierung (Instrument-Sprache) ---- */
-.tk-bar { margin-top: clamp(44px, 7vh, 72px); position: relative; z-index: 4;
+/* Senkrechter Rhythmus: die Seite steht auf einer 18er-Reihe (18 · 36 · 54 · 72 · 90 · 108).
+   Drei Abstaende hingen an vh und landeten dadurch auf 63, 95 und 102px — daneben,
+   und je nach Geraetehoehe woanders. Feste Stufen mit einem Breakpoint statt vh:
+   das ist vorhersagbar und faellt nicht wieder heraus. */
+.tk-bar { margin-top: 54px; position: relative; z-index: 4;
   display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px;
   padding: 14px 16px; border-radius: var(--r-karte);
   background: var(--flaeche-wald);
@@ -132,6 +137,22 @@
   font-family: var(--mono); font-size: 12px; letter-spacing: 0.5px; color: var(--paper); }
 .tk-search input::placeholder { color: var(--paper-faint); }
 .tk-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+/* Schmale Geraete: die Chip-Gruppen laufen waagerecht statt umzubrechen.
+   Mit dem vierten Regions-Chip (Salzkammergut) wuchs die Leiste auf VIER
+   Zeilen und schob die Liste nach unten — jede weitere Region haette eine
+   weitere Zeile gekostet. min-width:0 ist Pflicht: ein Flex-Kind waechst
+   sonst auf Inhaltsbreite, dann laeuft nichts ueber und es gibt nichts zu
+   scrollen. Die Kante blendet aus, damit sichtbar ist, dass es weitergeht. */
+@media (max-width: 720px) {
+  .tk-group { flex-wrap: nowrap; min-width: 0; overflow-x: auto; scrollbar-width: none;
+    -webkit-overflow-scrolling: touch; padding-bottom: 2px;
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 22px), transparent 100%);
+    mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 22px), transparent 100%); }
+  .tk-group::-webkit-scrollbar { display: none; }
+  .tk-group > .tk-chip { flex: 0 0 auto; }
+  .tk-group__label { flex: 0 0 auto; }
+}
 .tk-group__label { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.6px;
   text-transform: uppercase; color: var(--paper-faint); margin-right: 2px; }
 .tk-chip { cursor: pointer; border: 1px solid rgba(126,208,155,0.22); border-radius: var(--r-control);
@@ -282,7 +303,7 @@
   font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; margin-left: auto; white-space: nowrap; }
 
 /* ---- Abschluss: Bilanz + Live ---- */
-.tk-close { margin-top: clamp(48px, 8vh, 80px); margin-bottom: 56px;
+.tk-close { margin-top: 90px; margin-bottom: 54px;
   display: grid; grid-template-columns: 1.4fr 1fr; gap: 18px; align-items: stretch; }
 .tk-close__stats { position: relative; overflow: hidden; border-radius: var(--r-karte);
   padding: clamp(26px, 3.4vw, 42px);
@@ -375,7 +396,7 @@
     <section class="tk-hero st">
       <p class="kicker st st1">Hulk Hikes · Bergtouren-Guide</p>
       <h1 class="st st2">Meine Berge.<br><em>Meine Touren.</em></h1>
-      <p class="tk-lead st st3">Keine kopierten Listen — <strong>meine eigenen Touren</strong> im Chiemgau und Berchtesgadener Land. Wo ich selbst oben war, liest du die ganze Runde nach.</p>
+      <p class="tk-lead st st3">Keine kopierten Listen: hier stehen nur Touren, die ich selbst gegangen bin — mit echten Daten von der Uhr. Dazu ein paar, die auf meiner Liste stehen.</p>
     </section>
   </div>
 
@@ -385,7 +406,7 @@
       <figure><img src="/berg-starter/img/sebi-poles.jpg" alt="Sebi am Berg mit Stöcken" loading="lazy"></figure>
       <figure><img src="/berg-starter/img/sebi-kreuz.jpg" alt="Sebi am Gipfelkreuz" loading="lazy"></figure>
     </div>
-    <p class="tk-me__line">Echt, nicht gestellt — <b>das bin ich da oben.</b> Zwischen den Touren, die ich dir hier zeig.</p>
+    <p class="tk-me__line">Echt, nicht gestellt — das bin ich da oben, zwischen den Touren, die ich dir hier zeig.</p>
   </div>
 
   <!-- PINNED: zuletzt gegangene Tour -->
@@ -449,7 +470,7 @@
           </span>
           <span class="tk-row__tag">Erster Klettersteig über dem Mondsee — vor dem Andrang</span>
           <span class="tk-row__facts">
-            <span>846 hm</span><i>·</i><span>9,19 km</span><i>·</i><span>3:25 h</span><i>·</i>
+            <span>846 hm</span><i>·</i><span>9,19 km</span><i>·</i><span>3:25 h</span>
             <span class="tk-region">Salzkammergut</span>
             <span class="tk-dots" title="schwer"><b class="on"></b><b class="on"></b><b class="on"></b></span>
           </span>
@@ -486,7 +507,7 @@
           </span>
           <span class="tk-row__tag">Sonnenaufgang über Maria Gern — um vier Uhr los</span>
           <span class="tk-row__facts">
-            <span>456 hm</span><i>·</i><span>6,06 km</span><i>·</i><span>1:41 h</span><i>·</i>
+            <span>456 hm</span><i>·</i><span>6,06 km</span><i>·</i><span>1:41 h</span>
             <span class="tk-region">Berchtesgaden</span>
             <span class="tk-dots" title="leicht"><b class="on"></b><b></b><b></b></span>
           </span>
@@ -524,7 +545,7 @@
           </span>
           <span class="tk-row__tag">Ruhiger Kondi-Tag über Schneizlreuth</span>
           <span class="tk-row__facts">
-            <span>1.071 hm</span><i>·</i><span>12,52 km</span><i>·</i><span>~5 h</span><i>·</i>
+            <span>1.071 hm</span><i>·</i><span>12,52 km</span><i>·</i><span>~5 h</span>
             <span class="tk-region">Berchtesgaden</span>
             <span class="tk-dots" title="schwer"><b class="on"></b><b class="on"></b><b class="on"></b></span>
           </span>
@@ -558,7 +579,7 @@
           <span class="tk-row__top"><h3 class="tk-row__name">Grünstein</h3><span class="tk-row__alt">1.304 m</span></span>
           <span class="tk-row__tag">Kurz, mit Blick auf den Königssee</span>
           <span class="tk-row__facts">
-            <span>489 hm</span><i>·</i><span>ca. 5 km</span><i>·</i><span>ca. 2:00 h</span><i>·</i>
+            <span>489 hm</span><i>·</i><span>ca. 5 km</span><i>·</i><span>ca. 2:00 h</span>
             <span class="tk-region">Berchtesgaden</span>
             <span class="tk-dots" title="mittel"><b class="on"></b><b class="on"></b><b></b></span>
           </span>
@@ -590,7 +611,7 @@
           <span class="tk-row__top"><h3 class="tk-row__name">Zinnkopf</h3><span class="tk-row__alt">1.227 m</span></span>
           <span class="tk-row__tag">Aussichtsberg über dem Chiemsee</span>
           <span class="tk-row__facts">
-            <span>553 hm</span><i>·</i><span>9 km</span><i>·</i><span>ca. 3:00 h</span><i>·</i>
+            <span>553 hm</span><i>·</i><span>9 km</span><i>·</i><span>ca. 3:00 h</span>
             <span class="tk-region">Chiemgau</span>
             <span class="tk-dots" title="mittel"><b class="on"></b><b class="on"></b><b></b></span>
           </span>
@@ -622,7 +643,7 @@
           <span class="tk-row__top"><h3 class="tk-row__name">Dürrnbachhorn</h3><span class="tk-row__alt">1.776 m</span></span>
           <span class="tk-row__tag">Grat über der Winklmoosalm</span>
           <span class="tk-row__facts">
-            <span>591 hm</span><i>·</i><span>8,4 km</span><i>·</i><span>ca. 3:00 h</span><i>·</i>
+            <span>591 hm</span><i>·</i><span>8,4 km</span><i>·</i><span>ca. 3:00 h</span>
             <span class="tk-region">Chiemgau</span>
             <span class="tk-dots" title="mittel"><b class="on"></b><b class="on"></b><b></b></span>
           </span>
@@ -656,7 +677,7 @@
           <span class="tk-row__top"><h3 class="tk-row__name">Rauschberg</h3><span class="tk-row__alt">1.645 m</span></span>
           <span class="tk-row__tag">Der Hausberg von Ruhpolding</span>
           <span class="tk-row__facts">
-            <span>904 hm</span><i>·</i><span>16 km</span><i>·</i><span>ca. 5:30 h</span><i>·</i>
+            <span>904 hm</span><i>·</i><span>16 km</span><i>·</i><span>ca. 5:30 h</span>
             <span class="tk-region">Chiemgau</span>
             <span class="tk-dots" title="schwer"><b class="on"></b><b class="on"></b><b class="on"></b></span>
           </span>
@@ -689,7 +710,7 @@
           <span class="tk-row__top"><h3 class="tk-row__name">Gamsknogel</h3><span class="tk-row__alt">1.750 m</span></span>
           <span class="tk-row__tag">Stiller Grat bei Inzell</span>
           <span class="tk-row__facts">
-            <span>950 hm</span><i>·</i><span>9 km</span><i>·</i><span>ca. 4:30 h</span><i>·</i>
+            <span>950 hm</span><i>·</i><span>9 km</span><i>·</i><span>ca. 4:30 h</span>
             <span class="tk-region">Chiemgau</span>
             <span class="tk-dots" title="schwer"><b class="on"></b><b class="on"></b><b class="on"></b></span>
           </span>
@@ -722,7 +743,7 @@
           <span class="tk-row__top"><h3 class="tk-row__name">Hochgern</h3><span class="tk-row__alt">1.747 m</span></span>
           <span class="tk-row__tag">Chiemgau-Klassiker von Unterwössen</span>
           <span class="tk-row__facts">
-            <span>1.110 hm</span><i>·</i><span>15 km</span><i>·</i><span>ca. 4:30 h</span><i>·</i>
+            <span>1.110 hm</span><i>·</i><span>15 km</span><i>·</i><span>ca. 4:30 h</span>
             <span class="tk-region">Chiemgau</span>
             <span class="tk-dots" title="schwer"><b class="on"></b><b class="on"></b><b class="on"></b></span>
           </span>
@@ -759,8 +780,8 @@
     <div class="tk-close__stats">
       <p class="tk-close__label">Was bisher zusammenkam</p>
       <div class="tk-close__nums">
-        <div><b data-count="8" data-zahl="touren">0</b><span>Touren</span></div>
-        <div><b data-count="6124" data-zahl="hm">0</b><span>Höhenmeter gesamt</span></div>
+        <div><b data-count="9" data-zahl="touren">0</b><span>Touren</span></div>
+        <div><b data-count="6970" data-zahl="hm">0</b><span>Höhenmeter gesamt</span></div>
         <div><b data-count="1776" data-zahl="gipfel">0</b><span>m höchster Punkt</span></div>
       </div>
       <p class="tk-close__foot">Jede selbst ausgesucht, die gegangenen mit echten Daten.
