@@ -202,6 +202,32 @@ Pro Tour dieses Set. **Fett = Pflicht**, Rest optional/ableitbar.
 
 ---
 
+## 4b. Voice — bevor auch nur ein Satz geschrieben wird
+
+**Zuerst lesen:** `~/.claude/projects/-Users-sebastianwimmer/memory/user_sebi_dna.md`,
+Abschnitt 3 (Voice) und 11 (Guardrails). Für vegetarianhulk gilt dort:
+**1st-person, roh, verletzlich, emotional warm.** Anti: Coach-Bro, „premium/exclusive/elite",
+generische KI-Politur.
+
+**Die Falle, in die ich am 07.09.2026 gelaufen bin:** Aus Sebis Erzählung wurden bei mir
+Merksätze. Er schreibt, *was war* — ich schrieb *Regeln*:
+
+| Sebi | ich (falsch) |
+|---|---|
+| „sehr geile klettertour in schwierigkeit c hauptsächlich" | „Klettersteig, überwiegend Schwierigkeit C" |
+| „das erste mal mein klettersteig set ausgetestet" | „Set und Helm sind Pflicht, nicht Empfehlung" |
+| „früh genug dran sein lohnt sich auf jeden fall" | „Die zwei Stunden Vorsprung sind der eigentliche Trick" |
+
+Aus einem Anfänger, der etwas zum ersten Mal probiert, wurde eine Autorität, die Vorschriften
+macht — **das Gegenteil von „vulnerable".**
+
+**Prüffragen vor dem Commit:**
+1. Steht da, was passiert ist — oder eine Lehre daraus? Ersteres.
+2. Kommt „der/die eigentliche X", „X, nicht Y", „keine Floskel" vor? Raus, das ist Reflex.
+3. Wird jemand ausgeschlossen? Weiche Präferenz („lieber vorher üben") statt Verbot.
+4. Ist Sebis eigene Formulierung aus dem Chat verfügbar? **Dann die nehmen, nicht glätten.**
+   Sein O-Ton ist die Quelle, nicht der Rohstoff.
+
 ## 5. Standing Rules (Sebi, verbindlich)
 
 - **Ehrlichkeit:** nichts erfinden. Nur echte Daten, echte Fotos, Sebis echte Worte. Watzmann = „Schaustück", nicht „seine Tour".
