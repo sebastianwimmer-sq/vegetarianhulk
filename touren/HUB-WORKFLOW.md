@@ -169,7 +169,17 @@ Pro Tour dieses Set. **Fett = Pflicht**, Rest optional/ableitbar.
    ungefüllt, bricht das Skript ab — „Hey {{ NAME }}" darf niemanden erreichen.
    Die Überschriftgröße rechnet das Skript aus dem längsten Wort des Tournamens:
    ein langes Wort bricht nicht um und schob die Mail sonst aus dem Rahmen.
-   Vorlage: `email-templates/neue-tour.html`.
+   Vorlage: `email-templates/neue-tour.html` — sie folgt dem v3-Stil der bestehenden
+   Mails (Masthead, Gradient-Karte, Gold-CTA, Vers, Fusszeile), nachgemessen: **keine
+   einzige Farbe ausserhalb des Bestands**.
+
+   **Smashie ist optional und wird NICHT erfunden:**
+   ```
+   node scripts/tour-mail.mjs <slug> --smashie="eine Zeile von dir"
+   ```
+   Ohne die Angabe faellt der Block weg. Eine automatisch getextete Maskottchen-Zeile
+   je Tour waere genau die generische Fuellung, die am 07.09. angestrichen wurde —
+   lieber kein Smashie als ein erfundener.
 
 7. **Cache-Busting:** `./scripts/bump-asset-versions.sh`. Neue seiten-eigene Assets brauchen
    kein `?v=` (sind im Ordner).
