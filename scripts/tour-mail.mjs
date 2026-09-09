@@ -24,12 +24,17 @@
  */
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
+import { homedir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 
 const WURZEL = join(dirname(fileURLToPath(import.meta.url)), '..');
 const argv = process.argv.slice(2);
 const slug = argv.find(a => !a.startsWith('--'));
 const nurPruefen = argv.includes('--pruefen');
+/* --entwurf legt die Kampagne in Brevo als ENTWURF an. Nicht senden:
+   den Knopf drueckt ein Mensch. Eine Mail an die ganze Liste laesst sich
+   nicht zurueckholen, und ein Tippfehler erreicht dann alle auf einmal. */
+const alsEntwurf = argv.includes('--entwurf');
 /* Eine Zeile fuer das Maskottchen - von Sebi, nicht erfunden. Ohne die
    Angabe faellt der Block weg, statt mit Fuellung besetzt zu werden. */
 const smashieArg = argv.find(a => a.startsWith('--smashie='));
@@ -165,6 +170,41 @@ mkdirSync(ausOrdner, { recursive: true });
 const ausDatei = join(ausOrdner, `${slug}.html`);
 writeFileSync(ausDatei, html, 'utf8');
 console.log(`\n  Geschrieben   .mail-versand/${slug}.html  (${Math.round(html.length / 1024)} KB)`);
-console.log(`  Naechster Schritt: Inhalt in die Brevo-Kampagne einfuegen, Betreff und`);
-console.log(`  Vorschautext von oben uebernehmen, an die Newsletter-Liste senden.`);
-console.log(`\n  Vorher pruefen:  node scripts/mail-check.mjs .mail-versand/${slug}.html`);
+if (!alsEntwurf) {
+  console.log(`  Naechster Schritt: Inhalt in die Brevo-Kampagne einfuegen, Betreff und`);
+  console.log(`  Vorschautext von oben uebernehmen, an die Newsletter-Liste senden.`);
+}
+if (!alsEntwurf) {
+  console.log(`\n  Vorher pruefen:  node scripts/mail-check.mjs .mail-versand/${slug}.html`);
+  console.log(`  Entwurf anlegen: node scripts/tour-mail.mjs ${slug} --entwurf`);
+  process.exit(0);
+}
+
+/* ---------- Entwurf in Brevo anlegen ---------- */
+const KONFIG = join(homedir(), '.config/vh/newsletter.env');
+let adminToken = process.env.NL_ADMIN_TOKEN || '';
+if (!adminToken) {
+  try {
+    const zeile = readFileSync(KONFIG, 'utf8').split('\n').find(z => z.startsWith('NL_ADMIN_TOKEN='));
+    adminToken = zeile ? zeile.slice('NL_ADMIN_TOKEN='.length).trim() : '';
+  } catch {}
+}
+if (!adminToken) {
+  console.error(`\n  Kein Zugangstoken. Erwartet in ${KONFIG} oder als NL_ADMIN_TOKEN.`);
+  process.exit(2);
+}
+
+const ENDPUNKT = 'https://vh-forms.peaking.workers.dev/newsletter/kampagne';
+const antwort = await fetch(ENDPUNKT, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${adminToken}` },
+  body: JSON.stringify({ name: `Tour ${name} (${datum})`, subject: betreff, preheader: vorschau, html }),
+});
+const daten = await antwort.json().catch(() => ({}));
+if (!antwort.ok || !daten.ok) {
+  console.error(`\n  🔴 Entwurf nicht angelegt (${antwort.status}): ${daten.error || 'unbekannt'}`);
+  process.exit(1);
+}
+console.log(`\n  ✅ Entwurf in Brevo angelegt — Kampagne #${daten.id}`);
+console.log(`     ${daten.brevo || '(Brevo-Oberflaeche)'}`);
+console.log(`     Gesendet wird NICHT automatisch: pruefen, dann in Brevo abschicken.`);

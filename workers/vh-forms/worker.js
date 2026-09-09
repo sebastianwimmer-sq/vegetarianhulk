@@ -288,6 +288,158 @@ function bestaetigungsZiel(env, zustand) {
   return ziel.toString();
 }
 
+/* ============================================================
+   KAMPAGNEN-ENTWURF ANLEGEN  —  POST /newsletter/kampagne
+
+   Warum ueber den Worker und nicht lokal: der BREVO_API_KEY bleibt so,
+   wo er ist. Ein Schluessel, der fuer ein Skript auf eine Festplatte
+   kopiert wird, liegt danach dauerhaft dort.
+
+   Der Endpunkt legt ausschliesslich einen ENTWURF an. Er kann nicht
+   senden — es gibt keinen Pfad dafuer. Das ist Absicht: ein Tippfehler
+   erreicht sonst in einem Zug die ganze Liste, und zurueckholen laesst
+   sich eine Mail nicht. Den Versand loest ein Mensch in Brevo aus.
+
+   Schutz: Bearer-Token (eigenes Secret, nicht der Brevo-Key), Vergleich
+   in konstanter Zeit, Groessenbegrenzung, kein CORS — der Endpunkt ist
+   fuer ein Skript da, nicht fuer einen Browser.
+   ============================================================ */
+const KAMPAGNE_MAX_HTML = 400000;   // 400 KB, jede echte Mail liegt weit darunter
+
+/* Vergleich ohne fruehen Ausstieg: ein == verraet ueber die Laufzeit,
+   wie viele Zeichen gestimmt haben. */
+function gleichKonstant(a, b) {
+  const x = new TextEncoder().encode(String(a));
+  const y = new TextEncoder().encode(String(b));
+  if (x.length !== y.length) return false;
+  let diff = 0;
+  for (let i = 0; i < x.length; i++) diff |= x[i] ^ y[i];
+  return diff === 0;
+}
+
+async function handleKampagne(request, env) {
+  if (!env.NL_ADMIN_TOKEN || !env.BREVO_API_KEY) {
+    return json({ ok: false, error: 'nicht konfiguriert' }, 503, '');
+  }
+  const kopf = request.headers.get('Authorization') || '';
+  const token = kopf.startsWith('Bearer ') ? kopf.slice(7) : '';
+  if (!gleichKonstant(token, env.NL_ADMIN_TOKEN)) {
+    // absichtlich ohne Detail: was genau nicht stimmte, geht niemanden an
+    return json({ ok: false, error: 'nicht berechtigt' }, 401, '');
+  }
+
+  let body;
+  try { body = await request.json(); }
+  catch { return json({ ok: false, error: 'invalid json' }, 400, ''); }
+
+  const name = cleanField(body.name);
+  const subject = cleanField(body.subject);
+  const preheader = cleanField(body.preheader);
+  const html = String(body.html ?? '');
+  if (!name || !subject || !html) {
+    return json({ ok: false, error: 'name, subject und html sind Pflicht' }, 400, '');
+  }
+  if (html.length > KAMPAGNE_MAX_HTML) {
+    return json({ ok: false, error: `html zu gross (${html.length} > ${KAMPAGNE_MAX_HTML})` }, 413, '');
+  }
+  /* Ein Platzhalter, der bis hierher kommt, wuerde als "Hey {{ NAME }}"
+     in der Kampagne stehen. Lieber hier abbrechen. */
+  const offen = (html.replace(/\{\{ contact\.[^}]*\}\}|\{\{ unsubscribe \}\}/g, '')
+                     .match(/\{\{[^}]{0,60}\}\}/g) || []);
+  if (offen.length) {
+    return json({ ok: false, error: `ungefuellte Platzhalter: ${[...new Set(offen)].join(', ')}` }, 400, '');
+  }
+
+  const res = await brevo(env, '/emailCampaigns', {
+    method: 'POST',
+    body: JSON.stringify({
+      name,
+      subject,
+      previewText: preheader || undefined,
+      sender: DOI_SENDER,
+      htmlContent: html,
+      recipients: { listIds: [Number(env.NL_LIST_ID)] },
+      inlineImageActivation: false,
+      // KEIN scheduledAt und kein Senden: Brevo legt das als Entwurf ab.
+    }),
+  });
+  const text = await res.text().catch(() => '');
+  if (!res.ok) {
+    console.error('vh-forms kampagne failed:', res.status, text.slice(0, 200));
+    return json({ ok: false, error: `Brevo ${res.status}: ${text.slice(0, 200)}` }, 502, '');
+  }
+  let id = null;
+  try { id = JSON.parse(text).id; } catch {}
+  return json({
+    ok: true, id,
+    hinweis: 'Entwurf angelegt. Senden loest ein Mensch in Brevo aus.',
+    brevo: id ? `https://app.brevo.com/campaigns/classic/edit/${id}` : null,
+  }, 200, '');
+}
+
+/* Stand einer Kampagne lesen — damit sich "es sendet nicht" BELEGEN laesst,
+   statt es zu behaupten. Nur lesend, gleicher Token. */
+async function handleKampagneStand(request, env) {
+  if (!env.NL_ADMIN_TOKEN || !env.BREVO_API_KEY) return json({ ok: false, error: 'nicht konfiguriert' }, 503, '');
+  const kopf = request.headers.get('Authorization') || '';
+  if (!gleichKonstant(kopf.startsWith('Bearer ') ? kopf.slice(7) : '', env.NL_ADMIN_TOKEN)) {
+    return json({ ok: false, error: 'nicht berechtigt' }, 401, '');
+  }
+  const id = new URL(request.url).searchParams.get('id');
+  if (!/^\d{1,10}$/.test(id || '')) return json({ ok: false, error: 'id fehlt' }, 400, '');
+  const res = await brevo(env, `/emailCampaigns/${id}`, { method: 'GET' });
+  const text = await res.text().catch(() => '');
+  if (!res.ok) return json({ ok: false, error: `Brevo ${res.status}` }, 502, '');
+  let d = {};
+  try { d = JSON.parse(text); } catch {}
+  return json({
+    ok: true, id: d.id, name: d.name, subject: d.subject,
+    status: d.status, scheduledAt: d.scheduledAt ?? null,
+    empfaenger: d.recipients?.lists?.length ?? null,
+  }, 200, '');
+}
+
+/* Versand ausloesen — POST /newsletter/kampagne/senden
+
+   BEWUSST EIN EIGENER PFAD, NICHT EIN FLAG AM ANLEGEN.
+   Wer einen Entwurf anlegt, soll nicht aus Versehen senden koennen. Der
+   Versand braucht die Kampagnen-ID, die man nur kennt, wenn man den
+   Entwurf vorher gesehen hat — und er ist nicht rueckholbar.
+
+   Ausgeloest wird das nur auf ausdrueckliche Ansage von Sebi, nie
+   nebenbei im Tour-Workflow. Deshalb steht es auch in KEINEM Skript-
+   Standardpfad: es gibt kein "und dann senden" in tour-mail.mjs. */
+async function handleKampagneSenden(request, env) {
+  if (!env.NL_ADMIN_TOKEN || !env.BREVO_API_KEY) return json({ ok: false, error: 'nicht konfiguriert' }, 503, '');
+  const kopf = request.headers.get('Authorization') || '';
+  if (!gleichKonstant(kopf.startsWith('Bearer ') ? kopf.slice(7) : '', env.NL_ADMIN_TOKEN)) {
+    return json({ ok: false, error: 'nicht berechtigt' }, 401, '');
+  }
+  let body;
+  try { body = await request.json(); } catch { return json({ ok: false, error: 'invalid json' }, 400, ''); }
+  const id = String(body.id ?? '');
+  if (!/^\d{1,10}$/.test(id)) return json({ ok: false, error: 'id fehlt' }, 400, '');
+  /* Zweiter Schluessel im Body: ein versehentlicher Aufruf mit nur einer
+     ID reicht nicht. Der Satz muss wortgleich mitgeschickt werden. */
+  if (body.bestaetigung !== 'ja, an die liste senden') {
+    return json({ ok: false, error: 'bestaetigung fehlt' }, 400, '');
+  }
+  const stand = await brevo(env, `/emailCampaigns/${id}`, { method: 'GET' });
+  const d = await stand.json().catch(() => ({}));
+  if (!stand.ok) return json({ ok: false, error: `Brevo ${stand.status}` }, 502, '');
+  if (d.status !== 'draft') {
+    return json({ ok: false, error: `Kampagne ${id} steht auf "${d.status}", nicht auf draft` }, 409, '');
+  }
+  const res = await brevo(env, `/emailCampaigns/${id}/sendNow`, { method: 'POST' });
+  if (!res.ok) {
+    const t = await res.text().catch(() => '');
+    console.error('vh-forms senden failed:', res.status, t.slice(0, 200));
+    return json({ ok: false, error: `Brevo ${res.status}: ${t.slice(0, 160)}` }, 502, '');
+  }
+  console.log(`vh-forms: Kampagne ${id} ("${d.subject}") an die Liste gesendet`);
+  return json({ ok: true, id: Number(id), betreff: d.subject, hinweis: 'gesendet' }, 200, '');
+}
+
 async function handleNewsletterConfirm(request, env) {
   const token = new URL(request.url).searchParams.get('t');
   const email = await verifyDoiToken(env, token);
@@ -365,6 +517,15 @@ export default {
         return json({ ok: false, error: 'rate limited' }, 429, origin);
       }
       return handleNewsletter(request, env, origin);
+    }
+    if (request.method === 'POST' && url.pathname === '/newsletter/kampagne/senden') {
+      return handleKampagneSenden(request, env);
+    }
+    if (request.method === 'GET' && url.pathname === '/newsletter/kampagne') {
+      return handleKampagneStand(request, env);
+    }
+    if (request.method === 'POST' && url.pathname === '/newsletter/kampagne') {
+      return handleKampagne(request, env);
     }
     if (request.method === 'GET' && url.pathname === '/newsletter/confirm') {
       return handleNewsletterConfirm(request, env);
