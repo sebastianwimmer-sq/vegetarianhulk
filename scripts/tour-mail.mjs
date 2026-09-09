@@ -30,6 +30,10 @@ const WURZEL = join(dirname(fileURLToPath(import.meta.url)), '..');
 const argv = process.argv.slice(2);
 const slug = argv.find(a => !a.startsWith('--'));
 const nurPruefen = argv.includes('--pruefen');
+/* Eine Zeile fuer das Maskottchen - von Sebi, nicht erfunden. Ohne die
+   Angabe faellt der Block weg, statt mit Fuellung besetzt zu werden. */
+const smashieArg = argv.find(a => a.startsWith('--smashie='));
+const smashie = smashieArg ? smashieArg.slice('--smashie='.length).trim() : null;
 
 if (!slug) {
   console.error('Aufruf: node scripts/tour-mail.mjs <slug> [--pruefen]');
@@ -125,6 +129,11 @@ const werte = {
 };
 
 let html = readFileSync(join(WURZEL, 'email-templates/neue-tour.html'), 'utf8');
+if (smashie) {
+  werte.SMASHIE = smashie;
+} else {
+  html = html.replace(/[ \t]*<!-- SMASHIE:START[\s\S]*?<!-- SMASHIE:ENDE -->\n?/, '');
+}
 for (const [k, v] of Object.entries(werte)) html = html.split(`{{ ${k} }}`).join(v);
 
 /* Was jetzt noch an Platzhaltern steht, darf nur von Brevo kommen. */
@@ -145,6 +154,7 @@ console.log(`\n  Tour       ${name} · ${hoehe} · ${region}`);
 console.log(`  Gegangen   ${datum}`);
 console.log(`  Zahlen     ${zahl} hm · ${km} km · ${zeit} · ${grad}`);
 console.log(`  Überschrift ${h1Size}px (längstes Wort: ${laengstesWort} Zeichen)`);
+console.log(`  Smashie     ${smashie ? '"' + smashie + '"' : 'weggelassen (--smashie=... setzt eine Zeile)'}`);
 console.log(`\n  Betreff       ${betreff}`);
 console.log(`  Vorschautext  ${vorschau}`);
 
