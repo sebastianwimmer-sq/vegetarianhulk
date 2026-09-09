@@ -267,6 +267,28 @@ const PFLICHT = [
   ['tour-profil__hint',           'Hinweis, dass man ablesen kann'],
   ['id="tourVerlauf"',            'Verlaufsfuellung unter der Kurve'],
   ['tour-fakt--live',             'Live-Fakt am Gipfel'],
+
+  /* Am 07.09.2026 nachgezogen — jedes davon war schon einmal eine stille Luecke: */
+  ['<path class="fill"',          'Flaeche unter der Kurve (tour.js UEBERSCHREIBT nur, es legt nichts an)'],
+  ['<path class="line"',          'Kurve selbst — ohne sie bleibt das Diagramm LEER, ohne Fehlermeldung'],
+  ['data-lat="',                  'Wetter-Koordinate (sonst faellt die Tour auf fremde Werte zurueck)'],
+  ['data-lon="',                  'Wetter-Koordinate'],
+  ['data-hoehe="',                'Gipfelhoehe fuers Wetter'],
+  ["script-src 'self'",           'CSP ohne unsafe-inline'],
+];
+
+/* Wendungen, die auf KEINER Tour stehen duerfen. Zwei Sorten:
+   · Voice-Reflexe, die als generiert gelesen werden (07.09.2026, siehe
+     HUB-WORKFLOW.md 4b) — sie standen auf zwei Seiten gleichzeitig, weil
+     sie beim Kopieren der Vorlage mitgewandert sind.
+   · Aussagen, die veralten: eine Aufzaehlung von Regionen stimmt spaetestens
+     bei der naechsten Tour in einem neuen Gebiet nicht mehr.
+   Absichtlich auf die AUSSAGE gezielt, nicht auf einen exakten Wortlaut. */
+const VERBOTEN = [
+  [/\b(der|die|das) eigentliche[nrs]?\b/i, 'Wendung „der/die eigentliche X" — Merksatz statt Erzaehlung'],
+  [/,\s*nicht Empfehlung/i,                  '„X, nicht Empfehlung" — Vorschrift statt Erfahrung'],
+  [/keine? Floskel/i,                        '„keine Floskel" — Zuspitzung statt Beschreibung'],
+  [/im Chiemgau und Berchtesgadener Land/i,  'Regions-Aufzaehlung — veraltet bei jeder Tour ausserhalb'],
 ];
 const OPTIONAL = [
   ['tour-arc',   'Zeitachse (nur wenn die Uhrzeit die Geschichte ist)'],
@@ -290,11 +312,32 @@ function pruefeParitaet(slugs) {
         meld(fehler, s.slug, `fehlt: ${was} (${muster}) — andere Touren haben es`);
     }
   }
+  for (const [muster, was] of VERBOTEN) {
+    for (const s2 of seiten) {
+      const t = s2.html.match(muster);
+      if (t) meld(fehler, s2.slug, `${was} — gefunden: „${t[0]}"`);
+    }
+  }
+
   for (const [muster, was] of OPTIONAL) {
     const mit = seiten.filter(s => s.html.includes(muster)).map(s => s.slug);
     const ohne = seiten.filter(s => !s.html.includes(muster)).map(s => s.slug);
     if (mit.length && ohne.length)
       meld(hinweise, 'parität', `${was}: ${mit.join(', ')} hat es, ${ohne.join(', ')} nicht`);
+  }
+
+  /* Bildmenge: kein Pflichtwert, aber der haeufigste stille Rueckstand.
+     Eine Tour mit einem Foto neben zweien mit vier wirkt duenn, ohne dass
+     irgendein Merkmal fehlt. Nur als Hinweis — nachliefern kann das nur
+     Sebi, dafuer braucht es Bilder von genau dieser Tour. */
+  const bilder = seiten.map(s => ({
+    slug: s.slug,
+    n: new Set([...s.html.matchAll(new RegExp(`/touren/${s.slug}/([a-z0-9-]+\\.jpg)`, 'g'))].map(m => m[1])).size
+  }));
+  const meiste = Math.max(...bilder.map(b => b.n));
+  for (const b of bilder) {
+    if (b.n * 2 <= meiste)
+      meld(hinweise, 'parität', `${b.slug}: nur ${b.n} Foto(s), andere Touren haben bis zu ${meiste} — wirkt duenner`);
   }
 }
 
