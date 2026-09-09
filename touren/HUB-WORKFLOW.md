@@ -202,6 +202,35 @@ Pro Tour dieses Set. **Fett = Pflicht**, Rest optional/ableitbar.
 
 ---
 
+## 4a. Level-Parität — jede Änderung gilt für ALLE gegangenen Touren
+
+**Die Regel (Sebi, 09.09.2026):** Wird an einer Tour etwas verbessert, muss es bei allen
+ankommen, für die es zählt. Sonst steht die zuletzt gebaute auf Stand N und die andere auf
+N−2, und **beide sind für sich betrachtet fehlerfrei** — genau deshalb fällt es niemandem auf.
+
+**So wird eine Verbesserung durchgereicht:**
+1. Änderung an einer Tour bauen.
+2. Das Merkmal in `scripts/tour-check.mjs` eintragen:
+   - **`PFLICHT`** — jede Tour muss es haben. Fehlt es irgendwo, ist das Tor **rot**.
+   - **`OPTIONAL`** — nur sinnvoll, wenn es zur Tour passt (Zeitachse braucht eine
+     Uhrzeit-Geschichte, Sonnenaufgangs-Fakt eine Sonnenaufgangs-Tour). Ungleichstand wird
+     **gemeldet, blockiert aber nicht**.
+   - **`VERBOTEN`** — Formulierungen, die auf keiner Tour stehen dürfen. Auf die **Aussage**
+     zielen, nicht auf den Wortlaut: ein zu enges Muster meldet grün, während die Aussage steht.
+3. `node scripts/tour-check.mjs --alle` — das prüft **alle** Touren gegeneinander, nicht nur die neue.
+4. Was rot wird, bei den älteren Touren nachziehen. Dann erst commiten.
+
+**Warum die Unterscheidung wichtig ist:** Ristfeuchthorn hat keine Zeitachse — das ist kein
+Rückstand, sondern richtig, es war ein Kondi-Tag ohne Uhrzeit-Dramaturgie. Ein Tor, das
+„nicht vorhanden" mit „kaputt" verwechselt, steht dauerhaft rot und wird ignoriert.
+
+**Was nur Sebi nachliefern kann:** die Bildmenge. Das Tor meldet als Hinweis, wenn eine Tour
+höchstens halb so viele Fotos hat wie die reichste — nachliefern lässt sich das nur mit
+Bildern von genau dieser Tour.
+
+**Stand 09.09.2026:** alle drei gegangenen Touren in Parität, offen nur Ristfeuchthorn mit
+einem Foto gegen vier.
+
 ## 4b. Voice — bevor auch nur ein Satz geschrieben wird
 
 **Zuerst lesen:** `~/.claude/projects/-Users-sebastianwimmer/memory/user_sebi_dna.md`,
