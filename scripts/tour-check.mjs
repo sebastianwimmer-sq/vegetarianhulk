@@ -168,6 +168,16 @@ function pruefeHub(slugs) {
   for (const slug of slugs) {
     if (!html.includes(`/touren/${slug}/`))
       meld(fehler, 'hub', `keine Liste-Zeile verlinkt auf /touren/${slug}/`);
+    /* Jede Region, die in den Zeilen vorkommt, braucht einen Filter-Chip.
+       Sonst ist die Tour nur ueber "Alle" erreichbar — beim Salzkammergut
+       am 07.09.2026 genau so passiert, und es faellt niemandem auf, weil
+       die Seite fehlerfrei aussieht. */
+    const regionen = new Set([...html.matchAll(/data-region="([a-z0-9-]+)"/g)].map(m => m[1]));
+    const chips = new Set([...html.matchAll(/data-f="region" data-v="([a-z0-9-]*)"/g)].map(m => m[1]));
+    for (const r of regionen) {
+      if (!chips.has(r)) meld(fehler, 'hub', `Region "${r}" hat keinen Filter-Chip — nur ueber "Alle" auffindbar`);
+    }
+
     if (!new RegExp(`"position":\\d+,"name":"[^"]*","url":"https://vegetarianhulk\\.de/touren/${slug}/"`).test(html))
       meld(fehler, 'hub', `/touren/${slug}/ fehlt in der JSON-LD ItemList (SEO/KI-Findbarkeit)`);
   }
