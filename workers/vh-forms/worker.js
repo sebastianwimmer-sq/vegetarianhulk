@@ -392,11 +392,61 @@ async function handleKampagneStand(request, env) {
   if (!res.ok) return json({ ok: false, error: `Brevo ${res.status}` }, 502, '');
   let d = {};
   try { d = JSON.parse(text); } catch {}
+  /* Diagnose: ueberlebt der Kopf der Vorlage den Weg durch Brevo?
+     Gmail dunkelt Textfarben ab, wenn die Mail sich nicht als dunkel
+     ausweist — und genau das steht in <meta> und <style>, also in Teilen,
+     die ein Kampagnen-Editor gerne entfernt. */
+  const h = String(d.htmlContent || '');
+  const marker = (m) => h.includes(m);
   return json({
     ok: true, id: d.id, name: d.name, subject: d.subject,
     status: d.status, scheduledAt: d.scheduledAt ?? null,
     empfaenger: d.recipients?.lists?.length ?? null,
+    html_bytes: h.length,
+    kopf: {
+      meta_color_scheme: marker('name="color-scheme"'),
+      meta_supported: marker('supported-color-schemes'),
+      style_block: marker('<style>'),
+      root_color_scheme: marker(':root { color-scheme'),
+      bgcolor_anzahl: (h.match(/bgcolor=/g) || []).length,
+    },
   }, 200, '');
+}
+
+/* Testmail einer Kampagne — POST /newsletter/kampagne/test
+
+   Schickt die ECHTE Kampagne an wenige Adressen, nicht an die Liste.
+   So laesst sich vor dem Versand pruefen, ob sie im Posteingang landet
+   statt im Spam — mit genau dem Inhalt, der spaeter rausgeht.
+
+   Eingegrenzt: nur eine BESTEHENDE Kampagne (keine freien Inhalte) und
+   hoechstens 3 Empfaenger. Damit ist der Endpunkt auch bei einem
+   abhandengekommenen Token kein brauchbares Versandwerkzeug fuer Fremde.
+   Jeder Aufruf wird protokolliert. */
+async function handleKampagneTest(request, env) {
+  if (!env.NL_ADMIN_TOKEN || !env.BREVO_API_KEY) return json({ ok: false, error: 'nicht konfiguriert' }, 503, '');
+  const kopf = request.headers.get('Authorization') || '';
+  if (!gleichKonstant(kopf.startsWith('Bearer ') ? kopf.slice(7) : '', env.NL_ADMIN_TOKEN)) {
+    return json({ ok: false, error: 'nicht berechtigt' }, 401, '');
+  }
+  let body;
+  try { body = await request.json(); } catch { return json({ ok: false, error: 'invalid json' }, 400, ''); }
+  const id = String(body.id ?? '');
+  if (!/^\d{1,10}$/.test(id)) return json({ ok: false, error: 'id fehlt' }, 400, '');
+  const an = (Array.isArray(body.an) ? body.an : []).map(a => cleanField(a).toLowerCase()).filter(a => EMAIL_RE.test(a));
+  if (!an.length) return json({ ok: false, error: 'keine gueltige Empfaengeradresse' }, 400, '');
+  if (an.length > 3) return json({ ok: false, error: 'hoechstens 3 Empfaenger' }, 400, '');
+
+  const res = await brevo(env, `/emailCampaigns/${id}/sendTest`, {
+    method: 'POST', body: JSON.stringify({ emailTo: an }),
+  });
+  if (!res.ok) {
+    const t = await res.text().catch(() => '');
+    console.error('vh-forms test failed:', res.status, t.slice(0, 200));
+    return json({ ok: false, error: `Brevo ${res.status}: ${t.slice(0, 160)}` }, 502, '');
+  }
+  console.log(`vh-forms: Testmail Kampagne ${id} an ${an.length} Adresse(n)`);
+  return json({ ok: true, id: Number(id), an, hinweis: 'Testmail verschickt — die Liste bleibt unberuehrt' }, 200, '');
 }
 
 /* Versand ausloesen — POST /newsletter/kampagne/senden
@@ -517,6 +567,9 @@ export default {
         return json({ ok: false, error: 'rate limited' }, 429, origin);
       }
       return handleNewsletter(request, env, origin);
+    }
+    if (request.method === 'POST' && url.pathname === '/newsletter/kampagne/test') {
+      return handleKampagneTest(request, env);
     }
     if (request.method === 'POST' && url.pathname === '/newsletter/kampagne/senden') {
       return handleKampagneSenden(request, env);
