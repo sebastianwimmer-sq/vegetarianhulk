@@ -21,7 +21,7 @@
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
-<link rel="stylesheet" href="/v3.css?v=f24c99f0">
+<link rel="stylesheet" href="/v3.css?v=9a2d8dc4">
 <style>
   /* ============================================================
      LEGAL v3 — ruhiges Editorial-Dokument auf der dunklen Shell.
@@ -40,9 +40,9 @@
   /* Creme-Blatt: das eigentliche Dokument */
   .legal-doc { width: min(780px, 100%); margin: 0 auto 40px; position: relative; overflow: hidden;
     border-radius: var(--r-karte); padding: clamp(30px, 5vw, 64px) clamp(24px, 5vw, 60px);
-    background: linear-gradient(168deg, #F5EEDE 0%, #EFE7D2 100%);
+    background: linear-gradient(168deg, #F5EEDE 0%, var(--papier-warm) 100%);
     box-shadow: var(--shadow-paper);
-    --l-ink: #14281C; --l-body: #33453a; --l-soft: #5c6b5e; }
+    --l-ink: var(--ink-tief); --l-body: #33453a; --l-soft: #5c6b5e; }
   .legal-doc::after { content: ""; position: absolute; inset: 0; background-image: var(--grain);
     opacity: 0.5; pointer-events: none; }
   .legal-doc > * { position: relative; z-index: 1; }

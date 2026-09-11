@@ -15,7 +15,7 @@
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
-<link rel="stylesheet" href="/v3.css?v=f24c99f0">
+<link rel="stylesheet" href="/v3.css?v=9a2d8dc4">
 
 <style>
   /* ── Danke — warmer Bestätigungsmoment, Gipfelbuch-Vibe ── */
@@ -27,7 +27,7 @@
     padding: clamp(40px, 6vw, 62px) clamp(28px, 5vw, 56px);
     background:
       radial-gradient(90% 80% at 50% -18%, rgba(186,155,95,0.16), transparent 60%),
-      linear-gradient(172deg, #F8F2E2 0%, #F0E7D2 100%);
+      linear-gradient(172deg, var(--papier-hell) 0%, var(--papier-mitte) 100%);
     box-shadow: var(--shadow-paper); }
   .ty-card::after { content: ""; position: absolute; inset: 0; background-image: var(--grain);
     opacity: 0.6; pointer-events: none; }
@@ -48,7 +48,7 @@
   .ty-detail__eyebrow { font-family: var(--mono); font-size: 10px; font-weight: 700;
     letter-spacing: 2px; text-transform: uppercase; color: var(--royal); margin-bottom: 8px; }
   .ty-detail__headline { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-size: 21px; font-weight: 600;
-    line-height: 1.2; color: #14281C; margin-bottom: 10px; }
+    line-height: 1.2; color: var(--ink-tief); margin-bottom: 10px; }
   .ty-detail__body { font-size: 14px; line-height: 1.66; color: rgba(24,43,31,0.78); }
 
   /* Bestätigungs-Status nach dem Klick in der DOI-Mail (?bestaetigung=).
