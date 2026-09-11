@@ -26,7 +26,17 @@
      Variante von coming-soon.html kopiert statt den echten Knopf.
      Werte unverändert übernommen: die Darstellung bleibt byte-gleich. */
   --gold-btn-hell: #F4CE3C; --gold-btn: #E4B824; --gold-btn-tief: #C99C12;
-  --gold-band-hell: #E8BF25; --gold-band-tief: #D4A918; --gold-ink: #7d600f; --sage: #5E775E; --forest: #132B23;
+  --gold-band-hell: #E8BF25; --gold-band-tief: #D4A918;
+  /* Die Papier-Familie und die zwei Schrift-auf-Gold-Toene. Sie standen als
+     Literale ueber acht Seiten verstreut — deshalb hatte ich #0B2418 in der
+     Mail-Palette faelschlich fuer "Mail-eigen" gehalten, obwohl es auf acht
+     Flaechen als theme-color steht. Werte unveraendert: nur benannt.
+     #14100A und #221803 werden NICHT zusammengelegt — sie sitzen auf
+     verschieden hellem Gold, ein gemeinsamer Wert wuerde die Darstellung
+     auf einer der beiden Flaechen verschlechtern. */
+  --papier-hell: #F8F2E2; --papier-mitte: #F0E7D2; --papier-tief: #E9DFC6; --papier-warm: #EFE7D2;
+  --ink-tief: #14281C;
+  --auf-gold: #14100A; --auf-gold-tief: #221803; --gold-ink: #7d600f; --sage: #5E775E; --forest: #132B23;
 
   --bg-deep: #06231A;
   --paper: #F3EBD9; --paper-dim: rgba(243,235,217,0.68); --paper-faint: rgba(243,235,217,0.58);
@@ -68,7 +78,7 @@
   --flaeche-wald:
     radial-gradient(120% 88% at 82% -8%, rgba(126,208,155,0.16), transparent 58%),
     linear-gradient(165deg, #1C4A30 0%, #123524 55%, #0E2C1D 100%);
-  --flaeche-papier: radial-gradient(120% 120% at 12% 0%, #F8F2E2, #E9DFC6 70%);
+  --flaeche-papier: radial-gradient(120% 120% at 12% 0%, var(--papier-hell), var(--papier-tief) 70%);
 
   --ease-lux: cubic-bezier(0.32, 0.72, 0, 1);
   --mono: ui-monospace, 'SF Mono', Menlo, monospace;
@@ -168,7 +178,7 @@ main { position: relative; z-index: 1; }
   border-radius: var(--r-control); overflow: hidden;
   background:
     repeating-linear-gradient(93deg, rgba(24,43,31,0.028) 0 1px, transparent 1px 10px),
-    linear-gradient(158deg, #F5EEDE 0%, #EFE7D2 58%, #E7DDC4 100%);
+    linear-gradient(158deg, #F5EEDE 0%, var(--papier-warm) 58%, #E7DDC4 100%);
   box-shadow: inset 0 1px 1px rgba(255,255,255,0.7), inset 0 0 0 1px rgba(186,155,95,0.18); }
 .th-flag__grid::after { content: ""; position: absolute; inset: 0; background-image: var(--grain);
   opacity: 0.5; pointer-events: none; }
@@ -176,18 +186,18 @@ main { position: relative; z-index: 1; }
 .th-flag__body h2 em { font-style: italic; color: var(--royal); }
 .th-badge { display: inline-flex; align-items: center; gap: 7px;
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px;
-  text-transform: uppercase; color: #14100A;
+  text-transform: uppercase; color: var(--auf-gold);
   background: linear-gradient(180deg, var(--gold-band-hell), var(--gold-band-tief)); padding: 5px 12px;
   clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%); }
 .th-flag__body h2 { margin: 16px 0 12px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 600;
-  font-size: clamp(26px, 3.4vw, 36px); line-height: 1.06; color: #14281C; }
+  font-size: clamp(26px, 3.4vw, 36px); line-height: 1.06; color: var(--ink-tief); }
 .th-flag__copy { font-size: 16px; line-height: 1.65; color: rgba(24,43,31,0.82); max-width: 42ch; }
 .th-facts { margin: 26px 0 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
   background: rgba(24,43,31,0.12); border: 1px solid rgba(24,43,31,0.12); border-radius: var(--r-control); overflow: hidden; }
 .th-facts > div { background: rgba(245,238,222,0.7); padding: 12px 16px; }
 .th-facts dt { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.8px;
   text-transform: uppercase; color: var(--ink-meta); }
-.th-facts dd { margin-top: 3px; font-size: 16px; font-weight: 600; color: #14281C; }
+.th-facts dd { margin-top: 3px; font-size: 16px; font-weight: 600; color: var(--ink-tief); }
 .th-facts dd span { font-weight: 400; color: var(--ink-meta); font-size: 14px; }
 .th-flag__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; }
 .th-note { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 1.2px;
@@ -224,7 +234,7 @@ main { position: relative; z-index: 1; }
 /* Button */
 .th-btn { position: relative; display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
   font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.6px;
-  text-transform: uppercase; color: #221803; padding: 13px 24px;
+  text-transform: uppercase; color: var(--auf-gold-tief); padding: 13px 24px;
   /* geprägtes Emaille-Schild: Sheen oben, Koerper, dunkle Unterkante */
   background:
     linear-gradient(180deg, rgba(255,255,255,0.55) 0, rgba(255,255,255,0) 42%),
@@ -276,7 +286,7 @@ main { position: relative; z-index: 1; }
 .th-card__link { display: block; padding: 26px 24px 54px; text-decoration: none; color: inherit; border-radius: inherit; }
 .th-card--real::before { background: linear-gradient(90deg, var(--gold-band-hell), transparent); }
 .th-card--real:hover::before { width: 55%; }
-.th-card__state--live { color: #14100A; background: linear-gradient(180deg, var(--gold-band-hell), var(--gold-band-tief));
+.th-card__state--live { color: var(--auf-gold); background: linear-gradient(180deg, var(--gold-band-hell), var(--gold-band-tief));
   border: 0; border-radius: 0; padding: 5px 12px;
   clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%);
   transition: transform 400ms var(--ease-lux); }
@@ -290,11 +300,11 @@ main { position: relative; z-index: 1; }
 .th-hook { width: min(760px, 92vw); margin: 96px 0 40px; margin-left: calc((100% - min(760px, 92vw)) / 2);
   text-align: center; padding: clamp(40px, 6vw, 64px) clamp(28px, 5vw, 56px); border-radius: var(--r-control);
   position: relative; overflow: hidden;
-  background: linear-gradient(158deg, #F5EEDE, #E9DFC6); box-shadow: var(--shadow-paper); }
+  background: linear-gradient(158deg, #F5EEDE, var(--papier-tief)); box-shadow: var(--shadow-paper); }
 .th-hook::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.5; pointer-events: none; }
 .th-hook > * { position: relative; z-index: 1; }
 .th-hook h2 { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 600;
-  font-size: clamp(26px, 4vw, 38px); line-height: 1.08; color: #14281C; }
+  font-size: clamp(26px, 4vw, 38px); line-height: 1.08; color: var(--ink-tief); }
 .th-hook p { margin: 16px auto 26px; max-width: 46ch; font-size: 16px; line-height: 1.65; color: rgba(24,43,31,0.75); }
 
 @media (max-width: 720px) {
@@ -509,17 +519,17 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   transition: background 400ms var(--ease-lux), border-color 400ms var(--ease-lux), box-shadow 400ms var(--ease-lux); }
 .wp .wp-num { display: block; white-space: nowrap;
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
-  color: #14100A;
+  color: var(--auf-gold);
   /* DAV-Gelb wie am echten Wegweiser, mit schwarzem Punkt wie auf den Schildern */
   background:
-    radial-gradient(circle at 11px 50%, #14100A 2.2px, transparent 3px),
+    radial-gradient(circle at 11px 50%, var(--auf-gold) 2.2px, transparent 3px),
     linear-gradient(180deg, var(--gold-band-hell), var(--gold-band-tief));
   padding: 5px 16px 5px 20px;
   clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
   filter: drop-shadow(0 0 0.8px rgba(20,16,5,0.75)) drop-shadow(0 1.5px 1.5px rgba(2,10,6,0.85)) drop-shadow(0 6px 12px rgba(0,0,0,0.5));
   transition: filter 400ms var(--ease-lux), background 400ms var(--ease-lux); }
 .wp:hover .wp-num { background:
-    radial-gradient(circle at 11px 50%, #14100A 2.2px, transparent 3px),
+    radial-gradient(circle at 11px 50%, var(--auf-gold) 2.2px, transparent 3px),
     linear-gradient(180deg, #F4CE33, #E0B51E); }
 .wp:hover::before { border-color: var(--leaf); }
 .wp { transition: opacity 500ms var(--ease-lux); }
@@ -534,7 +544,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .wp.on::before { background: var(--emerald); border-color: var(--emerald);
   box-shadow: 0 0 10px rgba(80,200,120,0.7); animation: wpping 900ms var(--ease-lux) 1; }
 .wp.on .wp-num { background:
-    radial-gradient(circle at 11px 50%, #14100A 2.2px, transparent 3px),
+    radial-gradient(circle at 11px 50%, var(--auf-gold) 2.2px, transparent 3px),
     linear-gradient(180deg, #F8D63A, #E7BC1F);
   filter: drop-shadow(0 0 0.8px rgba(20,16,5,0.75)) drop-shadow(0 1.5px 1.5px rgba(2,10,6,0.85)) drop-shadow(0 0 14px rgba(232,191,37,0.45)); }
 /* POIs: Screen-Space Miniaturen */
@@ -613,7 +623,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .panel-nav .steps { order: 1; font-family: var(--mono); font-size: 10px; font-weight: 700;
   letter-spacing: 2.6px; text-transform: uppercase; color: var(--paper-faint); }
 .panel-nav .steps b { display: inline-block; padding: 2px 9px 2px 6px; margin: 0 3px;
-  color: #14100A; font-weight: 700;
+  color: var(--auf-gold); font-weight: 700;
   background: linear-gradient(180deg, var(--gold-band-hell), var(--gold-band-tief));
   clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 50%, calc(100% - 5px) 100%, 0 100%); }
 .panel-ticks { order: 2; display: flex; gap: 5px; margin-left: 2px; }
@@ -647,9 +657,9 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 /* Gipfel-Payoff: CTA als DAV-Schild zu den Hulk Hikes */
 .grat-panel .p-cta { display: inline-block; margin-top: 16px;
   font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase;
-  color: #14100A; text-decoration: none; padding: 9px 20px 9px 21px;
+  color: var(--auf-gold); text-decoration: none; padding: 9px 20px 9px 21px;
   background:
-    radial-gradient(circle at 10px 50%, #14100A 2px, transparent 2.7px),
+    radial-gradient(circle at 10px 50%, var(--auf-gold) 2px, transparent 2.7px),
     linear-gradient(180deg, var(--gold-band-hell), var(--gold-band-tief));
   clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
   filter: drop-shadow(0 2px 3px rgba(2,10,6,0.7));
@@ -713,7 +723,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .bibel-card { margin-top: clamp(64px, 14vw, 100px); border-radius: var(--r-karte); text-align: center; padding: 58px 32px 50px; position: relative; overflow: hidden;
   background:
     radial-gradient(90% 80% at 50% -20%, rgba(186,155,95,0.18), transparent 60%),
-    linear-gradient(175deg, #F8F2E2 0%, #F0E7D2 100%);
+    linear-gradient(175deg, var(--papier-hell) 0%, var(--papier-mitte) 100%);
   box-shadow: var(--shadow-paper); }
 .bibel-card::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.7; pointer-events: none; }
 .bibel-card .label { font-family: var(--mono); font-size: var(--t-label); font-weight: 600; letter-spacing: 2.4px; text-transform: uppercase; color: var(--gold); }
@@ -763,7 +773,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .gb-seite { padding: 46px 46px 36px; }
 .gb-seite--links blockquote { margin: 0 0 18px; max-width: 17ch;
   font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic; font-weight: 600;
-  font-size: clamp(20px, 2.5vw, 28px); line-height: 1.42; color: #14281C; }
+  font-size: clamp(20px, 2.5vw, 28px); line-height: 1.42; color: var(--ink-tief); }
 .gb-quelle { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2.2px;
   text-transform: uppercase; color: var(--gold-ink); }
 .gb-anker { margin-top: 8px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic;
@@ -809,10 +819,10 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   text-transform: uppercase; text-decoration: none; white-space: nowrap;
   transition: transform 450ms var(--ease-lux), filter 450ms var(--ease-lux); }
 /* rechtsweisend, DAV-Gelb — haengt rechts am Pfahl */
-.gab-schild--gelb { margin-left: calc(50% - 46px); color: #221803; text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+.gab-schild--gelb { margin-left: calc(50% - 46px); color: var(--auf-gold-tief); text-shadow: 0 1px 0 rgba(255,255,255,0.3);
   transform: rotateY(-26deg) rotateZ(-1.2deg); transform-origin: left center;
   background:
-    radial-gradient(circle at 12px 50%, #14100A 2.2px, transparent 3px),
+    radial-gradient(circle at 12px 50%, var(--auf-gold) 2.2px, transparent 3px),
     linear-gradient(180deg, rgba(255,255,255,0.5) 0, rgba(255,255,255,0) 44%),
     linear-gradient(180deg, var(--gold-btn-hell) 0%, var(--gold-btn) 46%, var(--gold-btn-tief) 100%);
   clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%);

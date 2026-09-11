@@ -19,7 +19,7 @@
     },
     "karte": {
       "wert": "#0B2418",
-      "rolle": "Kartengrund — Mail-eigen, dunkler als --forest"
+      "rolle": "Kartengrund — steht als theme-color auf 8 Seiten der Website, also KEINE Mail-Farbe"
     },
     "karte_oben": {
       "wert": "#164A2B",

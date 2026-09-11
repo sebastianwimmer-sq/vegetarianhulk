@@ -23,7 +23,7 @@
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
-<link rel="stylesheet" href="/v3.css?v=f24c99f0">
+<link rel="stylesheet" href="/v3.css?v=9a2d8dc4">
 <style>
 /* ============================================================
    /anfrage.html — v3 Editorial-Dark Port (page-scoped .anf-)
@@ -61,17 +61,17 @@
 /* ---- Formular-Card (Creme, data-light) ---- */
 .anf-card { position: relative; overflow: hidden; border-radius: var(--r-karte);
   padding: clamp(26px, 3.6vw, 44px);
-  background: linear-gradient(158deg, #F8F2E2 0%, #F0E7D2 60%, #E9DFC6 100%); box-shadow: var(--shadow-paper); }
+  background: linear-gradient(158deg, var(--papier-hell) 0%, var(--papier-mitte) 60%, var(--papier-tief) 100%); box-shadow: var(--shadow-paper); }
 .anf-card::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.5; pointer-events: none; }
 .anf-card > * { position: relative; z-index: 1; }
 .anf-row { margin: 0 0 16px; }
-.anf-row label, .anf-flabel { display: block; font-size: 13px; font-weight: 700; color: #14281C; margin: 0 0 7px; }
+.anf-row label, .anf-flabel { display: block; font-size: 13px; font-weight: 700; color: var(--ink-tief); margin: 0 0 7px; }
 .anf-hint { font-weight: 400; color: var(--ink-meta); font-size: 12px; }
 .anf-req { color: var(--royal); }
 .anf-card input[type="text"], .anf-card input[type="email"], .anf-card textarea {
   /* 16px Pflicht: darunter zoomt iOS beim Fokus in die Seite (wirkte wie ein Bug).
      Feld in warmem Papier statt Reinweiß — gehört zur Creme-Karte statt darauf zu kleben. */
-  width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; color: #14281C;
+  width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; color: var(--ink-tief);
   padding: 13px 15px; min-height: 50px; border-radius: var(--r-control); background: #FBF6EA;
   border: 1.5px solid rgba(24,43,31,0.22);
   box-shadow: inset 0 1.5px 3px rgba(24,43,31,0.07), inset 0 0 0 1px rgba(255,255,255,0.5);
@@ -87,7 +87,7 @@
 .anf-chip { position: relative; cursor: pointer; user-select: none; }
 .anf-chip input { position: absolute; opacity: 0; width: 0; height: 0; }
 .anf-chip span { display: inline-block; padding: 11px 16px; border-radius: var(--r-control); font-size: 13px; font-weight: 600;
-  color: #14281C; background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.58));
+  color: var(--ink-tief); background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.58));
   border: 1px solid rgba(24,43,31,0.2); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 1px 2px rgba(24,43,31,0.05);
   transition: background 180ms var(--ease-lux), border-color 180ms var(--ease-lux), color 180ms var(--ease-lux), transform 180ms var(--ease-lux), box-shadow 180ms var(--ease-lux); }
 .anf-chip:hover span { border-color: var(--royal); transform: translateY(-1px);
@@ -100,7 +100,7 @@
 /* Submit (gelb, wie die Site-CTAs) */
 .anf-submit { width: 100%; margin-top: 6px; cursor: pointer; border: 0;
   font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
-  color: #221803; padding: 15px 24px; text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+  color: var(--auf-gold-tief); padding: 15px 24px; text-shadow: 0 1px 0 rgba(255,255,255,0.35);
   background: linear-gradient(180deg, rgba(255,255,255,0.5) 0, rgba(255,255,255,0) 44%), linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%);
   clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
   filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4)) drop-shadow(0 2px 1px rgba(120,88,10,0.45)) drop-shadow(0 10px 16px rgba(0,0,0,0.32)); transition: transform 300ms var(--ease-lux), filter 300ms var(--ease-lux); }
@@ -152,7 +152,7 @@
   background: linear-gradient(135deg, var(--royal), var(--evergreen)); box-shadow: 0 12px 28px -10px rgba(4,89,39,0.5); }
 .anf-success-badge svg { width: 26px; height: 26px; color: #F3EBD9; }
 .anf-success h2 { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700; font-size: clamp(24px, 4vw, 32px);
-  color: #14281C; margin: 0 0 10px; }
+  color: var(--ink-tief); margin: 0 0 10px; }
 .anf-success p { font-size: 15px; line-height: 1.6; color: rgba(24,43,31,0.75); margin: 0 auto; max-width: 40ch; }
 .anf-close { width: min(1040px, 92vw); margin: 44px auto 56px; margin-left: calc((100% - min(1040px, 92vw)) / 2);
   padding-top: 26px; border-top: 1px solid rgba(126,208,155,0.14); text-align: center; }
