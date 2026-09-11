@@ -1,0 +1,105 @@
+{
+  "_hinweis": [
+    "Farbquelle der Mail-Vorlagen. scripts/tour-mail.mjs loest {{ FARBE_x }} hieraus auf.",
+    "",
+    "WARUM NICHT DIREKT IM HTML: E-Mail kann keine CSS-Variablen (Outlook ignoriert sie),",
+    "die Werte MUESSEN als Literal in der Mail stehen. Wenn sie dort von Hand getippt",
+    "werden, driften sie — am 11.09.2026 standen 25 von 27 Mail-Farben in keinem Token",
+    "der Website, darunter #f5eedd neben --card-cream: #f5eede (eine Ziffer daneben) und",
+    "sechs verschiedene Goldtoene. Deshalb: Literal ja, aber eingesetzt statt getippt.",
+    "",
+    "aus_site: der Wert wird zur Bauzeit aus v3.css gelesen. Aendert sich das Token,",
+    "aendert sich die naechste Mail mit. Fehlt es, bricht der Lauf ab.",
+    "wert: nur fuer Flaechen, die es auf der Website so nicht gibt (der Mail-Verlauf)."
+  ],
+  "farben": {
+    "grund": {
+      "wert": "#06140D",
+      "rolle": "Flaeche hinter der Karte — Mail-eigen, dunkler als --bg-deep"
+    },
+    "karte": {
+      "wert": "#0B2418",
+      "rolle": "Kartengrund — Mail-eigen, dunkler als --forest"
+    },
+    "karte_oben": {
+      "wert": "#164A2B",
+      "rolle": "oberer Halt des Kartenverlaufs"
+    },
+    "karte_mitte": {
+      "wert": "#0F3520",
+      "rolle": "mittlerer Halt"
+    },
+    "karte_unten": {
+      "wert": "#07180E",
+      "rolle": "unterer Halt"
+    },
+    "text": {
+      "aus_site": "card-cream",
+      "rolle": "Ueberschriften, kraeftiger Text"
+    },
+    "text_lauf": {
+      "wert": "#DDE5DB",
+      "rolle": "Fliesstext auf der Karte"
+    },
+    "text_zitat": {
+      "aus_site": "paper",
+      "rolle": "Zitate (O-Ton, Smashie, Vers)"
+    },
+    "text_leise": {
+      "wert": "#8FB79C",
+      "rolle": "Etiketten, Sekundaeres"
+    },
+    "text_fein": {
+      "wert": "#7C9585",
+      "rolle": "Fusszeile — auf 4,5:1 gemessen"
+    },
+    "akzent": {
+      "aus_site": "leaf",
+      "rolle": "gruener Akzent, Kursiv-Halbsatz"
+    },
+    "akzent_leise": {
+      "wert": "#6F9A7C",
+      "rolle": "Vers-Quellenangabe"
+    },
+    "gold_hell": {
+      "aus_site": "gold-btn-hell",
+      "rolle": "Knopf, oberer Halt"
+    },
+    "gold": {
+      "aus_site": "gold-btn",
+      "rolle": "Knopf, Mitte + Eyebrow-Strich"
+    },
+    "gold_tief": {
+      "aus_site": "gold-btn-tief",
+      "rolle": "Knopf, unterer Halt"
+    },
+    "gold_text": {
+      "wert": "#D8B24A",
+      "rolle": "Eyebrow-Schrift auf dunklem Grund"
+    },
+    "gold_ink": {
+      "wert": "#14100A",
+      "rolle": "Schrift AUF dem Goldknopf"
+    },
+    "linie": {
+      "wert": "#254A34",
+      "rolle": "duenne Trennlinie"
+    },
+    "linie_zart": {
+      "wert": "#2C513A",
+      "rolle": "Vers-Trennstrich"
+    },
+    "text_mittel": {
+      "wert": "#D0DACE",
+      "rolle": "Vers-Text"
+    },
+    "text_grau": {
+      "wert": "#A2B3A3",
+      "rolle": "Unterzeile am Knopf"
+    },
+    "karte_tief": {
+      "wert": "#0A2016",
+      "rolle": "vierter Halt des Kartenverlaufs"
+    }
+  }
+}

@@ -132,7 +132,7 @@
   display: inline-flex; margin-top: 14px; align-items: center; gap: 7px;
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.8px;
   text-transform: uppercase; color: #14100A;
-  background: linear-gradient(180deg, #E8BF25, #D4A918); padding: 5px 13px 5px 10px;
+  background: linear-gradient(180deg, var(--gold-band-hell), var(--gold-band-tief)); padding: 5px 13px 5px 10px;
   clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%);
   filter: drop-shadow(0 2px 4px rgba(3,15,9,0.5));
 }
@@ -260,7 +260,7 @@
   content: ""; position: absolute; left: 5px; right: 5px; top: 5px; height: 1px;
   background: linear-gradient(90deg,
     rgba(155,217,180,0.35) 0%, rgba(155,217,180,0.5) 40%,
-    var(--leaf) 62%, #E8BF25 100%);
+    var(--leaf) 62%, var(--gold-band-hell) 100%);
 }
 .tour-arc__step { position: relative; padding-top: 24px; min-width: 0; }
 .tour-arc__step::before {
@@ -268,7 +268,7 @@
   border-radius: 50%; background: #0E2C1D; border: 2px solid rgba(155,217,180,0.5);
 }
 .tour-arc__step--peak::before {
-  border-color: #E8BF25; background: rgba(232,191,37,0.3);
+  border-color: var(--gold-band-hell); background: rgba(232,191,37,0.3);
   box-shadow: 0 0 14px rgba(232,191,37,0.55);
 }
 .tour-arc__step:last-child::before { border-color: var(--leaf); background: var(--leaf); }
@@ -277,7 +277,7 @@
   font-size: clamp(22px, 2.8vw, 30px); line-height: 1; letter-spacing: -0.5px;
   color: var(--paper);
 }
-.tour-arc__step--peak .tour-arc__time { color: #E8BF25; }
+.tour-arc__step--peak .tour-arc__time { color: var(--gold-band-hell); }
 .tour-arc__what {
   display: block; margin-top: 8px; font-family: var(--mono); font-size: 10px;
   font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
@@ -312,7 +312,7 @@
 }
 .tour-svg .peak-x { color: var(--paper); opacity: 0; transition: opacity 500ms 1400ms; }
 .tour-svg .sun-dot {
-  fill: #E8BF25; opacity: 0;
+  fill: var(--gold-band-hell); opacity: 0;
   filter: drop-shadow(0 0 8px rgba(232,191,37,0.85)); transition: opacity 500ms 1500ms;
 }
 /* Beschriftung liegt als HTML ueber dem SVG, nicht darin.
@@ -336,8 +336,8 @@
   content: ""; width: 7px; height: 7px; border-radius: 50%;
   background: var(--emerald); box-shadow: 0 0 8px rgba(80,200,120,0.8);
 }
-.tour-profil__marke--sonne { color: #E8BF25; }
-.tour-profil__marke--sonne::before { background: #E8BF25; box-shadow: 0 0 9px rgba(232,191,37,0.85); }
+.tour-profil__marke--sonne { color: var(--gold-band-hell); }
+.tour-profil__marke--sonne::before { background: var(--gold-band-hell); box-shadow: 0 0 9px rgba(232,191,37,0.85); }
 @media (max-width: 560px) {
   /* auf schmalen Schirmen ist rechts vom Gipfel kein Platz mehr */
   .tour-profil__marke--gipfel { left: 0 !important; }
@@ -472,7 +472,7 @@
   text-shadow: 0 1px 0 rgba(255,255,255,0.35);
   background:
     linear-gradient(180deg, rgba(255,255,255,0.5) 0, rgba(255,255,255,0) 44%),
-    linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%);
+    linear-gradient(180deg, var(--gold-btn-hell) 0%, var(--gold-btn) 46%, var(--gold-btn-tief) 100%);
   clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
   filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4)) drop-shadow(0 2px 1px rgba(120,88,10,0.45))
           drop-shadow(0 10px 16px rgba(0,0,0,0.32));

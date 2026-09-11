@@ -80,13 +80,21 @@ function platzhalter(html, dateiname) {
 }
 
 /* Quelltext-Pruefungen: die brauchen keinen Browser. */
-function statisch(html) {
+function statisch(html, dateiname) {
   const funde = [];
   if (/\.webp\b/i.test(html)) funde.push('WebP verwendet — Outlook zeigt nichts an');
   const fremd = [...html.matchAll(/https?:\/\/([^/"')\s]+)/g)].map(m => m[1])
     .filter(h => !/vegetarianhulk\.de$|instagram\.com$|schemas\.microsoft\.com$|www\.w3\.org$/.test(h));
   if (fremd.length) funde.push(`fremde Hosts: ${[...new Set(fremd)].join(', ')}`);
 
+  /* Rohe Farbwerte in der erzeugten Vorlage: dort gehoeren sie hin
+     (E-Mail kann keine Variablen). In der QUELLE neue-tour.html nicht —
+     sie kommen aus email-templates/farben.json. Ein getippter Wert dort
+     driftet von der Website weg, ohne dass es auffaellt. */
+  if (dateiname === 'neue-tour.html') {
+    const roh = [...new Set((html.match(/(?<!&)#[0-9A-Fa-f]{6}\b/g) || []))];
+    if (roh.length) funde.push(`rohe Farbwerte statt {{ FARBE_x }}: ${roh.join(', ')}`);
+  }
   return funde;
 }
 
@@ -193,8 +201,15 @@ let offen = 0;   // Funde in Geruesten: gemeldet, aber nicht blockierend
 
 for (const datei of liste) {
   const html = readFileSync(datei, 'utf8');
-  const funde = [...statisch(html), ...platzhalter(html, basename(datei)),
-                 ...(await imBrowser(browser, html)), ...(await ueberlauf(browser, html))];
+  /* Eine Quelldatei mit {{ FARBE_x }} ist keine Mail, sondern ein Bauplan.
+     Sie im Browser auf Kontrast zu pruefen, misst ungueltige Farbwerte —
+     der erste Lauf meldete so 36 Phantom-Kontrastfehler, weil jeder
+     Platzhalter als "keine Farbe" gelesen wurde. Gerendert wird nur, was
+     aufgeloest ist; der Bauplan bekommt die statischen Pruefungen. */
+  const istBauplan = /\{\{\s*FARBE_/.test(html);
+  const funde = [...statisch(html, basename(datei)), ...platzhalter(html, basename(datei)),
+                 ...(istBauplan ? [] : await imBrowser(browser, html)),
+                 ...(istBauplan ? [] : await ueberlauf(browser, html))];
   /* Was der Worker verschickt, blockiert. Ein Blanko-Geruest, das nie
      jemand bekommt, wird GEMELDET, aber blockiert nicht — sonst stuende
      das Tor dauerhaft rot und wuerde nach einer Woche ignoriert.
