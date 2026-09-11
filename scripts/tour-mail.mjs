@@ -110,7 +110,26 @@ if (fehlend.length) {
    auf die Seite, nicht in die Ankuendigung. Abkuerzungen wie "z. B." brechen
    den Satz nicht, deshalb wird auf Punkt+Leerzeichen+Grossbuchstabe geteilt. */
 const saetze = notizV.split(/(?<=[.!?])\s+(?=[A-ZÄÖÜ])/);
-const notiz = saetze.slice(0, 2).join(' ').trim();
+
+/* Nicht einfach die ersten zwei: der O-Ton stand dann direkt unter dem
+   Aufhaenger und sagte dasselbe (gemessen 75% gemeinsame Inhaltswoerter).
+   Zwei Saetze dicht untereinander, die sich wiederholen, lassen eine Mail
+   duenn wirken — deshalb das Fenster mit der GERINGSTEN Ueberschneidung.
+   Bei Gleichstand gewinnt das fruehere, damit die Reihenfolge erhalten bleibt. */
+const inhaltswoerter = (x) => new Set(
+  x.toLowerCase().replace(/[^a-zäöüß ]/g, ' ').split(/\s+/).filter(w => w.length > 4));
+const leadWoerter = inhaltswoerter(lead);
+let bestes = { text: saetze.slice(0, 2).join(' ').trim(), quote: 101 };
+for (let i = 0; i + 1 < Math.max(saetze.length, 2); i++) {
+  const kandidat = saetze.slice(i, i + 2).join(' ').trim();
+  if (kandidat.length < 40) continue;
+  const w = inhaltswoerter(kandidat);
+  if (!w.size) continue;
+  const gemeinsam = [...w].filter(x => leadWoerter.has(x)).length;
+  const quote = Math.round(gemeinsam / w.size * 100);
+  if (quote < bestes.quote) bestes = { text: kandidat, quote };
+}
+const notiz = bestes.text;
 
 const zahl = Number(hm).toLocaleString('de-DE');
 
@@ -122,6 +141,43 @@ const zahl = Number(hm).toLocaleString('de-DE');
    0,646 em pro Zeichen ist an Georgia bold gemessen (dem Ersatz, den Mail-
    Clients tatsaechlich nehmen), 240px ist der Platz bei 320px Fensterbreite.
    Nachgeprueft wird es trotzdem: mail-check misst den Ueberlauf im Browser. */
+/* ---------- Bibelvers zur Tour ----------
+   Nicht zufaellig: die Themen kommen aus dem, was auf der Tour-Seite steht.
+   Ein Vers, der zur Kneifelspitze passt (Sonnenaufgang), passt nicht zu
+   einem Kondi-Tag. Trifft nichts, greift "standard" — Sebis Anker-Vers.
+   Einzelfall ueberschreiben: --vers=<id> */
+const versArg = argv.find(a => a.startsWith('--vers='));
+const versDatei = JSON.parse(readFileSync(join(WURZEL, 'email-templates/verse.json'), 'utf8'));
+const alleVerse = versDatei.verse;
+
+const text_ = `${lead} ${notizV} ${name}`.toLowerCase();
+const SIGNALE = [
+  [/erste[nrs]?\s+(mal|klettersteig|via ferrata)|zum ersten mal/, 'erstesmal'],
+  [/sonnenaufgang|blaue stunde|im dunkeln|vier uhr|4 uhr/,          'sonnenaufgang'],
+  [/klettersteig|via ferrata|steil|ausgesetzt|t4|schwindelfrei/,     'klettern'],
+  [/aussicht|blick|panorama|gipfelkreuz/,                            'aussicht'],
+];
+const themen = SIGNALE.filter(([re]) => re.test(text_)).map(([, t]) => t);
+/* Viele Hoehenmeter reihen sich VOR "klettern" und "aussicht" ein: bei einem
+   Kondi-Tag ist die Ausdauer die Geschichte, nicht der Blick. Ristfeuchthorn
+   bekam sonst einen Kletter-Vers, obwohl es ein langer Wandertag war. */
+if (Number(hm) >= 900) themen.splice(themen.indexOf('klettern') >= 0 ? themen.indexOf('klettern') : themen.length, 0, 'lang');
+
+let vers;
+if (versArg) {
+  const id = versArg.slice('--vers='.length);
+  vers = alleVerse.find(v => v.id === id);
+  if (!vers) { console.error(`Kein Vers mit id "${id}". Vorhanden: ${alleVerse.map(v => v.id).join(', ')}`); process.exit(2); }
+} else {
+  /* Der erstgenannte Treffer gewinnt — die Signalliste steht nach
+     Aussagekraft sortiert, "erstes Mal" schlaegt "lang". */
+  for (const th of themen) {
+    vers = alleVerse.find(v => v.themen.includes(th));
+    if (vers) break;
+  }
+  vers = vers || alleVerse.find(v => v.themen.includes('standard'));
+}
+
 const laengstesWort = Math.max(...name.split(/[\s-]+/).map(w => w.length));
 const h1Size = Math.max(22, Math.min(39, Math.floor(240 / (laengstesWort * 0.646))));
 const werte = {
@@ -131,6 +187,8 @@ const werte = {
   FOTO: `https://vegetarianhulk.de${foto}`,
   FOTO_ALT: `${name} — Blick von der Tour`,
   H1_SIZE: String(h1Size),
+  VERS_TEXT: vers.text,
+  VERS_STELLE: vers.stelle,
 };
 
 let html = readFileSync(join(WURZEL, 'email-templates/neue-tour.html'), 'utf8');
@@ -159,6 +217,9 @@ console.log(`\n  Tour       ${name} · ${hoehe} · ${region}`);
 console.log(`  Gegangen   ${datum}`);
 console.log(`  Zahlen     ${zahl} hm · ${km} km · ${zeit} · ${grad}`);
 console.log(`  Überschrift ${h1Size}px (längstes Wort: ${laengstesWort} Zeichen)`);
+console.log(`  O-Ton       ${bestes.quote}% Überschneidung mit dem Aufhänger`);
+console.log(`  Vers        ${vers.stelle} — ${vers.text.slice(0, 52)}${vers.text.length > 52 ? '…' : ''}`);
+console.log(`  (Signale: ${themen.join(', ') || 'keine → standard'})`);
 console.log(`  Smashie     ${smashie ? '"' + smashie + '"' : 'weggelassen (--smashie=... setzt eine Zeile)'}`);
 console.log(`\n  Betreff       ${betreff}`);
 console.log(`  Vorschautext  ${vorschau}`);

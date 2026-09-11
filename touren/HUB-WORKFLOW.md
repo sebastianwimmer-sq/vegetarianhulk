@@ -177,6 +177,26 @@ Pro Tour dieses Set. **Fett = Pflicht**, Rest optional/ableitbar.
    Stand prüfen: `GET /newsletter/kampagne?id=<n>` liefert `status` — so lässt sich
    *belegen*, dass ein Entwurf ein Entwurf ist, statt es zu behaupten.
 
+   **Niveau messen statt beurteilen:**
+   ```
+   node scripts/mail-loop.mjs .mail-versand/<slug>.html [--merken|--vergleich]
+   ```
+   `mail-check` prüft, ob etwas **kaputt** ist. `mail-loop` prüft, ob es **gut** ist, und macht
+   „wirkt schwach" zählbar: Takt (verschiedene Abstände), Inhaltsbreiten, Typo-Stufen,
+   Etiketten-Register, Dark-Mode-Abdeckung, Absatzlänge, Zeilenbreite und **Doppelung**
+   zwischen Textblöcken. `--merken` sichert einen Stand, `--vergleich` zeigt die Differenz —
+   daher „Loop": messen, ändern, wieder messen.
+
+   Erster Durchgang am 11.09.2026: Takt 8→4 verschiedene Abstände · Typo-Stufen 14→5, davon
+   0 enger als 1,25 · Dark-Mode-Abdeckung 94→100 % · Doppelung zwischen Aufhänger und O-Ton
+   **75→17 %** (der O-Ton nimmt jetzt das Satzfenster mit der geringsten Überschneidung,
+   statt die ersten zwei Sätze — er sagte sonst dasselbe wie der Absatz darüber).
+
+   **Es blockiert bewusst nichts.** Ein Niveau-Wert ist eine Einschätzung, kein Defekt; wer ihn
+   zum Tor macht, baut ein Tor, das bei jedem Sonderfall rot steht. Und: zwei der ersten
+   „Befunde" waren Fehler im Werkzeug selbst — es zählte den Inhalt des `<style>`-Blocks als
+   Schriftgröße und den unsichtbaren Vorschautext als eigene Typo-Stufe.
+
 
 7. **Cache-Busting:** `./scripts/bump-asset-versions.sh`. Neue seiten-eigene Assets brauchen
    kein `?v=` (sind im Ordner).

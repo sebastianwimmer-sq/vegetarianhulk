@@ -1,0 +1,58 @@
+{
+  "_hinweis": [
+    "Verse fuer die Tour-Mail. scripts/tour-mail.mjs waehlt anhand der Signale,",
+    "die auf der Tour-Seite stehen — nicht zufaellig. Ist kein Thema getroffen,",
+    "greift 'standard'.",
+    "",
+    "WORTLAUT BITTE GEGENLESEN: die Stellen sind nach Schlachter 2000 zitiert,",
+    "aber ich habe sie nicht gegen eine Ausgabe geprueft. Bei einem Bibelzitat",
+    "auf deiner Marke soll nicht meine Erinnerung die Quelle sein.",
+    "Eigene Verse ergaenzen: Block anhaengen, 'themen' passend setzen.",
+    "Einzelfall ueberschreiben: node scripts/tour-mail.mjs <slug> --vers=<id>"
+  ],
+
+  "verse": [
+    {
+      "id": "sprueche-24-16",
+      "text": "Der Gerechte fällt siebenmal — und steht wieder auf.",
+      "stelle": "Sprüche 24,16",
+      "themen": ["standard", "gescheitert", "wieder"],
+      "warum": "Sebis Anker-Vers, steht seit v3 unter jeder Mail"
+    },
+    {
+      "id": "psalm-121-1",
+      "text": "Ich hebe meine Augen auf zu den Bergen: Woher kommt mir Hilfe?",
+      "stelle": "Psalm 121,1",
+      "themen": ["aussicht", "gipfel", "berg"],
+      "warum": "wörtlich über Berge — passt, wenn der Blick die Geschichte ist"
+    },
+    {
+      "id": "psalm-18-34",
+      "text": "Er macht meine Füße denen der Hirsche gleich und stellt mich auf meine Höhen.",
+      "stelle": "Psalm 18,34",
+      "themen": ["steil", "klettern", "schwer"],
+      "warum": "Trittsicherheit und Höhe — passt zu Klettersteig und T4"
+    },
+    {
+      "id": "jesaja-40-31",
+      "text": "Die auf den HERRN harren, kriegen neue Kraft.",
+      "stelle": "Jesaja 40,31",
+      "themen": ["lang", "kondition", "durchhalten"],
+      "warum": "Ausdauer — passt zu langen Tagen mit vielen Höhenmetern"
+    },
+    {
+      "id": "klagelieder-3-23",
+      "text": "Seine Gnade ist alle Morgen neu.",
+      "stelle": "Klagelieder 3,23",
+      "themen": ["sonnenaufgang", "frueh", "morgen"],
+      "warum": "Morgen — passt zu Sonnenaufgangs- und Vier-Uhr-Touren"
+    },
+    {
+      "id": "josua-1-9",
+      "text": "Sei stark und mutig! Fürchte dich nicht und erschrick nicht.",
+      "stelle": "Josua 1,9",
+      "themen": ["erstesmal", "neu", "ausgesetzt"],
+      "warum": "erstes Mal, Respekt vor etwas Neuem"
+    }
+  ]
+}
