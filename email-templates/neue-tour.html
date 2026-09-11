@@ -19,133 +19,133 @@
 <style>
 :root { color-scheme: dark; supported-color-schemes: dark; }
 </style>
-<table bgcolor="#06140D" role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0;padding:0;background-color:#06140D;">
-<tr><td bgcolor="#06140D" align="center" style="padding:34px 12px;">
+<table bgcolor="{{ FARBE_grund }}" role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0;padding:0;background-color:{{ FARBE_grund }};">
+<tr><td bgcolor="{{ FARBE_grund }}" align="center" style="padding:34px 12px;">
 
-<div style="display:none;max-height:0;overflow:hidden;opacity:0;mso-hide:all;font-size:1px;line-height:1px;color:#06140D;">Deine 3 Touren zum Reinkommen, die Packliste, und wie ich selbst angefangen hab.</div>
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;mso-hide:all;font-size:1px;line-height:1px;color:{{ FARBE_grund }};">Deine 3 Touren zum Reinkommen, die Packliste, und wie ich selbst angefangen hab.</div>
 
 <!-- KARTE = ein Gradient-Flow -->
-<table bgcolor="#0B2418" role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;background-color:#0B2418;background-image:radial-gradient(90% 40% at 50% 8%, rgba(126,208,155,0.12) 0%, rgba(126,208,155,0) 60%), linear-gradient(168deg,#164A2B 0%,#0F3520 20%,#0B2418 46%,#0A2016 72%,#07180E 100%);border-radius:24px;overflow:hidden;box-shadow:0 30px 70px -24px rgba(0,0,0,0.7);">
+<table bgcolor="{{ FARBE_karte }}" role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;background-color:{{ FARBE_karte }};background-image:radial-gradient(90% 40% at 50% 8%, rgba(126,208,155,0.12) 0%, rgba(126,208,155,0) 60%), linear-gradient(168deg,{{ FARBE_karte_oben }} 0%,{{ FARBE_karte_mitte }} 20%,{{ FARBE_karte }} 46%,{{ FARBE_karte_tief }} 72%,{{ FARBE_karte_unten }} 100%);border-radius:24px;overflow:hidden;box-shadow:0 30px 70px -24px rgba(0,0,0,0.7);">
 
   <!-- Masthead OBEN (wie Website-Header überm Hero) -->
-  <tr><td bgcolor="#0B2418" align="center" style="padding:28px 0 20px 0;">
-    <div style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.36em;color:#F3EBD9;">VEGETARIAN<span style="color:#7ED09B;">HULK</span></div>
-    <div style="margin-top:7px;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:12px;color:#8FB79C;">aus den Bergen · seit 2016</div>
+  <tr><td bgcolor="{{ FARBE_karte }}" align="center" style="padding:28px 0 20px 0;">
+    <div style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.36em;color:{{ FARBE_text_zitat }};">VEGETARIAN<span style="color:{{ FARBE_akzent }};">HULK</span></div>
+    <div style="margin-top:7px;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:12px;color:{{ FARBE_text_leise }};">aus den Bergen · seit 2016</div>
   </td></tr>
 
   <!-- Foto der Tour -->
-  <tr><td bgcolor="#0B2418" style="font-size:0;line-height:0;background-color:#0B2418;">
+  <tr><td bgcolor="{{ FARBE_karte }}" style="font-size:0;line-height:0;background-color:{{ FARBE_karte }};">
     <a href="{{ URL }}" target="_blank"><img src="{{ FOTO }}" width="600" alt="{{ FOTO_ALT }}" style="display:block;width:100%;max-width:600px;height:auto;border:0;"></a>
   </td></tr>
-  <tr><td bgcolor="#C9A227" style="height:3px;background-color:#C9A227;background-image:linear-gradient(90deg,#B8901E,#F0CB4B,#B8901E);line-height:3px;font-size:0;">&nbsp;</td></tr>
+  <tr><td bgcolor="{{ FARBE_gold }}" style="height:3px;background-color:{{ FARBE_gold }};background-image:linear-gradient(90deg,{{ FARBE_gold }},{{ FARBE_gold_hell }},{{ FARBE_gold }});line-height:3px;font-size:0;">&nbsp;</td></tr>
 
   <!-- Intro -->
-  <tr><td bgcolor="#0B2418" style="padding:28px 28px 0 28px;">
-    <div style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#D8B24A;">Neue Tour · gegangen {{ DATUM }}</div>
-    <h1 style="margin:14px 0 0 0;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:{{ H1_SIZE }}px;line-height:1.08;font-weight:700;color:#F5EEDD;letter-spacing:-0.5px;">{{ NAME }} <span style="font-style:italic;color:#7ED09B;">ist online.</span></h1>
-    <p style="margin:10px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.04em;color:#8FB79C;">{{ HOEHE }} · {{ REGION }}</p>
-    <p style="margin:20px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:15px;line-height:1.68;color:#DDE5DB;">Hey {{ contact.VORNAME | default : "du" }}, ich war wieder unterwegs. Die ganze Runde steht jetzt online.</p>
-    <p style="margin:14px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:15px;line-height:1.68;color:#DDE5DB;">{{ LEAD }}</p>
+  <tr><td bgcolor="{{ FARBE_karte }}" style="padding:28px 28px 0 28px;">
+    <div style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:{{ FARBE_gold_text }};">Neue Tour · gegangen {{ DATUM }}</div>
+    <h1 style="margin:14px 0 0 0;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:{{ H1_SIZE }}px;line-height:1.08;font-weight:700;color:{{ FARBE_text }};letter-spacing:-0.5px;">{{ NAME }} <span style="font-style:italic;color:{{ FARBE_akzent }};">ist online.</span></h1>
+    <p style="margin:10px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.04em;color:{{ FARBE_text_leise }};">{{ HOEHE }} · {{ REGION }}</p>
+    <p style="margin:20px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:15px;line-height:1.68;color:{{ FARBE_text_lauf }};">Hey {{ contact.VORNAME | default : "du" }}, ich war wieder unterwegs. Die ganze Runde steht jetzt online.</p>
+    <p style="margin:14px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:15px;line-height:1.68;color:{{ FARBE_text_lauf }};">{{ LEAD }}</p>
   </td></tr>
 
   <!-- Zahlen: 2x2 statt vier nebeneinander. Vier Etiketten wie "Höhenmeter"
        und "Schwierigkeit" brauchen zusammen mehr als 320px — die Mail lief auf
        schmalen Telefonen um 66px aus dem Rahmen. -->
-  <tr><td bgcolor="#0B2418" style="padding:28px 28px 14px 28px;">
+  <tr><td bgcolor="{{ FARBE_karte }}" style="padding:28px 28px 14px 28px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
       <tr>
-      <td bgcolor="#0B2418" align="center" width="50%" style="padding:0 4px 14px 4px;">
-        <div style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:25px;font-weight:700;color:#F5EEDD;">{{ HM }}</div>
-        <div style="margin-top:3px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#8FB79C;">Höhenmeter</div>
+      <td bgcolor="{{ FARBE_karte }}" align="center" width="50%" style="padding:0 4px 14px 4px;">
+        <div style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:25px;font-weight:700;color:{{ FARBE_text }};">{{ HM }}</div>
+        <div style="margin-top:3px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:{{ FARBE_text_leise }};">Höhenmeter</div>
       </td>
-      <td bgcolor="#0B2418" align="center" width="50%" style="padding:0 4px 14px 4px;">
-        <div style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:25px;font-weight:700;color:#F5EEDD;">{{ KM }}</div>
-        <div style="margin-top:3px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#8FB79C;">Kilometer</div>
+      <td bgcolor="{{ FARBE_karte }}" align="center" width="50%" style="padding:0 4px 14px 4px;">
+        <div style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:25px;font-weight:700;color:{{ FARBE_text }};">{{ KM }}</div>
+        <div style="margin-top:3px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:{{ FARBE_text_leise }};">Kilometer</div>
       </td>
       </tr>
       <tr>
-      <td bgcolor="#0B2418" align="center" width="50%" style="padding:0 4px 14px 4px;">
-        <div style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:25px;font-weight:700;color:#F5EEDD;">{{ ZEIT }}</div>
-        <div style="margin-top:3px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#8FB79C;">Gehzeit</div>
+      <td bgcolor="{{ FARBE_karte }}" align="center" width="50%" style="padding:0 4px 14px 4px;">
+        <div style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:25px;font-weight:700;color:{{ FARBE_text }};">{{ ZEIT }}</div>
+        <div style="margin-top:3px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:{{ FARBE_text_leise }};">Gehzeit</div>
       </td>
-      <td bgcolor="#0B2418" align="center" width="50%" style="padding:0 4px 14px 4px;">
-        <div style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:25px;font-weight:700;color:#F5EEDD;">{{ GRAD }}</div>
-        <div style="margin-top:3px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#8FB79C;">Schwierigkeit</div>
+      <td bgcolor="{{ FARBE_karte }}" align="center" width="50%" style="padding:0 4px 14px 4px;">
+        <div style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:25px;font-weight:700;color:{{ FARBE_text }};">{{ GRAD }}</div>
+        <div style="margin-top:3px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:{{ FARBE_text_leise }};">Schwierigkeit</div>
       </td>
       </tr>
     </table>
   </td></tr>
 
   <!-- O-Ton -->
-  <tr><td bgcolor="#0B2418" style="padding:34px 28px 0 28px;">
+  <tr><td bgcolor="{{ FARBE_karte }}" style="padding:34px 28px 0 28px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
-      <td bgcolor="#0B2418" width="26" style="padding-right:12px;"><div style="height:2px;background-color:#C9A227;font-size:0;line-height:2px;">&nbsp;</div></td>
-      <td bgcolor="#0B2418" style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#D8B24A;white-space:nowrap;">Mein O-Ton</td>
-      <td bgcolor="#0B2418" style="padding-left:12px;width:100%;"><div style="height:1px;background-color:#254A34;font-size:0;line-height:1px;">&nbsp;</div></td>
+      <td bgcolor="{{ FARBE_karte }}" width="26" style="padding-right:12px;"><div style="height:2px;background-color:{{ FARBE_gold }};font-size:0;line-height:2px;">&nbsp;</div></td>
+      <td bgcolor="{{ FARBE_karte }}" style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:{{ FARBE_gold_text }};white-space:nowrap;">Mein O-Ton</td>
+      <td bgcolor="{{ FARBE_karte }}" style="padding-left:12px;width:100%;"><div style="height:1px;background-color:{{ FARBE_linie }};font-size:0;line-height:1px;">&nbsp;</div></td>
     </tr></table>
-    <p style="margin:16px 0 0 0;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:19px;line-height:1.55;color:#F1E9D5;">„{{ NOTIZ }}"</p>
+    <p style="margin:16px 0 0 0;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:19px;line-height:1.55;color:{{ FARBE_text_zitat }};">„{{ NOTIZ }}"</p>
   </td></tr>
 
   <!-- SMASHIE:START - der Erzeuger entfernt diesen Block, wenn keine Zeile
        mitgegeben wurde. Bewusst NICHT automatisch getextet: eine erfundene
        Maskottchen-Zeile je Tour waere genau die generische Fuellung, die
        Sebi zu Recht angestrichen hat. Eine Zeile von ihm oder keine. -->
-  <tr><td bgcolor="#0B2418" style="padding:28px 28px 0 28px;">
+  <tr><td bgcolor="{{ FARBE_karte }}" style="padding:28px 28px 0 28px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
-      <td bgcolor="#0B2418" width="80" valign="top" style="padding-right:16px;">
+      <td bgcolor="{{ FARBE_karte }}" width="80" valign="top" style="padding-right:16px;">
         <img src="https://vegetarianhulk.de/assets/img/smashy-maskottchen.png" width="72" alt="Smashie, das VegetarianHulk-Maskottchen" style="display:block;width:72px;height:auto;border:0;">
       </td>
-      <td bgcolor="#0B2418" valign="middle">
-        <div style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#7ED09B;">Smashie sagt</div>
-        <div style="margin-top:6px;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:19px;line-height:1.5;color:#F1E9D5;">&bdquo;{{ SMASHIE }}&ldquo; &#127793;</div>
+      <td bgcolor="{{ FARBE_karte }}" valign="middle">
+        <div style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:{{ FARBE_akzent }};">Smashie sagt</div>
+        <div style="margin-top:6px;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:19px;line-height:1.5;color:{{ FARBE_text_zitat }};">&bdquo;{{ SMASHIE }}&ldquo; &#127793;</div>
       </td>
     </tr></table>
   </td></tr>
   <!-- SMASHIE:ENDE -->
 
   <!-- CTA -->
-  <tr><td bgcolor="#0B2418" align="center" style="padding:34px 28px 14px 28px;">
+  <tr><td bgcolor="{{ FARBE_karte }}" align="center" style="padding:34px 28px 14px 28px;">
     <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
-      <td align="center" bgcolor="#E4B824" style="border-radius:13px;background-color:#E4B824;background-image:linear-gradient(180deg,#F6D24A 0%,#E4B824 52%,#C6980F 100%);box-shadow:0 14px 30px -8px rgba(230,184,36,0.4);">
-        <a href="{{ URL }}" target="_blank" style="display:inline-block;padding:17px 40px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#14100A;text-decoration:none;border-radius:13px;">Ganze Tour ansehen &nbsp;&rarr;</a>
+      <td align="center" bgcolor="{{ FARBE_gold }}" style="border-radius:13px;background-color:{{ FARBE_gold }};background-image:linear-gradient(180deg,{{ FARBE_gold_hell }} 0%,{{ FARBE_gold }} 52%,{{ FARBE_gold_tief }} 100%);box-shadow:0 14px 30px -8px rgba(230,184,36,0.4);">
+        <a href="{{ URL }}" target="_blank" style="display:inline-block;padding:17px 40px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:{{ FARBE_gold_ink }};text-decoration:none;border-radius:13px;">Ganze Tour ansehen &nbsp;&rarr;</a>
       </td>
     </tr></table>
-    <div style="margin-top:13px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:12px;color:#A2B3A3;max-width:34em;margin-left:auto;margin-right:auto;">Mit Höhenprofil, Fotos und dem, was ich vorm Start gern gewusst hätte.</div>
+    <div style="margin-top:13px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:12px;color:{{ FARBE_text_grau }};max-width:34em;margin-left:auto;margin-right:auto;">Mit Höhenprofil, Fotos und dem, was ich vorm Start gern gewusst hätte.</div>
   </td></tr>
 
   <!-- Close -->
-  <tr><td bgcolor="#0B2418" style="padding:28px 28px 0 28px;">
-    <p style="margin:0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:15px;line-height:1.68;color:#DDE5DB;">Die Zahlen oben sind meine eigenen, direkt von der Uhr. Wenn du die Tour nachgehst, schreib mir gern, wie es bei dir war.</p>
+  <tr><td bgcolor="{{ FARBE_karte }}" style="padding:28px 28px 0 28px;">
+    <p style="margin:0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:15px;line-height:1.68;color:{{ FARBE_text_lauf }};">Die Zahlen oben sind meine eigenen, direkt von der Uhr. Wenn du die Tour nachgehst, schreib mir gern, wie es bei dir war.</p>
   </td></tr>
 
   <!-- Signatur -->
-  <tr><td bgcolor="#0B2418" style="padding:28px 28px 0 28px;">
-    <p style="margin:0;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:19px;line-height:1.4;color:#F5EEDD;">Man sieht sich am Berg.</p>
-    <p style="margin:8px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:15px;font-weight:700;letter-spacing:0.04em;color:#7ED09B;">— Sebi</p>
+  <tr><td bgcolor="{{ FARBE_karte }}" style="padding:28px 28px 0 28px;">
+    <p style="margin:0;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:19px;line-height:1.4;color:{{ FARBE_text }};">Man sieht sich am Berg.</p>
+    <p style="margin:8px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:15px;font-weight:700;letter-spacing:0.04em;color:{{ FARBE_akzent }};">— Sebi</p>
   </td></tr>
 
   <!-- Vers -->
-  <tr><td bgcolor="#0B2418" align="center" style="padding:34px 28px 14px 28px;">
-    <div style="width:34px;height:1px;background-color:#2C513A;margin:0 auto 20px;font-size:0;line-height:1px;">&nbsp;</div>
-    <p style="margin:0;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:15px;line-height:1.5;color:#D0DACE;">&bdquo;{{ VERS_TEXT }}&ldquo;</p>
-    <p style="margin:9px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#6F9A7C;">{{ VERS_STELLE }} · Schlachter 2000</p>
+  <tr><td bgcolor="{{ FARBE_karte }}" align="center" style="padding:34px 28px 14px 28px;">
+    <div style="width:34px;height:1px;background-color:{{ FARBE_linie_zart }};margin:0 auto 20px;font-size:0;line-height:1px;">&nbsp;</div>
+    <p style="margin:0;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:15px;line-height:1.5;color:{{ FARBE_text_mittel }};">&bdquo;{{ VERS_TEXT }}&ldquo;</p>
+    <p style="margin:9px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:{{ FARBE_akzent_leise }};">{{ VERS_STELLE }} · Schlachter 2000</p>
   </td></tr>
 
   <!-- Footer (im Flow) -->
-  <tr><td bgcolor="#0B2418" align="center" style="padding:28px 28px 34px 28px;">
-    <div style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.02em;color:#8FB79C;">
-      <a href="https://www.instagram.com/vegetarianhulk/" target="_blank" style="color:#8FB79C;text-decoration:none;">Instagram</a>
-      &nbsp;·&nbsp; <a href="https://vegetarianhulk.de/touren/" target="_blank" style="color:#8FB79C;text-decoration:none;">Hulk Hikes</a>
-      &nbsp;·&nbsp; <a href="https://vegetarianhulk.de/kooperationen.html" target="_blank" style="color:#8FB79C;text-decoration:none;">Kooperationen</a>
+  <tr><td bgcolor="{{ FARBE_karte }}" align="center" style="padding:28px 28px 34px 28px;">
+    <div style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.02em;color:{{ FARBE_text_leise }};">
+      <a href="https://www.instagram.com/vegetarianhulk/" target="_blank" style="color:{{ FARBE_text_leise }};text-decoration:none;">Instagram</a>
+      &nbsp;·&nbsp; <a href="https://vegetarianhulk.de/touren/" target="_blank" style="color:{{ FARBE_text_leise }};text-decoration:none;">Hulk Hikes</a>
+      &nbsp;·&nbsp; <a href="https://vegetarianhulk.de/kooperationen.html" target="_blank" style="color:{{ FARBE_text_leise }};text-decoration:none;">Kooperationen</a>
     </div>
-    <p style="margin:18px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:12px;line-height:1.7;color:#7C9585;max-width:34em;margin-left:auto;margin-right:auto;">
+    <p style="margin:18px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:12px;line-height:1.7;color:{{ FARBE_text_fein }};max-width:34em;margin-left:auto;margin-right:auto;">
       Du bekommst diese Mail, weil du dich für den Berg-Starter eingetragen hast.<br>
-      Sebastian Wimmer · Burghauser Straße 35 · 84533 Haiming · <a href="mailto:info@vegetarianhulk.de" style="color:#7C9585;">info@vegetarianhulk.de</a>
+      Sebastian Wimmer · Burghauser Straße 35 · 84533 Haiming · <a href="mailto:info@vegetarianhulk.de" style="color:{{ FARBE_text_fein }};">info@vegetarianhulk.de</a>
     </p>
-    <p style="margin:11px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:12px;color:#7C9585;">
-      <a href="https://vegetarianhulk.de/impressum.html" target="_blank" style="color:#8FB79C;text-decoration:none;">Impressum</a>
-      &nbsp;·&nbsp; <a href="https://vegetarianhulk.de/datenschutz.html" target="_blank" style="color:#8FB79C;text-decoration:none;">Datenschutz</a>
-      &nbsp;·&nbsp; <a href="{{ unsubscribe }}" target="_blank" style="color:#8FB79C;text-decoration:underline;">Abmelden</a>
+    <p style="margin:11px 0 0 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:12px;color:{{ FARBE_text_fein }};">
+      <a href="https://vegetarianhulk.de/impressum.html" target="_blank" style="color:{{ FARBE_text_leise }};text-decoration:none;">Impressum</a>
+      &nbsp;·&nbsp; <a href="https://vegetarianhulk.de/datenschutz.html" target="_blank" style="color:{{ FARBE_text_leise }};text-decoration:none;">Datenschutz</a>
+      &nbsp;·&nbsp; <a href="{{ unsubscribe }}" target="_blank" style="color:{{ FARBE_text_leise }};text-decoration:underline;">Abmelden</a>
     </p>
   </td></tr>
 

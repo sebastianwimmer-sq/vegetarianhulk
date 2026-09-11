@@ -20,7 +20,13 @@
    ============================================================ */
 :root {
   --mint: #D1F2EB; --emerald: #50C878; --royal: #0B6E4F; --evergreen: #013220;
-  --alabaster: #E9E0CF; --gold: #BA9B5F; --gold-ink: #7d600f; --sage: #5E775E; --forest: #132B23;
+  --alabaster: #E9E0CF; --gold: #BA9B5F;
+  /* Die zwei Gold-Verläufe, die es auf der Site WIRKLICH gibt. Sie standen
+     bisher 49x als Literal verstreut — und die Mail hatte prompt eine dritte
+     Variante von coming-soon.html kopiert statt den echten Knopf.
+     Werte unverändert übernommen: die Darstellung bleibt byte-gleich. */
+  --gold-btn-hell: #F4CE3C; --gold-btn: #E4B824; --gold-btn-tief: #C99C12;
+  --gold-band-hell: #E8BF25; --gold-band-tief: #D4A918; --gold-ink: #7d600f; --sage: #5E775E; --forest: #132B23;
 
   --bg-deep: #06231A;
   --paper: #F3EBD9; --paper-dim: rgba(243,235,217,0.68); --paper-faint: rgba(243,235,217,0.58);
@@ -171,7 +177,7 @@ main { position: relative; z-index: 1; }
 .th-badge { display: inline-flex; align-items: center; gap: 7px;
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px;
   text-transform: uppercase; color: #14100A;
-  background: linear-gradient(180deg, #E8BF25, #D4A918); padding: 5px 12px;
+  background: linear-gradient(180deg, var(--gold-band-hell), var(--gold-band-tief)); padding: 5px 12px;
   clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%); }
 .th-flag__body h2 { margin: 16px 0 12px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 600;
   font-size: clamp(26px, 3.4vw, 36px); line-height: 1.06; color: #14281C; }
@@ -222,7 +228,7 @@ main { position: relative; z-index: 1; }
   /* geprägtes Emaille-Schild: Sheen oben, Koerper, dunkle Unterkante */
   background:
     linear-gradient(180deg, rgba(255,255,255,0.55) 0, rgba(255,255,255,0) 42%),
-    linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%);
+    linear-gradient(180deg, var(--gold-btn-hell) 0%, var(--gold-btn) 46%, var(--gold-btn-tief) 100%);
   clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
   text-shadow: 0 1px 0 rgba(255,255,255,0.35);
   transition: transform 400ms var(--ease-lux), filter 400ms var(--ease-lux), background 400ms var(--ease-lux);
@@ -268,9 +274,9 @@ main { position: relative; z-index: 1; }
 /* Echte, gegangene Tour — klickbare Karte */
 .th-card--real { padding: 0; border-color: rgba(126,208,155,0.26); }
 .th-card__link { display: block; padding: 26px 24px 54px; text-decoration: none; color: inherit; border-radius: inherit; }
-.th-card--real::before { background: linear-gradient(90deg, #E8BF25, transparent); }
+.th-card--real::before { background: linear-gradient(90deg, var(--gold-band-hell), transparent); }
 .th-card--real:hover::before { width: 55%; }
-.th-card__state--live { color: #14100A; background: linear-gradient(180deg, #E8BF25, #D4A918);
+.th-card__state--live { color: #14100A; background: linear-gradient(180deg, var(--gold-band-hell), var(--gold-band-tief));
   border: 0; border-radius: 0; padding: 5px 12px;
   clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%);
   transition: transform 400ms var(--ease-lux); }
@@ -507,7 +513,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   /* DAV-Gelb wie am echten Wegweiser, mit schwarzem Punkt wie auf den Schildern */
   background:
     radial-gradient(circle at 11px 50%, #14100A 2.2px, transparent 3px),
-    linear-gradient(180deg, #E8BF25, #D4A918);
+    linear-gradient(180deg, var(--gold-band-hell), var(--gold-band-tief));
   padding: 5px 16px 5px 20px;
   clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
   filter: drop-shadow(0 0 0.8px rgba(20,16,5,0.75)) drop-shadow(0 1.5px 1.5px rgba(2,10,6,0.85)) drop-shadow(0 6px 12px rgba(0,0,0,0.5));
@@ -608,7 +614,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   letter-spacing: 2.6px; text-transform: uppercase; color: var(--paper-faint); }
 .panel-nav .steps b { display: inline-block; padding: 2px 9px 2px 6px; margin: 0 3px;
   color: #14100A; font-weight: 700;
-  background: linear-gradient(180deg, #E8BF25, #D4A918);
+  background: linear-gradient(180deg, var(--gold-band-hell), var(--gold-band-tief));
   clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 50%, calc(100% - 5px) 100%, 0 100%); }
 .panel-ticks { order: 2; display: flex; gap: 5px; margin-left: 2px; }
 .panel-ticks i { width: 14px; height: 2px; background: rgba(24,43,31,0.22);
@@ -644,7 +650,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   color: #14100A; text-decoration: none; padding: 9px 20px 9px 21px;
   background:
     radial-gradient(circle at 10px 50%, #14100A 2px, transparent 2.7px),
-    linear-gradient(180deg, #E8BF25, #D4A918);
+    linear-gradient(180deg, var(--gold-band-hell), var(--gold-band-tief));
   clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
   filter: drop-shadow(0 2px 3px rgba(2,10,6,0.7));
   transition: filter 300ms var(--ease-lux), transform 300ms var(--ease-lux); }
@@ -808,7 +814,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   background:
     radial-gradient(circle at 12px 50%, #14100A 2.2px, transparent 3px),
     linear-gradient(180deg, rgba(255,255,255,0.5) 0, rgba(255,255,255,0) 44%),
-    linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%);
+    linear-gradient(180deg, var(--gold-btn-hell) 0%, var(--gold-btn) 46%, var(--gold-btn-tief) 100%);
   clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%);
   filter: drop-shadow(0 2px 2px rgba(2,10,6,0.8)) drop-shadow(0 12px 24px rgba(0,0,0,0.4)); }
 .gab-schild--gelb:hover { transform: rotateY(-18deg) rotateZ(-1.2deg) translateX(6px); }
