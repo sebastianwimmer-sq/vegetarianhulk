@@ -35,6 +35,10 @@ const nurPruefen = argv.includes('--pruefen');
    den Knopf drueckt ein Mensch. Eine Mail an die ganze Liste laesst sich
    nicht zurueckholen, und ein Tippfehler erreicht dann alle auf einmal. */
 const alsEntwurf = argv.includes('--entwurf');
+/* --papier baut die helle Fassung. Gmail kippt eine dunkle Mail im Dark
+   Mode auf hell; eine helle dunkelt es ab — und das sieht in beiden
+   Faellen gewollt aus statt nach Unfall. */
+const alsPapier = argv.includes('--papier');
 /* Eine Zeile fuer das Maskottchen - von Sebi, nicht erfunden. Ohne die
    Angabe faellt der Block weg, statt mit Fuellung besetzt zu werden. */
 const smashieArg = argv.find(a => a.startsWith('--smashie='));
@@ -196,7 +200,9 @@ const werte = {
    Mail stehen. Getippt driften sie: am 11.09.2026 standen 25 von 27
    Mail-Farben in keinem Token der Website, darunter #f5eedd neben
    --card-cream: #f5eede. Also Literal ja, aber eingesetzt statt getippt. */
-const farbDatei = JSON.parse(readFileSync(join(WURZEL, 'email-templates/farben.json'), 'utf8')).farben;
+const farbJson = JSON.parse(readFileSync(join(WURZEL, 'email-templates/farben.json'), 'utf8'));
+const farbDatei = alsPapier ? farbJson.farben_papier : farbJson.farben;
+if (!farbDatei) { console.error('Palette fehlt in farben.json'); process.exit(1); }
 const siteCss = readFileSync(join(WURZEL, 'v3.css'), 'utf8');
 const siteTokens = Object.fromEntries(
   [...siteCss.matchAll(/--([a-z0-9-]+):\s*(#[0-9A-Fa-f]{6})/g)].map(m => [m[1], m[2].toUpperCase()]));
@@ -243,6 +249,7 @@ console.log(`\n  Tour       ${name} · ${hoehe} · ${region}`);
 console.log(`  Gegangen   ${datum}`);
 console.log(`  Zahlen     ${zahl} hm · ${km} km · ${zeit} · ${grad}`);
 console.log(`  Überschrift ${h1Size}px (längstes Wort: ${laengstesWort} Zeichen)`);
+console.log(`  Palette     ${alsPapier ? 'Papier (hell)' : 'Wald (dunkel)'}`);
 console.log(`  Farben      ${Object.keys(farben).length} Rollen, davon ${Object.values(farbDatei).filter(d => d.aus_site).length} aus v3.css`);
 console.log(`  O-Ton       ${bestes.quote}% Überschneidung mit dem Aufhänger`);
 console.log(`  Vers        ${vers.stelle} — ${vers.text.slice(0, 52)}${vers.text.length > 52 ? '…' : ''}`);

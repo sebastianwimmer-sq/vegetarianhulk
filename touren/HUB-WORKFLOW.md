@@ -158,6 +158,12 @@ Pro Tour dieses Set. **Fett = Pflicht**, Rest optional/ableitbar.
    node scripts/mail-check.mjs .mail-versand/<slug>.html
    node scripts/tour-mail.mjs <slug> [--smashie="…"] --entwurf
    ```
+   Zwei Paletten, beide aus v3.css: **Wald** (dunkel, Standard) und **Papier** (hell,
+   `--papier`). Hintergrund: Gmail im Dark Mode kippt eine dunkle Mail auf hell — eine
+   helle dunkelt es ab, und das sieht in beiden Fällen gewollt aus statt nach Unfall.
+   Die Papier-Fassung entspricht den Creme-Panels der Tour-Seiten.
+   ```
+   ```
    Schritt 1 **erzeugt** die Mail aus `touren/<slug>/index.html` — Name, Höhe, Region, Datum,
    Aufhänger, die vier Zahlen, O-Ton (erste zwei Sätze), Hero-Foto. Betreff und Vorschautext
    kommen auf der Konsole. Schritt 3 legt daraus eine **Brevo-Kampagne als Entwurf** an und

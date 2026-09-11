@@ -10,7 +10,11 @@
     "",
     "aus_site: der Wert wird zur Bauzeit aus v3.css gelesen. Aendert sich das Token,",
     "aendert sich die naechste Mail mit. Fehlt es, bricht der Lauf ab.",
-    "wert: nur fuer Flaechen, die es auf der Website so nicht gibt (der Mail-Verlauf)."
+    "wert: nur fuer Flaechen, die es auf der Website so nicht gibt (der Mail-Verlauf).",
+    "",
+    "ZWEI PALETTEN: 'farben' ist dunkel (Stand bis 11.09.), 'farben_papier' hell.",
+    "Gmail kippt eine dunkle Mail im Dark Mode auf hell — eine helle dunkelt es ab,",
+    "und das sieht in beiden Faellen gewollt aus. Umschalten: tour-mail.mjs --papier"
   ],
   "farben": {
     "grund": {
@@ -100,6 +104,96 @@
     "karte_tief": {
       "wert": "#0A2016",
       "rolle": "vierter Halt des Kartenverlaufs"
+    }
+  },
+  "farben_papier": {
+    "grund": {
+      "aus_site": "papier-tief",
+      "rolle": "Flaeche hinter der Karte"
+    },
+    "karte": {
+      "aus_site": "papier-hell",
+      "rolle": "Kartengrund"
+    },
+    "karte_oben": {
+      "aus_site": "papier-hell",
+      "rolle": "oberer Halt"
+    },
+    "karte_mitte": {
+      "aus_site": "papier-warm",
+      "rolle": "mittlerer Halt"
+    },
+    "karte_tief": {
+      "aus_site": "papier-mitte",
+      "rolle": "dritter Halt"
+    },
+    "karte_unten": {
+      "aus_site": "papier-tief",
+      "rolle": "unterer Halt"
+    },
+    "text": {
+      "aus_site": "ink-tief",
+      "rolle": "Ueberschriften"
+    },
+    "text_lauf": {
+      "aus_site": "ink",
+      "rolle": "Fliesstext"
+    },
+    "text_zitat": {
+      "aus_site": "ink-tief",
+      "rolle": "Zitate"
+    },
+    "text_leise": {
+      "aus_site": "ink-soft",
+      "rolle": "Etiketten — --sage traegt hier nur 4,39:1, gemessen"
+    },
+    "text_fein": {
+      "aus_site": "ink-soft",
+      "rolle": "Fusszeile"
+    },
+    "text_mittel": {
+      "aus_site": "ink",
+      "rolle": "Vers-Text"
+    },
+    "text_grau": {
+      "aus_site": "ink-soft",
+      "rolle": "Unterzeile am Knopf"
+    },
+    "akzent": {
+      "aus_site": "royal",
+      "rolle": "gruener Akzent — auf Creme braucht es den dunklen Ton"
+    },
+    "akzent_leise": {
+      "aus_site": "ink-soft",
+      "rolle": "Vers-Quelle — --sage traegt hier nur 4,39:1, gemessen"
+    },
+    "gold_hell": {
+      "aus_site": "gold-btn-hell",
+      "rolle": "Knopf, oben"
+    },
+    "gold": {
+      "aus_site": "gold-btn",
+      "rolle": "Knopf, Mitte"
+    },
+    "gold_tief": {
+      "aus_site": "gold-btn-tief",
+      "rolle": "Knopf, unten"
+    },
+    "gold_text": {
+      "aus_site": "gold-ink",
+      "rolle": "Eyebrow auf Creme — der helle Goldton traegt dort nicht"
+    },
+    "gold_ink": {
+      "aus_site": "auf-gold",
+      "rolle": "Schrift auf dem Knopf"
+    },
+    "linie": {
+      "aus_site": "papier-mitte",
+      "rolle": "Trennlinie"
+    },
+    "linie_zart": {
+      "aus_site": "alabaster",
+      "rolle": "Vers-Trennstrich"
     }
   }
 }
