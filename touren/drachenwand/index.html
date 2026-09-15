@@ -82,7 +82,7 @@
   <!-- FOTO-HERO mit Overlay -->
   <section class="tour-hero" aria-label="Drachenwand — Tour-Überblick">
     <div class="tour-hero__img" aria-hidden="true">
-      <img src="/touren/drachenwand/ausblick.jpg" width="1125" height="1500"
+      <img srcset="/touren/drachenwand/ausblick-640.jpg 525w, /touren/drachenwand/ausblick.jpg 1125w" sizes="100vw" src="/touren/drachenwand/ausblick.jpg" width="1125" height="1500"
            alt="" fetchpriority="high" loading="eager" decoding="async">
     </div>
     <div class="tour-hero__inner">
@@ -153,7 +153,7 @@
       <figure class="tour-shot spannt-2" style="--span: 4; --shot-fokus: center 52%; --shot-mobil: 3/4">
         <img src="/touren/drachenwand/schild.jpg" width="675" height="900"
              alt="Gelbes Warnschild am Baum: Alpine Erfahrung, Trittsicherheit und Schwindelfreiheit nötig, darunter ein Schild mit der Aufschrift Klettersteig."
-             loading="lazy" decoding="async">
+             loading="eager" fetchpriority="low" decoding="async">
         <figcaption><b>Am Einstieg</b>Das liest man, bevor es losgeht</figcaption>
       </figure>
 
@@ -218,17 +218,17 @@
 
       <!-- die Wand selbst, neben dem Profil -->
       <figure class="tour-shot" style="--span: 7; --shot-min: 330px; --shot-fokus: center 42%">
-        <img src="/touren/drachenwand/wand.jpg" width="825" height="1100"
+        <img srcset="/touren/drachenwand/wand-640.jpg 525w, /touren/drachenwand/wand.jpg 825w" sizes="(max-width: 820px) 92vw, 46vw" src="/touren/drachenwand/wand.jpg" width="825" height="1100"
              alt="Die helle Felswand der Drachenwand zwischen Bäumen, rechts unten der türkisfarbene Mondsee."
-             loading="lazy" decoding="async">
+             loading="eager" fetchpriority="low" decoding="async">
         <figcaption><b>Die Wand</b>Da geht es rauf</figcaption>
       </figure>
 
       <!-- der Moment im Steig, als Abschluss -->
       <figure class="tour-shot" style="--span: 5; --shot-min: 330px; --shot-fokus: center 40%; --shot-mobil: 3/4">
-        <img src="/touren/drachenwand/gipfel.jpg" width="825" height="1100"
+        <img srcset="/touren/drachenwand/gipfel-640.jpg 525w, /touren/drachenwand/gipfel.jpg 825w" sizes="(max-width: 820px) 92vw, 46vw" src="/touren/drachenwand/gipfel.jpg" width="825" height="1100"
              alt="Sebi mit grünem Kletterhelm im Steig, dahinter der Mondsee im Morgenlicht."
-             loading="lazy" decoding="async">
+             loading="eager" fetchpriority="low" decoding="async">
         <figcaption><b>Oben angekommen</b>Erstes Mal mit Set und Helm</figcaption>
       </figure>
 
