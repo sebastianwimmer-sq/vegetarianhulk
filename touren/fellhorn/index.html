@@ -82,7 +82,7 @@
   <!-- FOTO-HERO mit Overlay -->
   <section class="tour-hero" aria-label="Fellhorn — Tour-Überblick">
     <div class="tour-hero__img" aria-hidden="true">
-      <img src="/touren/fellhorn/gipfelkreuz.jpg" width="825" height="1100"
+      <img srcset="/touren/fellhorn/gipfelkreuz-640.jpg 525w, /touren/fellhorn/gipfelkreuz.jpg 825w" sizes="100vw" src="/touren/fellhorn/gipfelkreuz.jpg" width="825" height="1100"
            alt="" fetchpriority="high" loading="eager" decoding="async">
     </div>
     <div class="tour-hero__inner">
@@ -121,9 +121,9 @@
         <dl class="tour-rows">
           <div class="tour-row"><dt>Parken</dt><dd>Unten in Blindau, <strong>5 € Tagesgebühr</strong>.</dd></div>
           <div class="tour-row"><dt>Einkehr</dt><dd><strong>Straubinger Haus</strong> auf 1.558 m, kurz unterm Gipfel. Kaiserschmarren 14,90 € — stabile 7,5 von 10.</dd></div>
-          <div class="tour-row"><dt>Der Einstieg</dt><dd>Der schwierigste Teil war, ihn zu finden. Bergfex führt auf einen <strong>unscheinbaren, schmalen Pfad</strong>, ausgeschildert als T4 — und bis hoch zur Kiesstraße ist er nur undeutlich markiert. Vorher genau anschauen.</dd></div>
-          <div class="tour-row"><dt>Charakter</dt><dd>Lang statt steil. Ab dem Straubinger Haus noch mal <strong>40 Minuten</strong> über Fels und Wurzeln zum Gipfel. Oben ist viel Gras — im September noch richtig grün.</dd></div>
-          <div class="tour-row"><dt>Der Abstieg</dt><dd>Über die Kiesstraße und dann die <strong>Betonstraße an der unteren Hemmersuppenalm</strong>. Da geht es so steil runter, dass die Knie das Nachsehen haben.</dd></div>
+          <div class="tour-row"><dt>Der Einstieg</dt><dd>Der schwierigste Teil war, ihn überhaupt zu finden: <strong>schmal, unscheinbar</strong>, bis zur Kiesstraße kaum markiert. Vorher genau anschauen.</dd></div>
+          <div class="tour-row"><dt>Charakter</dt><dd>Lang statt steil. Ab dem Straubinger Haus nochmal <strong>40 Minuten</strong> über Fels und Wurzeln. Oben: Gras, im September noch richtig grün.</dd></div>
+          <div class="tour-row"><dt>Der Abstieg</dt><dd>Kiesstraße, dann die <strong>Betonstraße an der Hemmersuppenalm</strong> — so steil, dass die Knie das Nachsehen haben.</dd></div>
         </dl>
         <p class="tour-panel__foot">Ganze Runde als Video auf
         <a href="https://www.instagram.com/vegetarianhulk/" target="_blank" rel="noopener">Instagram</a> —
@@ -133,14 +133,10 @@
       <div class="tour-panel flaeche-papier" data-light style="--span: 7">
         <p class="tour-panel__kicker">Gegangen<span class="hsep" aria-hidden="true"></span>13.09.</p>
         <h2 class="tour-panel__title">Meine <em>Meinung.</em></h2>
-        <p class="tour-note__body">Um vier aufgestanden, kurz vor halb sieben unten am Parkplatz. Unten hatten wir
-        erstmal Probleme, den Weg überhaupt zu finden — relativ unscheinbar und schmal, und bis zur Kiesstraße
-        auch nur undeutlich gekennzeichnet. In der Früh sah das Wetter nicht so crazy aus, aber gegen Mittag hat
-        es richtig gut aufgerissen. Oben angekommen hatte man einen richtig tollen Weitblick auf den Wilden Kaiser
-        und die umliegenden Berge, auch die Steinplatte konnte man gut erkennen. Nach der Gipfelpause zurück zum
-        Straubinger Haus, wo ein Kaiserschmarren wie immer getestet wurde. Runter ging es dann über die Betonstraße
-        an der unteren Hemmersuppenalm — da geht es so steil runter, das war für die Kniescheiben richtig
-        anstrengend.</p>
+        <p class="tour-note__body">Um vier aufgestanden, halb sieben am Parkplatz — und dann erstmal den Weg
+        gesucht. In der Früh sah das Wetter nicht so crazy aus, gegen Mittag hat es richtig aufgerissen. Oben
+        dann der Wilde Kaiser, die Steinplatte, alles da. Runter über die Betonstraße an der Hemmersuppenalm:
+        so steil, dass die Kniescheiben es mir heute noch übelnehmen.</p>
         <p class="tour-note__sig">— Sebi</p>
         <div class="tour-proof">
           <div><b>7:23 h</b><span>unterwegs</span></div>
@@ -154,9 +150,9 @@
 
       <!-- der Blick, auf den die Tour zulaeuft — gross und ungedimmt -->
       <figure class="tour-shot spannt-2" style="--span: 4; --shot-fokus: center 58%; --shot-mobil: 3/4">
-        <img src="/touren/fellhorn/wilder-kaiser.jpg" width="1500" height="1400"
+        <img srcset="/touren/fellhorn/wilder-kaiser-640.jpg 700w, /touren/fellhorn/wilder-kaiser.jpg 1500w" sizes="(max-width: 820px) 92vw, 46vw" src="/touren/fellhorn/wilder-kaiser.jpg" width="1500" height="1400"
              alt="Blick vom Fellhorn auf den Wilden Kaiser: helle Felswände unter blauem Himmel, davor bewaldete Rücken und Bergwiesen."
-             loading="lazy" decoding="async">
+             loading="eager" fetchpriority="low" decoding="async">
         <figcaption><b>Wilder Kaiser</b>Dafür ist man um vier aufgestanden</figcaption>
       </figure>
 
@@ -184,9 +180,8 @@
         <span class="tour-arc__what">zurück am Auto</span>
       </li>
     </ol>
-    <p class="tour-arc__note">Sieben Stunden und 23 Minuten von unten bis unten, davon gut fünf in Bewegung.
-    Die Gipfelzeit steht nicht auf der Minute — die Uhr hat den Tag als eine Runde aufgezeichnet. Der Aufstieg
-    vom Straubinger Haus war laut Strava eine gute Dreiviertelstunde für 1,3 Kilometer.</p>
+    <p class="tour-arc__note">7:23 h von unten bis unten, gut fünf davon in Bewegung. Die letzten
+    1,3 Kilometer ab dem Straubinger Haus haben allein 40 Minuten gefressen.</p>
       </section>
 
       <!-- HÖHENPROFIL -->
@@ -221,17 +216,17 @@
 
       <!-- das Gipfelbuch — das hat keine andere Tour -->
       <figure class="tour-shot" style="--span: 4; --shot-min: 330px; --shot-fokus: center 46%">
-        <img src="/touren/fellhorn/gipfelbuch.jpg" width="825" height="1100"
+        <img srcset="/touren/fellhorn/gipfelbuch-640.jpg 525w, /touren/fellhorn/gipfelbuch.jpg 825w" sizes="(max-width: 820px) 92vw, 46vw" src="/touren/fellhorn/gipfelbuch.jpg" width="825" height="1100"
              alt="Aufgeschlagenes Notizbuch am Gipfel mit handschriftlichem Eintrag und aufgeklebtem Smashie-Sticker, daneben der Abgrund."
-             loading="lazy" decoding="async">
+             loading="eager" fetchpriority="low" decoding="async">
         <figcaption><b>Gipfelbuch</b>Smashie war auch oben</figcaption>
       </figure>
 
       <!-- die Einkehr -->
       <figure class="tour-shot" style="--span: 7; --shot-min: 420px; --shot-fokus: center 76%">
-        <img src="/touren/fellhorn/einkehr.jpg" width="825" height="1100"
+        <img srcset="/touren/fellhorn/einkehr-640.jpg 525w, /touren/fellhorn/einkehr.jpg 825w" sizes="(max-width: 820px) 92vw, 46vw" src="/touren/fellhorn/einkehr.jpg" width="825" height="1100"
              alt="Zwei Portionen Kaiserschmarren mit Apfelmus auf der Terrasse des Straubinger Hauses, dahinter die Berge und angelehnte Wanderstöcke."
-             loading="lazy" decoding="async">
+             loading="eager" fetchpriority="low" decoding="async">
         <figcaption><b>Straubinger Haus</b>14,90 € — stabile 7,5 von 10</figcaption>
       </figure>
 
@@ -239,8 +234,8 @@
       <figure class="tour-shot" style="--span: 5; --shot-min: 330px; --shot-fokus: center 22%; --shot-mobil: 3/4">
         <img src="/touren/fellhorn/oben.jpg" width="675" height="900"
              alt="Sebi am Gipfel des Fellhorns, im Hintergrund das Gipfelkreuz und grüne Bergwiesen."
-             loading="lazy" decoding="async">
-        <figcaption><b>Nach 17,9 km</b>Gipfelpause, bevor es wieder runtergeht</figcaption>
+             loading="eager" fetchpriority="low" decoding="async">
+        <figcaption><b>Halbzeit</b>Oben nach 8,8 km — genauso viel ging noch bergab</figcaption>
       </figure>
 
   </div>

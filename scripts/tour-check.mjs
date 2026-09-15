@@ -115,6 +115,30 @@ function pruefeDetail(slug) {
   }
 
 
+  /* Distanz-Behauptungen in Bildunterschriften gegen die echten Daten pruefen.
+     Am 15.09.2026 stand unter dem Gipfelfoto "Nach 17,9 km" — das ist die
+     GANZE Runde, der Gipfel lag bei 8,8 km. Solche Saetze klingen richtig
+     und sind es nicht; kein Kontrast- oder Layout-Tor sieht das. */
+  {
+    const punkte = [...html.matchAll(/data-punkte="([^"]+)"/g)].map(m => m[1])[0];
+    if (punkte) {
+      const pk = punkte.trim().split(/\s+/).map(x => x.split(',').map(Number));
+      const gesamt = pk[pk.length - 1][0];
+      const gipfelKm = pk.reduce((a, b) => (b[1] > a[1] ? b : a))[0];
+      for (const m of html.matchAll(/<figcaption>([\s\S]*?)<\/figcaption>/g)) {
+        const text = m[1].replace(/<[^>]+>/g, ' ');
+        for (const z of text.matchAll(/(\d+[.,]?\d*)\s*km/gi)) {
+          const km = parseFloat(z[1].replace(',', '.'));
+          if (km > gesamt + 0.05) {
+            meld(fehler, slug, `Bildunterschrift nennt ${z[1]} km, die Tour ist nur ${gesamt} km lang`);
+          } else if (Math.abs(km - gesamt) < 0.05 && !/zur(ü|ue)ck|auto|ziel|ende|feierabend|daheim/i.test(text)) {
+            meld(fehler, slug, `Bildunterschrift "${text.trim().slice(0, 40)}" nennt die volle Distanz (${z[1]} km) — nach ${gesamt} km ist man am Auto, nicht am Gipfel (der liegt bei ${gipfelKm} km)`);
+          }
+        }
+      }
+    }
+  }
+
   // -- Design-Kodex (docs/design-kodex-v3.md): das gemeinsame Stylesheet MUSS
   //    die Gestaltung tragen. Frueher lag es als ~230-Zeilen-Block in jeder Tour;
   //    dabei drifteten Radien, Gaps und Flaechen gegen den Kodex.
@@ -188,6 +212,17 @@ function pruefeHub(slugs) {
       const name = (attr.match(/data-name="([^"]*)"/) || [])[1] || '?';
       meld(fehler, 'hub', `Zeile "${name}" nutzt data-hm — der Altimeter ueberschreibt das. data-thm nutzen.`);
     }
+  }
+
+  /* Jedes Bild auf dem Hub braucht width/height. Ohne Masse reserviert der
+     Browser keinen Platz, und beim Laden springt alles darunter — auf dieser
+     Seite gemessene 0,05 CLS, verursacht von zwei Polaroids ueber der
+     gepinnten Karte. Die Tour-Seiten werden schon geprueft, der Hub nicht. */
+  for (const m of html.matchAll(/<img[^>]*>/g)) {
+    const tag = m[0];
+    if (/width="\d+"/.test(tag) && /height="\d+"/.test(tag)) continue;
+    const src = (tag.match(/src="([^"]+)"/) || [])[1] || '(ohne src)';
+    meld(fehler, 'hub', `Bild ohne width/height: ${src} — beim Laden springt alles darunter`);
   }
 
   // Pflicht-Attribute je Zeile

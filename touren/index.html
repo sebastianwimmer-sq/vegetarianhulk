@@ -403,8 +403,8 @@
   <!-- Persönliche Feldaufnahmen -->
   <div class="tk-me tk-wide st st3">
     <div class="tk-me__shots">
-      <figure><img src="/berg-starter/img/sebi-poles.jpg" alt="Sebi am Berg mit Stöcken" loading="lazy"></figure>
-      <figure><img src="/berg-starter/img/sebi-kreuz.jpg" alt="Sebi am Gipfelkreuz" loading="lazy"></figure>
+      <figure><img width="360" height="480" src="/berg-starter/img/sebi-poles.jpg" alt="Sebi am Berg mit Stöcken" loading="eager" fetchpriority="low"></figure>
+      <figure><img width="768" height="1024" src="/berg-starter/img/sebi-kreuz.jpg" alt="Sebi am Gipfelkreuz" loading="eager" fetchpriority="low"></figure>
     </div>
     <p class="tk-me__line">Echt, nicht gestellt — das bin ich da oben, zwischen den Touren, die ich dir hier zeig.</p>
   </div>
@@ -421,7 +421,7 @@
       </div>
       <span class="tk-pin__cta">→ Ganze Tour: Fotos, Höhenprofil, Notiz</span>
     </div>
-    <div class="tk-pin__photo"><img src="/touren/fellhorn/wilder-kaiser.jpg" width="1125" height="1500" alt="Blick vom Fellhorn auf den Wilden Kaiser unter blauem Himmel" loading="eager" fetchpriority="high"></div>
+    <div class="tk-pin__photo"><img srcset="/touren/fellhorn/wilder-kaiser-640.jpg 700w, /touren/fellhorn/wilder-kaiser.jpg 1500w" sizes="(max-width: 820px) 92vw, 40vw" src="/touren/fellhorn/wilder-kaiser.jpg" width="1125" height="1500" alt="Blick vom Fellhorn auf den Wilden Kaiser unter blauem Himmel" loading="eager" fetchpriority="high"></div>
   </a>
 
   <!-- TOOLBAR -->
@@ -462,7 +462,7 @@
     <!-- Kneifelspitze (gegangen) -->
     <li class="tk-row rv" data-name="fellhorn fell horn reit im winkl blindau straubinger haus eggenalm hemmersuppenalm chiemgau" data-region="chiemgau" data-diff="3" data-thm="1107" data-date="20260913" style="--d: 0ms">
       <button class="tk-row__head" type="button" aria-expanded="false">
-        <span class="tk-row__eng"><img src="/touren/fellhorn/wilder-kaiser.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__eng"><img width="1500" height="1400" srcset="/touren/fellhorn/wilder-kaiser-640.jpg 700w, /touren/fellhorn/wilder-kaiser.jpg 1500w" sizes="(max-width: 820px) 92vw, 40vw" src="/touren/fellhorn/wilder-kaiser.jpg" alt="" loading="lazy"></span>
         <span class="tk-row__main">
           <span class="tk-row__top">
             <span class="tk-row__name">Fellhorn</span><span class="tk-row__alt">1.764 m</span>
@@ -500,7 +500,7 @@
 
     <li class="tk-row rv" data-name="drachenwand drachen wand mondsee st. lorenz sankt lorenz salzkammergut klettersteig via ferrata" data-region="skg" data-diff="3" data-thm="846" data-date="20260906" style="--d: 0ms">
       <button class="tk-row__head" type="button" aria-expanded="false">
-        <span class="tk-row__eng"><img src="/touren/drachenwand/ausblick.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__eng"><img width="1125" height="1500" srcset="/touren/drachenwand/ausblick-640.jpg 525w, /touren/drachenwand/ausblick.jpg 1125w" sizes="(max-width: 820px) 92vw, 40vw" src="/touren/drachenwand/ausblick.jpg" alt="" loading="lazy"></span>
         <span class="tk-row__main">
           <span class="tk-row__top">
             <span class="tk-row__name">Drachenwand</span><span class="tk-row__alt">1.179 m</span>
@@ -537,7 +537,7 @@
 
     <li class="tk-row rv" data-name="kneifelspitze kneiffelspitze maria gern berchtesgaden paulshütte paulshuette sonnenaufgang" data-region="bgl" data-diff="1" data-thm="456" data-date="20260830" style="--d: 0ms">
       <button class="tk-row__head" type="button" aria-expanded="false">
-        <span class="tk-row__eng"><img src="/touren/kneifelspitze/gipfelkreuz-nacht.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__eng"><img width="1125" height="1500" srcset="/touren/kneifelspitze/gipfelkreuz-nacht-640.jpg 525w, /touren/kneifelspitze/gipfelkreuz-nacht.jpg 1125w" sizes="(max-width: 820px) 92vw, 40vw" src="/touren/kneifelspitze/gipfelkreuz-nacht.jpg" alt="" loading="lazy"></span>
         <span class="tk-row__main">
           <span class="tk-row__top">
             <span class="tk-row__name">Kneifelspitze</span><span class="tk-row__alt">1.188 m</span>
@@ -575,7 +575,7 @@
     <!-- Ristfeuchthorn (gegangen) -->
     <li class="tk-row rv" data-name="ristfeuchthorn schneizlreuth berchtesgaden" data-region="bgl" data-diff="3" data-thm="1071" data-date="20260717" style="--d: 60ms">
       <button class="tk-row__head" type="button" aria-expanded="false">
-        <span class="tk-row__eng"><img src="/touren/ristfeuchthorn/ausblick.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__eng"><img width="1125" height="1500" srcset="/touren/ristfeuchthorn/ausblick-640.jpg 525w, /touren/ristfeuchthorn/ausblick.jpg 1125w" sizes="(max-width: 820px) 92vw, 40vw" src="/touren/ristfeuchthorn/ausblick.jpg" alt="" loading="lazy"></span>
         <span class="tk-row__main">
           <span class="tk-row__top">
             <span class="tk-row__name">Ristfeuchthorn</span><span class="tk-row__alt">1.569 m</span>
@@ -612,7 +612,7 @@
     <!-- Tour 1: Grünstein -->
     <li class="tk-row rv" data-name="grünstein gruenstein königssee koenigssee schönau berchtesgaden" data-region="bgl" data-diff="2" data-thm="489" data-date="-1" style="--d: 120ms">
       <button class="tk-row__head" type="button" aria-expanded="false">
-        <span class="tk-row__eng"><img src="/touren/assets/eng-gruenstein.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__eng"><img width="360" height="200" src="/touren/assets/eng-gruenstein.jpg" alt="" loading="lazy"></span>
         <span class="tk-row__main">
           <span class="tk-row__top"><h3 class="tk-row__name">Grünstein</h3><span class="tk-row__alt">1.304 m</span></span>
           <span class="tk-row__tag">Kurz, mit Blick auf den Königssee</span>
@@ -644,7 +644,7 @@
     <!-- Tour 2: Zinnkopf -->
     <li class="tk-row rv" data-name="zinnkopf chiemsee siegsdorf hörgering hoergering chiemgau" data-region="chiemgau" data-diff="2" data-thm="553" data-date="-2" style="--d: 180ms">
       <button class="tk-row__head" type="button" aria-expanded="false">
-        <span class="tk-row__eng"><img src="/touren/assets/eng-zinnkopf.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__eng"><img width="359" height="195" src="/touren/assets/eng-zinnkopf.jpg" alt="" loading="lazy"></span>
         <span class="tk-row__main">
           <span class="tk-row__top"><h3 class="tk-row__name">Zinnkopf</h3><span class="tk-row__alt">1.227 m</span></span>
           <span class="tk-row__tag">Aussichtsberg über dem Chiemsee</span>
@@ -676,7 +676,7 @@
     <!-- Tour 3: Dürrnbachhorn -->
     <li class="tk-row rv" data-name="dürrnbachhorn duerrnbachhorn winklmoosalm reit im winkl grat chiemgau" data-region="chiemgau" data-diff="2" data-thm="591" data-date="-3" style="--d: 240ms">
       <button class="tk-row__head" type="button" aria-expanded="false">
-        <span class="tk-row__eng"><img src="/touren/assets/eng-duerrnbachhorn.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__eng"><img width="360" height="144" src="/touren/assets/eng-duerrnbachhorn.jpg" alt="" loading="lazy"></span>
         <span class="tk-row__main">
           <span class="tk-row__top"><h3 class="tk-row__name">Dürrnbachhorn</h3><span class="tk-row__alt">1.776 m</span></span>
           <span class="tk-row__tag">Grat über der Winklmoosalm</span>
@@ -710,7 +710,7 @@
     <!-- Tour 4: Rauschberg -->
     <li class="tk-row rv" data-name="rauschberg ruhpolding hausberg chiemgau" data-region="chiemgau" data-diff="3" data-thm="904" data-date="-4" style="--d: 300ms">
       <button class="tk-row__head" type="button" aria-expanded="false">
-        <span class="tk-row__eng"><img src="/touren/assets/eng-rauschberg.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__eng"><img width="359" height="195" src="/touren/assets/eng-rauschberg.jpg" alt="" loading="lazy"></span>
         <span class="tk-row__main">
           <span class="tk-row__top"><h3 class="tk-row__name">Rauschberg</h3><span class="tk-row__alt">1.645 m</span></span>
           <span class="tk-row__tag">Der Hausberg von Ruhpolding</span>
@@ -743,7 +743,7 @@
     <!-- Tour 5: Gamsknogel -->
     <li class="tk-row rv" data-name="gamsknogel adlgaß adlgass inzell grat chiemgau" data-region="chiemgau" data-diff="3" data-thm="950" data-date="-5" style="--d: 360ms">
       <button class="tk-row__head" type="button" aria-expanded="false">
-        <span class="tk-row__eng"><img src="/touren/assets/eng-gamsknogel.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__eng"><img width="359" height="195" src="/touren/assets/eng-gamsknogel.jpg" alt="" loading="lazy"></span>
         <span class="tk-row__main">
           <span class="tk-row__top"><h3 class="tk-row__name">Gamsknogel</h3><span class="tk-row__alt">1.750 m</span></span>
           <span class="tk-row__tag">Stiller Grat bei Inzell</span>
@@ -776,7 +776,7 @@
     <!-- Tour 6: Hochgern -->
     <li class="tk-row rv" data-name="hochgern unterwössen unterwoessen marquartstein chiemgau klassiker" data-region="chiemgau" data-diff="3" data-thm="1110" data-date="-6" style="--d: 420ms">
       <button class="tk-row__head" type="button" aria-expanded="false">
-        <span class="tk-row__eng"><img src="/touren/assets/eng-hochgern.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__eng"><img width="359" height="146" src="/touren/assets/eng-hochgern.jpg" alt="" loading="lazy"></span>
         <span class="tk-row__main">
           <span class="tk-row__top"><h3 class="tk-row__name">Hochgern</h3><span class="tk-row__alt">1.747 m</span></span>
           <span class="tk-row__tag">Chiemgau-Klassiker von Unterwössen</span>
