@@ -299,9 +299,54 @@ macht — **das Gegenteil von „vulnerable".**
 
 ---
 
+## 6c. Wegverlauf (Routenkarte) — PFLICHT bei jeder neuen Tour
+
+Zwei Befehle, in dieser Reihenfolge:
+
+```bash
+python3 scripts/route-holen.py <slug>      # holt die Geometrie aus OpenStreetMap
+python3 scripts/route-einbauen.py <slug>   # zeichnet sie in die Seite
+bash scripts/bump-asset-versions.sh        # nur nötig, wenn tour.css/tour.js sich geändert haben
+```
+
+**Warum selbst gezeichnet und nicht eingebettet:** die Tour-Seiten laufen unter
+`script-src 'self'` und `img-src 'self' data:`. Leaflet, Mapbox und Google brauchen
+beides von fremden Hosts. Die Geometrie kommt deshalb EINMAL zur Bauzeit in die
+Seite — zur Laufzeit geht kein fremder Aufruf raus, und `datenschutz.html` bleibt
+unberührt. Ein Screenshot der Strava-Karte scheidet ebenfalls aus: die Kacheln
+gehören nicht uns.
+
+**Was die Karte behauptet — und was nicht.** Gezeichnet ist der WEG nach
+OpenStreetMap, nicht die GPS-Spur. Solange keine GPX-Datei vorliegt, darf die
+Seite auch nur das sagen; der Hinweistext unter der Karte tut das.
+
+**Der Startpunkt wird nicht geraten, sondern gewählt.** `route-holen.py` sammelt
+alle Parkplätze im Umkreis plus den Ort aus dem Maps-Link und nimmt den, dessen
+gerouteter Aufstieg am besten zur aufgezeichneten Strecke passt (Vergleichswert:
+die Gipfelposition im Höhenprofil). Liegt der beste Treffer über 35 % daneben,
+schreibt das Skript NICHTS — lieber keine Route als eine falsche. Das ist kein
+Fehler des Skripts, sondern sein Zweck; dann gehört eine GPX-Datei her.
+
+**Falle: `data-lat`/`data-lon` sind fürs Wetter gerundet.** Zwei Nachkommastellen
+sind bis zu 600 m unscharf — bei Ristfeuchthorn lagen sie 4.970 m neben dem
+Gipfel, das Wetter kam aus einem anderen Tal. Der echte Gipfel kommt aus OSM
+(Treffer zählt bei passendem NAMEN **oder** passender HÖHE). Am 16.09. wurden
+alle vier Touren darauf korrigiert.
+
+**Falle: ein Einzellauf darf kein Gedächtnis löschen.** `routen-quellen.json`
+wird aus den `route.json` ABGELEITET, nicht angesammelt — vorher hat
+`route-holen.py drachenwand` die Einträge der anderen drei still entfernt.
+`--nur-verzeichnis` baut es ohne Netzabfrage neu.
+
+**Prüfen:** `node scripts/tour-check.mjs` (6 PFLICHT-Zeilen für die Route) und
+`bash scripts/tour-check-fixtures.sh` (4 Negativtests, jeder muss rot werden).
+Danach selbst ansehen — 390 px und Desktop.
+
+---
+
 ## 6. Hub-Ausbau (nächste Stufen)
 
-- **GPX-Export** (Bergfex → Teilen → GPX) ermöglicht echte Routenkarte statt nur Höhenprofil; optional 3D wie Watzmann (DEM-Methode, s. `project_vh_hulk_hikes_nav`).
+- **GPX-Export** (Bergfex/Strava → Teilen → GPX) hebt die Routenkarte vom Weg laut OpenStreetMap auf die tatsächlich gegangene Spur — die Karte selbst steht seit 16.09. (§6c). Optional 3D wie Watzmann (DEM-Methode, s. `project_vh_hulk_hikes_nav`).
 - **Empfehlungen → gegangen:** wenn Sebi eine der 6 (Grünstein/Zinnkopf/Dürrnbachhorn/Rauschberg/Gamsknogel/Hochgern) geht → Detailseite bauen, Liste-Zeile auf „gegangen" + klickbar.
 - **Skalierung:** Liste ist client-seitig gefiltert/sortiert; JSON-LD ItemList mitpflegen (SEO/KI). Bei vielen Touren später ggf. Daten-getriebenes Rendering erwägen (aber SEO = Text muss im HTML bleiben).
 - **Übertragbar auf s2s-Kunden:** Muster (Daten-getriebene Detailseiten, Panel-Split, Live-Widget mit Quelle+Datenschutz) siehe `learning_v3_site_port_patterns`.

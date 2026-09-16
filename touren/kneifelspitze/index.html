@@ -48,7 +48,7 @@
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
 <link rel="stylesheet" href="/v3.css?v=9a2d8dc4">
-<link rel="stylesheet" href="/touren/tour.css?v=58f67ffa">
+<link rel="stylesheet" href="/touren/tour.css?v=48d2e274">
 <style>
   /* Nur was diese eine Tour ausmacht: der Bildausschnitt des Nacht-Heros.
      Alles andere kommt aus /touren/tour.css. */
@@ -92,7 +92,7 @@
       <p class="tour-lead st st3">Um vier Uhr los, im Dunkeln hoch, oben auf das Licht warten.
       Kurz und knackig — teilweise steil, aber durchgehend guter Weg.</p>
 
-      <div class="tour-fakten st st4" data-live data-lat="47.65" data-lon="13.00" data-hoehe="1188">
+      <div class="tour-fakten st st4" data-live data-lat="47.65815" data-lon="13.0179" data-hoehe="1188">
         <div class="tour-fakt"><b>6,06</b><span>km hin &amp; zurück</span></div>
         <div class="tour-fakt"><b data-count="456">0</b><span>Höhenmeter</span></div>
         <div class="tour-fakt"><b data-count="1188">0</b><span>m Gipfel</span></div>
@@ -213,6 +213,70 @@
     Werte aus der Strava-Aufzeichnung.</p>
       </section>
 
+      <!-- WEGVERLAUF (erzeugt: scripts/route-einbauen.py) -->
+      <section class="tour-route flaeche-wald" style="--span: 8">
+        <div class="tour-kopf">
+          <span class="tour-kopf__label">Wegverlauf<span class="hsep" aria-hidden="true"></span>Aufstieg</span>
+          <span class="tour-kopf__meta">Start → Kneifelspitze</span>
+        </div>
+        <div class="tour-route__flaeche">
+          <svg class="tour-route__svg" viewBox="0 0 900 640" fill="none"
+               role="img"
+               aria-label="Wegverlauf Kneifelspitze: 3,06 Kilometer vom Start zum Gipfel, nach OpenStreetMap"
+               data-route="47.65817,13.01785 47.65828,13.01799 47.65834,13.01853 47.6584,13.01888 47.65848,13.0193 47.65861,13.01969 47.65871,13.01998 47.65875,13.02034 47.65859,13.02082 47.65862,13.0212 47.65861,13.02168 47.6587,13.02198 47.65852,13.02216 47.65877,13.02232 47.65908,13.02186 47.65938,13.02201 47.65957,13.02181 47.65973,13.02148 47.66004,13.02077 47.65981,13.01998 47.6598,13.01905 47.66016,13.01885 47.6603,13.01861 47.66043,13.01816 47.66057,13.01798 47.66091,13.01782 47.66082,13.01752 47.66081,13.01662 47.66075,13.01629 47.66088,13.01595 47.66121,13.01565 47.66126,13.01595 47.66139,13.01626 47.66164,13.01577 47.66174,13.01577 47.66189,13.01578 47.66223,13.016 47.66246,13.01577 47.66264,13.01565 47.6626,13.01628 47.66281,13.01627 47.6632,13.01615 47.66319,13.01648 47.66347,13.01642 47.66385,13.01685 47.6642,13.01705 47.66463,13.01695 47.6649,13.01672 47.66522,13.01651 47.66544,13.01627 47.66557,13.01583 47.66566,13.01554 47.66567,13.01506 47.66564,13.01473 47.66559,13.0144 47.66553,13.01401 47.6656,13.01319 47.66577,13.01296 47.6658,13.01243 47.66581,13.01195 47.66588,13.01141 47.666,13.01098 47.66598,13.01033 47.66596,13.00983 47.66587,13.0095 47.66577,13.0089 47.66566,13.00832 47.6655,13.00787 47.66549,13.00734 47.66547,13.00664 47.66566,13.00642 47.66619,13.00602 47.66653,13.00619 47.66675,13.00613 47.66667,13.00576 47.66657,13.00527 47.66651,13.00485 47.66642,13.00431 47.66631,13.00391 47.66605,13.00366 47.66552,13.003"
+               data-km="3.06">
+            <!-- Statische Pfade = Fallback ohne JS. tour.js rechnet sie aus
+                 data-route neu; ohne sie bliebe die Karte leer. -->
+            <path class="tour-route__schatten" d="M654.9,571.5 Q660.4,565.0 671.0,563.2 Q681.7,561.5 688.7,559.8 Q695.6,558.0 703.9,555.6 Q712.1,553.3 719.8,549.5 Q727.5,545.7 733.2,542.8 Q739.0,539.8 746.1,538.6 Q753.2,537.5 762.7,542.1 Q772.1,546.8 779.6,546.0 Q787.1,545.1 796.6,545.4 Q806.1,545.7 812.0,543.0 Q817.9,540.4 821.5,545.6 Q825.0,550.9 828.2,543.6 Q831.4,536.3 822.3,527.2 Q813.2,518.1 816.2,509.3 Q819.1,500.5 815.2,494.9 Q811.2,489.4 804.7,484.7 Q798.2,480.0 784.2,470.9 Q770.2,461.9 754.6,468.6 Q739.0,475.3 720.6,475.6 Q702.3,475.9 698.3,465.4 Q694.4,454.8 689.6,450.7 Q684.9,446.6 676.0,442.8 Q667.1,439.0 663.5,434.9 Q660.0,430.8 656.9,420.9 Q653.7,410.9 647.8,413.5 Q641.9,416.1 624.1,416.4 Q606.3,416.7 599.8,418.4 Q593.3,420.2 586.6,416.4 Q579.9,412.6 574.0,403.0 Q568.0,393.3 574.0,391.8 Q579.9,390.3 586.0,386.5 Q592.1,382.7 582.5,375.4 Q572.8,368.1 572.8,365.1 Q572.8,362.2 573.0,357.8 Q573.2,353.4 577.5,343.4 Q581.9,333.5 577.3,326.8 Q572.8,320.0 570.4,314.7 Q568.0,309.4 580.5,310.6 Q592.9,311.8 592.7,305.6 Q592.5,299.5 590.1,288.1 Q587.8,276.6 594.3,276.9 Q600.8,277.2 599.6,269.0 Q598.4,260.8 606.9,249.7 Q615.4,238.5 619.3,228.2 Q623.3,218.0 621.3,205.4 Q619.4,192.8 614.8,184.9 Q610.3,177.0 606.1,167.6 Q602.0,158.2 597.2,151.8 Q592.5,145.3 583.8,141.5 Q575.1,137.7 569.4,135.1 Q563.7,132.4 554.2,132.1 Q544.7,131.8 538.2,132.7 Q531.7,133.6 525.2,135.1 Q518.7,136.5 511.0,138.2 Q503.3,140.0 487.1,137.9 Q470.9,135.9 466.4,130.9 Q461.8,126.0 451.4,125.1 Q440.9,124.2 431.4,123.9 Q422.0,123.6 411.4,121.5 Q400.7,119.5 392.2,116.0 Q383.7,112.5 370.9,113.1 Q358.0,113.7 348.1,114.2 Q338.3,114.8 331.8,117.4 Q325.3,120.1 313.5,123.0 Q301.6,126.0 290.1,129.2 Q278.7,132.4 269.8,137.1 Q260.9,141.8 250.4,142.1 Q240.0,142.4 226.2,143.0 Q212.3,143.6 208.0,138.0 Q203.7,132.4 195.8,116.9 Q187.9,101.4 191.2,91.4 Q194.6,81.4 193.4,75.0 Q192.2,68.5 184.9,70.8 Q177.6,73.2 167.9,76.2 Q158.3,79.1 150.0,80.8 Q141.7,82.6 131.1,85.2 Q120.4,87.9 112.5,91.1 Q104.6,94.3 99.7,101.9 Q94.7,109.6 81.7,125.1 L68.6,140.6"/>
+            <path class="tour-route__weg" pathLength="1" d="M654.9,571.5 Q660.4,565.0 671.0,563.2 Q681.7,561.5 688.7,559.8 Q695.6,558.0 703.9,555.6 Q712.1,553.3 719.8,549.5 Q727.5,545.7 733.2,542.8 Q739.0,539.8 746.1,538.6 Q753.2,537.5 762.7,542.1 Q772.1,546.8 779.6,546.0 Q787.1,545.1 796.6,545.4 Q806.1,545.7 812.0,543.0 Q817.9,540.4 821.5,545.6 Q825.0,550.9 828.2,543.6 Q831.4,536.3 822.3,527.2 Q813.2,518.1 816.2,509.3 Q819.1,500.5 815.2,494.9 Q811.2,489.4 804.7,484.7 Q798.2,480.0 784.2,470.9 Q770.2,461.9 754.6,468.6 Q739.0,475.3 720.6,475.6 Q702.3,475.9 698.3,465.4 Q694.4,454.8 689.6,450.7 Q684.9,446.6 676.0,442.8 Q667.1,439.0 663.5,434.9 Q660.0,430.8 656.9,420.9 Q653.7,410.9 647.8,413.5 Q641.9,416.1 624.1,416.4 Q606.3,416.7 599.8,418.4 Q593.3,420.2 586.6,416.4 Q579.9,412.6 574.0,403.0 Q568.0,393.3 574.0,391.8 Q579.9,390.3 586.0,386.5 Q592.1,382.7 582.5,375.4 Q572.8,368.1 572.8,365.1 Q572.8,362.2 573.0,357.8 Q573.2,353.4 577.5,343.4 Q581.9,333.5 577.3,326.8 Q572.8,320.0 570.4,314.7 Q568.0,309.4 580.5,310.6 Q592.9,311.8 592.7,305.6 Q592.5,299.5 590.1,288.1 Q587.8,276.6 594.3,276.9 Q600.8,277.2 599.6,269.0 Q598.4,260.8 606.9,249.7 Q615.4,238.5 619.3,228.2 Q623.3,218.0 621.3,205.4 Q619.4,192.8 614.8,184.9 Q610.3,177.0 606.1,167.6 Q602.0,158.2 597.2,151.8 Q592.5,145.3 583.8,141.5 Q575.1,137.7 569.4,135.1 Q563.7,132.4 554.2,132.1 Q544.7,131.8 538.2,132.7 Q531.7,133.6 525.2,135.1 Q518.7,136.5 511.0,138.2 Q503.3,140.0 487.1,137.9 Q470.9,135.9 466.4,130.9 Q461.8,126.0 451.4,125.1 Q440.9,124.2 431.4,123.9 Q422.0,123.6 411.4,121.5 Q400.7,119.5 392.2,116.0 Q383.7,112.5 370.9,113.1 Q358.0,113.7 348.1,114.2 Q338.3,114.8 331.8,117.4 Q325.3,120.1 313.5,123.0 Q301.6,126.0 290.1,129.2 Q278.7,132.4 269.8,137.1 Q260.9,141.8 250.4,142.1 Q240.0,142.4 226.2,143.0 Q212.3,143.6 208.0,138.0 Q203.7,132.4 195.8,116.9 Q187.9,101.4 191.2,91.4 Q194.6,81.4 193.4,75.0 Q192.2,68.5 184.9,70.8 Q177.6,73.2 167.9,76.2 Q158.3,79.1 150.0,80.8 Q141.7,82.6 131.1,85.2 Q120.4,87.9 112.5,91.1 Q104.6,94.3 99.7,101.9 Q94.7,109.6 81.7,125.1 L68.6,140.6"/>
+            <g class="tour-route__kms" aria-hidden="true">
+            <circle class="tour-route__km" cx="595.8" cy="419.5" r="4.5"/><text class="tour-route__kmtext" x="595.8" y="408.5">1</text>
+            <circle class="tour-route__km" cx="450.5" cy="125.0" r="4.5"/><text class="tour-route__kmtext" x="450.5" y="114.0">2</text>
+            </g>
+            <circle class="tour-route__start" cx="654.9" cy="571.5" r="7"/>
+            <path class="tour-route__gipfel" d="M68.6,149.6 V127.6 M61.599999999999994,134.6 H75.6"/>
+          </svg>
+
+          <span class="tour-route__wert" aria-hidden="true"></span>
+          <span class="tour-route__schild tour-route__schild--start"
+                style="left: 72.8%; top: 89.3%; transform: translate(-100%, -190%)">Start</span>
+          <span class="tour-route__schild tour-route__schild--gipfel"
+                style="left: 7.6%; top: 22.0%; transform: translate(0, -190%)">Kneifelspitze</span>
+
+          <!-- Kartenrand: Norden, Legende, Massstab. Zusammen in einer Ecke,
+               nicht ueber die Flaeche verstreut. -->
+          <span class="tour-route__norden" aria-hidden="true">
+            <svg viewBox="0 0 12 22" fill="none" aria-hidden="true">
+              <path d="M6,1 L10,9 L6,7 L2,9 Z" fill="currentColor"/>
+            </svg>N</span>
+
+          <div class="tour-route__legende tour-route__legende--links tour-route__legende--unten">
+            <div class="tour-route__fakt">
+              <span class="tour-route__fakt-label">Aufstieg</span>
+              <span class="tour-route__fakt-wert">3,06 km</span>
+            </div>
+            <div class="tour-route__fakt">
+              <span class="tour-route__fakt-label">Höhe</span>
+              <span class="tour-route__fakt-wert">735 → 1.188 m</span>
+            </div>
+          </div>
+
+          <!-- Der Massstab liegt DIREKT in der Kartenflaeche, nicht in der
+               Legende: seine Breite ist ein Anteil der KARTE. In der Legende
+               waere '%' ein Anteil des Kastens gewesen — der Balken haette
+               dann irgendeine Laenge gehabt und den Massstab widerlegt. -->
+          <span class="tour-route__massstab tour-route__massstab--links tour-route__massstab--unten"
+                style="--balken: 29.3%; --legende-hoehe: 96px">
+            <i aria-hidden="true"></i><em>0,5 km</em>
+          </span>
+        </div>
+        <p class="tour-route__hint">
+          <span class="tour-route__hint-satz">Der Weg nach oben, aus OpenStreetMap-Daten gezeichnet — keine GPS-Spur. Sie deckt sich bis auf 80 Meter mit der Aufzeichnung.</span>
+          <span class="tour-route__quelle">Kartendaten © OpenStreetMap-Mitwirkende, ODbL</span>
+        </p>
+      </section>
+      <!-- /WEGVERLAUF -->
+
       <!-- der Moment, auf den die ganze Tour zuläuft — neben dem Profil -->
       <figure class="tour-shot" style="--span: 7; --shot-min: 330px; --shot-fokus: center 46%">
         <img srcset="/touren/kneifelspitze/sonnenaufgang-640.jpg 700w, /touren/kneifelspitze/sonnenaufgang.jpg 1000w" sizes="(max-width: 820px) 92vw, 46vw" src="/touren/kneifelspitze/sonnenaufgang.jpg" width="1000" height="750"
@@ -271,7 +335,7 @@
   <a href="/kooperationen.html">Brands</a>
 </nav>
 
-<script src="/touren/tour.js?v=577c0583" defer></script>
+<script src="/touren/tour.js?v=f016c847" defer></script>
 <script src="/v3.js?v=64d0bdfd" defer></script>
 </body>
 </html>
