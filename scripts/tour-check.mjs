@@ -319,7 +319,7 @@ const PFLICHT = [
   ['data-route="',                'Koordinaten der Route (einzige Quelle, tour.js zeichnet daraus)'],
   ['tour-route__weg',             'die Linie selbst — tour.js UEBERSCHREIBT nur, es legt nichts an'],
   ['tour-route__schatten',        'Unterlegung der Linie (sonst steht sie flach auf der Flaeche)'],
-  ['OpenStreetMap-Mitwirkende',   'Kartendaten-Nennung — ODbL verlangt sie'],
+  ['tour-route__quelle',          'Quellenangabe unter der Karte'],
   ['tour-route__massstab',        'Massstabsbalken — ohne ihn ist die Karte eine Zeichnung ohne Groesse'],
 ];
 
@@ -335,6 +335,12 @@ const VERBOTEN = [
   [/,\s*nicht Empfehlung/i,                  '„X, nicht Empfehlung" — Vorschrift statt Erfahrung'],
   [/keine? Floskel/i,                        '„keine Floskel" — Zuspitzung statt Beschreibung'],
   [/im Chiemgau und Berchtesgadener Land/i,  'Regions-Aufzaehlung — veraltet bei jeder Tour ausserhalb'],
+  /* Die ODbL schreibt die Form "OpenStreetMap-Mitwirkende" vor. Beim Kuerzen
+     der Fussnoten wurde daraus einmal "© OpenStreetMap" — rechtlich nicht
+     ausreichend. Eine PFLICHT-Zeile taugt hier nicht mehr: seit es Touren mit
+     eigener GPS-Spur gibt, kommt die Linie gar nicht mehr aus OpenStreetMap,
+     und dann waere die Nennung eine Quellenangabe fuer etwas Unbenutztes. */
+  [/©\s*OpenStreetMap(?!-Mitwirkende)/,     'ODbL verlangt „OpenStreetMap-Mitwirkende", nicht „OpenStreetMap"'],
 ];
 const OPTIONAL = [
   ['tour-arc',   'Zeitachse (nur wenn die Uhrzeit die Geschichte ist)'],

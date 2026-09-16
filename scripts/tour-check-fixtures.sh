@@ -62,8 +62,11 @@ pruefe "Wegverlauf ganz entfernt" \
 pruefe "Route ohne Koordinaten (nur der statische Pfad bleibt)" \
   's{data-route="[^"]*"}{}' \
   "touren/$SLUG/index.html"
-pruefe "Kartendaten-Nennung fehlt (ODbL verlangt sie)" \
-  's{OpenStreetMap-Mitwirkende}{irgendwem}g' \
+pruefe "Quellenangabe unter der Karte fehlt" \
+  's{tour-route__quelle}{tour-route__nichts}g' \
+  "touren/$SLUG/index.html"
+pruefe "ODbL-Nennung auf die unzulaessige Kurzform gekuerzt" \
+  's{Sentinel-2 cloudless}{© OpenStreetMap und Sentinel-2 cloudless}' \
   "touren/$SLUG/index.html"
 pruefe "Linie fehlt — tour.js legt sie NICHT an" \
   's{tour-route__weg}{tour-route__nichts}g' \

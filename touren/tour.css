@@ -413,11 +413,24 @@
    Die Bilder stehen nicht mehr als eigene "Strecke" unter der Seite, sondern
    sitzen im Bento zwischen den Datenflaechen — dort, wo sie inhaltlich hingehoeren.
    Grid statt Scroller: WebKit/Gecko laden lazy beim horizontalen Scrollen nicht nach. */
+/* Ein Foto bestimmt seine Form SELBST und erbt sie nie vom Nachbarn.
+
+   Vorher hatte `.tour-shot` nur `min-height` und wuchs auf die Hoehe seiner
+   Rasterzeile (`align-items: stretch`). Neben der hohen Routenkarte wurde aus
+   einem 3:4-Foto eine 344x1107-Saeule — `object-fit: cover` hat dann 59 %
+   weggeschnitten. Gemerkt hat es Sebi, nicht ein Tor.
+
+   Fast alle Fotos hier sind Handy-Hochformat (0,75). Das ist die Vorgabe,
+   nicht das Raster. */
 .tour-shot {
   position: relative; min-width: 0; overflow: hidden; margin: 0;
   border-radius: var(--r-karte); box-shadow: var(--shadow-mid);
-  min-height: var(--shot-min, 260px);
+  align-self: start;
+  aspect-ratio: var(--shot-ar, 3 / 4);
+  min-height: var(--shot-min, 0);
 }
+/* Kacheln, die bewusst zwei Zeilen binden, duerfen weiter mitwachsen. */
+.tour-bento > .tour-shot.spannt-2 { align-self: stretch; aspect-ratio: auto; }
 /* Die Kachel liegt IN der Flaeche, nicht darauf: eine Kanten-Vignette in
    Waldton nimmt dem Foto den aufgeklebten Rand und bindet es an die
    Nachbarflaechen an. */
@@ -456,7 +469,9 @@
   .tour-shot img {
     position: static;
     width: 100%; height: auto;
-    aspect-ratio: var(--shot-mobil, 4 / 3);
+    /* Rueckfall ist die Form des BILDES, nicht 4/3. Ein 3:4-Handyfoto verlor
+       hier 44 % — und die Fotos hier sind fast alle hochkant. */
+    aspect-ratio: var(--shot-mobil, var(--shot-ar, 4 / 3));
   }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -358,6 +358,40 @@ Quelle ist **OpenTopoData** (`eudem25m`, 100 Punkte je Anfrage, 1/Sekunde,
 1.000/Tag). Open-Meteo bleibt als Rückfall drin, taugt hier aber schlecht: es
 zählt jeden der 100 Punkte als eigenen Aufruf und geht nach ~25 Anfragen in 429.
 
+### Kachelgrößen — wo was wie groß sinnvoll ist
+
+Das Raster hat 12 Spalten (`--span`). Die Regeln sind nicht Geschmack, sondern
+folgen aus dem Material:
+
+| Baustein | span | warum |
+|---|---|---|
+| Hero | 12 | trägt Name, Höhe, ein Satz |
+| Steckbrief-Panels | 5 + 7 | Zahlen links, Text rechts — ungleich, damit es nicht nach Tabelle aussieht |
+| Zeitachse | 8 | Fließtext, will keine volle Breite |
+| Höhenprofil | 8 | breites Diagramm, stretcht sich auf jede Höhe |
+| Routenkarte | 8 | quadratisch (max. 1:1), sonst reißt sie die Zeile auf |
+| Fotos | 4 · 5 · 7 | **die Kachel folgt dem Bild**, nicht umgekehrt |
+
+**Die wichtigste Regel: ein Foto bestimmt seine Form selbst.** `.tour-shot` hatte
+lange nur `min-height` und wuchs auf die Höhe seiner Rasterzeile. Neben der
+hohen Routenkarte wurde aus einem 3:4-Foto eine 344×1107-Säule — `object-fit:
+cover` schnitt **59 %** weg. Gemerkt hat es Sebi, kein Tor: das Markup war
+fehlerfrei, nur das Ergebnis nicht.
+
+```bash
+python3 scripts/foto-format.py <slug>   # schreibt --shot-ar aus width/height
+node scripts/foto-check.mjs             # misst den Beschnitt, 1440 px und 390 px
+node scripts/foto-check.mjs --selbsttest
+```
+
+Fast alle Fotos hier sind **Handy-Hochformat (3:4)**. Das ist die Vorgabe, an die
+sich das Raster hält. Ein Querformat-Foto in einer Hochformat-Kachel verliert
+44 %; `foto-format.py` verhindert das, indem es beiden dieselbe Form gibt.
+
+`spannt-2` bindet bewusst zwei Zeilen und darf beschneiden — aber **nur mit
+hochkanten Bildern**. Ein quadratisches Panorama darin verlor die Hälfte;
+`foto-format.py` nimmt `spannt-2` dort automatisch weg.
+
 ### Luftbild
 
 ```bash
@@ -388,8 +422,26 @@ python3 scripts/route-einbauen.py <slug>
 ```
 
 Woher die Datei kommt: **Strava am Rechner** (Aktivität → ⋯ → GPX exportieren;
-in der App fehlt der Punkt) oder **Apple Health** (Profil → Alle
-Gesundheitsdaten exportieren → im ZIP `workout-routes/route_*.gpx`).
+in der App fehlt der Punkt — das geht auch im kostenlosen Tarif) oder **Apple
+Health** (Profil → Alle Gesundheitsdaten exportieren → im ZIP
+`workout-routes/route_*.gpx`).
+
+**Gegen was verglichen wird.** Die Länge wird **räumlich** gerechnet, also mit
+dem Anstieg. Die flache Summe liegt systematisch zu niedrig — beim Fellhorn
+17,51 statt 17,84 km, bei einer Klettersteig-Tour deutlich mehr. Endet die
+Aufzeichnung am Gipfel statt am Auto, gilt sie als **Aufstieg** und wird gegen
+die Gipfelposition im Profil verglichen: die Kneifelspitze-Datei sah sonst nach
+53 % Fehler aus und war in Wahrheit auf 1 % genau. Über 25 % Abweichung wird die
+Datei **nicht übernommen**.
+
+**Uhr ≠ GPS.** Bei Drachenwand und Ristfeuchthorn misst die Spur rund 17 %
+weniger als die Uhr gezählt hat (steiles Waldgelände). Beides sind Sebis eigene
+Zahlen; die Karte nennt darum beide, statt eine davon zu verschweigen.
+
+**Parität: der Browser muss dasselbe wissen wie das Bau-Skript.** Bei einer
+Rundtour endet die Spur wieder am Parkplatz — `tour.js` setzte das Gipfelkreuz
+trotzdem auf den letzten Punkt und überschrieb damit das korrekt gebaute HTML.
+Die Gipfelkoordinate steht deshalb als `data-gipfel` am SVG.
 
 Die Tour wird nicht abgefragt, sondern erkannt: es gewinnt die, deren Gipfel dem
 höchsten Punkt der Spur am nächsten liegt; über 2 km wird die Datei abgelehnt

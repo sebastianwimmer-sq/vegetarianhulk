@@ -46,3 +46,7 @@ audit/
 
 # Erzeugte Versand-Mails (scripts/tour-mail.mjs) — Artefakt, kein Quelltext
 .mail-versand/
+
+# Python-Bytecode der Bau-Skripte — gehoert nicht in die Auslieferung
+__pycache__/
+*.pyc
