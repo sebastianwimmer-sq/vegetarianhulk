@@ -54,6 +54,11 @@ ZU_FUSS = ("path|footway|track|steps|bridleway|cycleway|pedestrian|"
 # und die Uhr anders misst. Darueber ist es eine ANDERE Route.
 TOLERANZ = 0.35
 
+# Bis hierhin schlaegt die Angabe der Seite (Maps-Link) den am besten passenden
+# Parkplatz. Darueber ist der Geocoder zu ungenau getroffen — dann zaehlt die
+# Laenge.
+MAPS_VORRANG = 0.16
+
 # Wie weit der letzte erreichbare Punkt hoechstens vom Gipfel weg sein darf.
 MAX_LUECKE_M = 400
 
@@ -327,18 +332,43 @@ def beste_route(nachbarn, gipfel, kandidaten, erwartet_km):
     if not bewertet:
         return None, "kein Ausgangspunkt ans Wegenetz angeschlossen"
 
-    bewertet.sort()
+    # Was die SEITE sagt, schlaegt was am besten passt. Der Maps-Link auf der
+    # Tourseite ist Sebis eigene Angabe ("Unten in Blindau, 5 € Tagesticket") —
+    # ein namenloser Parkplatz, dessen Weglaenge zufaellig besser trifft, ist
+    # trotzdem der falsche Ausgangspunkt. Am 16.09. starteten so alle vier
+    # Karten woanders als im Text; beim Fellhorn lag der gewaehlte Parkplatz
+    # suedlich des Gipfels, waehrend Blindau noerdlich liegt.
+    # Die Laenge bleibt Pruefung — nur nicht mehr Auswahlkriterium erster Wahl.
+    # ... aber nur, wenn die Angabe auch plausibel ist. Nominatim liefert fuer
+    # "Maria Gern" das Ortszentrum, nicht den Parkplatz gegenueber der Kirche —
+    # das waeren 35 % Abweichung gegen 3 % beim richtigen Parkplatz. Deshalb
+    # gilt der Vorrang nur innerhalb eines engen Bandes; darueber entscheidet
+    # wieder die Laenge.
+    bewertet.sort(key=lambda e: (not (e[4].startswith("Maps-Link")
+                                      and e[0] <= MAPS_VORRANG), e[0]))
+
     print(f"   {len(bewertet)} Ausgangspunkte geprueft, die drei besten:")
     for abw, km, _, _, herkunft, _ in bewertet[:3]:
         print(f"     {km:5.2f} km ({abw * 100:3.0f} % ab) — {herkunft}")
 
-    abweichung, km, knoten, ort, herkunft, versatz = bewertet[0]
-    if abweichung > TOLERANZ:
+    # Aus der Liste den ersten nehmen, der die Toleranz haelt: erst die Angabe
+    # der Seite, dann die Parkplaetze.
+    treffer = next((e for e in bewertet if e[0] <= TOLERANZ), None)
+    if not treffer:
+        abweichung, km = bewertet[0][0], bewertet[0][1]
         return None, (f"bester Treffer {km:.2f} km gegen {erwartet_km:.2f} km "
                       f"aufgezeichnet ({abweichung * 100:.0f} % ab)")
+    abweichung, km, knoten, ort, herkunft, versatz = treffer
+    if not herkunft.startswith("Maps-Link"):
+        print(f"   ! Der Ort aus dem Maps-Link der Seite passt nicht "
+              f"(oder fehlt) — es gilt: {herkunft}")
 
-    pfad, wege_ids = pfad_zurueck(davor, knoten)  # Gipfel → Start
-    pfad.reverse()                                # also umdrehen: Start → Gipfel
+    # pfad_zurueck laeuft VOM Startknoten ueber `davor` zurueck zur Dijkstra-
+    # Wurzel (dem Gipfel) und haengt dabei an — das Ergebnis ist also schon
+    # Start → Gipfel. Das zusaetzliche reverse() hier drehte es um, und danach
+    # sass der Start-Punkt auf dem Gipfel und das Gipfelkreuz am Parkplatz.
+    # Die Linie sah dabei voellig richtig aus; nur ihre Enden logen.
+    pfad, wege_ids = pfad_zurueck(davor, knoten)
     return {
         "pfad": pfad, "wege_ids": wege_ids, "km": km, "abweichung": abweichung,
         "start": ort, "herkunft": herkunft, "versatz_m": versatz,

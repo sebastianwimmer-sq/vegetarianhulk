@@ -338,6 +338,58 @@ wird aus den `route.json` ABGELEITET, nicht angesammelt — vorher hat
 `route-holen.py drachenwand` die Einträge der anderen drei still entfernt.
 `--nur-verzeichnis` baut es ohne Netzabfrage neu.
 
+### Höhenlinien
+
+```bash
+python3 scripts/hoehenkarte.py <slug>      # Höhengitter aus EU-DEM (25 m)
+```
+
+Läuft **vor** `route-einbauen.py`. Kein Satellitenbild: Luftbild-Kacheln dürften
+wir nicht ins Repo legen (Lizenz von Esri/Google/Bing), sie wögen Megabytes, und
+unter der dunkelgrünen Bildsprache sehen sie fremd aus. Höhenlinien wiegen
+12–27 kB, sind offen lizenziert und zeigen mehr: man sieht, wo es steil wird.
+
+Quelle ist **OpenTopoData** (`eudem25m`, 100 Punkte je Anfrage, 1/Sekunde,
+1.000/Tag). Open-Meteo bleibt als Rückfall drin, taugt hier aber schlecht: es
+zählt jeden der 100 Punkte als eigenen Aufruf und geht nach ~25 Anfragen in 429.
+
+### GPX — die echte Spur statt des OSM-Weges
+
+```bash
+python3 scripts/gpx-einlesen.py ~/Desktop/gpx/        # Datei oder Ordner
+python3 scripts/hoehenkarte.py <slug>
+python3 scripts/route-einbauen.py <slug>
+```
+
+Woher die Datei kommt: **Strava am Rechner** (Aktivität → ⋯ → GPX exportieren;
+in der App fehlt der Punkt) oder **Apple Health** (Profil → Alle
+Gesundheitsdaten exportieren → im ZIP `workout-routes/route_*.gpx`).
+
+Die Tour wird nicht abgefragt, sondern erkannt: es gewinnt die, deren Gipfel dem
+höchsten Punkt der Spur am nächsten liegt; über 2 km wird die Datei abgelehnt
+statt der falschen Tour untergeschoben. Danach trägt `route.json` `art: "spur"`,
+und die Sektion wechselt Beschriftung und Hinweistext von selbst — aus
+„Aufstieg / aus OpenStreetMap gezeichnet" wird „Gegangene Spur / aus der
+GPS-Aufzeichnung". Bei einer Rundtour sitzt das Gipfelkreuz dann am höchsten
+Punkt der Spur, nicht am Linienende.
+
+### Zwei Fallen, die am 16.09. live standen
+
+**Die Enden der Linie können lügen, während die Form stimmt.** Ein `reverse()`
+zu viel im Router, und der Start-Punkt saß bei allen vier Touren auf dem Gipfel,
+das Gipfelkreuz am Parkplatz — die Kilometermarken zählten rückwärts. Sichtbar
+war nichts, die Route sah aus wie immer. `route-einbauen.py` prüft das jetzt und
+bricht ab (Negativtest: Punkte umdrehen → muss rot werden).
+
+**Was die Seite sagt, schlägt was am besten passt.** Der Startpunkt wurde
+zunächst rein nach Weglänge gewählt — dabei gewannen bei allen vier Touren
+namenlose Parkplätze gegen den Ort, den die Seite selbst nennt. Beim Fellhorn
+lag der gewählte Parkplatz **südlich** des Gipfels, während Blindau (so steht es
+im Text) nördlich liegt. Jetzt hat der Maps-Link der Seite Vorrang, solange er
+innerhalb von 16 % liegt; darüber ist der Geocoder zu ungenau getroffen (er
+liefert für „Maria Gern" das Ortszentrum, nicht den Parkplatz an der Kirche) und
+die Länge entscheidet wieder.
+
 **Prüfen:** `node scripts/tour-check.mjs` (6 PFLICHT-Zeilen für die Route) und
 `bash scripts/tour-check-fixtures.sh` (4 Negativtests, jeder muss rot werden).
 Danach selbst ansehen — 390 px und Desktop.

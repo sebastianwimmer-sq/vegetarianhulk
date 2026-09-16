@@ -339,6 +339,10 @@ const VERBOTEN = [
 const OPTIONAL = [
   ['tour-arc',   'Zeitachse (nur wenn die Uhrzeit die Geschichte ist)'],
   ['tour-shot',  'Fotos im Raster'],
+  // Hoehenlinien sind PFLICHT waere falsch: eine frisch gebaute Tour hat sie
+  // erst nach `hoehenkarte.py`, und ein Tor, das dann rot steht, wird ignoriert.
+  // Als Paritaets-Hinweis faellt trotzdem auf, wenn eine Tour ohne dasteht.
+  ['tour-route__hoehenlinie', 'Hoehenlinien (scripts/hoehenkarte.py)'],
 ];
 
 function pruefeParitaet(slugs) {
