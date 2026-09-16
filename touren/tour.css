@@ -522,6 +522,19 @@
 }
 .tour-route__svg { display: block; width: 100%; height: auto; }
 
+/* Hoehenlinien aus EU-DEM (scripts/hoehenkarte.py). Sie sind Atmosphaere,
+   nicht Information erster Ordnung — wer sie einzeln liest, hat die Karte
+   verloren. Deshalb leise; jede fuenfte traegt etwas mehr, damit das Relief
+   ohne Beschriftung lesbar wird. Ein Satellitenbild waere hier das Naheliegende
+   gewesen: es scheitert an `img-src 'self'` und an den Kachel-Lizenzen. */
+.tour-route__hoehenlinie {
+  stroke: rgba(126,208,155,0.13); stroke-width: 1; fill: none;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.tour-route__hoehenlinie--betont { stroke: rgba(126,208,155,0.26); stroke-width: 1.4; }
+.tour-route__relief { opacity: 0; transition: opacity 900ms var(--ease-lux) 150ms; }
+.tour-route.in .tour-route__relief { opacity: 1; }
+
 /* Zwei Linien uebereinander: die untere gibt der oberen Tiefe, so wie ein
    Weg auf einer Karte einen Rand hat. Eine einzelne Linie sieht nach
    Diagramm aus, nicht nach Karte. */
@@ -563,40 +576,28 @@
 .tour-route__schild--start { color: var(--gold-band-hell); }
 .tour-route__schild--gipfel { color: var(--leaf); transform: translate(-50%, -230%); }
 
-/* Massstab: die Breite des Balkens ist ein Anteil der KARTE, deshalb liegt
-   er direkt in der Kartenflaeche. Lag er in der Legende, bezog sich das
-   Prozent auf den Legendenkasten — der Balken war dann bedeutungslos. */
-.tour-route__massstab {
-  position: absolute; width: var(--balken);
-  display: flex; flex-direction: column; gap: 5px;
-  font-family: var(--mono); font-size: 9.5px; font-weight: 700;
-  letter-spacing: 1.1px; color: var(--paper-faint);
-  text-shadow: 0 0 6px #0a2016; pointer-events: none;
-}
-.tour-route__massstab--links { left: 4.5%; }
-.tour-route__massstab--rechts { right: 4.5%; }
-/* Unter bzw. ueber der Legende, in DERSELBEN Ecke — --legende-hoehe kommt
-   aus dem Bau-Skript, weil nur das weiss, ob die Legende einen oder zwei
-   Fakten traegt. */
-.tour-route__massstab--oben { top: calc(7% + var(--legende-hoehe) + 20px); }
-.tour-route__massstab--unten { bottom: calc(9% + var(--legende-hoehe) + 20px); }
-.tour-route__massstab i {
-  display: block; height: 5px;
-  border: 1px solid rgba(243,235,217,0.45); border-top: 0;
-}
-.tour-route__massstab em { font-style: normal; white-space: nowrap; }
+/* Kartenrand: Norden, Zahlen, Massstab — alles in EINEM Kasten, der in der
+   freiesten Ecke sitzt (welche das ist, rechnet das Bau-Skript aus der
+   Belegung der vier Ecken aus, Start und Gipfel zaehlen dabei schwer).
 
-/* Legende auf der leereren Kartenhaelfte — welche das ist, rechnet das
-   Bau-Skript aus dem Schwerpunkt der Route aus. */
-.tour-route__legende {
-  position: absolute;
+   Der Kasten hat eine FESTE Breite. Nur dadurch kann der Massstabsbalken
+   darin ein exaktes Prozent tragen: `%` bezieht sich auf den Kasten. Beim
+   ersten Versuch stand der Balken in einem Kasten mit Inhaltsbreite — sein
+   Prozentwert war damit bedeutungslos, und ein Massstab, der nicht stimmt,
+   ist schlimmer als keiner. */
+.tour-route__kartenrand {
+  position: absolute; width: 30%;
   display: flex; flex-direction: column; gap: 14px;
   pointer-events: none;
 }
-.tour-route__legende--links { left: 4.5%; }
-.tour-route__legende--rechts { right: 4.5%; text-align: right; }
-.tour-route__legende--oben { top: 7%; }
-.tour-route__legende--unten { bottom: 9%; }
+.tour-route__kartenrand--links { left: 4.5%; }
+.tour-route__kartenrand--rechts { right: 4.5%; text-align: right; }
+.tour-route__kartenrand--oben { top: 7%; }
+.tour-route__kartenrand--unten { bottom: 8%; }
+.tour-route__kartenrand--rechts .tour-route__massstab { margin-left: auto; }
+.tour-route__kartenrand--rechts .tour-route__norden { justify-content: flex-end; }
+
+.tour-route__fakten { display: flex; flex-direction: column; gap: 12px; }
 .tour-route__fakt { display: flex; flex-direction: column; gap: 3px; }
 .tour-route__fakt-label {
   font-family: var(--mono); font-size: 9px; font-weight: 700;
@@ -609,12 +610,22 @@
   text-shadow: 0 0 8px #0a2016, 0 1px 2px rgba(6,26,17,0.9);
 }
 
+.tour-route__massstab {
+  display: flex; flex-direction: column; gap: 5px; width: var(--balken);
+  font-family: var(--mono); font-size: 9.5px; font-weight: 700;
+  letter-spacing: 1.1px; color: var(--paper-faint); text-shadow: 0 0 6px #0a2016;
+}
+.tour-route__massstab i {
+  display: block; height: 5px;
+  border: 1px solid rgba(243,235,217,0.45); border-top: 0;
+}
+.tour-route__massstab em { font-style: normal; white-space: nowrap; }
+
 .tour-route__norden {
-  position: absolute; top: 14px; right: 16px;
-  display: flex; flex-direction: column; align-items: center; gap: 1px;
-  font-family: var(--mono); font-size: 9px; font-weight: 700;
-  letter-spacing: 1px; color: rgba(243,235,217,0.55);
-  pointer-events: none; text-shadow: 0 0 6px #0a2016;
+  display: flex; align-items: center; gap: 5px;
+  font-family: var(--mono); font-size: 8.5px; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  color: rgba(243,235,217,0.5); text-shadow: 0 0 6px #0a2016;
 }
 .tour-route__norden svg { width: 9px; height: 16px; }
 
@@ -645,13 +656,13 @@
 
 @media (max-width: 560px) {
   .tour-route__kmtext { font-size: 16px; }
-  /* Die Legende wuerde hier auf dem Weg liegen — die Zahlen stehen auf dem
-     Handy ohnehin im Faktenstrip weiter oben. */
-  .tour-route__legende { display: none; }
-  /* Und weil sie weg ist, faellt auch ihr Versatz weg: sonst haengt der
-     Massstab an der Hoehe eines Kastens, den es hier gar nicht gibt. */
-  .tour-route__massstab--oben { top: 14px; }
-  .tour-route__massstab--unten { bottom: 14px; }
+  /* Die Zahlen stehen auf dem Handy ohnehin im Faktenstrip weiter oben —
+     hier nehmen sie der Karte nur Platz weg. Massstab und Norden bleiben:
+     ohne sie ist es eine Zeichnung ohne Groesse und ohne Richtung. */
+  .tour-route__fakten { display: none; }
+  .tour-route__kartenrand { width: 42%; gap: 10px; }
+  .tour-route__kartenrand--oben { top: 14px; }
+  .tour-route__kartenrand--unten { bottom: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
