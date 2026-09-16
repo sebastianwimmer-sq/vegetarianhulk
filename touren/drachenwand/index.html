@@ -48,7 +48,7 @@
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
 <link rel="stylesheet" href="/v3.css?v=9a2d8dc4">
-<link rel="stylesheet" href="/touren/tour.css?v=54cb9977">
+<link rel="stylesheet" href="/touren/tour.css?v=2709a105">
 <style>
   /* Nur was diese eine Tour ausmacht: der Bildausschnitt des Heros — der
      Blick faellt rechts unten auf den See, deshalb liegt der Fokus tiefer.
@@ -212,8 +212,7 @@
     <span class="tour-profil__marke tour-profil__marke--gipfel"
           style="left: calc(53.6% + 12px);">Drachenwand · 1.179 m</span>
     </div>
-    <p class="tour-profil__hint">Fahr über das Profil — Höhe und Distanz an jeder Stelle.
-    Werte aus der Strava-Aufzeichnung, Verlauf aus dem Höhendiagramm nachgezeichnet.</p>
+    <p class="tour-profil__hint">Zum Ablesen drüberfahren · Werte aus Strava, Verlauf nachgezeichnet.</p>
       </section>
 
       <!-- WEGVERLAUF (erzeugt: scripts/route-einbauen.py) -->
@@ -228,8 +227,9 @@
                aria-label="Wegverlauf Drachenwand · 1.179 m: 4,21 Kilometer vom Start zum Gipfel, nach OpenStreetMap"
                data-route="47.81867,13.35651 47.81869,13.35532 47.81873,13.35491 47.81889,13.35432 47.81909,13.35367 47.81954,13.3525 47.81984,13.35199 47.82018,13.35154 47.82036,13.35105 47.82048,13.35039 47.82055,13.34988 47.82037,13.34937 47.81989,13.3494 47.81953,13.34909 47.81945,13.34895 47.81922,13.34817 47.81884,13.34775 47.81889,13.3482 47.81896,13.34863 47.81882,13.34908 47.81851,13.35005 47.81838,13.35066 47.81814,13.3512 47.81808,13.35176 47.81798,13.35215 47.81755,13.35301 47.81725,13.35383 47.81691,13.35452 47.81654,13.35532 47.81618,13.3556 47.81614,13.35607 47.81571,13.35669 47.8154,13.3571 47.81515,13.35739 47.81484,13.358 47.81477,13.35826 47.81432,13.35919 47.81443,13.35953 47.81407,13.36002 47.81399,13.36035 47.81342,13.36048 47.81321,13.36025 47.8128,13.36 47.81261,13.35958 47.81227,13.3594 47.81167,13.35943 47.81129,13.35926 47.81091,13.35942 47.81061,13.35926 47.81015,13.35926 47.80979,13.35921 47.80934,13.35906 47.80909,13.35877 47.80892,13.35846 47.8092,13.35816 47.80951,13.35816 47.80973,13.35826 47.80987,13.35779 47.81009,13.35732 47.80989,13.35726 47.80983,13.35663 47.81001,13.35613 47.80998,13.3556 47.81015,13.3551 47.81048,13.35494 47.81085,13.35459 47.81123,13.3544 47.81144,13.35426 47.81174,13.35357 47.81167,13.3532 47.81191,13.35298 47.81248,13.35273 47.81229,13.35228 47.81217,13.35202 47.81267,13.3516 47.81289,13.35158 47.81348,13.35147 47.81365,13.35133 47.81356,13.35078 47.81349,13.3502 47.81327,13.34978 47.81338,13.34927 47.81372,13.34894 47.8139,13.34853 47.8138,13.34792 47.81371,13.34727"
                data-km="4.21">
+            <image class="tour-route__luftbild" x="0" y="0" width="900" height="1126" preserveAspectRatio="none" href="/touren/drachenwand/gelaende.jpg" aria-hidden="true"/>
             <!-- Hoehenlinien aus EU-DEM, zur Bauzeit gerechnet. Sie liegen
-                 GANZ unten, damit der Weg darueber liest. -->
+                 unter dem Weg, damit er darueber liest. -->
             <g class="tour-route__relief" aria-hidden="true">
             <path class="tour-route__hoehenlinie tour-route__hoehenlinie--betont" d="M57,0 L57,28 L71,28 L114,71 L114,85 L121,100 L143,114 L186,132 L214,139 L257,142 L357,192 L386,199 L400,205 L429,225 L474,271 L486,285 L514,339 L529,350 L543,353 L600,352 L629,342 L714,342 L729,349 L743,349 L757,356 L771,356 L800,385 L886,385 L900,392"/>
             <path class="tour-route__hoehenlinie" d="M0,396 L14,385 L29,378 L43,375 L64,399 L83,413 L88,428 L86,430 L71,436 L43,437 L0,432"/>
@@ -290,8 +290,8 @@
           </div>
         </div>
         <p class="tour-route__hint">
-          <span class="tour-route__hint-satz">Der Weg nach oben, aus OpenStreetMap-Daten gezeichnet — keine GPS-Spur. Eingezeichnet ist der kürzeste Weg — die Aufzeichnung ist 0,7 km länger.</span>
-          <span class="tour-route__quelle">Kartendaten © OpenStreetMap-Mitwirkende, ODbL · Höhenlinien alle 100 m aus EU-DEM (Copernicus)</span>
+          <span class="tour-route__hint-satz">Weg laut OpenStreetMap, keine GPS-Spur · Aufzeichnung 0,7 km länger</span>
+          <span class="tour-route__quelle">© OpenStreetMap-Mitwirkende · EU-DEM · Sentinel-2 cloudless (EOX, CC BY 4.0)</span>
         </p>
       </section>
       <!-- /WEGVERLAUF -->

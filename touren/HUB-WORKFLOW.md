@@ -304,10 +304,15 @@ macht — **das Gegenteil von „vulnerable".**
 Zwei Befehle, in dieser Reihenfolge:
 
 ```bash
-python3 scripts/route-holen.py <slug>      # holt die Geometrie aus OpenStreetMap
-python3 scripts/route-einbauen.py <slug>   # zeichnet sie in die Seite
-bash scripts/bump-asset-versions.sh        # nur nötig, wenn tour.css/tour.js sich geändert haben
+python3 scripts/route-holen.py <slug>      # Geometrie aus OpenStreetMap
+python3 scripts/hoehenkarte.py <slug>      # Höhengitter aus EU-DEM
+python3 scripts/satellit.py <slug>         # Luftbild (Sentinel-2 cloudless)
+python3 scripts/route-einbauen.py <slug>   # zeichnet alles in die Seite
+bash scripts/bump-asset-versions.sh        # nur wenn tour.css/tour.js sich geändert haben
 ```
+
+Reihenfolge ist bindend: `route-einbauen.py` liest, was die drei davor abgelegt
+haben, und lässt weg, was fehlt.
 
 **Warum selbst gezeichnet und nicht eingebettet:** die Tour-Seiten laufen unter
 `script-src 'self'` und `img-src 'self' data:`. Leaflet, Mapbox und Google brauchen
@@ -353,6 +358,27 @@ Quelle ist **OpenTopoData** (`eudem25m`, 100 Punkte je Anfrage, 1/Sekunde,
 1.000/Tag). Open-Meteo bleibt als Rückfall drin, taugt hier aber schlecht: es
 zählt jeden der 100 Punkte als eigenen Aufruf und geht nach ~25 Anfragen in 429.
 
+### Luftbild
+
+```bash
+python3 scripts/satellit.py <slug>         # Sentinel-2 cloudless → gelaende.jpg
+```
+
+Läuft **vor** `route-einbauen.py`. **Quelle ist nicht frei wählbar:** Esri, Google
+und Bing untersagen das Zwischenspeichern und Weiterverteilen ihrer Kacheln — und
+weil `img-src 'self'` gilt, MUSS das Bild ins Repo. Mit diesen Anbietern wäre das
+ein Lizenzbruch. **Sentinel-2 cloudless von EOX** steht unter **CC BY 4.0** und
+darf mit Nennung weiterverwendet werden.
+
+10 m Auflösung, also bewusst weich — das Bild soll Stimmung geben, nicht gelesen
+werden. Es wird entsättigt und leicht ins Markengrün gezogen (≤ 5 %), liegt bei
+40 % Deckkraft unter den Höhenlinien und wiegt 16–82 kB. Rohkacheln landen in
+`~/.cache/vh-satellit`, nicht im Repo: Ton nachregeln kostet dann keine 90
+Abrufe mehr.
+
+**Falle:** das Bild im Skript stark abzudunkeln macht es unsichtbar, weil im CSS
+noch die Deckkraft daraufkommt. Die Feinregelung gehört ins CSS.
+
 ### GPX — die echte Spur statt des OSM-Weges
 
 ```bash
@@ -389,6 +415,11 @@ im Text) nördlich liegt. Jetzt hat der Maps-Link der Seite Vorrang, solange er
 innerhalb von 16 % liegt; darüber ist der Geocoder zu ungenau getroffen (er
 liefert für „Maria Gern" das Ortszentrum, nicht den Parkplatz an der Kirche) und
 die Länge entscheidet wieder.
+
+**Falle: kürzen darf man den Text, nicht die Pflichtform.** Beim Straffen der
+Hinweise wurde aus „© OpenStreetMap-Mitwirkende" ein „© OpenStreetMap" — die ODbL
+verlangt aber genau diese Form. Das Tor hat es gefangen; die Nennung steht
+deshalb als PFLICHT-Zeile drin und nicht nur im Fließtext.
 
 **Prüfen:** `node scripts/tour-check.mjs` (6 PFLICHT-Zeilen für die Route) und
 `bash scripts/tour-check-fixtures.sh` (4 Negativtests, jeder muss rot werden).

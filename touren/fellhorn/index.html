@@ -48,7 +48,7 @@
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
 <link rel="stylesheet" href="/v3.css?v=9a2d8dc4">
-<link rel="stylesheet" href="/touren/tour.css?v=54cb9977">
+<link rel="stylesheet" href="/touren/tour.css?v=2709a105">
 <style>
   /* Nur was diese eine Tour ausmacht: der Bildausschnitt des Heros — der
      Blick faellt rechts unten auf den See, deshalb liegt der Fokus tiefer.
@@ -209,8 +209,7 @@
     <span class="tour-profil__marke tour-profil__marke--gipfel"
           style="left: calc(49.2% + 12px);">Fellhorn · 1.764 m</span>
     </div>
-    <p class="tour-profil__hint">Fahr über das Profil — Höhe und Distanz an jeder Stelle.
-    Werte aus der Strava-Aufzeichnung, Verlauf aus dem Höhendiagramm nachgezeichnet. Die Uhr hat oben 1.766 m gemessen — die amtliche Gipfelhöhe ist 1.764 m.</p>
+    <p class="tour-profil__hint">Zum Ablesen drüberfahren · Werte aus Strava, Verlauf nachgezeichnet. Uhr oben 1.766 m, amtlich 1.764 m.</p>
       </section>
 
       <!-- WEGVERLAUF (erzeugt: scripts/route-einbauen.py) -->
@@ -225,8 +224,9 @@
                aria-label="Wegverlauf Fellhorn · 1.764 m: 8,22 Kilometer vom Start zum Gipfel, nach OpenStreetMap"
                data-route="47.66376,12.47677 47.66297,12.47641 47.66238,12.47652 47.66198,12.47785 47.6615,12.4788 47.66075,12.47924 47.66036,12.47995 47.6596,12.48081 47.65904,12.48161 47.65872,12.48219 47.65779,12.48335 47.65747,12.48377 47.65675,12.48531 47.65602,12.48581 47.65568,12.48677 47.65557,12.48766 47.65537,12.48924 47.65514,12.49026 47.65441,12.49091 47.65394,12.49191 47.65351,12.49278 47.65333,12.49193 47.65292,12.4905 47.6524,12.48972 47.6517,12.49017 47.65137,12.49043 47.65046,12.49114 47.64968,12.49216 47.64894,12.49292 47.64843,12.49371 47.64813,12.49462 47.64776,12.49553 47.64696,12.49763 47.64698,12.49852 47.64692,12.49936 47.6464,12.50077 47.64595,12.50172 47.64638,12.50267 47.64582,12.50302 47.64524,12.50302 47.64424,12.50361 47.64373,12.50422 47.64327,12.50446 47.64247,12.50404 47.64196,12.50379 47.64099,12.50435 47.64069,12.50461 47.63935,12.5049 47.63853,12.50484 47.63794,12.50449 47.63744,12.50409 47.63628,12.5036 47.63562,12.50381 47.63513,12.50447 47.6341,12.50502 47.63332,12.50501 47.63255,12.50476 47.63156,12.50467 47.63115,12.50495 47.63032,12.50505 47.62983,12.50447 47.62944,12.50379 47.62864,12.50399 47.62801,12.5041 47.62763,12.50413 47.62674,12.504 47.62544,12.50394 47.62449,12.50339 47.62382,12.50286 47.62318,12.50228 47.62247,12.50176 47.62179,12.50108 47.6211,12.5006 47.62037,12.50034 47.61964,12.50065 47.61886,12.50074 47.61822,12.50125 47.61751,12.502 47.61675,12.50236 47.61605,12.50328 47.61568,12.5043 47.61514,12.50429 47.61421,12.50497 47.61354,12.5058 47.61308,12.50637 47.61241,12.50747 47.61177,12.50821 47.61118,12.50854 47.61012,12.50878"
                data-km="8.22">
+            <image class="tour-route__luftbild" x="0" y="0" width="900" height="1350" preserveAspectRatio="none" href="/touren/fellhorn/gelaende.jpg" aria-hidden="true"/>
             <!-- Hoehenlinien aus EU-DEM, zur Bauzeit gerechnet. Sie liegen
-                 GANZ unten, damit der Weg darueber liest. -->
+                 unter dem Weg, damit er darueber liest. -->
             <g class="tour-route__relief" aria-hidden="true">
             <path class="tour-route__hoehenlinie" d="M362,0 L343,14 L329,30 L314,38 L300,43 L286,43 L271,37 L257,46 L243,60 L229,62 L221,71 L214,77 L200,71 L186,62 L129,114 L114,123 L100,128 L71,114 L43,96 L0,76"/>
             <path class="tour-route__hoehenlinie" d="M0,687 L24,710 L53,753 L59,767 L57,782 L58,796 L64,810 L83,838 L97,853 L102,867 L104,895 L117,924 L126,966 L134,1037 L143,1057 L159,1066 L154,1080 L149,1123 L153,1151 L171,1194 L195,1236 L201,1250 L204,1265 L202,1293 L191,1336 L190,1350"/>
@@ -316,8 +316,8 @@
           </div>
         </div>
         <p class="tour-route__hint">
-          <span class="tour-route__hint-satz">Der Weg nach oben, aus OpenStreetMap-Daten gezeichnet — keine GPS-Spur. Eingezeichnet ist der kürzeste Weg — die Aufzeichnung ist 0,6 km länger.</span>
-          <span class="tour-route__quelle">Kartendaten © OpenStreetMap-Mitwirkende, ODbL · Höhenlinien alle 100 m aus EU-DEM (Copernicus)</span>
+          <span class="tour-route__hint-satz">Weg laut OpenStreetMap, keine GPS-Spur · Aufzeichnung 0,6 km länger</span>
+          <span class="tour-route__quelle">© OpenStreetMap-Mitwirkende · EU-DEM · Sentinel-2 cloudless (EOX, CC BY 4.0)</span>
         </p>
       </section>
       <!-- /WEGVERLAUF -->
