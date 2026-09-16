@@ -318,7 +318,14 @@ def abschnitt_bauen(slug, route, html):
     # Luftbild (scripts/satellit.py), falls vorhanden — Sentinel-2 cloudless,
     # CC BY 4.0. Liegt GANZ unten und traegt die Karte, statt sie zu uebernehmen.
     luftbild = ""
-    if (WURZEL / "touren" / slug / "gelaende.jpg").exists():
+    beleg = WURZEL / "touren" / slug / "gelaende.json"
+    bild_passt = beleg.exists() and all(
+        abs(a - b) < 1.0 for a, b in
+        zip(json.loads(beleg.read_text(encoding="utf-8")).get("ausschnitt", []), ausschnitt))
+    if (WURZEL / "touren" / slug / "gelaende.jpg").exists() and not bild_passt:
+        print(f"  ! {slug}: gelaende.jpg passt nicht zum Ausschnitt — Luftbild "
+              f"weggelassen. Bitte satellit.py {slug} laufen lassen.")
+    if bild_passt and (WURZEL / "touren" / slug / "gelaende.jpg").exists():
         luftbild = (f'<image class="tour-route__luftbild" x="0" y="0" '
                     f'width="{BREITE}" height="{hoehe_px}" preserveAspectRatio="none" '
                     f'href="/touren/{slug}/gelaende.jpg" aria-hidden="true"/>\n            ')
@@ -385,7 +392,20 @@ def abschnitt_bauen(slug, route, html):
     # Wie nah die geroutete Laenge an der aufgezeichneten liegt, steht im Text.
     # Ohne diese Zahl waere "nach OpenStreetMap" eine Behauptung ohne Beleg.
     if ist_spur:
-        satz = "Aufgezeichnete Spur."
+        # Kurz, aber nicht verschwiegen: bei der Kneifelspitze endet die
+        # Aufzeichnung oben, und bei zwei Touren misst GPS deutlich weniger
+        # als die Uhr. Beides gehoert in den Satz, sonst liest man die Karte
+        # als etwas, das sie nicht ist.
+        nur_auf = route.get("bis_gipfel")
+        seiten_km = route.get("erwartet_km")
+        weit = seiten_km and abs(route["km"] - seiten_km) / seiten_km > 0.05
+        zusatz = ""
+        if weit:
+            g = f"{route['km']:.2f}".replace(".", ",")
+            u = f"{seiten_km:.2f}".replace(".", ",")
+            zusatz = f" · GPS {g} km, Uhr {u} km"
+        satz = ("Aufgezeichnete Spur bis zum Gipfel — der Rückweg lief nicht mit."
+                if nur_auf else f"Aufgezeichnete Spur{zusatz}")
         kopf_label = "Gegangene Spur"
     else:
         satz = None
@@ -426,6 +446,7 @@ def abschnitt_bauen(slug, route, html):
                role="img"
                aria-label="Wegverlauf {name}: {km_text} Kilometer vom Start zum Gipfel, nach OpenStreetMap"
                data-route="{' '.join(f'{a},{b}' for a, b in punkte)}"
+               data-gipfel="{route['gipfel'][0]},{route['gipfel'][1]}"
                data-km="{route['km']}">
             {luftbild}<!-- Hoehenlinien aus EU-DEM, zur Bauzeit gerechnet. Sie liegen
                  unter dem Weg, damit er darueber liest. -->
@@ -458,7 +479,7 @@ def abschnitt_bauen(slug, route, html):
           <div class="tour-route__kartenrand tour-route__kartenrand--{legende_ecke[0]} tour-route__kartenrand--{legende_ecke[1]}">
             <div class="tour-route__fakten">
               <div class="tour-route__fakt">
-                <span class="tour-route__fakt-label">{"Strecke" if ist_spur else "Aufstieg"}</span>
+                <span class="tour-route__fakt-label">{"Aufstieg" if (route.get("bis_gipfel") or not ist_spur) else "Strecke"}</span>
                 <span class="tour-route__fakt-wert">{km_text} km</span>
               </div>{hoehen_block}
             </div>

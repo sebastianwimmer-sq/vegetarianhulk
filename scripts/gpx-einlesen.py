@@ -27,6 +27,7 @@ import json
 import pathlib
 import re
 import sys
+import math
 import xml.etree.ElementTree as ET
 from datetime import date
 
@@ -68,8 +69,17 @@ def punkte_lesen(datei):
     return punkte
 
 
-def strecke_km(punkte):
-    return sum(meter(a[:2], b[:2]) for a, b in zip(punkte, punkte[1:])) / 1000
+def strecke_km(punkte, raeumlich=True):
+    """Standardmaessig RAEUMLICH, also mit dem Anstieg. Die flache Summe liegt
+    systematisch zu niedrig — beim Fellhorn 17,51 statt 17,84 km, bei einer
+    Klettersteig-Tour noch deutlicher. Uhr und Strava rechnen raeumlich, und
+    gegen deren Zahl wird verglichen."""
+    gesamt = 0.0
+    for a, b in zip(punkte, punkte[1:]):
+        flach = meter(a[:2], b[:2])
+        hoch = (b[2] - a[2]) if (raeumlich and a[2] is not None and b[2] is not None) else 0
+        gesamt += math.hypot(flach, hoch)
+    return gesamt / 1000
 
 
 def ausduennen(punkte, ziel=ZIEL_PUNKTE):
@@ -138,18 +148,35 @@ def eine_datei(datei, gipfel):
     duenn = ausduennen(punkte)
     hoehen = [p[2] for p in punkte if p[2] is not None]
 
-    # Vergleichswert aus dem Hoehenprofil der Seite: stimmt die Laenge?
+    # Vergleichswerte aus dem Hoehenprofil der Seite.
     html = (WURZEL / "touren" / slug / "index.html").read_text(encoding="utf-8")
     profil = re.search(r'data-punkte="([^"]+)"', html)
-    erwartet = (float(profil.group(1).split()[-1].split(",")[0]) if profil else None)
+    gesamt_km = aufstieg_km = None
+    if profil:
+        werte = [(float(k), float(h)) for k, h in
+                 (q.split(",") for q in profil.group(1).split())]
+        gesamt_km = werte[-1][0]
+        aufstieg_km = max(werte, key=lambda w: w[1])[0]
+
+    # Endet die Aufzeichnung am Gipfel statt am Auto, ist sie der AUFSTIEG und
+    # muss auch dagegen verglichen werden. Die Kneifelspitze-Datei sah sonst
+    # nach 53 % Fehler aus und war in Wahrheit auf 1 % genau — Sebi hat die
+    # Uhr oben gestoppt.
+    ende_am_gipfel = meter(punkte[-1][:2], gipfel[slug]) < 300
+    zurueck_am_start = meter(punkte[-1][:2], punkte[0][:2]) < 300
+    bis_gipfel = ende_am_gipfel and not zurueck_am_start
+    erwartet = aufstieg_km if bis_gipfel else gesamt_km
 
     hinweis = ""
     if erwartet:
         ab = abs(km - erwartet) / erwartet * 100
-        hinweis = f" · Seite sagt {erwartet:.2f} km ({ab:.0f} % ab)"
+        art_text = "Aufstieg" if bis_gipfel else "Gesamt"
+        hinweis = f" · {art_text} laut Seite {erwartet:.2f} km ({ab:.0f} % ab)"
         if ab > 25:
-            print(f"  ! {datei.name} → {slug}: {km:.2f} km gegen {erwartet:.2f} km "
-                  f"laut Seite. Passt die Datei wirklich zu dieser Tour?")
+            print(f"  ✗ {datei.name} → {slug}: {km:.2f} km gegen {erwartet:.2f} km "
+                  f"laut Seite ({ab:.0f} % ab) — NICHT uebernommen. Falsche Datei "
+                  f"oder abgebrochene Aufzeichnung.")
+            return None
 
     print(f"  ✓ {datei.name} → {slug}: {km:.2f} km, {len(punkte)} Punkte "
           f"→ {len(duenn)}{hinweis}")
@@ -161,7 +188,8 @@ def eine_datei(datei, gipfel):
 
     return slug, {
         "slug": slug,
-        "art": "spur",          # nicht "aufstieg" — das hier ist der ganze Weg
+        "art": "spur",          # aufgezeichnet, nicht aus OSM gerechnet
+        "bis_gipfel": bis_gipfel,   # Aufzeichnung endet oben statt am Auto
         "verworfen": False,
         "punkte": [[round(p[0], 5), round(p[1], 5)] for p in duenn],
         "start": [round(duenn[0][0], 5), round(duenn[0][1], 5)],

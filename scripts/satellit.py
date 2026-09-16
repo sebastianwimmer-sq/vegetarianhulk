@@ -133,7 +133,12 @@ def eine_tour(slug):
 
     # Zwischenspeicher: der Ton wird erfahrungsgemaess mehrfach nachgeregelt,
     # und dafuer 90 Kacheln erneut zu holen waere unhoeflich und langsam.
-    cache = CACHE / f"{slug}-z{ZOOM}-{round(nord,4)}_{round(west,4)}.png"
+    # Der Schluessel muss den GANZEN Ausschnitt tragen. Mit nur der Nordwest-
+    # Ecke traf er auch dann, wenn sich die Hoehe der Karte geaendert hatte —
+    # das alte Bild wurde dann einfach auf das neue Format gezogen und lag
+    # verzerrt unter der Route, ohne dass irgendetwas anschlug.
+    schluessel = "_".join(f"{v:.5f}" for v in (nord, west, sued, ost))
+    cache = CACHE / f"{slug}-z{ZOOM}-{schluessel}.png"
     if cache.exists():
         bild, kacheln = Image.open(cache).convert("RGB"), 0
         print(f"  {slug}: aus dem Zwischenspeicher")
@@ -145,6 +150,15 @@ def eine_tour(slug):
 
     ziel = WURZEL / "touren" / slug / "gelaende.jpg"
     bild.save(ziel, "JPEG", quality=GUETE, optimize=True, progressive=True)
+    # Ausschnitt danebenlegen — sonst kann niemand feststellen, ob das Bild
+    # noch zur Route passt. Beim Hoehengitter gab es diesen Nachweis schon;
+    # beim Luftbild fehlte er, und ein verschobenes Luftbild sieht immer noch
+    # aus wie Gelaende.
+    (ziel.with_suffix(".json")).write_text(json.dumps({
+        "slug": slug, "ausschnitt": [round(v, 1) for v in ausschnitt],
+        "quelle": "Sentinel-2 cloudless (EOX), CC BY 4.0",
+        "zoom": ZOOM, "groesse": list(bild.size),
+    }, ensure_ascii=False) + "\n", encoding="utf-8")
     kb = ziel.stat().st_size / 1024
     print(f"  {slug}: {kacheln} Kacheln → {bild.size[0]}×{bild.size[1]} px, "
           f"{kb:.0f} kB → {ziel.relative_to(WURZEL)}")

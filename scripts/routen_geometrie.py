@@ -12,7 +12,11 @@ import math
 
 BREITE = 900          # viewBox-Breite; die Hoehe folgt dem Seitenverhaeltnis
 RAND = 0.09           # Luft rings um die Route, als Anteil der laengeren Seite
-MIN_VERH, MAX_VERH = 0.50, 1.50   # Hoehe/Breite — dazwischen bleibt es lesbar
+# Hoehe/Breite der Karte. Frueher bis 1,5 — dann war sie das hoechste Element
+# der Seite und hat jedes Foto in ihrer Rasterzeile mitgestreckt. Seit Luftbild
+# und Hoehenlinien den Rand fuellen, wirkt ein quadratischer Ausschnitt nicht
+# mehr leer, sondern nach Karte.
+MIN_VERH, MAX_VERH = 0.50, 1.00
 
 
 def meter(a, b):

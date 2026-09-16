@@ -17,7 +17,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")/.."
 # eigenen HTTP-Server und mehrere Browser mit. Ein a11y-Lauf neben einem
 # laufenden tour-visual meldete einmal rot und danach dreimal gruen —
 # Ressourcenkonkurrenz, kein Befund.
-if pgrep -f "tour-visual.mjs|a11y-check.mjs" >/dev/null 2>&1; then
+if pgrep -f "tour-visual.mjs|a11y-check.mjs|foto-check.mjs" >/dev/null 2>&1; then
   echo "Es laeuft bereits ein Pruefwerkzeug. Erst abwarten — sonst sind die"
   echo "Ergebnisse Rauschen. (pgrep -f tour-visual)"
   exit 2
@@ -52,6 +52,7 @@ if [ "$SCHNELL" -eq 0 ]; then
   titel "Im Browser (Minuten)"
   lauf "Barrierefreiheit, alle v3-Seiten" node scripts/a11y-check.mjs
   lauf "Darstellung, 4 Engines"        node scripts/tour-visual.mjs --site
+  lauf "Bildbeschnitt der Kacheln"     node scripts/foto-check.mjs
 fi
 
 DAUER=$(( $(date +%s) - START ))

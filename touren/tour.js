@@ -383,7 +383,7 @@
     var breiteM = Math.max(maxX - minX, 1), hoeheM = Math.max(maxY - minY, 1);
     var rand = Math.max(breiteM, hoeheM) * 0.09;
     breiteM += 2 * rand; hoeheM += 2 * rand;
-    if (hoeheM / breiteM > 1.50) breiteM = hoeheM / 1.50;
+    if (hoeheM / breiteM > 1.00) breiteM = hoeheM / 1.00;
     else if (hoeheM / breiteM < 0.46) hoeheM = breiteM * 0.46;
 
     var mitteX = (maxX + minX) / 2, mitteY = (maxY + minY) / 2;
@@ -418,7 +418,22 @@
       start.setAttribute('cy', px[0][1].toFixed(1));
     }
     var gipfel = route.querySelector('.tour-route__gipfel');
+
+    /* Der Gipfel ist NICHT einfach der letzte Punkt. Bei einer aufgezeichneten
+       Rundtour endet die Spur wieder am Parkplatz — das Kreuz sass dann auf
+       dem Startpunkt, waehrend das gebaute HTML es richtig hatte und tour.js
+       es beim Laden ueberschrieb. Die Koordinate steht deshalb als
+       `data-gipfel` am SVG; ohne sie bleibt es beim letzten Punkt. */
+    var gipfelOrt = (svg.getAttribute('data-gipfel') || '').split(',').map(Number);
     var letzter = px[px.length - 1];
+    if (gipfelOrt.length === 2 && isFinite(gipfelOrt[0]) && isFinite(gipfelOrt[1])) {
+      var naechster = 0, besterAbstand = Infinity;
+      for (var gi = 0; gi < punkte.length; gi++) {
+        var ab = meter(punkte[gi], gipfelOrt);
+        if (ab < besterAbstand) { besterAbstand = ab; naechster = gi; }
+      }
+      letzter = px[naechster];
+    }
     if (gipfel) {
       gipfel.setAttribute('d',
         'M' + letzter[0].toFixed(1) + ',' + (letzter[1] + 9).toFixed(1)
