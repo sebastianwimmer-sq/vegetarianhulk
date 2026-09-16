@@ -498,3 +498,163 @@
 }
 .tour-back a { color: var(--paper-faint); text-decoration: none; }
 .tour-back a:hover { color: var(--leaf); }
+
+
+/* ============================================================
+   WEGVERLAUF — die Route als eigene Karte.
+
+   Warum selbst gezeichnet und nicht eingebettet: die Tour-Seiten laufen
+   unter `script-src 'self'` und `img-src 'self' data:`. Leaflet, Mapbox
+   und Google brauchen beides von fremden Hosts. Die Geometrie kommt
+   deshalb zur Bauzeit aus OpenStreetMap in die Seite (scripts/route-
+   holen.py) — zur Laufzeit geht kein einziger fremder Aufruf raus.
+   ============================================================ */
+.tour-route__flaeche {
+  position: relative;
+  /* Dunkler als die Karte drumherum: die Route soll aus der Flaeche
+     heraustreten, nicht auf ihr liegen. */
+  background:
+    radial-gradient(120% 90% at 50% 12%, rgba(126,208,155,0.07), transparent 62%),
+    linear-gradient(180deg, rgba(6,26,17,0.5), rgba(6,26,17,0.78));
+  border: 1px solid rgba(126,208,155,0.14);
+  border-radius: var(--r-flaeche, 14px);
+  overflow: hidden;
+}
+.tour-route__svg { display: block; width: 100%; height: auto; }
+
+/* Zwei Linien uebereinander: die untere gibt der oberen Tiefe, so wie ein
+   Weg auf einer Karte einen Rand hat. Eine einzelne Linie sieht nach
+   Diagramm aus, nicht nach Karte. */
+.tour-route__schatten {
+  stroke: rgba(6,26,17,0.85); stroke-width: 9;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.tour-route__weg {
+  stroke: var(--emerald); stroke-width: 3.4;
+  stroke-linecap: round; stroke-linejoin: round;
+  filter: drop-shadow(0 0 7px rgba(80,200,120,0.45));
+  stroke-dasharray: 1; stroke-dashoffset: 1;
+}
+.tour-route.in .tour-route__weg { animation: routeZeichnen 2200ms var(--ease-lux) 250ms forwards; }
+@keyframes routeZeichnen { to { stroke-dashoffset: 0; } }
+
+.tour-route__km { fill: rgba(6,26,17,0.9); stroke: rgba(126,208,155,0.55); stroke-width: 1.5; }
+.tour-route__kmtext {
+  fill: var(--paper-faint); font-family: var(--mono); font-size: 13px;
+  font-weight: 700; text-anchor: middle; letter-spacing: 0.5px;
+}
+.tour-route__kms { opacity: 0; transition: opacity 600ms var(--ease-lux) 1400ms; }
+.tour-route.in .tour-route__kms { opacity: 1; }
+
+.tour-route__start { fill: var(--gold-band-hell); stroke: rgba(6,26,17,0.9); stroke-width: 2.5; }
+.tour-route__gipfel { stroke: var(--leaf); stroke-width: 3.2; stroke-linecap: round; }
+.tour-route__start, .tour-route__gipfel { opacity: 0; transition: opacity 500ms var(--ease-lux) 1200ms; }
+.tour-route.in .tour-route__start, .tour-route.in .tour-route__gipfel { opacity: 1; }
+
+/* Beschriftung liegt als HTML ueber der Karte — SVG-Text wuerde beim
+   Skalieren mitwachsen und auf dem Handy riesig werden. */
+.tour-route__schild {
+  position: absolute; transform: translate(-50%, -190%);
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  pointer-events: none; white-space: nowrap;
+  text-shadow: 0 0 3px #0a2016, 0 0 8px #0a2016, 0 1px 2px rgba(6,26,17,0.9);
+}
+.tour-route__schild--start { color: var(--gold-band-hell); }
+.tour-route__schild--gipfel { color: var(--leaf); transform: translate(-50%, -230%); }
+
+/* Massstab: die Breite des Balkens ist ein Anteil der KARTE, deshalb liegt
+   er direkt in der Kartenflaeche. Lag er in der Legende, bezog sich das
+   Prozent auf den Legendenkasten — der Balken war dann bedeutungslos. */
+.tour-route__massstab {
+  position: absolute; width: var(--balken);
+  display: flex; flex-direction: column; gap: 5px;
+  font-family: var(--mono); font-size: 9.5px; font-weight: 700;
+  letter-spacing: 1.1px; color: var(--paper-faint);
+  text-shadow: 0 0 6px #0a2016; pointer-events: none;
+}
+.tour-route__massstab--links { left: 4.5%; }
+.tour-route__massstab--rechts { right: 4.5%; }
+/* Unter bzw. ueber der Legende, in DERSELBEN Ecke — --legende-hoehe kommt
+   aus dem Bau-Skript, weil nur das weiss, ob die Legende einen oder zwei
+   Fakten traegt. */
+.tour-route__massstab--oben { top: calc(7% + var(--legende-hoehe) + 20px); }
+.tour-route__massstab--unten { bottom: calc(9% + var(--legende-hoehe) + 20px); }
+.tour-route__massstab i {
+  display: block; height: 5px;
+  border: 1px solid rgba(243,235,217,0.45); border-top: 0;
+}
+.tour-route__massstab em { font-style: normal; white-space: nowrap; }
+
+/* Legende auf der leereren Kartenhaelfte — welche das ist, rechnet das
+   Bau-Skript aus dem Schwerpunkt der Route aus. */
+.tour-route__legende {
+  position: absolute;
+  display: flex; flex-direction: column; gap: 14px;
+  pointer-events: none;
+}
+.tour-route__legende--links { left: 4.5%; }
+.tour-route__legende--rechts { right: 4.5%; text-align: right; }
+.tour-route__legende--oben { top: 7%; }
+.tour-route__legende--unten { bottom: 9%; }
+.tour-route__fakt { display: flex; flex-direction: column; gap: 3px; }
+.tour-route__fakt-label {
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 1.4px; text-transform: uppercase; color: var(--paper-faint);
+  text-shadow: 0 0 6px #0a2016;
+}
+.tour-route__fakt-wert {
+  font-family: var(--mono); font-size: 15px; font-weight: 700;
+  letter-spacing: 0.4px; color: var(--paper);
+  text-shadow: 0 0 8px #0a2016, 0 1px 2px rgba(6,26,17,0.9);
+}
+
+.tour-route__norden {
+  position: absolute; top: 14px; right: 16px;
+  display: flex; flex-direction: column; align-items: center; gap: 1px;
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 1px; color: rgba(243,235,217,0.55);
+  pointer-events: none; text-shadow: 0 0 6px #0a2016;
+}
+.tour-route__norden svg { width: 9px; height: 16px; }
+
+.tour-route__wert {
+  position: absolute; transform: translate(-50%, -160%); pointer-events: none;
+  padding: 7px 11px; border-radius: var(--r-control);
+  background: rgba(10,32,22,0.94); border: 1px solid rgba(126,208,155,0.28);
+  font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.6px;
+  color: var(--paper); white-space: nowrap; opacity: 0;
+  transition: opacity 220ms var(--ease-lux);
+  box-shadow: 0 12px 28px -14px rgba(0,0,0,0.8);
+}
+.tour-route.liest .tour-route__wert { opacity: 1; }
+.tour-route__wert b { color: var(--leaf); font-weight: 700; }
+
+/* Fuenf Zeilen Versalien liest niemand. Der Satz bleibt Satz, nur die
+   Quellenangabe traegt die Mono-Auszeichnung. */
+.tour-route__hint {
+  margin-top: 16px; display: flex; flex-direction: column; gap: 5px;
+}
+.tour-route__hint-satz {
+  font-size: 0.86rem; line-height: 1.5; color: var(--paper-dim); max-width: 62ch;
+}
+.tour-route__quelle {
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase; color: var(--paper-faint);
+}
+
+@media (max-width: 560px) {
+  .tour-route__kmtext { font-size: 16px; }
+  /* Die Legende wuerde hier auf dem Weg liegen — die Zahlen stehen auf dem
+     Handy ohnehin im Faktenstrip weiter oben. */
+  .tour-route__legende { display: none; }
+  /* Und weil sie weg ist, faellt auch ihr Versatz weg: sonst haengt der
+     Massstab an der Hoehe eines Kastens, den es hier gar nicht gibt. */
+  .tour-route__massstab--oben { top: 14px; }
+  .tour-route__massstab--unten { bottom: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tour-route.in .tour-route__weg { animation: none; stroke-dashoffset: 0; }
+  .tour-route__kms, .tour-route__start, .tour-route__gipfel { transition: none; }
+}

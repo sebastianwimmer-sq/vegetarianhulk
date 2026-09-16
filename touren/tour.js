@@ -341,4 +341,213 @@
       })
       .catch(function () { /* lautlos: eine Tour ohne Live-Wert ist kein Fehler */ });
   })();
+
+  /* ---------- Wegverlauf ----------
+     `data-route="lat,lon lat,lon …"` am SVG ist die EINZIGE Quelle, genau wie
+     data-punkte beim Profil. Die statischen Pfade im HTML sind der Fallback
+     ohne JS; hier werden sie aus denselben Daten neu gerechnet.
+
+     Die Projektion MUSS die aus scripts/route-einbauen.py sein — sonst springt
+     die Linie beim Laden sichtbar um. Beide rechnen: x nach Osten, y nach
+     Sueden, Mittelpunkt in die Mitte der viewBox. */
+  (function () {
+    var route = document.querySelector('.tour-route');
+    if (!route) return;
+
+    var svg = route.querySelector('.tour-route__svg');
+    var weg = route.querySelector('.tour-route__weg');
+    if (!svg || !weg) return;
+
+    var roh = (svg.getAttribute('data-route') || '').trim();
+    if (!roh) return;
+    var punkte = roh.split(/\s+/).map(function (p) {
+      var t = p.split(',');
+      return [parseFloat(t[0]), parseFloat(t[1])];
+    }).filter(function (p) { return isFinite(p[0]) && isFinite(p[1]); });
+    if (punkte.length < 2) return;
+
+    var kasten = (svg.getAttribute('viewBox') || '0 0 900 600').split(/\s+/).map(Number);
+    var kBreite = kasten[2], kHoehe = kasten[3];
+
+    /* --- Projektion, gleiche Formeln wie im Bau-Skript --- */
+    var lat0 = punkte.reduce(function (a, p) { return a + p[0]; }, 0) / punkte.length;
+    var k = Math.cos(lat0 * Math.PI / 180);
+    var xy = punkte.map(function (p) {
+      return [(p[1] - punkte[0][1]) * 111320 * k, -(p[0] - punkte[0][0]) * 111320];
+    });
+
+    var xs = xy.map(function (p) { return p[0]; });
+    var ys = xy.map(function (p) { return p[1]; });
+    var minX = Math.min.apply(null, xs), maxX = Math.max.apply(null, xs);
+    var minY = Math.min.apply(null, ys), maxY = Math.max.apply(null, ys);
+    var breiteM = Math.max(maxX - minX, 1), hoeheM = Math.max(maxY - minY, 1);
+    var rand = Math.max(breiteM, hoeheM) * 0.09;
+    breiteM += 2 * rand; hoeheM += 2 * rand;
+    if (hoeheM / breiteM > 1.50) breiteM = hoeheM / 1.50;
+    else if (hoeheM / breiteM < 0.46) hoeheM = breiteM * 0.46;
+
+    var mitteX = (maxX + minX) / 2, mitteY = (maxY + minY) / 2;
+    var skala = kBreite / breiteM;
+    var px = xy.map(function (p) {
+      return [(p[0] - mitteX) * skala + kBreite / 2,
+              (p[1] - mitteY) * skala + kHoehe / 2];
+    });
+
+    /* --- Pfad: leicht geglaettet, damit es nach Weg aussieht und nicht nach
+           Rohdaten (identisch zu bogen() im Bau-Skript) --- */
+    function pfad(p) {
+      if (p.length < 3) return 'M' + p.map(function (q) { return q[0] + ',' + q[1]; }).join(' L');
+      var teile = ['M' + p[0][0].toFixed(1) + ',' + p[0][1].toFixed(1)];
+      for (var i = 1; i < p.length - 1; i++) {
+        teile.push('Q' + p[i][0].toFixed(1) + ',' + p[i][1].toFixed(1) + ' '
+          + ((p[i][0] + p[i + 1][0]) / 2).toFixed(1) + ','
+          + ((p[i][1] + p[i + 1][1]) / 2).toFixed(1));
+      }
+      teile.push('L' + p[p.length - 1][0].toFixed(1) + ',' + p[p.length - 1][1].toFixed(1));
+      return teile.join(' ');
+    }
+
+    var d = pfad(px);
+    weg.setAttribute('d', d);
+    var schatten = route.querySelector('.tour-route__schatten');
+    if (schatten) schatten.setAttribute('d', d);
+
+    var start = route.querySelector('.tour-route__start');
+    if (start) {
+      start.setAttribute('cx', px[0][0].toFixed(1));
+      start.setAttribute('cy', px[0][1].toFixed(1));
+    }
+    var gipfel = route.querySelector('.tour-route__gipfel');
+    var letzter = px[px.length - 1];
+    if (gipfel) {
+      gipfel.setAttribute('d',
+        'M' + letzter[0].toFixed(1) + ',' + (letzter[1] + 9).toFixed(1)
+        + ' V' + (letzter[1] - 13).toFixed(1)
+        + ' M' + (letzter[0] - 7).toFixed(1) + ',' + (letzter[1] - 6).toFixed(1)
+        + ' H' + (letzter[0] + 7).toFixed(1));
+    }
+
+    /* Schilder sitzen als HTML ueber der Karte, also in Prozent nachfuehren. */
+    function schild(waehler, p) {
+      var el = route.querySelector(waehler);
+      if (!el) return;
+      var ax = p[0] / kBreite, ay = p[1] / kHoehe;
+      el.style.left = (ax * 100).toFixed(1) + '%';
+      el.style.top = (ay * 100).toFixed(1) + '%';
+      /* Am Rand nicht zentrieren, sonst laeuft der Name aus dem Bild —
+         gleiche Regel wie anker() in scripts/route-einbauen.py. */
+      el.style.transform = 'translate('
+        + (ax > 0.66 ? '-100%' : ax < 0.34 ? '0' : '-50%') + ', '
+        + (ay < 0.16 ? '120%' : '-190%') + ')';
+    }
+    schild('.tour-route__schild--start', px[0]);
+    schild('.tour-route__schild--gipfel', letzter);
+
+    /* --- Strecke an jedem Punkt, fuer Kilometermarken und Ablesen --- */
+    function meter(a, b) {
+      var breite = (a[0] + b[0]) / 2 * Math.PI / 180;
+      return Math.hypot((b[0] - a[0]) * 111320,
+                        (b[1] - a[1]) * 111320 * Math.cos(breite));
+    }
+    var summe = [0];
+    for (var i = 1; i < punkte.length; i++) {
+      summe.push(summe[i - 1] + meter(punkte[i - 1], punkte[i]) / 1000);
+    }
+    var gesamt = summe[summe.length - 1];
+
+    var marken = route.querySelector('.tour-route__kms');
+    if (marken) {
+      var schritt = gesamt <= 12 ? 1 : 2;
+      marken.textContent = '';
+      for (var ziel = schritt; ziel < gesamt; ziel += schritt) {
+        for (var j = 1; j < summe.length; j++) {
+          if (summe[j] < ziel) continue;
+          var t = (ziel - summe[j - 1]) / ((summe[j] - summe[j - 1]) || 1);
+          var mx = px[j - 1][0] + (px[j][0] - px[j - 1][0]) * t;
+          var my = px[j - 1][1] + (px[j][1] - px[j - 1][1]) * t;
+          /* Eine Marke direkt auf Start oder Gipfel verdeckt genau den
+             Punkt, auf den es ankommt — die 8 lag auf dem Gipfelkreuz. */
+          var zuNah = Math.hypot(mx - px[0][0], my - px[0][1]) < 26
+            || Math.hypot(mx - letzter[0], my - letzter[1]) < 26;
+          if (zuNah) break;
+          var kreis = document.createElementNS(SVG_NS, 'circle');
+          kreis.setAttribute('class', 'tour-route__km');
+          kreis.setAttribute('cx', mx.toFixed(1));
+          kreis.setAttribute('cy', my.toFixed(1));
+          kreis.setAttribute('r', '4.5');
+          var text = document.createElementNS(SVG_NS, 'text');
+          text.setAttribute('class', 'tour-route__kmtext');
+          text.setAttribute('x', mx.toFixed(1));
+          text.setAttribute('y', (my - 11).toFixed(1));
+          text.textContent = ziel;
+          marken.appendChild(kreis);
+          marken.appendChild(text);
+          break;
+        }
+      }
+    }
+
+    /* --- Ablesen: naechster Punkt auf der Route zum Finger. Zeigt Strecke und,
+           wenn das Hoehenprofil auf derselben Seite steht, die Hoehe dort. --- */
+    var wert = route.querySelector('.tour-route__wert');
+    var profilPunkte = null;
+    var profilSvg = document.querySelector('.tour-profil .tour-svg');
+    if (profilSvg && profilSvg.getAttribute('data-punkte')) {
+      profilPunkte = profilSvg.getAttribute('data-punkte').trim().split(/\s+/)
+        .map(function (p) { var t = p.split(','); return [parseFloat(t[0]), parseFloat(t[1])]; });
+    }
+
+    function hoeheBei(km) {
+      if (!profilPunkte) return null;
+      for (var i = 1; i < profilPunkte.length; i++) {
+        if (profilPunkte[i][0] < km) continue;
+        var spanne = profilPunkte[i][0] - profilPunkte[i - 1][0] || 1;
+        var t = (km - profilPunkte[i - 1][0]) / spanne;
+        return profilPunkte[i - 1][1] + (profilPunkte[i][1] - profilPunkte[i - 1][1]) * t;
+      }
+      return profilPunkte[profilPunkte.length - 1][1];
+    }
+
+    if (wert) {
+      svg.addEventListener('pointermove', function (e) {
+        var mass = svg.getBoundingClientRect();
+        var zx = (e.clientX - mass.left) / mass.width * kBreite;
+        var zy = (e.clientY - mass.top) / mass.height * kHoehe;
+
+        var beste = 0, bestAbstand = Infinity;
+        for (var i = 0; i < px.length; i++) {
+          var dd = (px[i][0] - zx) * (px[i][0] - zx) + (px[i][1] - zy) * (px[i][1] - zy);
+          if (dd < bestAbstand) { bestAbstand = dd; beste = i; }
+        }
+        /* Nur ablesen, wenn der Finger halbwegs auf dem Weg liegt — sonst
+           zeigt die Karte irgendeinen Wert fuer eine leere Flaeche an. */
+        if (Math.sqrt(bestAbstand) > kBreite * 0.09) { route.classList.remove('liest'); return; }
+
+        var km = summe[beste];
+        var hoehe = hoeheBei(km);
+        wert.innerHTML = '<b>' + km.toFixed(1).replace('.', ',') + ' km</b>'
+          + (hoehe ? ' · ' + Math.round(hoehe).toLocaleString('de-DE') + ' m' : '');
+        wert.style.left = (px[beste][0] / kBreite * 100).toFixed(1) + '%';
+        wert.style.top = (px[beste][1] / kHoehe * 100).toFixed(1) + '%';
+        route.classList.add('liest');
+      });
+      ['pointerleave', 'pointercancel'].forEach(function (n) {
+        svg.addEventListener(n, function () { route.classList.remove('liest'); });
+      });
+      window.addEventListener('blur', function () { route.classList.remove('liest'); });
+    }
+
+    /* --- Aufziehen beim Sichtbarwerden, wie beim Profil --- */
+    if (!('IntersectionObserver' in window) || sanftBevorzugt) {
+      route.classList.add('in');
+    } else {
+      var beob = new IntersectionObserver(function (eintraege) {
+        eintraege.forEach(function (e) {
+          if (e.isIntersecting) { route.classList.add('in'); beob.disconnect(); }
+        });
+      }, { rootMargin: '0px 0px -15% 0px' });
+      beob.observe(route);
+    }
+  })();
+
 })();

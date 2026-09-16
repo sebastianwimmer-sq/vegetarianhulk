@@ -310,6 +310,17 @@ const PFLICHT = [
   ['data-lon="',                  'Wetter-Koordinate'],
   ['data-hoehe="',                'Gipfelhoehe fuers Wetter'],
   ["script-src 'self'",           'CSP ohne unsafe-inline'],
+
+  /* Wegverlauf, 16.09.2026. Die Karte wird zur Bauzeit aus OpenStreetMap
+     gebaut (scripts/route-holen.py + route-einbauen.py). Ohne diese Zeilen
+     haette die naechste Tour einfach keine Route — und es faellt erst auf,
+     wenn jemand zwei Seiten nebeneinander legt. */
+  ['tour-route',                  'Wegverlauf — route-holen.py + route-einbauen.py laufen lassen'],
+  ['data-route="',                'Koordinaten der Route (einzige Quelle, tour.js zeichnet daraus)'],
+  ['tour-route__weg',             'die Linie selbst — tour.js UEBERSCHREIBT nur, es legt nichts an'],
+  ['tour-route__schatten',        'Unterlegung der Linie (sonst steht sie flach auf der Flaeche)'],
+  ['OpenStreetMap-Mitwirkende',   'Kartendaten-Nennung — ODbL verlangt sie'],
+  ['tour-route__massstab',        'Massstabsbalken — ohne ihn ist die Karte eine Zeichnung ohne Groesse'],
 ];
 
 /* Wendungen, die auf KEINER Tour stehen duerfen. Zwei Sorten:

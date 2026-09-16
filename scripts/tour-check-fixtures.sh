@@ -56,6 +56,18 @@ pruefe "JSON-LD kaputt" \
 pruefe "Vorlagen-Rest: Link auf die falsche Tour" \
   's{/touren/kneifelspitze/gipfelkreuz-nacht\.jpg}{/touren/ristfeuchthorn/ausblick.jpg}' \
   "touren/$SLUG/index.html"
+pruefe "Wegverlauf ganz entfernt" \
+  's{<section class="tour-route.*?</section>}{}s' \
+  "touren/$SLUG/index.html"
+pruefe "Route ohne Koordinaten (nur der statische Pfad bleibt)" \
+  's{data-route="[^"]*"}{}' \
+  "touren/$SLUG/index.html"
+pruefe "Kartendaten-Nennung fehlt (ODbL verlangt sie)" \
+  's{OpenStreetMap-Mitwirkende}{irgendwem}g' \
+  "touren/$SLUG/index.html"
+pruefe "Linie fehlt — tour.js legt sie NICHT an" \
+  's{tour-route__weg}{tour-route__nichts}g' \
+  "touren/$SLUG/index.html"
 pruefe "Liste nutzt data-hm statt data-thm" \
   's{data-thm="456"}{data-hm="456"}' \
   "touren/index.html"
