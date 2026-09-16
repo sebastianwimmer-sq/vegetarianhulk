@@ -343,6 +343,7 @@ const OPTIONAL = [
   // erst nach `hoehenkarte.py`, und ein Tor, das dann rot steht, wird ignoriert.
   // Als Paritaets-Hinweis faellt trotzdem auf, wenn eine Tour ohne dasteht.
   ['tour-route__hoehenlinie', 'Hoehenlinien (scripts/hoehenkarte.py)'],
+  ['tour-route__luftbild',    'Luftbild-Untergrund (scripts/satellit.py)'],
 ];
 
 function pruefeParitaet(slugs) {

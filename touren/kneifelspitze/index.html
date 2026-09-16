@@ -48,7 +48,7 @@
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
 <link rel="stylesheet" href="/v3.css?v=9a2d8dc4">
-<link rel="stylesheet" href="/touren/tour.css?v=54cb9977">
+<link rel="stylesheet" href="/touren/tour.css?v=2709a105">
 <style>
   /* Nur was diese eine Tour ausmacht: der Bildausschnitt des Nacht-Heros.
      Alles andere kommt aus /touren/tour.css. */
@@ -209,8 +209,7 @@
     <span class="tour-profil__marke tour-profil__marke--gipfel tour-profil__marke--sonne"
           style="left: calc(49.2% + 12px);">Kneifelspitze · 1.188 m</span>
     </div>
-    <p class="tour-profil__hint">Fahr über das Profil — Höhe und Distanz an jeder Stelle.
-    Werte aus der Strava-Aufzeichnung.</p>
+    <p class="tour-profil__hint">Zum Ablesen drüberfahren · Werte aus Strava.</p>
       </section>
 
       <!-- WEGVERLAUF (erzeugt: scripts/route-einbauen.py) -->
@@ -225,8 +224,9 @@
                aria-label="Wegverlauf Kneifelspitze: 3,06 Kilometer vom Start zum Gipfel, nach OpenStreetMap"
                data-route="47.66552,13.003 47.66562,13.00324 47.66624,13.00381 47.66638,13.00414 47.66645,13.00447 47.66651,13.00485 47.66657,13.00527 47.66667,13.00576 47.66663,13.0062 47.66636,13.00607 47.66603,13.00621 47.66566,13.00642 47.66545,13.00703 47.66549,13.00734 47.6655,13.00787 47.66566,13.00832 47.66577,13.0089 47.66587,13.0095 47.66596,13.00983 47.66598,13.01033 47.666,13.01098 47.66588,13.01141 47.66581,13.01195 47.66585,13.01276 47.66577,13.01296 47.66549,13.01355 47.66553,13.01401 47.66559,13.0144 47.66564,13.01473 47.66563,13.01532 47.66564,13.01566 47.66546,13.01609 47.66538,13.01641 47.66522,13.01651 47.6649,13.01672 47.66439,13.01709 47.6642,13.01705 47.66385,13.01685 47.66334,13.0164 47.66319,13.01648 47.66309,13.01607 47.66281,13.01627 47.66255,13.0162 47.66264,13.01565 47.66246,13.01577 47.66211,13.01571 47.66189,13.01578 47.66163,13.01558 47.66156,13.01604 47.66139,13.01626 47.66121,13.01582 47.66094,13.01556 47.66088,13.01595 47.66075,13.01629 47.66081,13.01662 47.66082,13.01752 47.66081,13.01811 47.66051,13.01805 47.66043,13.01816 47.6603,13.01861 47.66016,13.01885 47.65972,13.01931 47.65981,13.02021 47.66004,13.02077 47.65957,13.02154 47.65957,13.02181 47.65922,13.02181 47.65908,13.02186 47.65877,13.02232 47.65864,13.0221 47.65857,13.02179 47.65863,13.02147 47.6586,13.02098 47.65861,13.02053 47.65876,13.02014 47.6587,13.01973 47.65846,13.01946 47.65842,13.01902 47.65838,13.01868 47.65827,13.0182 47.65817,13.01785"
                data-km="3.06">
+            <image class="tour-route__luftbild" x="0" y="0" width="900" height="636" preserveAspectRatio="none" href="/touren/kneifelspitze/gelaende.jpg" aria-hidden="true"/>
             <!-- Hoehenlinien aus EU-DEM, zur Bauzeit gerechnet. Sie liegen
-                 GANZ unten, damit der Weg darueber liest. -->
+                 unter dem Weg, damit er darueber liest. -->
             <g class="tour-route__relief" aria-hidden="true">
             <path class="tour-route__hoehenlinie" d="M817,0 L817,15 L833,29 L871,48 L900,56"/>
             <path class="tour-route__hoehenlinie tour-route__hoehenlinie--betont" d="M738,0 L757,29 L771,46 L786,59 L833,87 L857,106 L871,113 L900,116"/>
@@ -289,8 +289,8 @@
           </div>
         </div>
         <p class="tour-route__hint">
-          <span class="tour-route__hint-satz">Der Weg nach oben, aus OpenStreetMap-Daten gezeichnet — keine GPS-Spur. Sie deckt sich bis auf 80 Meter mit der Aufzeichnung.</span>
-          <span class="tour-route__quelle">Kartendaten © OpenStreetMap-Mitwirkende, ODbL · Höhenlinien alle 50 m aus EU-DEM (Copernicus)</span>
+          <span class="tour-route__hint-satz">Weg laut OpenStreetMap, keine GPS-Spur</span>
+          <span class="tour-route__quelle">© OpenStreetMap-Mitwirkende · EU-DEM · Sentinel-2 cloudless (EOX, CC BY 4.0)</span>
         </p>
       </section>
       <!-- /WEGVERLAUF -->

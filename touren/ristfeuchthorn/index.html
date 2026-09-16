@@ -48,7 +48,7 @@
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
 <link rel="stylesheet" href="/v3.css?v=9a2d8dc4">
-<link rel="stylesheet" href="/touren/tour.css?v=54cb9977">
+<link rel="stylesheet" href="/touren/tour.css?v=2709a105">
 <style>
   /* Nur der Bildausschnitt dieses Heros — alles andere aus /touren/tour.css. */
   .tour-hero { --hero-fokus: center 38%; }
@@ -165,8 +165,7 @@
     <span class="tour-profil__marke tour-profil__marke--gipfel"
           style="left: calc(40% + 12px);">Ristfeuchthorn · 1.569 m</span>
     </div>
-    <p class="tour-profil__hint">Fahr über das Profil — Höhe und Distanz an jeder Stelle.
-    Werte aus dem Bergfex-Profil nachgezeichnet, auf 10 m gerundet.</p>
+    <p class="tour-profil__hint">Zum Ablesen drüberfahren · Verlauf aus dem Bergfex-Profil nachgezeichnet, auf 10 m gerundet.</p>
       </section>
 
       <!-- WEGVERLAUF (erzeugt: scripts/route-einbauen.py) -->
@@ -181,8 +180,9 @@
                aria-label="Wegverlauf Ristfeuchthorn · 1.569 m: 4,38 Kilometer vom Start zum Gipfel, nach OpenStreetMap"
                data-route="47.68936,12.80407 47.68943,12.80403 47.69013,12.80363 47.69037,12.80397 47.6905,12.80328 47.69047,12.80265 47.69035,12.80211 47.69027,12.80163 47.69009,12.80086 47.69001,12.80042 47.69018,12.79966 47.69013,12.79948 47.68964,12.79872 47.68949,12.79818 47.68931,12.79738 47.68908,12.79702 47.68871,12.79653 47.68856,12.79612 47.68849,12.79537 47.68863,12.79496 47.68883,12.79443 47.68902,12.79435 47.68933,12.79384 47.6896,12.79379 47.68998,12.79415 47.69029,12.7943 47.69058,12.79452 47.69096,12.79489 47.69138,12.7952 47.69174,12.79548 47.69215,12.79592 47.69251,12.79629 47.69278,12.79671 47.69319,12.79702 47.69354,12.79697 47.69405,12.79688 47.69438,12.79677 47.69478,12.79661 47.69504,12.79607 47.69559,12.79598 47.69601,12.79587 47.69638,12.79577 47.69661,12.79564 47.69684,12.79479 47.69653,12.7947 47.69622,12.79424 47.69588,12.79433 47.69571,12.79425 47.69565,12.79326 47.69567,12.79288 47.69523,12.79283 47.69508,12.79244 47.69484,12.79221 47.69442,12.79213 47.69411,12.79156 47.69405,12.7909 47.69431,12.79073 47.69395,12.79024 47.69362,12.79014 47.69344,12.79059 47.69323,12.7904 47.69292,12.78962 47.69295,12.78908 47.69272,12.78857 47.69279,12.78832 47.69319,12.7879 47.69362,12.78771 47.69404,12.78727 47.69438,12.78728 47.69495,12.78746 47.69528,12.78742 47.69515,12.78686 47.69495,12.7864 47.69498,12.78566 47.69481,12.78505 47.69448,12.7846 47.6942,12.78452 47.69384,12.78474 47.69337,12.78473 47.69301,12.78482 47.69251,12.78456 47.69243,12.78448 47.69198,12.78361 47.6919,12.78289 47.69221,12.7825 47.69254,12.78248 47.69305,12.78209 47.69338,12.78206 47.69387,12.78186 47.69431,12.78179"
                data-km="4.38">
+            <image class="tour-route__luftbild" x="0" y="0" width="900" height="562" preserveAspectRatio="none" href="/touren/ristfeuchthorn/gelaende.jpg" aria-hidden="true"/>
             <!-- Hoehenlinien aus EU-DEM, zur Bauzeit gerechnet. Sie liegen
-                 GANZ unten, damit der Weg darueber liest. -->
+                 unter dem Weg, damit er darueber liest. -->
             <g class="tour-route__relief" aria-hidden="true">
             <path class="tour-route__hoehenlinie" d="M653,0 L657,10 L671,31 L686,47 L699,58 L714,62 L743,65 L751,72 L758,86 L759,101 L754,130 L743,153 L713,202 L686,259 L681,303 L677,317 L663,346 L651,360 L604,404 L586,419 L520,461 L508,476 L486,508 L457,542 L446,562"/>
             <path class="tour-route__hoehenlinie" d="M790,0 L800,16 L829,38 L862,72 L882,101 L888,115 L896,158 L894,187 L886,219 L862,274 L871,285 L886,279 L888,288 L886,303 L882,317 L881,331 L890,360 L900,380"/>
@@ -247,8 +247,8 @@
           </div>
         </div>
         <p class="tour-route__hint">
-          <span class="tour-route__hint-satz">Der Weg nach oben, aus OpenStreetMap-Daten gezeichnet — keine GPS-Spur. Eingezeichnet ist der kürzeste Weg — die Aufzeichnung ist 0,6 km länger.</span>
-          <span class="tour-route__quelle">Kartendaten © OpenStreetMap-Mitwirkende, ODbL · Höhenlinien alle 100 m aus EU-DEM (Copernicus)</span>
+          <span class="tour-route__hint-satz">Weg laut OpenStreetMap, keine GPS-Spur · Aufzeichnung 0,6 km länger</span>
+          <span class="tour-route__quelle">© OpenStreetMap-Mitwirkende · EU-DEM · Sentinel-2 cloudless (EOX, CC BY 4.0)</span>
         </p>
       </section>
       <!-- /WEGVERLAUF -->

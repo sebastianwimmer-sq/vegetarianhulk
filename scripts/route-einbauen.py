@@ -315,6 +315,14 @@ def abschnitt_bauen(slug, route, html):
                 f'{" tour-route__hoehenlinie--betont" if betont else ""}" d="{d}"/>'
                 for _, betont, d in linien)
 
+    # Luftbild (scripts/satellit.py), falls vorhanden — Sentinel-2 cloudless,
+    # CC BY 4.0. Liegt GANZ unten und traegt die Karte, statt sie zu uebernehmen.
+    luftbild = ""
+    if (WURZEL / "touren" / slug / "gelaende.jpg").exists():
+        luftbild = (f'<image class="tour-route__luftbild" x="0" y="0" '
+                    f'width="{BREITE}" height="{hoehe_px}" preserveAspectRatio="none" '
+                    f'href="/touren/{slug}/gelaende.jpg" aria-hidden="true"/>\n            ')
+
     summe = strecken(punkte)
     marken = kilometer_marken(punkte, px, summe)
     balken_anteil, balken_text = massstab(skala, hoehe_px)
@@ -377,35 +385,35 @@ def abschnitt_bauen(slug, route, html):
     # Wie nah die geroutete Laenge an der aufgezeichneten liegt, steht im Text.
     # Ohne diese Zahl waere "nach OpenStreetMap" eine Behauptung ohne Beleg.
     if ist_spur:
-        satz = ("Die tatsächlich gegangene Spur, aus der GPS-Aufzeichnung. "
-                "Kilometermarken je nach Länge alle 1 oder 2 km.")
-        kopf_label, kopf_zusatz = "Gegangene Spur", f"{km_text} km"
+        satz = "Aufgezeichnete Spur."
+        kopf_label = "Gegangene Spur"
     else:
         satz = None
-        kopf_label, kopf_zusatz = "Aufstieg", None
+        kopf_label = "Aufstieg"
 
+    # Kurz halten. Der Abstand zur Aufzeichnung gehoert trotzdem hin — ohne ihn
+    # waere "nach OpenStreetMap" eine Behauptung ohne Beleg.
     unterschied = abs(route["km"] - route["erwartet_km"]) * 1000 if route.get("erwartet_km") else 0
-    if unterschied < 25:
-        naehe = "Sie deckt sich mit der Aufzeichnung."
-    elif unterschied < 120:
-        naehe = f"Sie deckt sich bis auf {unterschied:.0f} Meter mit der Aufzeichnung."
+    if unterschied < 120:
+        naehe = ""
     else:
-        weiter = "länger" if route["km"] > route["erwartet_km"] else "kürzer"
         km_diff = f"{unterschied / 1000:.1f}".replace(".", ",")
-        naehe = (f"Eingezeichnet ist der kürzeste Weg — die Aufzeichnung ist "
-                 f"{km_diff} km {'kürzer' if weiter == 'länger' else 'länger'}.")
+        laenger = "länger" if route["km"] < route["erwartet_km"] else "kürzer"
+        naehe = f" · Aufzeichnung {km_diff} km {laenger}"
 
-    relief_quelle = (f" · Höhenlinien alle {relief_stufe} m aus EU-DEM (Copernicus)"
-                     if relief_stufe else "")
+    hinweis_satz = satz if satz else f"Weg laut OpenStreetMap, keine GPS-Spur{naehe}"
 
-    if satz:
-        hinweis_satz = satz
-    else:
-        hinweis_satz = ("Der Weg nach oben, aus OpenStreetMap-Daten gezeichnet — "
-                        f"keine GPS-Spur. {naehe}")
-
-    quelle_weg = ("GPS-Aufzeichnung" if ist_spur
-                  else "Kartendaten © OpenStreetMap-Mitwirkende, ODbL")
+    # Nennung so knapp wie die Lizenzen es zulassen: ODbL und CC BY 4.0
+    # verlangen die Quelle, nicht einen Absatz.
+    # "OpenStreetMap-Mitwirkende" ist die von der ODbL vorgeschriebene Form —
+    # beim Kuerzen war daraus "© OpenStreetMap" geworden, was sie nicht erfuellt.
+    # Das Tor hat es gefangen; kuerzen darf man den Rest, nicht die Pflichtform.
+    quellen = ["GPS-Aufzeichnung"] if ist_spur else ["© OpenStreetMap-Mitwirkende"]
+    if relief_stufe:
+        quellen.append("EU-DEM")
+    if luftbild:
+        quellen.append("Sentinel-2 cloudless (EOX, CC BY 4.0)")
+    quelle_weg = " · ".join(quellen)
 
     return f"""{ANFANG}
       <section class="tour-route flaeche-wald" style="--span: 8">
@@ -419,8 +427,8 @@ def abschnitt_bauen(slug, route, html):
                aria-label="Wegverlauf {name}: {km_text} Kilometer vom Start zum Gipfel, nach OpenStreetMap"
                data-route="{' '.join(f'{a},{b}' for a, b in punkte)}"
                data-km="{route['km']}">
-            <!-- Hoehenlinien aus EU-DEM, zur Bauzeit gerechnet. Sie liegen
-                 GANZ unten, damit der Weg darueber liest. -->
+            {luftbild}<!-- Hoehenlinien aus EU-DEM, zur Bauzeit gerechnet. Sie liegen
+                 unter dem Weg, damit er darueber liest. -->
             <g class="tour-route__relief" aria-hidden="true">
             {relief_pfade}
             </g>
@@ -467,7 +475,7 @@ def abschnitt_bauen(slug, route, html):
         </div>
         <p class="tour-route__hint">
           <span class="tour-route__hint-satz">{hinweis_satz}</span>
-          <span class="tour-route__quelle">{quelle_weg}{relief_quelle}</span>
+          <span class="tour-route__quelle">{quelle_weg}</span>
         </p>
       </section>
       {ENDE}"""
