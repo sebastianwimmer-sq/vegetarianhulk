@@ -44,12 +44,13 @@ const TYPEN = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascrip
   '.jpg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml',
   '.json': 'application/json', '.woff2': 'font/woff2', '.ico': 'image/x-icon' };
 
-/* Fuer den Selbsttest wird v3.js beim Ausliefern auf das alte Verhalten
-   zurueckgebaut: EINE Schwelle. Die Datei auf der Platte bleibt unberuehrt. */
-function zurueckbauen(js) {
-  const alt = js.replace(/var OBEN_BIS = \d+, UNTEN_AB = \d+;/,
-                         'var OBEN_BIS = 120, UNTEN_AB = 120;');
-  if (alt === js) throw new Error('Rueckbau greift nicht — Muster in v3.js geaendert?');
+/* Rueckbau auf den Zustand vor dem 17.09.2026: oben per `top` verankert statt
+   nach oben geschoben. Zwischen `top` und `bottom` kann kein Browser animieren
+   — die Leiste springt dann. Nur im Speicher, die Datei bleibt unberuehrt. */
+function zurueckbauen(css) {
+  const alt = css.replace(/translate: -50% var\(--nav-oben, -740px\);/,
+                          'top: 0; bottom: auto; translate: -50% 22px;');
+  if (alt === css) throw new Error('Rueckbau greift nicht — Muster in v3.css geaendert?');
   return alt;
 }
 
@@ -60,7 +61,7 @@ function server() {
       if (pfad.endsWith('/')) pfad += 'index.html';
       try {
         let inhalt = await readFile(pfad);
-        if (SELBSTTEST && pfad.endsWith('v3.js')) inhalt = zurueckbauen(inhalt.toString());
+        if (SELBSTTEST && pfad.endsWith('v3.css')) inhalt = zurueckbauen(inhalt.toString());
         antwort.writeHead(200, { 'Content-Type': TYPEN[extname(pfad)] || 'application/octet-stream' });
         antwort.end(inhalt);
       } catch { antwort.writeHead(404); antwort.end('weg'); }
@@ -81,7 +82,7 @@ async function messen(engine, port, weite) {
     const nav = document.querySelector('.nav');
     window.__stop = setInterval(() => {
       const s = getComputedStyle(nav);
-      window.__log.push({ y: Math.round(window.scrollY),
+      window.__log.push({ y: Math.round(window.scrollY), pos: Math.round(nav.getBoundingClientRect().top),
         op: +(+s.opacity).toFixed(2), top: nav.classList.contains('at-top') });
     }, 30);
   });
@@ -96,17 +97,34 @@ async function messen(engine, port, weite) {
   const ergebnis = await seite.evaluate(() => {
     clearInterval(window.__stop);
     const l = window.__log;
-    let blinker = 0, war = true, falsch = 0;
-    for (const x of l) {
+    let blinker = 0, war = true, falsch = 0, sprung = 0;
+    const unten = Math.round(window.innerHeight - 18
+      - document.querySelector('.nav').getBoundingClientRect().height);
+    const ruhe = (q) => Math.abs(q - 22) < 25 || Math.abs(q - unten) < 25;
+
+    for (let i = 0; i < l.length; i++) {
+      const x = l[i];
       const sichtbar = x.op > 0.05;
       if (war && !sichtbar) blinker++;
       war = sichtbar;
-      /* Nur ausserhalb des Haltebands bewerten — im Band ist BEIDES richtig. */
+
+      /* SPRUNG = von RUHELAGE zu RUHELAGE in einer einzigen Probe. Genau das
+         tat die Leiste bis zum 17.09.2026: oben per `top`, unten per `bottom`
+         verankert — dazwischen kann kein Browser animieren. Landet ein grosser
+         Ortswechsel dagegen MITTEN auf der Strecke, war es eine ausgelassene
+         Messprobe waehrend schneller Fahrt (WebKit und Firefox tun das bei
+         Richtungswechseln) und kein Defekt. */
+      if (i && x.op > 0.5 && l[i-1].op > 0.5
+          && Math.abs(x.pos - l[i-1].pos) > (unten - 22) * 0.6
+          && ruhe(l[i-1].pos) && ruhe(x.pos)) sprung++;
+
+      /* FALSCH nur im RUHENDEN Zustand: waehrend der Fahrt steht die Klasse
+         schon auf dem Ziel, die Leiste aber noch unterwegs — das ist richtig. */
       const soll = x.y <= 60 ? true : (x.y >= 340 ? false : null);
-      if (soll !== null && x.op > 0.9 && soll !== x.top) falsch++;
+      if (ruhe(x.pos) && soll !== null && x.op > 0.9 && soll !== x.top) falsch++;
     }
     const e = l[l.length - 1];
-    return { blinker, falsch, proben: l.length, haengt: !(e.op > 0.9), ende: e };
+    return { blinker, falsch, sprung, proben: l.length, haengt: !(e.op > 0.9), ende: e };
   });
   await browser.close();
   return ergebnis;
@@ -121,16 +139,25 @@ for (const [name, engine] of [['WebKit', engines.webkit], ['Chromium', engines.c
   for (const [weite, art] of [[WACKELN, 'Wackeln'], [GROSS, 'grosser Schwung']]) {
     const r = await messen(engine, port, weite);
     zeilen.push(`  ${name.padEnd(9)}${art.padEnd(17)}Blinker ${String(r.blinker).padStart(2)}`
-      + ` · falsch ${String(r.falsch).padStart(3)}/${r.proben}`
+      + ` · Sprünge ${String(r.sprung).padStart(2)}`
+      + ` · falsch ${String(r.falsch).padStart(2)}/${r.proben}`
       + (r.haengt ? '  *** HAENGT UNSICHTBAR ***' : ''));
 
     if (r.haengt) befunde.push(`${name}/${art}: Nav bleibt nach der Ruhephase unsichtbar`);
-    if (weite === WACKELN && r.blinker > 0)
-      befunde.push(`${name}: ${r.blinker} Aus-/Einblendungen beim kleinen Wackeln — dort darf nichts passieren`);
-    if (weite === WACKELN && r.falsch > 0)
-      befunde.push(`${name}: ${r.falsch} Proben mit falschem Zustand beim kleinen Wackeln`);
-    if (weite === GROSS && r.falsch > r.proben * 0.15)
-      befunde.push(`${name}: ${r.falsch}/${r.proben} Proben falsch beim grossen Schwung (über 15 %)`);
+    if (r.blinker > 0)
+      befunde.push(`${name}/${art}: ${r.blinker}× verschwindet die Leiste und kommt zurück`);
+
+    if (weite === WACKELN) {
+      /* Der Fall, den Sebi trifft: hier steht die Leiste still, Latte = null. */
+      if (r.sprung > 0) befunde.push(`${name}/Wackeln: ${r.sprung}× springt die Leiste über den Schirm`);
+      if (r.falsch > 0) befunde.push(`${name}/Wackeln: ${r.falsch} Proben zeigen den falschen Zustand`);
+    } else if (r.sprung > 2) {
+      /* Beim grossen Schwung wird zwoelfmal in drei Sekunden ueber den ganzen
+         Schirm gerissen. Ein einzelnes hinterherhinkendes Bild ist dort
+         Messrauschen — das hat den Lauf abwechselnd rot und gruen gemacht.
+         Eine echte Regression erzeugt zwei Dutzend Spruenge, keine zwei. */
+      befunde.push(`${name}/grosser Schwung: ${r.sprung}× springt die Leiste über den Schirm`);
+    }
   }
 }
 s.close();
@@ -139,10 +166,10 @@ zeilen.forEach((z) => console.log(z));
 
 if (SELBSTTEST) {
   if (befunde.length) {
-    console.log(`\n✓ Selbsttest: mit EINER Schwelle schlägt das Tor an (${befunde.length} Befunde).`);
+    console.log(`\n✓ Selbsttest: mit der alten Verankerung schlägt das Tor an (${befunde.length} Befunde).`);
     process.exit(0);
   }
-  console.error('\n✗ SELBSTTEST: der Rückbau auf eine Schwelle wurde NICHT erkannt — '
+  console.error('\n✗ SELBSTTEST: der Rückbau auf die alte Verankerung wurde NICHT erkannt — '
     + 'das Tor kann seinen eigenen Fehlerfall nicht sehen.');
   process.exit(1);
 }
@@ -150,7 +177,7 @@ if (SELBSTTEST) {
 if (befunde.length) {
   console.error(`\n✗ nav-check: ${befunde.length} Befund(e):`);
   befunde.forEach((b) => console.error(`    ${b}`));
-  console.error('\n  Die Schwellen stehen in v3.js (OBEN_BIS / UNTEN_AB).');
+  console.error('\n  Schwellen: v3.js (OBEN_BIS / UNTEN_AB) · Verankerung: v3.css (.nav.at-top).');
   process.exit(1);
 }
 console.log('\n✓ nav-check: kein Flackern, kein falscher Zustand, nichts hängt.');

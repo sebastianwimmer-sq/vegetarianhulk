@@ -872,10 +872,13 @@ footer .legal a:hover { color: var(--paper); }
    NAV — helle Papier-Pille, TYPOGRAFISCH (keine Standard-Icons).
    Nur der Berg bleibt — er ist Brand, nicht Icon-Set.
    ============================================================ */
-.nav.no-t { transition: none !important; }
-.nav.nav-out { opacity: 0; }
-.nav.pre:not(.at-top) { translate: -50% 30px !important; }
-.nav.pre.at-top { top: 0; bottom: auto; translate: -50% -10px !important; }
+/* Frueher standen hier drei Helfer (.no-t/.nav-out/.pre) fuer einen Trick:
+   ausblenden → Position umspringen → einblenden. Noetig war er, weil die Leiste
+   oben per `top` und unten per `bottom` verankert war — zwischen beiden kann
+   kein Browser animieren. Der Preis: bei JEDEM Verlassen des Seitenkopfs
+   verschwand die Nav fuer rund 400 ms. Sebi am 17.09.2026: "grauenhaft".
+   Jetzt bleibt sie IMMER unten verankert und wird im Kopf-Zustand nach oben
+   geschoben — `translate` ist animierbar, also gibt es nichts zu verstecken. */
 /* Bottom-verankert (kein 100vh!) — bleibt stabil, wenn die mobile URL-Leiste
    ein-/ausblendet. Fixed + bottom folgt dem sichtbaren Viewport (Insta/WhatsApp). */
 .nav { position: fixed; left: 50%; top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); z-index: 70;
@@ -893,6 +896,10 @@ footer .legal a:hover { color: var(--paper); }
     0 4px 10px rgba(0,0,0,0.42),
     0 22px 46px -14px rgba(0,0,0,0.72),
     0 46px 100px -30px rgba(0,0,0,0.6); }
+@media (prefers-reduced-motion: reduce) {
+  /* Kein Zurueckfallen auf das alte Ausblenden: einfach ohne Fahrt umsetzen. */
+  .nav { transition: none; }
+}
 .nav::after { content: ""; position: absolute; inset: 0; border-radius: var(--r-karte);
   background-image: var(--grain); opacity: 0.5; pointer-events: none; }
 .nav a { position: relative; display: inline-flex; align-items: center; justify-content: center;
@@ -917,7 +924,13 @@ footer .legal a:hover { color: var(--paper); }
 
 /* Nav oben-Zustand (Desktop, vor dem ersten Scroll): normale Zeile */
 @media (min-width: 900px) {
-  .nav.at-top { top: 0; bottom: auto; translate: -50% 22px;
+  .nav.at-top {
+    /* Die Leiste haengt unten (bottom: 18px) und wird nach oben geschoben.
+       Der Versatz ist ein reiner PIXELWERT, den v3.js ausrechnet und als
+       `--nav-oben` setzt. Ein calc() aus Viewport-Einheit und Elementhoehe
+       taete dasselbe — nur interpoliert WebKit es nicht zuverlaessig, und dann
+       springt die Leiste doch wieder. Pixel gegen Pixel animiert jede Engine. */
+    translate: -50% var(--nav-oben, -740px);
     -webkit-backdrop-filter: blur(16px) saturate(1.35);
             backdrop-filter: blur(16px) saturate(1.35);
     background:

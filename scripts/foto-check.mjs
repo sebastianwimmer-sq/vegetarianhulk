@@ -72,7 +72,16 @@ async function messen(seite) {
     await new Promise((r) => setTimeout(r, 700));
     window.scrollTo(0, 0);
   });
-  await seite.waitForTimeout(350);
+  /* Deterministisch warten, bis JEDES Bild wirklich geladen ist. Vorher stand
+     hier eine feste Frist — unter Last (die Tore laufen hintereinander, jedes
+     mit eigenem Browser) reichte sie einmal nicht, und der Lauf wurde rot,
+     waehrend derselbe Test allein gruen war. Ein Tor, das mal so und mal so
+     ausgeht, wird ignoriert. */
+  await seite.waitForFunction(() => {
+    const b = [...document.querySelectorAll('.tour-shot img')];
+    return b.length === 0 || b.every((i) => i.complete && i.naturalWidth > 0);
+  }, { timeout: 15000 }).catch(() => {});
+  await seite.waitForTimeout(150);
   return seite.evaluate(() => [...document.querySelectorAll('.tour-shot img')].map((bild) => {
     const kasten = bild.getBoundingClientRect();
     if (!kasten.width || !bild.naturalWidth) return null;

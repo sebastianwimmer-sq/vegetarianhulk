@@ -69,7 +69,7 @@
   if (!nav) return;
   var mq = window.matchMedia('(min-width: 900px)');
   var t = false;
-  var isTop = null, busy = false;
+  var isTop = null;
 
   /* ZWEI Schwellen statt einer. Vorher kippte die Leiste bei genau 120 px —
      wer beim schnellen Hin-und-Her-Scrollen um diesen Punkt herumwackelt, löste
@@ -93,34 +93,35 @@
     return isTop === null ? y < 120 : isTop;   /* im Band: Zustand halten */
   }
 
+  /* Der Weg nach oben in Pixeln: Fensterhoehe minus eigene Hoehe minus die
+     beiden Abstaende (18 unten + 22 oben). Muss VOR dem ersten Umschalten und
+     nach jeder Groessenaenderung stehen — und NICHT im selben Tick wie der
+     Klassenwechsel: dann hat WebKit keinen Startwert und springt fast die ganze
+     Strecke (gemessen: 22 → 735 px in 30 ms). */
+  function versatzSetzen() {
+    var h = nav.getBoundingClientRect().height;
+    if (!h) return;
+    nav.style.setProperty('--nav-oben', -(window.innerHeight - h - 40) + 'px');
+  }
+
   function update() {
     t = false;
     var want = willOben();
-    if (want === isTop || busy) return;
-    if (isTop === null) { isTop = want; nav.classList.toggle('at-top', want); return; }
-    isTop = want; busy = true;
-    nav.classList.add('nav-out');
-    setTimeout(function () {
-      /* Zustand JETZT lesen, nicht den von vor 210 ms. Sonst schaltet die
-         Leiste auf eine Scrollposition, die es nicht mehr gibt, und steht
-         danach sichtbar falsch da. */
-      want = willOben();
-      isTop = want;
-      nav.classList.add('no-t', 'pre');
-      nav.classList.toggle('at-top', want);
-      void nav.offsetWidth;
-      nav.classList.remove('no-t');
-      nav.classList.remove('pre', 'nav-out');
-      /* Kurze Nachlaufsperre: sie verhindert ein Zurueckspringen mitten in der
-         Blende, darf aber keine halbe Sekunde lang den falschen Zustand
-         stehenlassen. Danach sofort nachsehen, wo wir wirklich sind. */
-      setTimeout(function () { busy = false; update(); }, 180);
-    }, 210);
+    if (want === isTop) return;
+    isTop = want;
+    /* Mehr passiert hier nicht mehr. Frueher stand an dieser Stelle eine Kette
+       aus zwei setTimeouts und einer Sperre, die eine Ausblende choreografiert
+       hat — samt aller Zustaende, in denen sie haengenbleiben konnte. Seit die
+       Leiste faehrt statt umzuspringen, macht das der Browser selbst:
+       `transition: translate 480ms`. */
+    nav.classList.toggle('at-top', want);
   }
+
   window.addEventListener('scroll', function () {
     if (!t) { requestAnimationFrame(update); t = true; }
   }, { passive: true });
-  window.addEventListener('resize', update, { passive: true });
+  window.addEventListener('resize', function () { versatzSetzen(); update(); }, { passive: true });
+  versatzSetzen();
   update();
 })();
 
