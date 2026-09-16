@@ -28,6 +28,8 @@ from routen_geometrie import BREITE, meter, projizieren, rahmen
 
 WURZEL = pathlib.Path(__file__).resolve().parent.parent
 
+STILL = False   # im Selbsttest an: dort sind Artefakt-Hinweise Nebenwirkung
+
 ANFANG = "<!-- WEGVERLAUF (erzeugt: scripts/route-einbauen.py) -->"
 ENDE = "<!-- /WEGVERLAUF -->"
 
@@ -305,8 +307,9 @@ def abschnitt_bauen(slug, route, html):
         passt = all(abs(a - b) < 1.0
                     for a, b in zip(relief.get("ausschnitt", []), ausschnitt))
         if not passt:
-            print(f"  ! {slug}: relief.json passt nicht mehr zum Ausschnitt — "
-                  f"Hoehenlinien weggelassen. Bitte hoehenkarte.py {slug} laufen lassen.")
+            if not STILL:
+                print(f"  ! {slug}: relief.json passt nicht mehr zum Ausschnitt — "
+                      f"Hoehenlinien weggelassen. Bitte hoehenkarte.py {slug} laufen lassen.")
             relief = None
         if relief:
             linien, relief_stufe = hoehenlinien(relief, nach_px)
@@ -323,8 +326,9 @@ def abschnitt_bauen(slug, route, html):
         abs(a - b) < 1.0 for a, b in
         zip(json.loads(beleg.read_text(encoding="utf-8")).get("ausschnitt", []), ausschnitt))
     if (WURZEL / "touren" / slug / "gelaende.jpg").exists() and not bild_passt:
-        print(f"  ! {slug}: gelaende.jpg passt nicht zum Ausschnitt — Luftbild "
-              f"weggelassen. Bitte satellit.py {slug} laufen lassen.")
+        if not STILL:
+            print(f"  ! {slug}: gelaende.jpg passt nicht zum Ausschnitt — Luftbild "
+                  f"weggelassen. Bitte satellit.py {slug} laufen lassen.")
     if bild_passt and (WURZEL / "touren" / slug / "gelaende.jpg").exists():
         luftbild = (f'<image class="tour-route__luftbild" x="0" y="0" '
                     f'width="{BREITE}" height="{hoehe_px}" preserveAspectRatio="none" '
@@ -542,11 +546,13 @@ def eine_tour(slug):
 
 
 def selbsttest():
+    global STILL
     """Beweist, dass die beiden Waechter anschlagen. Ein Waechter, den man nie
     hat anschlagen sehen, ist keiner — und beide bewachen Fehler, die man dem
     Bild NICHT ansieht: eine verkehrt herum gespeicherte Route sieht genauso
     aus wie eine richtige, verschobene Hoehenlinien sehen aus wie Gelaende."""
     import copy
+    STILL = True
     quellen = sorted((WURZEL / "touren").glob("*/route.json"))
     if not quellen:
         print("  keine route.json — nichts zu testen")
@@ -557,8 +563,27 @@ def selbsttest():
     html = (WURZEL / "touren" / slug / "index.html").read_text(encoding="utf-8")
     fehler = 0
 
-    # 1) Verkehrt herum MUSS abbrechen
-    verdreht = copy.deepcopy(route)
+    # Einen sauberen OSM-Fall HERSTELLEN statt einen zu suchen: die Spur bis zu
+    # ihrem gipfelnaechsten Punkt kuerzen. Das ist per Konstruktion Start →
+    # Gipfel, egal was in den echten Dateien steht. Vorher hat der Test die
+    # erste route.json genommen — als die eine GPS-Rundtour wurde, lief er ins
+    # Leere, und beim naechsten Anlauf meldete er falsch rot.
+    punkte = [tuple(q) for q in route["punkte"]]
+    bis_gipfel_idx = min(range(len(punkte)),
+                         key=lambda i: meter(punkte[i], route["gipfel"]))
+    probe = copy.deepcopy(route)
+    probe.pop("art", None)
+    probe.pop("bis_gipfel", None)
+    probe["punkte"] = route["punkte"][:bis_gipfel_idx + 1]
+    probe["start"] = route["punkte"][0]
+
+    # 1) Verkehrt herum MUSS abbrechen.
+    #    Der Waechter gilt nur fuer den aus OSM gerechneten Weg — bei einer
+    #    aufgezeichneten Rundtour ist "endet am Start" ja richtig. Sobald die
+    #    erste Tour eine GPS-Spur trug, lief dieser Test deshalb ins Leere und
+    #    meldete "NICHT ERKANNT". Also den OSM-Fall ausdruecklich herstellen,
+    #    statt zu hoffen, dass die erste Datei einer ist.
+    verdreht = copy.deepcopy(probe)
     verdreht["punkte"] = list(reversed(verdreht["punkte"]))
     try:
         abschnitt_bauen(slug, verdreht, html)
@@ -569,7 +594,7 @@ def selbsttest():
 
     # 2) Richtig herum MUSS durchgehen
     try:
-        abschnitt_bauen(slug, route, html)
+        abschnitt_bauen(slug, probe, html)
         print("  ✓ unveraenderte Route bleibt gruen")
     except ValueError as f:
         print(f"  ✗ FALSCH ROT bei unveraenderter Route: {f}")

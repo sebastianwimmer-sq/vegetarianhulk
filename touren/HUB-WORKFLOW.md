@@ -138,6 +138,10 @@ Pro Tour dieses Set. **Fett = Pflicht**, Rest optional/ableitbar.
    (Ristfeuchthorn: „Werte aus dem Bergfex-Profil nachgezeichnet, auf 10 m gerundet").
 5. **Wetter — IMMER ortsspezifisch, an ZWEI Stellen:**
    a) **Tour-Seite:** `data-lat` · `data-lon` · `data-hoehe` am Fakten-Strip (`.tour-fakten`).
+   **Mit FÜNF Nachkommastellen, nicht zwei.** Zwei sind bis zu 600 m unscharf; alle vier
+   Touren holten dadurch ihr Wetter 1,6–5,0 km neben dem Gipfel, Ristfeuchthorn aus einem
+   anderen Tal. Kein Tor konnte das sehen — das Feld war ja gefüllt. Die echten
+   Koordinaten liefert `route-holen.py` (OSM-Gipfel über Name **oder** Höhe).
       `tour.js` liest sie von dort — im Skript ist nichts zu ändern.
    b) **Hub** (`touren/index.html`, der „Jetzt am Berg"-Kasten): dieselben drei Attribute
       plus **`data-ort="<Name> · <Höhe> m"`**. Der Kasten zeigt das Wetter der
@@ -235,6 +239,15 @@ Pro Tour dieses Set. **Fett = Pflicht**, Rest optional/ableitbar.
 
 ---
 
+**Danach ist die Seite noch nicht fertig.** Karte, Gelände und Fotoformate kommen
+aus dem Tour-Loop — **ein Befehl, §6**:
+
+```bash
+scripts/tour-loop.sh <slug>            # bzw. --gpx <datei>, wenn eine GPS-Spur da ist
+```
+
+---
+
 ## 4a. Level-Parität — jede Änderung gilt für ALLE gegangenen Touren
 
 **Die Regel (Sebi, 09.09.2026):** Wird an einer Tour etwas verbessert, muss es bei allen
@@ -263,6 +276,15 @@ Bildern von genau dieser Tour.
 
 **Stand 09.09.2026:** alle drei gegangenen Touren in Parität, offen nur Ristfeuchthorn mit
 einem Foto gegen vier.
+
+**Parität gilt auch zwischen den beiden Renderern.** Karte und Profil werden ZWEIMAL
+gezeichnet: einmal beim Bauen (Python, als Fallback ohne JS) und einmal im Browser
+(`tour.js`, für Achsen und Ablesen). Was das Bau-Skript für seine Entscheidung braucht,
+muss als `data-`Attribut im Markup stehen — sonst überschreibt der Browser korrektes
+HTML mit einer schlechteren Annahme. Am 16.09. setzte `tour.js` das Gipfelkreuz auf den
+letzten Spurpunkt; bei einer aufgezeichneten Rundtour ist das wieder der Parkplatz.
+
+---
 
 ## 4b. Voice — bevor auch nur ein Satz geschrieben wird
 
@@ -299,187 +321,123 @@ macht — **das Gegenteil von „vulnerable".**
 
 ---
 
-## 6c. Wegverlauf (Routenkarte) — PFLICHT bei jeder neuen Tour
+## 6. Karte, Gelände und Fotoformate — der Tour-Loop
 
-Zwei Befehle, in dieser Reihenfolge:
-
-```bash
-python3 scripts/route-holen.py <slug>      # Geometrie aus OpenStreetMap
-python3 scripts/hoehenkarte.py <slug>      # Höhengitter aus EU-DEM
-python3 scripts/satellit.py <slug>         # Luftbild (Sentinel-2 cloudless)
-python3 scripts/route-einbauen.py <slug>   # zeichnet alles in die Seite
-bash scripts/bump-asset-versions.sh        # nur wenn tour.css/tour.js sich geändert haben
-```
-
-Reihenfolge ist bindend: `route-einbauen.py` liest, was die drei davor abgelegt
-haben, und lässt weg, was fehlt.
-
-**Warum selbst gezeichnet und nicht eingebettet:** die Tour-Seiten laufen unter
-`script-src 'self'` und `img-src 'self' data:`. Leaflet, Mapbox und Google brauchen
-beides von fremden Hosts. Die Geometrie kommt deshalb EINMAL zur Bauzeit in die
-Seite — zur Laufzeit geht kein fremder Aufruf raus, und `datenschutz.html` bleibt
-unberührt. Ein Screenshot der Strava-Karte scheidet ebenfalls aus: die Kacheln
-gehören nicht uns.
-
-**Was die Karte behauptet — und was nicht.** Gezeichnet ist der WEG nach
-OpenStreetMap, nicht die GPS-Spur. Solange keine GPX-Datei vorliegt, darf die
-Seite auch nur das sagen; der Hinweistext unter der Karte tut das.
-
-**Der Startpunkt wird nicht geraten, sondern gewählt.** `route-holen.py` sammelt
-alle Parkplätze im Umkreis plus den Ort aus dem Maps-Link und nimmt den, dessen
-gerouteter Aufstieg am besten zur aufgezeichneten Strecke passt (Vergleichswert:
-die Gipfelposition im Höhenprofil). Liegt der beste Treffer über 35 % daneben,
-schreibt das Skript NICHTS — lieber keine Route als eine falsche. Das ist kein
-Fehler des Skripts, sondern sein Zweck; dann gehört eine GPX-Datei her.
-
-**Falle: `data-lat`/`data-lon` sind fürs Wetter gerundet.** Zwei Nachkommastellen
-sind bis zu 600 m unscharf — bei Ristfeuchthorn lagen sie 4.970 m neben dem
-Gipfel, das Wetter kam aus einem anderen Tal. Der echte Gipfel kommt aus OSM
-(Treffer zählt bei passendem NAMEN **oder** passender HÖHE). Am 16.09. wurden
-alle vier Touren darauf korrigiert.
-
-**Falle: ein Einzellauf darf kein Gedächtnis löschen.** `routen-quellen.json`
-wird aus den `route.json` ABGELEITET, nicht angesammelt — vorher hat
-`route-holen.py drachenwand` die Einträge der anderen drei still entfernt.
-`--nur-verzeichnis` baut es ohne Netzabfrage neu.
-
-### Höhenlinien
+**Ein Befehl:**
 
 ```bash
-python3 scripts/hoehenkarte.py <slug>      # Höhengitter aus EU-DEM (25 m)
+scripts/tour-loop.sh <slug>                  # ganze Kette + Tore
+scripts/tour-loop.sh <slug> --gpx <datei>    # mit GPS-Spur statt OSM-Weg
+scripts/tour-loop.sh <slug> --pruefen        # ändert nichts, sagt nur was liefe
+scripts/tour-loop.sh --alle                  # alle Touren neu bauen
 ```
 
-Läuft **vor** `route-einbauen.py`. Kein Satellitenbild: Luftbild-Kacheln dürften
-wir nicht ins Repo legen (Lizenz von Esri/Google/Bing), sie wögen Megabytes, und
-unter der dunkelgrünen Bildsprache sehen sie fremd aus. Höhenlinien wiegen
-12–27 kB, sind offen lizenziert und zeigen mehr: man sieht, wo es steil wird.
+Danach **selbst ansehen** (390 px + Desktop) und vor dem Merge
+`bash scripts/premium-check.sh` (7 Tore, 4 Engines, ~5 min).
 
-Quelle ist **OpenTopoData** (`eudem25m`, 100 Punkte je Anfrage, 1/Sekunde,
-1.000/Tag). Open-Meteo bleibt als Rückfall drin, taugt hier aber schlecht: es
-zählt jeden der 100 Punkte als eigenen Aufruf und geht nach ~25 Anfragen in 429.
+### Die Reihenfolge ist bindend
+
+| # | Schritt | hängt ab von |
+|---|---|---|
+| 1 | `gpx-einlesen.py` **oder** `route-holen.py` | — |
+| 2 | `hoehenkarte.py` | dem Kartenausschnitt, und der folgt der Linie |
+| 3 | `satellit.py` | ebenso |
+| 4 | `foto-format.py` | den Bildmaßen |
+| 5 | `route-einbauen.py` | allem davor |
+| 6 | `bump-asset-versions.sh` | den geschriebenen Seiten |
+
+**Jeder Schritt hat schon einmal still das Falsche getan, wenn er außer der
+Reihe lief** — und kein einziger dieser Fälle wirft einen Fehler. Sie sehen
+alle aus wie eine fertige Seite. Genau dafür gibt es den Loop.
+
+### Woher die Daten kommen — und warum ausgerechnet von dort
+
+| Schicht | Quelle | Lizenz |
+|---|---|---|
+| Linie | Sebis **GPX** (Strava/Apple Health), sonst OpenStreetMap | ODbL |
+| Höhenlinien | EU-DEM 25 m über **OpenTopoData** | Copernicus |
+| Luftbild | **Sentinel-2 cloudless** (EOX) | CC BY 4.0 |
+| Wetter | Open-Meteo | CC BY 4.0 |
+
+**Esri, Google und Bing scheiden aus.** Die Tourseiten laufen unter
+`script-src 'self'` und `img-src 'self' data:` — Kacheln müssten also ins Repo,
+und genau das untersagen deren Nutzungsbedingungen. Deshalb wird **alles einmal
+zur Bauzeit geholt und selbst gezeichnet**: zur Laufzeit geht kein Aufruf an
+einen Kartendienst hinaus, `datenschutz.html` bleibt unberührt, und es gibt
+nichts zu blocken.
+
+**Open-Meteo taugt nicht für das Höhengitter** — es zählt jeden der 100 Punkte
+einer Anfrage einzeln und läuft nach ~25 Anfragen in 429. Es bleibt als
+Rückfall drin.
+
+### Was die Karte behaupten darf
+
+- **Ohne GPX** zeigt sie den *Weg nach OpenStreetMap*, nicht die GPS-Spur — und
+  sagt das. Der Startpunkt wird nicht geraten: der Ort aus dem Maps-Link der
+  Seite hat Vorrang bis 16 % Längenabweichung, darüber entscheidet die Länge
+  (der Geocoder liefert für „Maria Gern" das Ortszentrum, nicht den Parkplatz).
+  Über 35 % kommt **gar keine Route**.
+- **Mit GPX** ist sie die Aufzeichnung. Verglichen wird **räumlich**, also mit
+  dem Anstieg. Endet die Aufzeichnung am Gipfel statt am Auto, gilt sie als
+  *Aufstieg* und wird gegen die Gipfelposition im Profil verglichen. Über 25 %
+  wird die Datei **nicht übernommen**.
+- **Uhr ≠ GPS.** Bei Drachenwand und Ristfeuchthorn misst die Spur rund 17 %
+  weniger als die Uhr gezählt hat. Beides sind Sebis Zahlen — die Karte nennt
+  beide, statt eine zu verschweigen.
 
 ### Kachelgrößen — wo was wie groß sinnvoll ist
 
-Das Raster hat 12 Spalten (`--span`). Die Regeln sind nicht Geschmack, sondern
-folgen aus dem Material:
+12 Spalten (`--span`). Die Größen folgen dem Material, nicht dem Geschmack:
 
 | Baustein | span | warum |
 |---|---|---|
-| Hero | 12 | trägt Name, Höhe, ein Satz |
-| Steckbrief-Panels | 5 + 7 | Zahlen links, Text rechts — ungleich, damit es nicht nach Tabelle aussieht |
+| Hero | 12 | Name, Höhe, ein Satz |
+| Steckbrief-Panels | 5 + 7 | ungleich, damit es nicht nach Tabelle aussieht |
 | Zeitachse | 8 | Fließtext, will keine volle Breite |
-| Höhenprofil | 8 | breites Diagramm, stretcht sich auf jede Höhe |
-| Routenkarte | 8 | quadratisch (max. 1:1), sonst reißt sie die Zeile auf |
-| Fotos | 4 · 5 · 7 | **die Kachel folgt dem Bild**, nicht umgekehrt |
+| Höhenprofil | 8 | breites Diagramm, stretcht auf jede Höhe |
+| Routenkarte | 8 | höchstens quadratisch, sonst reißt sie die Zeile auf |
+| Fotos | 4 · 5 · 7 | **die Kachel folgt dem Bild** |
 
-**Die wichtigste Regel: ein Foto bestimmt seine Form selbst.** `.tour-shot` hatte
-lange nur `min-height` und wuchs auf die Höhe seiner Rasterzeile. Neben der
-hohen Routenkarte wurde aus einem 3:4-Foto eine 344×1107-Säule — `object-fit:
-cover` schnitt **59 %** weg. Gemerkt hat es Sebi, kein Tor: das Markup war
-fehlerfrei, nur das Ergebnis nicht.
+**Die wichtigste Regel: ein Foto bestimmt seine Form selbst und erbt sie nie vom
+Nachbarn.** Fast alle Fotos hier sind Handy-Hochformat (3:4). `foto-format.py`
+schreibt `--shot-ar` aus `width`/`height`; `spannt-2` darf beschneiden, aber nur
+mit hochkanten Bildern.
 
-```bash
-python3 scripts/foto-format.py <slug>   # schreibt --shot-ar aus width/height
-node scripts/foto-check.mjs             # misst den Beschnitt, 1440 px und 390 px
-node scripts/foto-check.mjs --selbsttest
-```
+### Die Fallen — alle aus dem 16.09.2026, alle live gewesen
 
-Fast alle Fotos hier sind **Handy-Hochformat (3:4)**. Das ist die Vorgabe, an die
-sich das Raster hält. Ein Querformat-Foto in einer Hochformat-Kachel verliert
-44 %; `foto-format.py` verhindert das, indem es beiden dieselbe Form gibt.
+| Was passiert ist | Warum es niemand sah | Was jetzt greift |
+|---|---|---|
+| Start-Punkt saß auf dem **Gipfel**, Gipfelkreuz am Parkplatz (4 Touren) | ein `reverse()` zu viel; die Linienform war korrekt | Endpunkt-Prüfung in `route-einbauen.py`, bricht ab |
+| Start lag nicht dort, wo die Seite ihn nennt (4 Touren) | rein nach Weglänge gewählt; Fellhorn startete südlich statt in Blindau | Maps-Link hat Vorrang bis 16 % |
+| Wetter kam **bis zu 5 km** neben dem Gipfel | `data-lat/lon` auf 2 Nachkommastellen — fürs Wetter gerundet, als Kartenendpunkt zu grob | Gipfel kommt aus OSM (Name **oder** Höhe) |
+| Foto verlor **59 %** in einer 344×1107-Säule | Kachel ohne eigene Form wuchs auf die Rasterzeile; Markup fehlerfrei | `foto-format.py` + `foto-check.mjs` (misst im Browser) |
+| Auf dem Handy verloren Hochformat-Fotos 44 % | Rückfall stand auf `4/3` statt auf der Bildform | `var(--shot-mobil, var(--shot-ar, 4/3))` |
+| `tour.js` überschrieb das korrekt gebaute Gipfelkreuz | Parität: der Browser kannte den Gipfel nicht | `data-gipfel` am SVG |
+| Einzellauf löschte das Verzeichnis der anderen Touren | Datei war Gedächtnis statt Anzeige | wird aus den `route.json` **abgeleitet** |
+| Luftbild lag verzerrt unter der Route | Cache-Schlüssel trug nur die Nordwest-Ecke | Schlüssel trägt den ganzen Ausschnitt |
+| Veraltetes Höhengitter/Luftbild | verschobene Linien sehen aus wie Gelände | Ausschnitt liegt in `relief.json`/`gelaende.json`, wird verglichen |
+| „© OpenStreetMap" statt „…-Mitwirkende" | beim Kürzen der Fußnoten verloren | VERBOTEN-Muster im Tor |
+| Luftbild unsichtbar | im Skript abdunkeln **und** im CSS Deckkraft → multipliziert sich | Ton im Skript, Sichtbarkeit im CSS |
+| GPX sah nach 53 % Fehler aus | flach statt räumlich gerechnet, Aufstieg gegen Gesamtstrecke verglichen | räumlich + Aufstiegs-Erkennung |
 
-`spannt-2` bindet bewusst zwei Zeilen und darf beschneiden — aber **nur mit
-hochkanten Bildern**. Ein quadratisches Panorama darin verlor die Hälfte;
-`foto-format.py` nimmt `spannt-2` dort automatisch weg.
-
-### Luftbild
-
-```bash
-python3 scripts/satellit.py <slug>         # Sentinel-2 cloudless → gelaende.jpg
-```
-
-Läuft **vor** `route-einbauen.py`. **Quelle ist nicht frei wählbar:** Esri, Google
-und Bing untersagen das Zwischenspeichern und Weiterverteilen ihrer Kacheln — und
-weil `img-src 'self'` gilt, MUSS das Bild ins Repo. Mit diesen Anbietern wäre das
-ein Lizenzbruch. **Sentinel-2 cloudless von EOX** steht unter **CC BY 4.0** und
-darf mit Nennung weiterverwendet werden.
-
-10 m Auflösung, also bewusst weich — das Bild soll Stimmung geben, nicht gelesen
-werden. Es wird entsättigt und leicht ins Markengrün gezogen (≤ 5 %), liegt bei
-40 % Deckkraft unter den Höhenlinien und wiegt 16–82 kB. Rohkacheln landen in
-`~/.cache/vh-satellit`, nicht im Repo: Ton nachregeln kostet dann keine 90
-Abrufe mehr.
-
-**Falle:** das Bild im Skript stark abzudunkeln macht es unsichtbar, weil im CSS
-noch die Deckkraft daraufkommt. Die Feinregelung gehört ins CSS.
-
-### GPX — die echte Spur statt des OSM-Weges
+### Die Tore
 
 ```bash
-python3 scripts/gpx-einlesen.py ~/Desktop/gpx/        # Datei oder Ordner
-python3 scripts/hoehenkarte.py <slug>
-python3 scripts/route-einbauen.py <slug>
+node scripts/tour-check.mjs --alle          # 6 PFLICHT-Zeilen für die Route
+bash scripts/tour-check-fixtures.sh         # Negativtests, jeder MUSS rot werden
+python3 scripts/route-einbauen.py --selbsttest   # 3 Fälle
+node scripts/foto-check.mjs --selbsttest    # stellt den alten Zustand her
 ```
 
-Woher die Datei kommt: **Strava am Rechner** (Aktivität → ⋯ → GPX exportieren;
-in der App fehlt der Punkt — das geht auch im kostenlosen Tarif) oder **Apple
-Health** (Profil → Alle Gesundheitsdaten exportieren → im ZIP
-`workout-routes/route_*.gpx`).
-
-**Gegen was verglichen wird.** Die Länge wird **räumlich** gerechnet, also mit
-dem Anstieg. Die flache Summe liegt systematisch zu niedrig — beim Fellhorn
-17,51 statt 17,84 km, bei einer Klettersteig-Tour deutlich mehr. Endet die
-Aufzeichnung am Gipfel statt am Auto, gilt sie als **Aufstieg** und wird gegen
-die Gipfelposition im Profil verglichen: die Kneifelspitze-Datei sah sonst nach
-53 % Fehler aus und war in Wahrheit auf 1 % genau. Über 25 % Abweichung wird die
-Datei **nicht übernommen**.
-
-**Uhr ≠ GPS.** Bei Drachenwand und Ristfeuchthorn misst die Spur rund 17 %
-weniger als die Uhr gezählt hat (steiles Waldgelände). Beides sind Sebis eigene
-Zahlen; die Karte nennt darum beide, statt eine davon zu verschweigen.
-
-**Parität: der Browser muss dasselbe wissen wie das Bau-Skript.** Bei einer
-Rundtour endet die Spur wieder am Parkplatz — `tour.js` setzte das Gipfelkreuz
-trotzdem auf den letzten Punkt und überschrieb damit das korrekt gebaute HTML.
-Die Gipfelkoordinate steht deshalb als `data-gipfel` am SVG.
-
-Die Tour wird nicht abgefragt, sondern erkannt: es gewinnt die, deren Gipfel dem
-höchsten Punkt der Spur am nächsten liegt; über 2 km wird die Datei abgelehnt
-statt der falschen Tour untergeschoben. Danach trägt `route.json` `art: "spur"`,
-und die Sektion wechselt Beschriftung und Hinweistext von selbst — aus
-„Aufstieg / aus OpenStreetMap gezeichnet" wird „Gegangene Spur / aus der
-GPS-Aufzeichnung". Bei einer Rundtour sitzt das Gipfelkreuz dann am höchsten
-Punkt der Spur, nicht am Linienende.
-
-### Zwei Fallen, die am 16.09. live standen
-
-**Die Enden der Linie können lügen, während die Form stimmt.** Ein `reverse()`
-zu viel im Router, und der Start-Punkt saß bei allen vier Touren auf dem Gipfel,
-das Gipfelkreuz am Parkplatz — die Kilometermarken zählten rückwärts. Sichtbar
-war nichts, die Route sah aus wie immer. `route-einbauen.py` prüft das jetzt und
-bricht ab (Negativtest: Punkte umdrehen → muss rot werden).
-
-**Was die Seite sagt, schlägt was am besten passt.** Der Startpunkt wurde
-zunächst rein nach Weglänge gewählt — dabei gewannen bei allen vier Touren
-namenlose Parkplätze gegen den Ort, den die Seite selbst nennt. Beim Fellhorn
-lag der gewählte Parkplatz **südlich** des Gipfels, während Blindau (so steht es
-im Text) nördlich liegt. Jetzt hat der Maps-Link der Seite Vorrang, solange er
-innerhalb von 16 % liegt; darüber ist der Geocoder zu ungenau getroffen (er
-liefert für „Maria Gern" das Ortszentrum, nicht den Parkplatz an der Kirche) und
-die Länge entscheidet wieder.
-
-**Falle: kürzen darf man den Text, nicht die Pflichtform.** Beim Straffen der
-Hinweise wurde aus „© OpenStreetMap-Mitwirkende" ein „© OpenStreetMap" — die ODbL
-verlangt aber genau diese Form. Das Tor hat es gefangen; die Nennung steht
-deshalb als PFLICHT-Zeile drin und nicht nur im Fließtext.
-
-**Prüfen:** `node scripts/tour-check.mjs` (6 PFLICHT-Zeilen für die Route) und
-`bash scripts/tour-check-fixtures.sh` (4 Negativtests, jeder muss rot werden).
-Danach selbst ansehen — 390 px und Desktop.
+**Jedes dieser Tore hat seinen eigenen Fehlerfall schon einmal nicht gesehen.**
+Der Selbsttest von `foto-check` stellt den alten Zustand per CSS wieder her und
+verlangt, dass er auffällt; der von `route-einbauen` **baut sich seinen OSM-Fall
+selbst**, weil er sonst an einer GPS-Rundtour ins Leere lief. Ein Wächter, den
+man nie hat anschlagen sehen, ist keiner.
 
 ---
 
-## 6. Hub-Ausbau (nächste Stufen)
+## 7. Hub-Ausbau (nächste Stufen)
 
 - **GPX-Export** (Bergfex/Strava → Teilen → GPX) hebt die Routenkarte vom Weg laut OpenStreetMap auf die tatsächlich gegangene Spur — die Karte selbst steht seit 16.09. (§6c). Optional 3D wie Watzmann (DEM-Methode, s. `project_vh_hulk_hikes_nav`).
 - **Empfehlungen → gegangen:** wenn Sebi eine der 6 (Grünstein/Zinnkopf/Dürrnbachhorn/Rauschberg/Gamsknogel/Hochgern) geht → Detailseite bauen, Liste-Zeile auf „gegangen" + klickbar.
