@@ -17,11 +17,20 @@ cd "$(dirname "${BASH_SOURCE[0]}")/.."
 # eigenen HTTP-Server und mehrere Browser mit. Ein a11y-Lauf neben einem
 # laufenden tour-visual meldete einmal rot und danach dreimal gruen —
 # Ressourcenkonkurrenz, kein Befund.
-if pgrep -f "tour-visual.mjs|a11y-check.mjs|foto-check.mjs" >/dev/null 2>&1; then
-  echo "Es laeuft bereits ein Pruefwerkzeug. Erst abwarten — sonst sind die"
-  echo "Ergebnisse Rauschen. (pgrep -f tour-visual)"
+#
+# SPERRDATEI statt `pgrep -f <skriptname>`. Die Namenssuche traf die eigene
+# Prozesskette: enthielt schon der AUFRUFENDE Befehl einen der Namen (etwa beim
+# Einbauen eines neuen Tors), meldete sie "laeuft bereits" und der voellig
+# korrekte Lauf brach ab. Am 16.09.2026 dreimal passiert. Eine PID plus
+# `kill -0` weiss dagegen genau, ob der Prozess lebt.
+SPERRE="${TMPDIR:-/tmp}/vh-premium-check.pid"
+if [ -f "$SPERRE" ] && kill -0 "$(cat "$SPERRE" 2>/dev/null)" 2>/dev/null; then
+  echo "Es laeuft bereits ein Pruefwerkzeug (PID $(cat "$SPERRE")). Erst abwarten —"
+  echo "sonst sind die Ergebnisse Rauschen."
   exit 2
 fi
+echo $$ > "$SPERRE"
+trap 'rm -f "$SPERRE"' EXIT INT TERM
 
 SCHNELL=0
 [ "${1:-}" = "--schnell" ] && SCHNELL=1
@@ -53,6 +62,7 @@ if [ "$SCHNELL" -eq 0 ]; then
   lauf "Barrierefreiheit, alle v3-Seiten" node scripts/a11y-check.mjs
   lauf "Darstellung, 4 Engines"        node scripts/tour-visual.mjs --site
   lauf "Bildbeschnitt der Kacheln"     node scripts/foto-check.mjs
+  lauf "Nav beim Scrollen"             node scripts/nav-check.mjs
 fi
 
 DAUER=$(( $(date +%s) - START ))
