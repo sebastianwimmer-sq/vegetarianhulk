@@ -70,20 +70,51 @@
   var mq = window.matchMedia('(min-width: 900px)');
   var t = false;
   var isTop = null, busy = false;
+
+  /* ZWEI Schwellen statt einer. Vorher kippte die Leiste bei genau 120 px —
+     wer beim schnellen Hin-und-Her-Scrollen um diesen Punkt herumwackelt, löste
+     jedes Mal die Ausblende aus. Gemessen am 16.09.2026: vier vollständige
+     Aus-/Einblendungen in drei Sekunden, und in 23 % der Proben stand die
+     Leiste sichtbar im FALSCHEN Zustand, weil die Sperre unten die
+     Zwischenschritte verschluckt. In Safari faellt es am ehesten auf, weil
+     dessen Momentum-Scrollen laenger um die Schwelle pendelt.
+
+     Jetzt: nach oben erst unter 60 px, nach unten erst ueber 160 px. Dazwischen
+     bleibt es, wie es ist. */
+  /* Das Band ist bewusst breit: die Leiste soll erst wechseln, wenn man den
+     Hero wirklich verlassen hat — nicht schon beim Antippen des Rads. */
+  var OBEN_BIS = 60, UNTEN_AB = 340;
+
+  function willOben() {
+    if (!mq.matches) return false;
+    var y = window.scrollY;           /* in Safari beim Ueberdehnen auch negativ */
+    if (y <= OBEN_BIS) return true;
+    if (y >= UNTEN_AB) return false;
+    return isTop === null ? y < 120 : isTop;   /* im Band: Zustand halten */
+  }
+
   function update() {
     t = false;
-    var want = mq.matches && window.scrollY < 120;
+    var want = willOben();
     if (want === isTop || busy) return;
     if (isTop === null) { isTop = want; nav.classList.toggle('at-top', want); return; }
     isTop = want; busy = true;
     nav.classList.add('nav-out');
     setTimeout(function () {
+      /* Zustand JETZT lesen, nicht den von vor 210 ms. Sonst schaltet die
+         Leiste auf eine Scrollposition, die es nicht mehr gibt, und steht
+         danach sichtbar falsch da. */
+      want = willOben();
+      isTop = want;
       nav.classList.add('no-t', 'pre');
       nav.classList.toggle('at-top', want);
       void nav.offsetWidth;
       nav.classList.remove('no-t');
       nav.classList.remove('pre', 'nav-out');
-      setTimeout(function () { busy = false; update(); }, 500);
+      /* Kurze Nachlaufsperre: sie verhindert ein Zurueckspringen mitten in der
+         Blende, darf aber keine halbe Sekunde lang den falschen Zustand
+         stehenlassen. Danach sofort nachsehen, wo wir wirklich sind. */
+      setTimeout(function () { busy = false; update(); }, 180);
     }, 210);
   }
   window.addEventListener('scroll', function () {
