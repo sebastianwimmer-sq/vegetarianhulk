@@ -26,8 +26,13 @@
    NH NOCH AL führen. Die aktuellen 4 Geräte sind reines Creator-Gear,
    kein Konflikt. Bei neuem Produkt zuerst NH/AL-Sortiment prüfen.
 
+   ── otonOffen ──
+   true = die Zeile ist nur sachlich (was das Ding IST), Sebis eigener Satz
+   fehlt noch. `scripts/produkte-check.py` listet sie auf. Nichts erfinden:
+   der O-Ton ist die Quelle, nicht der Rohstoff.
+
    ── Amazon-Tag-Status (LIVE) ──
-   Alle 4 url tragen die verifizierten SiteStripe-Links mit
+   Die ersten 4 url tragen die verifizierten SiteStripe-Links mit
    tag=vegetarianhul-21 (+ linkCode/linkId/ref_). Neue Amazon-Produkte
    immer mit eigener SiteStripe-URL inkl. Tag eintragen — nie ohne Tag.
    ============================================================ */
@@ -65,5 +70,86 @@ const VH_PRODUCTS = [
     url: "https://www.amazon.de/dp/B0DZDFWPDP?th=1&linkCode=ll2&tag=vegetarianhul-21&linkId=56a0390f5dcab742bc125eaea31387ae&ref_=as_li_ss_tl",
     bild: "",
     active: true
+  },
+  {
+    name: "ESN Daily — 480 g, Raspberry Iced Tea",
+    kategorie: "Was ich nehme",
+    text: "Pulver, 480 g, Geschmack Raspberry Iced Tea.",
+    url: "https://www.amazon.de/dp/B0CLLYL8Q5?tag=vegetarianhul-21",
+    bild: "",
+    active: true,
+    otonOffen: true      /* sachliche Zeile — Sebis Satz fehlt noch */
+  },
+  {
+    name: "ESN Cognitive Essentials — 90 Kapseln",
+    kategorie: "Was ich nehme",
+    text: "90 vegane Kapseln, 30 Portionen.",
+    url: "https://www.amazon.de/dp/B0H94HWT9J?tag=vegetarianhul-21",
+    bild: "",
+    active: true,
+    otonOffen: true      /* sachliche Zeile — Sebis Satz fehlt noch */
+  },
+  {
+    name: "SALEWA Toxo 3.0 Helm",
+    kategorie: "Womit ich am Berg unterwegs bin",
+    text: "Helm von Salewa.",
+    url: "https://www.amazon.de/dp/B09HKQ89LM?tag=vegetarianhul-21",
+    bild: "",
+    active: true,
+    otonOffen: true      /* sachliche Zeile — Sebis Satz fehlt noch */
+  },
+  {
+    name: "EDELRID Jay IV Klettergurt",
+    kategorie: "Womit ich am Berg unterwegs bin",
+    text: "Klettergurt von Edelrid.",
+    url: "https://www.amazon.de/dp/B0DXWTYRBY?tag=vegetarianhul-21",
+    bild: "",
+    active: true,
+    otonOffen: true      /* sachliche Zeile — Sebis Satz fehlt noch */
+  },
+  {
+    name: "BangLong Fahrradbrille",
+    kategorie: "Womit ich am Berg unterwegs bin",
+    text: "Polarisiert, UV400.",
+    url: "https://www.amazon.de/dp/B0DBZB4CZW?tag=vegetarianhul-21",
+    bild: "",
+    active: true,
+    otonOffen: true      /* sachliche Zeile — Sebis Satz fehlt noch */
+  },
+  {
+    name: "NooMii Trinkflasche — 800 ml",
+    kategorie: "Womit ich am Berg unterwegs bin",
+    text: "Edelstahl, doppelwandig, 800 ml.",
+    url: "https://www.amazon.de/dp/B0FPDS1YJG?tag=vegetarianhul-21",
+    bild: "",
+    active: true,
+    otonOffen: true      /* sachliche Zeile — Sebis Satz fehlt noch */
+  },
+  {
+    name: "Alpenwert Sitzkissen — 2er Set",
+    kategorie: "Womit ich am Berg unterwegs bin",
+    text: "Faltbar, wasserdicht, im Zweierset.",
+    url: "https://www.amazon.de/dp/B0DK27T39B?tag=vegetarianhul-21",
+    bild: "",
+    active: true,
+    otonOffen: true      /* sachliche Zeile — Sebis Satz fehlt noch */
+  },
+  {
+    name: "HYZUO Laptoptasche 13 Zoll",
+    kategorie: "Womit ich filme",
+    text: "Mit Ständer, für das MacBook Air 13 Zoll.",
+    url: "https://www.amazon.de/dp/B08HWR6J51?tag=vegetarianhul-21",
+    bild: "",
+    active: true,
+    otonOffen: true      /* sachliche Zeile — Sebis Satz fehlt noch */
+  },
+  {
+    name: "Cable Kit VI",
+    kategorie: "Womit ich am Berg unterwegs bin",
+    text: "",
+    url: "https://www.amazon.de/dp/B08WRH819Y?tag=vegetarianhul-21",
+    bild: "",
+    active: false,
+    otonOffen: true      /* sachliche Zeile — Sebis Satz fehlt noch */
   }
 ];

@@ -149,6 +149,17 @@ async function seitePruefen(browser, basis, datei) {
   if (partner.length && !KENNZEICHEN.test(quelle))
     rot.push(`${partner.length} Partnerlink(s) ohne Werbekennzeichnung (§ 5a Abs. 4 UWG)`);
 
+  /* Amazon verlangt vertraglich EINEN bestimmten Satz auf der Seite, auf der
+     die Partnerlinks stehen. Die allgemeine Werbekennzeichnung nach UWG
+     erfuellt das NICHT — es sind zwei verschiedene Pflichten aus zwei
+     verschiedenen Quellen. Am 18.09.2026 standen vier direkte Amazon-Links auf
+     partner-picks, die Formel aber nur auf der Weiterleitungsseite /go/amazon/,
+     an der diese Links vorbeigehen. */
+  const amazonDirekt = [...quelle.matchAll(/href\s*=\s*["'](https?:\/\/[^"']*amazon\.[^"']*tag=[^"']*)["']/gi)];
+  if (amazonDirekt.length && !/als amazon[- ]partner/i.test(quelle))
+    rot.push(`${amazonDirekt.length} direkte Amazon-Partnerlink(s), aber der von Amazon `
+      + `vorgeschriebene Satz „Als Amazon-Partner verdiene ich an qualifizierten Käufen" fehlt`);
+
   if (/(?:src|href)\s*=\s*["']http:\/\//i.test(quelle))
     rot.push('Mixed Content: Ressource über http:// eingebunden');
 

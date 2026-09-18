@@ -54,6 +54,7 @@ lauf() {
 titel "Statisch (Sekunden)"
 lauf "Design-Kodex: Radien"          python3 scripts/kodex-radien.py --pruefen
 lauf "Fremde Hosts & Ordner"         python3 scripts/fremdhosts-check.py
+lauf "Produktliste & Affiliate-Tags" node scripts/produkte-sync.mjs --pruefen
 lauf "Touren gegen die Spec"         node scripts/tour-check.mjs --alle
 lauf "Tore selbst (Fixtures)"        ./scripts/tour-check-fixtures.sh
 lauf "E-Mail-Vorlagen"               node scripts/mail-check.mjs --selbsttest
