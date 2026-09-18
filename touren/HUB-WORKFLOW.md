@@ -454,6 +454,33 @@ sie je besucht, weil alle den verlinkten Seiten folgen.
 
 ---
 
+## 6c. Produkte & Affiliate
+
+```bash
+node scripts/produkte-sync.mjs           # erzeugt den No-JS-Fallback aus den Daten
+node scripts/produkte-sync.mjs --pruefen # im premium-check
+```
+
+**Einzige Quelle: `lieblingsprodukte/products.js`.** Der `<noscript>`-Block in
+`partner-picks/index.html` wird daraus erzeugt — vorher stand dort „bei
+Datenänderung hier syncen", also eine Aufgabe, die man vergessen kann.
+
+**Drei Regeln, die das Tor nicht alle prüfen kann:**
+
+1. **Kanal-Regel (verbindlich):** was es bei Nature Heart oder Alpin Loacker gibt,
+   wird **ausschließlich** über deren Link/Code verlinkt — nie über Amazon. Vor
+   jedem neuen Produkt deren Sortiment prüfen. Das weiß kein Skript.
+2. **Jede `url` trägt `tag=vegetarianhul-21`.** Ohne Tag ist der Link Arbeit ohne
+   Ertrag. → wird geprüft.
+3. **`text` ist Sebis O-Ton, kein Katalog-Sprech und kein Health-Claim.** Wo nur
+   eine sachliche Zeile steht, trägt der Eintrag `otonOffen: true` und der Lauf
+   listet ihn auf. **Nichts erfinden** — der O-Ton ist die Quelle, nicht der Rohstoff.
+
+Amazon-Kurzlinks (`amzn.eu/d/…`) tragen keine ASIN. Auflösen mit einem echten
+Browser (Playwright); `curl -I` folgt der Weiterleitung nicht.
+
+---
+
 ## 7. Hub-Ausbau (nächste Stufen)
 
 - **GPX-Export** (Bergfex/Strava → Teilen → GPX) hebt die Routenkarte vom Weg laut OpenStreetMap auf die tatsächlich gegangene Spur — die Karte selbst steht seit 16.09. (§6c). Optional 3D wie Watzmann (DEM-Methode, s. `project_vh_hulk_hikes_nav`).
