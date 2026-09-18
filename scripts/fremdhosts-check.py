@@ -35,7 +35,11 @@ ERLAUBT = {
 # Ordner, die nicht zur Website gehoeren und deshalb auch nicht im Branch
 # liegen duerfen. Namen, keine Muster: ein Muster haette hier zu viel getroffen.
 VERBOTENE_ORDNER = ["design", "_preview", "design-system-sync", "design-archives",
-                    "prototypes", "second-brain"]
+                    "prototypes", "second-brain",
+                    # 18.09.2026 dazugekommen: legal-slim trug eine ZWEITE,
+                    # veraltete Datenschutzerklaerung; admin eine interne
+                    # Pflegeoberflaeche; archive eine alte Seite ohne Rechtslinks.
+                    "legal-slim", "admin", "archive"]
 
 EIGEN = re.compile(r"vegetarianhulk|^/|^\.|^#|^data:|^mailto:|^tel:|^\{\{")
 LADEND = re.compile(r"<(script|link|img|iframe|source|video|audio)\b[^>]*$", re.I)
