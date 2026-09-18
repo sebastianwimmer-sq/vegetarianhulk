@@ -437,6 +437,23 @@ man nie hat anschlagen sehen, ist keiner.
 
 ---
 
+## 6b. Sicherheit & Recht
+
+```bash
+node scripts/sicherheits-loop.mjs        # jede Seite einzeln, Sicherheit + Recht
+```
+
+Vor jedem Release und nach jeder neuen Seite. Das Wissen dazu — was geprüft wird,
+was der erste Lauf fand, was bewusst offen bleibt — steht in **`SICHERHEIT.md`**.
+
+**Der Grund, warum es diese Runde braucht:** GitHub Pages liefert den ganzen Branch
+aus. Was im Repo liegt, ist im Netz — auch was niemand verlinkt hat. Genau dort lagen
+am 18.09.2026 alle Funde: eine zweite, veraltete Datenschutzerklärung, eine interne
+Admin-Oberfläche, vier Prototyp-Ordner mit Google Fonts. Kein bestehendes Tor hatte
+sie je besucht, weil alle den verlinkten Seiten folgen.
+
+---
+
 ## 7. Hub-Ausbau (nächste Stufen)
 
 - **GPX-Export** (Bergfex/Strava → Teilen → GPX) hebt die Routenkarte vom Weg laut OpenStreetMap auf die tatsächlich gegangene Spur — die Karte selbst steht seit 16.09. (§6c). Optional 3D wie Watzmann (DEM-Methode, s. `project_vh_hulk_hikes_nav`).
