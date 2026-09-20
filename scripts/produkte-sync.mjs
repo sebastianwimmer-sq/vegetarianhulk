@@ -37,6 +37,13 @@ function laden(quelltext) {
   return new Function(`${quelltext}; return VH_PRODUCTS;`)();
 }
 
+/* Die Filter-Pillen auf /partner-picks tragen die Kurzform. Fehlt sie fuer
+   eine Kategorie, steht dort der ganze Satz und die Leiste wird dreizeilig —
+   sichtbar nur auf dem Handy, also genau dort, wo niemand nachsieht. */
+function kurzformenLaden(quelltext) {
+  return new Function(`${quelltext}; return typeof VH_KATEGORIE_KURZ === 'undefined' ? {} : VH_KATEGORIE_KURZ;`)();
+}
+
 function escape(t) {
   return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;')
     .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -70,13 +77,24 @@ if (SELBSTTEST) {
     console.error('✗ SELBSTTEST: Fallback wird nicht korrekt gebaut.'); process.exit(1);
   }
   if (block.includes('<strong>C</strong>')) { console.error('✗ SELBSTTEST: erfindet Eintraege.'); process.exit(1); }
-  console.log('✓ Selbsttest: fehlendes Tag wird erkannt, Fallback wird korrekt gebaut.');
+  const kurzDa = kurzformenLaden('const VH_KATEGORIE_KURZ = { "K": "Kurz" };');
+  const kurzWeg = kurzformenLaden('const VH_PRODUCTS = [];');
+  if (kurzDa.K !== 'Kurz') { console.error('✗ SELBSTTEST: vorhandene Kurzform nicht gelesen.'); process.exit(1); }
+  if (kurzWeg.K) { console.error('✗ SELBSTTEST: fehlende Kurzform wird nicht als Luecke erkannt.'); process.exit(1); }
+  console.log('✓ Selbsttest: fehlendes Tag wird erkannt, Fallback wird korrekt gebaut,'
+    + ' fehlende Kategorie-Kurzform faellt auf.');
   process.exit(0);
 }
 
 /* ---------- Lauf ---------- */
-const produkte = laden(readFileSync(DATEN, 'utf8'));
+const quelle = readFileSync(DATEN, 'utf8');
+const produkte = laden(quelle);
+const kurzformen = kurzformenLaden(quelle);
 const befunde = [];
+
+for (const k of new Set(produkte.filter((p) => p.active).map((p) => p.kategorie || 'Sonstiges'))) {
+  if (!kurzformen[k]) befunde.push(`Kategorie "${k}": keine Kurzform in VH_KATEGORIE_KURZ — die Filter-Pille traegt sonst den ganzen Satz`);
+}
 
 for (const p of produkte) {
   for (const feld of ['name', 'kategorie', 'url']) {
