@@ -108,8 +108,18 @@ function pruefeDetail(slug) {
 
     // Die Gipfelmarke liegt als HTML ueber dem Profil (nicht mehr als <text> im SVG)
     const marke = (html.match(/marke--gipfel[\s\S]{0,160}?·\s*([\d.]+)\s*m/) || [])[1];
-    if (marke && marke.replace('.', '') !== gipfel)
-      meld(fehler, slug, `Gipfelmarke am Profil sagt ${marke} m, H1 sagt ${mitPunkt} m`);
+
+    /* Bei einer MEHRGIPFEL-Tour ist der hoechste Punkt nicht der Titelgipfel.
+       Die Hoerndlwand heisst Hoerndlwand (1.684 m), ihr Scheitel im Profil ist
+       aber der Gurnwandkopf (1.691 m). Erklaert die Seite mehrere Gipfel und
+       nennt einen Hoechststand, wird gegen DEN verglichen — sonst waere die
+       einzige Moeglichkeit, gruen zu werden, eine falsche Zahl. */
+    const mehrgipfel = /<span>Gipfel<\/span>/.test(html);
+    const hoechst = (html.match(/data-count="(\d+)"[^>]*>[^<]*<\/b><span>m Höchststand/) || [])[1];
+    const soll = (mehrgipfel && hoechst) ? hoechst : gipfel;
+    const sollText = (mehrgipfel && hoechst) ? `${hoechst} m (Höchststand)` : `${mitPunkt} m (H1)`;
+    if (marke && marke.replace('.', '') !== soll)
+      meld(fehler, slug, `Gipfelmarke am Profil sagt ${marke} m, die Seite sagt ${sollText}`);
     if (!marke)
       meld(hinweise, slug, 'keine Gipfelmarke am Hoehenprofil gefunden');
   }
