@@ -232,6 +232,10 @@ main { position: relative; z-index: 1; }
   letter-spacing: 1.5px; color: var(--mint); }
 
 /* Button */
+/* Grundgroesse des Pfeils. Ohne sie waechst das SVG auf die Breite seines
+   Flex-Containers — im Wochenband stand am 20.09.2026 ein Pfeil so hoch wie
+   der halbe Kasten. Jede Flaeche musste die Groesse bisher selbst setzen. */
+.th-btn svg { width: 13px; height: 13px; flex: 0 0 auto; }
 .th-btn { position: relative; display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
   font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.6px;
   text-transform: uppercase; color: var(--auf-gold-tief); padding: 13px 24px;
@@ -1075,7 +1079,6 @@ footer .legal a { padding-inline: 2px; }
    Mini-Buttons in den aufgeklappten Tour-Zeilen. Alle nur ueber die
    Trefferflaeche vergroessert, das Schriftbild bleibt. */
 .panel-nav button { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
-.tk-sort select { min-height: 44px; }
 .tk-minibtn { min-height: 44px; display: inline-flex; align-items: center; }
 /* ---- Turnstile: fehlender Haken ----
    Das Widget steht im interaktiven Modus und braucht einen Klick. Fehlt er,
@@ -1100,18 +1103,46 @@ vh-form [slot="captcha"].is-err,
   .cf-turnstile.is-err { animation: none; }
 }
 
-/* Gruppen-Ueberschrift in der Produktliste. Bei vier Karten war die Kategorie
-   eine Randnotiz auf der Karte, bei dreizehn ist sie die Ordnung der Seite. */
-.pp-gruppe {
-  grid-column: 1 / -1;
-  display: flex; align-items: baseline; gap: 12px;
-  margin: 26px 0 -4px; padding-bottom: 10px;
-  font-family: var(--mono); font-size: 11px; font-weight: 700;
-  letter-spacing: 2px; text-transform: uppercase; color: var(--leaf);
-  background: linear-gradient(90deg, rgba(126,208,155,0.28), rgba(126,208,155,0)) left bottom / 100% 1px no-repeat;
+/* ---- Filter-Chips -----------------------------------------------------
+   Am 20.09.2026 aus touren/index.html hierher gezogen, weil die
+   Produktliste dieselben Chips braucht. Zwei Kopien waeren zwei Orte, an
+   denen dieselbe Pille beschrieben ist — und die driften auseinander. */
+.tk-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+/* flex schlaegt [hidden]: ohne diese Zeile steht eine leere Leiste da. */
+.tk-group[hidden] { display: none; }
+
+/* Schmale Geraete: die Chip-Gruppen laufen waagerecht statt umzubrechen.
+   Mit dem vierten Regions-Chip (Salzkammergut) wuchs die Leiste auf VIER
+   Zeilen und schob die Liste nach unten — jede weitere Region haette eine
+   weitere Zeile gekostet. min-width:0 ist Pflicht: ein Flex-Kind waechst
+   sonst auf Inhaltsbreite, dann laeuft nichts ueber und es gibt nichts zu
+   scrollen. Die Kante blendet aus, damit sichtbar ist, dass es weitergeht. */
+@media (max-width: 720px) {
+  .tk-group { flex-wrap: nowrap; min-width: 0; overflow-x: auto; scrollbar-width: none;
+    -webkit-overflow-scrolling: touch; padding-bottom: 2px;
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 22px), transparent 100%);
+    mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 22px), transparent 100%); }
+  .tk-group::-webkit-scrollbar { display: none; }
+  .tk-group > .tk-chip { flex: 0 0 auto; }
+  .tk-group__label { flex: 0 0 auto; }
 }
-.pp-gruppe:first-child { margin-top: 0; }
-.pp-gruppe__zahl {
-  font-size: 10px; color: var(--paper-faint); letter-spacing: 1.2px;
+
+.tk-group__label { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.6px;
+  text-transform: uppercase; color: var(--paper-faint); margin-right: 2px; }
+.tk-chip { cursor: pointer; border: 1px solid rgba(126,208,155,0.22); border-radius: var(--r-control);
+  position: relative; display: inline-flex; align-items: center;
+  background: transparent; padding: 7px 14px;
+  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--paper-dim);
+  transition: background 300ms var(--ease-lux), color 300ms var(--ease-lux), border-color 300ms var(--ease-lux), transform 300ms var(--ease-lux); }
+.tk-chip:hover { border-color: rgba(126,208,155,0.5); color: var(--paper); }
+/* WCAG 2.5.8 ohne optischen Preis: die Trefferflaeche liegt als unsichtbares
+   Rechteck ueber dem Chip, die sichtbare Pille bleibt kompakt. Mit min-height
+   war die Filterleiste auf 390 px auf 356 px Hoehe gewachsen. */
+.tk-chip::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 50%;
+  height: 44px; transform: translateY(-50%);
 }
-.pp-gruppe__zahl::before { content: "· "; }
+.tk-sort select { min-height: 44px; }
+.tk-chip[aria-pressed="true"] { background: linear-gradient(180deg, #E8BF25, #D4A918); color: #14100A;
+  border-color: transparent; transform: translateY(-1px); }
