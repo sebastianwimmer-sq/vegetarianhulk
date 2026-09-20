@@ -146,10 +146,10 @@ const VH_PRODUCTS = [
   {
     name: "Cable Kit VI",
     kategorie: "Womit ich am Berg unterwegs bin",
-    text: "",
+    text: "Mein Klettersteigset.",
     url: "https://www.amazon.de/dp/B08WRH819Y?tag=vegetarianhul-21",
     bild: "",
-    active: false,
+    active: true,
     otonOffen: true      /* sachliche Zeile — Sebis Satz fehlt noch */
   }
 ];
