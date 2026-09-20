@@ -51,7 +51,7 @@ const VH_PARTNERS = [
     discount: "10%",
     category: "Supplements",
     sortOrder: 1,
-    valueLine: "Meine Supplements hol ich von denen — laborgeprüft, Made in Germany, und läuft bei mir jeden Tag mit.",
+    valueLine: "Meine Supplements hol ich von denen — laborgeprüft, Made in Germany, und läuft bei mir jeden Tag mit. Was sie nicht führen, hol ich mir rund ums Training woanders.",
     hint: {
       lead: "Wichtig:",
       text: "Der Link allein gibt keinen Rabatt — Code VEGETARIANHULK im Warenkorb eingeben."

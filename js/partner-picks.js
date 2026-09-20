@@ -69,7 +69,28 @@
     var p = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p.setAttribute('d', 'M7 17 17 7M9 7h8v8'); s.appendChild(p); return s;
   }
 
-  VH_PRODUCTS.filter(function (p) { return p.active; }).forEach(function (p, i) {
+  /* Nach Kategorie gruppiert statt flach aneinandergereiht: bei vier Karten
+     war die Kategorie eine Randnotiz, bei dreizehn ist sie die Ordnung.
+     Reihenfolge der Gruppen = Reihenfolge des ersten Auftretens in den Daten,
+     damit sie in products.js steuerbar bleibt und nicht alphabetisch kippt. */
+  var aktive = VH_PRODUCTS.filter(function (p) { return p.active; });
+  var gruppen = [];
+  aktive.forEach(function (p) {
+    var k = p.kategorie || 'Sonstiges';
+    var g = gruppen.filter(function (x) { return x.name === k; })[0];
+    if (!g) { g = { name: k, stuecke: [] }; gruppen.push(g); }
+    g.stuecke.push(p);
+  });
+
+  var lauf = 0;
+  gruppen.forEach(function (gruppe) {
+    var kopf = el('h3', 'pp-gruppe', gruppe.name);
+    kopf.appendChild(el('span', 'pp-gruppe__zahl', gruppe.stuecke.length));
+    mount.appendChild(kopf);
+    gruppe.stuecke.forEach(function (p) { karte(p, lauf++); });
+  });
+
+  function karte(p, i) {
     var card = el('article', 'pp-card rv');
     card.style.setProperty('--d', (i * 90) + 'ms');
     card.appendChild(el('span', 'pp-card__no', n2(i + 1)));
@@ -95,5 +116,5 @@
     }
 
     mount.appendChild(card);
-  });
+  }
 })();

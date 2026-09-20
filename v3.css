@@ -1099,3 +1099,19 @@ vh-form [slot="captcha"].is-err,
   vh-form [slot="captcha"].is-err,
   .cf-turnstile.is-err { animation: none; }
 }
+
+/* Gruppen-Ueberschrift in der Produktliste. Bei vier Karten war die Kategorie
+   eine Randnotiz auf der Karte, bei dreizehn ist sie die Ordnung der Seite. */
+.pp-gruppe {
+  grid-column: 1 / -1;
+  display: flex; align-items: baseline; gap: 12px;
+  margin: 26px 0 -4px; padding-bottom: 10px;
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--leaf);
+  background: linear-gradient(90deg, rgba(126,208,155,0.28), rgba(126,208,155,0)) left bottom / 100% 1px no-repeat;
+}
+.pp-gruppe:first-child { margin-top: 0; }
+.pp-gruppe__zahl {
+  font-size: 10px; color: var(--paper-faint); letter-spacing: 1.2px;
+}
+.pp-gruppe__zahl::before { content: "· "; }
