@@ -698,3 +698,78 @@
   .tour-route.in .tour-route__weg { animation: none; stroke-dashoffset: 0; }
   .tour-route__kms, .tour-route__start, .tour-route__gipfel { transition: none; }
 }
+
+
+/* ============================================================
+   GALERIE — die Fotos ziehen beim Scrollen seitlich durch.
+
+   Vorher standen sie als einzelne Kacheln im Bento-Raster, zwischen
+   Textbloecken verteilt. Sebi am 20.09.2026: "die bilder sind nur so
+   einzelne bloeche … die seiten sind noch extrem statisch."
+
+   Jetzt: die Buehne bleibt stehen (sticky), der Streifen faehrt quer.
+   Die Scrollstrecke dafuer liefert die Huelle — ihre Hoehe haengt an der
+   Anzahl der Bilder (--anzahl), sonst haette eine Tour mit zwei Fotos
+   dieselbe lange Strecke wie eine mit neun.
+
+   Auf dem Handy und bei prefers-reduced-motion greift das NICHT: dort ist
+   ein nativer Wisch-Streifen besser als eine gekaperte Scrollrichtung.
+   ============================================================ */
+.tour-galerie {
+  grid-column: 1 / -1;
+  /* eine Bildbreite Anlauf + je Bild eine halbe Schirmhoehe Weg */
+  height: calc(100vh + var(--anzahl, 3) * 62vh);
+  margin: 0 calc(var(--luft, 0px) * -1);
+}
+.tour-galerie__buehne {
+  position: sticky; top: 0;
+  height: 100vh; display: flex; align-items: center;
+  overflow: hidden;
+}
+.tour-galerie__streifen {
+  display: flex; align-items: center; gap: var(--gap);
+  padding: 0 clamp(16px, 6vw, 90px);
+  will-change: transform;
+}
+.tour-galerie__streifen > .tour-shot {
+  flex: 0 0 auto;
+  height: min(64vh, 640px);
+  width: auto;
+  aspect-ratio: var(--shot-ar, 3 / 4);
+  align-self: center;
+}
+/* Der Kopf faehrt mit, damit die Buehne nicht aus dem Nichts kommt. */
+.tour-galerie__kopf {
+  position: absolute; left: clamp(16px, 6vw, 90px); top: clamp(18px, 6vh, 54px);
+  z-index: 2; pointer-events: none;
+}
+.tour-galerie__zaehler {
+  position: absolute; right: clamp(16px, 6vw, 90px); bottom: clamp(18px, 6vh, 54px);
+  z-index: 2; font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 1.4px; color: var(--paper-faint); pointer-events: none;
+}
+.tour-galerie__balken {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: rgba(126,208,155,0.16); z-index: 2;
+}
+.tour-galerie__balken i {
+  display: block; height: 100%; width: 0;
+  background: var(--emerald); box-shadow: 0 0 10px rgba(80,200,120,0.6);
+}
+
+@media (max-width: 860px), (prefers-reduced-motion: reduce) {
+  /* Kein Pinning: die Scrollrichtung zu kapern ist am Daumen unangenehm,
+     und ohne Bewegungswunsch gehoert sie gar nicht gekapert. Stattdessen
+     ein Streifen zum Wischen — mit Einrasten. */
+  .tour-galerie { height: auto; margin: 0; }
+  .tour-galerie__buehne { position: static; height: auto; overflow-x: auto;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; }
+  .tour-galerie__buehne::-webkit-scrollbar { display: none; }
+  .tour-galerie__streifen { transform: none !important; padding: 0 16px; }
+  .tour-galerie__streifen > .tour-shot {
+    height: auto; width: min(78vw, 420px); scroll-snap-align: center;
+  }
+  .tour-galerie__kopf, .tour-galerie__zaehler { position: static; margin-bottom: 10px; }
+  .tour-galerie__balken { display: none; }
+}

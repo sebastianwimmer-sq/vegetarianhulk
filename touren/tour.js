@@ -565,4 +565,63 @@
     }
   })();
 
+
+  /* ---------- Galerie: der Streifen faehrt, waehrend die Buehne steht ----------
+     Der Fortschritt kommt aus der Scrollposition der Huelle, nicht aus einem
+     Timer: so laeuft es exakt mit dem Finger und bleibt stehen, wenn man
+     stehenbleibt. Gerechnet wird in einem rAF, gelesen wird nur einmal pro
+     Bild — Layout-Werte im Scroll-Handler abzufragen kostet sonst jedes Mal
+     ein erzwungenes Neu-Layout. */
+  (function () {
+    var galerie = document.querySelector('.tour-galerie');
+    if (!galerie) return;
+    var buehne = galerie.querySelector('.tour-galerie__buehne');
+    var streifen = galerie.querySelector('.tour-galerie__streifen');
+    if (!buehne || !streifen) return;
+
+    var schmal = window.matchMedia('(max-width: 860px)');
+    var zaehler = galerie.querySelector('.tour-galerie__zaehler');
+    var balken = galerie.querySelector('.tour-galerie__balken i');
+    var bilder = [].slice.call(streifen.querySelectorAll('.tour-shot'));
+    var weg = 0, oben = 0, hoehe = 0, gemessen = false, wartet = false;
+
+    function messen() {
+      var k = galerie.getBoundingClientRect();
+      oben = k.top + window.scrollY;
+      hoehe = galerie.offsetHeight;
+      /* Wie weit der Streifen fahren muss: seine Breite minus die sichtbare. */
+      weg = Math.max(0, streifen.scrollWidth - buehne.clientWidth);
+      gemessen = true;
+    }
+
+    function zeichnen() {
+      wartet = false;
+      if (schmal.matches || sanftBevorzugt) { streifen.style.transform = ''; return; }
+      if (!gemessen) messen();
+      var strecke = hoehe - window.innerHeight;
+      if (strecke <= 0) return;
+      var anteil = (window.scrollY - oben) / strecke;
+      anteil = anteil < 0 ? 0 : (anteil > 1 ? 1 : anteil);
+      streifen.style.transform = 'translate3d(' + (-anteil * weg).toFixed(1) + 'px,0,0)';
+      if (balken) balken.style.width = (anteil * 100).toFixed(1) + '%';
+      if (zaehler && bilder.length) {
+        var n = Math.min(bilder.length, Math.floor(anteil * bilder.length) + 1);
+        zaehler.textContent = n + ' / ' + bilder.length;
+      }
+    }
+
+    function anstossen() { if (!wartet) { wartet = true; requestAnimationFrame(zeichnen); } }
+
+    window.addEventListener('scroll', anstossen, { passive: true });
+    window.addEventListener('resize', function () { gemessen = false; anstossen(); }, { passive: true });
+    /* Bilder aendern die Streifenbreite, sobald sie ihre Groesse kennen. */
+    bilder.forEach(function (f) {
+      var b = f.querySelector('img');
+      if (b && !b.complete) b.addEventListener('load', function () { gemessen = false; anstossen(); });
+    });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { gemessen = false; anstossen(); });
+    messen();
+    zeichnen();
+  })();
+
 })();
