@@ -24,7 +24,7 @@
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
-<link rel="stylesheet" href="/v3.css?v=85e6501c">
+<link rel="stylesheet" href="/v3.css?v=2eabfbb0">
 <link rel="stylesheet" href="/touren/tour.css?v=151421d0">
 <style>
 /* ============================================================
@@ -136,43 +136,7 @@
   min-height: 44px;   /* WCAG 2.5.8: war 19 px hoch */
   font-family: var(--mono); font-size: 12px; letter-spacing: 0.5px; color: var(--paper); }
 .tk-search input::placeholder { color: var(--paper-faint); }
-.tk-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 
-/* Schmale Geraete: die Chip-Gruppen laufen waagerecht statt umzubrechen.
-   Mit dem vierten Regions-Chip (Salzkammergut) wuchs die Leiste auf VIER
-   Zeilen und schob die Liste nach unten — jede weitere Region haette eine
-   weitere Zeile gekostet. min-width:0 ist Pflicht: ein Flex-Kind waechst
-   sonst auf Inhaltsbreite, dann laeuft nichts ueber und es gibt nichts zu
-   scrollen. Die Kante blendet aus, damit sichtbar ist, dass es weitergeht. */
-@media (max-width: 720px) {
-  .tk-group { flex-wrap: nowrap; min-width: 0; overflow-x: auto; scrollbar-width: none;
-    -webkit-overflow-scrolling: touch; padding-bottom: 2px;
-    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 22px), transparent 100%);
-    mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 22px), transparent 100%); }
-  .tk-group::-webkit-scrollbar { display: none; }
-  .tk-group > .tk-chip { flex: 0 0 auto; }
-  .tk-group__label { flex: 0 0 auto; }
-}
-.tk-group__label { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.6px;
-  text-transform: uppercase; color: var(--paper-faint); margin-right: 2px; }
-.tk-chip { cursor: pointer; border: 1px solid rgba(126,208,155,0.22); border-radius: var(--r-control);
-  position: relative; display: inline-flex; align-items: center;
-  background: transparent; padding: 7px 14px;
-  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
-  color: var(--paper-dim);
-  transition: background 300ms var(--ease-lux), color 300ms var(--ease-lux), border-color 300ms var(--ease-lux), transform 300ms var(--ease-lux); }
-.tk-chip:hover { border-color: rgba(126,208,155,0.5); color: var(--paper); }
-
-/* WCAG 2.5.8 ohne optischen Preis: die Trefferflaeche liegt als unsichtbares
-   Rechteck ueber dem Chip, die sichtbare Pille bleibt kompakt. Mit min-height
-   war die Filterleiste auf 390 px auf 356 px Hoehe gewachsen. */
-.tk-chip::after {
-  content: ""; position: absolute; left: 0; right: 0; top: 50%;
-  height: 44px; transform: translateY(-50%);
-}
-.tk-sort select { min-height: 44px; }
-.tk-chip[aria-pressed="true"] { background: linear-gradient(180deg, #E8BF25, #D4A918); color: #14100A;
-  border-color: transparent; transform: translateY(-1px); }
 .tk-sort { position: relative; }
 .tk-sort select { appearance: none; -webkit-appearance: none; cursor: pointer;
   padding: 8px 30px 8px 14px; border-radius: var(--r-control);

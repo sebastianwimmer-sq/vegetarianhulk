@@ -38,6 +38,18 @@
    ============================================================ */
 const VH_AMAZON_TAG = "vegetarianhul-21";
 
+/* Kurzform je Kategorie — nur fuer die Filter-Pillen.
+   Auf der Karte steht der ganze Satz ("Womit ich am Berg unterwegs bin"),
+   weil er sich dort als Satz liest. Als Pille waere er dreizeilig und wuerde
+   die Leiste auf dem Handy sprengen. Deshalb hier die Kurzform — und nur
+   hier, damit es keinen zweiten Ort gibt, der mitgepflegt werden muss.
+   `scripts/produkte-sync.mjs` meldet jede Kategorie ohne Eintrag. */
+const VH_KATEGORIE_KURZ = {
+  "Womit ich filme": "Filmen",
+  "Was ich nehme": "Supplements",
+  "Womit ich am Berg unterwegs bin": "Am Berg",
+};
+
 const VH_PRODUCTS = [
   {
     name: "DJI Neo 2 Fly More Combo",

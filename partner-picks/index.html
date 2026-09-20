@@ -23,7 +23,7 @@
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
-<link rel="stylesheet" href="/v3.css?v=85e6501c">
+<link rel="stylesheet" href="/v3.css?v=2eabfbb0">
 
 <style>
   /* ============================================================
@@ -94,6 +94,62 @@
   @media (min-width: 980px) { .pp-grid--pick { grid-template-columns: repeat(4, 1fr); } }
   @media (max-width: 520px) { .pp-grid--pick { grid-template-columns: 1fr; } }
 
+  /* ---- Stück der Woche ----------------------------------------------------
+     Bewusst KEINE weitere Karte: derselbe Kasten mit anderer Rahmenfarbe wäre
+     im Raster untergegangen. Das Band läuft quer über die volle Breite, trägt
+     Gold statt Grün und stellt die Empfehlung neben die Handlung. Die Karten
+     darunter bleiben dadurch, was sie sind — eine Liste. */
+  .pp-woche { position: relative; overflow: hidden;
+    width: min(1040px, 92vw); margin: 2px 0 22px;
+    margin-left: calc((100% - min(1040px, 92vw)) / 2);
+    display: grid; gap: 4px 30px; padding: 28px 30px 26px;
+    grid-template-columns: minmax(0, 1fr);
+    background:
+      radial-gradient(120% 150% at 8% 0%, rgba(232,191,37,0.10), transparent 58%),
+      linear-gradient(158deg, rgba(24,62,41,0.62), rgba(6,26,17,0.6));
+    border: 1px solid rgba(232,191,37,0.24); border-radius: var(--r-karte);
+    box-shadow: inset 0 1px 0 rgba(209,242,235,0.07), 0 22px 48px -30px rgba(0,0,0,0.75); }
+  .pp-woche[hidden] { display: none; }   /* grid schlägt [hidden] */
+  .pp-woche::after { content: ""; position: absolute; inset: 0;
+    background-image: var(--grain); opacity: 0.4; pointer-events: none; }
+  .pp-woche > * { position: relative; z-index: 1; }
+
+  .pp-woche__marke { margin: 0 0 14px; display: flex; align-items: center;
+    font-family: var(--mono); font-size: 10px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase; color: var(--gold-band-hell); }
+  .pp-woche__marke .hsep { color: rgba(232,191,37,0.45); }
+  .pp-woche__kat { margin: 0 0 6px; font-family: var(--mono); font-size: 10px; font-weight: 700;
+    letter-spacing: 1.4px; text-transform: uppercase; color: var(--paper-faint); }
+  .pp-woche__name { margin: 0 0 8px; font-family: 'Playfair Display', 'Playfair Fallback', serif;
+    font-size: clamp(1.7rem, 1.15rem + 2.1vw, 2.5rem); line-height: 1.08;
+    letter-spacing: -0.01em; color: var(--paper); }
+  .pp-woche__text { margin: 0; font-size: 16px; line-height: 1.65;
+    color: var(--paper-dim); max-width: 46ch; }
+  .pp-woche__fuss { display: flex; flex-direction: column; align-items: flex-start;
+    gap: 12px; margin-top: 20px; }
+  .pp-woche__fuss .pp-fine { margin-top: 0; }
+
+  /* Ab Tablet steht die Empfehlung links und die Handlung rechts — dadurch
+     endet der Blick am Knopf statt unter dem Kleingedruckten. */
+  @media (min-width: 860px) {
+    .pp-woche { grid-template-columns: minmax(0, 1fr) minmax(210px, 264px);
+      align-items: center; padding: 32px 34px 30px; }
+    .pp-woche__marke { grid-column: 1 / -1; }
+    .pp-woche__fuss { margin-top: 0; align-items: stretch; }
+    .pp-woche__fuss .th-btn { justify-content: center; }
+  }
+
+  /* ---- Filterleiste ---- */
+  .pp-leiste { width: min(1040px, 92vw); margin: 0 0 14px;
+    margin-left: calc((100% - min(1040px, 92vw)) / 2);
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    justify-content: space-between; }
+  .pp-leiste__zahl { margin: 0; font-family: var(--mono); font-size: 10px; font-weight: 700;
+    letter-spacing: 1.4px; text-transform: uppercase; color: var(--paper-faint); }
+  .pp-leiste__zahl span { color: var(--leaf); }
+  /* flex schlägt [hidden] — ohne diese Zeile stünden alle Karten da. */
+  .pp-card[hidden] { display: none; }
+
   /* ---- Karte: dunkle Tiefe, Gipfelgrat-Akzent beim Hover (wie /touren) ---- */
   .pp-card { position: relative; display: flex; flex-direction: column; overflow: hidden;
     padding: 30px 26px 26px;
@@ -155,8 +211,12 @@
   .pp-fine { margin-top: 12px; font-size: 11px; line-height: 1.45; color: var(--paper-faint); max-width: 46ch; }
 
   /* CTA — DAV-gelbes Wegweiser-Schild (v3 .th-btn), sitzt unten */
+  /* Die Karten sind unterschiedlich lang, der Knopf stand deshalb in jeder
+     Karte auf anderer Hoehe — vier Knoepfe auf einer Zeile sahen aus wie eine
+     Treppe. `auto` schiebt Kleingedrucktes und Knopf ans Kartenende, damit
+     die Knopfreihe eine Linie bildet. */
+  .pp-card > .pp-fine { margin-top: auto; padding-top: 14px; }
   .pp-cta { margin-top: 18px; align-self: flex-start; }
-  .pp-cta svg { width: 13px; height: 13px; }
   .pp-pending { margin-top: 18px; align-self: flex-start; display: inline-flex; align-items: center;
     font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.4px;
     text-transform: uppercase; color: var(--paper-faint);
@@ -262,6 +322,30 @@
         <h2 id="sec-picks">Die Sachen, die ich <em>wirklich</em> nutze.</h2>
       </div>
       <p class="pp-lead" style="margin: -4px 0 18px;">Womit ich am Berg unterwegs bin, was ich nehme und womit ich filme. Alles Sachen, die ich selbst benutze — wenn ich etwas nicht mehr nutze, fliegt es hier raus.</p>
+
+      <!-- Stück der Woche. Inhalt und Auswahl kommen aus js/partner-picks.js:
+           die Kalenderwoche bestimmt, welches Stück hier steht. Ohne JS bleibt
+           der Block aus — der No-JS-Block unten führt ohnehin alle auf. -->
+      <aside class="pp-woche" id="pp-woche" hidden aria-labelledby="pp-woche-name">
+        <p class="pp-woche__marke"><span data-w-kw></span><span class="hsep" aria-hidden="true"></span>diese Woche im Rucksack</p>
+        <div class="pp-woche__satz">
+          <p class="pp-woche__kat" data-w-kat></p>
+          <h3 class="pp-woche__name" id="pp-woche-name" data-w-name></h3>
+          <p class="pp-woche__text" data-w-text></p>
+        </div>
+        <div class="pp-woche__fuss">
+          <a class="th-btn th-btn--gelb" data-w-cta href="#" target="_blank" rel="sponsored noopener">Auf Amazon ansehen</a>
+          <p class="pp-fine">Amazon-Partnerlink: Wenn du darüber kaufst, erhalte ich eine Provision. Für dich entstehen keine Mehrkosten.</p>
+        </div>
+      </aside>
+
+      <!-- Filterleiste: die Chips baut js/partner-picks.js aus den Kategorien
+           in products.js. Eine neue Kategorie erscheint dadurch von selbst. -->
+      <div class="pp-leiste">
+        <div class="tk-group" id="pp-filter" role="group" aria-label="Nach Kategorie filtern" hidden></div>
+        <p class="pp-leiste__zahl" aria-live="polite"><span id="pp-zahl"></span> Stück</p>
+      </div>
+
       <div id="product-index" class="pp-grid pp-grid--pick">
         <!-- Crawler-/No-JS-Fallback: bei Datenänderung in /lieblingsprodukte/products.js hier syncen. -->
         <noscript>
@@ -325,10 +409,10 @@
 </nav>
 
 <script src="/codes/partners.js?v=0b7076e4"></script>
-<script src="/lieblingsprodukte/products.js?v=3c2ff379"></script>
+<script src="/lieblingsprodukte/products.js?v=c021653d"></script>
 
 
-<script src="/js/partner-picks.js?v=d062fbe9" defer></script>
+<script src="/js/partner-picks.js?v=a428be67" defer></script>
 
 <script src="/danke-block.js?v=370b0657"></script>
 <script src="/v3.js?v=867f6d1f" defer></script>
