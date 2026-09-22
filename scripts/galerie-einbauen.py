@@ -45,6 +45,59 @@ ALT_ENDE = "<!-- /GALERIE -->"
 KACHEL = re.compile(
     r'[ \t]*<figure class="tour-shot[^"]*"[^>]*>.*?</figure>\n?'
     r'(?:\s*<figcaption class="tour-blatt__text">.*?</figcaption>)?', re.S)
+
+# Kacheln, die zwischen den Zahlen stehen statt in der Strecke.
+# Sebi am 22.09.2026: "gerne noch die bilder etwas mehr in die stats weiter
+# oben mit rein mischen". Der Platz war schon frei — die Karte belegt acht
+# von zwoelf Spalten, vier standen leer, und das Profil lief ueber alle
+# zwoelf, obwohl acht reichen.
+#
+# Die Verteilung macht DIESES Skript, nicht ein zweites. Ein erster Anlauf
+# mit einem eigenen `stats-fotos.py` hat beim zweiten Lauf Fotos VERLOREN
+# (7 wurden zu 5), weil beide Skripte dieselben Kacheln verschoben und
+# keines wusste, was das andere gerade weggenommen hatte.
+OBEN = "tour-shot--oben"
+
+# Wie viele nach oben duerfen. Die Strecke soll eine Strecke bleiben:
+# zwei Fotos sind das Minimum fuer ein Paar, davon geht keins weg.
+def wie_viele_oben(anzahl):
+    if anzahl >= 6:
+        return 2
+    if anzahl >= 3:
+        return 1
+    return 0
+
+
+def oben_auswahl(anzahl):
+    """Chronologisch passend zum Nachbarn: neben das Profil ein Bild aus
+    dem AUFSTIEG (die Mitte), neben die Karte das LETZTE (der Ueberblick)."""
+    n = wie_viele_oben(anzahl)
+    if n == 0:
+        return []
+    if n == 1:
+        return [anzahl // 2]
+    return [anzahl // 2, anzahl - 1]
+
+
+def als_oben(kachel, span):
+    """Kachel fuers Raster herrichten. Marke vorher entfernen, sonst steht
+    sie beim zweiten Lauf zweimal in derselben class-Liste."""
+    # Einrueckung normalisieren statt uebernehmen: sonst wandert die Kachel
+    # bei jedem Lauf weiter nach rechts.
+    k = kachel.lstrip("\n").lstrip(" \t").replace(f" {OBEN}", "")
+    k = re.sub(r'class="tour-shot([^"]*)"',
+               lambda m: f'class="tour-shot{m.group(1)} {OBEN}"', k, count=1)
+    if "--span" in k:
+        k = re.sub(r"--span:\s*\d+", f"--span: {span}", k)
+    elif 'style="' in k:
+        k = k.replace('style="', f'style="--span: {span}; ', 1)
+    else:
+        k = k.replace('<figure class="tour-shot',
+                      f'<figure style="--span: {span}" class="tour-shot', 1)
+    # Im Raster ein Drittel breit, nicht halb — und sie steht weit oben,
+    # lazy waere dort ein Nachladen im Blickfeld.
+    k = re.sub(r'sizes="[^"]*"', 'sizes="(max-width: 860px) 92vw, 30vw"', k)
+    return re.sub(r'loading="lazy"', 'loading="eager"', k)
 # Ab hier gilt ein Bild als Querformat. 1.15 statt 1.0, damit ein fast
 # quadratisches Bild nicht ueber die volle Breite laeuft.
 QUER_AB = 1.15
@@ -122,6 +175,20 @@ def laden_setzen(bild, erstes):
     if 'loading="' in bild:
         return re.sub(r'loading="(?:eager|lazy)"', ziel, bild, count=1)
     return bild
+
+
+def einfuegen_vor(text, pos, stueck):
+    """Vor der ZEILE einfuegen, in der `pos` steht — nicht vor `pos` selbst.
+
+    Sonst landet das Stueck hinter der schon vorhandenen Einrueckung, und
+    die bleibt als Rest auf der Zeile davor haengen. Am 22.09.2026 hat das
+    die Datei bei jedem Lauf veraendert; der Versuch, den Rest per lstrip
+    zu saeubern, hat dafuer zwei Kommentarmarker zusammengeklebt.
+    """
+    zeilenanfang = text.rfind("\n", 0, pos) + 1
+    einzug = text[zeilenanfang:pos]
+    return (text[:zeilenanfang] + einzug + stueck.strip() + "\n\n"
+            + text[zeilenanfang:])
 
 
 def blatt(kacheln, art, einzug="        "):
@@ -210,17 +277,46 @@ def kacheln_holen(html):
     Strecke, nicht mehr im Raster. Beide Marker werden gesucht, damit auch
     die Vorgaengerfassung (GALERIE) sauber abgeloest wird.
     """
+    def neutral(k):
+        """Marke und Raster-Spannweite abstreifen: die Kachel soll wieder
+        eine gewoehnliche sein, bevor neu verteilt wird."""
+        k = k.replace(f" {OBEN}", "")
+        k = re.sub(r"\s*--span:\s*\d+;?", "", k)
+        # Nach dem Entfernen bleibt Leerraum im style-Attribut stehen und
+        # waechst bei jedem Lauf. Genauso die Einrueckung vor dem <figure>.
+        k = re.sub(r'style="\s+', 'style="', k)
+        k = re.sub(r'style="\s*"', "", k)
+        return k.lstrip("\n").lstrip(" \t")
+
     for anf, end in ((ANFANG, ENDE), (ALT_ANFANG, ALT_ENDE)):
         if anf in html:
             block = re.search(r"[ \t]*\n?\s*" + re.escape(anf) + r".*?"
                               + re.escape(end) + r"[ \t]*\n?", html, re.S)
             if not block:
                 raise ValueError(f"Marker {anf} ohne Gegenstueck — Seite von Hand pruefen")
-            kacheln = [zurueckbauen(k) for k in KACHEL.findall(block.group(0))]
+            # ALLE Kacheln der Seite, auch die oben zwischen den Zahlen —
+            # sonst verliert der zweite Lauf genau die.
+            drin = KACHEL.findall(block.group(0))
+            # Der Umbruch muss bleiben: das Muster schluckt beim Entfernen den
+            # Zeilenumbruch hinter dem Endmarker, und ohne ihn klebt die
+            # naechste Zeile (der KREUZE-Marker) an die vorherige.
+            rest = html[:block.start()] + "\n" + html[block.end():]
+            oben = [k for k in KACHEL.findall(rest) if OBEN in k]
+            for k in oben:
+                rest = rest.replace(k, "", 1)
+            # Die Einrueckung der entfernten Kachel bleibt als Leerzeile mit
+            # Leerzeichen stehen und waechst sonst bei jedem Lauf.
+            rest = re.sub(r"\n[ \t]+\n", "\n\n", rest)
+            # Reihenfolge wiederherstellen: die oben stehenden standen in der
+            # Mitte und am Schluss (siehe oben_auswahl), nicht am Anfang.
+            kacheln = [zurueckbauen(neutral(k)) for k in drin]
+            for i, k in zip(oben_auswahl(len(drin) + len(oben)),
+                            [zurueckbauen(neutral(x)) for x in oben]):
+                kacheln.insert(min(i, len(kacheln)), k)
             if not kacheln:
                 raise ValueError(f"Block {anf} gefunden, aber keine Kachel darin — "
                                  "Abbruch statt leerer Strecke")
-            return kacheln, html[:block.start()] + "\n" + html[block.end():]
+            return kacheln, rest
     return KACHEL.findall(html), html
 
 
@@ -228,6 +324,10 @@ def eine_tour(slug):
     seite = WURZEL / "touren" / slug / "index.html"
     html = seite.read_text(encoding="utf-8")
     kacheln, html = kacheln_holen(html)
+    # Profil auf volle Breite zuruecksetzen: ob ein Bild danebenkommt,
+    # entscheidet dieser Lauf neu.
+    html = re.sub(r'(<section class="tour-profil[^"]*"[^>]*style="--span:\s*)\d+',
+                  r"\g<1>12", html)
 
     if not kacheln:
         print(f"  {slug}: keine Fotos — uebersprungen")
@@ -251,14 +351,36 @@ def eine_tour(slug):
     stelle = anker.end() if "WEGVERLAUF" in anker.group(0) else \
         html.find("</section>", anker.start()) + len("</section>")
 
-    neu = html[:stelle] + "\n\n      " + bauen(kacheln, titel) + html[stelle:]
+    # Verteilen: erst nach oben, was zwischen die Zahlen gehoert.
+    hoch = oben_auswahl(len(kacheln))
+    genommen = [kacheln[i] for i in hoch]
+    kacheln = [k for i, k in enumerate(kacheln) if i not in hoch]
+
+    neu = html[:stelle] + "\n\n      " + (bauen(kacheln, titel) if kacheln else "") + html[stelle:]
+
+    if genommen:
+        # Das Profil lief ueber alle zwoelf Spalten; acht reichen, und
+        # daneben passt genau eine Kachel.
+        neu = re.sub(r'(<section class="tour-profil[^"]*"[^>]*style="--span:\s*)12',
+                     r"\g<1>8", neu, count=1)
+        anker = re.search(r'<section class="tour-profil', neu)
+        if not anker:
+            raise ValueError(f"{slug}: kein Hoehenprofil — wo soll das Bild hin?")
+        neu = einfuegen_vor(neu, anker.start(), als_oben(genommen[0], 4))
+
+    if len(genommen) > 1:
+        # Die Karte belegt acht von zwoelf — die vier daneben standen leer.
+        karte = re.search(r'<section class="tour-route', neu)
+        if not karte:
+            raise ValueError(f"{slug}: keine Karte — wo soll das zweite Bild hin?")
+        neu = einfuegen_vor(neu, karte.start(), als_oben(genommen[1], 4))
     neu = re.sub(r"\n[ \t]+\n", "\n\n", neu)
     neu = re.sub(r"\n{3,}", "\n\n", neu)
     seite.write_text(neu, encoding="utf-8")
 
     plan = anordnen(kacheln)
-    print(f"  {slug}: {len(kacheln)} Foto(s) → {len(plan)} Blatt "
-          f"({', '.join(a for a, _ in plan)})")
+    print(f"  {slug}: {len(genommen)} oben, {len(kacheln)} in der Strecke "
+          f"({', '.join(a for a, _ in plan) or 'leer'})")
     return True
 
 
