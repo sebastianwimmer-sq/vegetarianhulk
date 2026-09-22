@@ -701,149 +701,203 @@
 
 
 /* ============================================================
-   BILDSTRECKE — die Fotos kommen beim Scrollen HEREIN.
+   BILDSTRECKE — das Foto IST die Flaeche.
 
-   Vorgeschichte in zwei Schritten. Erst standen die Fotos als einzelne
-   Kacheln im Bento-Raster ("die bilder sind nur so einzelne bloeche").
-   Dann als angehefteter Streifen, der beim Scrollen quer fuhr — und da
-   waren sie auf dem Handy 304 px klein und standen im gruenen Nichts.
-   Sebi am 22.09.2026: "wollte nicht dass die so klein zum durchsliden
-   sind sondern eher dass man durchs scrollen so rein slidet".
+   Dritter Anlauf. Erst einzelne Kacheln im Bento-Raster, dann ein
+   angehefteter Querstreifen (auf dem Handy 304 px klein), dann diese
+   Strecke — und die erste Fassung davon war immer noch falsch. Sebi am
+   22.09.2026: "sieht in safari am macbook komplett tot aus bei den
+   bildern, alles so losgeloest".
 
-   Jetzt: eine senkrechte Bildstrecke. Jedes Blatt kommt aus der Tiefe
-   herein, an den Scrollweg gebunden — nicht als einmaliges Einblenden,
-   sondern durchgehend mitlaufend. Die Scrollrichtung bleibt dabei die
-   des Nutzers; nichts wird gekapert.
+   Er hatte recht, und der Fehler war grundsaetzlich: die Fotos hatten
+   runde Ecken, einen Schlagschatten und einen Innenring — also sassen
+   sie als KARTEN auf der gruenen Flaeche, jede eine kleine Insel mit
+   viel Leere drumherum. Ein uniformes Kartenraster ist genau das, was
+   der Anti-Slop-Kodex verbietet.
 
-   DREI ANATOMIEN statt einer Kachelgroesse, weil Textposition allein
-   keine Abwechslung ist: ein Querformat laeuft ueber die volle Breite
-   (das Durchatmen), ein Hochformat steht versetzt mit dem Text in der
-   Randspalte, und zwei Hochformate bilden ein Paar. Welche Anatomie ein
-   Foto bekommt, entscheidet sein SEITENVERHAELTNIS — nicht die Rotation.
+   Jetzt laeuft die Strecke ueber die volle Fensterbreite, die Bilder
+   stossen aneinander, und statt eines Hereingleitens wandert das Bild
+   IM Rahmen mit dem Scrollen (Parallaxe). Der Rahmen steht still, das
+   Motiv bewegt sich — dadurch haengt die Flaeche zusammen, statt aus
+   Einzelteilen zu bestehen.
+
+   `html { overflow-x: clip }` steht in v3.css — deshalb ist der
+   100vw-Ausbruch hier gefahrlos und `position: sticky` bleibt heil.
    ============================================================ */
 .tour-strecke {
   grid-column: 1 / -1;
-  display: grid; grid-template-columns: repeat(12, 1fr);
-  gap: var(--gap);
-  /* Zwischen den Blaettern mehr Luft als zwischen den Kacheln: die
-     Strecke ist ein eigener Abschnitt, kein weiteres Raster. */
-  row-gap: clamp(46px, 7vw, 104px);
+  width: 100vw; margin-left: calc(50% - 50vw);
+  display: flex; flex-direction: column;
+  gap: clamp(3px, 0.4vw, 6px);   /* Fuge, kein Abstand: die Blaetter gehoeren zusammen */
 }
-.tour-strecke__kopf { grid-column: 1 / -1; margin-bottom: -10px; }
+.tour-strecke__kopf {
+  width: var(--tour-breite); margin: 0 auto clamp(18px, 2vw, 30px);
+}
 
-.tour-blatt { margin: 0; display: grid; gap: 18px clamp(20px, 3vw, 44px); }
-.tour-blatt--voll  { grid-column: 1 / -1; }
-/* Der Text sitzt am FUSS des Bildes, nicht mittig daneben: mittig in
-   einer 780 px hohen Spalte schwebt eine kurze Zeile verloren. */
-.tour-blatt--links { grid-column: 1 / span 11; grid-template-columns: 8fr 4fr; align-items: end; }
-.tour-blatt--rechts{ grid-column: 2 / -1; grid-template-columns: 4fr 8fr; align-items: end; }
+/* Ein Blatt ist eine Bildbuehne mit fester Hoehe. Die Hoehe kommt vom
+   Fenster, nicht vom Bild — so entsteht eine durchgehende Bahn statt
+   einer Treppe aus unterschiedlich hohen Kacheln. */
+.tour-blatt {
+  margin: 0; position: relative;
+  display: grid; grid-template-columns: 1fr;
+  height: clamp(420px, 82vh, 860px);
+}
+.tour-blatt--paar { grid-template-columns: 1fr 1fr; gap: clamp(3px, 0.4vw, 6px); }
+.tour-blatt--links  { grid-template-columns: 7fr 5fr; }
+.tour-blatt--rechts { grid-template-columns: 5fr 7fr; }
 .tour-blatt--rechts > .tour-shot { order: 2; }
-/* Paar: zwei Hochformate nebeneinander, Text jeweils darunter. */
-.tour-blatt--paar  { grid-column: 2 / span 10; grid-template-columns: 1fr 1fr; align-items: start; }
 
-/* Das Bild selbst. .tour-shot bleibt der Traeger (Beschnitt-Tor und
-   foto-format.py haengen daran), hier bekommt es nur andere Masse. */
-/* align-self: start, NICHT stretch. Ein Bild mit aspect-ratio, das auf die
-   Hoehe seiner Rasterzeile gestreckt wird, hat keine eigene Form mehr —
-   und in einer auto-Spalte loest WebKit es auf 0x0 auf. Am 22.09.2026 in
-   webkit-390 und -768 auf ALLEN vier Tourseiten gemessen. */
-.tour-strecke .tour-shot { align-self: start; box-shadow: var(--shadow-tief, var(--shadow-mid)); }
-.tour-blatt--voll  > .tour-shot { max-height: 78vh; }
-.tour-blatt--links > .tour-shot,
-.tour-blatt--rechts > .tour-shot { max-height: 82vh; }
+/* Das Bild: randlos, ohne Ecken, ohne Schatten. Es soll nicht AUF der
+   Flaeche liegen, es soll die Flaeche sein. */
+.tour-strecke .tour-shot {
+  position: relative; overflow: hidden; margin: 0; min-width: 0;
+  align-self: stretch; height: 100%;
+  aspect-ratio: auto; border-radius: 0; box-shadow: none;
+  background: rgba(4,18,12,0.6);
+}
+.tour-strecke .tour-shot::after { content: none; }   /* Innenring der Kachel weg */
+.tour-strecke .tour-shot img {
+  position: absolute; left: 0; right: 0; top: -8%;
+  width: 100%; height: 116%;      /* Ueberhang, in dem die Parallaxe laeuft */
+  object-fit: cover; object-position: var(--shot-fokus, center 45%);
+  transition: none;
+}
+.tour-strecke .tour-shot:hover img { transform: none; }
 
-/* Der Text steht NEBEN dem Bild, nicht darauf: ein Verlauf ueber dem
-   Foto ist der Reflex, und er frisst genau den Teil des Bildes, der
-   unten am meisten traegt. In der Randspalte hat er Platz und Ruhe. */
-.tour-blatt__text { align-self: end; padding-bottom: 4px; }
-/* Paar: je Haelfte ein Traeger, damit zwei SPALTEN entstehen. */
-.tour-blatt__halb { display: grid; grid-template-columns: minmax(0, 1fr);
-  gap: 12px; align-content: start; min-width: 0; }
-.tour-blatt--voll .tour-blatt__text,
-.tour-blatt--paar .tour-blatt__text { align-self: start; padding-top: 2px; }
+/* Der Text. Bei --voll und --paar liegt er IM Bild, unten links, auf
+   einem schmalen Verlauf — bei --links/--rechts steht er in der eigenen
+   Spalte und traegt die Seite mit. Beides in der Serife: die Zeile ist
+   Sebis Satz, kein Datenfeld. */
+.tour-blatt__text {
+  z-index: 2; display: flex; flex-direction: column; gap: 10px;
+}
+.tour-blatt--voll > .tour-blatt__text,
+.tour-blatt--paar .tour-blatt__text {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: clamp(50px, 9vh, 110px) clamp(20px, 4vw, 56px) clamp(20px, 3vh, 34px);
+  background: linear-gradient(180deg, rgba(3,14,9,0) 0%, rgba(3,14,9,0.62) 58%, rgba(3,14,9,0.86) 100%);
+  pointer-events: none;
+}
+.tour-blatt--paar .tour-blatt__halb { position: relative; min-width: 0; display: grid; }
+.tour-blatt--paar .tour-blatt__halb > .tour-shot { grid-area: 1 / 1; }
+
+/* Solo mit Textspalte: hier steht der Satz gross und allein. Genau das
+   fehlte vorher — zwei winzige Mono-Zeilen in 40 % Leerraum. */
+.tour-blatt--links > .tour-blatt__text,
+.tour-blatt--rechts > .tour-blatt__text {
+  align-self: center; justify-content: center;
+  padding: clamp(24px, 3.4vw, 58px);
+  min-width: 0;
+}
+.tour-blatt--rechts > .tour-blatt__text { justify-self: end; }
+
 .tour-blatt__text b {
-  display: block; font-family: 'Playfair Display', 'Playfair Fallback', serif;
-  font-size: clamp(1.15rem, 0.95rem + 0.8vw, 1.6rem); line-height: 1.15;
-  color: var(--paper); margin-bottom: 8px; letter-spacing: -0.01em;
+  /* Zeilenlaenge an der EIGENEN Schriftgroesse begrenzen. `34ch` am
+     Behaelter loeste gegen die geerbte 16-px-Groesse auf — die Spalte
+     schrumpfte auf ~270 px und der Satz brach auf zwei Woerter je Zeile. */
+  max-width: 17em;
+  font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
+  font-size: clamp(1.15rem, 0.85rem + 1vw, 1.7rem); line-height: 1.24;
+  letter-spacing: -0.012em; color: var(--paper);
+  text-wrap: balance;
+}
+.tour-blatt--links > .tour-blatt__text b,
+.tour-blatt--rechts > .tour-blatt__text b {
+  font-size: clamp(1.25rem, 0.85rem + 1.3vw, 1.95rem); line-height: 1.2;
 }
 .tour-blatt__text span {
-  display: block; font-family: var(--mono); font-size: 11px; font-weight: 700;
-  letter-spacing: 1.3px; text-transform: uppercase; color: var(--paper-faint);
-  line-height: 1.6; max-width: 34ch;
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 1.6px; text-transform: uppercase; color: var(--meta-green);
+  display: flex; align-items: center; gap: 10px;
 }
-/* Feine Linie als Anschluss ans Bild — nur dort, wo Text daneben steht. */
-.tour-blatt--links .tour-blatt__text,
-.tour-blatt--rechts .tour-blatt__text { border-top: 1px solid rgba(126,208,155,0.2); padding-top: 16px; }
+/* Kurzer Strich vor der Uhrzeit — der Anker, der die Zeile haelt. */
+.tour-blatt__text span::before {
+  content: ""; width: 22px; height: 1px; background: currentColor; opacity: 0.55;
+}
+.tour-blatt--links > .tour-blatt__text span,
+.tour-blatt--rechts > .tour-blatt__text span { order: -1; }
 
-/* ---- Die Bewegung -------------------------------------------------------
-   Erste Wahl: an den Scrollweg gebundene Animation. Die tut genau das,
-   was gewuenscht ist — das Blatt kommt herein, WAEHREND man scrollt, und
-   geht rueckwaerts wieder raus. Kein Skript, kein Timer, kein Ruckeln.
-   Animiert werden nur transform und opacity. */
-@keyframes blattHerein {
-  from { opacity: 0; transform: translate3d(0, 46px, 0) scale(0.94); }
+/* ---- Die Bewegung ----------------------------------------------------
+   Das Motiv wandert im stehenden Rahmen. Das ist der Unterschied zwischen
+   "Elemente erscheinen" und "die Seite lebt": es laeuft durchgehend mit
+   dem Scrollen, vor- und rueckwaerts, und braucht keinen Startmoment.
+   Animiert wird ausschliesslich transform. */
+@keyframes blattWandert {
+  from { transform: translate3d(0, 4.8%, 0); }
+  to   { transform: translate3d(0, -4.8%, 0); }
+}
+@keyframes textHerein {
+  from { opacity: 0; transform: translate3d(0, 24px, 0); }
   to   { opacity: 1; transform: none; }
 }
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    .tour-blatt > * {
-      animation: blattHerein linear both;
+    .tour-strecke .tour-shot img {
+      animation: blattWandert linear both;
       animation-timeline: view();
-      animation-range: entry 2% cover 32%;
+      animation-range: cover 0% cover 100%;
     }
-    /* Der Text kommt eine Spur spaeter — sonst treffen Bild und Zeile
-       gleichzeitig ein und es liest sich wie ein einziger Block. */
-    .tour-blatt > .tour-blatt__text { animation-range: entry 10% cover 40%; }
+    .tour-blatt__text {
+      animation: textHerein linear both;
+      animation-timeline: view();
+      animation-range: entry 24% cover 34%;
+    }
   }
-  /* Rueckfallweg fuer Engines ohne Scroll-Timeline: EINMALIGES Hereinkommen
-     per IntersectionObserver. tour.js setzt .strecke-js auf die Sektion —
-     ohne Skript bleibt also alles sichtbar, statt unsichtbar zu haengen. */
+  /* Ohne Scroll-Timeline gibt es keine Parallaxe (ein Scroll-Handler je
+     Bild waere den Ruckler nicht wert) — nur der Text kommt herein.
+     `.strecke-js` setzt tour.js: ohne Skript bleibt alles sichtbar. */
   @supports not (animation-timeline: view()) {
-    .tour-strecke.strecke-js .tour-blatt > * {
-      opacity: 0; transform: translate3d(0, 46px, 0) scale(0.94);
-      transition: opacity 900ms var(--ease-lux), transform 900ms var(--ease-lux);
+    .tour-strecke.strecke-js .tour-blatt__text {
+      opacity: 0; transform: translate3d(0, 24px, 0);
+      transition: opacity 800ms var(--ease-lux), transform 800ms var(--ease-lux);
     }
-    .tour-strecke.strecke-js .tour-blatt.ist-da > * { opacity: 1; transform: none; }
-    .tour-strecke.strecke-js .tour-blatt.ist-da > .tour-blatt__text { transition-delay: 120ms; }
+    .tour-strecke.strecke-js .tour-blatt.ist-da .tour-blatt__text {
+      opacity: 1; transform: none;
+    }
   }
 }
 
 @media (max-width: 860px) {
-  /* Gestapelt und BREIT. Das war der eigentliche Fehler der alten Fassung:
-     ein 304-px-Kaertchen neben dem angeschnittenen naechsten. Hier nimmt
-     jedes Foto die Spalte, und der Text steht darunter. */
-  .tour-strecke { grid-template-columns: 1fr; row-gap: clamp(34px, 9vw, 56px); }
-  .tour-blatt--voll, .tour-blatt--links,
-  .tour-blatt--rechts, .tour-blatt--paar {
-    grid-column: 1 / -1; grid-template-columns: 1fr; gap: 14px;
+  /* Auch hier randlos und breit — das war der Kern der Beschwerde.
+     Ein Paar bleibt ein Paar, sonst wird aus zwei Fotos zweimal Scrollen.
+
+     ABER: die Hoehe kommt hier vom BILD, nicht vom Fenster. Eine feste
+     Bahnhoehe presst auf 390 px jedes Hochformat in eine 194x607-Box —
+     57 % Beschnitt, vom Tor gemessen. Ein Bild bestimmt seine Form selbst.
+     Nebenwirkung ist erwuenscht: die Blaetter werden unterschiedlich hoch
+     und die Strecke bekommt dadurch Rhythmus statt einer Bandstruktur. */
+  .tour-blatt { height: auto; }
+  /* Und das Bild muss dafuer in den FLUSS. Liegt es absolut, hat die Figur
+     keinen Inhalt, keine intrinsische Hoehe — WebKit loest sie auf 0x0 auf,
+     Chromium nicht. Zum zweiten Mal in dieser Datei dieselbe Ursache, dies-
+     mal beim Umbau auf bildeigene Hoehen wieder hereingeholt. Nebenwirkung:
+     die Parallaxe faellt am Handy weg. Kein Verlust — der Ueberhang haette
+     bei bildeigener Hoehe ohnehin nichts zum Wandern. */
+  .tour-strecke .tour-shot { height: auto; aspect-ratio: auto; align-self: start; }
+  .tour-strecke .tour-shot img {
+    position: static; top: auto; width: 100%; height: auto;
+    aspect-ratio: var(--shot-mobil, var(--shot-ar, 3 / 4));
+    animation: none;
   }
+  .tour-blatt--links, .tour-blatt--rechts { grid-template-columns: 1fr; }
   .tour-blatt--rechts > .tour-shot { order: 0; }
-  .tour-strecke .tour-shot { max-height: none; }
-  .tour-blatt--links .tour-blatt__text,
-  .tour-blatt--rechts .tour-blatt__text { border-top: 0; padding-top: 0; }
-  /* Ein Paar bleibt ein Paar — sonst wird aus zwei Fotos zweimal Scrollen. */
-  .tour-blatt--paar { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .tour-blatt--paar .tour-blatt__text b { font-size: 1rem; }
-  .tour-blatt--paar .tour-blatt__text span { font-size: 10px; letter-spacing: 1px; }
-}
-
-
-@media (max-width: 860px), (prefers-reduced-motion: reduce) {
-  /* Kein Pinning: die Scrollrichtung zu kapern ist am Daumen unangenehm,
-     und ohne Bewegungswunsch gehoert sie gar nicht gekapert. Stattdessen
-     ein Streifen zum Wischen — mit Einrasten. */
-  .tour-galerie { height: auto; margin: 0; }
-  .tour-galerie__buehne { position: static; height: auto; overflow-x: auto;
-    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; }
-  .tour-galerie__buehne::-webkit-scrollbar { display: none; }
-  .tour-galerie__streifen { transform: none !important; padding: 0 16px; }
-  .tour-galerie__streifen > .tour-shot {
-    height: auto; width: min(78vw, 420px); scroll-snap-align: center;
+  .tour-blatt--links > .tour-blatt__text,
+  .tour-blatt--rechts > .tour-blatt__text {
+    position: absolute; left: 0; right: 0; bottom: 0; max-width: none;
+    align-self: end; justify-self: stretch;
+    padding: clamp(50px, 9vh, 96px) 20px 20px;
+    background: linear-gradient(180deg, rgba(3,14,9,0) 0%, rgba(3,14,9,0.62) 58%, rgba(3,14,9,0.86) 100%);
   }
-  .tour-galerie__kopf, .tour-galerie__zaehler { position: static; margin-bottom: 10px; }
-  .tour-galerie__balken { display: none; }
+  .tour-blatt--links > .tour-blatt__text b,
+  .tour-blatt--rechts > .tour-blatt__text b { font-size: clamp(1.05rem, 0.8rem + 1.4vw, 1.5rem); }
+  .tour-blatt--links > .tour-blatt__text span,
+  .tour-blatt--rechts > .tour-blatt__text span { order: 0; }
+  .tour-blatt--paar .tour-blatt__text { padding: 40px 12px 14px; }
+  .tour-blatt--paar .tour-blatt__text b { font-size: 0.92rem; line-height: 1.3; }
+  .tour-blatt--paar .tour-blatt__text span { font-size: 9px; letter-spacing: 1.1px; }
+  .tour-blatt--paar .tour-blatt__text span::before { width: 12px; }
 }
+
 
 /* ============================================================
    DIE KREUZ-REIHE — vier Tafeln nebeneinander.
@@ -896,11 +950,13 @@
 .tour-kreuz:hover .tour-kreuz__bild img { transform: scale(1.04); }
 /* Die Ziffer liegt IM Himmel, oben links — dort ist bei allen vier
    Fotos Flaeche, weil ein Kreuz nach oben zeigt. */
-.tour-kreuz__nr {
-  position: absolute; left: 12px; top: 6px; z-index: 1;
-  font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic;
-  font-weight: 700; font-size: clamp(30px, 3.2vw, 46px); line-height: 1;
-  color: rgba(243,235,217,0.62); text-shadow: 0 2px 14px rgba(0,0,0,0.5);
+.tour-kreuz__uhr {
+  position: absolute; left: 0; bottom: 0; z-index: 1;
+  padding: 7px 12px 6px;
+  font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.4px;
+  color: var(--paper); background: rgba(3,14,9,0.72);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  border-top-right-radius: var(--r-control);
   pointer-events: none;
 }
 
@@ -910,34 +966,16 @@
   font-size: clamp(1rem, 0.85rem + 0.5vw, 1.22rem); line-height: 1.18;
   color: var(--paper); font-weight: 700;
 }
-.tour-kreuz__art, .tour-kreuz__zeit, .tour-kreuz__osm {
+.tour-kreuz__art, .tour-kreuz__osm {
   font-family: var(--mono); font-size: 10px; font-weight: 700;
   letter-spacing: 1.2px; text-transform: uppercase; color: var(--paper-faint);
 }
-.tour-kreuz__zeit i { font-style: normal; color: var(--meta-green); }
 /* --paper-faint statt eigener Deckkraft: 0.46 ergab 3,53:1 und riss die
    Latte. Untergeordnet bleibt die Zeile durch Schnitt und Stellung, nicht
    durch Blaesse. */
 .tour-kreuz__osm { color: var(--paper-faint); letter-spacing: 0.6px; text-transform: none;
   font-style: italic; }
 
-/* Die Standzeit: Zahl plus Balken. Der Balken ist kein Schmuck — er ist
-   der Grund, warum die vier nebeneinander stehen. */
-.tour-kreuz__dauer { display: flex; align-items: center; gap: 9px; margin-top: 3px; }
-.tour-kreuz__dauer b {
-  flex: 0 0 auto; font-family: var(--mono); font-size: 12px; font-weight: 700;
-  letter-spacing: 0.6px; color: var(--leaf);
-}
-.tour-kreuz__dauer i {
-  flex: 1; min-width: 0; height: 3px; border-radius: 2px;
-  background: rgba(126,208,155,0.16); position: relative; overflow: hidden;
-}
-.tour-kreuz__dauer i::after {
-  content: ""; position: absolute; left: 0; top: 0; bottom: 0;
-  width: var(--anteil, 50%); border-radius: inherit;
-  background: linear-gradient(90deg, var(--emerald), var(--leaf));
-  box-shadow: 0 0 10px rgba(80,200,120,0.45);
-}
 .tour-kreuz__notiz {
   margin-top: 4px; font-size: 13px; line-height: 1.55; color: var(--paper-dim);
 }

@@ -1,19 +1,18 @@
 {
-  "_hinweis": "Quelle fuer die Kreuz-Reihe. scripts/gipfelreihe-einbauen.py baut daraus den Abschnitt. Ankunft und Pause stammen aus den Standzeiten in der eigenen GPX-Aufzeichnung (hoerndlwand-2026-09-20.gpx, 28.025 Punkte), die Hoehen aus derselben Aufzeichnung — bewusst EINE Messmethode fuer alle vier, statt OSM und GPX zu mischen. Wo OSM abweicht, steht es in der Spalte osm_hinweis und in ~/vh-touren-eingang/hoerndlwand-notizen.md.",
+  "_hinweis": "Quelle fuer die Kreuz-Reihe. scripts/gipfelreihe-einbauen.py baut daraus den Abschnitt. Ankunft aus den Standzeiten der eigenen GPX-Aufzeichnung (hoerndlwand-2026-09-20.gpx), Hoehen aus derselben Aufzeichnung — bewusst EINE Messmethode fuer alle vier statt OSM und GPX zu mischen. Wo OSM abweicht, steht es in osm_hinweis. Die NOTIZ ist Sebis eigener Satz, nicht nacherzaehlt: Merksaetze wie 'Der Spontane. Die laengste Pause des Tages.' machen aus ihm eine Autoritaet, die er nie war. Wortlaut aus ~/vh-touren-eingang/hoerndlwand-notizen.md.",
   "titel": "Vier Kreuze an einem Tag",
   "kicker": "Nicht geplant",
-  "lede": "Geplant war die Hörndlwand. Der erste Gipfel lag fast am Weg, und dann waren wir eh schon oben. Wie lange wir wo standen, hat die Uhr mitgeschrieben — und das sagt mehr über den Tag als die Höhenmeter.",
-  "quelle": "Ankunft und Standzeit aus der eigenen GPX-Aufzeichnung",
+  "lede": "Geplant war nur die Hörndlwand. Der erste Gipfel kam spontan dazu, und oben waren wir dann eh schon.",
+  "quelle": "Ankunftszeiten aus der eigenen GPX-Aufzeichnung",
   "gipfel": [
     {
       "name": "Gurnwandkopf",
       "art": "Gipfel",
       "hoehe": 1694,
       "an": "10:02",
-      "pause_min": 33,
       "bild": "kreuz-gurnwandkopf",
       "alt": "Dunkler, verwitterter Holzpfosten mit geschnitzter Figur und Gipfelkasten, dahinter die Berchtesgadener Berge.",
-      "notiz": "Der Spontane. Die längste Pause des Tages.",
+      "notiz": "„Dann sind wir spontan zum 1. Gipfel.“",
       "osm_hinweis": "OSM: 1.691 m"
     },
     {
@@ -21,10 +20,9 @@
       "art": "Kreuz am Grat",
       "hoehe": 1692,
       "an": "10:38",
-      "pause_min": 7,
       "bild": "kreuz-obinger",
       "alt": "Helles Holzkreuz, auf dem Querbalken steht Obinger Bergfreunde, ringsum Latschen.",
-      "notiz": "Sieben Minuten. Der Querbalken trägt die Obinger Bergfreunde.",
+      "notiz": "Auf dem Querbalken stehen die Obinger Bergfreunde.",
       "osm_hinweis": "OSM kennt es als Wegkreuz, nicht als Gipfel"
     },
     {
@@ -32,10 +30,9 @@
       "art": "Hauptgipfel",
       "hoehe": 1682,
       "an": "11:11",
-      "pause_min": 26,
       "bild": "kreuz-hoerndlwand",
       "alt": "Hohes Gipfelkreuz aus verschraubtem Holz auf felsigem Grat, die Sonne steht direkt daneben.",
-      "notiz": "Der eigentlich Geplante. Da hoch braucht man Steigkenntnisse.",
+      "notiz": "„Da hoch braucht man eben schon gute Steigkenntnisse und Schwindelfreiheit.“",
       "osm_hinweis": "OSM: 1.684 m"
     },
     {
@@ -43,10 +40,9 @@
       "art": "Gipfel",
       "hoehe": 1685,
       "an": "11:37",
-      "pause_min": 25,
       "bild": "kreuz-ostgipfel",
       "alt": "Gipfelkreuz mit waagerechtem Schild und Plaketten, daneben ein gesetzter Steinmann.",
-      "notiz": "Der Letzte. Danach ging es nur noch runter.",
+      "notiz": "„Oben gehts viel durch Latschen und Fels mit Wurzeln.“",
       "osm_hinweis": null
     }
   ]
