@@ -5,14 +5,18 @@ WARUM
 Sebi am 22.09.2026: "mach was cooles aus den 4 gipfelkreuzen". Vier
 Kreuzfotos einzeln in die Bildstrecke zu haengen waere die schlechteste
 Loesung — sie gehoeren zusammen, und ihr Reiz liegt im VERGLEICH: vier
-Kreuze, vier Bauarten, vier Standzeiten an einem Vormittag. 33 Minuten
-auf dem ersten, sieben auf dem zweiten. Das erzaehlt den Tag besser als
-jede Hoehenmeterzahl.
+Kreuze, vier Bauarten, ein Vormittag. Deshalb ein eigener Abschnitt: die
+vier nebeneinander als Polyptychon, je Kreuz Name, Hoehe, Ankunft.
 
-Deshalb ein eigener Abschnitt: die vier nebeneinander als Polyptychon,
-darunter je Kreuz Name, Hoehe, Ankunft und Standzeit — und eine Leiste,
-die die Standzeiten im Verhaeltnis zeigt. Die Zahlen sind gemessen, nicht
-geschaetzt; sie stehen in <slug>/gipfel.json.
+Eine erste Fassung zeigte zusaetzlich die Standzeit als Balken (33 min
+auf dem ersten, 7 auf dem zweiten). Sebi hat sie am selben Tag wieder
+rausgenommen: "lass bei den 4 kreuzen die minuten weg". Der Selbsttest
+haelt das fest, damit es nicht durch eine spaetere Runde zurueckkommt.
+
+Die NOTIZ ist Sebis eigener Satz, nicht nacherzaehlt. "Der Spontane. Die
+laengste Pause des Tages." war der Reflex, gegen den kern.md warnt: aus
+einem Wanderer wird eine Autoritaet, und das ist das Gegenteil seiner
+dokumentierten Stimme.
 
 Ohne gipfel.json passiert fuer eine Tour nichts. Das ist Absicht: eine
 Tour mit einem Gipfel braucht keine Reihe, und ein Werkzeug, das fuer
@@ -38,36 +42,26 @@ def e(text):
 
 
 def bauen(daten, slug):
-    gipfel = daten["gipfel"]
-    laengste = max(g["pause_min"] for g in gipfel)
-
     karten = []
-    for n, g in enumerate(gipfel, 1):
-        # Die Leiste zeigt das VERHAELTNIS der Standzeiten, nicht Minuten
-        # auf einer Achse ab null — sonst waeren sieben Minuten ein Strich,
-        # den niemand sieht. Untergrenze 9 %, damit jede Pause sichtbar bleibt.
-        anteil = max(9, round(g["pause_min"] / laengste * 100))
+    for n, g in enumerate(daten["gipfel"], 1):
         hinweis = (f'<span class="tour-kreuz__osm">{e(g["osm_hinweis"])}</span>'
                    if g.get("osm_hinweis") else "")
+        hoehe = f'{g["hoehe"]:,}'.replace(",", ".")
         karten.append(f'''          <figure class="tour-kreuz" style="--n: {n}">
             <div class="tour-kreuz__bild">
               <img srcset="/touren/{slug}/{g["bild"]}-640.jpg 480w, /touren/{slug}/{g["bild"]}.jpg 1050w"
                    sizes="(max-width: 700px) 46vw, 23vw"
                    src="/touren/{slug}/{g["bild"]}.jpg" width="1050" height="1400"
                    alt="{e(g["alt"])}" loading="lazy" decoding="async">
-              <span class="tour-kreuz__nr" aria-hidden="true">{n:02d}</span>
+              <span class="tour-kreuz__uhr" aria-hidden="true">{e(g["an"])}</span>
             </div>
             <figcaption class="tour-kreuz__text">
               <b class="tour-kreuz__name">{e(g["name"])}</b>
-              <span class="tour-kreuz__art">{e(g["art"])}<span class="hsep" aria-hidden="true"></span>{g["hoehe"]:,} m</span>
-              <span class="tour-kreuz__zeit"><i>{e(g["an"])}</i> angekommen</span>
-              <span class="tour-kreuz__dauer" style="--anteil: {anteil}%">
-                <b>{g["pause_min"]} min</b><i aria-hidden="true"></i>
-              </span>
+              <span class="tour-kreuz__art">{e(g["art"])}<span class="hsep" aria-hidden="true"></span>{hoehe} m</span>
               <span class="tour-kreuz__notiz">{e(g["notiz"])}</span>
               {hinweis}
             </figcaption>
-          </figure>'''.replace(",", "."))
+          </figure>''')
 
     return f'''{ANFANG}
       <section class="tour-kreuze flaeche-wald" aria-labelledby="kreuze-{slug}">
@@ -121,10 +115,10 @@ def selbsttest():
         "titel": "T", "kicker": "K", "lede": "L", "quelle": "Q",
         "gipfel": [
             {"name": "A & B", "art": "Gipfel", "hoehe": 1694, "an": "10:02",
-             "pause_min": 33, "bild": "x", "alt": 'Ein "Kreuz"', "notiz": "N",
+             "bild": "x", "alt": 'Ein "Kreuz"', "notiz": "N",
              "osm_hinweis": "OSM: 1.691 m"},
             {"name": "C", "art": "Kreuz", "hoehe": 1692, "an": "10:38",
-             "pause_min": 7, "bild": "y", "alt": "A", "notiz": "N",
+             "bild": "y", "alt": "A", "notiz": "N",
              "osm_hinweis": None},
         ],
     }
@@ -135,23 +129,16 @@ def selbsttest():
     if "1.694 m" not in g:
         print("✗ SELBSTTEST: Tausenderpunkt fehlt")
         return 1
-    if "--anteil: 100%" not in g:
-        print("✗ SELBSTTEST: die laengste Pause muss die volle Leiste bekommen")
+    if "10:02" not in g or "10:38" not in g:
+        print("✗ SELBSTTEST: Ankunftszeit fehlt")
         return 1
-    if "--anteil: 21%" not in g:
-        print("✗ SELBSTTEST: kurze Pause falsch verhaeltnisgerecht (7/33 = 21 %)")
+    if "min" in g or "--anteil" in g:
+        print("✗ SELBSTTEST: Standzeit ist wieder drin — Sebi wollte die Minuten weg")
         return 1
     if g.count("tour-kreuz__osm") != 1:
         print("✗ SELBSTTEST: der OSM-Hinweis darf nur stehen, wo er gesetzt ist")
         return 1
-
-    klein = dict(probe, gipfel=[dict(probe["gipfel"][0], pause_min=1),
-                                dict(probe["gipfel"][1], pause_min=60)])
-    if "--anteil: 9%" not in bauen(klein, "test"):
-        print("✗ SELBSTTEST: winzige Pause faellt unter die Sichtbarkeitsgrenze")
-        return 1
-
-    print("✓ Selbsttest: maskiert, rechnet Verhaeltnisse, Untergrenze greift, "
+    print("✓ Selbsttest: maskiert, Ankunft steht, keine Standzeit mehr, "
           "Hinweis nur wo gesetzt.")
     return 0
 
