@@ -51,6 +51,14 @@ lauf() {
   fi
 }
 
+# Rueckweg zuerst. Sebi am 22.09.2026: "bitte davor aber immer sicherstellen
+# ... dass wir falls es noetig waere auch ein backup haben". `--auto` legt nur
+# an, wenn es fuer den aktuellen Live-Stand noch keinen Schnappschuss gibt —
+# und es laeuft HIER, weil dieses Skript vor jeder Auslieferung laeuft. Eine
+# Sicherung, an die man denken muss, ist genau der Fehler.
+titel "Rueckweg"
+bash scripts/sicherung.sh --auto "automatisch vor premium-check" || true
+
 titel "Statisch (Sekunden)"
 lauf "Design-Kodex: Radien"          python3 scripts/kodex-radien.py --pruefen
 lauf "Fremde Hosts & Ordner"         python3 scripts/fremdhosts-check.py
@@ -58,6 +66,7 @@ lauf "Produktliste & Affiliate-Tags" node scripts/produkte-sync.mjs --pruefen
 lauf "Touren gegen die Spec"         node scripts/tour-check.mjs --alle
 lauf "Tore selbst (Fixtures)"        ./scripts/tour-check-fixtures.sh
 lauf "E-Mail-Vorlagen"               node scripts/mail-check.mjs --selbsttest
+lauf "Sicherungs-Werkzeug"           ./scripts/sicherung.sh --selbsttest
 
 if [ "$SCHNELL" -eq 0 ]; then
   titel "Im Browser (Minuten)"

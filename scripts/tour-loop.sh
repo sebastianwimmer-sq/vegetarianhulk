@@ -102,6 +102,10 @@ for SLUG in "${SLUGS[@]}"; do
 done
 
 # 6. Cache-Buster: einmal fuer alle, nachdem alle Seiten geschrieben sind.
+# Rueckweg, bevor Seiten neu geschrieben werden. --auto ist still, wenn der
+# Live-Stand schon gesichert ist.
+bash scripts/sicherung.sh --auto "automatisch vor tour-loop" || true
+
 echo "${fett}── Gemeinsam${weg}"
 schritt "Cache-Buster ziehen" bash scripts/bump-asset-versions.sh
 
