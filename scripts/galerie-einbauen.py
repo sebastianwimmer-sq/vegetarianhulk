@@ -212,14 +212,15 @@ def kacheln_holen(html):
     """
     for anf, end in ((ANFANG, ENDE), (ALT_ANFANG, ALT_ENDE)):
         if anf in html:
-            block = re.search(re.escape(anf) + r".*?" + re.escape(end), html, re.S)
+            block = re.search(r"[ \t]*\n?\s*" + re.escape(anf) + r".*?"
+                              + re.escape(end) + r"[ \t]*\n?", html, re.S)
             if not block:
                 raise ValueError(f"Marker {anf} ohne Gegenstueck — Seite von Hand pruefen")
             kacheln = [zurueckbauen(k) for k in KACHEL.findall(block.group(0))]
             if not kacheln:
                 raise ValueError(f"Block {anf} gefunden, aber keine Kachel darin — "
                                  "Abbruch statt leerer Strecke")
-            return kacheln, html[:block.start()] + html[block.end():]
+            return kacheln, html[:block.start()] + "\n" + html[block.end():]
     return KACHEL.findall(html), html
 
 
@@ -251,7 +252,8 @@ def eine_tour(slug):
         html.find("</section>", anker.start()) + len("</section>")
 
     neu = html[:stelle] + "\n\n      " + bauen(kacheln, titel) + html[stelle:]
-    neu = re.sub(r'\n{3,}', '\n\n', neu)
+    neu = re.sub(r"\n[ \t]+\n", "\n\n", neu)
+    neu = re.sub(r"\n{3,}", "\n\n", neu)
     seite.write_text(neu, encoding="utf-8")
 
     plan = anordnen(kacheln)
@@ -319,8 +321,35 @@ def selbsttest():
         print("✗ SELBSTTEST: leerer Block wird nicht als Abbruch erkannt")
         return 1
 
+
+    # IDEMPOTENZ am ECHTEN Baum. Genau hier lief es am 22.09.2026 vorbei:
+    # der Selbsttest prueft Fixtures, und das WACHSEN der Datei zeigt sich
+    # erst, wenn man dieselbe Seite zweimal baut. kern.md: erst wenn Lauf 2
+    # und Lauf 3 byte-gleich sind, ist der Umbau stabil.
+    import hashlib, shutil, tempfile
+    beispiel = None
+    for k in sorted((WURZEL / "touren").iterdir()):
+        if (k / "index.html").exists() and ANFANG in (k / "index.html").read_text(encoding="utf-8"):
+            beispiel = k
+            break
+    if beispiel:
+        with tempfile.TemporaryDirectory() as tmp:
+            sicher = pathlib.Path(tmp) / "vorher.html"
+            shutil.copy(beispiel / "index.html", sicher)
+            try:
+                eine_tour(beispiel.name)
+                a = hashlib.md5((beispiel / "index.html").read_bytes()).hexdigest()
+                eine_tour(beispiel.name)
+                b = hashlib.md5((beispiel / "index.html").read_bytes()).hexdigest()
+            finally:
+                shutil.copy(sicher, beispiel / "index.html")
+        if a != b:
+            print(f"✗ SELBSTTEST: zweiter Lauf aendert die Datei erneut ({beispiel.name}) — "
+                  "der Einbau haeuft Leerraum an und die Seite waechst bei jedem Bau.")
+            return 1
+
     print("✓ Selbsttest: Anatomie trifft, Text bleibt, sizes/loading gesetzt, "
-          "zweiter Lauf verliert nichts, leerer Block bricht ab.")
+          "zweiter Lauf verliert nichts und ist byte-stabil, leerer Block bricht ab.")
     return 0
 
 

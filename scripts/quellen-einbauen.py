@@ -94,10 +94,11 @@ def eine_tour(slug):
 
     # Bestehenden Block ersetzen statt anhaengen.
     if ANFANG in t:
-        block = re.search(re.escape(ANFANG) + r".*?" + re.escape(ENDE), t, re.S)
+        block = re.search(r"[ \t]*\n?\s*" + re.escape(ANFANG) + r".*?"
+                          + re.escape(ENDE) + r"[ \t]*\n?", t, re.S)
         if not block:
             raise ValueError(f"{slug}: Marker ohne Gegenstueck")
-        t = t[:block.start()] + t[block.end():]
+        t = t[:block.start()] + "\n" + t[block.end():]
 
     # Die verstreuten Fussnoten einsammeln und entfernen.
     entfernt = 0
@@ -116,6 +117,7 @@ def eine_tour(slug):
     if anker == -1:
         raise ValueError(f"{slug}: kein <footer> — wo soll der Block hin?")
     neu = t[:anker] + bauen(liste) + "\n\n" + t[anker:]
+    neu = re.sub(r"\n[ \t]+\n", "\n\n", neu)
     neu = re.sub(r"\n{3,}", "\n\n", neu)
     seite.write_text(neu, encoding="utf-8")
     print(f"  {slug}: {len(liste)} Quelle(n) unten, {entfernt} Fussnote(n) entfernt")
@@ -155,8 +157,35 @@ def selbsttest():
         print('✗ SELBSTTEST: OSM-Route nennt OSM NICHT, Lizenzverstoss')
         return 1
 
+
+    # IDEMPOTENZ am ECHTEN Baum. Genau hier lief es am 22.09.2026 vorbei:
+    # der Selbsttest prueft Fixtures, und das WACHSEN der Datei zeigt sich
+    # erst, wenn man dieselbe Seite zweimal baut. kern.md: erst wenn Lauf 2
+    # und Lauf 3 byte-gleich sind, ist der Umbau stabil.
+    import hashlib, shutil, tempfile
+    beispiel = None
+    for k in sorted((WURZEL / "touren").iterdir()):
+        if (k / "index.html").exists() and ANFANG in (k / "index.html").read_text(encoding="utf-8"):
+            beispiel = k
+            break
+    if beispiel:
+        with tempfile.TemporaryDirectory() as tmp:
+            sicher = pathlib.Path(tmp) / "vorher.html"
+            shutil.copy(beispiel / "index.html", sicher)
+            try:
+                eine_tour(beispiel.name)
+                a = hashlib.md5((beispiel / "index.html").read_bytes()).hexdigest()
+                eine_tour(beispiel.name)
+                b = hashlib.md5((beispiel / "index.html").read_bytes()).hexdigest()
+            finally:
+                shutil.copy(sicher, beispiel / "index.html")
+        if a != b:
+            print(f"✗ SELBSTTEST: zweiter Lauf aendert die Datei erneut ({beispiel.name}) — "
+                  "der Einbau haeuft Leerraum an und die Seite waechst bei jedem Bau.")
+            return 1
+
     print("✓ Selbsttest: Pflicht-Wortlaute stehen, OSM nur wo benutzt, "
-          "verkuerzte Angabe wird erkannt.")
+          "verkuerzte Angabe wird erkannt, zweiter Lauf stabil.")
     return 0
 
 
