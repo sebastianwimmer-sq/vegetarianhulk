@@ -67,6 +67,8 @@ bash scripts/bump-asset-versions.sh >/dev/null 2>&1 || true
 
 titel "Statisch (Sekunden)"
 lauf "Design-Kodex: Radien"          python3 scripts/kodex-radien.py --pruefen
+lauf "Schild-Material"               python3 scripts/schild-check.py
+lauf "Schild (Fixtures)"             python3 scripts/schild-check.py --selbsttest
 lauf "Fremde Hosts & Ordner"         python3 scripts/fremdhosts-check.py
 lauf "Produktliste & Affiliate-Tags" node scripts/produkte-sync.mjs --pruefen
 lauf "Touren gegen die Spec"         node scripts/tour-check.mjs --alle
