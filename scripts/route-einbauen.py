@@ -393,23 +393,19 @@ def abschnitt_bauen(slug, route, html):
                 <span class="tour-route__fakt-wert">{hoehen_zeile}</span>
               </div>""" if hoehen_zeile else "")
 
-    # Wie nah die geroutete Laenge an der aufgezeichneten liegt, steht im Text.
-    # Ohne diese Zahl waere "nach OpenStreetMap" eine Behauptung ohne Beleg.
     if ist_spur:
-        # Kurz, aber nicht verschwiegen: bei der Kneifelspitze endet die
-        # Aufzeichnung oben, und bei zwei Touren misst GPS deutlich weniger
-        # als die Uhr. Beides gehoert in den Satz, sonst liest man die Karte
-        # als etwas, das sie nicht ist.
-        nur_auf = route.get("bis_gipfel")
-        seiten_km = route.get("erwartet_km")
-        weit = seiten_km and abs(route["km"] - seiten_km) / seiten_km > 0.05
-        zusatz = ""
-        if weit:
-            g = f"{route['km']:.2f}".replace(".", ",")
-            u = f"{seiten_km:.2f}".replace(".", ",")
-            zusatz = f" · GPS {g} km, Uhr {u} km"
+        # Ein Satz, der eine FRAGE beantwortet, die das Bild aufwirft — mehr
+        # nicht. Wer sieht, dass die Linie oben aufhoert, fragt sich warum;
+        # das gehoert hin.
+        #
+        # Was hier BIS 22.09.2026 zusaetzlich stand: "· GPS 13,46 km, Uhr
+        # 15,10 km". Das war fuer den Fall gedacht, dass die Linie aus
+        # OpenStreetMap kommt und die Laenge belegt werden muss — bei einer
+        # eigenen Spur gibt es diese Behauptung gar nicht. Auf der Karte
+        # steht keine Laenge, niemand misst sie ab, und die Faktenzeile nennt
+        # ohnehin den Wert der Uhr. Sebi: "das juckt niemand".
         satz = ("Aufgezeichnete Spur bis zum Gipfel — der Rückweg lief nicht mit."
-                if nur_auf else f"Aufgezeichnete Spur{zusatz}")
+                if route.get("bis_gipfel") else "Aufgezeichnete Spur")
         kopf_label = "Gegangene Spur"
     else:
         satz = None

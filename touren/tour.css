@@ -1040,3 +1040,39 @@
   .tour-kreuz__notiz { display: none; }   /* auf halber Spalte zu eng */
   .tour-kreuz__text { padding-top: 11px; gap: 4px; }
 }
+
+/* ============================================================
+   QUELLEN — eine Zeile, ganz unten, leise.
+
+   Sebi am 22.09.2026: "des andere viele zeug text nervt und stoert beim
+   betrachten einfach ... mach unten vor dem footer quellen oder so".
+
+   Vorher stand die Herkunft an vier Stellen verteilt: unter den Zahlen,
+   unter der Karte, unter jedem Kreuz. Hier steht sie einmal, in der
+   Groesse, die sie verdient — lesbar, aber ohne Anspruch auf
+   Aufmerksamkeit. Wer sie sucht, findet sie.
+   ============================================================ */
+.tour-quellen {
+  width: var(--tour-breite); margin: clamp(38px, 5vw, 64px) auto 0;
+  padding-top: 16px; border-top: 1px solid rgba(126,208,155,0.13);
+  display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+}
+.tour-quellen__label {
+  flex: 0 0 auto;
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--paper-faint);
+  /* Nicht blasser machen: 0.42 Deckkraft ergab 3,53:1 und riss die Latte.
+     Zurückhaltung kommt hier aus 9 px und der Stellung, nicht aus Blässe. */
+}
+.tour-quellen__liste {
+  margin: 0; min-width: 0;
+  font-family: var(--mono); font-size: 10px; line-height: 1.7;
+  letter-spacing: 0.3px; color: var(--paper-faint);
+}
+/* Trenner zwischen den Punkten, statt jeden in eine eigene Zeile zu setzen. */
+.tour-quellen__punkt + .tour-quellen__punkt::before {
+  content: "·"; margin: 0 8px; color: rgba(126,208,155,0.4);
+}
+@media (max-width: 560px) {
+  .tour-quellen { flex-direction: column; gap: 6px; }
+}

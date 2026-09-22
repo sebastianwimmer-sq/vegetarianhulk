@@ -99,6 +99,9 @@ for SLUG in "${SLUGS[@]}"; do
   schritt "Karte in die Seite"      python3 scripts/route-einbauen.py "$SLUG"
   schritt "Bildstrecke bauen"       python3 scripts/galerie-einbauen.py "$SLUG"
   schritt "Kreuz-Reihe"             python3 scripts/gipfelreihe-einbauen.py "$SLUG"
+  # Zuletzt: sammelt die verstreuten Fussnoten ein und setzt EINE Zeile
+  # vor den Fuss. Muss nach allem laufen, was Markup schreibt.
+  schritt "Quellen vor den Fuss"    python3 scripts/quellen-einbauen.py "$SLUG"
 done
 
 # 6. Cache-Buster: einmal fuer alle, nachdem alle Seiten geschrieben sind.
@@ -122,6 +125,8 @@ schritt "Karten-Waechter"          python3 scripts/route-einbauen.py --selbsttes
 schritt "Bildbeschnitt"            node scripts/foto-check.mjs
 schritt "Bildstrecken-Waechter"    python3 scripts/galerie-einbauen.py --selbsttest
 schritt "Kreuz-Waechter"           python3 scripts/gipfelreihe-einbauen.py --selbsttest
+schritt "Quellen-Waechter"         python3 scripts/quellen-einbauen.py --selbsttest
+schritt "Erklaer-Fussnoten"        python3 scripts/text-check.py
 
 echo
 if [ "$FEHLER" = 0 ]; then

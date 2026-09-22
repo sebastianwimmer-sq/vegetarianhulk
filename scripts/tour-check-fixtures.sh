@@ -62,8 +62,8 @@ pruefe "Wegverlauf ganz entfernt" \
 pruefe "Route ohne Koordinaten (nur der statische Pfad bleibt)" \
   's{data-route="[^"]*"}{}' \
   "touren/$SLUG/index.html"
-pruefe "Quellenangabe unter der Karte fehlt" \
-  's{tour-route__quelle}{tour-route__nichts}g' \
+pruefe "Quellenangabe vor dem Fuss fehlt" \
+  's{tour-quellen__liste}{tour-quellen__nichts}g' \
   "touren/$SLUG/index.html"
 pruefe "ODbL-Nennung auf die unzulaessige Kurzform gekuerzt" \
   's{Sentinel-2 cloudless}{© OpenStreetMap und Sentinel-2 cloudless}' \

@@ -44,8 +44,6 @@ def e(text):
 def bauen(daten, slug):
     karten = []
     for n, g in enumerate(daten["gipfel"], 1):
-        hinweis = (f'<span class="tour-kreuz__osm">{e(g["osm_hinweis"])}</span>'
-                   if g.get("osm_hinweis") else "")
         hoehe = f'{g["hoehe"]:,}'.replace(",", ".")
         karten.append(f'''          <figure class="tour-kreuz" style="--n: {n}">
             <div class="tour-kreuz__bild">
@@ -59,7 +57,6 @@ def bauen(daten, slug):
               <b class="tour-kreuz__name">{e(g["name"])}</b>
               <span class="tour-kreuz__art">{e(g["art"])}<span class="hsep" aria-hidden="true"></span>{hoehe} m</span>
               <span class="tour-kreuz__notiz">{e(g["notiz"])}</span>
-              {hinweis}
             </figcaption>
           </figure>''')
 
@@ -73,7 +70,6 @@ def bauen(daten, slug):
         <div class="tour-kreuze__reihe">
 {chr(10).join(karten)}
         </div>
-        <p class="tour-kreuze__quelle">{e(daten["quelle"])}</p>
       </section>
       {ENDE}'''
 
@@ -112,14 +108,12 @@ def eine_tour(slug):
 
 def selbsttest():
     probe = {
-        "titel": "T", "kicker": "K", "lede": "L", "quelle": "Q",
+        "titel": "T", "kicker": "K", "lede": "L",
         "gipfel": [
             {"name": "A & B", "art": "Gipfel", "hoehe": 1694, "an": "10:02",
-             "bild": "x", "alt": 'Ein "Kreuz"', "notiz": "N",
-             "osm_hinweis": "OSM: 1.691 m"},
+             "bild": "x", "alt": 'Ein "Kreuz"', "notiz": "N"},
             {"name": "C", "art": "Kreuz", "hoehe": 1692, "an": "10:38",
-             "bild": "y", "alt": "A", "notiz": "N",
-             "osm_hinweis": None},
+             "bild": "y", "alt": "A", "notiz": "N"},
         ],
     }
     g = bauen(probe, "test")
@@ -135,11 +129,15 @@ def selbsttest():
     if "min" in g or "--anteil" in g:
         print("✗ SELBSTTEST: Standzeit ist wieder drin — Sebi wollte die Minuten weg")
         return 1
-    if g.count("tour-kreuz__osm") != 1:
-        print("✗ SELBSTTEST: der OSM-Hinweis darf nur stehen, wo er gesetzt ist")
-        return 1
-    print("✓ Selbsttest: maskiert, Ankunft steht, keine Standzeit mehr, "
-          "Hinweis nur wo gesetzt.")
+    # Sebi am 22.09.2026: "das is so zu viel explaining ... das juckt niemand".
+    # Woher eine Zahl kommt, gehoert in die Belegkette, nicht unter jedes Kreuz.
+    for wort in ("OSM", "GPX", "Aufzeichnung", "Quelle"):
+        if wort in g:
+            print(f"✗ SELBSTTEST: '{wort}' steht wieder in der Ausgabe — "
+                  "Herkunft gehoert nicht unter jedes Kreuz")
+            return 1
+    print("✓ Selbsttest: maskiert, Ankunft steht, keine Standzeit, "
+          "keine Herkunfts-Fussnote.")
     return 0
 
 

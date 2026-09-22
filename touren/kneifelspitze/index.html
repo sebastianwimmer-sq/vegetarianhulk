@@ -48,7 +48,7 @@
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
 <link rel="stylesheet" href="/v3.css?v=abd8adf7">
-<link rel="stylesheet" href="/touren/tour.css?v=f15a49c8">
+<link rel="stylesheet" href="/touren/tour.css?v=6325a4a5">
 <style>
   /* Nur was diese eine Tour ausmacht: der Bildausschnitt des Nacht-Heros.
      Alles andere kommt aus /touren/tour.css. */
@@ -143,7 +143,6 @@
           <div><b>132 bpm</b><span>Ø Puls</span></div>
           <div><b>1:41 h</b><span>in Bewegung</span></div>
           <div><b>1.000</b><span>kcal</span></div>
-          <p class="src">Aufgezeichnet mit Apple Watch + Strava</p>
         </div>
       </div>
 
@@ -203,7 +202,7 @@
     <span class="tour-profil__marke tour-profil__marke--gipfel tour-profil__marke--sonne"
           style="left: calc(49.2% + 12px);">Kneifelspitze · 1.188 m</span>
     </div>
-    <p class="tour-profil__hint">Zum Ablesen drüberfahren · Werte aus Strava.</p>
+    <p class="tour-profil__hint">Zum Ablesen drüberfahren</p>
       </section>
 
       <!-- WEGVERLAUF (erzeugt: scripts/route-einbauen.py) -->
@@ -282,7 +281,6 @@
         </div>
         <p class="tour-route__hint">
           <span class="tour-route__hint-satz">Aufgezeichnete Spur bis zum Gipfel — der Rückweg lief nicht mit.</span>
-          <span class="tour-route__quelle">GPS-Aufzeichnung · EU-DEM · Sentinel-2 cloudless (EOX, CC BY 4.0)</span>
         </p>
       </section>
       <!-- /WEGVERLAUF -->
@@ -344,6 +342,13 @@
 
   <p class="tour-back"><a href="/touren/">← Alle Hulk Hikes</a></p>
 </main>
+
+<!-- QUELLEN (erzeugt: scripts/quellen-einbauen.py) -->
+  <aside class="tour-quellen" aria-label="Quellen">
+    <span class="tour-quellen__label">Quellen</span>
+    <p class="tour-quellen__liste"><span class="tour-quellen__punkt">Zahlen und Spur selbst aufgezeichnet (Apple Watch + Strava)</span><span class="tour-quellen__punkt">Sentinel-2 cloudless von EOX (CC BY 4.0)</span><span class="tour-quellen__punkt">Höhenlinien aus EU-DEM (Copernicus)</span><span class="tour-quellen__punkt">Live-Wetter von Open-Meteo (CC BY 4.0)</span></p>
+  </aside>
+  <!-- /QUELLEN -->
 
 <footer>
   <div class="inner">
