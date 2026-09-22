@@ -13,6 +13,8 @@
 #   · `foto-format.py` vergessen → Fotos erben die Hoehe ihrer Rasterzeile und
 #     verlieren bis zu 59 %
 #   · `bump-asset-versions.sh` vergessen → Besucher sehen altes CSS
+#   · `galerie-einbauen.py` vergessen → die Fotos bleiben einzelne Kacheln
+#     im Bento-Raster statt eine Bildstrecke zu werden
 #
 # Keiner dieser Faelle wirft einen Fehler. Alle sehen aus wie eine fertige
 # Seite. Deshalb: ein Befehl, feste Reihenfolge, und am Ende die Tore.
@@ -91,8 +93,12 @@ for SLUG in "${SLUGS[@]}"; do
   #    danach waere die Seite schon geschrieben.
   schritt "Fotoformate setzen"      python3 scripts/foto-format.py "$SLUG"
 
-  # 5. Alles in die Seite.
+  # 5. Alles in die Seite. Reihenfolge ist bindend: die Bildstrecke sucht
+  #    <!-- /WEGVERLAUF --> als Anker, und die Kreuz-Reihe sucht
+  #    <!-- /BILDSTRECKE -->. Vertauscht landet beides am falschen Platz.
   schritt "Karte in die Seite"      python3 scripts/route-einbauen.py "$SLUG"
+  schritt "Bildstrecke bauen"       python3 scripts/galerie-einbauen.py "$SLUG"
+  schritt "Kreuz-Reihe"             python3 scripts/gipfelreihe-einbauen.py "$SLUG"
 done
 
 # 6. Cache-Buster: einmal fuer alle, nachdem alle Seiten geschrieben sind.
@@ -110,6 +116,8 @@ echo "${fett}── Tore${weg}"
 schritt "Touren gegen die Spec"    node scripts/tour-check.mjs --alle
 schritt "Karten-Waechter"          python3 scripts/route-einbauen.py --selbsttest
 schritt "Bildbeschnitt"            node scripts/foto-check.mjs
+schritt "Bildstrecken-Waechter"    python3 scripts/galerie-einbauen.py --selbsttest
+schritt "Kreuz-Waechter"           python3 scripts/gipfelreihe-einbauen.py --selbsttest
 
 echo
 if [ "$FEHLER" = 0 ]; then

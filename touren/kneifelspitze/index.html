@@ -48,7 +48,7 @@
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
 <link rel="stylesheet" href="/v3.css?v=2eabfbb0">
-<link rel="stylesheet" href="/touren/tour.css?v=151421d0">
+<link rel="stylesheet" href="/touren/tour.css?v=d794f808">
 <style>
   /* Nur was diese eine Tour ausmacht: der Bildausschnitt des Nacht-Heros.
      Alles andere kommt aus /touren/tour.css. */
@@ -287,37 +287,47 @@
       </section>
       <!-- /WEGVERLAUF -->
 
-      <!-- GALERIE (erzeugt: scripts/galerie-einbauen.py) -->
-      <section class="tour-galerie" style="--anzahl: 3" aria-label="Bilder von der Tour">
-        <div class="tour-galerie__buehne">
-          <div class="tour-kopf tour-galerie__kopf">
-            <span class="tour-kopf__label">Bilder<span class="hsep" aria-hidden="true"></span>Kneifelspitze</span>
-          </div>
-          <div class="tour-galerie__streifen">
-            <figure class="tour-shot" style=" --shot-fokus: center 58%; --shot-mobil: 3/4">
-        <img srcset="/touren/kneifelspitze/blaue-stunde-640.jpg 525w, /touren/kneifelspitze/blaue-stunde.jpg 750w" sizes="(max-width: 820px) 92vw, 46vw" src="/touren/kneifelspitze/blaue-stunde.jpg" width="750" height="1000"
-             alt="Blaue Stunde über den Berchtesgadener Bergen, im Vordergrund das Dach der Paulshütte."
-             loading="eager" fetchpriority="low" decoding="async">
-        <figcaption><b>Blaue Stunde</b>Eine Stunde zwanzig warten</figcaption>
-      </figure>
-            <figure class="tour-shot" style="--shot-ar: 4 / 3; --shot-fokus: center 46%">
-        <img srcset="/touren/kneifelspitze/sonnenaufgang-640.jpg 700w, /touren/kneifelspitze/sonnenaufgang.jpg 1000w" sizes="(max-width: 820px) 92vw, 46vw" src="/touren/kneifelspitze/sonnenaufgang.jpg" width="1000" height="750"
-             alt="Rot glühende Wolken beim Sonnenaufgang, davor die Silhouetten von Fichten."
-             loading="eager" fetchpriority="low" decoding="async">
-        <figcaption><b>06:34</b>Halb hinter Bäumen, trotzdem top</figcaption>
-      </figure>
-            <figure class="tour-shot" style="--shot-ar: 3 / 4; --shot-fokus: center 44%; --shot-mobil: 3/4">
-        <img srcset="/touren/kneifelspitze/watzmann-morgen-640.jpg 525w, /touren/kneifelspitze/watzmann-morgen.jpg 1125w" sizes="(max-width: 820px) 92vw, 46vw" src="/touren/kneifelspitze/watzmann-morgen.jpg" width="1125" height="1500"
-             alt="Der Watzmann im ersten Morgenlicht unter blauem Himmel, davor Wiesen und Wald."
-             loading="eager" fetchpriority="low" decoding="async">
-        <figcaption><b>Watzmann</b>Beim Abstieg, im ersten Licht</figcaption>
-      </figure>
-          </div>
-          <span class="tour-galerie__zaehler" aria-hidden="true">1 / 3</span>
-          <span class="tour-galerie__balken" aria-hidden="true"><i></i></span>
+      <!-- BILDSTRECKE (erzeugt: scripts/galerie-einbauen.py) -->
+      <section class="tour-strecke" aria-label="Bilder von der Tour">
+        <div class="tour-kopf tour-strecke__kopf">
+          <span class="tour-kopf__label">Bilder<span class="hsep" aria-hidden="true"></span>Kneifelspitze</span>
         </div>
+        <figure class="tour-blatt tour-blatt--links">
+          <figure class="tour-shot" style=" --shot-fokus: center 58%; --shot-mobil: 3/4">
+        <img srcset="/touren/kneifelspitze/blaue-stunde-640.jpg 525w, /touren/kneifelspitze/blaue-stunde.jpg 750w" sizes="(max-width: 860px) 92vw, 52vw" src="/touren/kneifelspitze/blaue-stunde.jpg" width="750" height="1000"
+             alt="Blaue Stunde über den Berchtesgadener Bergen, im Vordergrund das Dach der Paulshütte."
+             loading="eager" fetchpriority="low" decoding="async"></figure>
+          <figcaption class="tour-blatt__text">
+            <b>Blaue Stunde</b>
+            <span>Eine Stunde zwanzig warten</span>
+          </figcaption>
+        </figure>
+        <figure class="tour-blatt tour-blatt--voll">
+          <figure class="tour-shot" style="--shot-ar: 4 / 3; --shot-fokus: center 46%">
+        <img srcset="/touren/kneifelspitze/sonnenaufgang-640.jpg 700w, /touren/kneifelspitze/sonnenaufgang.jpg 1000w" sizes="(max-width: 860px) 92vw, 88vw" src="/touren/kneifelspitze/sonnenaufgang.jpg" width="1000" height="750"
+             alt="Rot glühende Wolken beim Sonnenaufgang, davor die Silhouetten von Fichten."
+             loading="lazy" fetchpriority="low" decoding="async"></figure>
+          <figcaption class="tour-blatt__text">
+            <b>06:34</b>
+            <span>Halb hinter Bäumen, trotzdem top</span>
+          </figcaption>
+        </figure>
+        <figure class="tour-blatt tour-blatt--rechts">
+          <figure class="tour-shot" style="--shot-ar: 3 / 4; --shot-fokus: center 44%; --shot-mobil: 3/4">
+        <img srcset="/touren/kneifelspitze/watzmann-morgen-640.jpg 525w, /touren/kneifelspitze/watzmann-morgen.jpg 1125w" sizes="(max-width: 860px) 92vw, 52vw" src="/touren/kneifelspitze/watzmann-morgen.jpg" width="1125" height="1500"
+             alt="Der Watzmann im ersten Morgenlicht unter blauem Himmel, davor Wiesen und Wald."
+             loading="lazy" fetchpriority="low" decoding="async"></figure>
+          <figcaption class="tour-blatt__text">
+            <b>Watzmann</b>
+            <span>Beim Abstieg, im ersten Licht</span>
+          </figcaption>
+        </figure>
       </section>
-      <!-- /GALERIE -->
+      <!-- /BILDSTRECKE -->
+
+      
+
+      
 
       <!-- der Moment, auf den die ganze Tour zuläuft — neben dem Profil -->
 
@@ -364,7 +374,7 @@
   <a href="/kooperationen.html">Brands</a>
 </nav>
 
-<script src="/touren/tour.js?v=02757550" defer></script>
+<script src="/touren/tour.js?v=04d90a2b" defer></script>
 <script src="/v3.js?v=867f6d1f" defer></script>
 </body>
 </html>

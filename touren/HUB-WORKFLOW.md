@@ -43,7 +43,8 @@ Geschichte der Tour ist** (nachts los, oben auf das Licht warten). Referenz:
 |---|---|
 | `.tour-arc` | Zeitachse zwischen Split und Höhenprofil. 4 Punkte: los · oben · Sonnenaufgang · zurück, der Sonnenaufgang ist markiert. **Die Fläche ist Wald wie überall** (Kodex Regel 1) — der Tagesanbruch lebt in der 1px-Datenspur und den Punkten, nicht in einer dritten Hintergrundfarbe. Der erste Entwurf hatte einen Nacht→Orange-Verlauf als Fläche; genau das las sich als Template-Optik. |
 | `.tour-fakt--live[data-sonnenaufgang]` | Zweiter Live-Fakt im Hero-Strip: nächster Sonnenaufgang am Gipfel. **Gleiche Zahlenskala wie alle anderen Fakten** — der Unterschied ist die Farbe, nicht die Größe; vorher brachen kleinere Live-Zahlen den Rhythmus. Nutzt `daily=sunrise` aus demselben Open-Meteo-Call. |
-| `.tour-strip` | Fotostrecke für Touren mit mehr als einem Bild. **Bento mit ungleichen Kacheln** (Kodex Regel 8), nicht drei gleich große — ein uniformes Karten-Grid ist der Anti-Slop-Wächter aus dem Kodex. Größe folgt der Chronologie: das lange Warten groß, der Moment breit, der Rest klein. **Grid, kein horizontaler Scroller** — WebKit/Gecko laden `loading="lazy"` beim horizontalen Scrollen nicht nach. |
+| `.tour-strecke` | **Bildstrecke** — die Fotos stehen senkrecht untereinander und kommen beim Scrollen herein (`animation-timeline: view()`, Rückfallweg per IntersectionObserver in `tour.js`). Erzeugt von `scripts/galerie-einbauen.py`; von Hand wird hier nichts gesetzt. **Drei Anatomien**, und welche ein Foto bekommt, entscheidet sein Seitenverhältnis: Querformat → `--voll` (volle Breite, das Durchatmen), Hochformat → `--links`/`--rechts` (versetzt, Text in der Randspalte) oder `--paar` (zwei nebeneinander). Zwei Paare nie hintereinander — das Paar wäre sonst die neue Monotonie. **Kein horizontaler Streifen**: die Fassung davor war auf dem Handy 304 px klein („sieht richtig doof aus", 22.09.2026). |
+| `.tour-kreuze` | **Kreuz-Reihe** für Touren mit mehreren Gipfeln. Vier Tafeln nebeneinander (Handy 2×2), je Kreuz Name, Höhe, Ankunft und **Standzeit als Balken im Verhältnis** — der Balken trägt die Aussage, nicht die Zahl. Quelle ist `<slug>/gipfel.json`, erzeugt von `scripts/gipfelreihe-einbauen.py`. Ohne die Datei passiert für eine Tour nichts. |
 
 Die fixierte Reihenfolge aus §2 bleibt: Hero → Split → *(Nacht-Achse)* → Höhenprofil →
 *(Fotos)* → CTA → Zurück-Link.
@@ -245,6 +246,21 @@ aus dem Tour-Loop — **ein Befehl, §6**:
 ```bash
 scripts/tour-loop.sh <slug>            # bzw. --gpx <datei>, wenn eine GPS-Spur da ist
 ```
+
+Der Loop baut auch die **Bildstrecke** und die **Kreuz-Reihe**. Die Reihenfolge darin ist
+bindend, weil beide auf einem Anker im Markup sitzen:
+
+| Schritt | sucht | fehlt der Anker |
+|---|---|---|
+| `galerie-einbauen.py` | `<!-- /WEGVERLAUF -->` | fällt auf das Höhenprofil zurück |
+| `gipfelreihe-einbauen.py` | `<!-- /BILDSTRECKE -->` | **Abbruch** statt Einbau an falscher Stelle |
+
+Neue Fotos kommen als `<figure class="tour-shot">` ins Markup — irgendwo hinter
+`<!-- /WEGVERLAUF -->` genügt, den Rest ordnet das Skript. **Die Seite ist die einzige
+Quelle**, es gibt kein zweites Verzeichnis, das driften könnte. Ein zweiter Lauf ist
+stabil; der Selbsttest prüft das ausdrücklich, weil genau dort am 22.09.2026 alle
+Bildunterschriften verloren gingen (nach dem ersten Lauf steht der Text als Geschwister
+neben der Kachel, nicht mehr darin).
 
 ---
 

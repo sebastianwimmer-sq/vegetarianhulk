@@ -48,7 +48,7 @@
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
 <link rel="stylesheet" href="/v3.css?v=2eabfbb0">
-<link rel="stylesheet" href="/touren/tour.css?v=151421d0">
+<link rel="stylesheet" href="/touren/tour.css?v=d794f808">
 <style>
   /* Nur was diese eine Tour ausmacht: der Bildausschnitt des Heros — der
      Blick faellt rechts unten auf den See, deshalb liegt der Fokus tiefer.
@@ -326,43 +326,59 @@
       </section>
       <!-- /WEGVERLAUF -->
 
-      <!-- GALERIE (erzeugt: scripts/galerie-einbauen.py) -->
-      <section class="tour-galerie" style="--anzahl: 4" aria-label="Bilder von der Tour">
-        <div class="tour-galerie__buehne">
-          <div class="tour-kopf tour-galerie__kopf">
-            <span class="tour-kopf__label">Bilder<span class="hsep" aria-hidden="true"></span>Fellhorn</span>
-          </div>
-          <div class="tour-galerie__streifen">
+      <!-- BILDSTRECKE (erzeugt: scripts/galerie-einbauen.py) -->
+      <section class="tour-strecke" aria-label="Bilder von der Tour">
+        <div class="tour-kopf tour-strecke__kopf">
+          <span class="tour-kopf__label">Bilder<span class="hsep" aria-hidden="true"></span>Fellhorn</span>
+        </div>
+        <figure class="tour-blatt tour-blatt--paar">
+          <div class="tour-blatt__halb">
             <figure class="tour-shot" style="--shot-ar: 15 / 14; --shot-fokus: center 58%;">
-        <img srcset="/touren/fellhorn/wilder-kaiser-640.jpg 700w, /touren/fellhorn/wilder-kaiser.jpg 1500w" sizes="(max-width: 820px) 92vw, 46vw" src="/touren/fellhorn/wilder-kaiser.jpg" width="1500" height="1400"
+        <img srcset="/touren/fellhorn/wilder-kaiser-640.jpg 700w, /touren/fellhorn/wilder-kaiser.jpg 1500w" sizes="(max-width: 860px) 46vw, 42vw" src="/touren/fellhorn/wilder-kaiser.jpg" width="1500" height="1400"
              alt="Blick vom Fellhorn auf den Wilden Kaiser: helle Felswände unter blauem Himmel, davor bewaldete Rücken und Bergwiesen."
-             loading="eager" fetchpriority="low" decoding="async">
-        <figcaption><b>Wilder Kaiser</b>Dafür ist man um vier aufgestanden</figcaption>
-      </figure>
+             loading="eager" fetchpriority="low" decoding="async"></figure>
+            <figcaption class="tour-blatt__text">
+              <b>Wilder Kaiser</b>
+              <span>Dafür ist man um vier aufgestanden</span>
+            </figcaption>
+          </div>
+          <div class="tour-blatt__halb">
             <figure class="tour-shot" style="--shot-ar: 3 / 4; --shot-fokus: center 46%">
-        <img srcset="/touren/fellhorn/gipfelbuch-640.jpg 525w, /touren/fellhorn/gipfelbuch.jpg 825w" sizes="(max-width: 820px) 92vw, 46vw" src="/touren/fellhorn/gipfelbuch.jpg" width="825" height="1100"
+        <img srcset="/touren/fellhorn/gipfelbuch-640.jpg 525w, /touren/fellhorn/gipfelbuch.jpg 825w" sizes="(max-width: 860px) 46vw, 42vw" src="/touren/fellhorn/gipfelbuch.jpg" width="825" height="1100"
              alt="Aufgeschlagenes Notizbuch am Gipfel mit handschriftlichem Eintrag und aufgeklebtem Smashie-Sticker, daneben der Abgrund."
-             loading="eager" fetchpriority="low" decoding="async">
-        <figcaption><b>Gipfelbuch</b>Smashie war auch oben</figcaption>
-      </figure>
-            <figure class="tour-shot" style="--shot-ar: 3 / 4; --shot-fokus: center 76%">
-        <img srcset="/touren/fellhorn/einkehr-640.jpg 525w, /touren/fellhorn/einkehr.jpg 825w" sizes="(max-width: 820px) 92vw, 46vw" src="/touren/fellhorn/einkehr.jpg" width="825" height="1100"
+             loading="lazy" fetchpriority="low" decoding="async"></figure>
+            <figcaption class="tour-blatt__text">
+              <b>Gipfelbuch</b>
+              <span>Smashie war auch oben</span>
+            </figcaption>
+          </div>
+        </figure>
+        <figure class="tour-blatt tour-blatt--links">
+          <figure class="tour-shot" style="--shot-ar: 3 / 4; --shot-fokus: center 76%">
+        <img srcset="/touren/fellhorn/einkehr-640.jpg 525w, /touren/fellhorn/einkehr.jpg 825w" sizes="(max-width: 860px) 92vw, 52vw" src="/touren/fellhorn/einkehr.jpg" width="825" height="1100"
              alt="Zwei Portionen Kaiserschmarren mit Apfelmus auf der Terrasse des Straubinger Hauses, dahinter die Berge und angelehnte Wanderstöcke."
-             loading="eager" fetchpriority="low" decoding="async">
-        <figcaption><b>Straubinger Haus</b>14,90 € — stabile 7,5 von 10</figcaption>
-      </figure>
-            <figure class="tour-shot" style="--shot-ar: 3 / 4; --shot-fokus: center 22%; --shot-mobil: 3/4">
+             loading="lazy" fetchpriority="low" decoding="async"></figure>
+          <figcaption class="tour-blatt__text">
+            <b>Straubinger Haus</b>
+            <span>14,90 € — stabile 7,5 von 10</span>
+          </figcaption>
+        </figure>
+        <figure class="tour-blatt tour-blatt--rechts">
+          <figure class="tour-shot" style="--shot-ar: 3 / 4; --shot-fokus: center 22%; --shot-mobil: 3/4">
         <img src="/touren/fellhorn/oben.jpg" width="675" height="900"
              alt="Sebi am Gipfel des Fellhorns, im Hintergrund das Gipfelkreuz und grüne Bergwiesen."
-             loading="eager" fetchpriority="low" decoding="async">
-        <figcaption><b>Halbzeit</b>Oben nach 8,8 km — genauso viel ging noch bergab</figcaption>
-      </figure>
-          </div>
-          <span class="tour-galerie__zaehler" aria-hidden="true">1 / 4</span>
-          <span class="tour-galerie__balken" aria-hidden="true"><i></i></span>
-        </div>
+             loading="lazy" fetchpriority="low" decoding="async"></figure>
+          <figcaption class="tour-blatt__text">
+            <b>Halbzeit</b>
+            <span>Oben nach 8,8 km — genauso viel ging noch bergab</span>
+          </figcaption>
+        </figure>
       </section>
-      <!-- /GALERIE -->
+      <!-- /BILDSTRECKE -->
+
+      
+
+      
 
       <!-- das Gipfelbuch — das hat keine andere Tour -->
 
@@ -411,7 +427,7 @@
   <a href="/kooperationen.html">Brands</a>
 </nav>
 
-<script src="/touren/tour.js?v=02757550" defer></script>
+<script src="/touren/tour.js?v=04d90a2b" defer></script>
 <script src="/v3.js?v=867f6d1f" defer></script>
 </body>
 </html>
