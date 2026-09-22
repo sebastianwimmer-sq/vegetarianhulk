@@ -113,11 +113,18 @@ function pruefeDetail(slug) {
        Die Hoerndlwand heisst Hoerndlwand (1.684 m), ihr Scheitel im Profil ist
        aber der Gurnwandkopf (1.691 m). Erklaert die Seite mehrere Gipfel und
        nennt einen Hoechststand, wird gegen DEN verglichen — sonst waere die
-       einzige Moeglichkeit, gruen zu werden, eine falsche Zahl. */
-    const mehrgipfel = /<span>Gipfel<\/span>/.test(html);
+       einzige Moeglichkeit, gruen zu werden, eine falsche Zahl.
+
+       Erkannt wird das an der KACHEL "m Höchststand", nicht am Wort "Gipfel":
+       die Beschriftung stand vorher auf "Gipfel" und wurde am 22.09.2026 zu
+       "Gipfelkreuze" — da schlug das Tor an, obwohl sich an der Aussage
+       nichts geaendert hatte. Wer einen Hoechststand NENNT, muss ihn auch am
+       Profil markieren; wer keinen nennt, wird gegen die H1 geprueft. */
     const hoechst = (html.match(/data-count="(\d+)"[^>]*>[^<]*<\/b><span>m Höchststand/) || [])[1];
-    const soll = (mehrgipfel && hoechst) ? hoechst : gipfel;
-    const sollText = (mehrgipfel && hoechst) ? `${hoechst} m (Höchststand)` : `${mitPunkt} m (H1)`;
+    const soll = hoechst || gipfel;
+    const sollText = hoechst
+      ? `${hoechst.replace(/^(\d)(\d{3})$/, '$1.$2')} m (Höchststand)`
+      : `${mitPunkt} m (H1)`;
     if (marke && marke.replace('.', '') !== soll)
       meld(fehler, slug, `Gipfelmarke am Profil sagt ${marke} m, die Seite sagt ${sollText}`);
     if (!marke)

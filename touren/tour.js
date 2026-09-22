@@ -566,62 +566,35 @@
   })();
 
 
-  /* ---------- Galerie: der Streifen faehrt, waehrend die Buehne steht ----------
-     Der Fortschritt kommt aus der Scrollposition der Huelle, nicht aus einem
-     Timer: so laeuft es exakt mit dem Finger und bleibt stehen, wenn man
-     stehenbleibt. Gerechnet wird in einem rAF, gelesen wird nur einmal pro
-     Bild — Layout-Werte im Scroll-Handler abzufragen kostet sonst jedes Mal
-     ein erzwungenes Neu-Layout. */
+  /* ---------- Bildstrecke: Rueckfallweg ohne Scroll-Timeline ----------
+     Wo `animation-timeline: view()` laeuft, macht das CSS alles allein und
+     dieser Block fasst nichts an — deshalb die Abfrage zuerst.
+
+     Wichtig ist die Reihenfolge: die Startwerte (unsichtbar, nach unten
+     versetzt) haengen an `.strecke-js`, und diese Klasse setzt erst das
+     Skript. Ohne Skript bleibt die Strecke damit sichtbar, statt
+     unsichtbar haengen zu bleiben — genau der stille Ausfall, den man
+     nicht bemerkt, weil keine Fehlermeldung kommt. */
   (function () {
-    var galerie = document.querySelector('.tour-galerie');
-    if (!galerie) return;
-    var buehne = galerie.querySelector('.tour-galerie__buehne');
-    var streifen = galerie.querySelector('.tour-galerie__streifen');
-    if (!buehne || !streifen) return;
+    var strecken = [].slice.call(document.querySelectorAll('.tour-strecke'));
+    if (!strecken.length) return;
+    if (sanftBevorzugt) return;
+    if (window.CSS && CSS.supports && CSS.supports('animation-timeline: view()')) return;
+    if (!('IntersectionObserver' in window)) return;
 
-    var schmal = window.matchMedia('(max-width: 860px)');
-    var zaehler = galerie.querySelector('.tour-galerie__zaehler');
-    var balken = galerie.querySelector('.tour-galerie__balken i');
-    var bilder = [].slice.call(streifen.querySelectorAll('.tour-shot'));
-    var weg = 0, oben = 0, hoehe = 0, gemessen = false, wartet = false;
+    strecken.forEach(function (s) { s.classList.add('strecke-js'); });
 
-    function messen() {
-      var k = galerie.getBoundingClientRect();
-      oben = k.top + window.scrollY;
-      hoehe = galerie.offsetHeight;
-      /* Wie weit der Streifen fahren muss: seine Breite minus die sichtbare. */
-      weg = Math.max(0, streifen.scrollWidth - buehne.clientWidth);
-      gemessen = true;
-    }
+    var wache = new IntersectionObserver(function (eintraege) {
+      eintraege.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('ist-da');
+        wache.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
 
-    function zeichnen() {
-      wartet = false;
-      if (schmal.matches || sanftBevorzugt) { streifen.style.transform = ''; return; }
-      if (!gemessen) messen();
-      var strecke = hoehe - window.innerHeight;
-      if (strecke <= 0) return;
-      var anteil = (window.scrollY - oben) / strecke;
-      anteil = anteil < 0 ? 0 : (anteil > 1 ? 1 : anteil);
-      streifen.style.transform = 'translate3d(' + (-anteil * weg).toFixed(1) + 'px,0,0)';
-      if (balken) balken.style.width = (anteil * 100).toFixed(1) + '%';
-      if (zaehler && bilder.length) {
-        var n = Math.min(bilder.length, Math.floor(anteil * bilder.length) + 1);
-        zaehler.textContent = n + ' / ' + bilder.length;
-      }
-    }
-
-    function anstossen() { if (!wartet) { wartet = true; requestAnimationFrame(zeichnen); } }
-
-    window.addEventListener('scroll', anstossen, { passive: true });
-    window.addEventListener('resize', function () { gemessen = false; anstossen(); }, { passive: true });
-    /* Bilder aendern die Streifenbreite, sobald sie ihre Groesse kennen. */
-    bilder.forEach(function (f) {
-      var b = f.querySelector('img');
-      if (b && !b.complete) b.addEventListener('load', function () { gemessen = false; anstossen(); });
+    strecken.forEach(function (s) {
+      [].slice.call(s.querySelectorAll('.tour-blatt')).forEach(function (b) { wache.observe(b); });
     });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { gemessen = false; anstossen(); });
-    messen();
-    zeichnen();
   })();
 
 })();
