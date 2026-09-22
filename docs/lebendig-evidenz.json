@@ -1,0 +1,124 @@
+{
+  "_zweck": "Belege für den Umbau 'die Seiten wirken steady' (Sebi, 22.09.2026). Format wie design-evidenz.json: sicherheit = hart (Spezifikation/Browser-Support → wird Code-Konstante) · belegt (Fachartikel mit konkretem Befund → wird Bewertungskriterium) · trend (Fachmeinung → bleibt Meinung).",
+  "erstellt": "2026-09-22",
+  "gilt_bis": "2027-03-31",
+  "befund_vorher": {
+    "diagnose": "Die Seiten haben genau EINEN Gang: beim Laden blenden die .st-Stufen ein, die Zähler zählen hoch, der Hero zoomt — danach passiert nichts mehr. Scrollen ist flach, und der Wechsel Hub → Tourseite ist ein harter Neuaufbau mit Blitzer und Sprung nach oben. Das ist gemeint mit 'steady'.",
+    "gemessen_an": "touren/index.html, touren/hoerndlwand/index.html, index.html — Stand 9163d25",
+    "nav_auf_seiten": 37
+  },
+  "regeln": [
+    {
+      "id": "vt-opt-in",
+      "sicherheit": "hart",
+      "regel": "Cross-Document View Transitions werden mit `@view-transition { navigation: auto }` aktiviert. Das ältere `<meta name=\"view-transition\">` ist deprecated und fällt STILL aus — keine Warnung, keine Konsole.",
+      "quelle": "https://css-tricks.com/cross-document-view-transitions-part-1/",
+      "datum": "2026",
+      "wirkung": "Nur die CSS-At-Rule verwenden. Beide Seiten (Quelle UND Ziel) müssen opt-in machen, sonst passiert nichts.",
+      "einschraenkung": "Ein Tor muss prüfen, dass die Regel auf ALLEN Seiten steht — eine Seite ohne opt-in bricht die Kette lautlos."
+    },
+    {
+      "id": "vt-support",
+      "sicherheit": "hart",
+      "regel": "Chromium 126+ und Safari 18.2+ liefern Cross-Document View Transitions aus. Firefox noch hinter Flag.",
+      "quelle": "https://developer.chrome.com/docs/web-platform/view-transitions/cross-document",
+      "datum": "2026",
+      "wirkung": "Als Progressive Enhancement einsetzen: ohne Unterstützung lädt die Seite normal. Nichts darf davon abhängen.",
+      "einschraenkung": "Firefox sieht den Effekt nicht — das ist kein Fehler und darf kein Tor rot machen."
+    },
+    {
+      "id": "vt-bildverzerrung",
+      "sicherheit": "hart",
+      "regel": "Die Übergangs-Schnappschüsse werden per Voreinstellung mit `object-fit: fill` skaliert. Ändert sich das Seitenverhältnis zwischen den Seiten, zieht das Bild sich wie Kaugummi.",
+      "quelle": "https://css-tricks.com/cross-document-view-transitions-part-1/",
+      "datum": "2026",
+      "wirkung": "`::view-transition-old(...)` und `::view-transition-new(...)` brauchen ausdrücklich `object-fit: cover`.",
+      "einschraenkung": "Gilt für jedes benannte Bild — betrifft uns bei Hub-Kachel (quer) → Tour-Hero (hoch)."
+    },
+    {
+      "id": "vt-timeout",
+      "sicherheit": "hart",
+      "regel": "Erreicht die Zielseite nicht binnen 4 Sekunden einen renderbaren Zustand, stirbt der Übergang — lautlos.",
+      "quelle": "https://css-tricks.com/cross-document-view-transitions-part-1/",
+      "datum": "2026",
+      "wirkung": "Funktioniert lokal (80 ms) und fällt in Produktion unter Latenz aus. Kein Grund gegen den Einsatz, aber: nie etwas Funktionales daran hängen.",
+      "einschraenkung": "Wir liefern statisch über GitHub Pages aus, das Risiko ist klein. Trotzdem nur Schmuck, nie Funktion."
+    },
+    {
+      "id": "vt-reduced-motion",
+      "sicherheit": "hart",
+      "regel": "Die opt-in-Regel gehört in `@media (prefers-reduced-motion: no-preference)`.",
+      "quelle": "https://css-tricks.com/cross-document-view-transitions-part-1/",
+      "datum": "2026",
+      "wirkung": "Wer keine Bewegung will, bekommt einen normalen Seitenwechsel.",
+      "einschraenkung": null
+    },
+    {
+      "id": "vt-doppelte-namen",
+      "sicherheit": "hart",
+      "regel": "Ein `view-transition-name` darf zum Zeitpunkt des Übergangs nur EINMAL im Dokument vorkommen. Zwei gleiche Namen brechen den gesamten Übergang ab.",
+      "quelle": "https://developer.chrome.com/docs/web-platform/view-transitions/cross-document",
+      "datum": "2026",
+      "wirkung": "Namen je Tour eindeutig erzeugen (Slug), nicht von Hand setzen. Ein Tor muss Dubletten je Seite zählen.",
+      "einschraenkung": "Auf der Hub-Seite stehen ALLE Touren — dort ist die Dublettengefahr am größten."
+    },
+    {
+      "id": "choreo-fuehrung",
+      "sicherheit": "belegt",
+      "regel": "Preisgekrönte Seiten lesen sich beim Scrollen wie eine Führung, nicht wie ein Raster. Die Bewegung trägt die Erzählung, sie schmückt nicht.",
+      "quelle": "https://www.hontran.dev/blog/best-award-winning-websites-2026",
+      "datum": "2026",
+      "wirkung": "Je Abschnitt EINE bewusste Bewegung, die etwas über den Inhalt sagt — nicht überall dasselbe Einblenden.",
+      "einschraenkung": "Fachmeinung eines Awwwards-Jurors, keine Studie."
+    },
+    {
+      "id": "choreo-eine-flaeche",
+      "sicherheit": "belegt",
+      "regel": "Übergänge, die nicht auf sich aufmerksam machen, lassen eine mehrseitige Site wie EINE durchgehende Fläche wirken (By-Kin, Awwwards SOTD).",
+      "quelle": "https://www.hontran.dev/blog/best-award-winning-websites-2026",
+      "datum": "2026",
+      "wirkung": "Nav und wiederkehrende Elemente bekommen einen `view-transition-name` und bleiben beim Wechsel stehen, statt zu blinken.",
+      "einschraenkung": null
+    },
+    {
+      "id": "choreo-standbild",
+      "sicherheit": "belegt",
+      "regel": "Wenn Bewegung nötig ist, damit eine Fläche gut aussieht, versteckt sie schwache Gestaltung. Das Standbild muss für sich tragen.",
+      "quelle": "https://www.hontran.dev/blog/best-award-winning-websites-2026",
+      "datum": "2026",
+      "wirkung": "Prüfkriterium bei jeder neuen Bewegung: sieht der Abschnitt mit `prefers-reduced-motion: reduce` immer noch gut aus? Wenn nicht, ist die Bewegung das falsche Mittel.",
+      "einschraenkung": null
+    },
+    {
+      "id": "choreo-60fps",
+      "sicherheit": "belegt",
+      "regel": "Effekte, die Bilder fallen lassen, zählen nicht als Qualität — 'beauty at 60fps is the whole discipline'.",
+      "quelle": "https://www.hontran.dev/blog/best-award-winning-websites-2026",
+      "datum": "2026",
+      "wirkung": "Nur transform/opacity/clip-path animieren, scroll-gebunden per CSS statt per Scroll-Handler.",
+      "einschraenkung": null
+    },
+    {
+      "id": "fade-sparsam",
+      "sicherheit": "belegt",
+      "regel": "Bewegung wird präattentiv verarbeitet — das Auge wird automatisch hingezogen. Ob Scroll-Einblenden hilft oder stört, hängt daran, wie SPARSAM es eingesetzt wird.",
+      "quelle": "https://www.nngroup.com/articles/scroll-fading-101/",
+      "datum": "2026",
+      "wirkung": "Nicht jedes Element einblenden. Wenn alles einblendet, blendet nichts ein — und genau das erzeugt den 'steady'-Eindruck, weil kein Moment mehr heraussticht.",
+      "einschraenkung": "NN/G-Leitartikel, keine Fallzahl genannt."
+    },
+    {
+      "id": "kein-scrolljacking",
+      "sicherheit": "trend",
+      "regel": "Das Kapern der Scrollrichtung ist rückläufig, weil es schlicht langsam ist. Scrollytelling reagiert auf das Scrollen, statt es zu übernehmen.",
+      "quelle": "https://bubble.io/blog/web-design-trends/",
+      "datum": "2026",
+      "wirkung": "Bestätigt unsere Entscheidung vom 22.09., den angehefteten Querstreifen abzuschaffen.",
+      "einschraenkung": "Trendartikel."
+    }
+  ],
+  "offene_belege": [
+    "Ob Cross-Document View Transitions messbar auf Verweildauer oder Absprung wirken — dazu wurde keine Studie gefunden. Der Einsatz ist mit Wirkung auf die WAHRNEHMUNG begründet, nicht mit Kennzahlen.",
+    "Firefox-Zeitplan für stabile Cross-Document-Unterstützung: 'in progress', kein Datum."
+  ]
+}

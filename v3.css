@@ -1146,3 +1146,123 @@ vh-form [slot="captcha"].is-err,
 .tk-sort select { min-height: 44px; }
 .tk-chip[aria-pressed="true"] { background: linear-gradient(180deg, #E8BF25, #D4A918); color: #14100A;
   border-color: transparent; transform: translateY(-1px); }
+
+/* ============================================================
+   SEITENWECHSEL — eine Flaeche statt einzelner Seiten.
+
+   Sebi am 22.09.2026: "auf den seiten is alles iwie so steady so
+   langweilig fuer den besucher".
+
+   Ein Teil davon war gar nicht die einzelne Seite, sondern der WECHSEL:
+   Klick auf eine Tour → harter Neuaufbau, Blitzer, Sprung nach oben,
+   die Navigationsleiste verschwindet und kommt neu. Jeder Klick fuehlte
+   sich an wie ein Abbruch.
+
+   Cross-Document View Transitions loesen das ohne eine einzige Zeile
+   JavaScript: der Browser fotografiert die alte Seite, fotografiert die
+   neue und blendet dazwischen. Was einen Namen traegt, wird dabei nicht
+   ueberblendet, sondern BEWEGT — die Navigationsleiste bleibt also
+   stehen, waehrend der Inhalt wechselt.
+
+   Belege und Fallen: docs/lebendig-evidenz.json
+   · `@view-transition` ist die einzig gueltige Form. Das alte
+     <meta name="view-transition"> ist deprecated und faellt STILL aus.
+   · Beide Seiten muessen opt-in machen — deshalb steht es hier, im
+     gemeinsamen Stylesheet, und nicht je Seite.
+   · Chromium 126+ und Safari 18.2+. Firefox laedt normal weiter. Es
+     darf deshalb NICHTS Funktionales daran haengen.
+   · Ein Name darf je Dokument nur EINMAL vorkommen. Zwei gleiche
+     brechen den ganzen Uebergang ab — `vt-check.mjs` zaehlt sie.
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
+
+/* Die Leiste ist auf 37 Seiten dieselbe. Mit Namen bleibt sie beim
+   Wechsel stehen, statt zu blinken — das ist der groesste Einzeleffekt. */
+.nav { view-transition-name: hauptnav; }
+.topbar { view-transition-name: topbar; }
+
+/* Der Grund bleibt ebenfalls stehen, sonst blitzt die Seite durch. */
+:root::view-transition-group(root) { animation-duration: 420ms; }
+::view-transition-old(root) { animation: vtRaus 300ms var(--ease-lux) both; }
+::view-transition-new(root) { animation: vtRein 420ms var(--ease-lux) both; }
+@keyframes vtRaus { to   { opacity: 0; transform: translateY(-8px); } }
+@keyframes vtRein { from { opacity: 0; transform: translateY(14px); } }
+
+/* Benannte Bilder: ohne `cover` skaliert der Browser die Schnappschuesse
+   mit `fill` — bei uns wechselt das Seitenverhaeltnis von der Hub-Kachel
+   (quer) zum Tour-Hero (hoch), und das Bild zieht sich wie Kaugummi. */
+::view-transition-old(*), ::view-transition-new(*) {
+  object-fit: cover; overflow: hidden;
+}
+
+/* Die Leiste selbst soll sich NICHT bewegen, nur bleiben. */
+::view-transition-old(hauptnav), ::view-transition-new(hauptnav) {
+  animation: none; mix-blend-mode: normal;
+}
+
+/* ============================================================
+   ZUG — der Puls beim Scrollen. Fuer ALLE Seiten.
+
+   Das Problem war nicht zu wenig Animation, sondern ihr Zeitpunkt:
+   `.st` blendet beim LADEN ein, gestaffelt. Bis der Besucher scrollt,
+   ist damit auch alles unterhalb des ersten Schirms schon sichtbar —
+   danach passiert bis zum Seitenende nichts mehr.
+
+   `.zug` bindet denselben Effekt an den Scrollweg. Reine CSS-Timeline,
+   kein Skript, nur transform und opacity: laeuft mit 60 fps und kostet
+   keinen Scroll-Handler (docs/lebendig-evidenz.json, choreo-60fps).
+
+   SPARSAM EINSETZEN. NN/G: Bewegung wird praeattentiv verarbeitet, das
+   Auge wird automatisch hingezogen. Wenn ALLES einblendet, blendet
+   nichts ein — und genau das erzeugt wieder den flachen Eindruck.
+   Faustregel: je Abschnitt hoechstens der Kopf und eine Gruppe.
+
+   `--zug-weg` und `--zug-dreh` je Element anpassbar, damit nicht jede
+   Flaeche gleich hereinkommt.
+   ============================================================ */
+@keyframes zugHerein {
+  from { opacity: 0; transform: translate3d(0, var(--zug-weg, 30px), 0) rotate(var(--zug-dreh, 0deg)); }
+  to   { opacity: 1; transform: none; }
+}
+/* NICHT PAUSCHAL AUF `.rv` ANWENDEN — am 22.09.2026 ausprobiert und wieder
+   zurueckgenommen. `.rv` steht an 37 Stellen; scroll-gebunden blieben auf
+   drei Seiten GANZE ABSCHNITTE bei Deckkraft 0 stehen und waren nicht mehr
+   lesbar (Startseite: gipfelbuch, closing, home-outro).
+
+   Ursache: der `entry`-Bereich ist fuer ein Element, das hoeher als das
+   Fenster ist oder ganz unten steht, nie zu Ende zu scrollen — die Seite
+   hoert vorher auf. Drei verschiedene Bereiche durchprobiert (entry/cover,
+   18 %, 12 %, 45 %), zwei Seiten blieben bei jedem kaputt. Der Bereich ist
+   also nicht das Problem, der Ansatz war es.
+
+   Deshalb: `.rv` behaelt seinen IntersectionObserver-Weg, der endet
+   garantiert sichtbar. Scroll-gebunden wird nur, was hier ausdruecklich
+   `.zug` traegt — und `scripts/sichtbar-check.mjs` misst nach jedem Bau, dass
+   am Seitenende nichts unsichtbar haengt. Unlesbarer Inhalt ist schlimmer
+   als eine ruhige Seite.
+
+   Nebenbefund, der die Entscheidung stuetzt: wenn ALLES einblendet, blendet
+   nichts ein (NN/G, docs/lebendig-evidenz.json, fade-sparsam). Die
+   pauschale Umstellung waere auch gestalterisch falsch gewesen. */
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .zug {
+      animation: zugHerein linear both;
+      animation-timeline: view();
+      /* `entry 0% entry 100%`: was beim Laden schon im Bild steht, ist
+         bereits hinter dem Bereich und damit sofort fertig — kein
+         Element bleibt unsichtbar haengen. */
+      animation-range: entry 4% entry 92%;
+    }
+    /* Eine Gruppe kommt versetzt herein, nicht als Block. Der Versatz
+       haengt an --i, damit er ohne Skript auskommt. */
+    .zug-folge > * {
+      animation: zugHerein linear both;
+      animation-timeline: view();
+      animation-range: entry calc(4% + var(--i, 0) * 3%) entry calc(88% + var(--i, 0) * 3%);
+    }
+  }
+}
