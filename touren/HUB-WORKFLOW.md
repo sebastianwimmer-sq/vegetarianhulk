@@ -264,6 +264,55 @@ neben der Kachel, nicht mehr darin).
 
 ---
 
+## 4b. Der Rückweg — vor jedem Ausrollen
+
+```bash
+scripts/sicherung.sh --anlegen "vor <was>"   # Schnappschuss jetzt
+scripts/sicherung.sh --liste                 # was da ist
+scripts/sicherung.sh --zurueck <tag>         # zurück, ohne force-push
+```
+
+Läuft **automatisch** als erster Schritt in `premium-check.sh` und `tour-loop.sh` —
+`--auto` legt nur an, wenn der aktuelle Live-Stand noch keinen Schnappschuss hat.
+Eine Sicherung, an die man denken muss, ist der Fehler: im Repo lagen zwei
+Tags von Hand (`old-site-backup`, `pre-reveal-backup`), beide einmal gesetzt
+und nie wieder.
+
+| | was | warum beides |
+|---|---|---|
+| Tag | `sicherung/<datum>` auf `origin/main` | `main` **ist** die Auslieferung (Pages, Quelle `main:/`) |
+| Archiv | `~/vh-sicherungen/vh-<datum>.tar.gz` | ein Tag sichert nur Committetes — die halbfertige Arbeit wäre weg |
+
+Die Auswahl fürs Archiv macht `git ls-files --cached --others --exclude-standard`,
+keine Ausschlussliste: ein blosses `tar .` zog 289 MB, davon 282 MB Screenshot-Cache.
+
+---
+
+## 4c. Lebendigkeit — was bewegt sich, und warum
+
+Sebi am 22.09.2026: „auf den seiten is alles iwie so steady so langweilig."
+Belege und Fallen: `docs/lebendig-evidenz.json`.
+
+| Ebene | was | wo |
+|---|---|---|
+| **Seitenwechsel** | Nav und Kopfleiste bleiben stehen, das Tourfoto wandert von der Hub-Kachel auf den Hero | `v3.css` (`@view-transition`), `scripts/uebergang-einbauen.py` |
+| **Höhenprofil** | die Linie zeichnet sich, *während* man an ihr vorbeiscrollt — man geht die Tour ab | `touren/tour.css` |
+| **Bildstrecke** | das Motiv wandert im stehenden Rahmen (Parallaxe) | `touren/tour.css` |
+| **Abschnitte** | `.rv` blendet ein, einmalig, mit Sicherheitsnetz gegen verschluckte Beobachter-Einträge | `v3.js` |
+
+**Drei Regeln, teuer gelernt:**
+
+1. **Scroll-gebundene Einblendung nie pauschal auf `.rv`.** Der `entry`-Bereich ist für
+   das unterste Element einer Seite nicht zu Ende zu scrollen — ganze Abschnitte blieben
+   unlesbar. `sichtbar-check.mjs` hält das fest.
+2. **Ein `view-transition-name` doppelt im Dokument bricht den GANZEN Übergang ab.**
+   Deshalb trägt nur die Pin-Kachel den Namen, nicht auch die Listenzeile darunter.
+   `vt-check.mjs` zählt Dubletten am *gerenderten* Dokument.
+3. **Wenn alles einblendet, blendet nichts ein.** Je Abschnitt höchstens der Kopf und
+   eine Gruppe.
+
+---
+
 ## 4a. Level-Parität — jede Änderung gilt für ALLE gegangenen Touren
 
 **Die Regel (Sebi, 09.09.2026):** Wird an einer Tour etwas verbessert, muss es bei allen

@@ -175,6 +175,51 @@
     });
   }, { rootMargin: '0px 0px -4% 0px' }); /* war -10%: bei schnellem Scroll wirkten Sektionen als Lücke */
   els.forEach(function (e) { io.observe(e); });
+
+  /* SICHERHEITSNETZ. Gemessen am 22.09.2026: beim schnellen Durchscrollen
+     blieben Abschnitte ohne `.in` zurueck — einer lag 4.130 px oberhalb der
+     Fensterkante und war nie aufgedeckt worden. Der Beobachter verschluckt
+     bei grossen Scrollspruengen Eintraege, und `io.unobserve` sorgt dafuer,
+     dass es keine zweite Gelegenheit gibt.
+
+     (Die Live-Seite selbst war NICHT betroffen — ein erster Messlauf sah so
+     aus, hatte aber nur zu kurz gewartet. Der Grund fuer dieses Netz ist der
+     verschluckte Eintrag, nicht ein Ausfall in Produktion.)
+
+     Ein Einblenden, das Inhalt verstecken KANN, ist ein stiller Ausfall: der
+     Beobachter meldet nichts, die Konsole bleibt still, und gemerkt haette es
+     nur ein Besucher. Deshalb deckt dieses Netz alles auf, was im Dokument
+     schon oberhalb der Fensterunterkante liegt — unabhaengig davon, ob der
+     Beobachter ausgeloest hat.
+
+     Das Netz ersetzt den Beobachter nicht (der macht die Staffelung), es
+     faengt nur seine Aussetzer. Es laeuft gedrosselt und hoert auf, sobald
+     nichts mehr offen ist. */
+  function netz() {
+    var offen = 0;
+    els.forEach(function (e) {
+      if (e.classList.contains('in')) return;
+      if (e.getBoundingClientRect().top < window.innerHeight) { e.classList.add('in'); io.unobserve(e); }
+      else offen++;
+    });
+    return offen;
+  }
+  var wartet = false;
+  function anstossen() {
+    if (wartet) return;
+    wartet = true;
+    requestAnimationFrame(function () { wartet = false; if (!netz()) abmelden(); });
+  }
+  function abmelden() {
+    window.removeEventListener('scroll', anstossen);
+    window.removeEventListener('resize', anstossen);
+  }
+  window.addEventListener('scroll', anstossen, { passive: true });
+  window.addEventListener('resize', anstossen, { passive: true });
+  window.addEventListener('load', anstossen);
+  /* Letzter Halt: was nach dem Laden immer noch zu ist, aber im Dokument
+     laengst passiert waere, wird sichtbar. Lieber ohne Effekt als unlesbar. */
+  setTimeout(netz, 2500);
 })();
 
 /* Gipfelbuch: heutiges Datum + Tag-Zaehler (vegetarisch seit 2016) */

@@ -59,6 +59,12 @@ lauf() {
 titel "Rueckweg"
 bash scripts/sicherung.sh --auto "automatisch vor premium-check" || true
 
+# Cache-Buster nachziehen, statt ihn anzumahnen. Am 22.09.2026 standen fuenf
+# Tourseiten rot, weil v3.js von Hand geaendert wurde — ein mechanischer
+# Schritt, der niemanden aufhalten sollte. kern.md: ein Nachlauf-Schritt, den
+# man vergessen kann, gehoert ans Tor.
+bash scripts/bump-asset-versions.sh >/dev/null 2>&1 || true
+
 titel "Statisch (Sekunden)"
 lauf "Design-Kodex: Radien"          python3 scripts/kodex-radien.py --pruefen
 lauf "Fremde Hosts & Ordner"         python3 scripts/fremdhosts-check.py
@@ -67,9 +73,13 @@ lauf "Touren gegen die Spec"         node scripts/tour-check.mjs --alle
 lauf "Tore selbst (Fixtures)"        ./scripts/tour-check-fixtures.sh
 lauf "E-Mail-Vorlagen"               node scripts/mail-check.mjs --selbsttest
 lauf "Sicherungs-Werkzeug"           ./scripts/sicherung.sh --selbsttest
+lauf "Uebergaenge (Fixtures)"        node scripts/vt-check.mjs --selbsttest
+lauf "Sichtbarkeit (Fixtures)"       node scripts/sichtbar-check.mjs --selbsttest
 
 if [ "$SCHNELL" -eq 0 ]; then
   titel "Im Browser (Minuten)"
+  lauf "Seitenwechsel-Kette"             node scripts/vt-check.mjs
+  lauf "Nichts bleibt unsichtbar"        node scripts/sichtbar-check.mjs
   lauf "Barrierefreiheit, alle v3-Seiten" node scripts/a11y-check.mjs
   lauf "Darstellung, 4 Engines"        node scripts/tour-visual.mjs --site
   lauf "Bildbeschnitt der Kacheln"     node scripts/foto-check.mjs

@@ -355,12 +355,42 @@
   /* auf schmalen Schirmen ist rechts vom Gipfel kein Platz mehr */
   .tour-profil__marke--gipfel { left: 0 !important; }
 }
-.tour-profil.in .line { animation: tourDraw 1800ms var(--ease-lux) 300ms forwards; }
+/* ---- Das Profil zeichnet sich, WAEHREND man es liest --------------------
+   Vorher: ein einmaliges Zeichnen beim ersten Sichtkontakt (.in). Es lief
+   ab, und danach lag die Linie still da. Genau das meinte Sebi mit
+   "steady" — etwas passiert einmal und dann nie wieder.
+
+   Jetzt haengt der Fortschritt am Scrollweg: die Linie waechst mit, waehrend
+   man an ihr vorbeiscrollt, und schrumpft zurueck, wenn man hochscrollt. Der
+   Besucher GEHT die Tour ab. Das ist die Bewegung, die etwas ueber den
+   Inhalt sagt — nicht noch ein Einblenden (docs/lebendig-evidenz.json,
+   Regel choreo-fuehrung).
+
+   Der .in-Weg bleibt als Rueckfall fuer Engines ohne Scroll-Timeline. */
+@keyframes tourDraw { to { stroke-dashoffset: 0; } }
+
+@supports not (animation-timeline: view()) {
+  .tour-profil.in .line { animation: tourDraw 1800ms var(--ease-lux) 300ms forwards; }
+}
+@supports (animation-timeline: view()) {
+  .tour-profil .line {
+    animation: tourDraw linear both;
+    animation-timeline: view();
+    /* Von "Profil taucht auf" bis "Profil steht in der Mitte": dadurch ist
+       die Linie fertig, wenn man sie tatsaechlich liest. */
+    animation-range: entry 18% cover 52%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Ohne Bewegungswunsch steht die Linie sofort vollstaendig da —
+     das Standbild muss fuer sich tragen (Regel choreo-standbild). */
+  .tour-profil .line { animation: none !important; stroke-dashoffset: 0 !important; }
+}
+
 .tour-profil.in .fill,
 .tour-profil.in .peak-dot,
 .tour-profil.in .peak-x,
 .tour-profil.in .sun-dot { opacity: 1; }
-@keyframes tourDraw { to { stroke-dashoffset: 0; } }
 .tour-profil__gridline { stroke: rgba(243,235,217,0.07); stroke-width: 1; }
 
 /* Ablesen: Zeiger folgt dem Finger/der Maus und nennt Hoehe und Distanz.
