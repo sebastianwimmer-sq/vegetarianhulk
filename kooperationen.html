@@ -34,7 +34,7 @@
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
-<link rel="stylesheet" href="/v3.css?v=96fc69ab">
+<link rel="stylesheet" href="/v3.css?v=abd8adf7">
 <style>
 /* ============================================================
    /kooperationen.html — v3 Editorial-Dark (page-scoped .koop-*)
@@ -250,8 +250,9 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-flow__step--pay .koop-flow__node { color: rgba(228,184,36,0.6); border-color: rgba(228,184,36,0.42); }
 .koop-flow__step--pay.is-done .koop-flow__node { color: #E4B824; border-color: rgba(228,184,36,0.55); }
 .koop-flow__step--pay.is-active .koop-flow__node { color: var(--auf-gold); border-color: #F4CE3C;
-  background: linear-gradient(180deg, #F4CE3C 0%, #E4B824 55%, #C99C12 100%);
-  box-shadow: 0 0 0 5px rgba(228,184,36,0.16), 0 14px 28px -10px rgba(228,184,36,0.5); }
+  background: var(--schild-flaeche);
+  /* War ein gelber Doppel-Halo. Ein Schild wirft einen Schatten, es strahlt nicht. */
+  box-shadow: var(--schild-kante), 0 12px 22px -10px rgba(0,0,0,0.5); }
 .koop-flow__step--pay.is-active .koop-flow__name { color: #E4B824; }
 
 /* Panels — vertikal gestapelt, aktivieren beim Durchscrollen */
@@ -281,14 +282,14 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-ab-title { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 600;
   font-size: clamp(24px, 3.2vw, 34px); line-height: 1.06; color: var(--paper); }
 .koop-ab-time { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.4px;
-  text-transform: uppercase; color: var(--auf-gold); background: linear-gradient(180deg, #E8BF25, #D4A918);
+  text-transform: uppercase; color: var(--auf-gold); background: var(--schild-flaeche);
   padding: 4px 14px 4px 12px;
   clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%); }
 .koop-ab-desc { margin-top: 15px; font-size: 15.5px; line-height: 1.65; color: var(--paper-dim); max-width: 54ch; }
 .koop-ab-desc strong { color: var(--paper); font-weight: 700; }
 .koop-ab-paytag { display: inline-block; margin-top: 18px; font-family: var(--mono); font-size: 10px;
   font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--auf-gold);
-  background: linear-gradient(180deg, #F4CE3C, #E4B824); padding: 5px 13px; border-radius: var(--r-control); }
+  background: var(--schild-flaeche); padding: 5px 13px; border-radius: var(--r-control); }
 .koop-tl-note { margin-top: 24px; font-size: 14px; line-height: 1.6; color: var(--paper-faint); max-width: 52ch; }
 .koop-tl-note strong { color: var(--paper-dim); }
 
@@ -316,7 +317,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-pkg-hero > * { position: relative; z-index: 1; }
 .koop-pkg-flag { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px;
   font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--auf-gold);
-  background: linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%); padding: 5px 13px; border-radius: var(--r-control);
+  background: var(--schild-flaeche); padding: 5px 13px; border-radius: var(--r-control);
   filter: drop-shadow(0 1px 0 rgba(255,255,255,0.35)) drop-shadow(0 4px 8px rgba(0,0,0,0.35)); }
 .koop-pkg-name { margin: 15px 0 0; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
   font-size: clamp(27px, 3.4vw, 35px); line-height: 1.04; color: var(--paper); }

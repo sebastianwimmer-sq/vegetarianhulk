@@ -24,8 +24,8 @@
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
-<link rel="stylesheet" href="/v3.css?v=96fc69ab">
-<link rel="stylesheet" href="/touren/tour.css?v=8de94c95">
+<link rel="stylesheet" href="/v3.css?v=abd8adf7">
+<link rel="stylesheet" href="/touren/tour.css?v=f15a49c8">
 <style>
 /* ============================================================
    /touren/ — Hulk-Hikes FORUM-LISTE (page-scoped .tk-)
@@ -72,7 +72,7 @@
 .tk-pin__body { padding: clamp(26px, 3.4vw, 42px); display: flex; flex-direction: column; }
 .tk-pin__badge { align-self: flex-start; display: inline-flex; align-items: center; gap: 7px;
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
-  color: #14100A; background: linear-gradient(180deg, #E8BF25, #D4A918); padding: 5px 13px 5px 10px;
+  color: #14100A; background: var(--schild-flaeche); padding: 5px 13px 5px 10px;
   clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%); }
 .tk-pin h2 { margin: 16px 0 2px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
   font-size: clamp(30px, 4.4vw, 44px); line-height: 1; letter-spacing: -0.5px; color: #14281C; }
@@ -180,7 +180,7 @@
   line-height: 1.05; letter-spacing: -0.3px; color: #14281C; }
 .tk-row__alt { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--ink-meta); }
 .tk-badge-gone { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.4px;
-  text-transform: uppercase; color: #14100A; background: linear-gradient(180deg, #E8BF25, #D4A918);
+  text-transform: uppercase; color: #14100A; background: var(--schild-flaeche);
   padding: 3px 9px 3px 7px; clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 50%, calc(100% - 5px) 100%, 0 100%); }
 .tk-row__tag { margin-top: 2px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic;
   font-size: 14.5px; color: var(--royal); }
@@ -231,17 +231,15 @@
 .tk-minibtn--gelb { color: #221803; border: 0; border-radius: 0;
   padding: 9px 20px 9px 16px;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.5) 0, rgba(255,255,255,0) 44%),
-    linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%);
+    var(--schild-flaeche);
   clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
-  text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+  text-shadow: 0 1px 0 rgba(255,244,214,0.16);
   filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4)) drop-shadow(0 2px 1px rgba(120,88,10,0.45)) drop-shadow(0 8px 14px rgba(0,0,0,0.32)); }
 .tk-minibtn--gelb:hover { transform: translateX(3px) translateY(-2px); color: #221803;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.6) 0, rgba(255,255,255,0) 44%),
-    linear-gradient(180deg, #F8D648 0%, #EBBE28 46%, #CFA114 100%);
+    var(--schild-flaeche);
   box-shadow: none;
-  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4)) drop-shadow(0 2px 1px rgba(120,88,10,0.45)) drop-shadow(0 14px 22px rgba(0,0,0,0.38)) drop-shadow(0 0 16px rgba(232,191,37,0.42)); }
+  filter: var(--schild-schatten-hover); }
 @media (max-width: 760px) {
   .tk-row__head { grid-template-columns: 72px 1fr; padding-right: 14px; }
   .tk-row__side { display: none; }
@@ -321,8 +319,8 @@
   text-transform: uppercase; color: var(--paper-faint); }
 .tk-close__cta { display: block; text-align: center; text-decoration: none;
   font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
-  color: #221803; padding: 15px 22px; text-shadow: 0 1px 0 rgba(255,255,255,0.35);
-  background: linear-gradient(180deg, rgba(255,255,255,0.5) 0, rgba(255,255,255,0) 44%), linear-gradient(180deg, #F4CE3C 0%, #E4B824 46%, #C99C12 100%);
+  color: #221803; padding: 15px 22px; text-shadow: 0 1px 0 rgba(255,244,214,0.16);
+  background: var(--schild-flaeche);
   clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
   filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4)) drop-shadow(0 2px 1px rgba(120,88,10,0.45)) drop-shadow(0 10px 16px rgba(0,0,0,0.32));
   transition: transform 400ms var(--ease-lux), filter 400ms var(--ease-lux); }
