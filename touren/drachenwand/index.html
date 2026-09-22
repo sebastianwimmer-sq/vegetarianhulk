@@ -48,7 +48,7 @@
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
 <link rel="stylesheet" href="/v3.css?v=abd8adf7">
-<link rel="stylesheet" href="/touren/tour.css?v=f15a49c8">
+<link rel="stylesheet" href="/touren/tour.css?v=6325a4a5">
 <style>
   /* Nur was diese eine Tour ausmacht: der Bildausschnitt des Heros — der
      Blick faellt rechts unten auf den See, deshalb liegt der Fokus tiefer.
@@ -145,7 +145,6 @@
           <div><b>139 bpm</b><span>Ø Puls</span></div>
           <div><b>3:25 h</b><span>in Bewegung</span></div>
           <div><b>1.587</b><span>kcal</span></div>
-          <p class="src">Aufgezeichnet mit Apple Watch + Strava</p>
         </div>
       </div>
 
@@ -206,7 +205,7 @@
     <span class="tour-profil__marke tour-profil__marke--gipfel"
           style="left: calc(53.6% + 12px);">Drachenwand · 1.179 m</span>
     </div>
-    <p class="tour-profil__hint">Zum Ablesen drüberfahren · Werte aus Strava, Verlauf nachgezeichnet.</p>
+    <p class="tour-profil__hint">Zum Ablesen drüberfahren</p>
       </section>
 
       <!-- WEGVERLAUF (erzeugt: scripts/route-einbauen.py) -->
@@ -286,8 +285,7 @@
           </div>
         </div>
         <p class="tour-route__hint">
-          <span class="tour-route__hint-satz">Aufgezeichnete Spur · GPS 7,59 km, Uhr 9,19 km</span>
-          <span class="tour-route__quelle">GPS-Aufzeichnung · EU-DEM · Sentinel-2 cloudless (EOX, CC BY 4.0)</span>
+          <span class="tour-route__hint-satz">Aufgezeichnete Spur</span>
         </p>
       </section>
       <!-- /WEGVERLAUF -->
@@ -351,6 +349,13 @@
 
   <p class="tour-back"><a href="/touren/">← Alle Hulk Hikes</a></p>
 </main>
+
+<!-- QUELLEN (erzeugt: scripts/quellen-einbauen.py) -->
+  <aside class="tour-quellen" aria-label="Quellen">
+    <span class="tour-quellen__label">Quellen</span>
+    <p class="tour-quellen__liste"><span class="tour-quellen__punkt">Zahlen und Spur selbst aufgezeichnet (Apple Watch + Strava)</span><span class="tour-quellen__punkt">Sentinel-2 cloudless von EOX (CC BY 4.0)</span><span class="tour-quellen__punkt">Höhenlinien aus EU-DEM (Copernicus)</span><span class="tour-quellen__punkt">Live-Wetter von Open-Meteo (CC BY 4.0)</span></p>
+  </aside>
+  <!-- /QUELLEN -->
 
 <footer>
   <div class="inner">

@@ -1,9 +1,8 @@
 {
-  "_hinweis": "Quelle fuer die Kreuz-Reihe. scripts/gipfelreihe-einbauen.py baut daraus den Abschnitt. Ankunft aus den Standzeiten der eigenen GPX-Aufzeichnung (hoerndlwand-2026-09-20.gpx), Hoehen aus derselben Aufzeichnung — bewusst EINE Messmethode fuer alle vier statt OSM und GPX zu mischen. Wo OSM abweicht, steht es in osm_hinweis. Die NOTIZ ist Sebis eigener Satz, nicht nacherzaehlt: Merksaetze wie 'Der Spontane. Die laengste Pause des Tages.' machen aus ihm eine Autoritaet, die er nie war. Wortlaut aus ~/vh-touren-eingang/hoerndlwand-notizen.md.",
+  "_hinweis": "Quelle fuer die Kreuz-Reihe. Hoehen und Ankunftszeiten aus der eigenen GPX-Aufzeichnung (hoerndlwand-2026-09-20.gpx) — EINE Messmethode fuer alle vier. OSM weicht bei zweien um 2-3 m ab (Gurnwandkopf 1.691, Hoerndlwand 1.684) und kennt das Obinger Kreuz als Wegkreuz; das ist fuer uns die Belegkette, steht aber NICHT auf der Seite. Sebi am 22.09.2026: 'das is so zu viel explaining, das juckt niemand'. Die NOTIZ ist Sebis eigener Satz, nicht nacherzaehlt.",
   "titel": "Vier Kreuze an einem Tag",
   "kicker": "Nicht geplant",
   "lede": "Geplant war nur die Hörndlwand. Der erste Gipfel kam spontan dazu, und oben waren wir dann eh schon.",
-  "quelle": "Ankunftszeiten aus der eigenen GPX-Aufzeichnung",
   "gipfel": [
     {
       "name": "Gurnwandkopf",
@@ -12,8 +11,7 @@
       "an": "10:02",
       "bild": "kreuz-gurnwandkopf",
       "alt": "Dunkler, verwitterter Holzpfosten mit geschnitzter Figur und Gipfelkasten, dahinter die Berchtesgadener Berge.",
-      "notiz": "„Dann sind wir spontan zum 1. Gipfel.“",
-      "osm_hinweis": "OSM: 1.691 m"
+      "notiz": "„Dann sind wir spontan zum 1. Gipfel.“"
     },
     {
       "name": "Obinger Kreuz",
@@ -22,8 +20,7 @@
       "an": "10:38",
       "bild": "kreuz-obinger",
       "alt": "Helles Holzkreuz, auf dem Querbalken steht Obinger Bergfreunde, ringsum Latschen.",
-      "notiz": "Auf dem Querbalken stehen die Obinger Bergfreunde.",
-      "osm_hinweis": "OSM kennt es als Wegkreuz, nicht als Gipfel"
+      "notiz": "Auf dem Querbalken stehen die Obinger Bergfreunde."
     },
     {
       "name": "Hörndlwand",
@@ -32,8 +29,7 @@
       "an": "11:11",
       "bild": "kreuz-hoerndlwand",
       "alt": "Hohes Gipfelkreuz aus verschraubtem Holz auf felsigem Grat, die Sonne steht direkt daneben.",
-      "notiz": "„Da hoch braucht man eben schon gute Steigkenntnisse und Schwindelfreiheit.“",
-      "osm_hinweis": "OSM: 1.684 m"
+      "notiz": "„Da hoch braucht man eben schon gute Steigkenntnisse und Schwindelfreiheit.“"
     },
     {
       "name": "Hörndlwand Ostgipfel",
@@ -42,8 +38,7 @@
       "an": "11:37",
       "bild": "kreuz-ostgipfel",
       "alt": "Gipfelkreuz mit waagerechtem Schild und Plaketten, daneben ein gesetzter Steinmann.",
-      "notiz": "„Oben gehts viel durch Latschen und Fels mit Wurzeln.“",
-      "osm_hinweis": null
+      "notiz": "„Oben gehts viel durch Latschen und Fels mit Wurzeln.“"
     }
   ]
 }

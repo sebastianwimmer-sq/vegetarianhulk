@@ -336,7 +336,10 @@ const PFLICHT = [
   ['data-route="',                'Koordinaten der Route (einzige Quelle, tour.js zeichnet daraus)'],
   ['tour-route__weg',             'die Linie selbst — tour.js UEBERSCHREIBT nur, es legt nichts an'],
   ['tour-route__schatten',        'Unterlegung der Linie (sonst steht sie flach auf der Flaeche)'],
-  ['tour-route__quelle',          'Quellenangabe unter der Karte'],
+  /* Am 22.09.2026 vom Kartenfuss ans Seitenende gezogen: vier verteilte
+     Fussnoten stoerten beim Ansehen. Die Lizenzpflicht ist unveraendert
+     erfuellt, die Angabe steht nur an einer Stelle. */
+  ['tour-quellen__liste',         'Quellenangabe vor dem Fuss'],
   ['tour-route__massstab',        'Massstabsbalken — ohne ihn ist die Karte eine Zeichnung ohne Groesse'],
 ];
 
