@@ -46,6 +46,11 @@ const ERLAUBTE_HOSTS = {
   'api.open-meteo.com': 'Live-Wetter auf den Tourseiten',
 };
 
+/* Hosts, deren eigene Konsolenmeldungen nicht uns gehoeren. Bewusst NUR
+   Konsole: was sie LADEN wird weiter gegen ERLAUBTE_HOSTS geprueft, und
+   ein CSP-Verstoss zaehlt auch von hier. */
+const ERLAUBT_KONSOLE = ['challenges.cloudflare.com'];
+
 /* Dateien, die zwar im Repo gebraucht werden, aber nichts im Netz zu suchen
    haben. GitHub Pages kann sie nicht ausblenden — deshalb hier gelistet und
    bewusst als GELB gefuehrt, solange sie kein Geheimnis enthalten. */
@@ -194,7 +199,16 @@ async function seitePruefen(browser, basis, datei) {
       .some((e) => h === e || h.endsWith('.' + e));
     if (!erlaubt) fremd.add(h);
   });
-  seite.on('console', (m) => { if (m.type() === 'error') konsole.push(m.text().slice(0, 90)); });
+  /* Nur UNSERE Konsolenmeldungen. Turnstile schreibt aus seinem eigenen
+     Skript (challenges.cloudflare.com/.../flexible) auf jeder Konsolen-Ebene
+     eine getarnte Zeile — das ist Anbieter-Rauschen, kein Befund bei uns.
+     Ein Tor, das es bei jedem Lauf meldet, wird nach einer Woche ignoriert. */
+  seite.on('console', (m) => {
+    if (m.type() !== 'error') return;
+    const quelle = m.location()?.url || '';
+    if (ERLAUBT_KONSOLE.some((h) => quelle.includes(h))) return;
+    konsole.push(m.text().slice(0, 90));
+  });
 
   const url = `${basis.praefix}/${datei.replace(/index\.html$/, '')}`;
   await seite.goto(url, { waitUntil: 'domcontentloaded' }).catch(() => {});
@@ -207,6 +221,8 @@ async function seitePruefen(browser, basis, datei) {
   if (speicher.length && !datei.startsWith('admin/'))
     gelb.push(`schreibt in localStorage ohne Einwilligung: ${speicher.join(', ')}`);
 
+  /* CSP-Verstoesse zaehlen IMMER, auch aus fremdem Skript: ein blockierter
+     Fremdaufruf ist unser Befund, egal wer ihn ausgeloest hat. */
   const cspBruch = konsole.filter((z) => /content security policy/i.test(z));
   if (cspBruch.length) rot.push(`CSP-Verstoß im Browser: ${cspBruch[0]}`);
   const andere = konsole.filter((z) => !/content security policy/i.test(z));

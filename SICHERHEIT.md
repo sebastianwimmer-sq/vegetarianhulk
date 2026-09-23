@@ -110,6 +110,21 @@ mitausgeliefert. Solange sie kein Geheimnis tragen, ist das hinnehmbar:
 
 ---
 
+## Lauf 23.09.2026 — 0 🔴 · 25 🟡
+
+Alle Kundenflächen grün. Zwei Klarstellungen aus diesem Lauf:
+
+- **Turnstile-Konsolenrauschen zählt nicht mehr als Befund.** Das Widget schreibt aus
+  seinem eigenen Skript auf jeder Konsolen-Ebene eine getarnte Zeile
+  (`%c%d font-size:0;color:transparent NaN`). Das ist Anbieter-Verhalten, kein Fehler
+  bei uns — und ein Tor, das es bei jedem Lauf meldet, wird nach einer Woche ignoriert.
+  `ERLAUBT_KONSOLE` nimmt **nur die Konsole** aus: was der Host LÄDT, wird weiter geprüft,
+  und ein CSP-Verstoß zählt auch von dort.
+- Ein einmaliges 503 auf `/3-tage-reset/` war bei der Gegenprüfung nicht reproduzierbar —
+  transienter Aussetzer, kein Befund.
+
+---
+
 ## Backlog
 
 - 🟡 **23 gelbe Punkte** aus dem ersten Lauf — überwiegend Waisen (`coming-soon.html`,
