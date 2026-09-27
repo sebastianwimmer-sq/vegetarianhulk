@@ -55,6 +55,18 @@ def pruefe_seite(text):
     return fehler
 
 
+def profil_ok(text):
+    for blk in RE_LD.findall(text):
+        try:
+            d = json.loads(blk)
+        except json.JSONDecodeError:
+            continue
+        haupt = d.get("mainEntity", {}) if isinstance(d, dict) else {}
+        if d.get("@type") == "ProfilePage" and haupt.get("@type") == "Person" and haupt.get("name"):
+            return True
+    return False
+
+
 def pruefe(wurzel):
     befunde = []
     for datei in FAVICON_DATEIEN:
@@ -65,6 +77,10 @@ def pruefe(wurzel):
         t = start.read_text(encoding="utf-8")
         if not re.search(r'"@type": "WebSite",[^}]*"name": "' + MARKE + '"', t, re.S):
             befunde.append(f"✗ index.html: WebSite-Schema mit name {MARKE} fehlt (Seitenname im Suchergebnis)")
+        # Google: "An 'About Me' page" ist ein Einsatzfall fuer ProfilePage —
+        # die Startseite traegt Sebis O-Ton und ist dieses Profil.
+        if not profil_ok(t):
+            befunde.append("✗ index.html: ProfilePage mit mainEntity Person fehlt")
     anzahl = 0
     for pfad, _url in sitemap.seiten(wurzel):
         anzahl += 1
@@ -106,6 +122,10 @@ def selbsttest():
         if not any("favicon.svg fehlt" in b for b in befunde) or not any("touren/a" in b for b in befunde):
             print("✗ Selbsttest Baum: fehlende Favicon-Datei oder kaputte Seite nicht gemeldet")
             kaputt += 1
+    profil = '<script type="application/ld+json">{"@type":"ProfilePage","mainEntity":{"@type":"Person","name":"S"}}</script>'
+    if not profil_ok(profil) or profil_ok(profil.replace("ProfilePage", "WebPage")) or profil_ok(profil.replace('"name":"S"', '"x":1')):
+        print("✗ Selbsttest ProfilePage: Erkennung falsch")
+        kaputt += 1
     if kaputt:
         return 1
     print(f"✓ Selbsttest: {len(faelle)} Seitenfaelle + Baum in beide Richtungen korrekt")
