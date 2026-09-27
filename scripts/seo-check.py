@@ -23,6 +23,10 @@ sitemap = import_module("sitemap-bauen")
 
 MARKE = "VegetarianHulk"
 FAVICON_DATEIEN = ["favicon.svg", "favicon-48.png", "favicon-96.png", "apple-touch-icon.png", "favicon.ico"]
+# Bestaetigungen, die still verfallen, wenn die Datei fehlt: Google Search
+# Console (URL-Praefix, bestaetigt 27.09.2026 — "Entferne die Datei nicht")
+# und der IndexNow-Schluessel, den die GitHub Action braucht.
+PFLICHT_MUSTER = {"google*.html": "Search-Console-Bestaetigung", "[0-9a-f]" * 32 + ".txt": "IndexNow-Schluessel"}
 RE_LD = re.compile(r'<script type="application/ld\+json">(.*?)</script>', re.S)
 
 
@@ -72,6 +76,9 @@ def pruefe(wurzel):
     for datei in FAVICON_DATEIEN:
         if not (wurzel / datei).is_file():
             befunde.append(f"✗ {datei} fehlt im Wurzelordner")
+    for muster, zweck in PFLICHT_MUSTER.items():
+        if not list(wurzel.glob(muster)):
+            befunde.append(f"✗ {zweck} fehlt ({muster}) — Bestaetigung verfaellt still")
     start = wurzel / "index.html"
     if start.is_file():
         t = start.read_text(encoding="utf-8")
@@ -119,7 +126,8 @@ def selbsttest():
         (w / "touren/a").mkdir(parents=True)
         (w / "touren/a/index.html").write_text(gut.replace('href="/favicon-96.png"', 'href="data:x"'))
         _, befunde = pruefe(w)
-        if not any("favicon.svg fehlt" in b for b in befunde) or not any("touren/a" in b for b in befunde):
+        if not any("favicon.svg fehlt" in b for b in befunde) or not any("touren/a" in b for b in befunde) \
+                or not any("Search-Console" in b for b in befunde) or not any("IndexNow" in b for b in befunde):
             print("✗ Selbsttest Baum: fehlende Favicon-Datei oder kaputte Seite nicht gemeldet")
             kaputt += 1
     profil = '<script type="application/ld+json">{"@type":"ProfilePage","mainEntity":{"@type":"Person","name":"S"}}</script>'
