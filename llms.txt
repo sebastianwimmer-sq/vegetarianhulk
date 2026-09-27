@@ -4,8 +4,12 @@
 ## Pages
 - [Start](https://vegetarianhulk.de/): Wer Sebi ist, Werte, Positionierung.
 - [Hulk Hikes](https://vegetarianhulk.de/touren/): Selbst gegangene Bergtouren mit Höhenprofil, Gehzeit, Startpunkt.
-- [Ristfeuchthorn](https://vegetarianhulk.de/touren/ristfeuchthorn/): Beispiel-Tourbericht mit echten Watch-Daten und ehrlicher Einschätzung.
+- [Drachenwand](https://vegetarianhulk.de/touren/drachenwand/): Klettersteig am Mondsee, 9,19 km, 846 hm, Schwierigkeit C.
+- [Fellhorn](https://vegetarianhulk.de/touren/fellhorn/): über Reit im Winkl, 17,90 km, 1.107 hm, T4.
+- [Hörndlwand](https://vegetarianhulk.de/touren/hoerndlwand/): über den Weitsee, 15,10 km, 1.096 hm, T3, vier Gipfelkreuze.
+- [Kneifelspitze](https://vegetarianhulk.de/touren/kneifelspitze/): über Maria Gern im Dunkeln zum Sonnenaufgang, 6,06 km, 456 hm, T1.
+- [Ristfeuchthorn](https://vegetarianhulk.de/touren/ristfeuchthorn/): über Schneizlreuth, 12,52 km, 1.071 hm, T2–T3.
 - [Kooperationen](https://vegetarianhulk.de/kooperationen.html): Brand-Kooperationen, Reichweite, Pakete, FAQ.
 - [Partner & Picks](https://vegetarianhulk.de/partner-picks/): Partner-Codes und genutzte Ausrüstung.
-- [Newsletter](https://vegetarianhulk.de/newsletter): Gratis Berg-Starter + laufende Updates.
+- [Newsletter](https://vegetarianhulk.de/newsletter/): Gratis Berg-Starter + laufende Updates.
 - [Impressum](https://vegetarianhulk.de/impressum.html) · [Datenschutz](https://vegetarianhulk.de/datenschutz.html)
