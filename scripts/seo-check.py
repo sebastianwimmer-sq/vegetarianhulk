@@ -59,6 +59,22 @@ def pruefe_seite(text):
     return fehler
 
 
+# Muss gesperrt sein bzw. crawlbar bleiben. Streng geparst (urllib), denn
+# Google ist nachsichtig, andere Crawler nicht: eine Leerzeile nach
+# "User-agent" liess bis 27.09.2026 JEDE Sperrregel ins Leere laufen.
+ROBOTS_GESPERRT = ["/scripts/seo-check.py", "/docs/x.json", "/SICHERHEIT.md", "/admin/"]
+
+
+def pruefe_robots(robots_text, seiten_urls):
+    import urllib.robotparser
+    rp = urllib.robotparser.RobotFileParser()
+    rp.parse(robots_text.splitlines())
+    fehler = [f"✗ robots.txt sperrt {u}" for u in seiten_urls if not rp.can_fetch("Googlebot", u)]
+    fehler += [f"✗ robots.txt laesst {p} offen (Sperre wirkt nicht)" for p in ROBOTS_GESPERRT
+               if rp.can_fetch("Googlebot", sitemap.HOST.rstrip("/") + p)]
+    return fehler
+
+
 def profil_ok(text):
     for blk in RE_LD.findall(text):
         try:
@@ -79,6 +95,9 @@ def pruefe(wurzel):
     for muster, zweck in PFLICHT_MUSTER.items():
         if not list(wurzel.glob(muster)):
             befunde.append(f"✗ {zweck} fehlt ({muster}) — Bestaetigung verfaellt still")
+    robots = wurzel / "robots.txt"
+    if robots.is_file():
+        befunde += pruefe_robots(robots.read_text(encoding="utf-8"), [u for _, u in sitemap.seiten(wurzel)])
     start = wurzel / "index.html"
     if start.is_file():
         t = start.read_text(encoding="utf-8")
@@ -130,6 +149,13 @@ def selbsttest():
                 or not any("Search-Console" in b for b in befunde) or not any("IndexNow" in b for b in befunde):
             print("✗ Selbsttest Baum: fehlende Favicon-Datei oder kaputte Seite nicht gemeldet")
             kaputt += 1
+    gut_robots = "User-agent: *\nDisallow: /scripts/\nDisallow: /docs/\nDisallow: /SICHERHEIT.md\nDisallow: /admin/\n"
+    seite = [host + "touren/a/"]
+    if pruefe_robots(gut_robots, seite) \
+            or not pruefe_robots(gut_robots.replace("User-agent: *\n", "User-agent: *\n\n"), seite) \
+            or not pruefe_robots(gut_robots + "Disallow: /touren/\n", seite):
+        print("✗ Selbsttest robots: Leerzeile oder gesperrte Seite nicht erkannt")
+        kaputt += 1
     profil = '<script type="application/ld+json">{"@type":"ProfilePage","mainEntity":{"@type":"Person","name":"S"}}</script>'
     if not profil_ok(profil) or profil_ok(profil.replace("ProfilePage", "WebPage")) or profil_ok(profil.replace('"name":"S"', '"x":1')):
         print("✗ Selbsttest ProfilePage: Erkennung falsch")
