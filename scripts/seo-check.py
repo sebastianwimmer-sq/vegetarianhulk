@@ -37,8 +37,14 @@ def pruefe_seite(text):
         fehler.append("meta description fehlt oder unter 50 Zeichen")
     if 'rel="icon" href="data:' in text:
         fehler.append("Favicon als data:-URI (zeigt Google nicht an)")
-    if not re.search(r'<link rel="icon" href="/favicon[^"]*\.(svg|png)"', text):
-        fehler.append("Favicon-Datei nicht verlinkt")
+    # Google unterstuetzt BMP, GIF, ICO, PNG, JPEG, PPM, TIFF — kein SVG
+    # (developers.google.com/search/docs/appearance/favicon-in-search, 27.09.2026).
+    # Das ERSTE Icon muss also ein Rasterformat sein.
+    erstes = re.search(r'<link rel="icon" href="([^"]+)"', text)
+    if not erstes or not re.search(r"\.(png|ico)$", erstes.group(1)):
+        fehler.append("erstes Favicon ist kein PNG/ICO (Google liest kein SVG)")
+    if 'name="twitter:card"' not in text:
+        fehler.append("twitter:card fehlt")
     if len(re.findall(r"<h1[\s>]", text)) != 1:
         fehler.append("nicht genau eine <h1>")
     for blk in RE_LD.findall(text):
@@ -73,11 +79,14 @@ def selbsttest():
            '<meta name="description" content="' + "x" * 60 + '">'
            '<meta property="og:site_name" content="VegetarianHulk">'
            f'<link rel="canonical" href="{host}touren/a/">'
-           '<link rel="icon" href="/favicon.svg" type="image/svg+xml">'
+           '<link rel="icon" href="/favicon-96.png" type="image/png">'
+           '<meta name="twitter:card" content="summary_large_image">'
            '<script type="application/ld+json">{"a":1}</script></head><body><h1>A</h1></body></html>')
     faelle = {
         "sauber": (gut, 0),
-        "data-Favicon": (gut.replace('<link rel="icon" href="/favicon.svg"', '<link rel="icon" href="data:image/svg+xml,x"'), 2),
+        "data-Favicon": (gut.replace('<link rel="icon" href="/favicon-96.png"', '<link rel="icon" href="data:image/svg+xml,x"'), 2),
+        "SVG zuerst": (gut.replace('<link rel="icon" href="/favicon-96.png" type="image/png">', '<link rel="icon" href="/favicon.svg"><link rel="icon" href="/favicon-96.png">'), 1),
+        "ohne twitter:card": (gut.replace('name="twitter:card"', 'name="x"'), 1),
         "ohne Marke im Titel": (gut.replace("Tour | VegetarianHulk", "Tour"), 1),
         "ohne site_name": (gut.replace('property="og:site_name"', 'property="og:x"'), 1),
         "zwei h1": (gut.replace("<h1>A</h1>", "<h1>A</h1><h1>B</h1>"), 1),
@@ -92,7 +101,7 @@ def selbsttest():
     with tempfile.TemporaryDirectory() as tmp:
         w = pathlib.Path(tmp)
         (w / "touren/a").mkdir(parents=True)
-        (w / "touren/a/index.html").write_text(gut.replace('href="/favicon.svg"', 'href="data:x"'))
+        (w / "touren/a/index.html").write_text(gut.replace('href="/favicon-96.png"', 'href="data:x"'))
         _, befunde = pruefe(w)
         if not any("favicon.svg fehlt" in b for b in befunde) or not any("touren/a" in b for b in befunde):
             print("✗ Selbsttest Baum: fehlende Favicon-Datei oder kaputte Seite nicht gemeldet")
