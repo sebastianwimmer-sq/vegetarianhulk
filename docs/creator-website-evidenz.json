@@ -1,0 +1,107 @@
+{
+  "thema": "Markensuche 'vegetarianhulk' + was einer Creator-Website fehlt",
+  "stand": "2026-09-27",
+  "gilt_bis": "2027-03-31",
+  "regeln": [
+    {
+      "id": "favicon-format",
+      "regel": "Google Search unterstuetzt fuers Favicon BMP, GIF, ICO, PNG, JPEG, PPM, TIFF — SVG steht nicht in der Liste. Quadratisch, mind. 8x8, empfohlen groesser als 48x48. Link im Kopf der Startseite, crawlbar.",
+      "sicherheit": "hart",
+      "quelle": "https://developers.google.com/search/docs/appearance/favicon-in-search",
+      "datum": "2026-09-27",
+      "wirkung": "Erstes rel=icon ist favicon-96.png; seo-check.py prueft das.",
+      "einschraenkung": "data:-URIs erwaehnt die Doku nicht ausdruecklich; die Anforderung 'Googlebot-Image muss die Datei crawlen' schliesst sie praktisch aus."
+    },
+    {
+      "id": "favicon-dauer",
+      "regel": "Neues Favicon/Seitenname erscheint nach 'einigen Tagen bis einigen Wochen'; URL-Pruefung in der Search Console beschleunigt.",
+      "sicherheit": "hart",
+      "quelle": "https://developers.google.com/search/docs/appearance/favicon-in-search",
+      "datum": "2026-09-27",
+      "wirkung": "Erfolg fruehestens nach Neu-Crawl messen, nicht am Tag des Deploys.",
+      "einschraenkung": "Keine Garantie auf Anzeige."
+    },
+    {
+      "id": "seitenname",
+      "regel": "WebSite-Schema auf der Startseite (Domain-Root) ist die wichtigste Angabe fuer den Seitennamen; alternateName als Rueckfall. Zusaetzlich gelesen: og:site_name, <title>, Ueberschriften, Text der Startseite, Verweise von aussen.",
+      "sicherheit": "hart",
+      "quelle": "https://developers.google.com/search/docs/appearance/site-names",
+      "datum": "2026-09-27",
+      "wirkung": "WebSite name=VegetarianHulk + alternateName auf index.html; og:site_name auf allen Seiten. Die H1 der Startseite ('Sebi') traegt die Marke nicht — offene Designentscheidung.",
+      "einschraenkung": "Nur Domain/Subdomain, keine Unterordner."
+    },
+    {
+      "id": "llms-txt",
+      "regel": "Google Search (inkl. AI Overviews / AI Mode) nutzt llms.txt nicht; es gibt keine Zusatzanforderungen fuer KI-Funktionen.",
+      "sicherheit": "hart",
+      "quelle": "https://developers.google.com/search/docs/appearance/ai-features",
+      "datum": "2026-09-27",
+      "wirkung": "llms.txt bleibt (billig, andere Anbieter koennen es lesen), ist aber KEIN Hebel fuer Google. Fuer KI-Suche zaehlen dieselben Grundlagen: crawlbar, klar strukturiert, eigener Inhalt.",
+      "einschraenkung": "Ob ChatGPT/Perplexity llms.txt auswerten, ist nicht belegt."
+    },
+    {
+      "id": "wissenspanel-bestaetigen",
+      "regel": "Ein Google-Wissenspanel kann nur ueber YouTube, Search Console, Twitter/X oder Facebook beansprucht werden — Instagram ist kein Weg.",
+      "sicherheit": "hart",
+      "quelle": "https://support.google.com/knowledgepanel/answer/7534902?hl=en",
+      "datum": "2026-09-27",
+      "wirkung": "Search Console fuer vegetarianhulk.de ist Voraussetzung fuer ALLES Weitere (Indexierung, Favicon-Beschleunigung, spaeter Panel).",
+      "einschraenkung": "Ein Panel entsteht nur, wenn Google die Person als Entitaet fuehrt — beanspruchen kann man es erst, wenn es existiert."
+    },
+    {
+      "id": "who-how-why",
+      "regel": "Google fragt: Ist offensichtlich, WER den Inhalt erstellt hat? Fuehren Bylines zu weiteren Infos ueber den Autor? Ist klar, WIE er entstanden ist (z. B. selbst getestet)?",
+      "sicherheit": "hart",
+      "quelle": "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+      "datum": "2026-09-27",
+      "wirkung": "Fehlt: eine eigene Ueber-mich-Seite, auf die die Tour-Bylines zeigen. Staerke vorhanden: 'selbst gegangen' + echte GPS-Daten ist genau das 'How'.",
+      "einschraenkung": "Selbstbewertungsfragen, kein direktes Rankingsignal."
+    },
+    {
+      "id": "sameas",
+      "regel": "sameAs im Person-Schema verknuepft Website und Profile als dieselbe Entitaet.",
+      "sicherheit": "trend",
+      "quelle": "https://blitzmetrics.com/how-to-unlock-claim-and-merge-google-knowledge-panels/",
+      "datum": "2026-09-27",
+      "wirkung": "Nur Instagram eingetragen — weitere echte Profile ergaenzen, sobald bekannt.",
+      "einschraenkung": "Agentur-Praxis, keine Google-Dokumentation zur Gewichtung."
+    },
+    {
+      "id": "eigene-reichweite",
+      "regel": "E-Mail-Liste ist die einzige Reichweite, die nicht an einem Algorithmus haengt; Creator-Einkommen stammt ueberwiegend aus Brand-Deals.",
+      "sicherheit": "trend",
+      "quelle": "https://nealschaffer.com/creator-economy-statistics/",
+      "datum": "2026-09-27",
+      "wirkung": "Newsletter + Berg-Starter sind schon da — richtig priorisiert. Kooperationsseite ist der Umsatzhebel und muss aktuelle Zahlen tragen.",
+      "einschraenkung": "Sekundaerquelle, Zahlen aus Branchenreports ohne einsehbare Methodik."
+    }
+  ],
+  "offene_belege": [
+    {
+      "behauptung": "87 % der Brands verlangen ein Media Kit; Creator mit Media Kit bekommen 43 % mehr Anfragen; 68 % buchen eher mit Testimonials; 60 % bevorzugen PDF.",
+      "fundort": "https://influenceflow.io/resources/media-kits-for-brand-partnerships-the-complete-2025-2026-guide/",
+      "warum_offen": "Anbieterseite eines Media-Kit-Tools, zitiert Reports ohne Link auf die Originalstudie. Nicht als Tatsache verwenden."
+    },
+    {
+      "behauptung": "Ein Wikidata-Eintrag loest am haeufigsten ein Wissenspanel aus.",
+      "fundort": "WebSearch-Zusammenfassung zu Knowledge-Panel-Ratgebern (Agenturen)",
+      "warum_offen": "Keine Google-Quelle; Wikidata verlangt Relevanz mit unabhaengigen Belegen — Selbsteintrag ohne Presse kann geloescht werden."
+    }
+  ],
+  "befunde_27_09_2026": {
+    "technisch_behoben": [
+      "Sitemap hatte 4 von 5 Touren nicht (PR #67)",
+      "Newsletter-Canonical zeigte auf 301",
+      "Favicon nur als data:-URI (PR #68), SVG als erstes Icon (dieser PR)",
+      "og:site_name nur auf Startseite, twitter:card auf 12 von 13 Seiten fehlend",
+      "Launch-Gate-Skript mit oeffentlichem Vorschau-Schluessel blockierte das Rendern"
+    ],
+    "offen_braucht_sebi": [
+      "Google Search Console + Bing Webmaster Tools anlegen",
+      "Kooperationsseite: Zahlen von Juli 2026 stehen als 'letzte 30 Tage'",
+      "Newsletter-Formular sendet an vh-forms.peaking.workers.dev — PEAKING im Netzwerkverkehr jeder VH-Besucherin (Regel PEAKING getrennt von vegetarianhulk)",
+      "Oeffentliches GitHub-Repo konkurriert bei der Markensuche",
+      "Weitere Profile fuer sameAs (YouTube/TikTok/Strava?)"
+    ]
+  }
+}
