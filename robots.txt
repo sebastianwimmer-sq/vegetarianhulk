@@ -1,6 +1,4 @@
 User-agent: *
-Allow: /
-
 # Block staging variants (defense-in-depth, falls Subdomain mal gleichen Pfad serves)
 Disallow: /design/
 Disallow: /prototypes/
@@ -10,5 +8,14 @@ Disallow: /archive/
 Disallow: /_preview/
 Disallow: /workers/
 Disallow: /second-brain/
+# Werkzeuge und interne Notizen: liegen im ausgelieferten Branch (GitHub Pages
+# liefert alles aus), gehoeren aber nicht in den Suchindex. 27.09.2026.
+Disallow: /scripts/
+Disallow: /docs/
+Disallow: /release/
+Disallow: /email-templates/
+Disallow: /mail-templates/
+Disallow: /SICHERHEIT.md
+Disallow: /touren/HUB-WORKFLOW.md
 
 Sitemap: https://vegetarianhulk.de/sitemap.xml
