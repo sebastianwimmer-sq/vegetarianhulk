@@ -65,6 +65,11 @@ bash scripts/sicherung.sh --auto "automatisch vor premium-check" || true
 # man vergessen kann, gehoert ans Tor.
 bash scripts/bump-asset-versions.sh >/dev/null 2>&1 || true
 
+# Sitemap aus den Seiten ableiten. Bis 27.09.2026 von Hand gepflegt — vier von
+# fuenf Tourseiten fehlten darin. Das Tor unten prueft die Deckung trotzdem,
+# falls der Bau hier einmal still scheitert.
+python3 scripts/sitemap-bauen.py >/dev/null 2>&1 || true
+
 titel "Statisch (Sekunden)"
 lauf "Design-Kodex: Radien"          python3 scripts/kodex-radien.py --pruefen
 lauf "Schild-Material"               python3 scripts/schild-check.py
@@ -73,6 +78,8 @@ lauf "Text (Fixtures)"               python3 scripts/text-check.py --selbsttest
 lauf "Quellen (Fixtures)"            python3 scripts/quellen-einbauen.py --selbsttest
 lauf "Schild (Fixtures)"             python3 scripts/schild-check.py --selbsttest
 lauf "Fremde Hosts & Ordner"         python3 scripts/fremdhosts-check.py
+lauf "Sitemap deckt alle Seiten"     python3 scripts/sitemap-bauen.py --pruefen
+lauf "Sitemap (Fixtures)"            python3 scripts/sitemap-bauen.py --selbsttest
 lauf "Produktliste & Affiliate-Tags" node scripts/produkte-sync.mjs --pruefen
 lauf "Touren gegen die Spec"         node scripts/tour-check.mjs --alle
 lauf "Tore selbst (Fixtures)"        ./scripts/tour-check-fixtures.sh
