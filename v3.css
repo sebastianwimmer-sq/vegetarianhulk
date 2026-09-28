@@ -392,9 +392,13 @@ body.loaded .st { opacity: 1; transform: translateY(0); filter: blur(0); }
   .rail--l .rail-cross { left: 0; }
   .rail--r .rail-cross { right: 0; }
   /* Gipfel-Marker: klettert mit Scroll-Fortschritt (JS setzt --p 0..1) */
-  .rail-peak { position: absolute; width: 30px; top: calc(10% + (78% * var(--p, 0)));
-    display: grid; justify-items: center; gap: 3px;
-    transition: top 300ms var(--ease-lux); }
+  /* Die Marke ist ein Messinstrument: sie folgt dem Scrollstand DIREKT per
+     translate (v3.js setzt --y in px). Vorher lief sie per `top` mit 300 ms
+     Uebergang hinterher — auf der Startseite, die im 3D-Abschnitt die
+     Scrollposition laufend neu setzt, startete der Uebergang jedes Bild neu
+     und die Marke kam nie an. Gemessen 28.09.2026: bis 400 px daneben. */
+  .rail-peak { position: absolute; width: 30px; top: 0; translate: 0 var(--y, 10vh);
+    display: grid; justify-items: center; gap: 3px; }
   .rail--l .rail-peak { left: -3px; }
   .rail--r .rail-peak { right: -3px; }
   .rail-peak svg { width: 13px; height: 10px; color: var(--leaf); }
