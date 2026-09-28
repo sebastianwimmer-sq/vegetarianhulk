@@ -663,7 +663,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
    stehen auf dem dunklen Hang). Ein weicher Schatten um den Textblock traegt
    genau so weit, wie Text steht. Nur Desktop — am Handy liegt das Sheet. */
 @media (min-width: 700px) {
-  .grat-panel .inner { background: rgba(244,236,218,0.97); border-radius: 40px;
+  .grat-panel .inner { background: rgba(244,236,218,0.97); border-radius: var(--r-karte);
     box-shadow: 0 0 46px 38px rgba(244,236,218,0.97), 0 0 120px 80px rgba(244,236,218,0.45); }
 }
 /* Hairline-Anker RECHTS der Typo, faedet nach unten aus */
