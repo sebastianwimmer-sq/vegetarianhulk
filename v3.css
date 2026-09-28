@@ -1193,6 +1193,25 @@ vh-form [slot="captcha"].is-err,
   object-fit: cover; overflow: hidden;
 }
 
+/* Richtung (uebergang.js setzt den Typ): tiefer in die Seite steigt der
+   Inhalt von unten auf, zurueck kommt er von oben. Gleiche Ebene: die
+   ruhige Blende von oben. So liest sich ein Klick wie ein Schritt am Berg. */
+html:active-view-transition-type(hoch)::view-transition-old(root) { animation: vtHochRaus 320ms var(--ease-lux) both; }
+html:active-view-transition-type(hoch)::view-transition-new(root) { animation: vtHochRein 520ms var(--ease-lux) both; }
+html:active-view-transition-type(runter)::view-transition-old(root) { animation: vtRunterRaus 320ms var(--ease-lux) both; }
+html:active-view-transition-type(runter)::view-transition-new(root) { animation: vtRunterRein 520ms var(--ease-lux) both; }
+@keyframes vtHochRaus   { to   { opacity: 0; transform: translateY(-28px) scale(0.985); } }
+@keyframes vtHochRein   { from { opacity: 0; transform: translateY(48px); } }
+@keyframes vtRunterRaus { to   { opacity: 0; transform: translateY(28px) scale(0.985); } }
+@keyframes vtRunterRein { from { opacity: 0; transform: translateY(-48px); } }
+
+/* Das Tourfoto waechst von der Uebersicht ins Hero — etwas langsamer als
+   der Rest, damit man ihm folgen kann. */
+.tour-hero__img, .tk-pin__photo, .tk-row__eng { view-transition-class: tour; }
+::view-transition-group(*.tour) { animation-duration: 640ms; animation-timing-function: var(--ease-lux); z-index: 5; }
+::view-transition-old(*.tour) { animation: none; opacity: 0; }
+::view-transition-new(*.tour) { animation: none; }
+
 /* Die Leiste selbst soll sich NICHT bewegen, nur bleiben. */
 ::view-transition-old(hauptnav), ::view-transition-new(hauptnav) {
   animation: none; mix-blend-mode: normal;

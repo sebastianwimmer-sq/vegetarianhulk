@@ -1082,3 +1082,13 @@
 @media (max-width: 560px) {
   .tour-quellen { flex-direction: column; gap: 6px; }
 }
+
+/* Seitenwechsel (28.09.2026): Das Tourfoto wandert als eigene Ebene — und die
+   liegt UEBER dem Rest der Seite, also auch ueber dem Text, der auf dem Foto
+   steht. Ohne eigenen Namen war der Titel die ganze Fahrt verdeckt und sprang
+   am Ende herein. Mit Namen liegt er darueber und kommt kurz nach dem Foto. */
+.tour-hero__inner { view-transition-name: tour-text; }
+::view-transition-new(tour-text) { animation: vtTextRein 420ms 180ms var(--ease-lux, ease) both; }
+::view-transition-old(tour-text) { animation: vtTextRaus 200ms ease both; }
+@keyframes vtTextRein { from { opacity: 0; transform: translateY(16px); } }
+@keyframes vtTextRaus { to { opacity: 0; } }
