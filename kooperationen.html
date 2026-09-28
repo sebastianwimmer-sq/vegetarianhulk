@@ -445,6 +445,16 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
   color: var(--leaf); transition: transform 400ms var(--ease-lux); flex-shrink: 0; }
 .koop-faq details[open] summary::after { transform: rotate(45deg); }
 .koop-faq-body { padding: 0 22px 18px; font-size: 14px; line-height: 1.65; color: var(--paper-dim); max-width: 60ch; }
+/* FAQ auf Haarlinien statt Kastenstapel (28.09.2026) — wie /touren/. */
+.koop-faq { gap: 0; border-top: 1px solid rgba(126,208,155,0.18); }
+.koop-faq details, .koop-faq details[open] { border: 0; border-radius: 0; background: none;
+  border-bottom: 1px solid rgba(126,208,155,0.18); }
+.koop-faq summary { padding: 22px 0; font-size: clamp(17px, 0.8vw + 13px, 21px); transition: color 300ms var(--ease-lux); }
+.koop-faq summary:hover { color: var(--mint); }
+.koop-faq summary:focus-visible { outline: 2px solid var(--leaf); outline-offset: 4px; }
+.koop-faq summary::after { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid rgba(126,208,155,0.35); font-size: 17px; }
+.koop-faq-body { padding: 0 48px 22px 0; font-size: 15px; }
 
 /* ---- Bereit? — dunkler, fotografischer Schluss-Moment ----- */
 .koop-close { margin-top: clamp(74px, 11vh, 116px); }

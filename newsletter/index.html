@@ -134,6 +134,24 @@
 .nl-benefit h3 { margin: 10px 0 8px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 600;
   font-size: 20px; line-height: 1.15; color: var(--paper); }
 .nl-benefit p { font-size: 14px; line-height: 1.6; color: var(--paper-dim); }
+/* Drei Spalten auf Haarlinien statt drei gleicher Kaertchen (28.09.2026).
+   Die Roemerziffern waren keine Reihenfolge, sie sind raus. Was bleibt, ist
+   ein Blick in den Brief: drei Dinge nebeneinander, oben eine Linie, die
+   sich beim Drueberfahren fuellt. */
+.nl-benefits { gap: 0; border-top: 1px solid rgba(126,208,155,0.18); }
+.nl-benefit, .nl-benefit:hover { background: none; border: 0; border-radius: 0; box-shadow: none; transform: none;
+  overflow: visible; padding: 26px clamp(18px, 2.4vw, 30px) 8px; }
+.nl-benefit:first-child { padding-left: 0; }
+.nl-benefit:last-child { padding-right: 0; }
+.nl-benefit + .nl-benefit { border-left: 1px solid rgba(126,208,155,0.18); }
+.nl-benefit::before { top: -1px; height: 2px; background: var(--leaf); }
+.nl-benefit:hover::before { width: 100%; }
+.nl-benefit h3 { margin-top: 0; font-size: clamp(21px, 1.2vw + 14px, 26px); }
+.nl-benefit p { font-size: 15px; }
+@media (max-width: 760px) {
+  .nl-benefit, .nl-benefit:first-child, .nl-benefit:last-child { padding: 22px 0 20px; }
+  .nl-benefit + .nl-benefit { border-left: 0; border-top: 1px solid rgba(126,208,155,0.18); }
+}
 
 /* ---- Kein Bullshit (anti-hype) ---- */
 .anti { margin-top: clamp(72px, 12vh, 120px); }
@@ -276,17 +294,14 @@
       <h2>Kein Funnel. <em>Ein echter Brief</em> ab und zu.</h2>
       <div class="nl-benefits">
         <div class="nl-benefit reveal" style="transition-delay:60ms">
-          <p class="nl-benefit__n">i.</p>
           <h3>Neue Touren zuerst</h3>
           <p>Jede neue Hulk Hike — mit Foto, echtem Höhenprofil und meiner ehrlichen Einschätzung — landet bei dir, bevor sie sonst wo auftaucht.</p>
         </div>
         <div class="nl-benefit reveal" style="transition-delay:130ms">
-          <p class="nl-benefit__n">ii.</p>
           <h3>Ehrliche Gedanken</h3>
           <p>Ab und zu, wie ich das mit Disziplin, Glauben und vegetarisch-stark wirklich lebe. Kein Coaching-Sprech, keine Plastik-Sprüche.</p>
         </div>
         <div class="nl-benefit reveal" style="transition-delay:200ms">
-          <p class="nl-benefit__n">iii.</p>
           <h3>Ein Anker</h3>
           <p>Manchmal ein Vers oder ein Satz, der bei mir hängen geblieben ist. Kurz, echt, ohne Zeigefinger.</p>
         </div>
