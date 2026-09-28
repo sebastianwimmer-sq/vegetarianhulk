@@ -68,9 +68,18 @@ const server = spawn('python3', ['-m', 'http.server', String(PORT)],
   { cwd: WURZEL, stdio: 'ignore' });
 await new Promise((r) => setTimeout(r, 700));
 
+/* Eine Search-Console-Bestaetigung endet auf .html, ist aber keine Seite —
+   gleiche Erkennung am INHALT wie in sicherheits-loop.mjs (#74). */
+const RE_BESTAETIGUNG = /^google-site-verification: google[0-9a-f]+\.html\s*$/;
+const istBestaetigung = (text) => RE_BESTAETIGUNG.test(text);
+if (!istBestaetigung('google-site-verification: google44187d5a4a7fe3f1.html')
+    || istBestaetigung('<html><body>google-site-verification: google1.html</body></html>')) {
+  console.error('✗ SELBSTTEST: Bestaetigungsdatei falsch erkannt.'); server.kill(); process.exit(1);
+}
+
 const seiten = [];
 for (const d of readdirSync(WURZEL)) {
-  if (d.endsWith('.html')) seiten.push('/' + d);
+  if (d.endsWith('.html') && !istBestaetigung(readFileSync(join(WURZEL, d), 'utf8'))) seiten.push('/' + d);
 }
 for (const d of readdirSync(join(WURZEL, 'touren'), { withFileTypes: true })) {
   if (d.isDirectory() && existsSync(join(WURZEL, 'touren', d.name, 'index.html')))
