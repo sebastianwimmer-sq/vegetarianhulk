@@ -25,11 +25,10 @@
 
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
-import { spawn } from 'node:child_process';
+import { pruefserver } from './pruefserver.mjs';
 
 const WURZEL = resolve(import.meta.dirname, '..');
 const SELBSTTEST = process.argv.includes('--selbsttest');
-const PORT = 8247;
 
 const PW = '/opt/homebrew/lib/node_modules/playwright/index.mjs';
 
@@ -64,9 +63,7 @@ let chromium;
 try { ({ chromium } = await import(PW)); }
 catch { console.error(`Playwright nicht gefunden unter ${PW}`); process.exit(2); }
 
-const server = spawn('python3', ['-m', 'http.server', String(PORT)],
-  { cwd: WURZEL, stdio: 'ignore' });
-await new Promise((r) => setTimeout(r, 700));
+const { basis: BASIS, schliessen } = await pruefserver(WURZEL);
 
 /* Eine Search-Console-Bestaetigung endet auf .html, ist aber keine Seite —
    gleiche Erkennung am INHALT wie in sicherheits-loop.mjs (#74). */
@@ -74,7 +71,7 @@ const RE_BESTAETIGUNG = /^google-site-verification: google[0-9a-f]+\.html\s*$/;
 const istBestaetigung = (text) => RE_BESTAETIGUNG.test(text);
 if (!istBestaetigung('google-site-verification: google44187d5a4a7fe3f1.html')
     || istBestaetigung('<html><body>google-site-verification: google1.html</body></html>')) {
-  console.error('✗ SELBSTTEST: Bestaetigungsdatei falsch erkannt.'); server.kill(); process.exit(1);
+  console.error('✗ SELBSTTEST: Bestaetigungsdatei falsch erkannt.'); await schliessen(); process.exit(1);
 }
 
 const seiten = [];
@@ -95,7 +92,7 @@ const namenJeSeite = new Map();
 for (const pfad of seiten) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
   try {
-    await page.goto(`http://localhost:${PORT}${pfad}`, { waitUntil: 'domcontentloaded' });
+    await page.goto(`${BASIS}${pfad}`, { waitUntil: 'domcontentloaded' });
     const r = await page.evaluate(() => {
       /* Namen am GERENDERTEN Dokument sammeln: .nav bekommt seinen Namen
          aus dem Stylesheet, nicht aus einem style-Attribut. */
@@ -142,7 +139,7 @@ for (const n of hubNamen) {
 }
 
 await browser.close();
-server.kill();
+await schliessen();
 
 if (fehler.length) {
   console.error(`✗ vt-check: ${fehler.length} Befund(e) auf ${seiten.length} Seiten:`);

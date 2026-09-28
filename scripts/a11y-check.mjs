@@ -21,13 +21,12 @@
  * Exit 1 bei FEHLER. HINWEIS blockt nicht — ein Tor, das bei jedem zweiten
  * Fall grundlos rot steht, wird ignoriert.
  */
-import { spawn } from 'node:child_process';
+import { pruefserver } from './pruefserver.mjs';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const WURZEL = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const PORT = 8247;
 const PW = '/opt/homebrew/lib/node_modules/playwright/index.mjs';
 
 function v3Seiten() {
@@ -270,24 +269,14 @@ let pw;
 try { pw = await import(PW); }
 catch { console.error(`Playwright fehlt unter ${PW}`); process.exit(2); }
 
-const SERVER = [
-  'import sys, http.server, socketserver',
-  'class S(socketserver.ThreadingMixIn, http.server.HTTPServer): daemon_threads = True',
-  'h = http.server.SimpleHTTPRequestHandler',
-  'h.log_message = lambda *a, **k: None',
-  'S(("127.0.0.1", int(sys.argv[1])), h).serve_forever()',
-].join('\n');
-const server = spawn('python3', ['-c', SERVER, String(PORT)], { cwd: WURZEL, stdio: 'ignore' });
-const aufraeumen = () => { try { server.kill(); } catch {} };
-process.on('exit', aufraeumen);
-process.on('SIGINT', () => { aufraeumen(); process.exit(130); });
-await new Promise((r) => setTimeout(r, 1200));
+const { basis: BASIS, schliessen } = await pruefserver(WURZEL);
+process.on('SIGINT', () => { schliessen(); process.exit(130); });
 
 let fehlerGesamt = 0;
 const browser = await pw.chromium.launch();
 for (const pfad of seiten) {
   const seite = await browser.newPage({ viewport: { width: 390, height: 844 } });
-  await seite.goto(`http://localhost:${PORT}${pfad}`, { waitUntil: 'load' });
+  await seite.goto(`${BASIS}${pfad}`, { waitUntil: 'load' });
   await seite.evaluate(() => document.fonts.ready);
   await seite.waitForTimeout(1400);
   const { fehler, hinweise } = await seite.evaluate(pruefeImBrowser);

@@ -24,9 +24,8 @@
  */
 
 import { readdirSync, existsSync } from 'node:fs';
-import { readFile } from 'node:fs/promises';
-import { createServer } from 'node:http';
-import { extname, join, resolve } from 'node:path';
+import { join, resolve } from 'node:path';
+import { pruefserver } from './pruefserver.mjs';
 
 const WURZEL = resolve(import.meta.dirname, '..');
 const LIVE = process.argv.includes('--live');
@@ -73,30 +72,10 @@ let chromium;
 try { ({ chromium } = await import(PW)); }
 catch { console.error(`Playwright nicht gefunden unter ${PW}`); process.exit(2); }
 
-/* Eigener Server auf freiem Port (28.09.2026). Vorher: python3 -m http.server
-   auf festem Port mit STARREN 700 ms zum Hochfahren — unter Last reichte das
-   nicht, die erste Seite galt als „nicht ladbar", das Tor war mal rot, mal
-   gruen. `listen` meldet sich erst, wenn der Server wirklich annimmt. */
-const TYPEN = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.mjs': 'text/javascript',
-  '.jpg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml', '.json': 'application/json',
-  '.woff2': 'font/woff2', '.webp': 'image/webp', '.avif': 'image/avif', '.ico': 'image/x-icon', '.mp4': 'video/mp4' };
+/* Eigener Server auf freiem Port — siehe pruefserver.mjs (28.09.2026). */
 let server = null;
 let BASIS = 'https://vegetarianhulk.de';
-if (!LIVE) {
-  server = await new Promise((fertig) => {
-    const s = createServer(async (anf, ant) => {
-      let pfad = join(WURZEL, decodeURIComponent(anf.url.split('?')[0]));
-      if (pfad.endsWith('/')) pfad += 'index.html';
-      try {
-        const inhalt = await readFile(pfad);
-        ant.writeHead(200, { 'Content-Type': TYPEN[extname(pfad)] || 'application/octet-stream' });
-        ant.end(inhalt);
-      } catch { ant.writeHead(404); ant.end('weg'); }
-    });
-    s.listen(0, () => fertig(s));
-  });
-  BASIS = `http://localhost:${server.address().port}`;
-}
+if (!LIVE) { server = await pruefserver(WURZEL); BASIS = server.basis; }
 
 const seiten = [];
 for (const d of readdirSync(WURZEL)) if (d.endsWith('.html')) seiten.push('/' + d);
@@ -155,7 +134,7 @@ for (const pfad of seiten) {
 }
 
 await browser.close();
-if (server) server.close();
+if (server) await server.schliessen();
 
 if (befunde.length) {
   console.error(`✗ sichtbar-check: ${befunde.length} Seite(n) mit haengendem Inhalt:`);
