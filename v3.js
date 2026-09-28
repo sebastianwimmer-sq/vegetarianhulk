@@ -62,68 +62,12 @@
   }, { passive: true });
 })();
 
-/* Nav-Morph: oben normale Zeile, ab Scroll wird sie zur Bottom-Pille */
-(function () {
-  'use strict';
-  var nav = document.querySelector('.nav');
-  if (!nav) return;
-  var mq = window.matchMedia('(min-width: 900px)');
-  var t = false;
-  var isTop = null;
-
-  /* ZWEI Schwellen statt einer. Vorher kippte die Leiste bei genau 120 px —
-     wer beim schnellen Hin-und-Her-Scrollen um diesen Punkt herumwackelt, löste
-     jedes Mal die Ausblende aus. Gemessen am 16.09.2026: vier vollständige
-     Aus-/Einblendungen in drei Sekunden, und in 23 % der Proben stand die
-     Leiste sichtbar im FALSCHEN Zustand, weil die Sperre unten die
-     Zwischenschritte verschluckt. In Safari faellt es am ehesten auf, weil
-     dessen Momentum-Scrollen laenger um die Schwelle pendelt.
-
-     Jetzt: nach oben erst unter 60 px, nach unten erst ueber 160 px. Dazwischen
-     bleibt es, wie es ist. */
-  /* Das Band ist bewusst breit: die Leiste soll erst wechseln, wenn man den
-     Hero wirklich verlassen hat — nicht schon beim Antippen des Rads. */
-  var OBEN_BIS = 60, UNTEN_AB = 340;
-
-  function willOben() {
-    if (!mq.matches) return false;
-    var y = window.scrollY;           /* in Safari beim Ueberdehnen auch negativ */
-    if (y <= OBEN_BIS) return true;
-    if (y >= UNTEN_AB) return false;
-    return isTop === null ? y < 120 : isTop;   /* im Band: Zustand halten */
-  }
-
-  /* Der Weg nach oben in Pixeln: Fensterhoehe minus eigene Hoehe minus die
-     beiden Abstaende (18 unten + 22 oben). Muss VOR dem ersten Umschalten und
-     nach jeder Groessenaenderung stehen — und NICHT im selben Tick wie der
-     Klassenwechsel: dann hat WebKit keinen Startwert und springt fast die ganze
-     Strecke (gemessen: 22 → 735 px in 30 ms). */
-  function versatzSetzen() {
-    var h = nav.getBoundingClientRect().height;
-    if (!h) return;
-    nav.style.setProperty('--nav-oben', -(window.innerHeight - h - 40) + 'px');
-  }
-
-  function update() {
-    t = false;
-    var want = willOben();
-    if (want === isTop) return;
-    isTop = want;
-    /* Mehr passiert hier nicht mehr. Frueher stand an dieser Stelle eine Kette
-       aus zwei setTimeouts und einer Sperre, die eine Ausblende choreografiert
-       hat — samt aller Zustaende, in denen sie haengenbleiben konnte. Seit die
-       Leiste faehrt statt umzuspringen, macht das der Browser selbst:
-       `transition: translate 480ms`. */
-    nav.classList.toggle('at-top', want);
-  }
-
-  window.addEventListener('scroll', function () {
-    if (!t) { requestAnimationFrame(update); t = true; }
-  }, { passive: true });
-  window.addEventListener('resize', function () { versatzSetzen(); update(); }, { passive: true });
-  versatzSetzen();
-  update();
-})();
+/* Nav: steht fest unten, auf jeder Breite (28.09.2026). Bis dahin fuhr sie am
+   Desktop zwischen Kopf und Fuss hin und her — 785 px quer ueber den Schirm bei
+   jedem Verlassen des Seitenkopfs und bei jedem Seitenwechsel, in WebKit mit
+   einem Sprung beim Laden. Keine Schwelle, keine Hysterese und kein Easing hat
+   das behoben (#49, #50), weil die Fahrt selbst der Fehler war. Am Handy stand
+   die Leiste schon immer fest und war nie auffaellig. Tor: scripts/nav-check.mjs. */
 
 /* Wordmark weicht beim Runterscrollen, kommt beim Hochscrollen zurück */
 (function () {
