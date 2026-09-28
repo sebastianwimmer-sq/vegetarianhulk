@@ -256,6 +256,8 @@ function init(DEM) {
   const anchors = [];
   function anchor(el, v3, oy) { if (el) anchors.push({ el, v3, oy: oy || 0 }); }
   const wps = Array.from(document.querySelectorAll('.wp'));
+  const hudEl = document.querySelector('.wetter-hud');
+  let hudWeicht = false;
   wps.forEach((el, i) => anchor(el, curve.getPointAt(WP_T[i]), 0));
   anchor(document.querySelector('[data-poi="start"]'), curve.getPointAt(0.004).add(new THREE.Vector3(-0.5, 0.02, 0)), 0);
   anchor(document.querySelector('[data-poi="kapelle"]'), curve.getPointAt(0.06).add(new THREE.Vector3(0.35, 0, 0.3)), 0);
@@ -456,6 +458,20 @@ function init(DEM) {
       a.el.style.left = x.toFixed(1) + 'px';
       a.el.style.top = (y + a.oy).toFixed(1) + 'px';
       a.el.style.visibility = v.z < 1 ? 'visible' : 'hidden';
+    }
+    /* Station weicht, wenn ein Wegschild unter ihr durchfaehrt (28.09.2026):
+       der Berg dreht sich ~90 Grad, keine feste Ecke bleibt frei. Gemessen
+       vorher: am Handy lag sie ueber „04 · 2713 hm". */
+    if (hudEl && !hudEl.hidden) {
+      const h = hudEl.getBoundingClientRect();
+      let trifft = false;
+      for (const b of wps) {
+        if (b.style.visibility === 'hidden') continue;
+        if (+getComputedStyle(b).opacity < 0.3) continue;   /* am Stopp ausgeblendet */
+        const r = b.getBoundingClientRect();
+        if (r.right > h.left && r.left < h.right && r.bottom > h.top && r.top < h.bottom) { trifft = true; break; }
+      }
+      if (trifft !== hudWeicht) { hudWeicht = trifft; hudEl.classList.toggle('weicht', trifft); }
     }
     renderer.render(scene, camera);
     rafId = active ? requestAnimationFrame(frame) : 0;

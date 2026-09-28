@@ -600,6 +600,14 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   min-width: 168px; padding: 16px 18px 14px; border-radius: var(--r-control);
   background: rgba(4,18,12,0.96); border: 1px solid rgba(243,235,217,0.24);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 0 0 1px rgba(3,15,9,0.5), 0 16px 34px -14px rgba(0,0,0,0.6); }
+/* Desktop: die Glas-Nav steht seit #80 fest oben (22 px + ~64 px Hoehe) — die
+   Station rueckt darunter, sonst lag die Leiste ueber ihrer Kopfzeile. */
+@media (min-width: 900px) { .wetter-hud { top: calc(env(safe-area-inset-top, 0px) + 108px); } }
+/* Der Berg dreht sich beim Scrollen ~90 Grad, der Gipfel wandert oben quer
+   ueber den Schirm — keine feste Ecke bleibt frei. Faehrt ein Wegschild unter
+   die Station, weicht sie (relief3d.js setzt .weicht). */
+.wetter-hud { transition: opacity 260ms var(--ease-lux); }
+.grat-wrap.engaged .wetter-hud.weicht:not([hidden]) { opacity: 0.12; }
 .hud-label { display: flex; align-items: center; gap: 8px;
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.8px;
   text-transform: uppercase; color: var(--paper-faint); }
