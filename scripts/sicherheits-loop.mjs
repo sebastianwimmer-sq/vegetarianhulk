@@ -27,7 +27,7 @@
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { extname, join, relative, resolve } from 'node:path';
-import { readdirSync, statSync } from 'node:fs';
+import { readdirSync, readFileSync, statSync } from 'node:fs';
 
 const PW = '/opt/homebrew/lib/node_modules/playwright/index.mjs';
 let chromium;
@@ -81,7 +81,15 @@ function alleDateien(ordner = WURZEL, aus = []) {
 }
 
 const dateien = alleDateien();
-const seiten = dateien.filter((p) => p.endsWith('.html')).map((p) => relative(WURZEL, p));
+/* Eine Search-Console-Bestaetigung endet auf .html, ist aber keine Seite:
+   eine einzige Zeile, die Google byte-genau erwartet — wer ihr Impressum-Links
+   gibt, macht die Bestaetigung ungueltig. Erkannt am INHALT, nicht am Namen,
+   damit eine echte Seite namens google*.html weiter geprueft wird. 28.09.2026. */
+const RE_BESTAETIGUNG = /^google-site-verification: google[0-9a-f]+\.html\s*$/;
+const istBestaetigung = (text) => RE_BESTAETIGUNG.test(text);
+const seiten = dateien.filter((p) => p.endsWith('.html'))
+  .filter((p) => !istBestaetigung(readFileSync(p, 'utf8')))
+  .map((p) => relative(WURZEL, p));
 
 /* Wer verlinkt wen? Eine Seite, auf die nichts zeigt, existiert fuer Besucher
    nicht — ist aber trotzdem abrufbar. Genau dort lagen die Funde. */
@@ -263,7 +271,11 @@ if (SELBSTTEST) {
     .map((m) => m[1]).filter((u) => HAENDLER.test(u)).length > 0 && !KENNZEICHEN.test(q);
   if (!hatPartner(kaputt)) { console.error('✗ SELBSTTEST: Partnerlink ohne Kennzeichnung nicht erkannt.'); process.exit(1); }
   if (hatPartner(sauber)) { console.error('✗ SELBSTTEST: Fehlalarm auf sauberer Seite.'); process.exit(1); }
-  console.log('✓ Selbsttest: Partnerlink ohne Kennzeichnung wird erkannt, saubere Seite nicht.');
+  if (!istBestaetigung('google-site-verification: google44187d5a4a7fe3f1.html')
+      || istBestaetigung('<html><body>google-site-verification: google1.html</body></html>')) {
+    console.error('✗ SELBSTTEST: Bestaetigungsdatei falsch erkannt.'); process.exit(1);
+  }
+  console.log('✓ Selbsttest: Partnerlink ohne Kennzeichnung wird erkannt, saubere Seite nicht, Bestaetigungsdatei nur am Inhalt.');
   process.exit(0);
 }
 
