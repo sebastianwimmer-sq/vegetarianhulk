@@ -46,7 +46,9 @@ lauf() {
     printf "\033[32mgrün\033[0m\n"
   else
     printf "\033[31mROT\033[0m\n"
-    echo "$ausgabe" | grep -E "✗|FEHLER|🔴" | head -8 | sed 's/^/      /'
+    # Die Befunde stehen oft in den Zeilen UNTER der ✗-Kopfzeile (je Seite
+    # eingerueckt) — nur die Kopfzeile zu zeigen, verschwieg WELCHE Seite.
+    echo "$ausgabe" | grep -E -A6 "✗|FEHLER|🔴" | head -12 | sed 's/^/      /'
     FEHLER=$((FEHLER + 1))
   fi
 }

@@ -25,12 +25,11 @@
 
 import { readdirSync, existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
-import { spawn } from 'node:child_process';
+import { pruefserver } from './pruefserver.mjs';
 
 const WURZEL = resolve(import.meta.dirname, '..');
 const LIVE = process.argv.includes('--live');
 const SELBSTTEST = process.argv.includes('--selbsttest');
-const PORT = 8248;
 const PW = '/opt/homebrew/lib/node_modules/playwright/index.mjs';
 const LATTE = 0.95;   // darunter gilt ein Element als nicht lesbar
 
@@ -73,12 +72,10 @@ let chromium;
 try { ({ chromium } = await import(PW)); }
 catch { console.error(`Playwright nicht gefunden unter ${PW}`); process.exit(2); }
 
-const BASIS = LIVE ? 'https://vegetarianhulk.de' : `http://localhost:${PORT}`;
+/* Eigener Server auf freiem Port — siehe pruefserver.mjs (28.09.2026). */
 let server = null;
-if (!LIVE) {
-  server = spawn('python3', ['-m', 'http.server', String(PORT)], { cwd: WURZEL, stdio: 'ignore' });
-  await new Promise((r) => setTimeout(r, 700));
-}
+let BASIS = 'https://vegetarianhulk.de';
+if (!LIVE) { server = await pruefserver(WURZEL); BASIS = server.basis; }
 
 const seiten = [];
 for (const d of readdirSync(WURZEL)) if (d.endsWith('.html')) seiten.push('/' + d);
@@ -98,7 +95,10 @@ let geprueft = 0;
 for (const pfad of seiten) {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   try {
-    await page.goto(BASIS + pfad, { waitUntil: 'domcontentloaded', timeout: 20000 });
+    /* Ein Ladefehler ist nicht die Eigenschaft, die hier geprueft wird — ein
+       zweiter Versuch, erst dann Befund. */
+    await page.goto(BASIS + pfad, { waitUntil: 'domcontentloaded', timeout: 20000 })
+      .catch(() => page.goto(BASIS + pfad, { waitUntil: 'domcontentloaded', timeout: 30000 }));
     await page.evaluate(async () => {
       for (let y = 0; y <= document.body.scrollHeight; y += 400) {
         window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 30));
@@ -110,7 +110,11 @@ for (const pfad of seiten) {
     await page.waitForFunction(() => {
       const zahl = [...document.querySelectorAll('.rv,.st,.zug')]
         .filter((e) => e.offsetParent !== null && +getComputedStyle(e).opacity < 0.95).length;
-      const laeuft = document.getAnimations().some((a) => a.playState === 'running');
+      /* Endlos-Animationen (Scroll-Hinweis, Puls, Lava) laufen per Definition
+         immer — mit ihnen kam die Ruhe nie, jede Seite lief in den Timeout und
+         wurde dann mitten in einer Einblendung gemessen. */
+      const laeuft = document.getAnimations().some((a) => a.playState === 'running'
+        && a.effect && a.effect.getComputedTiming().iterations !== Infinity);
       window.__letzte = window.__letzte === undefined ? -1 : window.__vor;
       window.__vor = zahl;
       return !laeuft && window.__letzte === zahl;
@@ -130,7 +134,7 @@ for (const pfad of seiten) {
 }
 
 await browser.close();
-if (server) server.kill();
+if (server) await server.schliessen();
 
 if (befunde.length) {
   console.error(`✗ sichtbar-check: ${befunde.length} Seite(n) mit haengendem Inhalt:`);

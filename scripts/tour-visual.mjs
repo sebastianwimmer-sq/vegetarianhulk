@@ -21,13 +21,12 @@
  *
  * Exit 1 bei Ueberlauf, nicht geladenen Bildern oder JS-Fehlern.
  */
-import { spawn } from 'node:child_process';
+import { pruefserver } from './pruefserver.mjs';
 import { readdirSync, mkdirSync, readFileSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const WURZEL = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const PORT = 8231;
 const PW = '/opt/homebrew/lib/node_modules/playwright/index.mjs';
 const BILDER = join(WURZEL, '.tour-visual');
 
@@ -73,18 +72,11 @@ let pw;
 try { pw = await import(PW); }
 catch { console.error(`Playwright nicht gefunden unter ${PW} — npm i -g playwright`); process.exit(2); }
 
-const SERVER_CODE = [
-  'import sys, http.server, socketserver',
-  'class S(socketserver.ThreadingMixIn, http.server.HTTPServer): daemon_threads = True',
-  'h = http.server.SimpleHTTPRequestHandler',
-  'h.log_message = lambda *a, **k: None',
-  'S(("127.0.0.1", int(sys.argv[1])), h).serve_forever()',
-].join('\n');
-const server = spawn('python3', ['-c', SERVER_CODE, String(PORT)], { cwd: WURZEL, stdio: 'ignore' });
-const aufraeumen = () => { try { server.kill(); } catch {} };
+/* Eigener Server auf freiem Port — siehe pruefserver.mjs (28.09.2026). */
+const { port: PORT, schliessen } = await pruefserver(WURZEL);
+const aufraeumen = () => { try { schliessen(); } catch {} };
 process.on('exit', aufraeumen);
 process.on('SIGINT', () => { aufraeumen(); process.exit(130); });
-await new Promise(r => setTimeout(r, 1200));
 mkdirSync(BILDER, { recursive: true });
 
 let befunde = 0;
