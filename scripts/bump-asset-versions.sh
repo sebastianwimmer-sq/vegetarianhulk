@@ -25,6 +25,7 @@ ASSETS=(
   fonts.css
   v3.css
   v3.js
+  uebergang.js
   touren/tour.css
   touren/tour.js
   js/404.js

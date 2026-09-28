@@ -93,6 +93,8 @@ lauf "Sichtbarkeit (Fixtures)"       node scripts/sichtbar-check.mjs --selbsttes
 if [ "$SCHNELL" -eq 0 ]; then
   titel "Im Browser (Minuten)"
   lauf "Seitenwechsel-Kette"             node scripts/vt-check.mjs
+  lauf "Seitenwechsel (Selbsttest)"     node scripts/uebergang-check.mjs --selbsttest
+  lauf "Seitenwechsel: Richtung + Foto"  node scripts/uebergang-check.mjs
   lauf "Nichts bleibt unsichtbar"        node scripts/sichtbar-check.mjs
   lauf "Barrierefreiheit, alle v3-Seiten" node scripts/a11y-check.mjs
   lauf "Darstellung, 4 Engines"        node scripts/tour-visual.mjs --site
