@@ -295,6 +295,31 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
 .koop-ab-paytag { display: inline-block; margin-top: 18px; font-family: var(--mono); font-size: 10px;
   font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--auf-gold);
   background: var(--schild-flaeche); padding: 5px 13px; border-radius: var(--r-control); }
+/* Etappen als Wegweiser (28.09.2026): statt fuenf fast leerer Riesenkaesten
+   mit Geisterziffer steht jede Etappe auf einer Haarlinie, die Dauer als
+   gelbes Schild VOR dem Ziel — so liest man einen Bergwegweiser: Gehzeit,
+   dann wohin. Die aktive Etappe markiert die Linie links; nichts wird
+   abgeblendet, die Liste ist in jedem Zustand lesbar. Als Kasten bleibt nur
+   der Report, weil er das Ziel ist. */
+.koop-flow__panels { margin-top: 18px; border-top: 1px solid rgba(126,208,155,0.16); }
+.koop-ab-panel { min-height: 0; justify-content: flex-start; opacity: 1; transform: none; }
+.koop-ab-panel::before { content: none; }
+.koop-ab-panel:not(.koop-ab-panel--pay) { margin-top: 0; border-radius: 0; background: none; box-shadow: none;
+  border: 0; border-bottom: 1px solid rgba(126,208,155,0.16);
+  padding: clamp(22px, 3vw, 32px) 0 clamp(22px, 3vw, 32px) clamp(20px, 2.6vw, 32px); }
+.koop-ab-panel:not(.koop-ab-panel--pay)::after { content: ""; position: absolute; left: 0; top: 22px; bottom: 22px;
+  width: 2px; background: var(--leaf); transform: scaleY(0); transform-origin: top;
+  transition: transform 500ms var(--ease-lux); }
+.koop-ab-panel.is-in:not(.koop-ab-panel--pay)::after { transform: scaleY(1); }
+.koop-ab-panel.is-in { transform: none; }
+.koop-ab-panel--pay { margin-top: 22px; }
+.koop-ab-headrow { margin-top: 8px; align-items: center; }
+.koop-ab-headrow .koop-ab-time { order: -1; }
+.koop-ab-title { transition: color 400ms var(--ease-lux); }
+.koop-ab-panel:not(.is-in):not(.koop-ab-panel--pay) .koop-ab-title { color: var(--paper-dim); }
+.koop-ab-desc { margin-top: 10px; }
+.koop-ab-paytag { align-self: flex-start; }
+@media (prefers-reduced-motion: reduce) { .koop-ab-panel::after { transition: none; } }
 .koop-tl-note { margin-top: 24px; font-size: 14px; line-height: 1.6; color: var(--paper-faint); max-width: 52ch; }
 .koop-tl-note strong { color: var(--paper-dim); }
 
@@ -304,7 +329,7 @@ body.loaded .koop-scribble path { animation: koopDraw 1100ms var(--ease-lux) 900
   .koop-flow__node { width: 42px; height: 42px; font-size: 19px; }
   .koop-flow__node svg { width: 18px; height: 18px; }
   .koop-flow__name { font-size: 7.5px; letter-spacing: 0.8px; max-width: 9ch; }
-  .koop-ab-panel { min-height: clamp(260px, 52vh, 360px); }
+  .koop-ab-panel { min-height: 0; }
 }
 
 /* ============================================================
