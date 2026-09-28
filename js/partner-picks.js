@@ -8,7 +8,6 @@
   var mount = document.getElementById('partner-index');
   if (!mount || typeof VH_PARTNERS === 'undefined') return;
   function el(t, c, x) { var n = document.createElement(t); if (c) n.className = c; if (x != null) n.textContent = x; return n; }
-  function n2(i) { return (i < 10 ? '0' : '') + i; }
   function arrow() {
     var s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('fill', 'none'); s.setAttribute('stroke', 'currentColor'); s.setAttribute('stroke-width', '2.4'); s.setAttribute('aria-hidden', 'true');
@@ -20,7 +19,6 @@
     .forEach(function (p, i) {
       var card = el('article', 'pp-card rv');
       card.style.setProperty('--d', (i * 90) + 'ms');
-      card.appendChild(el('span', 'pp-card__no', n2(i + 1)));
 
       var head = el('div', 'pp-card__head');
       if (p.category) head.appendChild(el('span', 'pp-card__cat', p.category));
@@ -61,7 +59,6 @@
   var mount = document.getElementById('product-index');
   if (!mount || typeof VH_PRODUCTS === 'undefined') return;
   function el(t, c, x) { var n = document.createElement(t); if (c) n.className = c; if (x != null) n.textContent = x; return n; }
-  function n2(i) { return (i < 10 ? '0' : '') + i; }
   function isPending(url) { return !url || url.indexOf('PENDING_') === 0; }
   function arrow() {
     var s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -114,7 +111,7 @@
     if (kategorien.indexOf(k) === -1) kategorien.push(k);
   });
 
-  var karten = aktive.map(function (p, i) { return { daten: p, el: karte(p, i) }; });
+  var karten = aktive.map(function (p) { return { daten: p, el: karte(p) }; });
 
   var leiste = document.getElementById('pp-filter');
   var zaehler = document.getElementById('pp-zahl');
@@ -129,9 +126,7 @@
       karten.forEach(function (k) {
         var passt = !wert || (k.daten.kategorie || 'Sonstiges') === wert;
         k.el.hidden = !passt;
-        /* Die Nummer zählt das SICHTBARE durch — sonst steht nach einem Filter
-           „04, 07, 11" da und sieht aus, als fehlte etwas. */
-        if (passt) { sichtbar++; k.el.querySelector('.pp-card__no').textContent = n2(sichtbar); }
+        if (passt) sichtbar++;
       });
       if (zaehler) zaehler.textContent = sichtbar;
     };
@@ -151,28 +146,28 @@
     setzen('');
   }
 
-  function karte(p, i) {
-    var card = el('article', 'pp-card rv');
-    card.style.setProperty('--d', (i * 90) + 'ms');
-    card.appendChild(el('span', 'pp-card__no', n2(i + 1)));
+  /* Eine Zeile der Packliste: Kategorie links, Ding und Satz in der Mitte,
+     Link rechts. Das gelbe Schild traegt nur das Stueck der Woche — dreizehn
+     gleiche Schilder nebeneinander waren keine Wegweisung mehr, sondern Tapete. */
+  function karte(p) {
+    var card = el('article', 'pp-card');
 
-    var head = el('div', 'pp-card__head');
-    if (p.kategorie) head.appendChild(el('span', 'pp-card__cat', p.kategorie));
-    card.appendChild(head);
+    card.appendChild(el('p', 'pp-card__cat', p.kategorie || ''));
 
-    card.appendChild(el('h3', 'pp-card__name', p.name));
-    card.appendChild(el('p', 'pp-card__text', p.text));
-
-    if (p.preisHinweis) card.appendChild(el('p', 'pp-price', p.preisHinweis));
-
-    if (!isPending(p.url)) card.appendChild(el('p', 'pp-fine', 'Amazon-Partnerlink: Wenn du darüber kaufst, erhalte ich eine Provision. Für dich entstehen keine Mehrkosten.'));
+    var body = el('div', 'pp-card__body');
+    body.appendChild(el('h3', 'pp-card__name', p.name));
+    body.appendChild(el('p', 'pp-card__text', p.text));
+    if (p.preisHinweis) body.appendChild(el('p', 'pp-price', p.preisHinweis));
+    if (!isPending(p.url)) body.appendChild(el('p', 'pp-fine', 'Amazon-Partnerlink: Wenn du darüber kaufst, erhalte ich eine Provision. Für dich entstehen keine Mehrkosten.'));
+    card.appendChild(body);
 
     if (isPending(p.url)) {
       card.appendChild(el('span', 'pp-pending', 'Link folgt in Kürze'));
     } else {
-      var cta = el('a', 'th-btn th-btn--gelb pp-cta', 'Auf Amazon ansehen');
+      var cta = el('a', 'pp-link', 'Auf Amazon');
       cta.href = '/go/amazon/?to=' + encodeURIComponent(p.url) + '&name=' + encodeURIComponent(p.name);
       cta.target = '_blank'; cta.rel = 'sponsored noopener'; cta.appendChild(arrow());
+      cta.setAttribute('aria-label', p.name + ' auf Amazon ansehen');
       card.appendChild(cta);
     }
 

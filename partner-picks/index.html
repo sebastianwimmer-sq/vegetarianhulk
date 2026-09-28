@@ -94,10 +94,7 @@
   .pp-grid { display: grid; gap: 16px; margin-top: 4px;
     width: min(1040px, 92vw); margin-left: calc((100% - min(1040px, 92vw)) / 2); }
   .pp-grid--partner { grid-template-columns: 1fr; }
-  .pp-grid--pick { grid-template-columns: repeat(2, 1fr); }
   @media (min-width: 640px) { .pp-grid--partner { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 980px) { .pp-grid--pick { grid-template-columns: repeat(4, 1fr); } }
-  @media (max-width: 520px) { .pp-grid--pick { grid-template-columns: 1fr; } }
 
   /* ---- Stück der Woche ----------------------------------------------------
      Bewusst KEINE weitere Karte: derselbe Kasten mit anderer Rahmenfarbe wäre
@@ -172,15 +169,8 @@
   .pp-card:hover::before { width: 62%; }
   .pp-card > * { position: relative; z-index: 1; }
 
-  /* Ghost-Ziffer — riesig, transparent hinter der Typo */
-  .pp-card__no { position: absolute; right: 18px; top: 6px; z-index: 0;
-    font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic; font-weight: 700; font-size: 58px;
-    line-height: 1; color: rgba(126,208,155,0.09); pointer-events: none;
-    transition: color 550ms var(--ease-lux); }
-  .pp-card:hover .pp-card__no { color: rgba(126,208,155,0.17); }
-
   .pp-card__head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-    min-height: 20px; padding-right: 48px; }
+    min-height: 20px; }
   .pp-card__cat { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px;
     text-transform: uppercase; color: var(--leaf); }
   .pp-badge { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1px;
@@ -227,6 +217,58 @@
     text-transform: uppercase; color: var(--paper-faint);
     background: rgba(5,22,14,0.5); border: 1px dashed rgba(126,208,155,0.28); border-radius: var(--r-control);
     padding: 11px 18px; }
+
+  /* ---- Packliste (28.09.2026): EINE Flaeche, darin Zeilen ----------------
+     Vorher dreizehn gleiche Karten im 4er-Raster, jede mit Geisterziffer und
+     gelbem Schild. Die Ziffern waren keine Reihenfolge, die Schilder keine
+     Wegweisung mehr. Jetzt liest man die Liste wie einen Packzettel: links
+     wofuer, in der Mitte was und warum, rechts der Weg dahin. Das gelbe
+     Schild bleibt dem Stueck der Woche vorbehalten. */
+  .pp-grid--pick { grid-template-columns: 1fr; gap: 0;
+    padding: 6px clamp(20px, 3.2vw, 40px);
+    background: linear-gradient(158deg, rgba(19,54,35,0.5), rgba(6,26,17,0.55));
+    border: 1px solid rgba(126,208,155,0.14); border-radius: var(--r-karte);
+    box-shadow: inset 0 1px 0 rgba(209,242,235,0.06), 0 18px 40px -26px rgba(0,0,0,0.7); }
+  .pp-grid--pick .pp-card { display: grid; grid-template-columns: 168px minmax(0, 1fr) auto;
+    gap: 6px clamp(20px, 3vw, 40px); align-items: start;
+    padding: 26px 0; background: none; border: 0; border-radius: 0; box-shadow: none;
+    border-bottom: 1px solid rgba(126,208,155,0.12); overflow: visible; transform: none; }
+  .pp-grid--pick .pp-card[hidden] { display: none; }
+  .pp-grid--pick .pp-card:last-of-type { border-bottom: 0; }
+  .pp-grid--pick .pp-card::after { content: none; }
+  /* Markierung am linken Rand statt Karte, die sich hebt */
+  .pp-grid--pick .pp-card::before { left: calc(-1 * clamp(20px, 3.2vw, 40px)); top: 26px; bottom: 26px;
+    width: 2px; height: auto; background: var(--leaf);
+    transform: scaleY(0); transform-origin: top; transition: transform 450ms var(--ease-lux); }
+  .pp-grid--pick .pp-card:hover::before,
+  .pp-grid--pick .pp-card:focus-within::before { width: 2px; transform: scaleY(1); }
+  .pp-grid--pick .pp-card__cat { margin: 0; padding-top: 7px; line-height: 1.5; }
+  .pp-grid--pick .pp-card__name { margin: 0 0 6px; font-size: clamp(20px, 1.2vw + 14px, 25px);
+    transition: color 300ms var(--ease-lux); }
+  .pp-grid--pick .pp-card:hover .pp-card__name { color: var(--mint); }
+  .pp-grid--pick .pp-card__text { max-width: 58ch; }
+  .pp-grid--pick .pp-fine { margin-top: 8px; }
+  .pp-grid--pick .pp-pending { margin-top: 2px; }
+
+  .pp-link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px;
+    margin-top: 2px; white-space: nowrap; text-decoration: none;
+    font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+    color: var(--mint); border: 1px solid rgba(126,208,155,0.35); border-radius: var(--r-control);
+    transition: background 250ms var(--ease-lux), color 250ms var(--ease-lux), border-color 250ms var(--ease-lux); }
+  .pp-link svg { width: 14px; height: 14px; flex: none; transition: transform 250ms var(--ease-lux); }
+  .pp-link:hover { background: var(--leaf); border-color: var(--leaf); color: #05130C; }
+  .pp-link:hover svg { transform: translate(2px, -2px); }
+  .pp-link:focus-visible { outline: 2px solid var(--leaf); outline-offset: 3px; }
+
+  @media (max-width: 720px) {
+    .pp-grid--pick .pp-card { grid-template-columns: 1fr; padding: 22px 0; }
+    .pp-grid--pick .pp-card__cat { padding-top: 0; }
+    .pp-grid--pick .pp-card > :last-child { justify-self: start; margin-top: 10px; }
+    .pp-grid--pick .pp-card::before { top: 22px; bottom: 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pp-grid--pick .pp-card::before, .pp-link, .pp-link svg { transition: none; }
+  }
 
   /* ---- Divider (Berg-Glyphe zwischen den Sektionen) ---- */
   .pp-divider { display: flex; justify-content: center; margin: 44px 0; color: rgba(126,208,155,0.4); }
@@ -417,7 +459,7 @@
 <script src="/lieblingsprodukte/products.js?v=c021653d"></script>
 
 
-<script src="/js/partner-picks.js?v=a428be67" defer></script>
+<script src="/js/partner-picks.js?v=0512dcb3" defer></script>
 
 <script src="/danke-block.js?v=370b0657"></script>
 <script src="/v3.js?v=7e80d756" defer></script>
