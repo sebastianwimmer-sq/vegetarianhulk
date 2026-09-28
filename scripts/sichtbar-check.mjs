@@ -24,13 +24,13 @@
  */
 
 import { readdirSync, existsSync } from 'node:fs';
-import { join, resolve } from 'node:path';
-import { spawn } from 'node:child_process';
+import { readFile } from 'node:fs/promises';
+import { createServer } from 'node:http';
+import { extname, join, resolve } from 'node:path';
 
 const WURZEL = resolve(import.meta.dirname, '..');
 const LIVE = process.argv.includes('--live');
 const SELBSTTEST = process.argv.includes('--selbsttest');
-const PORT = 8248;
 const PW = '/opt/homebrew/lib/node_modules/playwright/index.mjs';
 const LATTE = 0.95;   // darunter gilt ein Element als nicht lesbar
 
@@ -73,11 +73,29 @@ let chromium;
 try { ({ chromium } = await import(PW)); }
 catch { console.error(`Playwright nicht gefunden unter ${PW}`); process.exit(2); }
 
-const BASIS = LIVE ? 'https://vegetarianhulk.de' : `http://localhost:${PORT}`;
+/* Eigener Server auf freiem Port (28.09.2026). Vorher: python3 -m http.server
+   auf festem Port mit STARREN 700 ms zum Hochfahren — unter Last reichte das
+   nicht, die erste Seite galt als „nicht ladbar", das Tor war mal rot, mal
+   gruen. `listen` meldet sich erst, wenn der Server wirklich annimmt. */
+const TYPEN = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.mjs': 'text/javascript',
+  '.jpg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml', '.json': 'application/json',
+  '.woff2': 'font/woff2', '.webp': 'image/webp', '.avif': 'image/avif', '.ico': 'image/x-icon', '.mp4': 'video/mp4' };
 let server = null;
+let BASIS = 'https://vegetarianhulk.de';
 if (!LIVE) {
-  server = spawn('python3', ['-m', 'http.server', String(PORT)], { cwd: WURZEL, stdio: 'ignore' });
-  await new Promise((r) => setTimeout(r, 700));
+  server = await new Promise((fertig) => {
+    const s = createServer(async (anf, ant) => {
+      let pfad = join(WURZEL, decodeURIComponent(anf.url.split('?')[0]));
+      if (pfad.endsWith('/')) pfad += 'index.html';
+      try {
+        const inhalt = await readFile(pfad);
+        ant.writeHead(200, { 'Content-Type': TYPEN[extname(pfad)] || 'application/octet-stream' });
+        ant.end(inhalt);
+      } catch { ant.writeHead(404); ant.end('weg'); }
+    });
+    s.listen(0, () => fertig(s));
+  });
+  BASIS = `http://localhost:${server.address().port}`;
 }
 
 const seiten = [];
@@ -98,7 +116,10 @@ let geprueft = 0;
 for (const pfad of seiten) {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   try {
-    await page.goto(BASIS + pfad, { waitUntil: 'domcontentloaded', timeout: 20000 });
+    /* Ein Ladefehler ist nicht die Eigenschaft, die hier geprueft wird — ein
+       zweiter Versuch, erst dann Befund. */
+    await page.goto(BASIS + pfad, { waitUntil: 'domcontentloaded', timeout: 20000 })
+      .catch(() => page.goto(BASIS + pfad, { waitUntil: 'domcontentloaded', timeout: 30000 }));
     await page.evaluate(async () => {
       for (let y = 0; y <= document.body.scrollHeight; y += 400) {
         window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 30));
@@ -110,7 +131,11 @@ for (const pfad of seiten) {
     await page.waitForFunction(() => {
       const zahl = [...document.querySelectorAll('.rv,.st,.zug')]
         .filter((e) => e.offsetParent !== null && +getComputedStyle(e).opacity < 0.95).length;
-      const laeuft = document.getAnimations().some((a) => a.playState === 'running');
+      /* Endlos-Animationen (Scroll-Hinweis, Puls, Lava) laufen per Definition
+         immer — mit ihnen kam die Ruhe nie, jede Seite lief in den Timeout und
+         wurde dann mitten in einer Einblendung gemessen. */
+      const laeuft = document.getAnimations().some((a) => a.playState === 'running'
+        && a.effect && a.effect.getComputedTiming().iterations !== Infinity);
       window.__letzte = window.__letzte === undefined ? -1 : window.__vor;
       window.__vor = zahl;
       return !laeuft && window.__letzte === zahl;
@@ -130,7 +155,7 @@ for (const pfad of seiten) {
 }
 
 await browser.close();
-if (server) server.kill();
+if (server) server.close();
 
 if (befunde.length) {
   console.error(`✗ sichtbar-check: ${befunde.length} Seite(n) mit haengendem Inhalt:`);
