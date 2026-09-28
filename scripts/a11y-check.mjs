@@ -288,7 +288,7 @@ for (const pfad of seiten) {
   await seite.close();
 }
 await browser.close();
-aufraeumen();
+await schliessen();
 
 console.log(`\n${fehlerGesamt ? fehlerGesamt + ' Fehler' : 'Keine Fehler'} über ${seiten.length} Seiten.`);
 process.exit(fehlerGesamt ? 1 : 0);
