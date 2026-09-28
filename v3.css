@@ -910,9 +910,9 @@ footer .legal a:hover { color: var(--paper); }
    NAV — helle Papier-Pille, TYPOGRAFISCH (keine Standard-Icons).
    Nur der Berg bleibt — er ist Brand, nicht Icon-Set.
    ============================================================ */
-/* Die Leiste steht fest unten, auf jeder Breite. Frueher wechselte sie am
-   Desktop zwischen Kopf (Glas) und Fuss (Papier) — erst per Ausblende, dann per
-   Fahrt. Beides war sichtbar kaputt; siehe v3.js und scripts/nav-check.mjs. */
+/* Die Leiste steht fest: am Handy unten (Papier), am Desktop oben (Glas, siehe
+   unten). Frueher wechselte sie am Desktop beim SCROLLEN zwischen beiden — erst
+   per Ausblende, dann per Fahrt. Beides war sichtbar kaputt (#49, #50, #78). */
 /* Bottom-verankert (kein 100vh!) — bleibt stabil, wenn die mobile URL-Leiste
    ein-/ausblendet. Fixed + bottom folgt dem sichtbaren Viewport (Insta/WhatsApp). */
 .nav { position: fixed; left: 50%; top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); z-index: 70;
@@ -950,6 +950,34 @@ footer .legal a:hover { color: var(--paper); }
   .nav { gap: 4px; padding: 8px 12px; max-width: calc(100vw - 16px); }
   .nav a { padding: 12px 4px; min-width: 44px; font-size: 10px; letter-spacing: 1px; }
   .nav .center .mtn { width: 52px; height: 42px; margin-top: -34px; }
+}
+
+/* Desktop: Glas-Leiste fest OBEN (28.09.2026) — so, wie apple.com seine
+   Navigation fuehrt: oben, durchscheinend, und sie wechselt nie den Ort.
+   Unten bleibt die Papier-Pille dem Handy (Daumen, wie eine iOS-Tab-Leiste).
+   Der Wechsel haengt NUR an der Breite, nie am Scrollen — die Fahrt zwischen
+   Kopf und Fuss war der Fehler (#78), und nav-check misst weiter auf 0 px. */
+@media (min-width: 900px) {
+  .nav {
+    top: calc(env(safe-area-inset-top, 0px) + 22px); bottom: auto;
+    -webkit-backdrop-filter: blur(16px) saturate(1.35);
+            backdrop-filter: blur(16px) saturate(1.35);
+    background: linear-gradient(180deg, rgba(18,58,40,0.72), rgba(6,26,17,0.66));
+    border-color: rgba(126,208,155,0.42);
+    box-shadow:
+      inset 0 1px 0 rgba(209,242,235,0.22),
+      inset 0 0 22px -6px rgba(80,200,120,0.18),
+      0 0 0 1px rgba(3,15,9,0.4),
+      0 2px 0 rgba(126,208,155,0.12),
+      0 16px 40px -14px rgba(0,0,0,0.7),
+      0 0 34px -8px rgba(80,200,120,0.28); }
+  .nav::after { opacity: 0.18; }
+  .nav a { color: rgba(243,235,217,0.9); }
+  .nav a:hover { color: var(--paper); }
+  .nav a[aria-current] { color: var(--mint); }
+  .nav a[aria-current]::after { background: var(--leaf); box-shadow: 0 0 8px rgba(126,208,155,0.7); }
+  .nav .center { color: var(--leaf); }
+  .nav .center .mtn { color: var(--leaf); filter: drop-shadow(0 0 8px rgba(80,200,120,0.4)); }
 }
 
 /* ---- Desktop ---- */

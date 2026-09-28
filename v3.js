@@ -62,7 +62,7 @@
   }, { passive: true });
 })();
 
-/* Nav: steht fest unten, auf jeder Breite (28.09.2026). Bis dahin fuhr sie am
+/* Nav: steht fest — Handy unten, Desktop oben, nie beim Scrollen wechselnd (28.09.2026). Bis dahin fuhr sie am
    Desktop zwischen Kopf und Fuss hin und her — 785 px quer ueber den Schirm bei
    jedem Verlassen des Seitenkopfs und bei jedem Seitenwechsel, in WebKit mit
    einem Sprung beim Laden. Keine Schwelle, keine Hysterese und kein Easing hat
