@@ -95,6 +95,8 @@ if [ "$SCHNELL" -eq 0 ]; then
   lauf "Seitenwechsel-Kette"             node scripts/vt-check.mjs
   lauf "Seitenwechsel (Selbsttest)"     node scripts/uebergang-check.mjs --selbsttest
   lauf "Seitenwechsel: Richtung + Foto"  node scripts/uebergang-check.mjs
+  lauf "Hoehenmeter (Selbsttest)"       node scripts/hoehenmeter-check.mjs --selbsttest
+  lauf "Hoehenmeter-Leiste"             node scripts/hoehenmeter-check.mjs
   lauf "Nichts bleibt unsichtbar"        node scripts/sichtbar-check.mjs
   lauf "Barrierefreiheit, alle v3-Seiten" node scripts/a11y-check.mjs
   lauf "Darstellung, 4 Engines"        node scripts/tour-visual.mjs --site

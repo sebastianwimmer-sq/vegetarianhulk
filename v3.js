@@ -90,21 +90,30 @@
 (function () {
   'use strict';
   var peaks = document.querySelectorAll('.rail-peak');
-  var hms = document.querySelectorAll('[data-hm]');
+  /* Die Zahl wird ueber ihren Ort gefunden, nicht ueber ein Attribut: der
+     Rail-Markup steht kopiert auf 15 Seiten, und auf fuenf davon war `data-hm`
+     beim Kopieren verloren gegangen — dort stand die Zahl fest (28.09.2026). */
+  var hms = document.querySelectorAll('.rail-peak .hm, [data-hm]');
   if (!peaks.length) return;
   var t = false;
   function update() {
+    t = false;
     var max = document.documentElement.scrollHeight - window.innerHeight;
     var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
-    var hm = 2713 - Math.round(p * 2713);
-    peaks.forEach(function (el) { el.style.setProperty('--p', p); });
-    hms.forEach(function (el) { el.textContent = hm + ' hm'; });
-    t = false;
+    var hm = (2713 - Math.round(p * 2713)) + ' hm';
+    peaks.forEach(function (el) {
+      var h = el.parentNode.clientHeight;
+      el.style.setProperty('--p', p);
+      el.style.setProperty('--y', Math.round(h * (0.10 + 0.78 * p)) + 'px');
+    });
+    hms.forEach(function (el) { if (el.textContent !== hm) el.textContent = hm; });
   }
-  window.addEventListener('scroll', function () {
-    if (!t) { requestAnimationFrame(update); t = true; }
-  }, { passive: true });
-  window.addEventListener('resize', update, { passive: true });
+  function planen() { if (!t) { t = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', planen, { passive: true });
+  window.addEventListener('resize', planen, { passive: true });
+  /* Waechst die Seite nach dem Laden (Bilder, aufklappende Zeilen), stimmt der
+     Anteil sonst erst beim naechsten Scrollen wieder. */
+  if ('ResizeObserver' in window) new ResizeObserver(planen).observe(document.body);
   update();
 })();
 
