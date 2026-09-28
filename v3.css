@@ -910,18 +910,14 @@ footer .legal a:hover { color: var(--paper); }
    NAV — helle Papier-Pille, TYPOGRAFISCH (keine Standard-Icons).
    Nur der Berg bleibt — er ist Brand, nicht Icon-Set.
    ============================================================ */
-/* Frueher standen hier drei Helfer (.no-t/.nav-out/.pre) fuer einen Trick:
-   ausblenden → Position umspringen → einblenden. Noetig war er, weil die Leiste
-   oben per `top` und unten per `bottom` verankert war — zwischen beiden kann
-   kein Browser animieren. Der Preis: bei JEDEM Verlassen des Seitenkopfs
-   verschwand die Nav fuer rund 400 ms. Sebi am 17.09.2026: "grauenhaft".
-   Jetzt bleibt sie IMMER unten verankert und wird im Kopf-Zustand nach oben
-   geschoben — `translate` ist animierbar, also gibt es nichts zu verstecken. */
+/* Die Leiste steht fest unten, auf jeder Breite. Frueher wechselte sie am
+   Desktop zwischen Kopf (Glas) und Fuss (Papier) — erst per Ausblende, dann per
+   Fahrt. Beides war sichtbar kaputt; siehe v3.js und scripts/nav-check.mjs. */
 /* Bottom-verankert (kein 100vh!) — bleibt stabil, wenn die mobile URL-Leiste
    ein-/ausblendet. Fixed + bottom folgt dem sichtbaren Viewport (Insta/WhatsApp). */
 .nav { position: fixed; left: 50%; top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); z-index: 70;
   translate: -50% 0;
-  transition: translate 480ms var(--ease-lux), opacity 200ms ease;
+  transition: opacity 200ms ease;
   display: flex; align-items: center; gap: clamp(4px, 2.6vw, 24px); padding: 10px clamp(18px, 3.4vw, 34px);
   border: 1px solid rgba(150,130,92,0.55); border-radius: var(--r-karte);
   background: linear-gradient(180deg, #F8F0E0 0%, #EDDFC5 100%);
@@ -934,10 +930,6 @@ footer .legal a:hover { color: var(--paper); }
     0 4px 10px rgba(0,0,0,0.42),
     0 22px 46px -14px rgba(0,0,0,0.72),
     0 46px 100px -30px rgba(0,0,0,0.6); }
-@media (prefers-reduced-motion: reduce) {
-  /* Kein Zurueckfallen auf das alte Ausblenden: einfach ohne Fahrt umsetzen. */
-  .nav { transition: none; }
-}
 .nav::after { content: ""; position: absolute; inset: 0; border-radius: var(--r-karte);
   background-image: var(--grain); opacity: 0.5; pointer-events: none; }
 .nav a { position: relative; display: inline-flex; align-items: center; justify-content: center;
@@ -958,36 +950,6 @@ footer .legal a:hover { color: var(--paper); }
   .nav { gap: 4px; padding: 8px 12px; max-width: calc(100vw - 16px); }
   .nav a { padding: 12px 4px; min-width: 44px; font-size: 10px; letter-spacing: 1px; }
   .nav .center .mtn { width: 52px; height: 42px; margin-top: -34px; }
-}
-
-/* Nav oben-Zustand (Desktop, vor dem ersten Scroll): normale Zeile */
-@media (min-width: 900px) {
-  .nav.at-top {
-    /* Die Leiste haengt unten (bottom: 18px) und wird nach oben geschoben.
-       Der Versatz ist ein reiner PIXELWERT, den v3.js ausrechnet und als
-       `--nav-oben` setzt. Ein calc() aus Viewport-Einheit und Elementhoehe
-       taete dasselbe — nur interpoliert WebKit es nicht zuverlaessig, und dann
-       springt die Leiste doch wieder. Pixel gegen Pixel animiert jede Engine. */
-    translate: -50% var(--nav-oben, -740px);
-    -webkit-backdrop-filter: blur(16px) saturate(1.35);
-            backdrop-filter: blur(16px) saturate(1.35);
-    background:
-      linear-gradient(180deg, rgba(18,58,40,0.72), rgba(6,26,17,0.66));
-    border-color: rgba(126,208,155,0.42);
-    box-shadow:
-      inset 0 1px 0 rgba(209,242,235,0.22),
-      inset 0 0 22px -6px rgba(80,200,120,0.18),
-      0 0 0 1px rgba(3,15,9,0.4),
-      0 2px 0 rgba(126,208,155,0.12),
-      0 16px 40px -14px rgba(0,0,0,0.7),
-      0 0 34px -8px rgba(80,200,120,0.28); }
-  .nav.at-top::after { opacity: 0.18; }
-  .nav.at-top a { color: rgba(243,235,217,0.9); }
-  .nav.at-top a:hover { color: var(--paper); }
-  .nav.at-top a[aria-current] { color: var(--mint); }
-  .nav.at-top a[aria-current]::after { background: var(--leaf); box-shadow: 0 0 8px rgba(126,208,155,0.7); }
-  .nav.at-top .center { color: var(--leaf); }
-  .nav.at-top .center .mtn { color: var(--leaf); filter: drop-shadow(0 0 8px rgba(80,200,120,0.4)); }
 }
 
 /* ---- Desktop ---- */
