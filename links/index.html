@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>VegetarianHulk – Links</title>
+<meta name="description" content="Berg-Starter gratis, meine Touren, Partner-Codes und Kooperationen — alles von @vegetarianhulk an einem Wegweiser.">
+<!-- Link-Seite aus der Instagram-Bio: kein eigener Suchinhalt, deshalb noindex.
+     Die Zielseiten sind indexiert und tragen den Inhalt. -->
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://vegetarianhulk.de/links/">
+<meta name="theme-color" content="#0B2418">
+
+<link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
+<link rel="stylesheet" href="/v3.css?v=d15e4e8c">
+<script src="/uebergang.js?v=4002aa79"></script>
+<link rel="preload" href="/berg-starter/img/sebi-kreuz.jpg" as="image" fetchpriority="high">
+<style>
+  /* Link-Seite (Instagram-Bio) als WEGWEISER: ein Pfahl, je Ziel ein Schild.
+     Material und Farben kommen aus v3.css (--schild-*, --auf-gold*), hier steht
+     nur die Anordnung. Kein JavaScript — die CSP erlaubt keine Inline-Skripte. */
+  :root { --spalte: 30rem; --pfahl-x: 30px; --pfahl-b: 12px; }
+  body { padding-bottom: 0; min-height: 100svh; }
+  .weg { position: relative; z-index: 2; width: min(100%, var(--spalte)); margin-inline: auto;
+    padding: 0 16px calc(env(safe-area-inset-bottom, 0px) + 28px); }
+
+  /* ===== Kopf: Foto löst sich in den Raum auf, der Name überlappt ===== */
+  .kopf { position: relative; margin: 0 -16px; }
+  .kopf img { display: block; width: 100%; height: min(58svh, 520px); object-fit: cover; object-position: 50% 22%;
+    -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 98%);
+            mask-image: linear-gradient(180deg, #000 55%, transparent 98%); }
+  .kopf__text { position: relative; margin-top: -92px; padding: 0 16px; }
+  .kopf h1 { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(54px, 17vw, 72px);
+    line-height: .92; letter-spacing: -.02em; }
+  .kopf__handle { font-family: 'Caveat', cursive; font-size: 27px; color: var(--leaf); line-height: 1; margin-top: 4px;
+    display: inline-block; transform: rotate(-2deg); }
+  .kopf__zeile { margin-top: 12px; font-size: 15.5px; color: var(--paper-dim); display: flex; flex-wrap: wrap; align-items: center; }
+
+  /* ===== Der Wegweiser ===== */
+  .pfahl { position: relative; margin-top: 34px; padding: 0 0 26px; list-style: none; display: grid; gap: 14px; }
+  /* Pfahl: verzinktes Rohr, oben abgeschlossen, unten im Boden */
+  .pfahl::before { content: ""; position: absolute; top: -18px; bottom: 0; left: calc(var(--pfahl-x) - var(--pfahl-b) / 2);
+    width: var(--pfahl-b); border-radius: 6px 6px 0 0;
+    background: linear-gradient(90deg, #5f6a64 0%, #b9c2bc 38%, #7d8882 62%, #3e4843 100%);
+    box-shadow: 0 10px 18px rgba(0,0,0,.35); }
+  .pfahl::after { content: ""; position: absolute; bottom: -4px; left: calc(var(--pfahl-x) - 34px); width: 68px; height: 10px;
+    border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.45), transparent); }
+
+  /* Standort-Tafel: bei jedem echten Wegweiser steht oben, wo du bist */
+  .standort { position: relative; z-index: 1; width: fit-content; margin-left: calc(var(--pfahl-x) - 12px);
+    padding: 7px 14px; border-radius: 4px; background: #F5F1E6; color: var(--ink);
+    box-shadow: inset 0 0 0 1px rgba(20,40,28,.35), 0 6px 12px rgba(0,0,0,.3);
+    font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; }
+  .standort b { color: var(--royal); }
+
+  .schild { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 12px;
+    margin-left: calc(var(--pfahl-x) - 20px); min-height: 64px;
+    padding: 12px 42px 12px 22px; color: var(--auf-gold-tief); text-decoration: none;
+    background: radial-gradient(circle at 11px 50%, var(--auf-gold) 2.2px, transparent 3px), var(--schild-flaeche);
+    box-shadow: var(--schild-kante);
+    clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 50%, calc(100% - 22px) 100%, 0 100%);
+    filter: var(--schild-schatten);
+    transform-origin: 0 50%;
+    transition: transform 450ms var(--ease-lux), filter 450ms var(--ease-lux), background 450ms var(--ease-lux); }
+  .schild b { display: block; font-family: var(--mono); font-size: 13.5px; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase; line-height: 1.25; }
+  .schild span { display: block; font-size: 14.5px; line-height: 1.35; color: #3a2a06; margin-top: 2px; }
+  /* Der Zeit-Slot rechts: auf DAV-Schildern steht dort die Gehzeit */
+  .schild .slot { margin: 0; font-family: var(--mono); font-size: 12px; font-weight: 800; letter-spacing: .6px; white-space: nowrap;
+    color: var(--auf-gold); padding-left: 12px; border-left: 1px solid rgba(86,60,4,.4); }
+  .schild:hover { background: radial-gradient(circle at 11px 50%, var(--auf-gold) 2.2px, transparent 3px), var(--schild-flaeche-hover);
+    filter: var(--schild-schatten-hover); transform: translateX(6px); }
+  .schild:focus-visible { outline: none;
+    filter: drop-shadow(0 0 1.5px var(--mint)) drop-shadow(0 0 1.5px var(--mint)) drop-shadow(0 0 1.5px var(--mint)) var(--schild-schatten); }
+
+  /* Erstes Schild = der Einstieg: größer, mit handschriftlichem Hinweis */
+  .schild--start { min-height: 84px; }
+  .schild--start b { font-size: 16px; }
+  .hinweis { position: absolute; right: 8px; top: -30px; z-index: 2; font-family: 'Caveat', cursive; font-size: 24px; color: var(--leaf);
+    transform: rotate(-4deg); pointer-events: none; }
+  .hinweis svg { width: 26px; height: 22px; vertical-align: -10px; margin-left: 2px; }
+  .start { position: relative; }
+
+  /* Gegenrichtung: das dunkle Schild zeigt nach links — ein anderer Weg */
+  .schild--dunkel { margin-left: 0; padding: 12px 22px 12px 42px; grid-template-columns: auto minmax(0,1fr);
+    color: var(--paper); text-align: right; transform-origin: 100% 50%;
+    background: linear-gradient(180deg, rgba(21,58,38,.97), rgba(6,22,14,.97));
+    clip-path: polygon(22px 0, 100% 0, 100% 100%, 22px 100%, 0 50%);
+    filter: drop-shadow(0 0 .8px rgba(243,235,217,.6)) drop-shadow(0 2px 2px rgba(2,10,6,.85)) drop-shadow(0 12px 24px rgba(0,0,0,.4)); }
+  /* Befestigungspunkt als eigene Lage: steckt er als obere Hintergrundschicht
+     im Schild, misst das Kontrast-Tor gegen den hellen Punkt (1,2:1 statt 5,8:1) */
+  .schild--dunkel::after { content: ""; position: absolute; right: 9px; top: calc(50% - 2.5px); width: 5px; height: 5px;
+    border-radius: 50%; background: rgba(243,235,217,.85); }
+  .schild--dunkel span { color: var(--paper-dim); }
+  .schild--dunkel .slot { order: -1; color: var(--leaf); border-left: 0; padding-left: 0; padding-right: 12px; border-right: 1px solid rgba(243,235,217,.25); }
+  .schild--dunkel:hover { background: linear-gradient(180deg, rgba(26,70,46,.98), rgba(8,28,18,.98)); transform: translateX(-6px);
+    filter: drop-shadow(0 0 .8px rgba(243,235,217,.7)) drop-shadow(0 2px 2px rgba(2,10,6,.85)) drop-shadow(0 16px 28px rgba(0,0,0,.45)); }
+  .schild--dunkel:focus-visible { filter: drop-shadow(0 0 1.5px var(--mint)) drop-shadow(0 0 1.5px var(--mint)) drop-shadow(0 0 1.5px var(--mint)); }
+
+  /* Die Schilder schwingen beim Ankommen einmal am Pfahl ein */
+  @media (prefers-reduced-motion: no-preference) {
+    .pfahl > li { animation: einschwingen 900ms var(--ease-lux) both; }
+    .pfahl > li:nth-child(2) { animation-delay: 80ms; } .pfahl > li:nth-child(3) { animation-delay: 150ms; }
+    .pfahl > li:nth-child(4) { animation-delay: 220ms; } .pfahl > li:nth-child(5) { animation-delay: 290ms; }
+    .pfahl > li:nth-child(6) { animation-delay: 360ms; } .pfahl > li:nth-child(7) { animation-delay: 430ms; }
+    .kopf__text { animation: auftauchen 1000ms var(--ease-lux) both; }
+  }
+  @keyframes einschwingen { from { opacity: 0; transform: translateX(-10px) rotate(-3deg); } }
+  @keyframes auftauchen { from { opacity: 0; transform: translateY(12px); } }
+
+  .fuss { margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 18px; font-size: 13.5px; }
+  .fuss a { color: var(--paper-faint); padding: 12px 2px; min-height: 44px; display: inline-flex; align-items: center; }
+  .fuss a:hover { color: var(--paper); }
+  .fuss a:focus-visible { outline: 2px solid var(--mint); outline-offset: 2px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<main class="weg">
+  <header class="kopf">
+    <img src="/berg-starter/img/sebi-kreuz.jpg" alt="Sebi am Gipfelkreuz" width="768" height="1024" fetchpriority="high">
+    <div class="kopf__text">
+      <h1>Sebi</h1>
+      <span class="kopf__handle">@vegetarianhulk</span>
+      <p class="kopf__zeile">Vegetarisch<span class="hsep" aria-hidden="true"></span>Glaube<span class="hsep" aria-hidden="true"></span>eigene Bergtouren im Chiemgau &amp; BGL</p>
+    </div>
+  </header>
+
+  <nav aria-label="Wegweiser">
+    <ul class="pfahl">
+      <li><p class="standort">Standort <b>Instagram</b></p></li>
+      <li class="start">
+        <span class="hinweis" aria-hidden="true">fang hier an<svg viewBox="0 0 26 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 3c9 1 15 7 14 16"/><path d="M12 14l6 6 5-6"/></svg></span>
+        <a class="schild schild--start" href="/newsletter">
+          <span><b>Berg-Starter</b><span>3 Einsteiger-Touren + Packliste</span></span>
+          <span class="slot">gratis</span>
+        </a>
+      </li>
+      <li>
+        <a class="schild" href="/touren/hoerndlwand/">
+          <span><b>Hörndlwand</b><span>4 Gipfelkreuze an einem Tag</span></span>
+          <span class="slot">1.684 m</span>
+        </a>
+      </li>
+      <li>
+        <a class="schild" href="/touren/">
+          <span><b>Hulk Hikes</b><span>Meine Berge. Meine Touren.</span></span>
+          <span class="slot">alle</span>
+        </a>
+      </li>
+      <li>
+        <a class="schild" href="/partner-picks/">
+          <span><b>Partner &amp; Codes</b><span>Wo ich einkaufe. Sparst du mit.</span></span>
+          <span class="slot">Codes</span>
+        </a>
+      </li>
+      <li>
+        <a class="schild schild--dunkel" href="/kooperationen.html">
+          <span class="slot">Brands</span>
+          <span><b>Kooperation</b><span>Dein Produkt, echt in meinem Feed.</span></span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <footer class="fuss">
+    <a href="/">vegetarianhulk.de</a>
+    <a href="/impressum.html">Impressum</a>
+    <a href="/datenschutz.html">Datenschutz</a>
+  </footer>
+</main>
+</body>
+</html>
