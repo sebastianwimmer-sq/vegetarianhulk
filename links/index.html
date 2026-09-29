@@ -6,12 +6,12 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>VegetarianHulk – Links</title>
-<meta name="description" content="Berg-Starter gratis, meine Touren, Partner-Codes und Kooperationen — alles von @vegetarianhulk an einem Wegweiser.">
+<meta name="description" content="Berg-Starter gratis, meine Touren, Partner-Codes und Kooperationen von @vegetarianhulk.">
 <!-- Link-Seite aus der Instagram-Bio: kein eigener Suchinhalt, deshalb noindex.
      Die Zielseiten sind indexiert und tragen den Inhalt. -->
 <meta name="robots" content="noindex,follow">
 <link rel="canonical" href="https://vegetarianhulk.de/links/">
-<meta name="theme-color" content="#0B2418">
+<meta name="theme-color" content="#06231A">
 
 <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
 <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
@@ -22,150 +22,169 @@
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
 <link rel="stylesheet" href="/v3.css?v=d15e4e8c">
 <script src="/uebergang.js?v=4002aa79"></script>
-<link rel="preload" href="/berg-starter/img/sebi-kreuz.jpg" as="image" fetchpriority="high">
+<link rel="preload" href="/hero-cutout.webp" as="image" fetchpriority="high">
+<link rel="preload" href="/links/img/grat-sonnenaufgang.webp" as="image">
 <style>
-  /* Link-Seite (Instagram-Bio) als WEGWEISER: ein Pfahl, je Ziel ein Schild.
-     Material und Farben kommen aus v3.css (--schild-*, --auf-gold*), hier steht
-     nur die Anordnung. Kein JavaScript — die CSP erlaubt keine Inline-Skripte. */
-  :root { --spalte: 30rem; --pfahl-x: 30px; --pfahl-b: 12px; }
-  body { padding-bottom: 0; min-height: 100svh; }
-  .weg { position: relative; z-index: 2; width: min(100%, var(--spalte)); margin-inline: auto;
-    padding: 0 16px calc(env(safe-area-inset-bottom, 0px) + 28px); }
+  /* Link-Seite (Instagram-Bio). Drei Ebenen, die ineinanderlaufen:
+       1  der echte Sonnenaufgang an der Hörndlwand (hinten, steht fest)
+       2  Sebi, freigestellt, die Sonne sitzt als Gegenlicht hinter ihm
+       3  Nebel — er schluckt den Oberkörper und trägt den Wegweiser
+     Schild- und Pfahl-Material sind Fotos (Higgsfield, 29.09.2026), keine
+     CSS-Verläufe: lackiertes Blech mit Rostkante, verzinktes Rohr.
+     Kein JavaScript — die CSP erlaubt keine Inline-Skripte. */
+  :root { --spalte: 28rem; --pfahl-x: 34px; --pfahl-b: 14px; --gold-lack: #E9BC1E; }
+  html { background: #06231A; }
+  body { padding-bottom: 0; min-height: 100svh; background: #06231A; overflow-x: clip; }
+  body::after { z-index: 5; }
 
-  /* ===== Kopf: Foto löst sich in den Raum auf, der Name überlappt ===== */
-  .kopf { position: relative; margin: 0 -16px; }
-  .kopf img { display: block; width: 100%; height: min(58svh, 520px); object-fit: cover; object-position: 50% 22%;
-    -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 98%);
-            mask-image: linear-gradient(180deg, #000 55%, transparent 98%); }
-  .kopf__text { position: relative; margin-top: -92px; padding: 0 16px; }
-  .kopf h1 { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(54px, 17vw, 72px);
-    line-height: .92; letter-spacing: -.02em; }
-  .kopf__handle { font-family: 'Caveat', cursive; font-size: 27px; color: var(--leaf); line-height: 1; margin-top: 4px;
-    display: inline-block; transform: rotate(-2deg); }
-  .kopf__zeile { margin-top: 12px; font-size: 15.5px; color: var(--paper-dim); display: flex; flex-wrap: wrap; align-items: center; }
+  /* ===== Ebene 1: der Grat im Morgenlicht ===== */
+  .grat { position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(6,35,26,.15) 0%, rgba(6,35,26,0) 30%, rgba(6,35,26,.55) 58%, #06231A 82%),
+      radial-gradient(46% 26% at 62% 26%, rgba(255,196,110,.32), transparent 70%),
+      url("/links/img/grat-sonnenaufgang.webp") 46% 73% / auto 160% no-repeat; }
+  /* breite Schirme: Bild muss die Fläche decken, die Sonne bleibt mittig */
+  @media (min-aspect-ratio: 3/4) { .grat { background-size: auto, auto, cover; background-position: 0 0, 0 0, 50% 58%; } }
+
+  .weg { position: relative; z-index: 2; width: min(100%, var(--spalte)); margin-inline: auto;
+    padding: 0 18px calc(env(safe-area-inset-bottom, 0px) + 26px); }
+
+  /* ===== Ebene 2: Sebi ===== */
+  .person { position: relative; height: min(64svh, 560px); margin: 0 -18px; }
+  .person img { position: absolute; left: 50%; bottom: 0; width: min(118%, 500px); height: auto; transform: translateX(-50%);
+    /* Gegenlicht: die Sonne sitzt hinter dem Kopf, eine warme Kante am Rand */
+    filter: drop-shadow(0 0 1px rgba(255,214,150,.55)) drop-shadow(0 0 26px rgba(255,190,100,.22)) saturate(1.04);
+    -webkit-mask-image: linear-gradient(180deg, #000 74%, transparent 97%);
+            mask-image: linear-gradient(180deg, #000 74%, transparent 97%); }
+  /* Nebel und Porträt ragen bewusst über die Spalte — seitlich abschneiden,
+     sonst wächst die Seite in die Breite */
+  @media (max-width: 640px) { .kopf { overflow-x: clip; margin: 0 -18px; padding: 0 18px; } }
+
+  /* ===== Ebene 3: Nebel ===== */
+  .nebel { position: absolute; left: -30%; right: -30%; bottom: -60px; height: 260px; pointer-events: none; z-index: 1; }
+  .nebel i { position: absolute; inset: 0; display: block; border-radius: 50%; filter: blur(22px); }
+  .nebel i:nth-child(1) { background: radial-gradient(50% 42% at 30% 60%, rgba(214,236,226,.30), transparent 70%); }
+  .nebel i:nth-child(2) { background: radial-gradient(46% 38% at 72% 52%, rgba(214,236,226,.24), transparent 70%); }
+  .nebel i:nth-child(3) { background: radial-gradient(70% 30% at 50% 80%, rgba(12,52,38,.9), transparent 75%); }
+  @media (prefers-reduced-motion: no-preference) {
+    .nebel i:nth-child(1) { animation: drift 38s ease-in-out infinite alternate; }
+    .nebel i:nth-child(2) { animation: drift 52s ease-in-out infinite alternate-reverse; }
+  }
+  @keyframes drift { from { transform: translateX(-6%); } to { transform: translateX(6%); } }
+
+  .name { position: relative; z-index: 2; margin-top: -86px; text-align: center; }
+  .name h1 { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(58px, 18vw, 80px);
+    line-height: .9; letter-spacing: -.02em; text-shadow: 0 6px 30px rgba(0,0,0,.45); }
+  .name__handle { display: inline-block; margin-top: 2px; font-family: 'Caveat', cursive; font-size: 28px; line-height: 1;
+    color: var(--leaf); transform: rotate(-2deg); }
+  .name__zeile { margin-top: 10px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap;
+    font-size: 13px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--paper-dim); }
 
   /* ===== Der Wegweiser ===== */
-  .pfahl { position: relative; margin-top: 34px; padding: 0 0 26px; list-style: none; display: grid; gap: 14px; }
-  /* Pfahl: verzinktes Rohr, oben abgeschlossen, unten im Boden */
-  .pfahl::before { content: ""; position: absolute; top: -18px; bottom: 0; left: calc(var(--pfahl-x) - var(--pfahl-b) / 2);
-    width: var(--pfahl-b); border-radius: 6px 6px 0 0;
-    background: linear-gradient(90deg, #5f6a64 0%, #b9c2bc 38%, #7d8882 62%, #3e4843 100%);
-    box-shadow: 0 10px 18px rgba(0,0,0,.35); }
-  .pfahl::after { content: ""; position: absolute; bottom: -4px; left: calc(var(--pfahl-x) - 34px); width: 68px; height: 10px;
-    border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.45), transparent); }
+  .pfahl { position: relative; list-style: none; margin-top: 30px; padding: 0 0 34px; display: grid; gap: 12px; perspective: 900px; }
+  .pfahl::before { content: ""; position: absolute; top: -20px; bottom: 0; left: calc(var(--pfahl-x) - var(--pfahl-b) / 2);
+    width: var(--pfahl-b); border-radius: 7px 7px 2px 2px;
+    background:
+      linear-gradient(90deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 30%, rgba(255,255,255,.18) 46%, rgba(0,0,0,0) 62%, rgba(0,0,0,.6) 100%),
+      url("/links/img/pfahl-zink.webp") 0 0 / 100% auto repeat-y;
+    box-shadow: 6px 14px 22px rgba(0,0,0,.45); }
+  /* wo der Pfahl im Boden steckt: Schatten statt einer harten Kante */
+  .pfahl::after { content: ""; position: absolute; bottom: -6px; left: calc(var(--pfahl-x) - 60px); width: 120px; height: 20px;
+    border-radius: 50%; background: radial-gradient(closest-side, rgba(2,14,9,.85), transparent); }
 
-  /* Standort-Tafel: bei jedem echten Wegweiser steht oben, wo du bist */
-  .standort { position: relative; z-index: 1; width: fit-content; margin-left: calc(var(--pfahl-x) - 12px);
-    padding: 7px 14px; border-radius: 4px; background: #F5F1E6; color: var(--ink);
-    box-shadow: inset 0 0 0 1px rgba(20,40,28,.35), 0 6px 12px rgba(0,0,0,.3);
-    font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; }
-  .standort b { color: var(--royal); }
+  .standort { position: relative; z-index: 1; width: fit-content; margin-left: calc(var(--pfahl-x) - 14px);
+    padding: 6px 12px 6px 14px; border-radius: 3px; background: #F4F1E8; color: #16301F;
+    box-shadow: inset 0 0 0 2px #16301F, inset 0 0 0 3px #F4F1E8, 0 8px 14px rgba(0,0,0,.35);
+    font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
 
-  .schild { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 12px;
-    margin-left: calc(var(--pfahl-x) - 20px); min-height: 64px;
-    padding: 12px 42px 12px 22px; color: var(--auf-gold-tief); text-decoration: none;
-    background: radial-gradient(circle at 11px 50%, var(--auf-gold) 2.2px, transparent 3px), var(--schild-flaeche);
-    box-shadow: var(--schild-kante);
-    clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 50%, calc(100% - 22px) 100%, 0 100%);
-    filter: var(--schild-schatten);
-    transform-origin: 0 50%;
-    transition: transform 450ms var(--ease-lux), filter 450ms var(--ease-lux), background 450ms var(--ease-lux); }
-  .schild b { display: block; font-family: var(--mono); font-size: 13.5px; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase; line-height: 1.25; }
-  .schild span { display: block; font-size: 14.5px; line-height: 1.35; color: #3a2a06; margin-top: 2px; }
-  /* Der Zeit-Slot rechts: auf DAV-Schildern steht dort die Gehzeit */
-  .schild .slot { margin: 0; font-family: var(--mono); font-size: 12px; font-weight: 800; letter-spacing: .6px; white-space: nowrap;
-    color: var(--auf-gold); padding-left: 12px; border-left: 1px solid rgba(86,60,4,.4); }
-  .schild:hover { background: radial-gradient(circle at 11px 50%, var(--auf-gold) 2.2px, transparent 3px), var(--schild-flaeche-hover);
-    filter: var(--schild-schatten-hover); transform: translateX(6px); }
+  /* Ein Schild: Blech-Foto, im Lack der Marke eingefärbt, Pfeilform, Schraube am Pfahl */
+  .schild { position: relative; z-index: 1; display: flex; align-items: center; gap: 12px;
+    margin-left: calc(var(--pfahl-x) - 22px); min-height: 60px; padding: 10px 44px 10px 30px;
+    color: #1B1404; text-decoration: none;
+    background: var(--gold-lack) url("/links/img/schild-blech.webp") 50% 50% / cover;
+    background-blend-mode: luminosity;
+    clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 50%, calc(100% - 24px) 100%, 0 100%);
+    filter: drop-shadow(0 0 .6px rgba(60,40,2,.9)) drop-shadow(0 2px 1px rgba(40,28,2,.55)) drop-shadow(0 12px 16px rgba(0,0,0,.42));
+    transform: rotateY(-8deg) rotateZ(var(--neig, -.6deg)); transform-origin: 0 50%;
+    transition: transform 500ms var(--ease-lux), filter 500ms var(--ease-lux); }
+  .pfahl > li:nth-child(odd) .schild { --neig: .5deg; }
+  /* Kantenlicht oben, Kantenschatten unten: umgeschlagenes Blech */
+  .schild::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg, rgba(255,246,200,.35) 0, rgba(255,246,200,0) 3px, rgba(0,0,0,0) calc(100% - 4px), rgba(60,40,0,.35) 100%); }
+  /* die Schraube, mit der das Schild am Pfahl sitzt */
+  .schild::after { content: ""; position: absolute; left: 14px; top: 50%; width: 7px; height: 7px; margin-top: -3.5px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #d7dbd8, #6d736f 60%, #3b403d);
+    box-shadow: 0 1px 1px rgba(0,0,0,.45); }
+  .schild__ziel { position: relative; flex: 1 1 auto; min-width: 0; font-size: 17px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; line-height: 1.15; }
+  .schild__marke { position: relative; flex: 0 0 auto; padding-left: 12px; border-left: 1.5px solid rgba(40,28,2,.45);
+    font-size: 13px; font-weight: 800; letter-spacing: .04em; white-space: nowrap; }
+  .schild:hover { transform: rotateY(-2deg) rotateZ(var(--neig, -.6deg)) translateX(6px);
+    filter: drop-shadow(0 0 .6px rgba(60,40,2,.9)) drop-shadow(0 2px 1px rgba(40,28,2,.55)) drop-shadow(0 18px 22px rgba(0,0,0,.5)); }
+  .schild:active { transform: rotateY(-2deg) translateX(3px) scale(.985); }
   .schild:focus-visible { outline: none;
-    filter: drop-shadow(0 0 1.5px var(--mint)) drop-shadow(0 0 1.5px var(--mint)) drop-shadow(0 0 1.5px var(--mint)) var(--schild-schatten); }
+    filter: drop-shadow(0 0 1.5px var(--mint)) drop-shadow(0 0 1.5px var(--mint)) drop-shadow(0 0 1.5px var(--mint)) drop-shadow(0 12px 16px rgba(0,0,0,.42)); }
 
-  /* Erstes Schild = der Einstieg: größer, mit handschriftlichem Hinweis */
-  .schild--start { min-height: 84px; }
-  .schild--start b { font-size: 16px; }
-  .hinweis { position: absolute; right: 8px; top: -30px; z-index: 2; font-family: 'Caveat', cursive; font-size: 24px; color: var(--leaf);
-    transform: rotate(-4deg); pointer-events: none; }
-  .hinweis svg { width: 26px; height: 22px; vertical-align: -10px; margin-left: 2px; }
+  /* Der Einstieg: größer, mit Hinweis in Handschrift */
   .start { position: relative; }
+  .schild--start { min-height: 74px; }
+  .schild--start .schild__ziel { font-size: 20px; }
+  .hinweis { position: absolute; right: 2px; top: -34px; z-index: 3; font-family: 'Caveat', cursive; font-size: 25px; color: var(--leaf);
+    transform: rotate(-4deg); pointer-events: none; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
+  .hinweis svg { width: 26px; height: 22px; vertical-align: -10px; margin-left: 2px; }
 
-  /* Gegenrichtung: das dunkle Schild zeigt nach links — ein anderer Weg */
-  .schild--dunkel { margin-left: 0; padding: 12px 22px 12px 42px; grid-template-columns: auto minmax(0,1fr);
-    color: var(--paper); text-align: right; transform-origin: 100% 50%;
-    background: linear-gradient(180deg, rgba(21,58,38,.97), rgba(6,22,14,.97));
-    clip-path: polygon(22px 0, 100% 0, 100% 100%, 22px 100%, 0 50%);
-    filter: drop-shadow(0 0 .8px rgba(243,235,217,.6)) drop-shadow(0 2px 2px rgba(2,10,6,.85)) drop-shadow(0 12px 24px rgba(0,0,0,.4)); }
-  /* Befestigungspunkt als eigene Lage: steckt er als obere Hintergrundschicht
-     im Schild, misst das Kontrast-Tor gegen den hellen Punkt (1,2:1 statt 5,8:1) */
-  .schild--dunkel::after { content: ""; position: absolute; right: 9px; top: calc(50% - 2.5px); width: 5px; height: 5px;
-    border-radius: 50%; background: rgba(243,235,217,.85); }
-  .schild--dunkel span { color: var(--paper-dim); }
-  .schild--dunkel .slot { order: -1; color: var(--leaf); border-left: 0; padding-left: 0; padding-right: 12px; border-right: 1px solid rgba(243,235,217,.25); }
-  .schild--dunkel:hover { background: linear-gradient(180deg, rgba(26,70,46,.98), rgba(8,28,18,.98)); transform: translateX(-6px);
-    filter: drop-shadow(0 0 .8px rgba(243,235,217,.7)) drop-shadow(0 2px 2px rgba(2,10,6,.85)) drop-shadow(0 16px 28px rgba(0,0,0,.45)); }
-  .schild--dunkel:focus-visible { filter: drop-shadow(0 0 1.5px var(--mint)) drop-shadow(0 0 1.5px var(--mint)) drop-shadow(0 0 1.5px var(--mint)); }
+  /* Gegenrichtung: dunkel lackiert, zeigt nach links — ein anderer Weg */
+  .schild--dunkel { margin-left: 0; padding: 10px 30px 10px 44px; flex-direction: row-reverse; text-align: right; color: var(--paper);
+    background: #1E4A33 url("/links/img/schild-blech.webp") 50% 50% / cover; background-blend-mode: luminosity;
+    clip-path: polygon(24px 0, 100% 0, 100% 100%, 24px 100%, 0 50%);
+    transform: rotateY(8deg) rotateZ(.5deg); transform-origin: 100% 50%;
+    filter: drop-shadow(0 0 .6px rgba(243,235,217,.45)) drop-shadow(0 2px 1px rgba(0,0,0,.6)) drop-shadow(0 12px 16px rgba(0,0,0,.45)); }
+  /* Dunkle Lackschicht über dem Blech als eigene Lage */
+  .schild--dunkel::before { background: linear-gradient(180deg, rgba(243,235,217,.16) 0, rgba(12,40,26,.82) 3px, rgba(8,30,19,.9) 100%); }
+  .schild--dunkel::after { left: auto; right: 14px; }
+  .schild--dunkel .schild__marke { padding-left: 0; padding-right: 12px; border-left: 0; border-right: 1.5px solid rgba(243,235,217,.3); color: var(--leaf); }
+  .schild--dunkel:hover { transform: rotateY(2deg) rotateZ(.5deg) translateX(-6px); }
 
-  /* Die Schilder schwingen beim Ankommen einmal am Pfahl ein */
+  .person img { --x: -50%; }
   @media (prefers-reduced-motion: no-preference) {
-    .pfahl > li { animation: einschwingen 900ms var(--ease-lux) both; }
-    .pfahl > li:nth-child(2) { animation-delay: 80ms; } .pfahl > li:nth-child(3) { animation-delay: 150ms; }
-    .pfahl > li:nth-child(4) { animation-delay: 220ms; } .pfahl > li:nth-child(5) { animation-delay: 290ms; }
-    .pfahl > li:nth-child(6) { animation-delay: 360ms; } .pfahl > li:nth-child(7) { animation-delay: 430ms; }
-    .kopf__text { animation: auftauchen 1000ms var(--ease-lux) both; }
+    .name { animation: auftauchen 1100ms var(--ease-lux) both; }
+    .person img { animation: auftauchen 1400ms var(--ease-lux) both; }
+    .pfahl > li { animation: einschwingen 900ms var(--ease-lux) both; animation-delay: calc(var(--i, 0) * 70ms + 250ms); }
   }
-  @keyframes einschwingen { from { opacity: 0; transform: translateX(-10px) rotate(-3deg); } }
-  @keyframes auftauchen { from { opacity: 0; transform: translateY(12px); } }
+  @keyframes auftauchen { from { opacity: 0; transform: translate(var(--x, 0), 14px); } }
+  @keyframes einschwingen { from { opacity: 0; transform: translateX(-14px) rotateY(-40deg); } }
 
-  .fuss { margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 18px; font-size: 13.5px; }
+  .fuss { margin-top: 26px; display: flex; flex-wrap: wrap; justify-content: center; gap: 0 18px; font-size: 13px; }
   .fuss a { color: var(--paper-faint); padding: 12px 2px; min-height: 44px; display: inline-flex; align-items: center; }
   .fuss a:hover { color: var(--paper); }
   .fuss a:focus-visible { outline: 2px solid var(--mint); outline-offset: 2px; border-radius: 4px; }
 </style>
 </head>
 <body>
+<div class="grat" aria-hidden="true"></div>
 <main class="weg">
   <header class="kopf">
-    <img src="/berg-starter/img/sebi-kreuz.jpg" alt="Sebi am Gipfelkreuz" width="768" height="1024" fetchpriority="high">
-    <div class="kopf__text">
+    <div class="person">
+      <img src="/hero-cutout.webp" alt="Sebi" width="880" height="1011" fetchpriority="high">
+      <div class="nebel" aria-hidden="true"><i></i><i></i><i></i></div>
+    </div>
+    <div class="name">
       <h1>Sebi</h1>
-      <span class="kopf__handle">@vegetarianhulk</span>
-      <p class="kopf__zeile">Vegetarisch<span class="hsep" aria-hidden="true"></span>Glaube<span class="hsep" aria-hidden="true"></span>eigene Bergtouren im Chiemgau &amp; BGL</p>
+      <span class="name__handle">@vegetarianhulk</span>
+      <p class="name__zeile">Vegetarisch<span class="hsep" aria-hidden="true"></span>Glaube<span class="hsep" aria-hidden="true"></span>Berge</p>
     </div>
   </header>
 
   <nav aria-label="Wegweiser">
     <ul class="pfahl">
-      <li><p class="standort">Standort <b>Instagram</b></p></li>
-      <li class="start">
+      <li style="--i:0"><p class="standort">Standort · Instagram</p></li>
+      <li class="start" style="--i:1">
         <span class="hinweis" aria-hidden="true">fang hier an<svg viewBox="0 0 26 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 3c9 1 15 7 14 16"/><path d="M12 14l6 6 5-6"/></svg></span>
-        <a class="schild schild--start" href="/newsletter">
-          <span><b>Berg-Starter</b><span>3 Einsteiger-Touren + Packliste</span></span>
-          <span class="slot">gratis</span>
-        </a>
+        <a class="schild schild--start" href="/newsletter"><span class="schild__ziel">Berg-Starter</span><span class="schild__marke">gratis</span></a>
       </li>
-      <li>
-        <a class="schild" href="/touren/hoerndlwand/">
-          <span><b>Hörndlwand</b><span>4 Gipfelkreuze an einem Tag</span></span>
-          <span class="slot">1.684 m</span>
-        </a>
-      </li>
-      <li>
-        <a class="schild" href="/touren/">
-          <span><b>Hulk Hikes</b><span>Meine Berge. Meine Touren.</span></span>
-          <span class="slot">alle</span>
-        </a>
-      </li>
-      <li>
-        <a class="schild" href="/partner-picks/">
-          <span><b>Partner &amp; Codes</b><span>Wo ich einkaufe. Sparst du mit.</span></span>
-          <span class="slot">Codes</span>
-        </a>
-      </li>
-      <li>
-        <a class="schild schild--dunkel" href="/kooperationen.html">
-          <span class="slot">Brands</span>
-          <span><b>Kooperation</b><span>Dein Produkt, echt in meinem Feed.</span></span>
-        </a>
-      </li>
+      <li style="--i:2"><a class="schild" href="/touren/hoerndlwand/"><span class="schild__ziel">Hörndlwand</span><span class="schild__marke">1.684 m</span></a></li>
+      <li style="--i:3"><a class="schild" href="/touren/"><span class="schild__ziel">Hulk Hikes</span><span class="schild__marke">5 Touren</span></a></li>
+      <li style="--i:4"><a class="schild" href="/partner-picks/"><span class="schild__ziel">Partner</span><span class="schild__marke">Codes</span></a></li>
+      <li style="--i:5"><a class="schild schild--dunkel" href="/kooperationen.html"><span class="schild__ziel">Kooperation</span><span class="schild__marke">Brands</span></a></li>
     </ul>
   </nav>
 
