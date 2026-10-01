@@ -59,6 +59,9 @@
     letter-spacing: 1.6px; text-transform: uppercase; color: rgba(243,235,217,0.45);
     opacity: 0; animation: rise 700ms var(--ease) 900ms forwards; }
   /* Pflicht-Disclosure (Amazon-Partnerprogramm) */
+  .foot.recht { margin-top: 6px; }
+  .foot a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+  .foot a:hover, .foot a:focus-visible { color: var(--paper); outline: none; }
   .foot { font-size: 12.5px; line-height: 1.5; color: rgba(243,235,217,0.5); max-width: 40ch;
     opacity: 0; animation: rise 800ms var(--ease) 1040ms forwards; }
   @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
@@ -87,6 +90,7 @@
     <p class="auto" id="auto" aria-live="polite">Leitet automatisch weiter …</p>
   </div>
   <p class="foot">Als Amazon-Partner verdiene ich an qualifizierten Käufen.</p>
+  <p class="foot recht"><a href="/impressum.html">Impressum</a> · <a href="/datenschutz.html">Datenschutz</a></p>
 </main>
 <script>
 (function () {
