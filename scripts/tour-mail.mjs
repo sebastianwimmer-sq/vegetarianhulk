@@ -64,6 +64,11 @@ const text = (s) => (s || '')
   .replace(/&amp;/g, '&')
   .replace(/&auml;/g, 'ä').replace(/&ouml;/g, 'ö').replace(/&uuml;/g, 'ü')
   .replace(/&szlig;/g, 'ß').replace(/&mdash;/g, '—')
+  // Anfuehrungen und Striche: sonst stand im Brevo-Vorschautext woertlich
+  // "&bdquo;Den Muskelkater…" — das Feld ist Klartext, es dekodiert nichts.
+  .replace(/&bdquo;/g, '„').replace(/&ldquo;/g, '“').replace(/&rdquo;/g, '”')
+  .replace(/&rsquo;/g, '’').replace(/&lsquo;/g, '‘').replace(/&ndash;/g, '–')
+  .replace(/&hellip;/g, '…')
   .replace(/\s+/g, ' ')
   .trim();
 
@@ -86,7 +91,9 @@ const region = text(greif(/<p class="tour-crumb[^"]*">([\s\S]*?)<\/p>/, 'Region 
 const datum  = greif(/<span class="tour-badge">Gegangen[\s\S]*?<\/span>\s*(\d{2}\.\d{2}\.)/, 'Datum (.tour-badge)');
 const lead   = text(greif(/<p class="tour-lead[^"]*">([\s\S]*?)<\/p>/, 'Aufhänger (.tour-lead)'));
 const notizV = text(greif(/<p class="tour-note__body">([\s\S]*?)<\/p>/, 'O-Ton (.tour-note__body)'));
-const foto   = greif(/<div class="tour-hero__img"[^>]*>\s*<img src="([^"]+)"/, 'Hero-Foto');
+// src irgendwo im Tag: seit die Heros srcset VOR src tragen, fand das alte
+// Muster (`<img src=` direkt) bei keiner Tour mehr ein Foto.
+const foto   = greif(/<div class="tour-hero__img"[^>]*>\s*<img\b[^>]*?\ssrc="([^"]+)"/, 'Hero-Foto');
 
 /* Fakten-Strip: Wert + Beschriftung. Die Live-Kacheln (Wetter, Sonnenaufgang)
    tragen kein einfaches <b>Wert</b> und fallen hier von selbst raus. */
@@ -100,8 +107,11 @@ const finde = (...worte) => {
 /* Der Höhenmeter-Wert steht als data-count, weil er hochzählt. */
 const hm   = (seite.match(/<b data-count="(\d+)">0<\/b><span>Höhenmeter/) || [])[1];
 const km   = fakten.find(f => /km/.test(f.label))?.wert;
-const zeit = finde('gehzeit');
-const grad = finde('skala');
+/* Erkannt an der AUSSAGE, nicht am Wortlaut: seit der Hoerndlwand heisst die
+   Zeit "in Bewegung" und der Grad steht ohne "SAC-Skala" — die Mail brach fuer
+   jede neue Tour ab, ohne dass es jemand merkte. */
+const zeit = finde('gehzeit', 'bewegung');
+const grad = finde('skala') || fakten.find(f => /^(T[1-6]|[A-F])(\s*[–-]\s*(T[1-6]|[A-F]))?$/.test(f.wert))?.wert;
 
 const fehlend = Object.entries({ name, hoehe, region, datum, lead, notizV, foto, hm, km, zeit, grad })
   .filter(([, v]) => !v).map(([k]) => k);
