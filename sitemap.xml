@@ -37,7 +37,7 @@
   </url>
   <url>
     <loc>https://vegetarianhulk.de/touren/</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-05</lastmod>
     <priority>0.95</priority>
   </url>
   <url>
@@ -63,6 +63,16 @@
   <url>
     <loc>https://vegetarianhulk.de/touren/ristfeuchthorn/</loc>
     <lastmod>2026-09-28</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://vegetarianhulk.de/touren/schwarzensee/</loc>
+    <lastmod>2026-10-05</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://vegetarianhulk.de/touren/wendelstein/</loc>
+    <lastmod>2026-10-05</lastmod>
     <priority>0.85</priority>
   </url>
 </urlset>

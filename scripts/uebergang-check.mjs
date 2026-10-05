@@ -83,8 +83,8 @@ pruefen('Fellhorn -> zurueck zur Liste', await lesen(), 'runter', 'tour-fellhorn
 
 // 3) Pin-Kachel -> Tourseite
 await seite.waitForTimeout(700);
-await Promise.all([seite.waitForURL('**/touren/hoerndlwand/'), seite.locator('a.tk-pin[href="/touren/hoerndlwand/"]').click()]);
-pruefen('Pin -> Hoerndlwand', await lesen(), 'hoch', 'tour-hoerndlwand');
+await Promise.all([seite.waitForURL('**/touren/wendelstein/'), seite.locator('a.tk-pin[href="/touren/wendelstein/"]').click()]);
+pruefen('Pin -> Wendelstein', await lesen(), 'hoch', 'tour-wendelstein');
 
 // 4) gleiche Ebene ueber die Nav
 await seite.waitForTimeout(700);
