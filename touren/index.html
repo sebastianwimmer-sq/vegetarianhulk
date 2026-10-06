@@ -159,7 +159,8 @@
 
 /* ---- Forum-Liste ---- */
 .tk-list { margin-top: 18px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
-.tk-row { position: relative; overflow: hidden; border-radius: var(--r-karte);
+/* clip statt hidden: hidden macht die Zeile zum Scroll-Container, view() darin stuende still */
+.tk-row { position: relative; overflow: clip; border-radius: var(--r-karte);
   background:
     repeating-linear-gradient(96deg, rgba(24,43,31,0.02) 0 1px, transparent 1px 11px),
     linear-gradient(168deg, #F6EFDF 0%, #F0E8D3 66%, #EAE0C8 100%);
@@ -198,6 +199,18 @@
 .tk-dots { display: inline-flex; gap: 3.5px; }
 .tk-dots b { width: 6.5px; height: 6.5px; border-radius: 50%; border: 1.3px solid var(--royal); box-sizing: border-box; }
 .tk-dots b.on { background: var(--royal); }
+/* Die Schwierigkeit fuellt sich beim Scrollen, Punkt fuer Punkt bis zur Stufe
+   der Tour (motion-loop, Entscheidung 06.10.2026: Bewegung haengt am Weg).
+   Zeilen, die beim Laden schon oben stehen, sind sofort gefuellt. */
+@keyframes tkPunkt { from { background-color: transparent; transform: scale(.55); } to { background-color: var(--royal); transform: none; } }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .tk-dots b.on { --i: 0; animation: tkPunkt linear both; animation-timeline: view();
+      animation-range: cover calc(14% + var(--i) * 5%) cover calc(22% + var(--i) * 5%); }
+    .tk-dots b.on:nth-child(2) { --i: 1; }
+    .tk-dots b.on:nth-child(3) { --i: 2; }
+  }
+}
 /* rechts: Mini-Profil + Chevron */
 .tk-row__side { display: flex; align-items: center; gap: 16px; }
 .tk-row__profile { width: 120px; height: 34px; color: var(--sage); }
