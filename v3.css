@@ -409,6 +409,13 @@ body.loaded .st { opacity: 1; transform: translateY(0); filter: blur(0); }
 .topbar { position: sticky; top: 0; z-index: 60; display: flex; align-items: center; padding: 22px 0 14px;
   transition: transform 500ms var(--ease-lux), opacity 500ms var(--ease-lux); }
 .topbar.is-hidden { transform: translateY(-130%); opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  /* Ausblenden statt Wegfahren — Ueberblendung ist der erlaubte Ersatz
+     (Media Queries 5: "remove or replace"). Gefunden vom motion-loop, 06.10.2026. */
+  .topbar { transition: opacity 200ms linear, visibility 0s linear 200ms; }
+  .topbar:not(.is-hidden) { transition: opacity 200ms linear, visibility 0s; }
+  .topbar.is-hidden { transform: none; opacity: 0; visibility: hidden; }
+}
 .brandbox { position: relative; display: inline-block; }
 .wordmark { font-weight: 900; letter-spacing: 3px; font-size: 16px; color: var(--paper); }
 .wordmark b { color: var(--leaf); }
