@@ -157,7 +157,7 @@ body::after { content: ""; position: fixed; inset: 0; background-image: var(--gr
     radial-gradient(80% 18% at 50% 100%, rgba(3,18,11,0.9),     transparent 75%);
   background-size: cover, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
   background-position: center;
-  animation: lava1 58s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  animation: lava1 58s cubic-bezier(0.45, 0, 0.55, 1) 1 both;
   will-change: transform; }
 .bg2 { position: absolute; inset: 0;
   background-image:
@@ -165,8 +165,18 @@ body::after { content: ""; position: fixed; inset: 0; background-image: var(--gr
     radial-gradient(46% 26% at 22% 62%, rgba(201,169,106,0.32), transparent 70%),
     radial-gradient(56% 30% at 74% 90%, rgba(15,126,91,0.55), transparent 72%);
   mix-blend-mode: screen; opacity: 0.65;
-  animation: lava2 44s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  animation: lava2 44s cubic-bezier(0.45, 0, 0.55, 1) 1 both;
   will-change: transform; }
+/* Die Lava haengt am Weg, nicht an der Uhr (motion-loop 06.10.2026, WCAG 2.2.2):
+   sie lebt, waehrend man scrollt, und steht, waehrend man liest. Ohne
+   Scroll-Zeitachse bleibt der ruhige Ausgangszustand. */
+@supports (animation-timeline: scroll()) {
+  .bg  { animation: lava1 linear both; animation-timeline: scroll(root); }
+  .bg2 { animation: lava2 linear both; animation-timeline: scroll(root); }
+}
+@supports not (animation-timeline: scroll()) {
+  .bg, .bg2 { animation: none; }
+}
 @keyframes lava1 {
   from { transform: translate(0, 0) rotate(0deg) scale(1.02); }
   to   { transform: translate(-2%, 1.5%) rotate(1.4deg) scale(1.07); }
@@ -510,7 +520,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--paper-faint);
   transition: color 400ms var(--ease-lux); }
 .hero-scroll:hover { color: var(--leaf); }
-.hero-scroll__chev { width: 22px; height: 22px; color: var(--leaf); animation: heroScrollBob 2.2s ease-in-out infinite; }
+.hero-scroll__chev { width: 22px; height: 22px; color: var(--leaf); animation: heroScrollBob 2.2s ease-in-out 3; } /* dreimal, dann hat der Hinweis seine Aufgabe erfuellt */
 @keyframes heroScrollBob { 0%,100% { transform: translateY(0); opacity: 0.55; } 50% { transform: translateY(6px); opacity: 1; } }
 
 /* ---- Sektions-Kopf ---- */
@@ -640,7 +650,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   border-radius: 50%; background: var(--emerald); pointer-events: none; z-index: 1;
   box-shadow: 0 0 0 1.5px rgba(3,15,9,0.7), 0 0 12px rgba(80,200,120,0.8); }
 .route-head::after { content: ""; position: absolute; inset: -4px; border-radius: 50%;
-  border: 1.5px solid rgba(80,200,120,0.7); animation: headping 1.6s var(--ease-lux) infinite; }
+  border: 1.5px solid rgba(80,200,120,0.7); animation: headping 1.6s var(--ease-lux) 2; } /* zweimal, dann ruht er (WCAG 2.2.2) */
 @keyframes headping { from { transform: scale(0.6); opacity: 1; } to { transform: scale(2.1); opacity: 0; } }
 
 /* Smashy: folgt der Kurve, hopst beim Wandern */

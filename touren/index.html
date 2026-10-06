@@ -28,10 +28,10 @@
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
-<link rel="stylesheet" href="/v3.css?v=1147e256">
+<link rel="stylesheet" href="/v3.css?v=cc496231">
 <script src="/uebergang.js?v=4002aa79"></script>
 <link rel="expect" href="#tkList" blocking="render">
-<link rel="stylesheet" href="/touren/tour.css?v=d33711ba">
+<link rel="stylesheet" href="/touren/tour.css?v=fd8b4cea">
 <style>
 /* ============================================================
    /touren/ — Hulk-Hikes FORUM-LISTE (page-scoped .tk-)
@@ -320,7 +320,7 @@
    Live-Sprache der Route (route-head auf der Startseite) */
 .tk-live__dot { width: 8px; height: 8px; flex: 0 0 auto; border-radius: 50%;
   background: var(--emerald); box-shadow: 0 0 8px rgba(80,200,120,0.7);
-  animation: tkpulse 2.4s ease-in-out infinite; }
+  animation: tkpulse 2.4s ease-in-out 2; } /* zweimal, dann steht er (WCAG 2.2.2) */
 @keyframes tkpulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
 .tk-live__temp { margin-top: 10px; display: flex; align-items: center;
   font-family: var(--mono); font-weight: 700; font-size: 34px; line-height: 1; color: var(--paper); }

@@ -218,7 +218,7 @@
 .tour-fakt__puls {
   width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%;
   background: var(--emerald); box-shadow: 0 0 8px rgba(80,200,120,0.7);
-  animation: tourPuls 2.4s ease-in-out infinite;
+  animation: tourPuls 2.4s ease-in-out 2; /* Live meldet sich zweimal, dann steht es (WCAG 2.2.2) */
 }
 .tour-fakt__ico { display: inline-flex; color: rgba(243,235,217,0.85); }
 .tour-fakt__ico svg { width: 19px; height: 19px; }
