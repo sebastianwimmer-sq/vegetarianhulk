@@ -116,6 +116,9 @@
   --flaeche-papier: radial-gradient(120% 120% at 12% 0%, var(--papier-hell), var(--papier-tief) 70%);
 
   --ease-lux: cubic-bezier(0.32, 0.72, 0, 1);
+  /* Dauer-Skala (motion-loop 06.10.2026): die Werte, die vorher als Zahlen
+     verstreut standen — gleiche Zeiten, jetzt an EINER Stelle. */
+  --dur-1: 200ms; --dur-2: 300ms; --dur-3: 400ms; --dur-4: 500ms; --dur-5: 600ms; --dur-6: 900ms;
   --mono: ui-monospace, 'SF Mono', Menlo, monospace;
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
 }
@@ -255,15 +258,15 @@ main { position: relative; z-index: 1; }
   text-transform: uppercase; color: var(--paper-faint); margin-bottom: 16px; }
 .th-profile { width: 100%; height: auto; color: var(--leaf); overflow: visible; }
 .th-profile__fill { fill: rgba(80,200,120,0.12); opacity: 0;
-  transition: opacity 900ms var(--ease-lux) 500ms; }
+  transition: opacity var(--dur-6) var(--ease-lux) var(--dur-4); }
 .th-profile__line { fill: none; stroke-dasharray: 100; stroke-dashoffset: 100;
   filter: drop-shadow(0 0 5px rgba(80,200,120,0.4)); }
 .th-profile__dot { fill: var(--emerald); opacity: 0;
-  filter: drop-shadow(0 0 5px rgba(80,200,120,0.9)); transition: opacity 400ms 300ms; }
-.th-profile__cross { color: var(--paper); opacity: 0; transition: opacity 500ms 1300ms; }
-.th-profile__marks text { fill: rgba(243,235,217,0.55); opacity: 0; transition: opacity 700ms 900ms; }
+  filter: drop-shadow(0 0 5px rgba(80,200,120,0.9)); transition: opacity var(--dur-3) var(--dur-2); }
+.th-profile__cross { color: var(--paper); opacity: 0; transition: opacity var(--dur-4) 1300ms; }
+.th-profile__marks text { fill: rgba(243,235,217,0.55); opacity: 0; transition: opacity 700ms var(--dur-6); }
 /* Draw-on, sobald die Flagship-Karte im Viewport ist */
-.th-flag.in .th-profile__line { animation: thDraw 1500ms var(--ease-lux) 300ms forwards; }
+.th-flag.in .th-profile__line { animation: thDraw 1500ms var(--ease-lux) var(--dur-2) forwards; }
 .th-flag.in .th-profile__fill,
 .th-flag.in .th-profile__dot,
 .th-flag.in .th-profile__cross,
@@ -289,7 +292,7 @@ main { position: relative; z-index: 1; }
   box-shadow: var(--schild-kante);
   clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
   /* Kein weisser Praegeschatten: matte Farbe wird aufgetragen, nicht poliert. */
-  transition: transform 400ms var(--ease-lux), filter 400ms var(--ease-lux), background 400ms var(--ease-lux);
+  transition: transform var(--dur-3) var(--ease-lux), filter var(--dur-3) var(--ease-lux), background var(--dur-3) var(--ease-lux);
   filter: var(--schild-schatten); }
 .th-btn:hover { background: var(--schild-flaeche-hover); }
 /* Beim Zeigen ruckt das Schild in Pfeilrichtung und wirft tiefer — wie
@@ -337,7 +340,7 @@ main { position: relative; z-index: 1; }
 .th-card__state--live { color: var(--auf-gold); background: var(--schild-flaeche); box-shadow: var(--schild-kante);
   border: 0; border-radius: 0; padding: 5px 12px;
   clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%);
-  transition: transform 400ms var(--ease-lux); }
+  transition: transform var(--dur-3) var(--ease-lux); }
 .th-card--real:hover .th-card__state--live { transform: translateX(4px); }
 .th-card__state { position: absolute; left: 24px; bottom: 20px;
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
@@ -364,7 +367,7 @@ main { position: relative; z-index: 1; }
 
 /* ---- Motion ---- */
 .rv { opacity: 0; transform: translateY(52px); filter: blur(8px);
-  transition: opacity 900ms var(--ease-lux), transform 900ms var(--ease-lux), filter 900ms var(--ease-lux);
+  transition: opacity var(--dur-6) var(--ease-lux), transform var(--dur-6) var(--ease-lux), filter var(--dur-6) var(--ease-lux);
   transition-delay: var(--d, 0ms); }
 .rv.in { opacity: 1; transform: translateY(0); filter: blur(0); }
 .st { opacity: 0; transform: translateY(26px); filter: blur(6px);
@@ -376,15 +379,15 @@ body.loaded .st { opacity: 1; transform: translateY(0); filter: blur(0); }
    der Scroll-Parallax (JS, nur transform) bleibt. */
 @media (max-width: 899px) {
   .rv { filter: none; transform: translateY(30px);
-    transition: opacity 600ms var(--ease-lux), transform 600ms var(--ease-lux);
+    transition: opacity var(--dur-5) var(--ease-lux), transform var(--dur-5) var(--ease-lux);
     transition-delay: var(--d, 0ms); }
   .rv.in { filter: none; }
-  .st { filter: none; transition: opacity 600ms var(--ease-lux), transform 600ms var(--ease-lux); }
+  .st { filter: none; transition: opacity var(--dur-5) var(--ease-lux), transform var(--dur-5) var(--ease-lux); }
   body.loaded .st { filter: none; }
   .bg, .bg2 { animation: none; }
 }
 .st1 { transition-delay: 100ms; } .st2 { transition-delay: 240ms; } .st3 { transition-delay: 360ms; }
-.st4 { transition-delay: 500ms; } .st5 { transition-delay: 660ms; }
+.st4 { transition-delay: var(--dur-4); } .st5 { transition-delay: 660ms; }
 
 /* ---- Altimeter-Rails: volle Höhe, gespiegelt, Berg-Bezug.
    Tick-Skala wie am Höhenmesser + durchlaufender Mono-Ticker +
@@ -419,13 +422,13 @@ body.loaded .st { opacity: 1; transform: translateY(0); filter: blur(0); }
 
 /* ---- Topbar ---- */
 .topbar { position: sticky; top: 0; z-index: 60; display: flex; align-items: center; padding: 22px 0 14px;
-  transition: transform 500ms var(--ease-lux), opacity 500ms var(--ease-lux); }
+  transition: transform var(--dur-4) var(--ease-lux), opacity var(--dur-4) var(--ease-lux); }
 .topbar.is-hidden { transform: translateY(-130%); opacity: 0; }
 @media (prefers-reduced-motion: reduce) {
   /* Ausblenden statt Wegfahren — Ueberblendung ist der erlaubte Ersatz
      (Media Queries 5: "remove or replace"). Gefunden vom motion-loop, 06.10.2026. */
-  .topbar { transition: opacity 200ms linear, visibility 0s linear 200ms; }
-  .topbar:not(.is-hidden) { transition: opacity 200ms linear, visibility 0s; }
+  .topbar { transition: opacity var(--dur-1) linear, visibility 0s linear var(--dur-1); }
+  .topbar:not(.is-hidden) { transition: opacity var(--dur-1) linear, visibility 0s; }
   .topbar.is-hidden { transform: none; opacity: 0; visibility: hidden; }
 }
 .brandbox { position: relative; display: inline-block; }
@@ -454,7 +457,7 @@ body.loaded .st { opacity: 1; transform: translateY(0); filter: blur(0); }
 .stage-cut { position: relative; z-index: 2; display: block; width: 88%; height: auto; margin-inline: auto;
   filter: drop-shadow(0 34px 54px rgba(0,0,0,0.6)) drop-shadow(0 6px 14px rgba(0,0,0,0.35)); }
 .social-link { border-bottom: 1px solid rgba(126,208,155,0.4); padding-bottom: 1px;
-  transition: color 400ms var(--ease-lux), border-color 400ms var(--ease-lux); }
+  transition: color var(--dur-3) var(--ease-lux), border-color var(--dur-3) var(--ease-lux); }
 .social-link:hover { color: var(--leaf); border-color: var(--leaf); }
 .stage-caption { margin-top: 16px; text-align: center; font-family: var(--mono); font-size: 10px; font-weight: 600;
   letter-spacing: 2.2px; text-transform: uppercase; color: var(--paper-faint); }
@@ -490,7 +493,7 @@ body.loaded .scribble path { animation: draw 1100ms var(--ease-lux) 1000ms forwa
 .cta { position: relative; display: inline-block; margin-top: 44px; padding: 16px 30px;
   font-family: var(--mono); font-weight: 700; font-size: 14px; letter-spacing: 2.4px; text-transform: uppercase;
   color: var(--paper); }
-.cta .arr { display: inline-block; margin-left: 10px; transition: transform 500ms var(--ease-lux); }
+.cta .arr { display: inline-block; margin-left: 10px; transition: transform var(--dur-4) var(--ease-lux); }
 .cta:hover .arr { transform: translateX(6px); }
 .cta .sub { position: absolute; left: 30px; top: calc(100% + 10px); white-space: nowrap;
   font-size: 10px; font-weight: 600; letter-spacing: 2px; color: var(--paper-faint); }
@@ -518,7 +521,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .hero-scroll { display: flex; flex-direction: column; align-items: center; gap: 9px; width: max-content;
   margin: clamp(34px, 6vh, 64px) auto 0; text-decoration: none;
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--paper-faint);
-  transition: color 400ms var(--ease-lux); }
+  transition: color var(--dur-3) var(--ease-lux); }
 .hero-scroll:hover { color: var(--leaf); }
 .hero-scroll__chev { width: 22px; height: 22px; color: var(--leaf); animation: heroScrollBob 2.2s ease-in-out 3; } /* dreimal, dann hat der Hinweis seine Aufgabe erfuellt */
 @keyframes heroScrollBob { 0%,100% { transform: translateY(0); opacity: 0.55; } 50% { transform: translateY(6px); opacity: 1; } }
@@ -545,7 +548,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 /* Instrumente erst, wenn die Szene eingerastet ist (JS: .engaged) —
    vorher schwebten HUD + Schilder über der Sektions-Headline */
 .berg-overlays, .wetter-hud:not([hidden]), .scroll-hint {
-  opacity: 0; transition: opacity 600ms var(--ease-lux); }
+  opacity: 0; transition: opacity var(--dur-5) var(--ease-lux); }
 .grat-wrap.engaged .berg-overlays,
 .grat-wrap.engaged .wetter-hud:not([hidden]) { opacity: 1; }
 .grat-wrap.engaged:not(.reading) .scroll-hint { opacity: 1; }
@@ -575,7 +578,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .wp::before { content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
   width: 7px; height: 7px; border-radius: 50%; box-sizing: border-box;
   background: rgba(7,31,20,0.9); border: 1.5px solid rgba(243,235,217,0.75);
-  transition: background 400ms var(--ease-lux), border-color 400ms var(--ease-lux), box-shadow 400ms var(--ease-lux); }
+  transition: background var(--dur-3) var(--ease-lux), border-color var(--dur-3) var(--ease-lux), box-shadow var(--dur-3) var(--ease-lux); }
 .wp .wp-num { display: block; white-space: nowrap;
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
   color: var(--auf-gold);
@@ -587,14 +590,14 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   padding: 5px 16px 5px 20px;
   clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
   filter: drop-shadow(0 0 0.8px rgba(20,16,5,0.75)) drop-shadow(0 1.5px 1.5px rgba(2,10,6,0.85)) drop-shadow(0 6px 12px rgba(0,0,0,0.5));
-  transition: filter 400ms var(--ease-lux), background 400ms var(--ease-lux); }
+  transition: filter var(--dur-3) var(--ease-lux), background var(--dur-3) var(--ease-lux); }
 .wp:hover .wp-num { background:
     radial-gradient(circle at 11px 50%, var(--auf-gold) 2.2px, transparent 3px),
     linear-gradient(180deg, #F4CE33, #E0B51E); }
 .wp:hover::before { border-color: var(--leaf); }
-.wp { transition: opacity 500ms var(--ease-lux); }
+.wp { transition: opacity var(--dur-4) var(--ease-lux); }
 .berg-overlays.reading .wp:not(.on) { opacity: 0.12; }
-.poi { transition: opacity 500ms var(--ease-lux); }
+.poi { transition: opacity var(--dur-4) var(--ease-lux); }
 .berg-overlays.reading .poi:not(.poi--kreuz) { opacity: 0.15; }
 /* Pro Stopp leuchtet das passende Kartensymbol */
 .berg-overlays.reading[data-stop="0"] .poi[data-poi="start"],
@@ -602,7 +605,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .berg-overlays.reading[data-stop="2"] .poi[data-poi="huette"] { opacity: 1; }
 .berg-overlays.reading .wp:not(.on):hover { opacity: 1; }
 .wp.on::before { background: var(--emerald); border-color: var(--emerald);
-  box-shadow: 0 0 10px rgba(80,200,120,0.7); animation: wpping 900ms var(--ease-lux) 1; }
+  box-shadow: 0 0 10px rgba(80,200,120,0.7); animation: wpping var(--dur-6) var(--ease-lux) 1; }
 .wp.on .wp-num { background:
     radial-gradient(circle at 11px 50%, var(--auf-gold) 2.2px, transparent 3px),
     var(--schild-flaeche-hover);
@@ -611,7 +614,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .poi { position: absolute; transform: translate(-50%, -100%); pointer-events: none;
   color: rgba(243,235,217,0.92); }
 .poi svg { display: block; width: 100%; height: auto; }
-.poi--kreuz { color: rgba(243,235,217,0.85); transition: color 600ms var(--ease-lux), filter 600ms var(--ease-lux); }
+.poi--kreuz { color: rgba(243,235,217,0.85); transition: color var(--dur-5) var(--ease-lux), filter var(--dur-5) var(--ease-lux); }
 .grat-wrap.summit .poi--kreuz { color: var(--leaf); filter: drop-shadow(0 0 8px rgba(80,200,120,0.65)); }
 /* Bergstation-HUD: Instrument oben rechts (bergfex/Apple-Weather-Prinzip:
    grosser Messwert, klare Hairline-Karte) */
@@ -640,7 +643,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   letter-spacing: 1.8px; text-transform: uppercase; color: var(--mint); }
 .hud-src { display: inline-block; margin-top: 9px; font-family: var(--mono); font-size: 10px; font-weight: 700;
   letter-spacing: 1.2px; text-transform: uppercase; color: var(--paper-faint); text-decoration: none;
-  transition: color 300ms var(--ease-lux); }
+  transition: color var(--dur-2) var(--ease-lux); }
 .hud-src:hover { color: var(--leaf); }
 .hud-meta { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(243,235,217,0.14);
   font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 1.6px;
@@ -672,7 +675,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   width: min(760px, 60vw); text-align: right;
   padding: clamp(84px, 14vh, 140px) calc(max(6vw, 50vw - 470px)) 84px clamp(40px, 5vw, 90px);
   transform-origin: 100% 100%;
-  transition: opacity 500ms var(--ease-lux), transform 700ms var(--ease-lux);
+  transition: opacity var(--dur-4) var(--ease-lux), transform 700ms var(--ease-lux);
   /* Kino-Scrim aus der unteren RECHTEN Bildkante + warme Eck-Vignette fuer Tiefe */
   background:
     radial-gradient(120% 100% at 100% 100%, rgba(120,92,40,0.16) 0%, rgba(120,92,40,0) 34%),
@@ -705,12 +708,12 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 50%, calc(100% - 5px) 100%, 0 100%); }
 .panel-ticks { order: 2; display: flex; gap: 5px; margin-left: 2px; }
 .panel-ticks i { width: 14px; height: 2px; background: rgba(24,43,31,0.22);
-  transition: background 400ms var(--ease-lux); }
+  transition: background var(--dur-3) var(--ease-lux); }
 .panel-ticks i.on { background: var(--royal); }
 .panel-nav button { order: 3; width: auto; height: auto; border: 0; border-radius: 0;
   background: transparent; cursor: pointer; padding: 4px 8px;
   font-family: var(--mono); font-size: 16px; line-height: 1; color: var(--ink-meta);
-  transition: color 300ms var(--ease-lux), transform 300ms var(--ease-lux); }
+  transition: color var(--dur-2) var(--ease-lux), transform var(--dur-2) var(--ease-lux); }
 .panel-nav button:hover { color: var(--royal); transform: none; }
 .panel-nav button:first-of-type { order: 3; margin-left: auto; }
 .panel-nav button:last-of-type { order: 4; }
@@ -741,7 +744,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   box-shadow: var(--schild-kante);
   clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
   filter: var(--schild-schatten);
-  transition: filter 300ms var(--ease-lux), transform 300ms var(--ease-lux); }
+  transition: filter var(--dur-2) var(--ease-lux), transform var(--dur-2) var(--ease-lux); }
 .grat-panel .p-cta:hover { transform: translateX(3px);
   filter: var(--schild-schatten-hover); }
 .grat-panel .p-cta[hidden] { display: none; }
@@ -821,7 +824,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 .hikes-profile { display: block; width: min(100%, 560px); height: auto; margin-top: 26px;
   color: var(--leaf); overflow: visible; }
 .hikes-profile .hp-line { stroke-dasharray: 100; stroke-dashoffset: 100; }
-.hikes.rv.in .hp-line { animation: gratdraw 1600ms var(--ease-lux) 300ms forwards; stroke-dasharray: 100; }
+.hikes.rv.in .hp-line { animation: gratdraw 1600ms var(--ease-lux) var(--dur-2) forwards; stroke-dasharray: 100; }
 .hikes-facts { margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; max-width: 620px; }
 .hikes-facts div { border-top: 1px solid rgba(243,235,217,0.16); padding-top: 10px; }
 .hikes-facts dt { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 1.8px;
@@ -874,7 +877,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   font-family: 'Caveat', cursive; font-weight: 600; font-size: 23px;
   text-decoration: none; color: var(--royal);
   border-bottom: 1.5px dashed rgba(30,58,42,0.45);
-  transition: color 400ms var(--ease-lux), border-color 400ms var(--ease-lux); }
+  transition: color var(--dur-3) var(--ease-lux), border-color var(--dur-3) var(--ease-lux); }
 .gb-cta::after { content: "\2192"; position: absolute; right: 6px; }
 .gb-cta:hover { color: #0A3B22; border-bottom-color: rgba(11,110,79,0.7); }
 @media (max-width: 700px) { .gb-cta { margin: 0 30px 26px; } }
@@ -924,7 +927,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
 }
 .brands-line { margin-top: 30px; font-size: 16px; color: var(--paper-faint); }
 .brands-line a { font-weight: 700; color: var(--leaf); border-bottom: 1px solid rgba(126,208,155,0.4); padding-bottom: 2px;
-  transition: border-color 400ms var(--ease-lux); }
+  transition: border-color var(--dur-3) var(--ease-lux); }
 .brands-line a:hover { border-color: var(--leaf); }
 
 /* ---- Footer ---- */
@@ -935,7 +938,7 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   font-size: clamp(28px, 5vw, 44px); line-height: 1.06; color: var(--paper); }
 .home-outro h2 em { font-style: italic; color: var(--leaf); }
 .home-outro__social { margin-top: 20px; font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; }
-.home-outro__social a { color: var(--paper-faint); text-decoration: none; border-bottom: 1px solid rgba(126,208,155,0.3); transition: color 300ms var(--ease-lux); }
+.home-outro__social a { color: var(--paper-faint); text-decoration: none; border-bottom: 1px solid rgba(126,208,155,0.3); transition: color var(--dur-2) var(--ease-lux); }
 .home-outro__social a:hover { color: var(--leaf); }
 footer { position: relative; z-index: 1; margin-top: 64px; text-align: center; color: var(--paper); }
 footer .inner { width: min(100% - 36px, 560px); margin-inline: auto;
@@ -957,7 +960,7 @@ footer .legal a:hover { color: var(--paper); }
    ein-/ausblendet. Fixed + bottom folgt dem sichtbaren Viewport (Insta/WhatsApp). */
 .nav { position: fixed; left: 50%; top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); z-index: 70;
   translate: -50% 0;
-  transition: opacity 200ms ease;
+  transition: opacity var(--dur-1) ease;
   display: flex; align-items: center; gap: clamp(4px, 2.6vw, 24px); padding: 10px clamp(18px, 3.4vw, 34px);
   border: 1px solid rgba(150,130,92,0.55); border-radius: var(--r-karte);
   background: linear-gradient(180deg, #F8F0E0 0%, #EDDFC5 100%);
@@ -975,7 +978,7 @@ footer .legal a:hover { color: var(--paper); }
 .nav a { position: relative; display: inline-flex; align-items: center; justify-content: center;
   padding: 12px 8px; min-width: 48px; min-height: 44px; text-align: center;
   font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
-  color: #6B5F4A; transition: color 400ms var(--ease-lux), transform 400ms var(--ease-lux); }
+  color: #6B5F4A; transition: color var(--dur-3) var(--ease-lux), transform var(--dur-3) var(--ease-lux); }
 .nav a:hover { color: var(--forest); transform: translateY(-2px); }
 .nav .center { color: #045927; display: flex; flex-direction: column; align-items: center; gap: 2px; }
 .nav .center .mtn { width: 60px; height: 48px; margin-top: -38px;
@@ -1198,7 +1201,7 @@ vh-form [slot="captcha"].is-err,
   background: transparent; padding: 7px 14px;
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
   color: var(--paper-dim);
-  transition: background 300ms var(--ease-lux), color 300ms var(--ease-lux), border-color 300ms var(--ease-lux), transform 300ms var(--ease-lux); }
+  transition: background var(--dur-2) var(--ease-lux), color var(--dur-2) var(--ease-lux), border-color var(--dur-2) var(--ease-lux), transform var(--dur-2) var(--ease-lux); }
 .tk-chip:hover { border-color: rgba(126,208,155,0.5); color: var(--paper); }
 /* WCAG 2.5.8 ohne optischen Preis: die Trefferflaeche liegt als unsichtbares
    Rechteck ueber dem Chip, die sichtbare Pille bleibt kompakt. Mit min-height
@@ -1249,7 +1252,7 @@ vh-form [slot="captcha"].is-err,
 
 /* Der Grund bleibt ebenfalls stehen, sonst blitzt die Seite durch. */
 :root::view-transition-group(root) { animation-duration: 420ms; }
-::view-transition-old(root) { animation: vtRaus 300ms var(--ease-lux) both; }
+::view-transition-old(root) { animation: vtRaus var(--dur-2) var(--ease-lux) both; }
 ::view-transition-new(root) { animation: vtRein 420ms var(--ease-lux) both; }
 @keyframes vtRaus { to   { opacity: 0; transform: translateY(-8px); } }
 @keyframes vtRein { from { opacity: 0; transform: translateY(14px); } }
