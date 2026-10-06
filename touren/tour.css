@@ -100,7 +100,9 @@
 
 /* ---------- HERO ---------- */
 .tour-hero {
-  position: relative; overflow: hidden;
+  /* clip statt hidden: sonst haengt jede view()-Animation im Hero an dieser
+     Box statt am Fenster und steht still (06.10.2026, motion-loop). */
+  position: relative; overflow: clip;
   margin: clamp(14px, 3vh, 30px) 0 0;
   width: 100vw; margin-left: calc((100% - 100vw) / 2);
   min-height: clamp(480px, 78vh, 760px);
@@ -134,6 +136,24 @@
   animation: tourHeroZoom 2200ms var(--ease-lux) both;
 }
 @keyframes tourHeroZoom { from { transform: scale(1.06); } to { transform: scale(1); } }
+/* Aufbruch (Entscheidung 06.10.2026, "Der Scroll ist der Aufstieg"): beim
+   Hinausscrollen zoomt das Motiv zurueck und hebt sich — im STEHENDEN,
+   randlosen Rahmen (kern.md 22.09.: keine Karten, das Motiv wandert). Ersetzt
+   den zeitgesteuerten Zoom beim Laden. Die Luecke unten liegt in der Blende. */
+@media (prefers-reduced-motion: reduce) {
+  /* Zoom ist ein klassischer Ausloeser (Apple/WebKit): lief live trotz reduce */
+  .tour-hero__img img { animation: none !important; transform: none !important; }
+}
+@keyframes tourHeroAufbruch { from { transform: scale(1.06); } to { transform: scale(1) translateY(-5%); } }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .tour-hero__img img {
+      animation: tourHeroAufbruch linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 100%;
+    }
+  }
+}
 .tour-hero__img::after {
   content: ""; position: absolute; inset: 0;
   background:
