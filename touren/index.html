@@ -28,10 +28,10 @@
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
-<link rel="stylesheet" href="/v3.css?v=cc496231">
+<link rel="stylesheet" href="/v3.css?v=b86fb2a0">
 <script src="/uebergang.js?v=4002aa79"></script>
 <link rel="expect" href="#tkList" blocking="render">
-<link rel="stylesheet" href="/touren/tour.css?v=fd8b4cea">
+<link rel="stylesheet" href="/touren/tour.css?v=9fe6c38d">
 <style>
 /* ============================================================
    /touren/ — Hulk-Hikes FORUM-LISTE (page-scoped .tk-)
@@ -94,7 +94,7 @@
   letter-spacing: 1.5px; text-transform: uppercase; color: var(--royal);
   display: inline-block;
   /* Ruecken statt Aufsperren: letter-spacing rechnete je Frame das Layout neu */
-  transition: transform 400ms var(--ease-lux); }
+  transition: transform var(--dur-3) var(--ease-lux); }
 .tk-pin:hover .tk-pin__cta { transform: translateX(3px); }
 .tk-pin__photo { position: relative; min-height: 260px; overflow: hidden; }
 .tk-pin__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
@@ -137,7 +137,7 @@
 .tk-search { flex: 1 1 200px; display: flex; align-items: center; gap: 9px;
   padding: 9px 13px; border-radius: var(--r-control);
   background: rgba(3,15,9,0.5); border: 1px solid rgba(126,208,155,0.18);
-  transition: border-color 300ms var(--ease-lux), box-shadow 300ms var(--ease-lux); }
+  transition: border-color var(--dur-2) var(--ease-lux), box-shadow var(--dur-2) var(--ease-lux); }
 .tk-search:focus-within { border-color: rgba(126,208,155,0.55); box-shadow: 0 0 0 3px rgba(80,200,120,0.12); }
 .tk-search svg { width: 14px; height: 14px; color: var(--leaf); flex: 0 0 auto; }
 .tk-search input { flex: 1; min-width: 0; background: none; border: 0; outline: none; font: inherit;
@@ -151,7 +151,7 @@
   background: rgba(3,15,9,0.5); border: 1px solid rgba(126,208,155,0.22);
   font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
   color: var(--paper-dim); outline: none;
-  transition: border-color 300ms var(--ease-lux); }
+  transition: border-color var(--dur-2) var(--ease-lux); }
 .tk-sort select:hover, .tk-sort select:focus { border-color: rgba(126,208,155,0.5); color: var(--paper); }
 .tk-sort::after { content: "▾"; position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
   pointer-events: none; color: var(--leaf); font-size: 10px; }
@@ -168,7 +168,7 @@
     linear-gradient(168deg, #F6EFDF 0%, #F0E8D3 66%, #EAE0C8 100%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 0 0 1px rgba(186,155,95,0.2),
     0 16px 36px -26px rgba(0,0,0,0.55);
-  transition: transform 500ms var(--ease-lux), box-shadow 500ms var(--ease-lux),
+  transition: transform var(--dur-4) var(--ease-lux), box-shadow var(--dur-4) var(--ease-lux),
     opacity 350ms var(--ease-lux); }
 .tk-row:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 0 0 1px rgba(186,155,95,0.36),
   0 26px 48px -26px rgba(0,0,0,0.6); }
@@ -179,7 +179,7 @@
   width: 100%; text-align: left; background: none; border: 0; cursor: pointer; padding: 0 20px 0 0; font: inherit; color: inherit; }
 .tk-row__eng { align-self: stretch; position: relative; overflow: hidden; min-height: 86px; }
 .tk-row__eng img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-  mix-blend-mode: multiply; transition: transform 900ms var(--ease-lux); }
+  mix-blend-mode: multiply; transition: transform var(--dur-6) var(--ease-lux); }
 .tk-row:hover .tk-row__eng img { transform: scale(1.07); }
 .tk-row__eng::after { content: ""; position: absolute; inset: 0;
   background: linear-gradient(90deg, transparent 60%, rgba(243,236,222,1) 100%); }
@@ -220,11 +220,11 @@
 .tk-row__profile .pline { fill: none; stroke: var(--royal); stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; }
 .tk-row__chev { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;
   border: 1px solid rgba(24,43,31,0.25); color: var(--royal);
-  transition: transform 500ms var(--ease-lux), background 300ms var(--ease-lux); }
+  transition: transform var(--dur-4) var(--ease-lux), background var(--dur-2) var(--ease-lux); }
 .tk-row__chev svg { width: 12px; height: 12px; }
 .tk-row.open .tk-row__chev { transform: rotate(180deg); background: rgba(11,110,79,0.1); }
 /* Expand-Panel (animierte Höhe via grid) */
-.tk-row__panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 600ms var(--ease-lux); }
+.tk-row__panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--dur-5) var(--ease-lux); }
 .tk-row.open .tk-row__panel { grid-template-rows: 1fr; }
 .tk-row__panelin { overflow: hidden; }
 .tk-row__detail { display: grid; grid-template-columns: 1fr auto; gap: 8px 26px;
@@ -243,7 +243,7 @@
   background: linear-gradient(180deg, #FBF6E9 0%, #EFE6CE 100%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), inset 0 -2px 3px rgba(120,100,60,0.12),
     0 2px 3px rgba(60,50,30,0.14), 0 8px 16px -8px rgba(0,0,0,0.35);
-  transition: transform 300ms var(--ease-lux), box-shadow 300ms var(--ease-lux), color 300ms var(--ease-lux); }
+  transition: transform var(--dur-2) var(--ease-lux), box-shadow var(--dur-2) var(--ease-lux), color var(--dur-2) var(--ease-lux); }
 .tk-minibtn:hover { transform: translateY(-2px); color: var(--royal);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 4px 6px rgba(60,50,30,0.16), 0 16px 26px -10px rgba(0,0,0,0.4); }
 .tk-minibtn:active { transform: translateY(0);
@@ -329,11 +329,11 @@
 .tk-live__ico svg { display: block; width: 28px; height: 28px; }
 .tk-live__cond { margin-top: 5px; font-family: var(--mono); font-size: 11px; font-weight: 700;
   letter-spacing: 1.6px; text-transform: uppercase; color: var(--mint); }
-.tk-live { transition: transform 400ms var(--ease-lux), border-color 400ms var(--ease-lux); }
+.tk-live { transition: transform var(--dur-3) var(--ease-lux), border-color var(--dur-3) var(--ease-lux); }
 .tk-live:hover { transform: translateY(-2px); border-color: rgba(126,208,155,0.4); }
 .tk-live__src { display: block; margin-top: 10px; font-family: var(--mono); font-size: 10px; font-weight: 700;
   letter-spacing: 1.4px; text-transform: uppercase; color: var(--paper-faint);
-  transition: color 300ms var(--ease-lux); }
+  transition: color var(--dur-2) var(--ease-lux); }
 .tk-live:hover .tk-live__src { color: var(--leaf); }
 .tk-live__meta { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(243,235,217,0.14);
   font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 1.4px;
@@ -344,7 +344,7 @@
   background: var(--schild-flaeche);
   clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
   filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4)) drop-shadow(0 2px 1px rgba(120,88,10,0.45)) drop-shadow(0 10px 16px rgba(0,0,0,0.32));
-  transition: transform 400ms var(--ease-lux), filter 400ms var(--ease-lux); }
+  transition: transform var(--dur-3) var(--ease-lux), filter var(--dur-3) var(--ease-lux); }
 .tk-close__cta:hover { transform: translateX(4px); filter: drop-shadow(0 3px 14px rgba(232,191,37,0.45)); }
 @media (max-width: 860px) { .tk-close { grid-template-columns: 1fr; } }
 
