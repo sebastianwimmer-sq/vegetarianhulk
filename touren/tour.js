@@ -178,6 +178,8 @@
     if (marke) {
       var anteil = x(gipfel.km) / BREITE;
       marke.style.left = 'calc(' + (anteil * 100).toFixed(1) + '% + 12px)';
+      // Ab hier blendet der Gipfelname ein (tour.css, --gang)
+      marke.style.setProperty('--gipfel', anteil.toFixed(3));
       marke.style.top = Math.max(0, y(gipfel.hoehe) / HOEHE * 100 - 6) + '%';
       // am rechten Rand wuerde die Marke hinauslaufen: dann nach links kippen
       if (anteil > 0.62) {
