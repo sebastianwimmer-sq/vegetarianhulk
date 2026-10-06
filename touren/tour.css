@@ -66,7 +66,12 @@
 
 /* ---------- FLAECHEN (Regel 1) ---------- */
 .flaeche-wald {
-  position: relative; overflow: hidden;
+  /* clip statt hidden: hidden macht die Flaeche zum Scroll-Container, und jede
+     view()-Animation darin (Hoehenprofil, Kreuz-Reihe) haengt dann an dieser Box
+     statt am Fenster. In Chromium stand das Profil dadurch immer fertig da
+     (06.10.2026, an Pixeln gemessen); WebKit war nachsichtiger als die Spec.
+     clip schneidet die Kornschicht genauso an den Radien ab. */
+  position: relative; overflow: clip;
   border-radius: var(--r-karte); padding: clamp(24px, 3vw, 34px);
   background: var(--flaeche-wald);
   box-shadow: var(--shadow-mid);
@@ -77,7 +82,12 @@
 }
 .flaeche-wald > * { position: relative; z-index: 1; }
 .flaeche-papier {
-  position: relative; overflow: hidden;
+  /* clip statt hidden: hidden macht die Flaeche zum Scroll-Container, und jede
+     view()-Animation darin (Hoehenprofil, Kreuz-Reihe) haengt dann an dieser Box
+     statt am Fenster. In Chromium stand das Profil dadurch immer fertig da
+     (06.10.2026, an Pixeln gemessen); WebKit war nachsichtiger als die Spec.
+     clip schneidet die Kornschicht genauso an den Radien ab. */
+  position: relative; overflow: clip;
   border-radius: var(--r-karte); padding: clamp(24px, 3vw, 34px);
   background: var(--flaeche-papier);
   box-shadow: var(--shadow-paper);
@@ -325,7 +335,12 @@
   fill: none; stroke: currentColor; stroke-width: 2;
   stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke;
   filter: drop-shadow(0 0 5px rgba(80,200,120,0.4));
-  stroke-dasharray: 1400; stroke-dashoffset: 1400;
+  /* Gezeichnet wird per clip-path von links nach rechts, also entlang der
+     KILOMETER — nicht per stroke-dasharray. Mit non-scaling-stroke rechnet der
+     Strich im Bildschirmraum, die Laenge im SVG-Raum: bei einem gestreckten
+     Profil stand die Linie beim Auftauchen schon zu ~60 % da (gemessen an
+     Pixeln, 06.10.2026). Oben/unten -20 %, damit Gipfel und Schatten bleiben. */
+  clip-path: inset(-20% 0 -20% 0);
 }
 .tour-svg .peak-dot {
   fill: var(--emerald); opacity: 0;
@@ -377,13 +392,16 @@
    Regel choreo-fuehrung).
 
    Der .in-Weg bleibt als Rueckfall fuer Engines ohne Scroll-Timeline. */
-@keyframes tourDraw { to { stroke-dashoffset: 0; } }
+@keyframes tourDraw { from { clip-path: inset(-20% 100% -20% 0); } to { clip-path: inset(-20% 0 -20% 0); } }
 
 @supports not (animation-timeline: view()) {
-  .tour-profil.in .line { animation: tourDraw 1800ms var(--ease-lux) 300ms forwards; }
+  .tour-profil.in .line { animation: tourDraw 1800ms var(--ease-lux) 300ms both; }
 }
 @supports (animation-timeline: view()) {
-  .tour-profil .line {
+  /* Die Flaeche unter der Kurve laeuft mit — sonst ging sie der Linie voraus
+     und der Weg sah aus, als waere er schon gegangen. */
+  .tour-profil .line,
+  .tour-profil .fill {
     animation: tourDraw linear both;
     animation-timeline: view();
     /* Von "Profil taucht auf" bis "Profil steht in der Mitte": dadurch ist
@@ -394,7 +412,8 @@
 @media (prefers-reduced-motion: reduce) {
   /* Ohne Bewegungswunsch steht die Linie sofort vollstaendig da —
      das Standbild muss fuer sich tragen (Regel choreo-standbild). */
-  .tour-profil .line { animation: none !important; stroke-dashoffset: 0 !important; }
+  .tour-profil .line,
+  .tour-profil .fill { animation: none !important; clip-path: inset(-20% 0 -20% 0) !important; }
 }
 
 .tour-profil.in .fill,

@@ -91,6 +91,7 @@ lauf "E-Mail-Vorlagen"               node scripts/mail-check.mjs --selbsttest
 lauf "Sicherungs-Werkzeug"           ./scripts/sicherung.sh --selbsttest
 lauf "Uebergaenge (Fixtures)"        node scripts/vt-check.mjs --selbsttest
 lauf "Sichtbarkeit (Fixtures)"       node scripts/sichtbar-check.mjs --selbsttest
+lauf "Motion-Loop (Fixtures)"        node "$HOME/kit-build/motion-loop/mess.mjs" --selbsttest
 
 if [ "$SCHNELL" -eq 0 ]; then
   titel "Im Browser (Minuten)"
@@ -100,6 +101,8 @@ if [ "$SCHNELL" -eq 0 ]; then
   lauf "Hoehenmeter (Selbsttest)"       node scripts/hoehenmeter-check.mjs --selbsttest
   lauf "Hoehenmeter-Leiste"             node scripts/hoehenmeter-check.mjs
   lauf "Nichts bleibt unsichtbar"        node scripts/sichtbar-check.mjs
+  # Bewegung gegen die Entscheidung (motion-loop/marken/vh.json) — misst DIESEN Baum
+  lauf "Bewegung gegen Entscheidung"    env MOTION_WURZEL="$PWD" node "$HOME/kit-build/motion-loop/mess.mjs" vh
   lauf "Barrierefreiheit, alle v3-Seiten" node scripts/a11y-check.mjs
   lauf "Darstellung, 4 Engines"        node scripts/tour-visual.mjs --site
   lauf "Bildbeschnitt der Kacheln"     node scripts/foto-check.mjs
