@@ -2,6 +2,12 @@
 /* Load-Choreografie */
 (function () {
   'use strict';
+
+  /* Druck: Lazy-Bilder laden erst beim Scrollen — wer druckt, scrollt nicht,
+     und die Fotos waeren im PDF leere Kaesten (motion-loop 06.10.2026). */
+  window.addEventListener('beforeprint', function () {
+    document.querySelectorAll('img[loading="lazy"]').forEach(function (i) { i.loading = 'eager'; });
+  });
   function go() { requestAnimationFrame(function () { document.body.classList.add('loaded'); }); }
   // Früh + zuverlässig: sobald DOM geparst ist (nicht erst nach allen Bildern).
   if (document.readyState !== 'loading') go();

@@ -1352,3 +1352,16 @@ html:active-view-transition-type(runter)::view-transition-new(root) { animation:
     }
   }
 }
+
+/* Druck (motion-loop 06.10.2026): wer druckt, scrollt nicht — Einblendungen
+   stehen fertig da, Bewegung ist aus (Profil, Kreuze, Achse stehen dadurch
+   vollstaendig: --gang bleibt auf 1), Navigation und Leisten drucken nicht
+   auf jeder Seite mit. Der invertierte Schriftzug bleibt bewusst verdeckt. */
+@media print {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .rv, .st, .tour-kreuz, .tour-blatt__text, .gipfelbuch, .closing, .home-outro, .shead,
+  .tk-row, .tk-close, .tk-bar, .tk-me, .tk-lead, .kicker {
+    opacity: 1 !important; transform: none !important; clip-path: none !important; filter: none !important;
+  }
+  nav.nav, .dock, .rail, .scroll-hint, .hero-scroll, .berg-overlays { display: none !important; }
+}
