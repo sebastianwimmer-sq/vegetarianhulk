@@ -104,8 +104,8 @@ const finde = (...worte) => {
   const t = fakten.find(f => worte.some(w => f.label.toLowerCase().includes(w)));
   return t ? t.wert : null;
 };
-/* Der Höhenmeter-Wert steht als data-count, weil er hochzählt. */
-const hm   = (seite.match(/<b data-count="(\d+)">0<\/b><span>Höhenmeter/) || [])[1];
+/* Der Höhenmeter-Wert steht als data-count (die sichtbare Zahl ist formatiert). */
+const hm   = (seite.match(/<b data-count="(\d+)">[^<]*<\/b><span>Höhenmeter/) || [])[1];
 const km   = fakten.find(f => /km/.test(f.label))?.wert;
 /* Erkannt an der AUSSAGE, nicht am Wortlaut: seit der Hoerndlwand heisst die
    Zeit "in Bewegung" und der Grad steht ohne "SAC-Skala" — die Mail brach fuer

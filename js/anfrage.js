@@ -128,33 +128,15 @@ async function submitBrandInquiry(e) {
     if (c.checked) { var box = document.querySelector('.anf-consent'); if (box) box.classList.remove('is-err'); }
   });
 })();
-/* Count-Up der Kontext-Zahlen beim Reinscrollen (animiert + live-Gefühl) */
+/* Kontext-Zahlen stehen einfach da — kein Hochzaehlen (motion-loop 06.10.2026:
+   eine Bewegung, die einmal laeuft und nichts erzaehlt). */
 (function () {
   'use strict';
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function fmtInt(n) { return n.toLocaleString('de-DE'); }
   function fmtPct(n) { return n.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%'; }
-  var nums = document.querySelectorAll('[data-count], [data-count-pct]');
-  function run(el) {
+  document.querySelectorAll('[data-count], [data-count-pct]').forEach(function (el) {
     var pct = el.hasAttribute('data-count-pct');
     var target = parseFloat(pct ? el.dataset.countPct : el.dataset.count);
-    var fmt = pct ? fmtPct : fmtInt;
-    if (reduce) { el.textContent = fmt(target); return; }
-    var t0 = null, DUR = 1400;
-    function step(ts) {
-      if (!t0) t0 = ts;
-      var p = Math.min(1, (ts - t0) / DUR);
-      var e = 1 - Math.pow(1 - p, 3);
-      el.textContent = fmt(pct ? Math.round(target * e * 10) / 10 : Math.round(target * e));
-      if (p < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-  if ('IntersectionObserver' in window && nums.length) {
-    if (!reduce) nums.forEach(function (el) { el.textContent = el.hasAttribute('data-count-pct') ? fmtPct(0) : fmtInt(0); });
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (en) { if (en.isIntersecting) { run(en.target); io.unobserve(en.target); } });
-    }, { rootMargin: '0px 0px -12% 0px' });
-    nums.forEach(function (el) { io.observe(el); });
-  } else { nums.forEach(run); }
+    if (isFinite(target)) el.textContent = pct ? fmtPct(target) : fmtInt(target);
+  });
 })();
