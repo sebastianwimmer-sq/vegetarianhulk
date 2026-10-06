@@ -335,12 +335,10 @@
   fill: none; stroke: currentColor; stroke-width: 2;
   stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke;
   filter: drop-shadow(0 0 5px rgba(80,200,120,0.4));
-  /* Gezeichnet wird per clip-path von links nach rechts, also entlang der
-     KILOMETER — nicht per stroke-dasharray. Mit non-scaling-stroke rechnet der
-     Strich im Bildschirmraum, die Laenge im SVG-Raum: bei einem gestreckten
-     Profil stand die Linie beim Auftauchen schon zu ~60 % da (gemessen an
-     Pixeln, 06.10.2026). Oben/unten -20 %, damit Gipfel und Schatten bleiben. */
-  clip-path: inset(-20% 0 -20% 0);
+  /* Gezeichnet wird per clip-path entlang der KILOMETER (tourGehen am Wrapper,
+     Rueckfall tourDraw an der Linie) — nicht per stroke-dasharray: mit
+     non-scaling-stroke rechnet der Strich im Bildschirmraum, die Laenge im
+     SVG-Raum, die Linie stand beim Auftauchen schon zu ~60 % da (06.10.2026). */
 }
 .tour-svg .peak-dot {
   fill: var(--emerald); opacity: 0;
@@ -397,23 +395,46 @@
 @supports not (animation-timeline: view()) {
   .tour-profil.in .line { animation: tourDraw 1800ms var(--ease-lux) 300ms both; }
 }
+/* Der Weg wird entlang der KILOMETER gegangen (Entscheidung 06.10.2026:
+   "Kreuze rasten ein"). --gang laeuft 0 → 1 auf der Scroll-Zeitachse des
+   Diagramms und erbt sich an alles darin:
+   - SVG (Linie, Flaeche, Kreuz, Punkt) und km-Achse werden bis --gang
+     freigeschnitten — das Kreuz erscheint, wenn die Linie es erreicht;
+   - der Gipfelname BLENDET EIN, sobald --gang den Gipfel-Anteil --gipfel
+     ueberschreitet. Schrift wird nie zerschnitten (am iPhone steht der Name
+     links und las sich sonst als "GURNWANDKOP").
+   Ohne Scroll-Zeitachse oder bei reduce bleibt --gang auf 1: alles steht. */
+@property --gang { syntax: '<number>'; inherits: true; initial-value: 1; }
+@keyframes tourGang { from { --gang: 0; } to { --gang: 1; } }
+.tour-profil__flaeche .tour-svg,
+.tour-profil__flaeche .tour-profil__achse {
+  clip-path: inset(-50% calc((1 - var(--gang)) * 100%) -50% -50%);
+}
+.tour-profil__marke--gipfel {
+  opacity: clamp(0, calc((var(--gang) - var(--gipfel, 0.5)) * 12), 1);
+}
 @supports (animation-timeline: view()) {
-  /* Die Flaeche unter der Kurve laeuft mit — sonst ging sie der Linie voraus
-     und der Weg sah aus, als waere er schon gegangen. */
-  .tour-profil .line,
-  .tour-profil .fill {
-    animation: tourDraw linear both;
+  .tour-profil__flaeche {
+    animation: tourGang linear both;
     animation-timeline: view();
     /* Von "Profil taucht auf" bis "Profil steht in der Mitte": dadurch ist
-       die Linie fertig, wenn man sie tatsaechlich liest. */
+       der Weg gegangen, wenn man ihn tatsaechlich liest. */
     animation-range: entry 18% cover 52%;
+  }
+  /* Der Schnitt macht das Einblenden — keine Uhr mehr dazwischen */
+  .tour-profil .fill, .tour-profil .peak-dot, .tour-profil .peak-x, .tour-profil .sun-dot {
+    opacity: 1; transition: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {
   /* Ohne Bewegungswunsch steht die Linie sofort vollstaendig da —
      das Standbild muss fuer sich tragen (Regel choreo-standbild). */
   .tour-profil .line,
-  .tour-profil .fill { animation: none !important; clip-path: inset(-20% 0 -20% 0) !important; }
+  .tour-profil .fill,
+  .tour-profil__flaeche { animation: none !important; clip-path: none !important; }
+  .tour-profil__flaeche .tour-svg,
+  .tour-profil__flaeche .tour-profil__achse { clip-path: none !important; }
+  .tour-profil__marke--gipfel { opacity: 1 !important; }
 }
 
 .tour-profil.in .fill,
