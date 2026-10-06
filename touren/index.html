@@ -28,7 +28,7 @@
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
-<link rel="stylesheet" href="/v3.css?v=a89f6700">
+<link rel="stylesheet" href="/v3.css?v=1147e256">
 <script src="/uebergang.js?v=4002aa79"></script>
 <link rel="expect" href="#tkList" blocking="render">
 <link rel="stylesheet" href="/touren/tour.css?v=d33711ba">
@@ -92,8 +92,10 @@
 .tk-pin__facts i { display: inline-block; width: 1px; height: 10px; margin: 0 5px; vertical-align: -1px; background: rgba(24,43,31,0.3); font-size: 0; }
 .tk-pin__cta { margin-top: 10px; font-family: var(--mono); font-size: 11px; font-weight: 700;
   letter-spacing: 1.5px; text-transform: uppercase; color: var(--royal);
-  transition: letter-spacing 400ms var(--ease-lux); }
-.tk-pin:hover .tk-pin__cta { letter-spacing: 2.2px; }
+  display: inline-block;
+  /* Ruecken statt Aufsperren: letter-spacing rechnete je Frame das Layout neu */
+  transition: transform 400ms var(--ease-lux); }
+.tk-pin:hover .tk-pin__cta { transform: translateX(3px); }
 .tk-pin__photo { position: relative; min-height: 260px; overflow: hidden; }
 .tk-pin__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
   transition: transform 1200ms var(--ease-lux); }
