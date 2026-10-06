@@ -1152,3 +1152,13 @@
 ::view-transition-old(tour-text) { animation: vtTextRaus var(--dur-1) ease both; }
 @keyframes vtTextRein { from { opacity: 0; transform: translateY(16px); } }
 @keyframes vtTextRaus { to { opacity: 0; } }
+
+/* Druck (motion-loop 06.10.2026): die Karte steht im Endzustand von .in —
+   ohne Animation blieb sie sonst im verdeckten Ausgangszustand (Seite leer). */
+@media print {
+  .tour-route__luftbild { opacity: 0.4 !important; }
+  .tour-route__relief, .tour-route__kms, .tour-route__start, .tour-route__gipfel { opacity: 1 !important; }
+  .tour-route__weg { animation: none !important; stroke-dashoffset: 0 !important; }
+  /* Karten und Fotos nicht ueber den Seitenumbruch zerschneiden */
+  .flaeche-wald, .flaeche-papier, .tour-route, .tour-profil, figure { break-inside: avoid; }
+}

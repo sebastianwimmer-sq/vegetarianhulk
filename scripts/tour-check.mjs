@@ -281,7 +281,7 @@ function pruefeHub(slugs) {
   if (/border-radius:\s*999px/.test(hubStil))
     meld(fehler, 'hub', 'Pillen-Radius (999px) — im Kodex nicht vorgesehen');
   // Hartkodierte Kennzahlen veralten still, sobald eine Tour dazukommt
-  if (/<b data-count="\d+">0<\/b><span>Touren/.test(html))
+  if (/<b data-count="\d+">[^<]*<\/b><span>Touren/.test(html))
     meld(fehler, 'hub', 'Kennzahl "Touren" ohne data-zahl — wird nicht aus der Liste gerechnet und veraltet');
 
   // Pinned = die neueste gegangene Tour (data-date als YYYYMMDD; Empfehlungen sind negativ)

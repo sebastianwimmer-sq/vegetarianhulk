@@ -103,19 +103,8 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var nums = document.querySelectorAll('[data-count]');
   function fmt(n) { return n.toLocaleString('de-DE'); }
-  function run(el) {
-    var target = parseInt(el.dataset.count, 10);
-    if (reduce) { el.textContent = fmt(target); return; }
-    var t0 = null, DUR = 1400;
-    function step(ts) {
-      if (!t0) t0 = ts;
-      var p = Math.min(1, (ts - t0) / DUR);
-      var e = 1 - Math.pow(1 - p, 3);
-      el.textContent = fmt(Math.round(target * e));
-      if (p < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
+  // Die Bilanz steht einfach da (kein Hochzaehlen, motion-loop 06.10.2026)
+  function run(el) { el.textContent = fmt(parseInt(el.dataset.count, 10)); }
   if ('IntersectionObserver' in window && nums.length) {
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (en) { if (en.isIntersecting) { run(en.target); io.unobserve(en.target); } });

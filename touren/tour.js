@@ -253,26 +253,18 @@
     document.querySelectorAll('[data-zahl]').forEach(function (el) {
       var wert = werte[el.dataset.zahl];
       if (wert == null) return;
-      // data-count treibt das Count-up, das gleich danach laeuft
       el.dataset.count = String(wert);
     });
   })();
 
-  /* ---------- Hero-Zahlen: Count-up ---------- */
+  /* ---------- Hero-Zahlen: stehen einfach da ----------
+     Vorher zaehlten sie hoch (1,5 s) — eine Bewegung, die einmal laeuft und
+     nichts erzaehlt (22.09.: "steady"; motion-loop 06.10.2026). Die Zahl im
+     HTML ist der Wert; hier wird sie nur nachgezogen, falls die Liste mehr
+     weiss (data-zahl). */
   document.querySelectorAll('[data-count]').forEach(function (el) {
     var ziel = parseInt(el.dataset.count, 10);
-    if (!isFinite(ziel)) return;
-    var fmt = function (n) { return n.toLocaleString('de-DE'); };
-    if (sanftBevorzugt) { el.textContent = fmt(ziel); return; }
-    var start = null, DAUER = 1500;
-    function schritt(ts) {
-      if (!start) start = ts;
-      var p = Math.min(1, (ts - start) / DAUER);
-      var e = 1 - Math.pow(1 - p, 3);
-      el.textContent = fmt(Math.round(ziel * e));
-      if (p < 1) requestAnimationFrame(schritt);
-    }
-    requestAnimationFrame(schritt);
+    if (isFinite(ziel)) el.textContent = ziel.toLocaleString('de-DE');
   });
 
   /* ---------- Live am Gipfel (Open-Meteo) ----------
