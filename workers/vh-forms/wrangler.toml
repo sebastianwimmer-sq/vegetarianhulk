@@ -7,6 +7,7 @@ name = "vh-forms"
 main = "worker.js"
 compatibility_date = "2026-06-01"
 workers_dev = true
+preview_urls = false   # Vorschau-Adressen umgehen Schutz/Register (cloudflare-check 28.09.2026); jeder Deploy ohne diese Zeile schaltet sie wieder ein
 
 [vars]
 NL_LIST_ID = "5"              # Brevo-Liste vegetarianhulk-discipline-reset (#5)
