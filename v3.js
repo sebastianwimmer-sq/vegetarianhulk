@@ -186,9 +186,10 @@
   'use strict';
   var d = document.querySelector('[data-gb-datum]');
   var t = document.querySelector('[data-gb-tag]');
-  if (d) d.textContent = new Date().toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+  if (d) d.textContent = new Date().toLocaleDateString(document.documentElement.lang === 'en' ? 'en-US' : 'de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
   if (t) {
     var days = Math.floor((Date.now() - new Date(2016, 7, 15).getTime()) / 86400000);  /* Veggie-Start: 15.08.2016 (Sebi) */
-    t.textContent = 'Tag ' + days.toLocaleString('de-DE');
+    // Englische Seiten (/en/): Day 3,800 statt Tag 3.800
+    t.textContent = document.documentElement.lang === 'en' ? 'Day ' + days.toLocaleString('en-US') : 'Tag ' + days.toLocaleString('de-DE');
   }
 })();

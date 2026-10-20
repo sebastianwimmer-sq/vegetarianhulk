@@ -42,7 +42,7 @@ async function laden() {
   try {
     const [modul, dem] = await Promise.all([
       import('./vendor/three.module.min.js'),
-      fetch('watzmann-dem.json?v=hd3').then((r) => (r.ok ? r.json() : Promise.reject(new Error('DEM')))),
+      fetch('/watzmann-dem.json?v=hd3').then((r) => (r.ok ? r.json() : Promise.reject(new Error('DEM')))),
     ]);
     THREE = modul;
     init(dem);
@@ -272,7 +272,9 @@ function init(DEM) {
   if (head) anchors.push(headAnchor);
 
   /* ---- Panel ---- */
-  const WERTE = [
+  /* Englische Seite (/en/, 20.10.2026): dieselben vier Werte in Sebis Ton. */
+  const EN = document.documentElement.lang === 'en';
+  const WERTE_DE = [
     { num: '01 / Faith', ort: 'Wimbachbrücke · 630 m · Start',
       title: 'Bibel-grounded. Wörtlich.',
       text: 'Das Fundament, bevor irgendwas anderes kommt: Schlachter 2000, jeden Morgen — bevor das Handy angeht. Hinfallen gehört dazu, liegen bleiben nicht.' },
@@ -287,6 +289,22 @@ function init(DEM) {
       text: '4-5× pro Woche, Lifting plus Cardio — und am Wochenende den Grat rauf. Kraft ist die Basis für jede Tour.',
       vers: '„Disziplin ist kein Talent. Sie ist ein Ritual."', src: 'Der Leitsatz', cta: true }
   ];
+  const WERTE_EN = [
+    { num: '01 / Faith', ort: 'Wimbachbrücke · 630 m · Start',
+      title: 'Bible-grounded. Literally.',
+      text: 'The foundation before anything else: the Bible, every morning — before the phone goes on. Falling down is part of it. Staying down isn’t.' },
+    { num: '02 / Discipline', ort: 'Mitterkaseralm · 1420 m',
+      title: 'Ritual over willpower.',
+      text: 'Structure that holds — every morning, even when nobody’s watching. 4:50 a.m., Bible, gym. For years now.' },
+    { num: '03 / Vegetarian + Strong', ort: 'Watzmannhaus · 1930 m',
+      title: 'Proof since 2016.',
+      text: 'Building muscle without meat isn’t a compromise — it’s my proof that you can have both. A stop at the hut: a plate, not theory.' },
+    { num: '04 / Fitness', ort: 'Mittelspitze · 2713 m · Summit',
+      title: 'Gym since 2017.',
+      text: '4–5× a week, lifting plus cardio — and up the ridge on weekends. Strength is the base for every hike.',
+      vers: '“Discipline isn’t a talent. It’s a ritual.”', src: 'The motto', cta: true }
+  ];
+  const WERTE = EN ? WERTE_EN : WERTE_DE;
   /* Etappen-Daten: publizierte Wegstrecken (Normalweg), Hoehenmeter real */
   WERTE[1].ort += ' · +790 hm · 3,5 km';
   WERTE[2].ort += ' · +510 hm · 2,3 km';
@@ -502,8 +520,11 @@ function init(DEM) {
   /* ---- Bergstation: Open-Meteo am Watzmann ---- */
   const chip = document.querySelector('.wetter-hud');
   if (chip && window.fetch) {
-    const WMO = c => c === 0 ? 'klar' : c <= 2 ? 'leicht bewölkt' : c === 3 ? 'bedeckt'
-      : c <= 48 ? 'Nebel' : c <= 67 ? 'Regen' : c <= 77 ? 'Schneefall' : c <= 82 ? 'Schauer' : 'Gewitter';
+    const WMO = EN
+      ? (c => c === 0 ? 'clear' : c <= 2 ? 'partly cloudy' : c === 3 ? 'overcast'
+        : c <= 48 ? 'fog' : c <= 67 ? 'rain' : c <= 77 ? 'snowfall' : c <= 82 ? 'showers' : 'thunderstorm')
+      : (c => c === 0 ? 'klar' : c <= 2 ? 'leicht bewölkt' : c === 3 ? 'bedeckt'
+        : c <= 48 ? 'Nebel' : c <= 67 ? 'Regen' : c <= 77 ? 'Schneefall' : c <= 82 ? 'Schauer' : 'Gewitter');
     /* Fineline-Wettersymbole (Kartografie-Stil, currentColor) */
     const IC = {
       sun: '<circle cx="12" cy="12" r="4.4"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.2 5.2l1.9 1.9M16.9 16.9l1.9 1.9M18.8 5.2l-1.9 1.9M7.1 16.9l-1.9 1.9"/>',
@@ -525,7 +546,7 @@ function init(DEM) {
         const ico = chip.querySelector('[data-w-icon]');
         if (ico) ico.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true">'
           + IC[icoKey(d.current.weather_code)] + '</svg>';
-        chip.querySelector('[data-w-meta]').textContent = s ? 'Sonne bis ' + s : 'Live';
+        chip.querySelector('[data-w-meta]').textContent = s ? (EN ? 'Sunset ' : 'Sonne bis ') + s : 'Live';
         chip.hidden = false;
         /* Live-Wetter senkt die Schneegrenze, wenn's am Watzmann grad schneit/friert */
         var wc = d.current.weather_code;

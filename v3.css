@@ -1365,3 +1365,13 @@ html:active-view-transition-type(runter)::view-transition-new(root) { animation:
   }
   nav.nav, .dock, .rail, .scroll-hint, .hero-scroll, .berg-overlays { display: none !important; }
 }
+
+/* Sprach-Umschalter (20.10.2026, scripts/sprachen.mjs): ein Link zur Schwesterseite,
+   beschriftet in deren Sprache, rechts in der Kopfleiste. Gedaempft wie die Legal-Zeile,
+   damit er nicht mit dem Schriftzug konkurriert; 44 px Trefferflaeche. */
+.topbar .sprache { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 4px;
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.6px; color: var(--paper-faint); text-decoration: none;
+  transition: color var(--dur-1) linear; }
+.topbar .sprache-flagge { display: block; box-shadow: 0 0 0 1px rgba(255,255,255,0.18); }
+@media (hover: hover) { .topbar .sprache:hover { color: var(--paper); } }
+.topbar .sprache:focus-visible { outline: 2px solid var(--leaf); outline-offset: 2px; color: var(--paper); }
