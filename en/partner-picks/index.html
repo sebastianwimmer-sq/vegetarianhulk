@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="vh-quelle" content="/partner-picks/@84cfe7aba6194978">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smash Partners &amp; Picks — codes &amp; my gear | VegetarianHulk</title>
+<meta name="description" content="My partners with real discount codes — and the gear I actually use. Honestly recommended, not a catalog: supplements, mountain gear and my content equipment.">
+<meta name="theme-color" content="#0B2418">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://vegetarianhulk.de/en/partner-picks/">
+
+<meta property="og:title" content="Smash Partners &amp; Picks — codes &amp; my gear">
+<meta property="og:site_name" content="VegetarianHulk">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:description" content="Partner codes + my favorite products — honestly recommended, not a catalog.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vegetarianhulk.de/en/partner-picks/">
+<meta property="og:image" content="https://vegetarianhulk.de/berg-starter/img/sebi-poles.jpg">
+<meta property="og:locale" content="en_US">
+
+<link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
+<link rel="stylesheet" href="/v3.css?v=82a7c42d">
+<script src="/uebergang.js?v=4002aa79"></script>
+
+<style>
+  /* ============================================================
+     P&P — v3 Editorial Dark. Karten mit Tiefe statt flachem Raster.
+     KANAL-REGEL: NH/Alpin-Loacker-Produkte laufen NUR über deren
+     Partner-Code — nie über Amazon (siehe products.js / partners.js).
+     Alle Klassen .pp-  ·  Body .pp-page.
+     ============================================================ */
+
+  /* ---- Hero ---- */
+  .pp-hero { margin: clamp(48px, 9vh, 96px) 0 14px; }
+  .pp-hero .kicker { font-family: var(--mono); font-size: var(--t-label); font-weight: 600;
+    letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf);
+    display: flex; align-items: center; gap: 12px; }
+  .pp-hero .kicker::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.24); }
+  .pp-hero h1 { margin: 16px 0 20px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
+    font-size: clamp(44px, 11vw, 84px); line-height: 0.98; color: var(--paper); letter-spacing: -0.5px; }
+  .pp-hero h1 em { font-style: italic; color: var(--leaf); }
+  .pp-lead { font-size: 16.5px; line-height: 1.7; color: var(--paper-dim); max-width: 52ch; }
+  .pp-meta { margin-top: 22px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--paper-faint); }
+  /* Deko-Punkt → kleine Berg-Glyphe */
+  .pp-meta i { display: inline-block; width: 13px; height: 8px; font-size: 0; background: var(--leaf);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'%3E%3Cpath d='M1.5 15 9 3.2l3.4 5L15.8 4l6.7 11z'/%3E%3C/svg%3E") center/contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'%3E%3Cpath d='M1.5 15 9 3.2l3.4 5L15.8 4l6.7 11z'/%3E%3C/svg%3E") center/contain no-repeat; }
+
+  /* Hero 2-spaltig: Text + echtes Sebi-Foto */
+  .pp-hero__top { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: clamp(26px, 4vw, 56px); align-items: center; }
+  .pp-hero__photo { justify-self: center; width: min(290px, 82%); }
+  @media (max-width: 860px) { .pp-hero__top { grid-template-columns: 1fr; }
+    .pp-hero__photo { order: -1; width: min(220px, 60%); margin-bottom: 4px; } }
+  .pp-photo { position: relative; display: inline-block; padding: 9px 9px 0; background: #FBF6EA;
+    box-shadow: 0 22px 44px -20px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.25); border-radius: 3px; transform: rotate(-2.2deg); }
+  .pp-photo img { display: block; width: 100%; height: auto; border-radius: 1px; }
+  .pp-photo figcaption { display: block; padding: 11px 4px 12px; font-family: 'Caveat', cursive;
+    font-size: 18px; line-height: 1.18; color: #2a2118; text-align: center; }
+
+  /* Signierter Abschluss (dunkel) */
+  .pp-sign { width: min(1040px, 92vw); margin: 40px auto 0; margin-left: calc((100% - min(1040px, 92vw)) / 2);
+    padding-top: 24px; border-top: 1px solid rgba(243,235,217,0.14); display: inline-flex; align-items: center; gap: 15px; }
+  .pp-sign__mascot { width: 58px; height: auto; flex: 0 0 auto; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.45));
+    animation: ppMascot 4.5s ease-in-out infinite; }
+  @keyframes ppMascot { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-5px) rotate(1.5deg); } }
+  .pp-sign .hand { font-family: 'Caveat', cursive; font-size: 27px; line-height: 1.05; color: var(--leaf); }
+  .pp-sign .date { margin-top: 4px; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--paper-faint); }
+  @media (prefers-reduced-motion: reduce) { .pp-sign__mascot { animation: none; } }
+
+  /* ---- Affiliate-Disclosure: heller data-light-Hinweis, klar sichtbar ---- */
+  /* Transparenter Legal-Hinweis (kein schwerer Beige-Kasten) */
+  .pp-disclosure { width: min(1040px, 92vw); margin: 22px 0 8px;
+    margin-left: calc((100% - min(1040px, 92vw)) / 2);
+    display: flex; align-items: center; gap: 13px;
+    padding: 12px 2px; position: relative; }
+  .pp-disclosure__tag { flex: none; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.6px;
+    text-transform: uppercase; color: #14100A; align-self: flex-start;
+    background: var(--schild-flaeche); padding: 5px 11px;
+    clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%); }
+  .pp-disclosure__text { margin: 0; font-size: 12.5px; line-height: 1.55; color: var(--paper-dim); }
+  .pp-disclosure__text strong { color: var(--paper); font-weight: 700; }
+
+  /* ---- Sektions-Grids ---- */
+  .pp-grid { display: grid; gap: 16px; margin-top: 4px;
+    width: min(1040px, 92vw); margin-left: calc((100% - min(1040px, 92vw)) / 2); }
+  .pp-grid--partner { grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .pp-grid--partner { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ---- Stück der Woche ----------------------------------------------------
+     Bewusst KEINE weitere Karte: derselbe Kasten mit anderer Rahmenfarbe wäre
+     im Raster untergegangen. Das Band läuft quer über die volle Breite, trägt
+     Gold statt Grün und stellt die Empfehlung neben die Handlung. Die Karten
+     darunter bleiben dadurch, was sie sind — eine Liste. */
+  .pp-woche { position: relative; overflow: hidden;
+    width: min(1040px, 92vw); margin: 2px 0 22px;
+    margin-left: calc((100% - min(1040px, 92vw)) / 2);
+    display: grid; gap: 4px 30px; padding: 28px 30px 26px;
+    grid-template-columns: minmax(0, 1fr);
+    background:
+      radial-gradient(120% 150% at 8% 0%, rgba(232,191,37,0.10), transparent 58%),
+      linear-gradient(158deg, rgba(24,62,41,0.62), rgba(6,26,17,0.6));
+    border: 1px solid rgba(232,191,37,0.24); border-radius: var(--r-karte);
+    box-shadow: inset 0 1px 0 rgba(209,242,235,0.07), 0 22px 48px -30px rgba(0,0,0,0.75); }
+  .pp-woche[hidden] { display: none; }   /* grid schlägt [hidden] */
+  .pp-woche::after { content: ""; position: absolute; inset: 0;
+    background-image: var(--grain); opacity: 0.4; pointer-events: none; }
+  .pp-woche > * { position: relative; z-index: 1; }
+
+  .pp-woche__marke { margin: 0 0 14px; display: flex; align-items: center;
+    font-family: var(--mono); font-size: 10px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase; color: var(--gold-band-hell); }
+  .pp-woche__marke .hsep { color: rgba(232,191,37,0.45); }
+  .pp-woche__kat { margin: 0 0 6px; font-family: var(--mono); font-size: 10px; font-weight: 700;
+    letter-spacing: 1.4px; text-transform: uppercase; color: var(--paper-faint); }
+  .pp-woche__name { margin: 0 0 8px; font-family: 'Playfair Display', 'Playfair Fallback', serif;
+    font-size: clamp(1.7rem, 1.15rem + 2.1vw, 2.5rem); line-height: 1.08;
+    letter-spacing: -0.01em; color: var(--paper); }
+  .pp-woche__text { margin: 0; font-size: 16px; line-height: 1.65;
+    color: var(--paper-dim); max-width: 46ch; }
+  .pp-woche__fuss { display: flex; flex-direction: column; align-items: flex-start;
+    gap: 12px; margin-top: 20px; }
+  .pp-woche__fuss .pp-fine { margin-top: 0; }
+
+  /* Ab Tablet steht die Empfehlung links und die Handlung rechts — dadurch
+     endet der Blick am Knopf statt unter dem Kleingedruckten. */
+  @media (min-width: 860px) {
+    .pp-woche { grid-template-columns: minmax(0, 1fr) minmax(210px, 264px);
+      align-items: center; padding: 32px 34px 30px; }
+    .pp-woche__marke { grid-column: 1 / -1; }
+    .pp-woche__fuss { margin-top: 0; align-items: stretch; }
+    .pp-woche__fuss .th-btn { justify-content: center; }
+  }
+
+  /* ---- Filterleiste ---- */
+  .pp-leiste { width: min(1040px, 92vw); margin: 0 0 14px;
+    margin-left: calc((100% - min(1040px, 92vw)) / 2);
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    justify-content: space-between; }
+  .pp-leiste__zahl { margin: 0; font-family: var(--mono); font-size: 10px; font-weight: 700;
+    letter-spacing: 1.4px; text-transform: uppercase; color: var(--paper-faint); }
+  .pp-leiste__zahl span { color: var(--leaf); }
+  /* flex schlägt [hidden] — ohne diese Zeile stünden alle Karten da. */
+  .pp-card[hidden] { display: none; }
+
+  /* ---- Karte: dunkle Tiefe, Gipfelgrat-Akzent beim Hover (wie /touren) ---- */
+  .pp-card { position: relative; display: flex; flex-direction: column; overflow: hidden;
+    padding: 30px 26px 26px;
+    background: linear-gradient(158deg, rgba(19,54,35,0.5), rgba(6,26,17,0.55));
+    border: 1px solid rgba(126,208,155,0.14); border-radius: var(--r-karte);
+    box-shadow: inset 0 1px 0 rgba(209,242,235,0.06), 0 18px 40px -26px rgba(0,0,0,0.7);
+    transition: transform 550ms var(--ease-lux), border-color 550ms var(--ease-lux), box-shadow 550ms var(--ease-lux); }
+  .pp-card::after { content: ""; position: absolute; inset: 0; background-image: var(--grain);
+    opacity: 0.4; pointer-events: none; }
+  .pp-card::before { content: ""; position: absolute; left: 0; top: 0; height: 2px; width: 0;
+    background: linear-gradient(90deg, var(--emerald), transparent);
+    transition: width 650ms var(--ease-lux); z-index: 2; }
+  .pp-card:hover { transform: translateY(-5px); border-color: rgba(126,208,155,0.34);
+    box-shadow: inset 0 1px 0 rgba(209,242,235,0.1), 0 30px 54px -26px rgba(0,0,0,0.78); }
+  .pp-card:hover::before { width: 62%; }
+  .pp-card > * { position: relative; z-index: 1; }
+
+  .pp-card__head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    min-height: 20px; }
+  .pp-card__cat { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--leaf); }
+  .pp-badge { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    color: #14100A; background: var(--schild-flaeche); padding: 4px 12px 4px 11px;
+    clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%); }
+  .pp-card__name { margin: 12px 0 8px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 600;
+    font-size: 22px; line-height: 1.14; color: var(--paper); }
+  .pp-card__text { font-size: 14.5px; line-height: 1.62; color: var(--paper-dim); }
+
+  /* Hinweis-Box */
+  .pp-hint { margin-top: 14px; font-size: 12.5px; line-height: 1.5; color: var(--paper-dim); }
+  .pp-hint strong { color: var(--leaf); font-weight: 700; }
+
+  /* Code-Zeile — gepunkteter Bergstations-Rahmen, Mono-Code in Mint */
+  .pp-code { display: flex; align-items: center; gap: 8px; margin-top: 16px;
+    background: rgba(5,22,14,0.6); border: 1px dashed rgba(126,208,155,0.4); border-radius: var(--r-control);
+    padding: 8px 8px 8px 14px; }
+  .pp-code code { flex: 1; font-family: var(--mono); font-weight: 700; font-size: 13.5px;
+    letter-spacing: 1.2px; color: var(--mint); }
+  .pp-copy { flex: none; border: 0; cursor: pointer; background: var(--royal); color: var(--paper);
+    font-family: var(--mono); font-weight: 700; font-size: 11px; letter-spacing: 1px;
+    padding: 8px 15px; border-radius: var(--r-control);
+    transition: background 200ms var(--ease-lux), color 200ms var(--ease-lux), transform 200ms var(--ease-lux); }
+  .pp-copy:hover { background: var(--emerald); color: #05130C; transform: translateY(-1px); }
+  .pp-copy:focus-visible { outline: 2px solid var(--leaf); outline-offset: 2px; }
+  .pp-copy.copied { background: var(--emerald); color: #05130C; }
+
+  /* Preis-Hinweis (Picks) */
+  .pp-price { margin-top: 16px; font-family: var(--mono); font-size: 10px; font-weight: 700;
+    letter-spacing: 1.6px; text-transform: uppercase; color: var(--paper-faint); }
+
+  /* Affiliate-Fineprint (rechtlich) */
+  .pp-fine { margin-top: 12px; font-size: 11px; line-height: 1.45; color: var(--paper-faint); max-width: 46ch; }
+
+  /* CTA — DAV-gelbes Wegweiser-Schild (v3 .th-btn), sitzt unten */
+  /* Die Karten sind unterschiedlich lang, der Knopf stand deshalb in jeder
+     Karte auf anderer Hoehe — vier Knoepfe auf einer Zeile sahen aus wie eine
+     Treppe. `auto` schiebt Kleingedrucktes und Knopf ans Kartenende, damit
+     die Knopfreihe eine Linie bildet. */
+  .pp-card > .pp-fine { margin-top: auto; padding-top: 14px; }
+  .pp-cta { margin-top: 18px; align-self: flex-start; }
+  .pp-pending { margin-top: 18px; align-self: flex-start; display: inline-flex; align-items: center;
+    font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.4px;
+    text-transform: uppercase; color: var(--paper-faint);
+    background: rgba(5,22,14,0.5); border: 1px dashed rgba(126,208,155,0.28); border-radius: var(--r-control);
+    padding: 11px 18px; }
+
+  /* ---- Packliste (28.09.2026): EINE Flaeche, darin Zeilen ----------------
+     Vorher dreizehn gleiche Karten im 4er-Raster, jede mit Geisterziffer und
+     gelbem Schild. Die Ziffern waren keine Reihenfolge, die Schilder keine
+     Wegweisung mehr. Jetzt liest man die Liste wie einen Packzettel: links
+     wofuer, in der Mitte was und warum, rechts der Weg dahin. Das gelbe
+     Schild bleibt dem Stueck der Woche vorbehalten. */
+  .pp-grid--pick { grid-template-columns: 1fr; gap: 0;
+    padding: 6px clamp(20px, 3.2vw, 40px);
+    background: linear-gradient(158deg, rgba(19,54,35,0.5), rgba(6,26,17,0.55));
+    border: 1px solid rgba(126,208,155,0.14); border-radius: var(--r-karte);
+    box-shadow: inset 0 1px 0 rgba(209,242,235,0.06), 0 18px 40px -26px rgba(0,0,0,0.7); }
+  .pp-grid--pick .pp-card { display: grid; grid-template-columns: 168px minmax(0, 1fr) auto;
+    gap: 6px clamp(20px, 3vw, 40px); align-items: start;
+    padding: 26px 0; background: none; border: 0; border-radius: 0; box-shadow: none;
+    border-bottom: 1px solid rgba(126,208,155,0.12); overflow: visible; transform: none; }
+  .pp-grid--pick .pp-card[hidden] { display: none; }
+  .pp-grid--pick .pp-card:last-of-type { border-bottom: 0; }
+  .pp-grid--pick .pp-card::after { content: none; }
+  /* Markierung am linken Rand statt Karte, die sich hebt */
+  .pp-grid--pick .pp-card::before { left: calc(-1 * clamp(20px, 3.2vw, 40px)); top: 26px; bottom: 26px;
+    width: 2px; height: auto; background: var(--leaf);
+    transform: scaleY(0); transform-origin: top; transition: transform 450ms var(--ease-lux); }
+  .pp-grid--pick .pp-card:hover::before,
+  .pp-grid--pick .pp-card:focus-within::before { width: 2px; transform: scaleY(1); }
+  .pp-grid--pick .pp-card__cat { margin: 0; padding-top: 7px; line-height: 1.5; }
+  .pp-grid--pick .pp-card__name { margin: 0 0 6px; font-size: clamp(20px, 1.2vw + 14px, 25px);
+    transition: color 300ms var(--ease-lux); }
+  .pp-grid--pick .pp-card:hover .pp-card__name { color: var(--mint); }
+  .pp-grid--pick .pp-card__text { max-width: 58ch; }
+  .pp-grid--pick .pp-fine { margin-top: 8px; }
+  .pp-grid--pick .pp-pending { margin-top: 2px; }
+
+  .pp-link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px;
+    margin-top: 2px; white-space: nowrap; text-decoration: none;
+    font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+    color: var(--mint); border: 1px solid rgba(126,208,155,0.35); border-radius: var(--r-control);
+    transition: background 250ms var(--ease-lux), color 250ms var(--ease-lux), border-color 250ms var(--ease-lux); }
+  .pp-link svg { width: 14px; height: 14px; flex: none; transition: transform 250ms var(--ease-lux); }
+  .pp-link:hover { background: var(--leaf); border-color: var(--leaf); color: #05130C; }
+  .pp-link:hover svg { transform: translate(2px, -2px); }
+  .pp-link:focus-visible { outline: 2px solid var(--leaf); outline-offset: 3px; }
+
+  @media (max-width: 720px) {
+    .pp-grid--pick .pp-card { grid-template-columns: 1fr; padding: 22px 0; }
+    .pp-grid--pick .pp-card__cat { padding-top: 0; }
+    .pp-grid--pick .pp-card > :last-child { justify-self: start; margin-top: 10px; }
+    .pp-grid--pick .pp-card::before { top: 22px; bottom: 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pp-grid--pick .pp-card::before, .pp-link, .pp-link svg { transition: none; }
+  }
+
+  /* ---- Divider (Berg-Glyphe zwischen den Sektionen) ---- */
+  .pp-divider { display: flex; justify-content: center; margin: 44px 0; color: rgba(126,208,155,0.4); }
+  .pp-divider svg { width: 30px; height: auto;
+    filter: drop-shadow(0 1px 2px rgba(3,15,9,0.6)); }
+
+  /* ---- Danke-Block ---- */
+  .pp-danke { width: min(560px, 92vw); margin: 96px auto 0; }
+  .pp-noscript { max-width: 560px; margin: 20px auto 0; padding: 16px 20px;
+    border: 1px solid rgba(126,208,155,0.2); border-radius: var(--r-control);
+    font-size: 14px; color: var(--paper-dim); text-align: center; }
+  .pp-noscript a { color: var(--leaf); border-bottom: 1px solid rgba(126,208,155,0.4); }
+</style>
+<!-- SPRACHE:KOPF -->
+<link rel="alternate" hreflang="de" href="https://vegetarianhulk.de/partner-picks/">
+<link rel="alternate" hreflang="en" href="https://vegetarianhulk.de/en/partner-picks/">
+<link rel="alternate" hreflang="x-default" href="https://vegetarianhulk.de/partner-picks/">
+<meta property="og:locale:alternate" content="de_DE">
+<!-- /SPRACHE:KOPF -->
+</head>
+<body class="pp-page">
+<div class="bg-wrap" aria-hidden="true"><div class="bg"></div></div>
+<div class="bg2-wrap" aria-hidden="true"><div class="bg2"></div></div>
+
+<div class="rail rail--l" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">2713 hm</span></div>
+</div>
+<div class="rail rail--r" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">2713 hm</span></div>
+</div>
+
+<main>
+  <div class="wrap">
+
+    <header class="topbar">
+      <span class="brandbox">
+        <a class="wordmark" href="/en/">VEGETARIAN<b>HULK</b></a>
+        <span class="wordmark wordmark--invert" aria-hidden="true" data-invert-layer>VEGETARIAN<b>HULK</b></span>
+      </span>
+      <!-- SPRACHE:WECHSEL --><a class="sprache" href="/partner-picks/" hreflang="de" lang="de" data-sprache="de"><svg class="sprache-flagge" viewBox="0 0 5 3" width="20" height="12" aria-hidden="true" focusable="false"><path fill="#000" d="M0 0h5v1H0z"/><path fill="#D00" d="M0 1h5v1H0z"/><path fill="#FFCE00" d="M0 2h5v1H0z"/></svg><span>Deutsch</span></a><!-- /SPRACHE:WECHSEL -->
+    </header>
+
+    <!-- Hero -->
+    <section class="pp-hero st" aria-labelledby="pp-title">
+      <div class="pp-hero__top">
+        <div class="pp-hero__text">
+          <p class="kicker st st1">Smash Partners &amp; Picks</p>
+          <h1 id="pp-title" class="st st2">Where I shop,<br><em>you save too.</em></h1>
+          <p class="pp-lead st st3">My partners with real discount codes — and the gear I use myself. Honestly recommended, otherwise it wouldn’t be here.</p>
+          <p class="pp-meta st st4"><span>Discount codes</span><i></i><span>My own gear</span><i></i><span>Amazon Associate</span></p>
+        </div>
+        <figure class="pp-photo pp-hero__photo st st3">
+          <img src="/berg-starter/img/sebi-poles.jpg" alt="Sebi in the mountains with hiking poles" loading="eager">
+          <figcaption>The poles in the photo: Alpin Loacker — available below with a code.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Affiliate-Disclosure (rechtlich, klar sichtbar) -->
+    <aside class="pp-disclosure rv" aria-label="Ad disclosure">
+      <span class="pp-disclosure__tag">Ad</span>
+      <p class="pp-disclosure__text"><strong>Affiliate links.</strong> Through my codes and links you buy
+      at the same price as usual — I get a commission. It costs you nothing extra. As an Amazon Associate I earn from qualifying purchases.</p>
+    </aside>
+
+    <!-- 01 — Partner & Codes -->
+    <section aria-labelledby="sec-partner">
+      <div class="shead" style="margin-top: 64px;">
+        <p class="kicker">01 · Partners &amp; codes</p>
+        <h2 id="sec-partner">Where I shop, <em>you</em> save.</h2>
+      </div>
+      <div id="partner-index" class="pp-grid pp-grid--partner">
+        <!-- ERZEUGT von scripts/produkte-sync.mjs aus lieblingsprodukte/products.js.
+             Nicht von Hand aendern — der naechste Lauf ueberschreibt es. -->
+        <noscript>
+          <ul style="margin:0;padding-left:1.1em;color:var(--ink,#1a1410);line-height:1.7">
+            <li><strong>DJI Neo 2 Fly More Combo</strong> — What I film with. For the drone shots over the summits — launches from my hand, no tripod needed in the mountains. <a href="https://www.amazon.de/dp/B0FJ1F5QZM?th=1&amp;linkCode=ll2&amp;tag=vegetarianhul-21&amp;linkId=a138653a571471b0275264da9a5a8428&amp;ref_=as_li_ss_tl" rel="sponsored nofollow noopener">On Amazon</a></li>
+            <li><strong>DJI Mic Mini</strong> — What I film with. My audio for every talking head — clip it on and forget about it. <a href="https://www.amazon.de/dp/B0DDL8WGH5?th=1&amp;linkCode=ll2&amp;tag=vegetarianhul-21&amp;linkId=8d4636d5aacb5d851793087d5df6b729&amp;ref_=as_li_ss_tl" rel="sponsored nofollow noopener">On Amazon</a></li>
+            <li><strong>Insta360 Flow 2 Plus</strong> — What I film with. The gimbal for my hiking vlogs — AI tracking keeps up when I’m out on my own. <a href="https://www.amazon.de/dp/B0F6CBMRBH?th=1&amp;linkCode=ll2&amp;tag=vegetarianhul-21&amp;linkId=50fde7fd02631ca3bb2eab5034fb7539&amp;ref_=as_li_ss_tl" rel="sponsored nofollow noopener">On Amazon</a></li>
+            <li><strong>Apple MacBook Air 13&quot; M4</strong> — What I film with. Edits all my reels — silent, and all day without a power outlet. <a href="https://www.amazon.de/dp/B0DZDFWPDP?th=1&amp;linkCode=ll2&amp;tag=vegetarianhul-21&amp;linkId=56a0390f5dcab742bc125eaea31387ae&amp;ref_=as_li_ss_tl" rel="sponsored nofollow noopener">On Amazon</a></li>
+            <li><strong>ESN Daily — 480 g, Raspberry Iced Tea</strong> — What I take. Powder, 480 g, Raspberry Iced Tea flavor. <a href="https://www.amazon.de/dp/B0CLLYL8Q5?tag=vegetarianhul-21" rel="sponsored nofollow noopener">On Amazon</a></li>
+            <li><strong>ESN Cognitive Essentials — 90 capsules</strong> — What I take. 90 vegan capsules, 30 servings. <a href="https://www.amazon.de/dp/B0H94HWT9J?tag=vegetarianhul-21" rel="sponsored nofollow noopener">On Amazon</a></li>
+            <li><strong>SALEWA Toxo 3.0 helmet</strong> — What I take to the mountains. Helmet by Salewa. <a href="https://www.amazon.de/dp/B09HKQ89LM?tag=vegetarianhul-21" rel="sponsored nofollow noopener">On Amazon</a></li>
+            <li><strong>EDELRID Jay IV climbing harness</strong> — What I take to the mountains. Climbing harness by Edelrid. <a href="https://www.amazon.de/dp/B0DXWTYRBY?tag=vegetarianhul-21" rel="sponsored nofollow noopener">On Amazon</a></li>
+            <li><strong>BangLong cycling glasses</strong> — What I take to the mountains. Polarized, UV400. <a href="https://www.amazon.de/dp/B0DBZB4CZW?tag=vegetarianhul-21" rel="sponsored nofollow noopener">On Amazon</a></li>
+            <li><strong>NooMii water bottle — 800 ml</strong> — What I take to the mountains. Stainless steel, double-walled, 800 ml. <a href="https://www.amazon.de/dp/B0FPDS1YJG?tag=vegetarianhul-21" rel="sponsored nofollow noopener">On Amazon</a></li>
+            <li><strong>Alpenwert seat cushion — set of 2</strong> — What I take to the mountains. Foldable, waterproof, set of two. <a href="https://www.amazon.de/dp/B0DK27T39B?tag=vegetarianhul-21" rel="sponsored nofollow noopener">On Amazon</a></li>
+            <li><strong>HYZUO 13-inch laptop sleeve</strong> — What I film with. With stand, for the 13-inch MacBook Air. <a href="https://www.amazon.de/dp/B08HWR6J51?tag=vegetarianhul-21" rel="sponsored nofollow noopener">On Amazon</a></li>
+            <li><strong>Cable Kit VI</strong> — What I take to the mountains. My via ferrata set. <a href="https://www.amazon.de/dp/B08WRH819Y?tag=vegetarianhul-21" rel="sponsored nofollow noopener">On Amazon</a></li>
+          </ul>
+        </noscript>
+      </div>
+    </section>
+
+    <div class="pp-divider" aria-hidden="true">
+      <svg viewBox="0 0 30 22" fill="none"><path d="M1 21 9 6l4 6.5L18 5l11 16z" fill="currentColor"/></svg>
+    </div>
+
+    <!-- 02 — Meine Picks -->
+    <section aria-labelledby="sec-picks">
+      <div class="shead" style="margin-top: 0;">
+        <p class="kicker">02 · My picks</p>
+        <h2 id="sec-picks">The things I <em>actually</em> use.</h2>
+      </div>
+      <p class="pp-lead" style="margin: -4px 0 18px;">What I take to the mountains, what I take and what I film with. All things I use myself — if I stop using something, it’s out.</p>
+
+      <!-- Stück der Woche. Inhalt und Auswahl kommen aus js/partner-picks.js:
+           die Kalenderwoche bestimmt, welches Stück hier steht. Ohne JS bleibt
+           der Block aus — der No-JS-Block unten führt ohnehin alle auf. -->
+      <aside class="pp-woche" id="pp-woche" hidden aria-labelledby="pp-woche-name">
+        <p class="pp-woche__marke"><span data-w-kw></span><span class="hsep" aria-hidden="true"></span>in my backpack this week</p>
+        <div class="pp-woche__satz">
+          <p class="pp-woche__kat" data-w-kat></p>
+          <h3 class="pp-woche__name" id="pp-woche-name" data-w-name></h3>
+          <p class="pp-woche__text" data-w-text></p>
+        </div>
+        <div class="pp-woche__fuss">
+          <a class="th-btn th-btn--gelb" data-w-cta href="#" target="_blank" rel="sponsored noopener">View on Amazon</a>
+          <p class="pp-fine">Amazon affiliate link: if you buy through it, I get a commission. It costs you nothing extra. Links go to Amazon.de.</p>
+        </div>
+      </aside>
+
+      <!-- Filterleiste: die Chips baut js/partner-picks.js aus den Kategorien
+           in products.js. Eine neue Kategorie erscheint dadurch von selbst. -->
+      <div class="pp-leiste">
+        <div class="tk-group" id="pp-filter" role="group" aria-label="Filter by category" hidden></div>
+        <p class="pp-leiste__zahl" aria-live="polite"><span id="pp-zahl"></span> items</p>
+      </div>
+
+      <div id="product-index" class="pp-grid pp-grid--pick">
+        <!-- Crawler-/No-JS-Fallback: bei Datenänderung in /lieblingsprodukte/products.js hier syncen. -->
+        <noscript>
+          <ul style="margin:0;padding-left:1.1em;color:var(--ink,#1a1410);line-height:1.7">
+            <li><strong>DJI Neo 2 Fly More Combo</strong> — What I film with. For the drone shots over the summits. <a href="https://www.amazon.de/dp/B0FJ1F5QZM?tag=vegetarianhul-21" rel="sponsored nofollow noopener">On Amazon</a></li>
+            <li><strong>DJI Mic Mini</strong> — What I film with. My audio for every talking head. <a href="https://www.amazon.de/dp/B0DDL8WGH5?tag=vegetarianhul-21" rel="sponsored nofollow noopener">On Amazon</a></li>
+            <li><strong>Insta360 Flow 2 Plus</strong> — What I film with. The gimbal for my hiking vlogs. <a href="https://www.amazon.de/dp/B0F6CBMRBH?tag=vegetarianhul-21" rel="sponsored nofollow noopener">On Amazon</a></li>
+            <li><strong>Apple MacBook Air 13&quot; M4</strong> — What I film with. Edits all my reels. <a href="https://www.amazon.de/dp/B0DZDFWPDP?tag=vegetarianhul-21" rel="sponsored nofollow noopener">On Amazon</a></li>
+          </ul>
+        </noscript>
+      </div>
+      <noscript>
+        <p class="pp-noscript">The list needs JavaScript. Otherwise message me on
+        <a href="https://instagram.com/vegetarianhulk" rel="noopener">@vegetarianhulk</a>.</p>
+      </noscript>
+    </section>
+
+    <div class="pp-sign">
+      <img class="pp-sign__mascot" src="/assets/img/smashy-maskottchen.webp" alt="Smashy, the VegetarianHulk mascot" loading="lazy">
+      <div>
+        <p class="hand">Honestly recommended. — Sebi</p>
+        <p class="date">VegetarianHulk · only what I use myself</p>
+      </div>
+    </div>
+
+    <!-- Danke an die Smashies -->
+    <section class="pp-danke rv" aria-label="Thanks to the Smashies">
+      <vh-danke-block data-light></vh-danke-block>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="inner">
+    <a class="wordmark" href="/en/">VEGETARIAN<b>HULK</b></a>
+    <p class="claim">Builder &amp; creator. Discipline over hype.</p>
+    <nav class="legal" aria-label="Legal">
+      <a href="/impressum.html" hreflang="de">Legal notice (German)</a>
+      <a href="/datenschutz.html" hreflang="de">Privacy (German)</a>
+      <span>© 2026 Sebastian Wimmer</span>
+    </nav>
+  </div>
+</footer>
+
+<nav class="nav" aria-label="Main navigation">
+  <a href="/en/">Home</a>
+  <a href="/en/partner-picks/" aria-current="page">P&amp;P</a>
+  <a class="center" href="/en/hikes/">
+    <span class="mtn"><svg viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 50 26 16l10 16 8-12 22 30"/>
+      <path d="M22 23.5 26 20l4 5" opacity="0.85"/>
+      <path d="M40.5 25.5 44 21.5l3.5 5" opacity="0.85"/>
+      <circle cx="58" cy="11" r="4.5" opacity="0.9"/>
+      <path d="M12 50c8-4 16-3.4 22 0" opacity="0.45"/>
+    </svg></span>
+    Hulk&nbsp;Hikes
+  </a>
+  <a href="/newsletter" hreflang="de">News</a>
+  <a href="/en/brands/">Brands</a>
+</nav>
+
+<script src="/codes/partners.js?v=069c8dfc"></script>
+<script src="/lieblingsprodukte/products.js?v=80f3cc06"></script>
+
+
+<script src="/js/partner-picks.js?v=e12a1bc7" defer></script>
+
+<script src="/danke-block.js?v=b0f058b9"></script>
+<script src="/v3.js?v=2d13e502" defer></script>
+</body>
+</html>

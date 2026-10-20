@@ -71,13 +71,22 @@ def bauen(wurzel):
     for pfad, url in seiten(wurzel):
         eintraege.setdefault(url, pfad)  # doppelter Canonical: erster gewinnt
     zeilen = ['<?xml version="1.0" encoding="UTF-8"?>',
-              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">']
     for url in sorted(eintraege, key=lambda u: (u != HOST, u)):
         rest = url[len(HOST):]
-        prio = PRIORITAET.get(rest, "0.85" if rest.startswith("touren/") else "0.6")
+        # Englische Schwestern (/en/, 20.10.2026) erben die Prioritaet ihrer Art
+        basis = {"en/": "", "en/brands/": "kooperationen.html", "en/brand-inquiry/": "anfrage.html",
+                 "en/partner-picks/": "partner-picks/", "en/hikes/": "touren/"}.get(rest, rest)
+        prio = PRIORITAET.get(basis, "0.85" if basis.startswith(("touren/", "en/hikes/")) else "0.6")
         zeilen += ["  <url>", f"    <loc>{url}</loc>",
                    f"    <lastmod>{lastmod(eintraege[url], wurzel)}</lastmod>",
-                   f"    <priority>{prio}</priority>", "  </url>"]
+                   f"    <priority>{prio}</priority>"]
+        # Sprachpaare: genau die hreflang-Zeilen, die die Seite selbst traegt
+        # (scripts/sprachen-bauen.mjs) — keine zweite Quelle.
+        seite = eintraege[url].read_text(encoding="utf-8", errors="replace")
+        for lang, href in re.findall(r'<link rel="alternate" hreflang="([a-z-]+)" href="([^"]+)">', seite):
+            zeilen.append(f'    <xhtml:link rel="alternate" hreflang="{lang}" href="{href}"/>')
+        zeilen.append("  </url>")
     zeilen.append("</urlset>")
     return "\n".join(zeilen) + "\n"
 

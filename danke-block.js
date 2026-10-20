@@ -18,6 +18,16 @@
   // danke-block.js wird beim Hash-Bump ohnehin neu ausgeliefert).
   var MASCOT_SRC = '/assets/img/smashy-maskottchen.png?v=3';
 
+  // Englische Seiten (/en/, 20.10.2026): derselbe Block auf Englisch.
+  var T = document.documentElement.lang === 'en' ? {
+    h2: 'Thanks to my Smashies',
+    p: 'Every purchase through my links keeps this going — <strong>at no extra cost to you</strong>. Thanks for being part of the Smashies.',
+    alt: 'Smashy mascot'
+  } : {
+    h2: 'Danke an meine Smashies',
+    p: 'Jeder Kauf über meine Links hält das hier am Laufen — <strong>ohne Mehrkosten für dich</strong>. Danke, dass ihr Teil der Smashies seid.',
+    alt: 'Smashy Maskottchen'
+  };
   var TEMPLATE = '' +
     '<style>' +
     '  :host { display: block; }' +
@@ -68,7 +78,7 @@
     '</style>' +
     '<div class="wrap">' +
     '  <div class="mascot">' +
-    '    <img alt="Smashy Maskottchen" width="140" height="140" loading="eager" decoding="async" ' +
+    '    <img alt="' + T.alt + '" width="140" height="140" loading="eager" decoding="async" ' +
     '         onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\';" />' +
     '    <div class="fallback" style="display:none" aria-hidden="true">' +
     '      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13C4 8 8 4 20 4c0 12-4 16-9 16z"/><path d="M12 11c-3 2-5 5-6 9"/></svg>' +
@@ -76,8 +86,8 @@
     '    </div>' +
     '  </div>' +
     '  <p class="kicker">Smashies</p>' +
-    '  <h2>Danke an meine Smashies</h2>' +
-    '  <p>Jeder Kauf über meine Links hält das hier am Laufen — <strong>ohne Mehrkosten für dich</strong>. Danke, dass ihr Teil der Smashies seid.</p>' +
+    '  <h2>' + T.h2 + '</h2>' +
+    '  <p>' + T.p + '</p>' +
     '</div>';
 
   function VhDanke() { return Reflect.construct(HTMLElement, [], VhDanke); }

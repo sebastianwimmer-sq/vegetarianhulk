@@ -5,9 +5,11 @@
 /* Count-Up der Stat-Zahlen beim Reinscrollen (animiert + live-Gefühl) */
 (function () {
   'use strict';
+  // Zahlenformat nach Seitensprache (/en/ seit 20.10.2026: 2,091 statt 2.091)
+  var LOC = document.documentElement.lang === 'en' ? 'en-US' : 'de-DE';
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function fmtInt(n) { return n.toLocaleString('de-DE'); }
-  function fmtPct(n) { return n.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%'; }
+  function fmtInt(n) { return n.toLocaleString(LOC); }
+  function fmtPct(n) { return n.toLocaleString(LOC, { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%'; }
   var nums = document.querySelectorAll('[data-count], [data-count-pct]');
   function run(el) {
     var pct = el.hasAttribute('data-count-pct');

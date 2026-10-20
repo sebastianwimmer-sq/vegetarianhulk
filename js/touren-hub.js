@@ -102,7 +102,9 @@
   'use strict';
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var nums = document.querySelectorAll('[data-count]');
-  function fmt(n) { return n.toLocaleString('de-DE'); }
+  // Zahlenformat nach Seitensprache (/en/ seit 20.10.2026: 2,091 statt 2.091)
+  var LOC = document.documentElement.lang === 'en' ? 'en-US' : 'de-DE';
+  function fmt(n) { return n.toLocaleString(LOC); }
   // Die Bilanz steht einfach da (kein Hochzaehlen, motion-loop 06.10.2026)
   function run(el) { el.textContent = fmt(parseInt(el.dataset.count, 10)); }
   if ('IntersectionObserver' in window && nums.length) {
@@ -114,7 +116,9 @@
 
   var box = document.querySelector('[data-tklive]');
   if (box && window.fetch) {
-    var WMO = function (cd) { return cd === 0 ? 'klar' : cd <= 2 ? 'leicht bewölkt' : cd === 3 ? 'bedeckt'
+    var EN = document.documentElement.lang === 'en';
+    var WMO = EN ? function (cd) { return cd === 0 ? 'clear' : cd <= 2 ? 'partly cloudy' : cd === 3 ? 'overcast'
+      : cd <= 48 ? 'fog' : cd <= 67 ? 'rain' : cd <= 77 ? 'snowfall' : cd <= 82 ? 'showers' : 'thunderstorm'; } : function (cd) { return cd === 0 ? 'klar' : cd <= 2 ? 'leicht bewölkt' : cd === 3 ? 'bedeckt'
       : cd <= 48 ? 'Nebel' : cd <= 67 ? 'Regen' : cd <= 77 ? 'Schneefall' : cd <= 82 ? 'Schauer' : 'Gewitter'; };
     var IC = {
       sun: '<circle cx="12" cy="12" r="4.4"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.2 5.2l1.9 1.9M16.9 16.9l1.9 1.9M18.8 5.2l-1.9 1.9M7.1 16.9l-1.9 1.9"/>',
@@ -145,7 +149,7 @@
         box.querySelector('[data-lv-temp]').textContent = Math.round(d.current.temperature_2m);
         box.querySelector('[data-lv-cond]').textContent = WMO(d.current.weather_code);
         box.querySelector('[data-lv-ico]').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true">' + IC[key(d.current.weather_code)] + '</svg>';
-        box.querySelector('[data-lv-meta]').textContent = ort + (s ? ' · Licht bis ' + s : '');
+        box.querySelector('[data-lv-meta]').textContent = ort + (s ? (EN ? ' · light until ' : ' · Licht bis ') + s : '');
         box.hidden = false;
       })
       .catch(function () {});

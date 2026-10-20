@@ -8,6 +8,9 @@
    ============================================================ */
 (function () {
   'use strict';
+  // Englische Tourseiten (/en/hikes/, 20.10.2026): Formate und Texte nach Seitensprache
+  var EN = document.documentElement.lang === 'en';
+  var LOC = EN ? 'en-US' : 'de-DE';
 
   var sanftBevorzugt = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -86,7 +89,7 @@
       return punkte[punkte.length - 1].hoehe;
     }
 
-    var zahl = function (n) { return Math.round(n).toLocaleString('de-DE'); };
+    var zahl = function (n) { return Math.round(n).toLocaleString(LOC); };
 
     function ablesen(clientX) {
       var kasten = svg.getBoundingClientRect();
@@ -102,7 +105,7 @@
       wert.style.left = Math.min(kasten.width - rand, Math.max(rand, x)) + 'px';
       wert.style.top = '18px';
       wert.innerHTML = '<b>' + zahl(hoehe) + ' m</b> · ' +
-        km.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' km';
+        km.toLocaleString(LOC, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' km';
       profil.classList.add('liest');
     }
 
@@ -155,7 +158,7 @@
         var t = document.createElement('span');
         t.className = 'tour-profil__tick tour-profil__tick--y';
         t.style.top = (linieY / HOEHE * 100) + '%';
-        t.textContent = h.toLocaleString('de-DE') + ' m';
+        t.textContent = h.toLocaleString(LOC) + ' m';
         achse.appendChild(t);
       }
     });
@@ -167,7 +170,7 @@
         var k = document.createElement('span');
         k.className = 'tour-profil__tick tour-profil__tick--x';
         k.style.left = (x(km) / BREITE * 100) + '%';
-        k.textContent = km.toLocaleString('de-DE') + ' km';
+        k.textContent = km.toLocaleString(LOC) + ' km';
         achse.appendChild(k);
       }
     }
@@ -264,7 +267,7 @@
      weiss (data-zahl). */
   document.querySelectorAll('[data-count]').forEach(function (el) {
     var ziel = parseInt(el.dataset.count, 10);
-    if (isFinite(ziel)) el.textContent = ziel.toLocaleString('de-DE');
+    if (isFinite(ziel)) el.textContent = ziel.toLocaleString(LOC);
   });
 
   /* ---------- Live am Gipfel (Open-Meteo) ----------
@@ -281,6 +284,9 @@
     var dawnBox = strip.querySelector('[data-sonnenaufgang]');
 
     var WMO = function (cd) {
+      if (EN) return cd === 0 ? 'clear' : cd <= 2 ? 'partly cloudy' : cd === 3 ? 'overcast'
+        : cd <= 48 ? 'fog' : cd <= 67 ? 'rain' : cd <= 77 ? 'snowfall'
+        : cd <= 82 ? 'showers' : 'thunderstorm';
       return cd === 0 ? 'klar' : cd <= 2 ? 'leicht bewölkt' : cd === 3 ? 'bedeckt'
         : cd <= 48 ? 'Nebel' : cd <= 67 ? 'Regen' : cd <= 77 ? 'Schneefall'
         : cd <= 82 ? 'Schauer' : 'Gewitter';
@@ -320,7 +326,7 @@
           if (zeit) {
             dawnBox.querySelector('[data-sonnenaufgang-zeit]').textContent = zeit;
             var label = dawnBox.querySelector('[data-sonnenaufgang-label]');
-            if (label) label.textContent = (jetzt < heute) ? 'Sonnenaufgang heute' : 'Sonnenaufgang morgen';
+            if (label) label.textContent = (jetzt < heute) ? (EN ? 'Sunrise today' : 'Sonnenaufgang heute') : (EN ? 'Sunrise tomorrow' : 'Sonnenaufgang morgen');
             dawnBox.hidden = false;
           }
         }
@@ -534,8 +540,8 @@
 
         var km = summe[beste];
         var hoehe = hoeheBei(km);
-        wert.innerHTML = '<b>' + km.toFixed(1).replace('.', ',') + ' km</b>'
-          + (hoehe ? ' · ' + Math.round(hoehe).toLocaleString('de-DE') + ' m' : '');
+        wert.innerHTML = '<b>' + (EN ? km.toFixed(1) : km.toFixed(1).replace('.', ',')) + ' km</b>'
+          + (hoehe ? ' · ' + Math.round(hoehe).toLocaleString(LOC) + ' m' : '');
         wert.style.left = (px[beste][0] / kBreite * 100).toFixed(1) + '%';
         wert.style.top = (px[beste][1] / kHoehe * 100).toFixed(1) + '%';
         route.classList.add('liest');

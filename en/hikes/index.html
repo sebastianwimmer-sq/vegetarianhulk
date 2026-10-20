@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="vh-quelle" content="/touren/@b835a99196777b70">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.open-meteo.com; base-uri 'none'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hulk Hikes — my mountain hikes in the Chiemgau &amp; Berchtesgaden Alps | VegetarianHulk</title>
+<meta name="description" content="Mountain hikes I’ve done myself — filter by region and difficulty, with elevation profile, walking time and starting point.">
+<meta name="theme-color" content="#0B2418">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://vegetarianhulk.de/en/hikes/">
+
+<meta property="og:title" content="Hulk Hikes — my mountain hikes in the Chiemgau &amp; Berchtesgaden Alps">
+<meta property="og:site_name" content="VegetarianHulk">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:description" content="My own hikes — filterable, with elevation profile, walking time and starting point.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vegetarianhulk.de/en/hikes/">
+<meta property="og:image" content="https://vegetarianhulk.de/touren/ristfeuchthorn/ausblick.jpg">
+<meta property="og:locale" content="en_US">
+
+<link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
+<link rel="stylesheet" href="/v3.css?v=82a7c42d">
+<script src="/uebergang.js?v=4002aa79"></script>
+<link rel="expect" href="#tkList" blocking="render">
+<link rel="stylesheet" href="/touren/tour.css?v=5f9829f8">
+<style>
+/* ============================================================
+   /touren/ — Hulk-Hikes FORUM-LISTE (page-scoped .tk-)
+   Pinned-Highlight (letzte gegangene Tour) + filterbare,
+   durchsuchbare, sortierbare Zeilen-Liste mit Expand.
+   ============================================================ */
+.tk-hero { margin: clamp(40px, 8vh, 90px) 0 0; }
+.tk-hero .kicker { display: flex; align-items: center; gap: 12px; font-family: var(--mono);
+  font-size: var(--t-label); font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf); }
+.tk-hero .kicker::after { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.24); }
+.tk-hero h1 { margin: 16px 0 18px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
+  font-size: clamp(42px, 10vw, 80px); line-height: 0.98; letter-spacing: -0.5px; color: var(--paper); }
+.tk-hero h1 em { font-style: italic; color: var(--leaf); }
+.tk-lead { font-size: 16.5px; line-height: 1.7; color: var(--paper-dim); max-width: 54ch; }
+.tk-lead strong { color: var(--paper); font-weight: 600; }
+/* Persönliche Feldaufnahmen (echte Sebi-Fotos, verbindet mit /berg-starter) */
+.tk-me { margin-top: clamp(22px, 4vh, 40px); display: flex; align-items: center; gap: clamp(18px, 3.5vw, 40px); flex-wrap: wrap; }
+.tk-me__shots { display: flex; flex: 0 0 auto; padding: 20px 10px 20px 14px; }
+.tk-me__shots figure { margin: 0; padding: 7px 7px 0; background: #FBF6EA; border-radius: 3px; width: 150px;
+  box-shadow: 0 18px 34px -18px rgba(0,0,0,0.62), 0 2px 5px rgba(0,0,0,0.22); }
+.tk-me__shots figure img { display: block; width: 100%; height: auto; border-radius: 1px; }
+.tk-me__shots figure:nth-child(1) { transform: rotate(-4.5deg); z-index: 2; margin-top: -8px; }
+.tk-me__shots figure:nth-child(2) { transform: rotate(3.5deg); margin-left: -46px; margin-top: 20px; z-index: 1; }
+.tk-me__shots figure:hover { z-index: 3; }
+.tk-me__line { font-family: 'Caveat', cursive; font-size: 24px; line-height: 1.28; color: var(--paper-dim); max-width: 26ch; }
+.tk-me__line b { color: var(--leaf); }
+@media (min-width: 820px) { .tk-bar { margin-top: 72px; } .tk-close { margin-top: 108px; } }
+@media (max-width: 600px) { .tk-me__shots figure { width: 122px; } .tk-me__line { font-size: 21px; } }
+
+.tk-wide { width: min(1080px, 94vw); margin-left: calc((100% - min(1080px, 94vw)) / 2); }
+
+/* ---- Pinned Highlight: zuletzt gegangene Tour ---- */
+.tk-pin { margin-top: clamp(40px, 6vh, 64px); position: relative; overflow: hidden; border-radius: var(--r-karte);
+  display: grid; grid-template-columns: 1.25fr 1fr;
+  background:
+    repeating-linear-gradient(96deg, rgba(24,43,31,0.022) 0 1px, transparent 1px 11px),
+    linear-gradient(168deg, #F6EFDF 0%, #EFE7D1 62%, #E8DEC5 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 0 0 1px rgba(186,155,95,0.26),
+    0 36px 70px -34px rgba(0,0,0,0.66);
+  text-decoration: none; color: inherit;
+  transition: transform 550ms var(--ease-lux), box-shadow 550ms var(--ease-lux); }
+.tk-pin:hover { transform: translateY(-4px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 0 0 1px rgba(186,155,95,0.4), 0 46px 84px -34px rgba(0,0,0,0.7); }
+.tk-pin__body { padding: clamp(26px, 3.4vw, 42px); display: flex; flex-direction: column; }
+.tk-pin__badge { align-self: flex-start; display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
+  color: #14100A; background: var(--schild-flaeche); padding: 5px 13px 5px 10px;
+  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%); }
+.tk-pin h2 { margin: 16px 0 2px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
+  font-size: clamp(30px, 4.4vw, 44px); line-height: 1; letter-spacing: -0.5px; color: #14281C; }
+.tk-pin h2 span { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--ink-meta); margin-left: 6px; }
+.tk-pin__tag { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic; font-size: 18px; color: var(--royal); }
+.tk-pin__note { margin: 14px 0 0; max-width: 40ch;
+  font-family: 'Caveat', cursive; font-weight: 600; font-size: 21px; line-height: 1.35; color: #1E3A2A; }
+.tk-pin__facts { margin-top: auto; padding-top: 18px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px;
+  font-family: var(--mono); font-size: 11.5px; font-weight: 700; color: #14281C;
+  border-top: 1px solid rgba(24,43,31,0.14); }
+.tk-pin__facts i { display: inline-block; width: 1px; height: 10px; margin: 0 5px; vertical-align: -1px; background: rgba(24,43,31,0.3); font-size: 0; }
+.tk-pin__cta { margin-top: 10px; font-family: var(--mono); font-size: 11px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--royal);
+  display: inline-block;
+  /* Ruecken statt Aufsperren: letter-spacing rechnete je Frame das Layout neu */
+  transition: transform var(--dur-3) var(--ease-lux); }
+.tk-pin:hover .tk-pin__cta { transform: translateX(3px); }
+.tk-pin__photo { position: relative; min-height: 260px; overflow: hidden; }
+.tk-pin__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  transition: transform 1200ms var(--ease-lux); }
+.tk-pin:hover .tk-pin__photo img { transform: scale(1.04); }
+/* Das Foto wird in die Papierflaeche EINGEARBEITET, nicht daraufgesetzt.
+   Vorher lief der Verlauf nur ueber 14% der Breite — links weich, an den drei
+   anderen Kanten eine harte Fotokante mitten in der Karte. Jetzt blendet es
+   nach allen Seiten aus und traegt eine leichte Vignette, damit es in der
+   Flaeche liegt statt darauf. */
+.tk-pin__photo::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(238,229,209,1) 0, rgba(238,229,209,0.55) 16%, rgba(238,229,209,0) 44%),
+    linear-gradient(180deg, rgba(238,229,209,0.85) 0, rgba(238,229,209,0) 22%),
+    linear-gradient(0deg, rgba(238,229,209,0.85) 0, rgba(238,229,209,0) 22%);
+}
+/* Innenschatten bettet die Kante ein — die Karte liegt ueber dem Foto, nicht daneben */
+.tk-pin__photo::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  box-shadow: inset 0 0 34px 2px rgba(238,229,209,0.2); }
+@media (max-width: 860px) {
+  .tk-pin { grid-template-columns: 1fr; }
+  .tk-pin__photo { min-height: 210px; order: -1; }
+  .tk-pin__photo::after { background:
+    linear-gradient(0deg, rgba(238,229,209,1) 0, rgba(238,229,209,0.5) 18%, rgba(238,229,209,0) 46%),
+    linear-gradient(90deg, rgba(238,229,209,0.7) 0, rgba(238,229,209,0) 20%),
+    linear-gradient(270deg, rgba(238,229,209,0.7) 0, rgba(238,229,209,0) 20%); }
+}
+
+/* ---- Toolbar: Suche · Filter · Sortierung (Instrument-Sprache) ---- */
+/* Senkrechter Rhythmus: die Seite steht auf einer 18er-Reihe (18 · 36 · 54 · 72 · 90 · 108).
+   Drei Abstaende hingen an vh und landeten dadurch auf 63, 95 und 102px — daneben,
+   und je nach Geraetehoehe woanders. Feste Stufen mit einem Breakpoint statt vh:
+   das ist vorhersagbar und faellt nicht wieder heraus. */
+.tk-bar { margin-top: 54px; position: relative; z-index: 4;
+  display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px;
+  padding: 14px 16px; border-radius: var(--r-karte);
+  background: var(--flaeche-wald);
+  border: 1px solid rgba(126,208,155,0.18);
+  box-shadow: inset 0 1px 0 rgba(209,242,235,0.07), 0 22px 48px -26px rgba(0,0,0,0.7); }
+.tk-search { flex: 1 1 200px; display: flex; align-items: center; gap: 9px;
+  padding: 9px 13px; border-radius: var(--r-control);
+  background: rgba(3,15,9,0.5); border: 1px solid rgba(126,208,155,0.18);
+  transition: border-color var(--dur-2) var(--ease-lux), box-shadow var(--dur-2) var(--ease-lux); }
+.tk-search:focus-within { border-color: rgba(126,208,155,0.55); box-shadow: 0 0 0 3px rgba(80,200,120,0.12); }
+.tk-search svg { width: 14px; height: 14px; color: var(--leaf); flex: 0 0 auto; }
+.tk-search input { flex: 1; min-width: 0; background: none; border: 0; outline: none; font: inherit;
+  min-height: 44px;   /* WCAG 2.5.8: war 19 px hoch */
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.5px; color: var(--paper); }
+.tk-search input::placeholder { color: var(--paper-faint); }
+
+.tk-sort { position: relative; }
+.tk-sort select { appearance: none; -webkit-appearance: none; cursor: pointer;
+  padding: 8px 30px 8px 14px; border-radius: var(--r-control);
+  background: rgba(3,15,9,0.5); border: 1px solid rgba(126,208,155,0.22);
+  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--paper-dim); outline: none;
+  transition: border-color var(--dur-2) var(--ease-lux); }
+.tk-sort select:hover, .tk-sort select:focus { border-color: rgba(126,208,155,0.5); color: var(--paper); }
+.tk-sort::after { content: "▾"; position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  pointer-events: none; color: var(--leaf); font-size: 10px; }
+.tk-count { margin-left: auto; font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 1.6px; text-transform: uppercase; color: var(--paper-faint); }
+.tk-count b { color: var(--leaf); }
+
+/* ---- Forum-Liste ---- */
+.tk-list { margin-top: 18px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+/* clip statt hidden: hidden macht die Zeile zum Scroll-Container, view() darin stuende still */
+.tk-row { position: relative; overflow: clip; border-radius: var(--r-karte);
+  background:
+    repeating-linear-gradient(96deg, rgba(24,43,31,0.02) 0 1px, transparent 1px 11px),
+    linear-gradient(168deg, #F6EFDF 0%, #F0E8D3 66%, #EAE0C8 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 0 0 1px rgba(186,155,95,0.2),
+    0 16px 36px -26px rgba(0,0,0,0.55);
+  transition: transform var(--dur-4) var(--ease-lux), box-shadow var(--dur-4) var(--ease-lux),
+    opacity 350ms var(--ease-lux); }
+.tk-row:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 0 0 1px rgba(186,155,95,0.36),
+  0 26px 48px -26px rgba(0,0,0,0.6); }
+.tk-row.is-out { opacity: 0; transform: translateY(10px) scale(0.99); pointer-events: none; }
+.tk-row[hidden] { display: none; }
+/* Kopfzeile (Klickfläche) */
+.tk-row__head { display: grid; grid-template-columns: 96px 1fr auto; gap: 0 18px; align-items: center;
+  width: 100%; text-align: left; background: none; border: 0; cursor: pointer; padding: 0 20px 0 0; font: inherit; color: inherit; }
+.tk-row__eng { align-self: stretch; position: relative; overflow: hidden; min-height: 86px; }
+.tk-row__eng img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  mix-blend-mode: multiply; transition: transform var(--dur-6) var(--ease-lux); }
+.tk-row:hover .tk-row__eng img { transform: scale(1.07); }
+.tk-row__eng::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 60%, rgba(243,236,222,1) 100%); }
+.tk-row__main { padding: 15px 0; min-width: 0; }
+.tk-row__top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.tk-row__name { margin: 0; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700; font-size: clamp(19px, 2.4vw, 24px);
+  line-height: 1.05; letter-spacing: -0.3px; color: #14281C; }
+.tk-row__alt { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--ink-meta); }
+.tk-badge-gone { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.4px;
+  text-transform: uppercase; color: #14100A; background: var(--schild-flaeche);
+  padding: 3px 9px 3px 7px; clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 50%, calc(100% - 5px) 100%, 0 100%); }
+.tk-row__tag { margin-top: 2px; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic;
+  font-size: 14.5px; color: var(--royal); }
+.tk-row__facts { margin-top: 7px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px 9px;
+  font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.3px; color: rgba(24,43,31,0.78); }
+.tk-row__facts i { display: inline-block; width: 1px; height: 9px; margin: 0 5px; vertical-align: -1px; background: rgba(24,43,31,0.26); font-size: 0; }
+.tk-region { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--royal);
+  border: 1px solid rgba(11,110,79,0.32); border-radius: var(--r-control); padding: 2px 9px; }
+.tk-dots { display: inline-flex; gap: 3.5px; }
+.tk-dots b { width: 6.5px; height: 6.5px; border-radius: 50%; border: 1.3px solid var(--royal); box-sizing: border-box; }
+.tk-dots b.on { background: var(--royal); }
+/* Die Schwierigkeit fuellt sich beim Scrollen, Punkt fuer Punkt bis zur Stufe
+   der Tour (motion-loop, Entscheidung 06.10.2026: Bewegung haengt am Weg).
+   Zeilen, die beim Laden schon oben stehen, sind sofort gefuellt. */
+@keyframes tkPunkt { from { background-color: transparent; transform: scale(.55); } to { background-color: var(--royal); transform: none; } }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .tk-dots b.on { --i: 0; animation: tkPunkt linear both; animation-timeline: view();
+      animation-range: cover calc(14% + var(--i) * 5%) cover calc(22% + var(--i) * 5%); }
+    .tk-dots b.on:nth-child(2) { --i: 1; }
+    .tk-dots b.on:nth-child(3) { --i: 2; }
+  }
+}
+/* rechts: Mini-Profil + Chevron */
+.tk-row__side { display: flex; align-items: center; gap: 16px; }
+.tk-row__profile { width: 120px; height: 34px; color: var(--sage); }
+.tk-row__profile .pfill { fill: rgba(94,119,94,0.14); }
+.tk-row__profile .pline { fill: none; stroke: var(--royal); stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; }
+.tk-row__chev { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;
+  border: 1px solid rgba(24,43,31,0.25); color: var(--royal);
+  transition: transform var(--dur-4) var(--ease-lux), background var(--dur-2) var(--ease-lux); }
+.tk-row__chev svg { width: 12px; height: 12px; }
+.tk-row.open .tk-row__chev { transform: rotate(180deg); background: rgba(11,110,79,0.1); }
+/* Expand-Panel (animierte Höhe via grid) */
+.tk-row__panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--dur-5) var(--ease-lux); }
+.tk-row.open .tk-row__panel { grid-template-rows: 1fr; }
+.tk-row__panelin { overflow: hidden; }
+.tk-row__detail { display: grid; grid-template-columns: 1fr auto; gap: 8px 26px;
+  padding: 4px 20px 18px 114px; }
+.tk-row__desc { font-size: 14px; line-height: 1.6; color: rgba(24,43,31,0.8); max-width: 62ch; }
+.tk-row__desc strong { color: #14281C; }
+.tk-row__meta { display: flex; flex-direction: column; gap: 7px; padding-top: 2px; }
+.tk-row__meta p { display: flex; align-items: flex-start; gap: 7px; font-size: 12.5px; line-height: 1.4;
+  color: rgba(24,43,31,0.72); white-space: nowrap; }
+.tk-row__meta svg { flex: 0 0 auto; width: 13px; height: 13px; margin-top: 1px; color: var(--royal); }
+.tk-row__links { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px 10px; margin-top: 6px; }
+/* Sekundaer-Button: gepraegter Papier-Chip statt flacher Outline-Bubble */
+.tk-minibtn { display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
+  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase;
+  color: #14281C; border-radius: var(--r-control); padding: 9px 15px; border: 1px solid rgba(24,43,31,0.16);
+  background: linear-gradient(180deg, #FBF6E9 0%, #EFE6CE 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), inset 0 -2px 3px rgba(120,100,60,0.12),
+    0 2px 3px rgba(60,50,30,0.14), 0 8px 16px -8px rgba(0,0,0,0.35);
+  transition: transform var(--dur-2) var(--ease-lux), box-shadow var(--dur-2) var(--ease-lux), color var(--dur-2) var(--ease-lux); }
+.tk-minibtn:hover { transform: translateY(-2px); color: var(--royal);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 4px 6px rgba(60,50,30,0.16), 0 16px 26px -10px rgba(0,0,0,0.4); }
+.tk-minibtn:active { transform: translateY(0);
+  box-shadow: inset 0 2px 4px rgba(120,100,60,0.28), 0 1px 2px rgba(0,0,0,0.2); }
+/* Primaer-Button: gepraegtes gelbes Schild */
+.tk-minibtn--gelb { color: #221803; border: 0; border-radius: 0;
+  padding: 9px 20px 9px 16px;
+  background:
+    var(--schild-flaeche);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
+  text-shadow: 0 1px 0 rgba(255,244,214,0.16);
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4)) drop-shadow(0 2px 1px rgba(120,88,10,0.45)) drop-shadow(0 8px 14px rgba(0,0,0,0.32)); }
+.tk-minibtn--gelb:hover { transform: translateX(3px) translateY(-2px); color: #221803;
+  background:
+    var(--schild-flaeche);
+  box-shadow: none;
+  filter: var(--schild-schatten-hover); }
+@media (max-width: 760px) {
+  .tk-row__head { grid-template-columns: 72px 1fr; padding-right: 14px; }
+  .tk-row__side { display: none; }
+  .tk-row__detail { padding-left: 16px; grid-template-columns: 1fr; }
+  .tk-row__meta p { white-space: normal; }
+}
+
+/* Leerzustand */
+.tk-empty { display: none; margin-top: 18px; padding: 34px 22px; text-align: center; border-radius: var(--r-karte);
+  border: 1px dashed rgba(126,208,155,0.3); color: var(--paper-dim); }
+.tk-empty p { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic; font-size: 19px; }
+.tk-empty button { margin-top: 12px; cursor: pointer; background: none; border: 0;
+  font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+  color: var(--leaf); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Watzmann-Verweis */
+.tk-watz { margin-top: 34px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding: 16px 20px; border-radius: var(--r-karte);
+  background: linear-gradient(158deg, rgba(19,54,35,0.4), rgba(6,26,17,0.5));
+  border: 1px solid rgba(126,208,155,0.14); }
+.tk-watz p { font-size: 13.5px; color: var(--paper-dim); }
+.tk-watz a { color: var(--leaf); text-decoration: none; font-family: var(--mono); font-size: 11px;
+  font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; margin-left: auto; white-space: nowrap; }
+
+/* ---- Abschluss: Bilanz + Live ---- */
+.tk-close { margin-top: 90px; margin-bottom: 54px;
+  display: grid; grid-template-columns: 1.4fr 1fr; gap: 18px; align-items: stretch; }
+.tk-close__stats { position: relative; overflow: hidden; border-radius: var(--r-karte);
+  padding: clamp(26px, 3.4vw, 42px);
+  background:
+    repeating-linear-gradient(96deg, rgba(24,43,31,0.022) 0 1px, transparent 1px 11px),
+    linear-gradient(168deg, #F6EFDF 0%, #EFE7D1 62%, #E8DEC5 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 0 0 1px rgba(186,155,95,0.26),
+    0 30px 60px -32px rgba(0,0,0,0.6); }
+.tk-close__label { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2.4px;
+  text-transform: uppercase; color: var(--gold-ink); }
+.tk-close__nums { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 14px clamp(24px, 4vw, 54px); }
+.tk-close__nums div { display: flex; flex-direction: column; gap: 5px; }
+.tk-close__nums b { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
+  font-size: clamp(34px, 4.6vw, 52px); line-height: 1; letter-spacing: -1px; color: var(--royal);
+  font-variant-numeric: tabular-nums; }
+.tk-close__nums span { font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 1.6px; text-transform: uppercase; color: var(--ink-meta); }
+.tk-close__foot { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(24,43,31,0.14);
+  font-size: 13.5px; line-height: 1.6; color: rgba(24,43,31,0.72); max-width: 52ch; }
+.tk-close__foot a { color: var(--royal); text-decoration: none; font-weight: 600; }
+.tk-close__side { display: flex; flex-direction: column; gap: 14px; }
+/* Live-Widget (Instrument, wie Bergstation-HUD) */
+.tk-live { display: block; text-decoration: none; color: inherit; flex: 1; border-radius: var(--r-karte); padding: 20px 22px;
+  background: var(--flaeche-wald);
+  border: 1px solid rgba(126,208,155,0.2);
+  box-shadow: inset 0 1px 0 rgba(209,242,235,0.08), 0 22px 46px -26px rgba(0,0,0,0.7); }
+.tk-live__label { display: flex; align-items: center; gap: 9px; font-family: var(--mono);
+  font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--paper-faint); }
+/* Live-Puls statt Mini-Smashy: das Maskottchen war bei 22px unlesbar
+   und wirkte wie ein fremdes Emoji — der Puls-Punkt ist die etablierte
+   Live-Sprache der Route (route-head auf der Startseite) */
+.tk-live__dot { width: 8px; height: 8px; flex: 0 0 auto; border-radius: 50%;
+  background: var(--emerald); box-shadow: 0 0 8px rgba(80,200,120,0.7);
+  animation: tkpulse 2.4s ease-in-out 2; } /* zweimal, dann steht er (WCAG 2.2.2) */
+@keyframes tkpulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+.tk-live__temp { margin-top: 10px; display: flex; align-items: center;
+  font-family: var(--mono); font-weight: 700; font-size: 34px; line-height: 1; color: var(--paper); }
+.tk-live__unit { font-size: 15px; color: var(--leaf); margin-left: 3px; }
+.tk-live__ico { margin-left: auto; color: rgba(243,235,217,0.9); }
+.tk-live__ico svg { display: block; width: 28px; height: 28px; }
+.tk-live__cond { margin-top: 5px; font-family: var(--mono); font-size: 11px; font-weight: 700;
+  letter-spacing: 1.6px; text-transform: uppercase; color: var(--mint); }
+.tk-live { transition: transform var(--dur-3) var(--ease-lux), border-color var(--dur-3) var(--ease-lux); }
+.tk-live:hover { transform: translateY(-2px); border-color: rgba(126,208,155,0.4); }
+.tk-live__src { display: block; margin-top: 10px; font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 1.4px; text-transform: uppercase; color: var(--paper-faint);
+  transition: color var(--dur-2) var(--ease-lux); }
+.tk-live:hover .tk-live__src { color: var(--leaf); }
+.tk-live__meta { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(243,235,217,0.14);
+  font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 1.4px;
+  text-transform: uppercase; color: var(--paper-faint); }
+.tk-close__cta { display: block; text-align: center; text-decoration: none;
+  font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
+  color: #221803; padding: 15px 22px; text-shadow: 0 1px 0 rgba(255,244,214,0.16);
+  background: var(--schild-flaeche);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4)) drop-shadow(0 2px 1px rgba(120,88,10,0.45)) drop-shadow(0 10px 16px rgba(0,0,0,0.32));
+  transition: transform var(--dur-3) var(--ease-lux), filter var(--dur-3) var(--ease-lux); }
+.tk-close__cta:hover { transform: translateX(4px); filter: drop-shadow(0 3px 14px rgba(232,191,37,0.45)); }
+@media (max-width: 860px) { .tk-close { grid-template-columns: 1fr; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .tk-row, .tk-row__panel, .tk-row__eng img, .tk-pin__photo img, .tk-chip { transition: none !important; }
+  .tk-live__dot { animation: none; }
+}
+</style>
+<!-- SPRACHE:KOPF -->
+<link rel="alternate" hreflang="de" href="https://vegetarianhulk.de/touren/">
+<link rel="alternate" hreflang="en" href="https://vegetarianhulk.de/en/hikes/">
+<link rel="alternate" hreflang="x-default" href="https://vegetarianhulk.de/touren/">
+<meta property="og:locale:alternate" content="de_DE">
+<!-- /SPRACHE:KOPF -->
+</head>
+<body class="tk-page">
+<div class="bg-wrap" aria-hidden="true"><div class="bg"></div></div>
+<div class="bg2-wrap" aria-hidden="true"><div class="bg2"></div></div>
+
+<div class="rail rail--l" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">1765 hm</span></div>
+</div>
+<div class="rail rail--r" aria-hidden="true">
+  <svg class="rail-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V6"/><path d="M7.5 10.5h9"/><path d="M5 21l7-4 7 4"/></svg>
+  <div class="rail-peak"><svg viewBox="0 0 24 18" fill="currentColor"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg><span class="hm">1765 hm</span></div>
+</div>
+
+<main>
+  <div class="wrap">
+    <header class="topbar">
+      <span class="brandbox">
+        <a class="wordmark" href="/en/">VEGETARIAN<b>HULK</b></a>
+        <span class="wordmark wordmark--invert" aria-hidden="true" data-invert-layer>VEGETARIAN<b>HULK</b></span>
+      </span>
+      <!-- SPRACHE:WECHSEL --><a class="sprache" href="/touren/" hreflang="de" lang="de" data-sprache="de"><svg class="sprache-flagge" viewBox="0 0 5 3" width="20" height="12" aria-hidden="true" focusable="false"><path fill="#000" d="M0 0h5v1H0z"/><path fill="#D00" d="M0 1h5v1H0z"/><path fill="#FFCE00" d="M0 2h5v1H0z"/></svg><span>Deutsch</span></a><!-- /SPRACHE:WECHSEL -->
+    </header>
+
+    <section class="tk-hero st">
+      <p class="kicker st st1">Hulk Hikes · Mountain hiking guide</p>
+      <h1 class="st st2">My mountains.<br><em>My hikes.</em></h1>
+      <p class="tk-lead st st3">No copied lists: you’ll only find hikes here that I’ve done myself — with real data from my watch. Plus a few that are on my list.</p>
+    </section>
+  </div>
+
+  <!-- Persönliche Feldaufnahmen -->
+  <div class="tk-me tk-wide st st3">
+    <div class="tk-me__shots">
+      <figure><img width="360" height="480" src="/berg-starter/img/sebi-poles.jpg" alt="Sebi in the mountains with poles" loading="eager" fetchpriority="low"></figure>
+      <figure><img width="768" height="1024" src="/berg-starter/img/sebi-kreuz.jpg" alt="Sebi at the summit cross" loading="eager" fetchpriority="low"></figure>
+    </div>
+    <p class="tk-me__line">Real, not staged — that’s me up there, between the hikes I’m showing you here.</p>
+  </div>
+
+  <!-- PINNED: zuletzt gegangene Tour -->
+  <a class="tk-pin tk-wide st st3" href="/en/hikes/wendelstein/" aria-label="Wendelstein — most recent hike, view the whole hike">
+    <div class="tk-pin__body">
+      <span class="tk-pin__badge">Most recent hike<span class="hsep" aria-hidden="true"></span>Oct 4</span>
+      <h2>Wendelstein <span>1,838 m</span></h2>
+      <p class="tk-pin__tag">Happy to have been above 1,800 meters</p>
+      <p class="tk-pin__note">“The summit log is tucked away in a chapel.”</p>
+      <div class="tk-pin__facts">
+        <span>826 m gain</span><i>·</i><span>13.32 km</span><i>·</i><span>5:05 h</span><i>·</i><span>T2</span>
+      </div>
+      <span class="tk-pin__cta">→ The whole hike: map, elevation profile, notes</span>
+    </div>
+    <div class="tk-pin__photo" style="view-transition-name: tour-wendelstein"><img srcset="/touren/wendelstein/gipfelkreuz-640.jpg 480w, /touren/wendelstein/gipfelkreuz.jpg 1050w" sizes="(max-width: 860px) 92vw, 34vw" src="/touren/wendelstein/gipfelkreuz.jpg" width="1050" height="1400" alt="The wooden summit cross on the Wendelstein against a blue sky, the Alpine foothills below." loading="eager" fetchpriority="high"></div>
+  </a>
+
+  <!-- TOOLBAR -->
+  <div class="tk-bar tk-wide st st4" role="region" aria-label="Filter and sort hikes">
+    <label class="tk-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+      <input type="search" id="tkSearch" placeholder="Search hikes …" autocomplete="off" aria-label="Search hikes">
+    </label>
+    <div class="tk-group" role="group" aria-label="Region">
+      <span class="tk-group__label">Region</span>
+      <button class="tk-chip" data-f="region" data-v="" aria-pressed="true" type="button">All</button>
+      <button class="tk-chip" data-f="region" data-v="chiemgau" aria-pressed="false" type="button">Chiemgau</button>
+      <button class="tk-chip" data-f="region" data-v="bgl" aria-pressed="false" type="button">Berchtesgaden</button>
+      <button class="tk-chip" data-f="region" data-v="skg" aria-pressed="false" type="button">Salzkammergut</button>
+      <button class="tk-chip" data-f="region" data-v="mangfall" aria-pressed="false" type="button">Mangfall Mountains</button>
+    </div>
+    <div class="tk-group" role="group" aria-label="Difficulty">
+      <span class="tk-group__label">Difficulty</span>
+      <button class="tk-chip" data-f="diff" data-v="" aria-pressed="true" type="button">All</button>
+      <button class="tk-chip" data-f="diff" data-v="1" aria-pressed="false" type="button">Easy</button>
+      <button class="tk-chip" data-f="diff" data-v="2" aria-pressed="false" type="button">Moderate</button>
+      <button class="tk-chip" data-f="diff" data-v="3" aria-pressed="false" type="button">Hard</button>
+    </div>
+    <div class="tk-sort">
+      <select id="tkSort" aria-label="Sort order">
+        <option value="new">Newest first</option>
+        <option value="old">Oldest first</option>
+        <option value="easy">Easy → hard</option>
+        <option value="hard">Hard → easy</option>
+        <option value="hm">Most elevation gain</option>
+      </select>
+    </div>
+    <span class="tk-count" aria-live="polite"><b id="tkCount">13</b> Hikes</span>
+  </div>
+
+  <!-- FORUM-LISTE -->
+  <ol class="tk-list tk-wide" id="tkList">
+
+    <!-- Kneifelspitze (gegangen) -->
+    <li class="tk-row rv" data-name="wendelstein wendel stein sudelfeld bayrischzell wendelsteinhaus kapelle mangfallgebirge" data-region="mangfall" data-diff="2" data-thm="826" data-date="20261004" style="--d: 0ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img width="1050" height="1400" srcset="/touren/wendelstein/gipfelkreuz-640.jpg 480w, /touren/wendelstein/gipfelkreuz.jpg 1050w" sizes="220px" src="/touren/wendelstein/gipfelkreuz.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top">
+            <span class="tk-row__name">Wendelstein</span><span class="tk-row__alt">1,838 m</span>
+            <span class="tk-badge-gone">Hiked Oct 4</span>
+          </span>
+          <span class="tk-row__tag">Happy to have been above 1,800 meters</span>
+          <span class="tk-row__facts">
+            <span>826 m gain</span><i>·</i><span>13.32 km</span><i>·</i><span>5:05 h</span>
+            <span class="tk-region">Mangfall Mountains</span>
+            <span class="tk-dots" title="moderate"><b class="on"></b><b class="on"></b><b></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0.0,30.9 L4.5,28.5 L9.0,26.2 L14.4,25.7 L18.9,24.5 L23.5,21.5 L28.0,17.3 L32.5,16.3 L37.9,14.9 L42.4,12.9 L46.9,9.7 L51.4,6.9 L56.8,4.3 L60.5,3.0 L61.4,3.1 L65.9,6.0 L70.4,8.9 L74.9,12.6 L80.3,15.5 L84.8,17.2 L89.3,18.7 L93.8,20.2 L98.3,22.5 L103.8,25.4 L108.3,25.9 L112.8,27.9 L117.3,30.2 L120.0,31.0 L120,34 L0,34 Z"/><path class="pline" d="M0.0,30.9 L4.5,28.5 L9.0,26.2 L14.4,25.7 L18.9,24.5 L23.5,21.5 L28.0,17.3 L32.5,16.3 L37.9,14.9 L42.4,12.9 L46.9,9.7 L51.4,6.9 L56.8,4.3 L60.5,3.0 L61.4,3.1 L65.9,6.0 L70.4,8.9 L74.9,12.6 L80.3,15.5 L84.8,17.2 L89.3,18.7 L93.8,20.2 L98.3,22.5 L103.8,25.4 L108.3,25.9 L112.8,27.9 L117.3,30.2 L120.0,31.0"/></svg>
+          <span class="tk-row__go">View</span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">Up from Lower Sudelfeld, part of it unmarked &mdash; &ldquo;we had to improvise&rdquo;. From the inn it’s another good 100 m of elevation to the cross, and the summit log is in a chapel.
+          <strong>you can read the whole loop on the hike page.</strong></p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Lower Sudelfeld near Bayrischzell</p>
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 20 9 8l4 7 3-5 5 10z"/></svg> Food stop: Wendelsteinhaus, no Kaiserschmarrn</p>
+          </div>
+          <div class="tk-row__links">
+            <a class="tk-minibtn tk-minibtn--gelb" href="/en/hikes/wendelstein/">→ View the whole hike</a>
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/Parkplatz+Unteres+Sudelfeld+Bayrischzell" target="_blank" rel="noopener">Starting point in Maps</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
+    <li class="tk-row rv" data-name="schwarzensee schwarzsee sagereckersteig sagereck sagerecksteig koenigssee königssee salet bartholomä berchtesgaden" data-region="bgl" data-diff="3" data-thm="1039" data-date="20261003" style="--d: 0ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img width="1050" height="1400" srcset="/touren/schwarzensee/schwarzensee-640.jpg 480w, /touren/schwarzensee/schwarzensee.jpg 1050w" sizes="220px" src="/touren/schwarzensee/schwarzensee.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top">
+            <span class="tk-row__name">Schwarzensee</span><span class="tk-row__alt">1,583 m</span>
+            <span class="tk-badge-gone">Hiked Oct 3</span>
+          </span>
+          <span class="tk-row__tag">The plan was the Halsköpfl</span>
+          <span class="tk-row__facts">
+            <span>1,039 m gain</span><i>·</i><span>13.51 km</span><i>·</i><span>5:12 h</span>
+            <span class="tk-region">Berchtesgaden</span>
+            <span class="tk-dots" title="hard"><b class="on"></b><b class="on"></b><b class="on"></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0.0,30.9 L5.3,30.9 L9.8,30.7 L15.1,27.8 L19.6,23.8 L24.9,20.0 L29.3,16.2 L34.7,12.7 L40.0,9.4 L44.4,8.7 L49.8,6.0 L54.2,4.6 L58.7,3.0 L59.6,3.1 L64.0,3.2 L69.3,4.7 L73.8,5.9 L79.1,8.6 L84.4,9.4 L88.9,12.6 L94.2,16.8 L98.7,21.1 L104.0,26.1 L108.4,29.7 L113.8,30.9 L119.1,30.9 L120.0,31.0 L120,34 L0,34 Z"/><path class="pline" d="M0.0,30.9 L5.3,30.9 L9.8,30.7 L15.1,27.8 L19.6,23.8 L24.9,20.0 L29.3,16.2 L34.7,12.7 L40.0,9.4 L44.4,8.7 L49.8,6.0 L54.2,4.6 L58.7,3.0 L59.6,3.1 L64.0,3.2 L69.3,4.7 L73.8,5.9 L79.1,8.6 L84.4,9.4 L88.9,12.6 L94.2,16.8 L98.7,21.1 L104.0,26.1 L108.4,29.7 L113.8,30.9 L119.1,30.9 L120.0,31.0"/></svg>
+          <span class="tk-row__go">View</span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">Took the first boat across the Königssee to Salet, then up the Sagereckersteig &mdash; quite demanding, T3 in places. At the top, still a good stretch over to the Schwarzensee.
+          <strong>you can read the whole loop on the hike page.</strong></p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Salet on the Königssee (by boat)</p>
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 20 9 8l4 7 3-5 5 10z"/></svg> Food stop: none this time</p>
+          </div>
+          <div class="tk-row__links">
+            <a class="tk-minibtn tk-minibtn--gelb" href="/en/hikes/schwarzensee/">→ View the whole hike</a>
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/Parkplatz+K%C3%B6nigssee+Sch%C3%B6nau" target="_blank" rel="noopener">Starting point in Maps</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
+    <li class="tk-row rv" data-name="hoerndlwand hörndlwand hoerndl wand gurnwandkopf obinger kreuz ostkreuz weitsee ruhpolding chiemgau vier gipfel" data-region="chiemgau" data-diff="3" data-thm="1096" data-date="20260920" style="--d: 0ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img width="1050" height="1400" srcset="/touren/hoerndlwand/kreuz-hoerndlwand-640.jpg 480w, /touren/hoerndlwand/kreuz-hoerndlwand.jpg 1050w" sizes="220px" src="/touren/hoerndlwand/kreuz-hoerndlwand.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top">
+            <span class="tk-row__name">Hörndlwand</span><span class="tk-row__alt">1,684 m</span>
+            <span class="tk-badge-gone">Hiked Sep 20</span>
+          </span>
+          <span class="tk-row__tag">Only the Hörndlwand was actually planned</span>
+          <span class="tk-row__facts">
+            <span>1,096 m gain</span><i>·</i><span>15.10 km</span><i>·</i><span>5:41 h</span>
+            <span class="tk-region">Chiemgau</span>
+            <span class="tk-dots" title="hard"><b class="on"></b><b class="on"></b><b class="on"></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0.0,30.6 L4.8,27.8 L9.5,25.0 L14.3,23.0 L19.1,20.7 L23.8,17.4 L28.6,14.2 L33.4,11.0 L38.1,8.7 L42.9,6.4 L46.9,3.0 L47.7,3.1 L52.5,5.4 L57.2,3.5 L62.8,5.2 L67.5,7.5 L72.3,9.4 L77.1,13.0 L81.9,15.9 L86.6,19.0 L91.4,21.6 L96.2,23.7 L100.9,26.2 L105.7,29.0 L110.5,31.0 L115.2,30.9 L120.0,30.9 L120,34 L0,34 Z"/><path class="pline" d="M0.0,30.6 L4.8,27.8 L9.5,25.0 L14.3,23.0 L19.1,20.7 L23.8,17.4 L28.6,14.2 L33.4,11.0 L38.1,8.7 L42.9,6.4 L46.9,3.0 L47.7,3.1 L52.5,5.4 L57.2,3.5 L62.8,5.2 L67.5,7.5 L72.3,9.4 L77.1,13.0 L81.9,15.9 L86.6,19.0 L91.4,21.6 L96.2,23.7 L100.9,26.2 L105.7,29.0 L110.5,31.0 L115.2,30.9 L120.0,30.9"/></svg>
+          <span class="tk-row__go">View</span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">Not the standard route, but straight up from the Weitsee — T3 the whole way,
+          lots of switchbacks up to a high plateau, then dwarf pines and rock with roots at the top. &ldquo;Then we
+          spontaneously went for the 1st summit, actually only the Hörndlwand was planned&rdquo; — in the end it was four crosses.
+          <strong>you can read the whole loop on the hike page.</strong></p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Weitsee near Reit im Winkl</p>
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 20 9 8l4 7 3-5 5 10z"/></svg> Food stop: none on the loop</p>
+          </div>
+          <div class="tk-row__links">
+            <a class="tk-minibtn tk-minibtn--gelb" href="/en/hikes/hoerndlwand/">→ View the whole hike</a>
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/Weitsee+Reit+im+Winkl+Parkplatz" target="_blank" rel="noopener">Starting point in Maps</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
+    <li class="tk-row rv" data-name="fellhorn fell horn reit im winkl blindau straubinger haus eggenalm hemmersuppenalm chiemgau" data-region="chiemgau" data-diff="3" data-thm="1107" data-date="20260913" style="--d: 0ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img width="1500" height="1400" srcset="/touren/fellhorn/wilder-kaiser-640.jpg 700w, /touren/fellhorn/wilder-kaiser.jpg 1500w" sizes="(max-width: 820px) 92vw, 40vw" src="/touren/fellhorn/wilder-kaiser.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top">
+            <span class="tk-row__name">Fellhorn</span><span class="tk-row__alt">1,764 m</span>
+            <span class="tk-badge-gone">Hiked Sep 13</span>
+          </span>
+          <span class="tk-row__tag">My longest hike — across the border and back</span>
+          <span class="tk-row__facts">
+            <span>1,107 m gain</span><i>·</i><span>17.90 km</span><i>·</i><span>5:06 h</span>
+            <span class="tk-region">Chiemgau</span>
+            <span class="tk-dots" title="hard"><b class="on"></b><b class="on"></b><b class="on"></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,31 L20,25 L40,17 L52,11 L59,4 L70,12 L82,19 L96,25 L120,31 L120,34 L0,34 Z"/><path class="pline" d="M0,31 L20,25 L40,17 L52,11 L59,4 L70,12 L82,19 L96,25 L120,31"/></svg>
+          <span class="tk-row__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">Long rather than steep: 17.9 km across the border into Austria to the Straubinger Haus,
+          and from there another 40 minutes to the summit. The trailhead at the bottom is hard to find — narrow,
+          inconspicuous, only faintly marked. At the top, though, the Wilder Kaiser —
+          <strong>you can read the whole loop on the hike page.</strong></p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Blindau near Reit im Winkl, €5 day fee</p>
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 20 9 8l4 7 3-5 5 10z"/></svg> Food stop: Straubinger Haus, 1,558 m</p>
+          </div>
+          <div class="tk-row__links">
+            <a class="tk-minibtn tk-minibtn--gelb" href="/en/hikes/fellhorn/">→ View the whole hike</a>
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/Blindau+Reit+im+Winkl+Parkplatz" target="_blank" rel="noopener">Starting point in Maps</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
+
+    <li class="tk-row rv" data-name="drachenwand drachen wand mondsee st. lorenz sankt lorenz salzkammergut klettersteig via ferrata" data-region="skg" data-diff="3" data-thm="846" data-date="20260906" style="--d: 0ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img width="1125" height="1500" srcset="/touren/drachenwand/ausblick-640.jpg 525w, /touren/drachenwand/ausblick.jpg 1125w" sizes="(max-width: 820px) 92vw, 40vw" src="/touren/drachenwand/ausblick.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top">
+            <span class="tk-row__name">Drachenwand</span><span class="tk-row__alt">1,179 m</span>
+            <span class="tk-badge-gone">Hiked Sep 6</span>
+          </span>
+          <span class="tk-row__tag">First via ferrata above the Mondsee — before the crowds</span>
+          <span class="tk-row__facts">
+            <span>846 m gain</span><i>·</i><span>9.19 km</span><i>·</i><span>3:25 h</span>
+            <span class="tk-region">Salzkammergut</span>
+            <span class="tk-dots" title="hard"><b class="on"></b><b class="on"></b><b class="on"></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,31 L18,25 L36,19 L52,8 L64,4 L78,13 L88,19 L92,16 L104,24 L120,31 L120,34 L0,34 Z"/><path class="pline" d="M0,31 L18,25 L36,19 L52,8 L64,4 L78,13 L88,19 L92,16 L104,24 L120,31"/></svg>
+          <span class="tk-row__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">Left at four, at the start of the route shortly before six — and so ahead of the crowds. Mostly
+          difficulty C, harness and helmet are a must. The way down is a T4 path, and by nine
+          you can already see the route getting jammed — <strong>you can read the whole loop on the hike page.</strong></p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: St. Lorenz on the Mondsee, €3 day ticket</p>
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 20 9 8l4 7 3-5 5 10z"/></svg> Food stop: Gasthaus Drachenwand</p>
+          </div>
+          <div class="tk-row__links">
+            <a class="tk-minibtn tk-minibtn--gelb" href="/en/hikes/drachenwand/">→ View the whole hike</a>
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/Drachenwand+Klettersteig+St.+Lorenz+Mondsee" target="_blank" rel="noopener">Starting point in Maps</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
+
+    <li class="tk-row rv" data-name="kneifelspitze kneiffelspitze maria gern berchtesgaden paulshütte paulshuette sonnenaufgang" data-region="bgl" data-diff="1" data-thm="456" data-date="20260830" style="--d: 0ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img width="1125" height="1500" srcset="/touren/kneifelspitze/gipfelkreuz-nacht-640.jpg 525w, /touren/kneifelspitze/gipfelkreuz-nacht.jpg 1125w" sizes="(max-width: 820px) 92vw, 40vw" src="/touren/kneifelspitze/gipfelkreuz-nacht.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top">
+            <span class="tk-row__name">Kneifelspitze</span><span class="tk-row__alt">1,188 m</span>
+            <span class="tk-badge-gone">Hiked Aug 30</span>
+          </span>
+          <span class="tk-row__tag">Sunrise over Maria Gern — left at four</span>
+          <span class="tk-row__facts">
+            <span>456 m gain</span><i>·</i><span>6.06 km</span><i>·</i><span>1:41 h</span>
+            <span class="tk-region">Berchtesgaden</span>
+            <span class="tk-dots" title="easy"><b class="on"></b><b></b><b></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,30 L20,23 L40,15 L59,4 L80,15 L100,23 L120,30 L120,34 L0,34 Z"/><path class="pline" d="M0,30 L20,23 L40,15 L59,4 L80,15 L100,23 L120,30"/></svg>
+          <span class="tk-row__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">Left at four, up in the dark, at the summit cross around 5:15 — and then waiting
+          until the sun came up at 6:34. Short and punchy, steep in places, but always a good path —
+          <strong>you can read the whole loop on the hike page.</strong></p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: across from the Maria Gern church</p>
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 20 9 8l4 7 3-5 5 10z"/></svg> Food stop: Paulshütte right at the summit</p>
+          </div>
+          <div class="tk-row__links">
+            <a class="tk-minibtn tk-minibtn--gelb" href="/en/hikes/kneifelspitze/">→ View the whole hike</a>
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/Wallfahrtskirche+Maria+Gern+Berchtesgaden" target="_blank" rel="noopener">Starting point in Maps</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
+
+    <!-- Ristfeuchthorn (gegangen) -->
+    <li class="tk-row rv" data-name="ristfeuchthorn schneizlreuth berchtesgaden" data-region="bgl" data-diff="3" data-thm="1071" data-date="20260717" style="--d: 60ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img width="1125" height="1500" srcset="/touren/ristfeuchthorn/ausblick-640.jpg 525w, /touren/ristfeuchthorn/ausblick.jpg 1125w" sizes="(max-width: 820px) 92vw, 40vw" src="/touren/ristfeuchthorn/ausblick.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top">
+            <span class="tk-row__name">Ristfeuchthorn</span><span class="tk-row__alt">1,569 m</span>
+            <span class="tk-badge-gone">Hiked Jul 17</span>
+          </span>
+          <span class="tk-row__tag">Quiet endurance day above Schneizlreuth</span>
+          <span class="tk-row__facts">
+            <span>1,071 m gain</span><i>·</i><span>12.52 km</span><i>·</i><span>~5 h</span>
+            <span class="tk-region">Berchtesgaden</span>
+            <span class="tk-dots" title="hard"><b class="on"></b><b class="on"></b><b class="on"></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,30 L28,22 L58,6 L88,20 L120,30 L120,34 L0,34 Z"/><path class="pline" d="M0,30 L28,22 L58,6 L88,20 L120,30"/></svg>
+          <span class="tk-row__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">Very natural, remote and properly overgrown in places — no hiking highway.
+          At the top, a really beautiful view of the Berchtesgaden Alps — <strong>you can read the whole loop on the hike page.</strong></p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Wurzenwirt parking lot (free)</p>
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 20 9 8l4 7 3-5 5 10z"/></svg> Food stop: Wurzenwirt at the parking lot</p>
+          </div>
+          <div class="tk-row__links">
+            <a class="tk-minibtn tk-minibtn--gelb" href="/en/hikes/ristfeuchthorn/">→ View the whole hike</a>
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/Wurzenwirt+Schneizlreuth" target="_blank" rel="noopener">Starting point in Maps</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
+
+    <!-- Tour 1: Grünstein -->
+    <li class="tk-row rv" data-name="grünstein gruenstein königssee koenigssee schönau berchtesgaden" data-region="bgl" data-diff="2" data-thm="489" data-date="-1" style="--d: 120ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img width="360" height="200" src="/touren/assets/eng-gruenstein.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top"><h3 class="tk-row__name">Grünstein</h3><span class="tk-row__alt">1,304 m</span></span>
+          <span class="tk-row__tag">Short, with a view of the Königssee</span>
+          <span class="tk-row__facts">
+            <span>489 m gain</span><i>·</i><span>approx. 5 km</span><i>·</i><span>approx. 2:00 h</span>
+            <span class="tk-region">Berchtesgaden</span>
+            <span class="tk-dots" title="moderate"><b class="on"></b><b class="on"></b><b></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,30 C24,28 40,24 60,9 C80,24 96,28 120,30 L120,34 L0,34 Z"/><path class="pline" d="M0,30 C24,28 40,24 60,9 C80,24 96,28 120,30"/></svg>
+          <span class="tk-row__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">The viewing balcony above the Königssee: a short, punchy climb through the forest,
+          at the top the view of the lake and the Watzmann east face — on the way, the <strong>Grünsteinhütte</strong> for a stop.</p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Hammerstiel parking lot, Schönau am Königssee</p>
+          </div>
+          <div class="tk-row__links">
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/Parkplatz+Hammerstiel+Sch%C3%B6nau+am+K%C3%B6nigssee" target="_blank" rel="noopener">Starting point in Maps</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
+
+    <!-- Tour 2: Zinnkopf -->
+    <li class="tk-row rv" data-name="zinnkopf chiemsee siegsdorf hörgering hoergering chiemgau" data-region="chiemgau" data-diff="2" data-thm="553" data-date="-2" style="--d: 180ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img width="359" height="195" src="/touren/assets/eng-zinnkopf.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top"><h3 class="tk-row__name">Zinnkopf</h3><span class="tk-row__alt">1,227 m</span></span>
+          <span class="tk-row__tag">Viewpoint above the Chiemsee</span>
+          <span class="tk-row__facts">
+            <span>553 m gain</span><i>·</i><span>9 km</span><i>·</i><span>approx. 3:00 h</span>
+            <span class="tk-region">Chiemgau</span>
+            <span class="tk-dots" title="moderate"><b class="on"></b><b class="on"></b><b></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,31 C16,29 28,25 44,9 C64,17 92,26 120,30 L120,34 L0,34 Z"/><path class="pline" d="M0,31 C16,29 28,25 44,9 C64,17 92,26 120,30"/></svg>
+          <span class="tk-row__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">A quiet Chiemgau viewpoint above Siegsdorf: up through forest and across alpine meadows,
+          at the top an open view over the <strong>Chiemsee</strong>. Low-key, not many people.</p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Hörgering parking lot, Siegsdorf</p>
+          </div>
+          <div class="tk-row__links">
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/H%C3%B6rgering+Siegsdorf" target="_blank" rel="noopener">Starting point in Maps</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
+
+    <!-- Tour 3: Dürrnbachhorn -->
+    <li class="tk-row rv" data-name="dürrnbachhorn duerrnbachhorn winklmoosalm reit im winkl grat chiemgau" data-region="chiemgau" data-diff="2" data-thm="591" data-date="-3" style="--d: 240ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img width="360" height="144" src="/touren/assets/eng-duerrnbachhorn.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top"><h3 class="tk-row__name">Dürrnbachhorn</h3><span class="tk-row__alt">1,776 m</span></span>
+          <span class="tk-row__tag">Ridge above the Winklmoosalm</span>
+          <span class="tk-row__facts">
+            <span>591 m gain</span><i>·</i><span>8.4 km</span><i>·</i><span>approx. 3:00 h</span>
+            <span class="tk-region">Chiemgau</span>
+            <span class="tk-dots" title="moderate"><b class="on"></b><b class="on"></b><b></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,30 C20,26 32,18 48,15 C64,13 76,16 88,14 C100,16 112,25 120,29 L120,34 L0,34 Z"/><path class="pline" d="M0,30 C20,26 32,18 48,15 C64,13 76,16 88,14 C100,16 112,25 120,29"/></svg>
+          <span class="tk-row__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">A ridge hike high above the <strong>Winklmoosalm</strong>: first an easy walk across
+          the alpine pasture, then along the ridge with views into the Chiemgau and Loferer mountains.
+          On the ridge you need <strong>sure footing</strong>.</p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Winklmoosalm parking lot (toll road from Seegatterl)</p>
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 20 9 8l4 7 3-5 5 10z"/></svg> Ridge: sure footing required</p>
+          </div>
+          <div class="tk-row__links">
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/Parkplatz+Winklmoosalm" target="_blank" rel="noopener">Starting point in Maps</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
+
+    <!-- Tour 4: Rauschberg -->
+    <li class="tk-row rv" data-name="rauschberg ruhpolding hausberg chiemgau" data-region="chiemgau" data-diff="3" data-thm="904" data-date="-4" style="--d: 300ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img width="359" height="195" src="/touren/assets/eng-rauschberg.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top"><h3 class="tk-row__name">Rauschberg</h3><span class="tk-row__alt">1,645 m</span></span>
+          <span class="tk-row__tag">Ruhpolding’s local mountain</span>
+          <span class="tk-row__facts">
+            <span>904 m gain</span><i>·</i><span>16 km</span><i>·</i><span>approx. 5:30 h</span>
+            <span class="tk-region">Chiemgau</span>
+            <span class="tk-dots" title="hard"><b class="on"></b><b class="on"></b><b class="on"></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,31 C24,29 40,21 60,15 C80,21 96,29 120,31 L120,34 L0,34 Z"/><path class="pline" d="M0,31 C24,29 40,21 60,15 C80,21 96,29 120,31"/></svg>
+          <span class="tk-row__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">Ruhpolding’s local mountain as a long loop: 16 km, steadily uphill, at the top a wide
+          view over the Ruhpolding valley. <strong>The cable car and hut are currently closed</strong> — bring your own snacks and water.</p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Rauschbergbahn parking lot, Ruhpolding</p>
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 20 9 8l4 7 3-5 5 10z"/></svg> Cable car &amp; hut closed — bring snacks</p>
+          </div>
+          <div class="tk-row__links">
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/Rauschbergbahn+Ruhpolding" target="_blank" rel="noopener">Starting point in Maps</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
+
+    <!-- Tour 5: Gamsknogel -->
+    <li class="tk-row rv" data-name="gamsknogel adlgaß adlgass inzell grat chiemgau" data-region="chiemgau" data-diff="3" data-thm="950" data-date="-5" style="--d: 360ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img width="359" height="195" src="/touren/assets/eng-gamsknogel.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top"><h3 class="tk-row__name">Gamsknogel</h3><span class="tk-row__alt">1,750 m</span></span>
+          <span class="tk-row__tag">Quiet ridge near Inzell</span>
+          <span class="tk-row__facts">
+            <span>950 m gain</span><i>·</i><span>9 km</span><i>·</i><span>approx. 4:30 h</span>
+            <span class="tk-region">Chiemgau</span>
+            <span class="tk-dots" title="hard"><b class="on"></b><b class="on"></b><b class="on"></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,32 L60,6 L120,32 L120,34 L0,34 Z"/><path class="pline" d="M0,32 L60,6 L120,32"/></svg>
+          <span class="tk-row__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">A quiet ridge near Inzell in the Chiemgau Alps: steeply up from Adlgaß near Inzell,
+          at the top <strong>ridge sections, partly with fixed ropes</strong>. Far quieter than the classics.</p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Adlgaß hiking parking lot, Inzell</p>
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 20 9 8l4 7 3-5 5 10z"/></svg> Ridge sections, partly with fixed ropes</p>
+          </div>
+          <div class="tk-row__links">
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/Wanderparkplatz+Adlga%C3%9F+Inzell" target="_blank" rel="noopener">Starting point in Maps</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
+
+    <!-- Tour 6: Hochgern -->
+    <li class="tk-row rv" data-name="hochgern unterwössen unterwoessen marquartstein chiemgau klassiker" data-region="chiemgau" data-diff="3" data-thm="1110" data-date="-6" style="--d: 420ms">
+      <button class="tk-row__head" type="button" aria-expanded="false">
+        <span class="tk-row__eng"><img width="359" height="146" src="/touren/assets/eng-hochgern.jpg" alt="" loading="lazy"></span>
+        <span class="tk-row__main">
+          <span class="tk-row__top"><h3 class="tk-row__name">Hochgern</h3><span class="tk-row__alt">1,747 m</span></span>
+          <span class="tk-row__tag">Chiemgau classic from Unterwössen</span>
+          <span class="tk-row__facts">
+            <span>1,110 m gain</span><i>·</i><span>15 km</span><i>·</i><span>approx. 4:30 h</span>
+            <span class="tk-region">Chiemgau</span>
+            <span class="tk-dots" title="hard"><b class="on"></b><b class="on"></b><b class="on"></b></span>
+          </span>
+        </span>
+        <span class="tk-row__side">
+          <svg class="tk-row__profile" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><path class="pfill" d="M0,31 C28,29 44,17 60,7 C76,17 92,29 120,31 L120,34 L0,34 Z"/><path class="pline" d="M0,31 C28,29 44,17 60,7 C76,17 92,29 120,31"/></svg>
+          <span class="tk-row__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </span>
+      </button>
+      <div class="tk-row__panel"><div class="tk-row__panelin">
+        <div class="tk-row__detail">
+          <p class="tk-row__desc">A Chiemgau classic from Unterwössen: a long, varied loop from Unterwössen —
+          forest, alpine pastures, an open summit. Just below the summit, the <strong>Hochgernhaus</strong> for a stop, and a big panoramic view at the top.</p>
+          <div class="tk-row__meta">
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start: Hochgern hiking parking lot, Unterwössen</p>
+          </div>
+          <div class="tk-row__links">
+            <a class="tk-minibtn" href="https://www.google.com/maps/search/Wanderparkplatz+Hochgern+Unterw%C3%B6ssen" target="_blank" rel="noopener">Starting point in Maps</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
+
+  </ol>
+
+  <!-- Leerzustand -->
+  <div class="tk-empty tk-wide" id="tkEmpty">
+    <p>No hike matches your filter.</p>
+    <button type="button" id="tkReset">Reset filters</button>
+  </div>
+
+  <!-- ABSCHLUSS: Guide-Bilanz (Count-up) + Live-Bedingungen + CTA -->
+  <section class="tk-close tk-wide rv" aria-label="What’s added up so far and current conditions">
+    <div class="tk-close__stats">
+      <p class="tk-close__label">What’s added up so far</p>
+      <div class="tk-close__nums">
+        <div><b data-count="9" data-zahl="touren">9</b><span>Hikes</span></div>
+        <div><b data-count="6970" data-zahl="hm">6,970</b><span>Total elevation gain</span></div>
+        <div><b data-count="1776" data-zahl="gipfel">1,776</b><span>m highest point</span></div>
+      </div>
+      <p class="tk-close__foot">Each one picked by me, the ones I’ve done with real data.
+      The Watzmann normal route runs as a <a href="/en/#grat">3D experience on the homepage</a>.</p>
+    </div>
+    <div class="tk-close__side">
+      <a class="tk-live" data-tklive hidden href="https://open-meteo.com/" target="_blank" rel="noopener"
+         aria-label="Current conditions on the mountain — open data source Open-Meteo"
+         data-lat="47.63" data-lon="12.52" data-hoehe="1764" data-ort="Fellhorn · 1,764 m">
+        <p class="tk-live__label"><span class="tk-live__dot"></span>On the mountain right now</p>
+        <p class="tk-live__temp"><span data-lv-temp>–</span><span class="tk-live__unit">°C</span><span class="tk-live__ico" data-lv-ico aria-hidden="true"></span></p>
+        <p class="tk-live__cond" data-lv-cond></p>
+        <p class="tk-live__meta" data-lv-meta></p>
+        <span class="tk-live__src">Source: Open-Meteo <span aria-hidden="true">↗</span></span>
+      </a>
+      <a class="tk-close__cta" href="/newsletter" hreflang="de">→ Sign up</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="inner">
+    <a class="wordmark" href="/en/">VEGETARIAN<b>HULK</b></a>
+    <p class="claim">Builder &amp; creator. Discipline over hype.</p>
+    <nav class="legal" aria-label="Legal">
+      <a href="/impressum.html" hreflang="de">Legal notice (German)</a>
+      <a href="/datenschutz.html" hreflang="de">Privacy (German)</a>
+      <span>© 2026 Sebastian Wimmer</span>
+    </nav>
+  </div>
+</footer>
+
+<nav class="nav" aria-label="Main navigation">
+  <a href="/en/">Home</a>
+  <a href="/en/partner-picks/">P&amp;P</a>
+  <a class="center" href="/en/hikes/" aria-current="page">
+    <span class="mtn"><svg viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 50 26 16l10 16 8-12 22 30"/>
+      <path d="M22 23.5 26 20l4 5" opacity="0.85"/>
+      <path d="M40.5 25.5 44 21.5l3.5 5" opacity="0.85"/>
+      <circle cx="58" cy="11" r="4.5" opacity="0.9"/>
+      <path d="M12 50c8-4 16-3.4 22 0" opacity="0.45"/>
+    </svg></span>
+    Hulk&nbsp;Hikes
+  </a>
+  <a href="/newsletter" hreflang="de">News</a>
+  <a href="/en/brands/">Brands</a>
+</nav>
+
+<!-- JSON-LD: Touren als ItemList (SEO + KI-Findbarkeit) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Hulk Hikes — mountain hikes I’ve done myself",
+  "description": "My own hiking recommendations as Sebi (VegetarianHulk), with elevation gain, walking time and starting point.",
+  "url": "https://vegetarianhulk.de/en/hikes/",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Wendelstein (1,838 m) — from Lower Sudelfeld","url":"https://vegetarianhulk.de/en/hikes/wendelstein/"},
+    {"@type":"ListItem","position":2,"name":"Schwarzensee (1,583 m) — via the Sagereckersteig from the Königssee","url":"https://vegetarianhulk.de/en/hikes/schwarzensee/"},
+    {"@type":"ListItem","position":3,"name":"Hörndlwand (1,684 m) — four crosses above the Weitsee","url":"https://vegetarianhulk.de/en/hikes/hoerndlwand/"},
+    {"@type":"ListItem","position":4,"name":"Fellhorn (1,764 m) — via the Straubinger Haus","url":"https://vegetarianhulk.de/en/hikes/fellhorn/"},
+    {"@type":"ListItem","position":5,"name":"Drachenwand (1,179 m) — first via ferrata above the Mondsee","url":"https://vegetarianhulk.de/en/hikes/drachenwand/"},
+    {"@type":"ListItem","position":6,"name":"Kneifelspitze (1,188 m) — sunrise over Maria Gern","url":"https://vegetarianhulk.de/en/hikes/kneifelspitze/"},
+    {"@type":"ListItem","position":7,"name":"Ristfeuchthorn (1,569 m) — loop above Schneizlreuth","url":"https://vegetarianhulk.de/en/hikes/ristfeuchthorn/"},
+    {"@type":"ListItem","position":8,"name":"Grünstein (1,304 m) — Königssee view"},
+    {"@type":"ListItem","position":9,"name":"Zinnkopf (1,227 m) — viewpoint above the Chiemsee"},
+    {"@type":"ListItem","position":10,"name":"Dürrnbachhorn (1,776 m) — ridge above the Winklmoosalm"},
+    {"@type":"ListItem","position":11,"name":"Rauschberg (1,645 m) — Ruhpolding’s local mountain"},
+    {"@type":"ListItem","position":12,"name":"Gamsknogel (1,750 m) — quiet ridge near Inzell"},
+    {"@type":"ListItem","position":13,"name":"Hochgern (1,747 m) — Chiemgau classic from Unterwössen"}
+  ]
+}
+</script>
+
+<script src="/js/touren-hub.js?v=940e5611" defer></script>
+<script src="/touren/tour.js?v=fcbb3401" defer></script>
+<script src="/v3.js?v=2d13e502" defer></script>
+</body>
+</html>
