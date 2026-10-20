@@ -102,7 +102,9 @@
   'use strict';
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var nums = document.querySelectorAll('[data-count]');
-  function fmt(n) { return n.toLocaleString('de-DE'); }
+  // Zahlenformat nach Seitensprache (/en/ seit 20.10.2026: 2,091 statt 2.091)
+  var LOC = document.documentElement.lang === 'en' ? 'en-US' : 'de-DE';
+  function fmt(n) { return n.toLocaleString(LOC); }
   // Die Bilanz steht einfach da (kein Hochzaehlen, motion-loop 06.10.2026)
   function run(el) { el.textContent = fmt(parseInt(el.dataset.count, 10)); }
   if ('IntersectionObserver' in window && nums.length) {

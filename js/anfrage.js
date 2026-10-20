@@ -13,6 +13,7 @@ const FORMS_ENDPOINT = 'https://vh-forms.peaking.workers.dev/brand-inquiry';
 // Der Vermerk im Brand-Feld landet im Betreff der Mail an Sebi — so sieht er ohne
 // Worker-Aenderung, dass er auf Englisch antwortet.
 const EN = document.documentElement.lang === 'en';
+const LOC = EN ? 'en-US' : 'de-DE';
 const TEXT = EN ? {
   consent: 'Please tick the privacy box so I can process your inquiry.',
   captcha: '<strong>Almost done.</strong> Just tick the security check — then we’re good to go.',
@@ -162,8 +163,8 @@ async function submitBrandInquiry(e) {
    eine Bewegung, die einmal laeuft und nichts erzaehlt). */
 (function () {
   'use strict';
-  function fmtInt(n) { return n.toLocaleString('de-DE'); }
-  function fmtPct(n) { return n.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%'; }
+  function fmtInt(n) { return n.toLocaleString(LOC); }
+  function fmtPct(n) { return n.toLocaleString(LOC, { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%'; }
   document.querySelectorAll('[data-count], [data-count-pct]').forEach(function (el) {
     var pct = el.hasAttribute('data-count-pct');
     var target = parseFloat(pct ? el.dataset.countPct : el.dataset.count);
