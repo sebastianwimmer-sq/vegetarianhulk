@@ -80,6 +80,8 @@ lauf "Text (Fixtures)"               python3 scripts/text-check.py --selbsttest
 lauf "Quellen (Fixtures)"            python3 scripts/quellen-einbauen.py --selbsttest
 lauf "Schild (Fixtures)"             python3 scripts/schild-check.py --selbsttest
 lauf "Fremde Hosts & Ordner"         python3 scripts/fremdhosts-check.py
+lauf "Inline-Handler gegen CSP"      python3 scripts/inline-handler-check.py
+lauf "Inline-Handler (Fixtures)"      python3 scripts/inline-handler-check.py --selbsttest
 lauf "Sitemap deckt alle Seiten"     python3 scripts/sitemap-bauen.py --pruefen
 lauf "Sitemap (Fixtures)"            python3 scripts/sitemap-bauen.py --selbsttest
 lauf "Marken-Signale fuer die Suche" python3 scripts/seo-check.py

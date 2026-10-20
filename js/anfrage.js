@@ -114,6 +114,16 @@ async function submitBrandInquiry(e) {
   return false;
 }
 
+// Absenden: per Listener, nicht per onsubmit-Attribut. Die CSP der Seite
+// (script-src 'self', ohne 'unsafe-inline') blockiert Inline-Handler — seit der
+// Auslagerung am 03.09.2026 schickte der Browser das Formular deshalb nativ ab:
+// Seite neu geladen, E-Mail in der URL, nie beim Worker angekommen (gefunden
+// 20.10.2026, Chromium und WebKit).
+(function () {
+  var f = document.getElementById('brandForm');
+  if (f) f.addEventListener('submit', submitBrandInquiry);
+})();
+
 // Footer-Year
 (function () {
   var y = new Date().getFullYear();
