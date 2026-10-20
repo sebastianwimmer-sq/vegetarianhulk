@@ -23,10 +23,11 @@ import {
   DOMAIN, PAARE, STEMPEL_MUSTER, datei, kopfZeilen, sichtbarerText, stempelZeile, textHash,
 } from './sprachen.mjs';
 
-// Ab so vielen deutschen Treffern im sichtbaren Text gilt eine EN-Seite als
-// nicht fertig uebersetzt. 0 waere zu streng: Eigennamen wie „Sebi & Phil“.
+// Ab so vielen deutschen Funktionswoertern im sichtbaren Text gilt eine EN-Seite
+// als nicht fertig uebersetzt. Umlaute zaehlen bewusst NICHT: die Seiten handeln
+// von Bayern — Königssee, Hörndlwand, Adlgaß heissen auf Englisch genauso.
 const MAX_DEUTSCH = 2;
-const DEUTSCH = /\b(und|der|die|das|nicht|mit|für|dein|deine|wir|du|ist|zum|zur|bei|eine?)\b|[äöüÄÖÜß]/g;
+const DEUTSCH = /\b(und|der|die|das|nicht|mit|für|dein|deine|wir|du|ist|zum|zur|bei|eine?|auf|von|den|dem|noch|auch|sich|ich|mein|meine)\b/g;
 
 const lies = (wurzel, pfad) => readFileSync(join(wurzel, datei(pfad)), 'utf8');
 
