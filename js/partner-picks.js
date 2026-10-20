@@ -7,6 +7,9 @@
   'use strict';
   var mount = document.getElementById('partner-index');
   if (!mount || typeof VH_PARTNERS === 'undefined') return;
+  // Englische Seite (/en/partner-picks/, 20.10.2026): Felder mit _en, sonst der deutsche Wert
+  var EN = document.documentElement.lang === 'en';
+  function f(p, k) { return (EN && p[k + '_en'] != null) ? p[k + '_en'] : p[k]; }
   function el(t, c, x) { var n = document.createElement(t); if (c) n.className = c; if (x != null) n.textContent = x; return n; }
   function arrow() {
     var s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -21,14 +24,14 @@
       card.style.setProperty('--d', (i * 90) + 'ms');
 
       var head = el('div', 'pp-card__head');
-      if (p.category) head.appendChild(el('span', 'pp-card__cat', p.category));
+      if (p.category) head.appendChild(el('span', 'pp-card__cat', f(p, 'category')));
       if (p.discount) head.appendChild(el('span', 'pp-badge', '–' + p.discount));
       card.appendChild(head);
 
       card.appendChild(el('h3', 'pp-card__name', p.name));
-      card.appendChild(el('p', 'pp-card__text', p.valueLine));
+      card.appendChild(el('p', 'pp-card__text', f(p, 'valueLine')));
 
-      if (p.hint) { var h = el('p', 'pp-hint'); h.appendChild(el('strong', null, p.hint.lead + ' ')); h.appendChild(document.createTextNode(p.hint.text)); card.appendChild(h); }
+      if (p.hint) { var hi = f(p, 'hint'); var h = el('p', 'pp-hint'); h.appendChild(el('strong', null, hi.lead + ' ')); h.appendChild(document.createTextNode(hi.text)); card.appendChild(h); }
 
       if (p.code) {
         var code = el('div', 'pp-code');
@@ -36,15 +39,18 @@
         var btn = el('button', 'pp-copy', 'Copy'); btn.type = 'button';
         btn.addEventListener('click', function () {
           if (navigator.clipboard) navigator.clipboard.writeText(p.code);
-          btn.textContent = 'Kopiert'; btn.classList.add('copied');
+          btn.textContent = EN ? 'Copied' : 'Kopiert'; btn.classList.add('copied');
           setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
         });
         code.appendChild(btn); card.appendChild(code);
       }
 
-      card.appendChild(el('p', 'pp-fine', 'Affiliate-Link: Wenn du über Code/Link kaufst, erhalte ich eine Provision. Für dich entstehen keine Mehrkosten.' + (p.finePrintExtra ? ' ' + p.finePrintExtra : '')));
+      card.appendChild(el('p', 'pp-fine', (EN
+        ? 'Affiliate link: if you buy via the code/link, I get a commission. It costs you nothing extra.'
+        : 'Affiliate-Link: Wenn du über Code/Link kaufst, erhalte ich eine Provision. Für dich entstehen keine Mehrkosten.')
+        + (f(p, 'finePrintExtra') ? ' ' + f(p, 'finePrintExtra') : '')));
 
-      var cta = el('a', 'th-btn th-btn--gelb pp-cta', 'Zum Shop'); cta.href = '/go/' + p.slug + '/'; cta.rel = 'sponsored noopener'; cta.appendChild(arrow());
+      var cta = el('a', 'th-btn th-btn--gelb pp-cta', EN ? 'To the shop' : 'Zum Shop'); cta.href = '/go/' + p.slug + '/'; cta.rel = 'sponsored noopener'; cta.appendChild(arrow());
       card.appendChild(cta);
 
       mount.appendChild(card);
@@ -58,6 +64,12 @@
   'use strict';
   var mount = document.getElementById('product-index');
   if (!mount || typeof VH_PRODUCTS === 'undefined') return;
+  var EN = document.documentElement.lang === 'en';
+  var KAT_EN = (typeof VH_KATEGORIE_EN !== 'undefined') ? VH_KATEGORIE_EN : {};
+  function kat(k) { return EN ? (KAT_EN[k] || k) : k; }
+  function txt(p) { return EN && p.text_en ? p.text_en : p.text; }
+  function nam(p) { return EN && p.name_en ? p.name_en : p.name; }
+  var BALD = EN ? 'Link coming soon' : 'Link folgt in Kürze';
   function el(t, c, x) { var n = document.createElement(t); if (c) n.className = c; if (x != null) n.textContent = x; return n; }
   function isPending(url) { return !url || url.indexOf('PENDING_') === 0; }
   function arrow() {
@@ -87,13 +99,13 @@
   var hl = document.getElementById('pp-woche');
   if (hl) {
     hl.hidden = false;
-    hl.querySelector('[data-w-kw]').textContent = 'KW ' + w.kw;
-    hl.querySelector('[data-w-kat]').textContent = dieseWoche.kategorie || '';
-    hl.querySelector('[data-w-name]').textContent = dieseWoche.name;
-    hl.querySelector('[data-w-text]').textContent = dieseWoche.text || '';
+    hl.querySelector('[data-w-kw]').textContent = (EN ? 'Week ' : 'KW ') + w.kw;
+    hl.querySelector('[data-w-kat]').textContent = kat(dieseWoche.kategorie || '');
+    hl.querySelector('[data-w-name]').textContent = nam(dieseWoche);
+    hl.querySelector('[data-w-text]').textContent = txt(dieseWoche) || '';
     var hlCta = hl.querySelector('[data-w-cta]');
     if (isPending(dieseWoche.url)) {
-      hlCta.replaceWith(el('span', 'pp-pending', 'Link folgt in Kürze'));
+      hlCta.replaceWith(el('span', 'pp-pending', BALD));
     } else {
       hlCta.href = '/go/amazon/?to=' + encodeURIComponent(dieseWoche.url)
         + '&name=' + encodeURIComponent(dieseWoche.name);
@@ -132,8 +144,10 @@
     };
     /* Fehlt eine Kurzform, steht der ganze Satz auf der Pille — unschön, aber
        vollständig. Das Tor in produkte-sync.mjs meldet die Lücke. */
-    var kurz = (typeof VH_KATEGORIE_KURZ !== 'undefined') ? VH_KATEGORIE_KURZ : {};
-    [['', 'Alles']].concat(kategorien.map(function (k) { return [k, kurz[k] || k]; }))
+    var kurz = EN
+      ? ((typeof VH_KATEGORIE_KURZ_EN !== 'undefined') ? VH_KATEGORIE_KURZ_EN : {})
+      : ((typeof VH_KATEGORIE_KURZ !== 'undefined') ? VH_KATEGORIE_KURZ : {});
+    [['', EN ? 'All' : 'Alles']].concat(kategorien.map(function (k) { return [k, kurz[k] || kat(k)]; }))
       .forEach(function (paar) {
         var c = el('button', 'tk-chip', paar[1]);
         c.type = 'button';
@@ -152,22 +166,24 @@
   function karte(p) {
     var card = el('article', 'pp-card');
 
-    card.appendChild(el('p', 'pp-card__cat', p.kategorie || ''));
+    card.appendChild(el('p', 'pp-card__cat', kat(p.kategorie || '')));
 
     var body = el('div', 'pp-card__body');
-    body.appendChild(el('h3', 'pp-card__name', p.name));
-    body.appendChild(el('p', 'pp-card__text', p.text));
+    body.appendChild(el('h3', 'pp-card__name', nam(p)));
+    body.appendChild(el('p', 'pp-card__text', txt(p)));
     if (p.preisHinweis) body.appendChild(el('p', 'pp-price', p.preisHinweis));
-    if (!isPending(p.url)) body.appendChild(el('p', 'pp-fine', 'Amazon-Partnerlink: Wenn du darüber kaufst, erhalte ich eine Provision. Für dich entstehen keine Mehrkosten.'));
+    if (!isPending(p.url)) body.appendChild(el('p', 'pp-fine', EN
+      ? 'Amazon affiliate link: if you buy through it, I get a commission. It costs you nothing extra. Links go to Amazon.de.'
+      : 'Amazon-Partnerlink: Wenn du darüber kaufst, erhalte ich eine Provision. Für dich entstehen keine Mehrkosten.'));
     card.appendChild(body);
 
     if (isPending(p.url)) {
-      card.appendChild(el('span', 'pp-pending', 'Link folgt in Kürze'));
+      card.appendChild(el('span', 'pp-pending', BALD));
     } else {
-      var cta = el('a', 'pp-link', 'Auf Amazon');
+      var cta = el('a', 'pp-link', EN ? 'On Amazon' : 'Auf Amazon');
       cta.href = '/go/amazon/?to=' + encodeURIComponent(p.url) + '&name=' + encodeURIComponent(p.name);
       cta.target = '_blank'; cta.rel = 'sponsored noopener'; cta.appendChild(arrow());
-      cta.setAttribute('aria-label', p.name + ' auf Amazon ansehen');
+      cta.setAttribute('aria-label', EN ? 'View ' + nam(p) + ' on Amazon' : p.name + ' auf Amazon ansehen');
       card.appendChild(cta);
     }
 

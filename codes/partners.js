@@ -50,12 +50,16 @@ const VH_PARTNERS = [
     code: "VEGETARIANHULK",
     discount: "10%",
     category: "Supplements",
+    category_en: "Supplements",
     sortOrder: 1,
     valueLine: "Meine Supplements hol ich von denen — laborgeprüft, Made in Germany, und läuft bei mir jeden Tag mit. Was sie nicht führen, hol ich mir rund ums Training woanders.",
     hint: {
       lead: "Wichtig:",
       text: "Der Link allein gibt keinen Rabatt — Code VEGETARIANHULK im Warenkorb eingeben."
     },
+    /* Englisch (/en/partner-picks/): dieselben Aussagen, keine Health Claims. */
+    valueLine_en: "I get my supplements from them — lab-tested, made in Germany, and part of my day, every day. Whatever they don’t carry, I get elsewhere around my training.",
+    hint_en: { lead: "Important:", text: "The link alone doesn’t give you a discount — enter the code VEGETARIANHULK in your cart." },
     shopUrl: "https://nature-heart.de/sebastian11377224",
     fallbackUrl: "https://nature-heart.de",
     active: true
@@ -67,6 +71,7 @@ const VH_PARTNERS = [
     code: "VEGETARIANHULK",
     discount: "15%",
     category: "Outdoor-Gear",
+    category_en: "Outdoor gear",
     sortOrder: 2,
     isNew: true,
     // Promo deaktiviert bis Sale-Enddatum von Melanie bestätigt ist —
@@ -83,6 +88,9 @@ const VH_PARTNERS = [
     shopUrl: "https://alpinloacker.com/sebastian-wimmer",
     fallbackUrl: "https://alpinloacker.com",
     finePrintExtra: "15 % Rabatt — während großer Sale-Aktionen gilt der Code mit 5 %.",
+    valueLine_en: "My hiking poles are from them — honestly goated. A family business from the Alps since 1993: merino, sleeping bags & ultralight gear for the mountains.",
+    hint_en: { lead: "Easy:", text: "The discount is applied automatically when you click the link." },
+    finePrintExtra_en: "15% off — during big sales the code gives 5%.",
     active: true
   }
 ];
