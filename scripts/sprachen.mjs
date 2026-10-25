@@ -11,8 +11,10 @@
  * (scripts/sprachen-check.mjs) lesen diese Liste — nie eine eigene.
  *
  * Nicht in der Liste (bleiben Deutsch): Impressum, Datenschutz (Rechtstexte),
- * /newsletter (Newsletter und Mails sind deutsch), 3-tage-reset, berg-starter,
- * danke, links, go/ (Weiterleitungen, noindex).
+ * 3-tage-reset, links, go/ (Weiterleitungen, noindex).
+ * Newsletter zweisprachig seit 25.10.2026: /newsletter/ ist ein Paar; berg-starter und danke
+ * haben englische Schwestern (GEFUEHRT), die nur ueber Mail und Anmeldung erreichbar sind —
+ * noindex, darum nicht in Sitemap und hreflang. Alle drei erzeugt scripts/en-flaechen.mjs.
  */
 import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
@@ -28,8 +30,31 @@ export const PAARE = [
   { de: '/anfrage.html', en: '/en/brand-inquiry/' },
   { de: '/partner-picks/', en: '/en/partner-picks/' },
   { de: '/touren/', en: '/en/hikes/' },
+  { de: '/newsletter/', en: '/en/newsletter/' },
   ...TOUREN.map((t) => ({ de: `/touren/${t}/`, en: `/en/hikes/${t}/` })),
 ];
+
+// Englische Schwestern ohne eigenen Suchauftritt (noindex): erreichbar per Mail bzw. Bestaetigung.
+export const GEFUEHRT = [
+  { de: '/berg-starter/', en: '/en/hike-starter/' },
+  { de: '/danke.html', en: '/en/thanks/' },
+];
+
+/**
+ * 1:1-Regel (Sebi 23.10.2026: „immer beides einfach 1/1 gleich“): wohin ein Link einer deutschen
+ * Seite auf ihrer englischen Schwester zeigen muss. Externe Ziele, Anker, Rechtstexte, Dateien
+ * und go/-Weiterleitungen bleiben gleich; ein deutscher Pfad ohne Schwester ergibt null.
+ */
+const SCHWESTER = new Map([...PAARE, ...GEFUEHRT].map((p) => [p.de, p.en]));
+export function enZiel(href) {
+  if (!href.startsWith('/') || href.startsWith('//')) return href;
+  const [pfad, rest = ''] = href.split(/(?=[?#])/);
+  const schluessel = pfad === '/newsletter' ? '/newsletter/' : pfad;
+  if (SCHWESTER.has(schluessel)) return SCHWESTER.get(schluessel) + rest;
+  if (/^\/(impressum|datenschutz)\.html$/.test(pfad) || pfad.startsWith('/go/')) return href;
+  if (/\.(jpe?g|png|webp|svg|pdf|js|css|woff2|gpx)$/i.test(pfad)) return href;
+  return null;
+}
 
 /** URL-Pfad → Datei im Repo ('/' → 'index.html', '/anfrage.html' → 'anfrage.html'). */
 export const datei = (pfad) => (pfad.endsWith('/') ? `${pfad.slice(1)}index.html` : pfad.slice(1));

@@ -24,6 +24,41 @@
   var TURNSTILE_SITEKEY = '0x4AAAAAAEUfGlaYARQSJ-Co';
   var LS_KEY = 'vegetarianhulk_newsletterSubscribed';
   var CONTACT = 'info@vegetarianhulk.de';
+  /* Zweisprachig (Sebi 25.10.2026): Texte per <html lang>. Die englische Anmeldung geht auf die
+     englische Liste und bekommt englische Mails (Worker: sprache). */
+  var SPRACHE = document.documentElement.lang === 'en' ? 'en' : 'de';
+  var T = {
+    de: {
+      form: 'Newsletter-Signup', vorname: 'Dein Vorname (optional)', mail: 'Deine E-Mail-Adresse', mailPh: 'deine@email.de',
+      knopf: 'Berg-Starter holen', hp: 'Dieses Feld bitte leer lassen',
+      einwilligung: 'Ja, schick mir den Berg-Starter und ab und zu den Letter. Ich best&auml;tige per Mail (Double-Opt-In) und kann mich jederzeit abmelden. Mehr in der <a href="/datenschutz.html">Datenschutzerkl&auml;rung</a>.',
+      trust: 'Kein Spam &middot; Aussteigen mit einem Klick.',
+      erfolg: '<strong>Fast geschafft.</strong> Best&auml;tige kurz den Link in deiner Mail &mdash; dann kommt der Berg-Starter.',
+      schon: '<strong>Schon dabei.</strong> Diese E-Mail ist bereits eingetragen.',
+      fehler: '<strong>Etwas ging schief.</strong> ', nochmal: 'Versuch&apos;s nochmal.', schritt: 'Da fehlt noch ein Schritt.',
+      mailPruefen: 'E-Mail-Adresse pr&uuml;fen.', haken: 'Bitte setz kurz den Datenschutz-Haken &mdash; dann geht&apos;s los.',
+      captcha: '<strong>Fast fertig.</strong> Setz noch den Haken bei der Sicherheitspr&uuml;fung &mdash; dann geht&apos;s los.',
+      senden: 'Konnt nicht senden. Schreib mir direkt: ',
+      mailtoBetreff: 'Berg-Starter bitte', mailtoText: 'Hi Sebi,\n\nbitte schick mir den Berg-Starter.\n\n',
+      mailtoVorname: 'Mein Vorname: ', mailtoMail: 'Meine Mail: ', mailtoDanke: '\n\nDanke!',
+      einwilligungText: 'Newsletter + Berg-Starter, Double-Opt-In, Abmeldung jederzeit'
+    },
+    en: {
+      form: 'Newsletter signup', vorname: 'Your first name (optional)', mail: 'Your email address', mailPh: 'you@email.com',
+      knopf: 'Get the Hike Starter', hp: 'Please leave this field empty',
+      einwilligung: 'Yes, send me the Hike Starter and the letter now and then. I confirm by email (double opt-in) and can unsubscribe anytime. More in the <a href="/datenschutz.html" hreflang="de">privacy policy (German)</a>.',
+      trust: 'No spam &middot; Unsubscribe with one click.',
+      erfolg: '<strong>Almost done.</strong> Just confirm the link in your email &mdash; then the Hike Starter arrives.',
+      schon: '<strong>Already in.</strong> This email is already signed up.',
+      fehler: '<strong>Something went wrong.</strong> ', nochmal: 'Please try again.', schritt: 'One step is still missing.',
+      mailPruefen: 'Please check your email address.', haken: 'Please tick the privacy box &mdash; then we&apos;re good to go.',
+      captcha: '<strong>Almost there.</strong> Please complete the security check &mdash; then we&apos;re good to go.',
+      senden: 'Couldn&apos;t send. Write to me directly: ',
+      mailtoBetreff: 'Hike Starter please', mailtoText: 'Hi Sebi,\n\nplease send me the Hike Starter.\n\n',
+      mailtoVorname: 'My first name: ', mailtoMail: 'My email: ', mailtoDanke: '\n\nThanks!',
+      einwilligungText: 'Newsletter + Hike Starter, double opt-in, unsubscribe anytime'
+    }
+  }[SPRACHE];
 
   var TEMPLATE = '' +
     '<style>' +
@@ -79,27 +114,27 @@
     '  .hp { position: absolute !important; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }' +
     '  @media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 1400ms; } .submit, .arrow, .field { transition: none; } }' +
     '</style>' +
-    '<form novalidate aria-label="Newsletter-Signup">' +
+    '<form novalidate aria-label="' + T.form + '">' +
     '  <div class="row">' +
-    '    <label class="sr" for="vhnf-first">Dein Vorname (optional)</label>' +
-    '    <input id="vhnf-first" class="field" type="text" name="firstName" placeholder="Dein Vorname (optional)" autocomplete="given-name" maxlength="40" />' +
+    '    <label class="sr" for="vhnf-first">' + T.vorname + '</label>' +
+    '    <input id="vhnf-first" class="field" type="text" name="firstName" placeholder="' + T.vorname + '" autocomplete="given-name" maxlength="40" />' +
     '    <div class="row email-row">' +
-    '      <label class="sr" for="vhnf-email">Deine E-Mail-Adresse</label>' +
-    '      <input id="vhnf-email" class="field" type="email" name="email" placeholder="deine@email.de" autocomplete="email" inputmode="email" required />' +
+    '      <label class="sr" for="vhnf-email">' + T.mail + '</label>' +
+    '      <input id="vhnf-email" class="field" type="email" name="email" placeholder="' + T.mailPh + '" autocomplete="email" inputmode="email" required />' +
     '      <button class="submit" type="submit">' +
-    '        <span class="label">Berg-Starter holen</span>' +
+    '        <span class="label">' + T.knopf + '</span>' +
     '        <span class="arrow" aria-hidden="true">&rarr;</span>' +
     '        <span class="spinner" hidden aria-hidden="true"></span>' +
     '      </button>' +
     '    </div>' +
     '  </div>' +
     '  <slot name="captcha"></slot>' +
-    '  <label class="sr" for="vhnf-hp">Dieses Feld bitte leer lassen</label>' +
+    '  <label class="sr" for="vhnf-hp">' + T.hp + '</label>' +
     '  <input id="vhnf-hp" class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />' +
     '  <label class="consent"><input id="vhnf-consent" type="checkbox" />' +
-    '    <span>Ja, schick mir den Berg-Starter und ab und zu den Letter. Ich best&auml;tige per Mail (Double-Opt-In) und kann mich jederzeit abmelden. Mehr in der <a href="/datenschutz.html">Datenschutzerkl&auml;rung</a>.</span>' +
+    '    <span>' + T.einwilligung + '</span>' +
     '  </label>' +
-    '  <p class="trust">Kein Spam &middot; Aussteigen mit einem Klick.</p>' +
+    '  <p class="trust">' + T.trust + '</p>' +
     '  <div class="msg" role="status" aria-live="polite"></div>' +
     '</form>';
 
@@ -210,24 +245,24 @@
     }
     if (state === 'success') {
       this._msg.className = 'msg is-visible msg--success';
-      this._msg.innerHTML = '<strong>Fast geschafft.</strong> Best&auml;tige kurz den Link in deiner Mail &mdash; dann kommt der Berg-Starter.';
+      this._msg.innerHTML = T.erfolg;
       return;
     }
     if (state === 'already') {
       this.removeAttribute('data-state'); // Felder sichtbar lassen
       this._msg.className = 'msg is-visible msg--info';
-      this._msg.innerHTML = '<strong>Schon dabei.</strong> Diese E-Mail ist bereits eingetragen.';
+      this._msg.innerHTML = T.schon;
       return;
     }
     if (state === 'error') {
       this.removeAttribute('data-state');
       this._msg.className = 'msg is-visible msg--error';
       this._email.setAttribute('aria-invalid', 'true');
-      this._msg.innerHTML = '<strong>Etwas ging schief.</strong> ' + (detail || 'Versuch&apos;s nochmal.');
+      this._msg.innerHTML = T.fehler + (detail || T.nochmal);
     }
     if (state === 'fehlt') {
       this._msg.className = 'msg is-visible msg--info';
-      this._msg.innerHTML = detail || 'Da fehlt noch ein Schritt.';
+      this._msg.innerHTML = detail || T.schritt;
       return;
     }
   };
@@ -239,7 +274,7 @@
     var firstName = (this._first.value || '').trim().slice(0, 40);
     var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     if (!valid) {
-      this.showState('error', 'E-Mail-Adresse pr&uuml;fen.');
+      this.showState('error', T.mailPruefen);
       return;
     }
     // Datenschutz-Einwilligung (DSGVO): Haken ist Pflicht
@@ -247,7 +282,7 @@
       this._consentBox.classList.add('is-err');
       this.showState('error');
       this._email.removeAttribute('aria-invalid'); // nicht die Mail, der Haken fehlt
-      this._msg.innerHTML = 'Bitte setz kurz den Datenschutz-Haken &mdash; dann geht&apos;s los.';
+      this._msg.innerHTML = T.haken;
       return;
     }
     // CAPTCHA: Token einsammeln (nur wenn Schicht aktiv)
@@ -255,7 +290,7 @@
     if (TURNSTILE_SITEKEY && window.turnstile && this._turnstileWidgetId !== null) {
       turnstileToken = window.turnstile.getResponse(this._turnstileWidgetId) || '';
       if (!turnstileToken) {
-        this.showState('fehlt', '<strong>Fast fertig.</strong> Setz noch den Haken bei der Sicherheitspr&uuml;fung &mdash; dann geht&apos;s los.');
+        this.showState('fehlt', T.captcha);
         this._email.removeAttribute('aria-invalid');
         if (this._captchaHolder) {
           this._captchaHolder.classList.add('is-err');
@@ -276,7 +311,7 @@
     fetch(ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, brand: BRAND, firstName: firstName, turnstileToken: turnstileToken, consent: true, consentText: 'Newsletter + Berg-Starter, Double-Opt-In, Abmeldung jederzeit' })
+      body: JSON.stringify({ email: email, brand: BRAND, firstName: firstName, turnstileToken: turnstileToken, consent: true, consentText: T.einwilligungText, sprache: SPRACHE })
     })
       .then(function (res) {
         return res.json().catch(function () { return {}; }).then(function (data) {
@@ -294,11 +329,11 @@
         if (r.res.status === 503) {
           setLocalStorageSubscribed();
           emitSubscribed();
-          var subject = encodeURIComponent('Berg-Starter bitte');
+          var subject = encodeURIComponent(T.mailtoBetreff);
           var body = encodeURIComponent(
-            'Hi Sebi,\n\nbitte schick mir den Berg-Starter.\n\n' +
-            (firstName ? 'Mein Vorname: ' + firstName + '\n' : '') +
-            'Meine Mail: ' + email + '\n\nDanke!'
+            T.mailtoText +
+            (firstName ? T.mailtoVorname + firstName + '\n' : '') +
+            T.mailtoMail + email + T.mailtoDanke
           );
           window.location.href = 'mailto:' + CONTACT + '?subject=' + subject + '&body=' + body;
           syncAllToSuccess('success');
@@ -311,7 +346,7 @@
         if (self._turnstileWidgetId !== null && window.turnstile) {
           try { window.turnstile.reset(self._turnstileWidgetId); } catch (e) { /* noop */ }
         }
-        self.showState('error', 'Konnt nicht senden. Schreib mir direkt: ' + CONTACT);
+        self.showState('error', T.senden + CONTACT);
         if (window.console) console.error('[newsletter] submit failed:', err);
       });
   };

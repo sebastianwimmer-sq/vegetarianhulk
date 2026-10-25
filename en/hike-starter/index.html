@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'self'" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#06231A" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Your Hike Starter — VegetarianHulk</title>
+<meta name="description" content="Welcome to the mountains. My three hikes to get started, what really belongs in your backpack, and how I got into it myself." />
+
+<!-- noindex bleibt; OG nur für Link-Previews (WhatsApp/DM/Mail), unabhängig vom Indexieren -->
+<meta property="og:title" content="Your Hike Starter — VegetarianHulk" />
+<meta property="og:description" content="My three hikes to get started, what really belongs in your backpack, and how I got into it myself." />
+<meta property="og:type" content="article" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="https://vegetarianhulk.de/en/hike-starter/" />
+<meta property="og:image" content="https://vegetarianhulk.de/berg-starter/img/sebi-poles.jpg" />
+
+<link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts.css?v=6dafcfa7" />
+<link rel="stylesheet" href="/v3.css?v=82a7c42d" />
+<script src="/uebergang.js?v=4002aa79"></script>
+<style>
+/* ============================================================
+   /berg-starter — Freebie v2 (persönlich, story-getrieben)
+   Research-Richtung: Wert = Sebi, nicht Info. Echtes Foto,
+   Handschrift-Notizen, Raster gebrochen, signiert.
+   Lead-Magnet: noindex, unlisted, per Willkommensmail verlinkt.
+   ============================================================ */
+.bs-wrap { width: min(940px, 92vw); margin: 0 auto; }
+
+/* Field-Photo: echte Aufnahme als gerahmter Print, leicht schräg */
+.bs-photo { position: relative; display: inline-block; padding: 9px 9px 0; background: #FBF6EA;
+  box-shadow: 0 22px 44px -20px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.25);
+  border-radius: 3px; }
+.bs-photo img { display: block; width: 100%; height: auto; border-radius: 1px; }
+.bs-photo figcaption { display: block; padding: 11px 4px 12px; font-family: 'Caveat', cursive;
+  font-size: 19px; line-height: 1.15; color: #2a2118; text-align: center; }
+.bs-photo--tilt-l { transform: rotate(-2.4deg); }
+.bs-photo--tilt-r { transform: rotate(2deg); }
+
+/* Sebis Notiz: Handschrift-Marginalie mit Pfeil */
+.bs-note { position: relative; margin: 18px 0 4px; padding: 15px 18px 16px 46px; border-radius: 4px 14px 14px 4px;
+  background: rgba(4,89,39,0.07); box-shadow: inset 3px 0 0 var(--royal); }
+.bs-note::before { content: "✎"; position: absolute; left: 16px; top: 13px; font-size: 17px; color: var(--royal); opacity: 0.75; }
+.bs-note b { display: block; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.6px;
+  text-transform: uppercase; color: var(--royal); margin-bottom: 6px; }
+.bs-note p { font-family: 'Caveat', cursive; font-size: 21px; line-height: 1.32; color: #21372a; }
+
+/* ---- Hero: Identität + echtes Foto, Raster gebrochen ---- */
+.bs-hero { position: relative; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(24px, 4vw, 52px);
+  align-items: center; padding: clamp(30px, 6vh, 66px) 0 clamp(24px, 4vh, 48px); }
+/* Gradient-Glow wie Startseiten-Hero */
+.bs-hero::before { content: ""; position: absolute; inset: -30% 0 -22%; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(48% 42% at 80% 16%, rgba(201,169,106,0.30), transparent 70%),
+    radial-gradient(56% 48% at 16% 34%, rgba(15,126,91,0.42),   transparent 72%),
+    radial-gradient(50% 42% at 84% 74%, rgba(63,191,128,0.26),  transparent 70%);
+  filter: blur(12px); }
+.bs-hero__k { display: inline-flex; align-items: center; gap: 9px; font-family: var(--mono);
+  font-size: 10px; font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase; color: var(--leaf); }
+.bs-hero__k svg { width: 15px; height: 15px; }
+.bs-hero h1 { margin: 18px 0 0; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
+  font-size: clamp(40px, 6.6vw, 72px); line-height: 0.98; letter-spacing: -1px; color: var(--paper); }
+.bs-hero h1 em { font-style: italic; color: var(--leaf); }
+.bs-hero__sub { margin-top: 20px; font-size: 16.5px; line-height: 1.65; color: var(--paper-dim); max-width: 42ch; }
+.bs-hero__sub strong { color: var(--paper); font-weight: 600; }
+.bs-hero__photo { justify-self: center; max-width: 340px; }
+@media (max-width: 780px) { .bs-hero { grid-template-columns: 1fr; text-align: left; }
+  .bs-hero__photo { order: -1; max-width: 260px; margin-bottom: 6px; } }
+
+/* ---- Sheet ---- */
+.bs-sheet { position: relative; overflow: hidden; border-radius: var(--r-karte); margin: clamp(20px, 3.5vh, 40px) 0;
+  padding: clamp(28px, 4.2vw, 50px); background: radial-gradient(130% 120% at 12% 0%, #F8F2E2, #EBE1C9 78%);
+  box-shadow: var(--shadow-paper); }
+.bs-sheet::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.5; pointer-events: none; }
+.bs-sheet > * { position: relative; z-index: 1; }
+.bs-k { display: inline-flex; align-items: center; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2.2px;
+  text-transform: uppercase; color: var(--gold-ink); }
+/* Berg-Glyphe statt KI-Slop-Strich */
+.bs-k .line { display: inline-block; width: 17px; height: 11px; margin-right: 9px; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'%3E%3Cpath d='M1.5 15 9 3.2l3.4 5L15.8 4l6.7 11z'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'%3E%3Cpath d='M1.5 15 9 3.2l3.4 5L15.8 4l6.7 11z'/%3E%3C/svg%3E") center/contain no-repeat; }
+.bs-sheet h2 { margin: 12px 0 0; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 600;
+  font-size: clamp(27px, 4vw, 40px); line-height: 1.04; color: #14281C; }
+.bs-sheet h2 em { font-style: italic; color: var(--royal); }
+
+/* Story: Text + Foto nebeneinander (gebrochen) */
+.bs-story__grid { margin-top: 24px; display: grid; grid-template-columns: 1fr 300px; gap: clamp(24px, 4vw, 46px); align-items: start; }
+.bs-story__grid--center { align-items: center; grid-template-columns: 1fr 250px; }
+@media (max-width: 780px) { .bs-story__grid, .bs-story__grid--center { grid-template-columns: 1fr; } .bs-story__grid .bs-photo { max-width: 260px; } }
+.bs-prose p { font-size: 16px; line-height: 1.72; color: #21372a; margin-bottom: 15px; max-width: 56ch; }
+.bs-prose p:last-child { margin-bottom: 0; }
+.bs-prose .lead { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-size: clamp(20px, 2.6vw, 24px);
+  font-style: italic; line-height: 1.4; color: #14281C; }
+.bs-prose .uline { background: linear-gradient(transparent 62%, rgba(4,89,39,0.22) 62%, rgba(4,89,39,0.22) 92%, transparent 92%); }
+
+/* Warum diese 3 */
+.bs-why { margin-top: 22px; font-size: 16px; line-height: 1.7; color: #21372a; max-width: 60ch; }
+.bs-why b { color: #14281C; }
+
+/* ---- Touren ---- */
+.bs-tour { position: relative; margin-top: 30px; padding-top: 28px; border-top: 1px solid rgba(24,43,31,0.16); }
+.bs-tour:first-of-type { border-top: 0; padding-top: 6px; margin-top: 18px; }
+.bs-tour__no { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-style: italic; font-weight: 700; font-size: 15px; color: var(--royal); }
+.bs-tour__name { margin: 3px 0 0; font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700;
+  font-size: clamp(24px, 3.2vw, 32px); line-height: 1.03; color: #14281C; }
+.bs-tour__name span { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 0.5px; color: var(--royal); vertical-align: 4px; margin-left: 8px; }
+.bs-tour__tagline { margin-top: 4px; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--ink-meta); }
+.bs-tour__body { margin-top: 16px; display: grid; grid-template-columns: 1fr 220px; gap: clamp(18px, 3vw, 36px); align-items: start; }
+@media (max-width: 720px) { .bs-tour__body { grid-template-columns: 1fr; } }
+.bs-tour__voice { font-size: 15.5px; line-height: 1.68; color: #21372a; }
+.bs-tour__voice strong { color: #14281C; font-weight: 600; }
+/* Fakten-Seitenpanel */
+.bs-facts { border-radius: var(--r-control); padding: 16px 18px; background: rgba(20,40,28,0.04); box-shadow: inset 0 0 0 1px rgba(24,43,31,0.1); }
+.bs-facts dl { display: grid; grid-template-columns: auto 1fr; gap: 7px 12px; margin: 0; }
+.bs-facts dt { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--ink-meta); padding-top: 3px; }
+.bs-facts dd { margin: 0; font-size: 13.5px; font-weight: 600; color: #14281C; text-align: right; }
+.bs-facts dd b { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 700; }
+.bs-map { margin-top: 13px; display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono);
+  font-size: 10px; font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; color: #14281C; text-decoration: none;
+  padding: 12px 15px; border-radius: var(--r-control); min-height: 44px; box-sizing: border-box; background: var(--schild-flaeche); box-shadow: var(--schild-kante);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 9px -3px rgba(120,88,10,0.5); transition: transform 220ms var(--ease-lux); }
+.bs-map:hover { transform: translateY(-2px); }
+.bs-map svg { width: 11px; height: 11px; }
+
+/* ---- Packliste: Rucksack + Kopf ---- */
+.bs-pack2 { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(22px, 3.5vw, 42px); align-items: start; }
+@media (max-width: 720px) { .bs-pack2 { grid-template-columns: 1fr; } }
+.bs-pack2 h3 { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 600; font-size: 21px; color: #14281C; }
+.bs-pack2 h3 small { display: block; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--ink-meta); margin-top: 4px; }
+.bs-list { list-style: none; margin: 15px 0 0; padding: 0; }
+.bs-list li { display: flex; align-items: flex-start; gap: 11px; padding: 8px 0; font-size: 14.5px; line-height: 1.4; color: #1c3325; }
+.bs-list li svg { flex: 0 0 auto; width: 17px; height: 17px; margin-top: 1px; color: var(--royal); }
+.bs-list li b { font-weight: 600; color: #14281C; }
+.bs-list li span { color: var(--ink-meta); }
+.bs-kopf li { align-items: baseline; }
+.bs-kopf li::before { content: ""; flex: 0 0 auto; width: 6px; height: 6px; border-radius: 50%; background: var(--royal); margin-top: 8px; }
+
+/* ---- Schluss ---- */
+.bs-end { position: relative; overflow: hidden; text-align: center; border-radius: var(--r-karte); margin: clamp(22px,4vh,44px) 0 clamp(50px,9vh,90px);
+  padding: clamp(38px, 6vw, 68px) clamp(24px, 5vw, 54px);
+  background: linear-gradient(158deg, rgba(19,54,35,0.92), rgba(6,24,15,0.94));
+  box-shadow: inset 0 1px 0 rgba(209,242,235,0.08), 0 30px 64px -30px rgba(0,0,0,0.7); }
+.bs-end::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.35; mix-blend-mode: overlay; pointer-events: none; }
+.bs-end > * { position: relative; z-index: 1; }
+.bs-end h2 { font-family: 'Playfair Display', 'Playfair Fallback', serif; font-weight: 600; font-size: clamp(28px, 5vw, 44px); line-height: 1.05; color: var(--paper); }
+.bs-end h2 em { font-style: italic; color: var(--leaf); }
+.bs-end p { margin: 16px auto 0; max-width: 46ch; font-size: 15.5px; line-height: 1.65; color: var(--paper-dim); }
+.bs-end p strong { color: var(--paper); font-weight: 600; }
+.bs-btn { margin-top: 26px; display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+  font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #14100A;
+  padding: 15px 26px; border-radius: var(--r-control); background: var(--schild-flaeche);
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4)) drop-shadow(0 2px 2px rgba(120,88,10,0.4)) drop-shadow(0 12px 22px rgba(0,0,0,0.32));
+  transition: transform 260ms var(--ease-lux); }
+.bs-btn:hover { transform: translateY(-2px); }
+.bs-sign { margin-top: 30px; padding-top: 24px; border-top: 1px solid rgba(243,235,217,0.14);
+  display: inline-flex; align-items: center; gap: 16px; text-align: left; }
+.bs-sign__mascot { width: 66px; height: auto; flex: 0 0 auto;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.45)); animation: bsMascot 4.5s ease-in-out infinite; }
+@keyframes bsMascot { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-5px) rotate(1.5deg); } }
+.bs-sign .hand { font-family: 'Caveat', cursive; font-size: 30px; line-height: 1.05; color: var(--leaf); }
+.bs-sign .date { margin-top: 5px; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--paper-faint); }
+@media (prefers-reduced-motion: reduce) { .bs-sign__mascot { animation: none; } }
+
+@media print {
+  .bg-wrap, .bg2-wrap, .rail, .topbar { display: none !important; }
+  body { background: #fff !important; }
+  .bs-hero h1, .bs-hero__k, .bs-hero__sub, .bs-hero__sub strong { color: #14281C !important; }
+  .bs-hero h1 em { color: var(--royal) !important; }
+  .bs-sheet, .bs-tour, .bs-end { break-inside: avoid; }
+  .bs-end { background: #143a24 !important; }
+  .bs-btn { box-shadow: none; filter: none; }
+}
+</style>
+</head>
+<body class="th-page bs-page">
+<div class="bg-wrap" aria-hidden="true"><div class="bg"></div></div>
+<div class="bg2-wrap" aria-hidden="true"><div class="bg2"></div></div>
+
+<main>
+  <div class="bs-wrap">
+    <header class="topbar" style="justify-content:center">
+      <span class="brandbox"><a class="wordmark" href="/en/">VEGETARIAN<b>HULK</b></a></span>
+    </header>
+
+    <!-- Hero: Identität + echtes Foto -->
+    <section class="bs-hero">
+      <div class="bs-hero__text">
+        <span class="bs-hero__k">
+          <svg viewBox="0 0 24 18" fill="currentColor" aria-hidden="true"><path d="M2 17 9 5l3.2 5L15.5 6 22 17z"/></svg>
+          Welcome to the mountains
+        </span>
+        <h1>You don’t have to be a pro.<br><em>You already belong.</em></h1>
+        <p class="bs-hero__sub">I’ll take you along on the three hikes I use to bring people up a mountain for the first time — plus what really belongs in your backpack. No textbook. Just start walking.</p>
+      </div>
+      <figure class="bs-photo bs-photo--tilt-r bs-hero__photo">
+        <img src="/berg-starter/img/sebi-kreuz.jpg" alt="Sebi at the summit cross" loading="eager">
+        <figcaption>Up at the cross. This is exactly why you do it.</figcaption>
+      </figure>
+    </section>
+
+    <!-- Wie ich reingekommen bin -->
+    <section class="bs-sheet">
+      <span class="bs-k"><span class="line"></span>Honest and short</span>
+      <h2>How I got into it.</h2>
+      <div class="bs-story__grid">
+        <div class="bs-prose">
+          <p class="lead">I wasn’t born into it — I was taken along.</p>
+          <p>It started with my dad and my grandpa, who often took me up the mountains as a kid.
+          I’m still really grateful for that today. These days I mostly go with friends who share the same hobby.</p>
+          <p>And that’s exactly the best part for me: <span class="uline">enjoying nature together, as two or in a small group.</span>
+          You don’t have to figure it out alone. Bring someone — the mountain is best with two.</p>
+        </div>
+        <figure class="bs-photo bs-photo--tilt-l">
+          <img src="/berg-starter/img/sebi-poles.jpg" alt="Sebi in the mountains" loading="lazy">
+          <figcaption>Stop for a moment. Look. Breathe.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Warum diese 3 -->
+    <section class="bs-sheet">
+      <span class="bs-k"><span class="line"></span>My picks</span>
+      <h2>Why exactly these three.</h2>
+      <p class="bs-why">A good, varied mix: one with a hut and a postcard view, a quiet lonely one to unwind, one with a wide view over the region. All three are very doable. Start with the one closest to you.</p>
+
+      <!-- Tour 1 -->
+      <article class="bs-tour">
+        <p class="bs-tour__no">i.</p>
+        <h3 class="bs-tour__name">Grünstein <span>1.304 m · Berchtesgaden</span></h3>
+        <p class="bs-tour__tagline">Hut, postcard view, Königssee</p>
+        <div class="bs-tour__body">
+          <div>
+            <p class="bs-tour__voice">For me one of the most beautiful views so far — and the trail is really relaxed.
+            At the top the <strong>Grünsteinhütte</strong> is waiting with food and drinks. And if you feel like more, keep going to the
+            <strong>Archenkanzel</strong>: the best view over the Königssee I know.</p>
+            <div class="bs-note">
+              <b>Sebi’s note</b>
+              <p>The Grünstein also has a via ferrata — that one is NOT for beginners. Take the normal trail 445, it has no tricky spots.
+              The Archenkanzel is another ~1.5 h further, so plan it as a full day.</p>
+            </div>
+          </div>
+          <div class="bs-facts">
+            <dl>
+              <dt>Elevation gain</dt><dd><b>489 hm</b></dd>
+              <dt>Distance</dt><dd>approx. 5 km</dd>
+              <dt>Duration</dt><dd>approx. 2:00 h</dd>
+              <dt>Food stop</dt><dd>Grünsteinhütte</dd>
+              <dt>Season</dt><dd>May–Oct</dd>
+              <dt>Start</dt><dd>Hammerstiel car park</dd>
+            </dl>
+            <a class="bs-map" href="https://www.google.com/maps/search/Parkplatz+Hammerstiel+Sch%C3%B6nau+am+K%C3%B6nigssee" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start in Maps</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Tour 2 -->
+      <article class="bs-tour">
+        <p class="bs-tour__no">ii.</p>
+        <h3 class="bs-tour__name">Zinnkopf <span>1.227 m · Chiemgau</span></h3>
+        <p class="bs-tour__tagline">Lonely, summit cross, to unwind</p>
+        <div class="bs-tour__body">
+          <div>
+            <p class="bs-tour__voice">It started as a spontaneous hike of mine, I’ve been up twice now. A very
+            lonely summit — beautiful wooden cross, benches, a relaxed spot. There are several starting points, pick the closest one.
+            Perfect to get started: easy, wooded, no crowds.</p>
+            <div class="bs-note">
+              <b>Sebi’s note</b>
+              <p>The lower part can get properly muddy and wet — sturdy shoes. There’s no hut on the mountain itself, so pack a snack.
+              And honestly: the best view is already halfway up, not only at the top.</p>
+            </div>
+          </div>
+          <div class="bs-facts">
+            <dl>
+              <dt>Elevation gain</dt><dd><b>553 hm</b></dd>
+              <dt>Distance</dt><dd>approx. 9 km</dd>
+              <dt>Duration</dt><dd>approx. 3:00 h</dd>
+              <dt>Level</dt><dd>easy (T1–T2)</dd>
+              <dt>Season</dt><dd>almost all year</dd>
+              <dt>Start</dt><dd>Hörgering car park</dd>
+            </dl>
+            <a class="bs-map" href="https://www.google.com/maps/search/H%C3%B6rgering+Siegsdorf" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start in Maps</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Tour 3 -->
+      <article class="bs-tour">
+        <p class="bs-tour__no">iii.</p>
+        <h3 class="bs-tour__name">Dürrnbachhorn <span>1.776 m · Chiemgau</span></h3>
+        <p class="bs-tour__tagline">Wide view over the region, mountain-pine ridge</p>
+        <div class="bs-tour__body">
+          <div>
+            <p class="bs-tour__voice">I always start from the <strong>Winklmoosalm car park</strong>. At the top you get a good
+            view over the whole region, lots of mountain pines along the way. Often doable in spring and still in autumn — the high start makes it possible.</p>
+            <div class="bs-note">
+              <b>Sebi’s note</b>
+              <p>The Winklmoosalm road is a toll road — check the current price on site. There’s even an old nostalgic chairlift going up,
+              if you want it easy. The ridge beyond the summit needs sure footing — to get started, just go up and back the same way.</p>
+            </div>
+          </div>
+          <div class="bs-facts">
+            <dl>
+              <dt>Elevation gain</dt><dd><b>591 hm</b></dd>
+              <dt>Distance</dt><dd>approx. 8.4 km</dd>
+              <dt>Duration</dt><dd>approx. 3:00 h</dd>
+              <dt>Getting there</dt><dd>Toll road from Seegatterl</dd>
+              <dt>Season</dt><dd>Spring–autumn</dd>
+              <dt>Start</dt><dd>Winklmoosalm car park</dd>
+            </dl>
+            <a class="bs-map" href="https://www.google.com/maps/search/Parkplatz+Winklmoosalm" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Start in Maps</a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Packliste: Rucksack + Kopf -->
+    <section class="bs-sheet">
+      <span class="bs-k"><span class="line"></span>Before you set off</span>
+      <h2>What really comes along.</h2>
+      <div class="bs-pack2">
+        <div>
+          <h3>In the backpack<small>That’s all you need</small></h3>
+          <ul class="bs-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Sturdy hiking boots</b> with good tread — no sneakers</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Poles</b> — the ones from Alpin Loacker are honestly goat</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Sunglasses</b> + sunscreen + cap — the sun hits hard up top</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>At least 1.5 L of water</b> + a snack</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Rain jacket + a warm layer</b> — mountain = changing weather</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Mini first-aid kit</b> + blister plasters + phone with an offline map</span></li>
+          </ul>
+        </div>
+        <div>
+          <h3>In your head<small>The more important gear</small></h3>
+          <ul class="bs-list bs-kopf">
+            <li><span><b>Good mood</b> — you’re bringing that anyway, right?</span></li>
+            <li><span><b>Stamina</b> — it comes by itself, a little more every time</span></li>
+            <li><span><b>Respect for the mountain and nature</b> — the mountain isn’t going anywhere, better turn back if things turn</span></li>
+            <li><span><b>Openness</b> — everyone’s friendly in the mountains, for real</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Schluss: Einladung + Aktion + Signatur -->
+    <section class="bs-end">
+      <h2>You belong <em>now.</em></h2>
+      <p><strong>Which one are you doing first?</strong> Reply to my welcome email — I’ll give you one more tip for exactly that hike.</p>
+      <a class="bs-btn" href="/en/hikes/">All Hulk Hikes at a glance →</a>
+      <div class="bs-sign">
+        <img class="bs-sign__mascot" src="/assets/img/smashy-maskottchen.webp" alt="Smashy, the VegetarianHulk mascot" loading="lazy">
+        <div>
+          <p class="hand">See you in the mountains. — Sebi</p>
+          <p class="date">VegetarianHulk · your Hike Starter</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="inner">
+    <a class="wordmark" href="/en/">VEGETARIAN<b>HULK</b></a>
+    <p class="claim">Builder &amp; creator. Discipline over hype.</p>
+    <nav class="legal" aria-label="Legal">
+      <a href="/impressum.html" hreflang="de">Legal notice (German)</a>
+      <a href="/datenschutz.html" hreflang="de">Privacy (German)</a>
+      <span>© 2026 Sebastian Wimmer</span>
+    </nav>
+  </div>
+</footer>
+
+<!-- Floating Nav — typografisch, nur der Berg bleibt -->
+<nav class="nav" aria-label="Main navigation">
+  <a href="/en/">Home</a>
+  <a href="/en/partner-picks/">P&amp;P</a>
+  <a class="center" href="/en/hikes/">
+    <span class="mtn"><svg viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 50 26 16l10 16 8-12 22 30"/>
+      <path d="M22 23.5 26 20l4 5" opacity="0.85"/>
+      <path d="M40.5 25.5 44 21.5l3.5 5" opacity="0.85"/>
+      <circle cx="58" cy="11" r="4.5" opacity="0.9"/>
+      <path d="M12 50c8-4 16-3.4 22 0" opacity="0.45"/>
+    </svg></span>
+    Hulk&nbsp;Hikes
+  </a>
+  <a href="/en/newsletter/">News</a>
+  <a href="/en/brands/">Brands</a>
+</nav>
+
+<script src="/v3.js?v=2d13e502" defer></script>
+</body>
+</html>

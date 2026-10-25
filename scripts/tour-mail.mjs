@@ -4,6 +4,9 @@
  *
  *   node scripts/tour-mail.mjs drachenwand
  *   node scripts/tour-mail.mjs drachenwand --pruefen   # nur pruefen, nichts schreiben
+ *   node scripts/tour-mail.mjs drachenwand --sprache=en  # englisch: aus en/hikes/<slug>/,
+ *        Vorlage neue-tour.en.html, Entwurf an die englische Liste (Newsletter zweisprachig
+ *        seit 25.10.2026 — jede Ausgabe gibt es zweimal: ohne und mit --sprache=en)
  *
  * WARUM ERZEUGT UND NICHT GEPFLEGT
  * Eine Mail, die von Hand aus der Tour-Seite abgeschrieben wird, driftet beim
@@ -31,6 +34,7 @@ const WURZEL = join(dirname(fileURLToPath(import.meta.url)), '..');
 const argv = process.argv.slice(2);
 const slug = argv.find(a => !a.startsWith('--'));
 const nurPruefen = argv.includes('--pruefen');
+const EN = argv.includes('--sprache=en');
 /* --entwurf legt die Kampagne in Brevo als ENTWURF an. Nicht senden:
    den Knopf drueckt ein Mensch. Eine Mail an die ganze Liste laesst sich
    nicht zurueckholen, und ein Tippfehler erreicht dann alle auf einmal. */
@@ -49,9 +53,10 @@ if (!slug) {
   process.exit(2);
 }
 
-const seitePfad = join(WURZEL, 'touren', slug, 'index.html');
+const seiteRel = EN ? `en/hikes/${slug}/index.html` : `touren/${slug}/index.html`;
+const seitePfad = join(WURZEL, seiteRel);
 if (!existsSync(seitePfad)) {
-  console.error(`Keine Tour-Seite unter touren/${slug}/index.html`);
+  console.error(`Keine Tour-Seite unter ${seiteRel}`);
   process.exit(2);
 }
 const seite = readFileSync(seitePfad, 'utf8');
@@ -88,7 +93,9 @@ const altRoh = greif(/<p class="tour-alt[^"]*">([\s\S]*?)<\/p>/, 'Höhe/Ort (.to
 const hoehe  = text(altRoh.split('<span class="hsep"')[0]);
 const region = text(greif(/<p class="tour-crumb[^"]*">([\s\S]*?)<\/p>/, 'Region (.tour-crumb)')
                     .replace(/<a[^>]*>[\s\S]*?<\/a>/, ''));
-const datum  = greif(/<span class="tour-badge">Gegangen[\s\S]*?<\/span>\s*(\d{2}\.\d{2}\.)/, 'Datum (.tour-badge)');
+const datum  = EN
+  ? greif(/<span class="tour-badge">Hiked[\s\S]*?<\/span>\s*([A-Z][a-z]{2} \d{1,2})/, 'Datum (.tour-badge)')
+  : greif(/<span class="tour-badge">Gegangen[\s\S]*?<\/span>\s*(\d{2}\.\d{2}\.)/, 'Datum (.tour-badge)');
 const lead   = text(greif(/<p class="tour-lead[^"]*">([\s\S]*?)<\/p>/, 'Aufhänger (.tour-lead)'));
 const notizV = text(greif(/<p class="tour-note__body">([\s\S]*?)<\/p>/, 'O-Ton (.tour-note__body)'));
 // src irgendwo im Tag: seit die Heros srcset VOR src tragen, fand das alte
@@ -105,13 +112,13 @@ const finde = (...worte) => {
   return t ? t.wert : null;
 };
 /* Der Höhenmeter-Wert steht als data-count (die sichtbare Zahl ist formatiert). */
-const hm   = (seite.match(/<b data-count="(\d+)">[^<]*<\/b><span>Höhenmeter/) || [])[1];
+const hm   = (seite.match(EN ? /<b data-count="(\d+)">[^<]*<\/b><span>elevation gain/ : /<b data-count="(\d+)">[^<]*<\/b><span>Höhenmeter/) || [])[1];
 const km   = fakten.find(f => /km/.test(f.label))?.wert;
 /* Erkannt an der AUSSAGE, nicht am Wortlaut: seit der Hoerndlwand heisst die
    Zeit "in Bewegung" und der Grad steht ohne "SAC-Skala" — die Mail brach fuer
    jede neue Tour ab, ohne dass es jemand merkte. */
-const zeit = finde('gehzeit', 'bewegung');
-const grad = finde('skala') || fakten.find(f => /^(T[1-6]|[A-F])(\s*[–-]\s*(T[1-6]|[A-F]))?$/.test(f.wert))?.wert;
+const zeit = finde('gehzeit', 'bewegung', 'moving', 'walking');
+const grad = finde('skala', 'scale') || fakten.find(f => /^(T[1-6]|[A-F])(\s*[–-]\s*(T[1-6]|[A-F]))?$/.test(f.wert))?.wert;
 
 const fehlend = Object.entries({ name, hoehe, region, datum, lead, notizV, foto, hm, km, zeit, grad })
   .filter(([, v]) => !v).map(([k]) => k);
@@ -145,7 +152,7 @@ for (let i = 0; i + 1 < Math.max(saetze.length, 2); i++) {
 }
 const notiz = bestes.text;
 
-const zahl = Number(hm).toLocaleString('de-DE');
+const zahl = Number(hm).toLocaleString(EN ? 'en-US' : 'de-DE');
 
 /* Ueberschriftgroesse aus dem laengsten Wort des Tournamens.
    Ein Wort bricht nicht um: bei 39px braucht "Drachenwand" allein 277px, und
@@ -164,12 +171,18 @@ const versArg = argv.find(a => a.startsWith('--vers='));
 const versDatei = JSON.parse(readFileSync(join(WURZEL, 'email-templates/verse.json'), 'utf8'));
 const alleVerse = versDatei.verse;
 
-const text_ = `${lead} ${notizV} ${name}`.toLowerCase();
+/* Die Signale liest immer die DEUTSCHE Seite — so bekommen beide Sprachen denselben Vers
+   (1:1); englische Woerter trafen anders (Ristfeuchthorn: Jesaja deutsch, Psalm englisch). */
+const signalSeite = EN ? readFileSync(join(WURZEL, 'touren', slug, 'index.html'), 'utf8') : seite;
+const aus = (re) => text((signalSeite.match(re) || [])[1] || '');
+const text_ = EN
+  ? `${aus(/<p class="tour-lead[^"]*">([\s\S]*?)<\/p>/)} ${aus(/<p class="tour-note__body">([\s\S]*?)<\/p>/)} ${name}`.toLowerCase()
+  : `${lead} ${notizV} ${name}`.toLowerCase();
 const SIGNALE = [
-  [/erste[nrs]?\s+(mal|klettersteig|via ferrata)|zum ersten mal/, 'erstesmal'],
-  [/sonnenaufgang|blaue stunde|im dunkeln|vier uhr|4 uhr/,          'sonnenaufgang'],
-  [/klettersteig|via ferrata|steil|ausgesetzt|t4|schwindelfrei/,     'klettern'],
-  [/aussicht|blick|panorama|gipfelkreuz/,                            'aussicht'],
+  [/erste[nrs]?\s+(mal|klettersteig|via ferrata)|zum ersten mal|first (time|via ferrata)/, 'erstesmal'],
+  [/sonnenaufgang|blaue stunde|im dunkeln|vier uhr|4 uhr|sunrise|blue hour|in the dark|at 4\b/, 'sonnenaufgang'],
+  [/klettersteig|via ferrata|steil|ausgesetzt|t4|schwindelfrei|steep|exposed/, 'klettern'],
+  [/aussicht|blick|panorama|gipfelkreuz|view|summit cross/,          'aussicht'],
 ];
 const themen = SIGNALE.filter(([re]) => re.test(text_)).map(([, t]) => t);
 /* Viele Hoehenmeter reihen sich VOR "klettern" und "aussicht" ein: bei einem
@@ -194,15 +207,22 @@ if (versArg) {
 
 const laengstesWort = Math.max(...name.split(/[\s-]+/).map(w => w.length));
 const h1Size = Math.max(22, Math.min(39, Math.floor(240 / (laengstesWort * 0.646))));
+// Englisch: King James Version (gemeinfrei) aus verse.json (text_en, stelle_en).
+const versText = EN ? vers.text_en : vers.text;
+const versStelle = EN ? vers.stelle_en : vers.stelle;
+if (!versText || !versStelle) { console.error(`Vers ${vers.id}: Fassung ${EN ? 'text_en/stelle_en' : 'text/stelle'} fehlt in verse.json`); process.exit(1); }
 const werte = {
   NAME: name, HOEHE: hoehe, REGION: region, DATUM: datum,
   LEAD: lead, NOTIZ: notiz, HM: zahl, KM: km, ZEIT: zeit, GRAD: grad,
-  URL: `https://vegetarianhulk.de/touren/${slug}/`,
+  URL: EN ? `https://vegetarianhulk.de/en/hikes/${slug}/` : `https://vegetarianhulk.de/touren/${slug}/`,
   FOTO: `https://vegetarianhulk.de${foto}`,
-  FOTO_ALT: `${name} — Blick von der Tour`,
+  FOTO_ALT: EN ? `${name} — view from the hike` : `${name} — Blick von der Tour`,
   H1_SIZE: String(h1Size),
-  VERS_TEXT: vers.text,
-  VERS_STELLE: vers.stelle,
+  // Versteckter Vorschautext im Postfach = derselbe wie in Brevo (bis 25.10. stand dort der
+  // Satz der Willkommens-Mail: „Deine 3 Touren zum Reinkommen …“).
+  VORSCHAU: `${lead.slice(0, 110)}${lead.length > 110 ? '…' : ''}`,
+  VERS_TEXT: versText,
+  VERS_STELLE: versStelle,
 };
 
 /* ---------- Farben aus der Quelle einsetzen ----------
@@ -232,7 +252,7 @@ for (const [name, d] of Object.entries(farbDatei)) {
   }
 }
 
-let html = readFileSync(join(WURZEL, 'email-templates/neue-tour.html'), 'utf8');
+let html = readFileSync(join(WURZEL, EN ? 'email-templates/neue-tour.en.html' : 'email-templates/neue-tour.html'), 'utf8');
 if (smashie) {
   werte.SMASHIE = smashie;
 } else {
@@ -242,7 +262,7 @@ for (const [k, v] of Object.entries(werte)) html = html.split(`{{ ${k} }}`).join
 for (const [k, v] of Object.entries(farben)) html = html.split(`{{ FARBE_${k} }}`).join(v);
 
 /* Was jetzt noch an Platzhaltern steht, darf nur von Brevo kommen. */
-const ERLAUBT = ['{{ contact.VORNAME | default : "du" }}', '{{ unsubscribe }}'];
+const ERLAUBT = [`{{ contact.VORNAME | default : "${EN ? 'there' : 'du'}" }}`, '{{ unsubscribe }}'];
 let rest = html;
 for (const e of ERLAUBT) rest = rest.split(e).join('');
 const uebrig = [...new Set(rest.match(/\{\{[^}]{0,60}\}\}/g) || [])];
@@ -252,7 +272,7 @@ if (uebrig.length) {
   process.exit(1);
 }
 
-const betreff = `${name} ist online — ${zahl} hm, ${km} km`;
+const betreff = EN ? `${name} is online — ${zahl} m elevation gain, ${km} km` : `${name} ist online — ${zahl} hm, ${km} km`;
 const vorschau = `${lead.slice(0, 110)}${lead.length > 110 ? '…' : ''}`;
 
 console.log(`\n  Tour       ${name} · ${hoehe} · ${region}`);
@@ -262,7 +282,8 @@ console.log(`  Überschrift ${h1Size}px (längstes Wort: ${laengstesWort} Zeiche
 console.log(`  Palette     ${alsPapier ? 'Papier (hell)' : 'Wald (dunkel)'}`);
 console.log(`  Farben      ${Object.keys(farben).length} Rollen, davon ${Object.values(farbDatei).filter(d => d.aus_site).length} aus v3.css`);
 console.log(`  O-Ton       ${bestes.quote}% Überschneidung mit dem Aufhänger`);
-console.log(`  Vers        ${vers.stelle} — ${vers.text.slice(0, 52)}${vers.text.length > 52 ? '…' : ''}`);
+console.log(`  Sprache     ${EN ? 'Englisch → englische Liste' : 'Deutsch → deutsche Liste'}`);
+console.log(`  Vers        ${versStelle} — ${versText.slice(0, 52)}${versText.length > 52 ? '…' : ''}`);
 console.log(`  (Signale: ${themen.join(', ') || 'keine → standard'})`);
 console.log(`  Smashie     ${smashie ? '"' + smashie + '"' : 'weggelassen (--smashie=... setzt eine Zeile)'}`);
 console.log(`\n  Betreff       ${betreff}`);
@@ -272,16 +293,18 @@ if (nurPruefen) { console.log('\n  (--pruefen: nichts geschrieben)'); process.ex
 
 const ausOrdner = join(WURZEL, '.mail-versand');
 mkdirSync(ausOrdner, { recursive: true });
-const ausDatei = join(ausOrdner, `${slug}.html`);
+const ausName = `${slug}${EN ? '.en' : ''}.html`;
+const ausDatei = join(ausOrdner, ausName);
 writeFileSync(ausDatei, html, 'utf8');
-console.log(`\n  Geschrieben   .mail-versand/${slug}.html  (${Math.round(html.length / 1024)} KB)`);
+console.log(`\n  Geschrieben   .mail-versand/${ausName}  (${Math.round(html.length / 1024)} KB)`);
 if (!alsEntwurf) {
   console.log(`  Naechster Schritt: Inhalt in die Brevo-Kampagne einfuegen, Betreff und`);
   console.log(`  Vorschautext von oben uebernehmen, an die Newsletter-Liste senden.`);
 }
 if (!alsEntwurf) {
-  console.log(`\n  Vorher pruefen:  node scripts/mail-check.mjs .mail-versand/${slug}.html`);
-  console.log(`  Entwurf anlegen: node scripts/tour-mail.mjs ${slug} --entwurf`);
+  console.log(`\n  Vorher pruefen:  node scripts/mail-check.mjs .mail-versand/${ausName}`);
+  console.log(`  Entwurf anlegen: node scripts/tour-mail.mjs ${slug} --entwurf${EN ? ' --sprache=en' : ''}`);
+  if (!EN) console.log(`  Englisch dazu:   node scripts/tour-mail.mjs ${slug} --sprache=en   (jede Ausgabe zweimal)`);
   process.exit(0);
 }
 
@@ -303,7 +326,7 @@ const ENDPUNKT = 'https://vh-forms.peaking.workers.dev/newsletter/kampagne';
 const antwort = await fetch(ENDPUNKT, {
   method: 'POST',
   headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${adminToken}` },
-  body: JSON.stringify({ name: `Tour ${name} (${datum})`, subject: betreff, preheader: vorschau, html }),
+  body: JSON.stringify({ name: `Tour ${name} (${datum})${EN ? ' EN' : ''}`, subject: betreff, preheader: vorschau, html, sprache: EN ? 'en' : 'de' }),
 });
 const daten = await antwort.json().catch(() => ({}));
 if (!antwort.ok || !daten.ok) {

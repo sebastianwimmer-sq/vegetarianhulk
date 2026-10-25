@@ -11,6 +11,7 @@ preview_urls = false   # Vorschau-Adressen umgehen Schutz/Register (cloudflare-c
 
 [vars]
 NL_LIST_ID = "5"              # Brevo-Liste vegetarianhulk-discipline-reset (#5)
+NL_LIST_ID_EN = "8"           # Brevo-Liste vegetarianhulk-newsletter-en (#8), angelegt 25.10.2026 per POST /newsletter/liste-en
 # Ziel nach dem Klick in der Bestätigungsmail. MUSS eine Seite sein, die
 # ?bestaetigung=ok|abgelaufen|fehler auswertet — sonst steht der Mensch ohne
 # Rückmeldung da (bis 03.09.2026 zeigte "/" wortlos den Hero).
