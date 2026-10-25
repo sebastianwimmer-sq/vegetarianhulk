@@ -86,6 +86,9 @@ lauf "Sitemap deckt alle Seiten"     python3 scripts/sitemap-bauen.py --pruefen
 lauf "Sitemap (Fixtures)"            python3 scripts/sitemap-bauen.py --selbsttest
 lauf "Sprachen DE/EN"               node scripts/sprachen-check.mjs
 lauf "Sprachen (Fixtures)"           node scripts/sprachen-check.mjs --selbsttest
+lauf "EN-Flächen aus DE erzeugt"     node scripts/en-flaechen.mjs --pruefen
+lauf "EN-Flächen (Fixtures)"        node scripts/en-flaechen.mjs --selbsttest
+lauf "Newsletter DE/EN (Worker)"     node scripts/newsletter-sprachen-test.mjs
 lauf "Marken-Signale fuer die Suche" python3 scripts/seo-check.py
 lauf "Marken-Signale (Fixtures)"      python3 scripts/seo-check.py --selbsttest
 lauf "Produktliste & Affiliate-Tags" node scripts/produkte-sync.mjs --pruefen

@@ -30,14 +30,34 @@
     },
   };
 
+  // Englische Schwester /en/thanks/ (Sebi 25.10.2026: Newsletter zweisprachig) — Texte per <html lang>.
+  var EN = document.documentElement.lang === 'en';
+  if (EN) TAG_CONTENT = {
+    discipline: {
+      eyebrow: 'Pillar — Discipline',
+      headline: 'You want the structure that carries you.',
+      body: 'Discipline isn’t a talent. It’s a ritual. Over the next weeks I’ll send you what really works for me — morning routine, streak recovery, comeback patterns. No coach-bro slogans.',
+    },
+    vegetarian: {
+      eyebrow: 'Pillar — Vegetarian + strong',
+      headline: 'You want to see the live proof.',
+      body: '10 years vegetarian, 9 years in the gym. I share what really ends up on my plate — macros, simple routines, what started in 2016 and still holds today. Plant-based + strength = no contradiction.',
+    },
+    faith: {
+      eyebrow: 'Pillar — Faith',
+      headline: 'You want the deeper anchor.',
+      body: 'Faith meets discipline. Bible verses that carry me, Sunday reset routines, anchor practice. King James Version. Not performative — lived. You don’t have to be a Christian to read along.',
+    },
+  };
+
   if (tag && TAG_CONTENT[tag]) {
     var c = TAG_CONTENT[tag];
     document.getElementById('tag-eyebrow').textContent = c.eyebrow;
     document.getElementById('tag-headline').textContent = c.headline;
     document.getElementById('tag-body').textContent = c.body;
     document.getElementById('tag-detail').style.display = 'block';
-    document.getElementById('thanks-title').textContent = 'Notiert.';
-    document.getElementById('thanks-sub').textContent = 'Ich passe meine Mails an das an, was dich gerade trägt.';
+    document.getElementById('thanks-title').textContent = EN ? 'Noted.' : 'Notiert.';
+    document.getElementById('thanks-sub').textContent = EN ? 'I’ll shape my emails around what carries you right now.' : 'Ich passe meine Mails an das an, was dich gerade trägt.';
   }
 
   /* ── Double-Opt-In: der Klick in der Bestätigungsmail landet hier ──
@@ -81,6 +101,44 @@
       status: '<b>Bitte einmal melden.</b> <span>Schreib kurz an info@vegetarianhulk.de — dann trage ich dich von Hand ein und der Starter geht sofort raus.</span>',
       cta: { text: '→ Kurz Bescheid geben', href: 'mailto:info@vegetarianhulk.de?subject=Best%C3%A4tigung%20hat%20nicht%20geklappt' },
       seitentitel: 'Bestätigung fehlgeschlagen · VegetarianHulk'
+    }
+  };
+
+  if (EN) ZUSTAENDE = {
+    ok: {
+      kicker: '— Confirmed —',
+      titel: 'You’re in.',
+      sub: 'Your address is confirmed. The Hike Starter is on its way to your inbox.',
+      klasse: 'ty-status--ok',
+      status: '<b>All done.</b> <span>You don’t need to do anything else. If nothing arrives in a few minutes: check your spam folder once.</span>',
+      seitentitel: 'Confirmed · VegetarianHulk'
+    },
+    'ok-ohne-starter': {
+      kicker: '— Confirmed —',
+      titel: 'You’re in.',
+      sub: 'Your address is confirmed and signed up. Sending the Hike Starter got stuck, though.',
+      klasse: 'ty-status--tun',
+      status: '<b>The starter comes by hand.</b> <span>You’re on the list, that doesn’t change. If it isn’t there within an hour, drop me a line — then I’ll send it directly.</span>',
+      cta: { text: '→ Request the starter', href: 'mailto:info@vegetarianhulk.de?subject=Hike%20Starter%20please' },
+      seitentitel: 'Confirmed · VegetarianHulk'
+    },
+    abgelaufen: {
+      kicker: '— Link expired —',
+      titel: 'That link was too old.',
+      sub: 'Confirmation links are valid for seven days. Just sign up again and a fresh one arrives right away.',
+      klasse: 'ty-status--tun',
+      status: '<b>One more step.</b> <span>Your address wasn’t saved — the link needs to be requested again.</span>',
+      cta: { text: '→ Sign up again', href: '/en/newsletter/' },
+      seitentitel: 'Link expired · VegetarianHulk'
+    },
+    fehler: {
+      kicker: '— Didn’t work —',
+      titel: 'Something went wrong.',
+      sub: 'Your click arrived, but the signup didn’t work. That was on me, not on you.',
+      klasse: 'ty-status--tun',
+      status: '<b>Please let me know.</b> <span>Write a quick line to info@vegetarianhulk.de — then I’ll add you by hand and the starter goes out right away.</span>',
+      cta: { text: '→ Let me know', href: 'mailto:info@vegetarianhulk.de?subject=Confirmation%20didn%27t%20work' },
+      seitentitel: 'Confirmation failed · VegetarianHulk'
     }
   };
 

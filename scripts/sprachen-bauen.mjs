@@ -22,7 +22,7 @@ function setze(html, pfad) {
   }
   const wechsel = umschalter(pfad);
   if (wechsel) {
-    const leiste = t.match(/<header class="topbar">[\s\S]*?\n(\s*)<\/header>/);
+    const leiste = t.match(/<header class="topbar"[^>]*>[\s\S]*?\n(\s*)<\/header>/);
     if (!leiste) throw new Error(`Kopfleiste <header class="topbar"> fehlt in ${datei(pfad)}`);
     const einzug = leiste[1] + '  ';
     const neu = leiste[0].replace(/\n(\s*)<\/header>$/, `\n${einzug}<!-- SPRACHE:WECHSEL -->${wechsel}<!-- /SPRACHE:WECHSEL -->\n$1</header>`);

@@ -6,6 +6,8 @@
                                  + Bestätigungs-Mail via Brevo Transactional
    GET  /newsletter/confirm    →  Link-Klick: Signatur prüfen → Kontakt in
                                  Liste → Redirect zur Website
+   Sprache: body.sprache 'en' → eigene Liste NL_LIST_ID_EN, englische Mails,
+            /en/thanks/ (25.10.2026); alles andere bleibt deutsch.
 
    Schutz: Honeypot (_honey) + best-effort Rate-Limit pro IP
    (in-memory pro Isolate — bewusst ohne KV, reicht gegen simple Bots).
@@ -24,6 +26,23 @@ import DOI_HTML from '../../email-templates/confirm-doi.html';
    herübergeschoben werden — und am 03.09. hatte genau sie die Dark-Mode-
    Korrektur nicht, weil das Prüfwerkzeug nur email-templates/ ansieht. */
 import WELCOME_HTML from '../../email-templates/welcome-berg-starter.html';
+/* Englische Fassungen (Sebi 25.10.2026: Newsletter zweisprachig). Erzeugt aus den deutschen
+   Vorlagen per scripts/en-flaechen.mjs — nie von Hand aendern, dort die Tabelle nachziehen. */
+import DOI_HTML_EN from '../../email-templates/confirm-doi.en.html';
+import WELCOME_HTML_EN from '../../email-templates/welcome-berg-starter.en.html';
+
+/* Je Sprache: Liste, Mails, Danke-Seite. Englisch geht auf eine eigene Brevo-Liste
+   (NL_LIST_ID_EN) — die deutsche Liste bekommt nie eine englische Anmeldung und umgekehrt. */
+const SPRACHEN = {
+  de: { liste: (env) => Number(env.NL_LIST_ID), doi: () => DOI_HTML, starter: () => WELCOME_HTML,
+    doiBetreff: 'Fast dabei — einmal bestätigen 🏔️', starterBetreff: 'Dein Berg-Starter 🏔️',
+    danke: 'https://vegetarianhulk.de/danke.html', abmelden: 'Abmelden' },
+  en: { liste: (env) => Number(env.NL_LIST_ID_EN), doi: () => DOI_HTML_EN, starter: () => WELCOME_HTML_EN,
+    doiBetreff: 'Almost there — confirm once 🏔️', starterBetreff: 'Your Hike Starter 🏔️',
+    danke: 'https://vegetarianhulk.de/en/thanks/', abmelden: 'Unsubscribe' },
+};
+/** Nur 'en' ist englisch; alles andere (auch Fehlendes) bleibt deutsch. */
+const spracheVon = (wert) => (wert === 'en' ? 'en' : 'de');
 
 const ALLOWED_ORIGINS = new Set([
   'https://vegetarianhulk.de',
@@ -157,7 +176,6 @@ async function verifyTurnstile(env, token, ip) {
      2. GET  /newsletter/confirm?t=… → Signatur prüfen → Kontakt in Liste
         → Redirect auf die Website
    Der Kontakt landet erst NACH dem Klick in der Liste = echtes DOI. */
-const DOI_SUBJECT = 'Fast dabei — einmal bestätigen 🏔️';
 const DOI_SENDER = { name: 'Sebi · VegetarianHulk', email: 'info@vegetarianhulk.de' };
 const DOI_TOKEN_TTL_MS = 7 * 24 * 60 * 60 * 1000; // Link 7 Tage gültig
 
@@ -185,13 +203,14 @@ async function doiKey(env) {
   return crypto.subtle.importKey('raw', hash, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign', 'verify']);
 }
 
-async function makeDoiToken(env, email) {
-  const payload = new TextEncoder().encode(`${email}|${Date.now() + DOI_TOKEN_TTL_MS}`);
+/* Die Sprache steht mit im signierten Link (dritter Teil) — aeltere Links ohne sie bleiben deutsch. */
+async function makeDoiToken(env, email, sprache = 'de') {
+  const payload = new TextEncoder().encode(`${email}|${Date.now() + DOI_TOKEN_TTL_MS}${sprache === 'en' ? '|en' : ''}`);
   const sig = await crypto.subtle.sign('HMAC', await doiKey(env), payload);
   return `${b64url(payload)}.${b64url(sig)}`;
 }
 
-/* Gibt die E-Mail zurück, wenn Token gültig + nicht abgelaufen — sonst null. */
+/* Gibt { email, sprache } zurück, wenn Token gültig + nicht abgelaufen — sonst null. */
 async function verifyDoiToken(env, token) {
   try {
     const [p, s] = String(token).split('.');
@@ -199,25 +218,34 @@ async function verifyDoiToken(env, token) {
     const payload = b64urlDecode(p);
     const valid = await crypto.subtle.verify('HMAC', await doiKey(env), b64urlDecode(s), payload);
     if (!valid) return null;
-    const [email, exp] = new TextDecoder().decode(payload).split('|');
-    if (!EMAIL_RE.test(email) || Date.now() > Number(exp)) return null;
-    return email;
+    const [email, exp, sprache] = new TextDecoder().decode(payload).split('|');
+    if (!EMAIL_RE.test(email)) return null;
+    // Abgelaufen, aber echt signiert: die Sprache ist bekannt, damit die Erklaerung passt.
+    if (Date.now() > Number(exp)) return { abgelaufen: true, sprache: spracheVon(sprache) };
+    return { email, sprache: spracheVon(sprache) };
   } catch {
     return null;
   }
 }
 
-async function sendDoiMail(env, email, confirmUrl) {
-  const html = DOI_HTML
-    .replaceAll('{{ doubleoptin }}', confirmUrl)
+/* Merge-Tags fuellen: der Vorname bekommt den Standardwert der Vorlage („du“ / „there“).
+   Ausdruecklich als replaceAll — scripts/mail-check.mjs liest genau diese Aufrufe. */
+function fuellen(html, s) {
+  return html
     .replaceAll('{{ contact.VORNAME | default : "du" }}', 'du')
-    .replaceAll('{{ unsubscribe }}', 'mailto:info@vegetarianhulk.de?subject=Abmelden');
+    .replaceAll('{{ contact.VORNAME | default : "there" }}', 'there')
+    .replaceAll('{{ unsubscribe }}', 'mailto:info@vegetarianhulk.de?subject=' + s.abmelden);
+}
+
+async function sendDoiMail(env, email, confirmUrl, sprache = 'de') {
+  const s = SPRACHEN[sprache];
+  const html = fuellen(s.doi().replaceAll('{{ doubleoptin }}', confirmUrl), s);
   const res = await brevo(env, '/smtp/email', {
     method: 'POST',
     body: JSON.stringify({
       sender: DOI_SENDER,
       to: [{ email }],
-      subject: DOI_SUBJECT,
+      subject: s.doiBetreff,
       htmlContent: html,
     }),
   });
@@ -233,18 +261,15 @@ async function sendDoiMail(env, email, confirmUrl) {
    ist von hier aus unsichtbar und damit auch im Zeitverhalten nicht zusagbar.
    Deshalb schickt ihn der Worker jetzt selbst, direkt nach der Eintragung:
    damit ist „wie schnell“ beantwortbar (Sekunden) und nachprüfbar. */
-const STARTER_SUBJECT = 'Dein Berg-Starter 🏔️';
-
-async function sendStarterMail(env, email) {
-  const html = WELCOME_HTML
-    .replaceAll('{{ contact.VORNAME | default : "du" }}', 'du')
-    .replaceAll('{{ unsubscribe }}', 'mailto:info@vegetarianhulk.de?subject=Abmelden');
+async function sendStarterMail(env, email, sprache = 'de') {
+  const s = SPRACHEN[sprache];
+  const html = fuellen(s.starter(), s);
   const res = await brevo(env, '/smtp/email', {
     method: 'POST',
     body: JSON.stringify({
       sender: DOI_SENDER,
       to: [{ email }],
-      subject: STARTER_SUBJECT,
+      subject: s.starterBetreff,
       htmlContent: html,
     }),
   });
@@ -255,12 +280,14 @@ async function sendStarterMail(env, email) {
 }
 
 /* Nach Bestätigungs-Klick: Kontakt in die Liste (idempotent). */
-async function addContactToList(env, email) {
+async function addContactToList(env, email, sprache = 'de') {
+  const liste = SPRACHEN[sprache].liste(env);
+  if (!liste) throw new Error(`keine Liste fuer Sprache ${sprache}`);
   const res = await brevo(env, '/contacts', {
     method: 'POST',
     body: JSON.stringify({
       email,
-      listIds: [Number(env.NL_LIST_ID)],
+      listIds: [liste],
       updateEnabled: true,
     }),
   });
@@ -275,11 +302,11 @@ async function addContactToList(env, email) {
    traegt. Die URL-API haengt sauber an und schluckt auch einen Tippfehler
    in der Variablen nicht still: faellt sie um, landet der Mensch auf der
    Standard-Danke-Seite statt auf einer Fehlerseite des Browsers. */
-function bestaetigungsZiel(env, zustand) {
-  const basis = 'https://vegetarianhulk.de/danke.html';
+function bestaetigungsZiel(env, zustand, sprache = 'de') {
+  const basis = SPRACHEN[sprache].danke;
   let ziel;
   try {
-    ziel = new URL(env.NL_REDIRECT_URL || basis);
+    ziel = new URL(sprache === 'en' ? basis : (env.NL_REDIRECT_URL || basis));
   } catch {
     console.error('vh-forms: NL_REDIRECT_URL ist keine gueltige URL, nutze Standard');
     ziel = new URL(basis);
@@ -346,6 +373,8 @@ async function handleKampagne(request, env) {
      in der Kampagne stehen. Lieber hier abbrechen. */
   const offen = (html.replace(/\{\{ contact\.[^}]*\}\}|\{\{ unsubscribe \}\}/g, '')
                      .match(/\{\{[^}]{0,60}\}\}/g) || []);
+  const liste = SPRACHEN[spracheVon(body.sprache)].liste(env);
+  if (!liste) return json({ ok: false, error: `keine Liste fuer Sprache ${body.sprache}` }, 400, '');
   if (offen.length) {
     return json({ ok: false, error: `ungefuellte Platzhalter: ${[...new Set(offen)].join(', ')}` }, 400, '');
   }
@@ -358,7 +387,7 @@ async function handleKampagne(request, env) {
       previewText: preheader || undefined,
       sender: DOI_SENDER,
       htmlContent: html,
-      recipients: { listIds: [Number(env.NL_LIST_ID)] },
+      recipients: { listIds: [liste] },
       inlineImageActivation: false,
       // KEIN scheduledAt und kein Senden: Brevo legt das als Entwurf ab.
     }),
@@ -490,28 +519,57 @@ async function handleKampagneSenden(request, env) {
   return json({ ok: true, id: Number(id), betreff: d.subject, hinweis: 'gesendet' }, 200, '');
 }
 
+/* ============================================================
+   ENGLISCHE LISTE ANLEGEN  —  POST /newsletter/liste-en  (einmalig)
+   Legt die Brevo-Liste fuer englische Anmeldungen im selben Ordner wie die
+   deutsche an — oder liefert sie, wenn es sie schon gibt (idempotent). Die
+   Nummer kommt danach als NL_LIST_ID_EN in wrangler.toml. Gleicher Schutz wie
+   die Kampagnen-Endpunkte (NL_ADMIN_TOKEN); der Brevo-Key verlaesst den Worker nie.
+   ============================================================ */
+const LISTE_EN_NAME = 'vegetarianhulk-newsletter-en';
+
+async function handleListeEn(request, env) {
+  if (!env.NL_ADMIN_TOKEN || !env.BREVO_API_KEY) return json({ ok: false, error: 'nicht konfiguriert' }, 503, '');
+  const kopf = request.headers.get('Authorization') || '';
+  if (!gleichKonstant(kopf.startsWith('Bearer ') ? kopf.slice(7) : '', env.NL_ADMIN_TOKEN)) {
+    return json({ ok: false, error: 'nicht berechtigt' }, 401, '');
+  }
+  const alle = await brevo(env, '/contacts/lists?limit=50&offset=0');
+  if (!alle.ok) return json({ ok: false, error: `Brevo ${alle.status}` }, 502, '');
+  const da = ((await alle.json()).lists || []).find((l) => l.name === LISTE_EN_NAME);
+  if (da) return json({ ok: true, id: da.id, neu: false }, 200, '');
+  const de = await brevo(env, `/contacts/lists/${Number(env.NL_LIST_ID)}`);
+  if (!de.ok) return json({ ok: false, error: `deutsche Liste nicht lesbar: Brevo ${de.status}` }, 502, '');
+  const { folderId } = await de.json();
+  const neu = await brevo(env, '/contacts/lists', { method: 'POST', body: JSON.stringify({ name: LISTE_EN_NAME, folderId }) });
+  const text = await neu.text().catch(() => '');
+  if (!neu.ok) return json({ ok: false, error: `Brevo ${neu.status}: ${text.slice(0, 160)}` }, 502, '');
+  return json({ ok: true, id: JSON.parse(text).id, neu: true }, 200, '');
+}
+
 async function handleNewsletterConfirm(request, env) {
   const token = new URL(request.url).searchParams.get('t');
-  const email = await verifyDoiToken(env, token);
-  if (!email || !env.BREVO_API_KEY) {
+  const gueltig = await verifyDoiToken(env, token);
+  if (!gueltig || gueltig.abgelaufen || !env.BREVO_API_KEY) {
     // abgelaufen/ungültig → Danke-Seite erklärt es und bietet neues Eintragen an
-    return Response.redirect(bestaetigungsZiel(env, 'abgelaufen'), 302);
+    return Response.redirect(bestaetigungsZiel(env, 'abgelaufen', gueltig?.sprache), 302);
   }
+  const { email, sprache } = gueltig;
   try {
-    await addContactToList(env, email);
+    await addContactToList(env, email, sprache);
     /* Getrennt abgefangen: die Eintragung IST gelungen, auch wenn der Versand
        hakt. Diesen Fall als 'fehler' zu melden wäre gelogen — und ihn als 'ok'
        zu melden hieße, jemanden auf eine Mail warten zu lassen, die nie kommt. */
     try {
-      await sendStarterMail(env, email);
+      await sendStarterMail(env, email, sprache);
     } catch (mailErr) {
       console.error('vh-forms starter mail failed:', mailErr.message || mailErr);
-      return Response.redirect(bestaetigungsZiel(env, 'ok-ohne-starter'), 302);
+      return Response.redirect(bestaetigungsZiel(env, 'ok-ohne-starter', sprache), 302);
     }
-    return Response.redirect(bestaetigungsZiel(env, 'ok'), 302);
+    return Response.redirect(bestaetigungsZiel(env, 'ok', sprache), 302);
   } catch (err) {
     console.error('vh-forms confirm failed:', err.message || err);
-    return Response.redirect(bestaetigungsZiel(env, 'fehler'), 302);
+    return Response.redirect(bestaetigungsZiel(env, 'fehler', sprache), 302);
   }
 }
 
@@ -538,14 +596,16 @@ async function handleNewsletter(request, env, origin) {
   if (!EMAIL_RE.test(email)) {
     return json({ ok: false, error: 'Gültige E-Mail ist Pflicht.' }, 400, origin);
   }
-  if (!env.BREVO_API_KEY || !Number(env.NL_LIST_ID)) {
+  const sprache = spracheVon(body.sprache);
+  // Ohne englische Liste keine englische Anmeldung — nie still auf die deutsche Liste.
+  if (!env.BREVO_API_KEY || !SPRACHEN[sprache].liste(env)) {
     return json({ ok: false, error: 'newsletter not configured' }, 503, origin);
   }
 
   try {
-    const token = await makeDoiToken(env, email);
+    const token = await makeDoiToken(env, email, sprache);
     const confirmUrl = new URL(request.url).origin + '/newsletter/confirm?t=' + encodeURIComponent(token);
-    await sendDoiMail(env, email, confirmUrl);
+    await sendDoiMail(env, email, confirmUrl, sprache);
     return json({ ok: true }, 200, origin);
   } catch (err) {
     console.error('vh-forms newsletter failed:', err.message || err);
@@ -579,6 +639,9 @@ export default {
     }
     if (request.method === 'POST' && url.pathname === '/newsletter/kampagne') {
       return handleKampagne(request, env);
+    }
+    if (request.method === 'POST' && url.pathname === '/newsletter/liste-en') {
+      return handleListeEn(request, env);
     }
     if (request.method === 'GET' && url.pathname === '/newsletter/confirm') {
       return handleNewsletterConfirm(request, env);

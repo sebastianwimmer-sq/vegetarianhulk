@@ -20,7 +20,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import {
-  DOMAIN, PAARE, STEMPEL_MUSTER, datei, kopfZeilen, sichtbarerText, stempelZeile, textHash,
+  DOMAIN, PAARE, STEMPEL_MUSTER, datei, enZiel, kopfZeilen, sichtbarerText, stempelZeile, textHash,
 } from './sprachen.mjs';
 
 // Ab so vielen deutschen Funktionswoertern im sichtbaren Text gilt eine EN-Seite
@@ -30,6 +30,37 @@ const MAX_DEUTSCH = 2;
 const DEUTSCH = /\b(und|der|die|das|nicht|mit|für|dein|deine|wir|du|ist|zum|zur|bei|eine?|auf|von|den|dem|noch|auch|sich|ich|mein|meine)\b/g;
 
 const lies = (wurzel, pfad) => readFileSync(join(wurzel, datei(pfad)), 'utf8');
+
+/** Linkziele einer Seite, relativ aufgeloest; Umschalter und erzeugte Sprach-Bloecke zaehlen nicht. */
+function linkZiele(html, pfad) {
+  const ohne = html.replace(/<!-- SPRACHE:(\w+) -->[\s\S]*?<!-- \/SPRACHE:\1 -->/g, '');
+  return [...ohne.matchAll(/<a\b(?![^>]*class="[^"]*\bsprache\b)[^>]*\bhref="([^"]+)"/g)].map((m) => {
+    const h = m[1];
+    if (!h.startsWith('/') && !h.startsWith('.') && !/^[a-z0-9-]+\//i.test(h)) return h;
+    const u = new URL(h, `https://vegetarianhulk.de${pfad}`);
+    return u.pathname + u.search + u.hash;
+  });
+}
+
+/**
+ * 1:1: jeder Link der DE-Seite steht auf der EN-Seite als Link auf seine EN-Schwester, gleich oft —
+ * und die EN-Seite hat keinen Weg, den die DE-Seite nicht hat (vorher: alle EN-Seiten fuehrten
+ * zum deutschen Newsletter, 25.10.2026).
+ */
+function wegeBefunde(de, en, deHtml, enHtml) {
+  const rest = linkZiele(enHtml, en);
+  const fehlt = [];
+  for (const h of linkZiele(deHtml, de)) {
+    const soll = enZiel(h);
+    const i = soll === null ? -1 : rest.indexOf(soll);
+    if (i >= 0) rest.splice(i, 1);
+    else fehlt.push(soll === null ? `${h} (ohne englische Schwester)` : soll);
+  }
+  const b = [];
+  if (fehlt.length) b.push(`${en}: anderer Weg hinter dem Knopf — fehlt ${[...new Set(fehlt)].slice(0, 5).join(', ')}`);
+  if (rest.length) b.push(`${en}: Weg, den ${de} nicht hat — ${[...new Set(rest)].slice(0, 5).join(', ')}`);
+  return b;
+}
 
 function pruefePaar(wurzel, { de, en }, sitemap) {
   const befunde = [];
@@ -61,6 +92,8 @@ function pruefePaar(wurzel, { de, en }, sitemap) {
   if (!ziel(de, en).test(deHtml)) befunde.push(`${de}: Umschalter zu ${en} fehlt`);
   if (!ziel(en, de).test(enHtml)) befunde.push(`${en}: Umschalter zu ${de} fehlt`);
 
+  befunde.push(...wegeBefunde(de, en, deHtml, enHtml));
+
   const reste = sichtbarerText(enHtml).match(DEUTSCH) ?? [];
   if (reste.length > MAX_DEUTSCH) {
     befunde.push(`${en}: ${reste.length} deutsche Wörter im sichtbaren Text (${[...new Set(reste)].slice(0, 8).join(', ')})`);
@@ -90,10 +123,10 @@ function baue(wurzel, dateien) {
 }
 
 function sauber(wurzel, paar) {
-  const de = `<html lang="de"><head></head><body><p>Wir bauen deinen Auftritt und das bleibt so.</p>`
+  const de = `<html lang="de"><head></head><body><p>Wir bauen deinen Auftritt und das bleibt so.</p><a href="/touren/">Touren</a>`
     + `<a class="sprache" href="${paar.en}" hreflang="en">English</a></body></html>`;
   baue(wurzel, { [datei(paar.de)]: de, [datei(paar.en)]: '<html lang="en"><head></head><body></body></html>' });
-  const en = `<html lang="en"><head>${stempelZeile(paar.de, de)}</head><body><p>We build your presence.</p>`
+  const en = `<html lang="en"><head>${stempelZeile(paar.de, de)}</head><body><p>We build your presence.</p><a href="/en/hikes/">Hikes</a>`
     + `<a class="sprache" href="${paar.de}" hreflang="de">Deutsch</a></body></html>`;
   const mitKopf = (html, pfad) => html.replace('</head>', `<!-- SPRACHE:KOPF -->\n${kopfZeilen(pfad, wurzel)}\n<!-- /SPRACHE:KOPF -->\n</head>`);
   baue(wurzel, {
@@ -147,6 +180,14 @@ function selbsttest() {
         writeFileSync(f, readFileSync(f, 'utf8').replace(/<a class="sprache"[^>]*>English<\/a>/, ''));
       },
       erwartet: /Umschalter zu/,
+    },
+    {
+      name: 'EN-Knopf führt auf die deutsche Seite',
+      kaputt: (w) => {
+        const f = join(w, datei(paar.en));
+        writeFileSync(f, readFileSync(f, 'utf8').replace('<a href="/en/hikes/">', '<a href="/touren/">'));
+      },
+      erwartet: /anderer Weg hinter dem Knopf — fehlt \/en\/hikes\//,
     },
   ];
   let rot = 0;
