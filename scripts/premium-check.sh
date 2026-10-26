@@ -85,7 +85,9 @@ lauf "Inline-Handler (Fixtures)"      python3 scripts/inline-handler-check.py --
 lauf "Sitemap deckt alle Seiten"     python3 scripts/sitemap-bauen.py --pruefen
 lauf "Sitemap (Fixtures)"            python3 scripts/sitemap-bauen.py --selbsttest
 lauf "Sprachen DE/EN"               node scripts/sprachen-check.mjs
+lauf "Keine Platzhalter-Werte"  python3 "$HOME/kit-build/platzhalter-check.py" .
 lauf "Sprachen (Fixtures)"           node scripts/sprachen-check.mjs --selbsttest
+lauf "Platzhalter (Fixtures)"   python3 "$HOME/kit-build/platzhalter-check.py" --selbsttest
 lauf "EN-Flächen aus DE erzeugt"     node scripts/en-flaechen.mjs --pruefen
 lauf "EN-Flächen (Fixtures)"        node scripts/en-flaechen.mjs --selbsttest
 lauf "Newsletter DE/EN (Worker)"     node scripts/newsletter-sprachen-test.mjs
