@@ -642,6 +642,13 @@ async function handleIntern(request, env, weg) {
   }
   const mail = String(b.mail || '').trim().toLowerCase();
   if (!EMAIL_RE.test(mail)) return json({ ok: false, error: 'Adresse fehlt' }, 400, '');
+  if (weg === 'kontakt') {   // nur lesen: steht die Adresse in Brevo, in welchen Listen, gesperrt?
+    const res = await brevo(env, `/contacts/${encodeURIComponent(mail)}`, { method: 'GET' });
+    if (res.status === 404) return json({ ok: true, gefunden: false }, 200, '');
+    if (!res.ok) return json({ ok: false, error: `Brevo ${res.status}` }, 502, '');
+    const k = await res.json().catch(() => ({}));
+    return json({ ok: true, gefunden: true, listen: k.listIds || [], gesperrt: !!k.emailBlacklisted, angelegt: k.createdAt || null }, 200, '');
+  }
   try { await addContactToList(env, mail, 'de'); await sendStarterMail(env, mail, 'de'); }
   catch (e) { console.error('vh-forms intern/newsletter:', e.message); return json({ ok: false, error: 'Newsletter ging nicht' }, 502, ''); }
   return json({ ok: true }, 200, '');
@@ -655,7 +662,7 @@ export default {
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: corsHeaders(origin) });
     }
-    if (request.method === 'POST' && (url.pathname === '/intern/mail' || url.pathname === '/intern/newsletter')) {
+    if (request.method === 'POST' && ['/intern/mail', '/intern/newsletter', '/intern/kontakt'].includes(url.pathname)) {
       return handleIntern(request, env, url.pathname.slice(8));
     }
     if (request.method === 'POST' && url.pathname === '/newsletter/subscribe') {
