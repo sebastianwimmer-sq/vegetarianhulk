@@ -633,7 +633,9 @@ async function handleIntern(request, env, weg) {
   if (weg === 'mail') {
     const an = String(b.an || '').trim(), betreff = String(b.betreff || '').slice(0, 160), text = String(b.text || '').slice(0, 8000);
     if (!EMAIL_RE.test(an) || !betreff || !text) return json({ ok: false, error: 'Felder fehlen' }, 400, '');
-    const html = `<div style="font:16px/1.55 -apple-system,Segoe UI,sans-serif;color:#232a24;max-width:560px">${escHtml(text).replace(/\n/g, '<br>').replace(/(https:\/\/[^\s<]+)/g, '<a href="$1">$1</a>')}</div>`;
+    // Gestaltete Mail vom internen Aufrufer (nur mit X-Intern erreichbar); sonst schlichtes HTML aus dem Text. Text bleibt immer dabei.
+    const html = typeof b.html === 'string' && b.html.length > 0 && b.html.length <= 60000 ? b.html
+      : `<div style="font:16px/1.55 -apple-system,Segoe UI,sans-serif;color:#232a24;max-width:560px">${escHtml(text).replace(/\n/g, '<br>').replace(/(https:\/\/[^\s<]+)/g, '<a href="$1">$1</a>')}</div>`;
     const res = await brevo(env, '/smtp/email', { method: 'POST', body: JSON.stringify({ sender: DOI_SENDER, to: [{ email: an }], subject: betreff, textContent: text, htmlContent: html }) });
     if (!res.ok) { console.error('vh-forms intern/mail: Brevo', res.status); return json({ ok: false, error: 'Mail ging nicht raus' }, 502, ''); }
     return json({ ok: true }, 200, '');
