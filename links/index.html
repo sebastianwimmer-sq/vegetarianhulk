@@ -146,6 +146,15 @@
   .schild--dunkel .schild__marke { padding-left: 0; padding-right: 12px; border-left: 0; border-right: 1.5px solid rgba(243,235,217,.3); color: var(--warm); }
   .schild--dunkel:hover { transform: rotateY(2deg) rotateZ(.5deg) translateX(-6px); }
 
+  /* Saison-Schild Wichteln: rot lackiertes Blech, Ränder wie eine Zuckerstange (matt, kein Glanz, gleiche Pfeilform) */
+  .schild--weihnacht { color: #fff8ee;
+    background: repeating-linear-gradient(-45deg, #fff8ee 0 7px, #b3202e 7px 14px) top / 100% 6px no-repeat,
+      repeating-linear-gradient(-45deg, #fff8ee 0 7px, #b3202e 7px 14px) bottom / 100% 6px no-repeat,
+      #a81d2b url("/links/img/schild-blech.webp") 50% 50% / cover;
+    background-blend-mode: normal, normal, multiply; }
+  .schild--weihnacht::before { background: linear-gradient(180deg, rgba(255,240,230,.18) 0, rgba(120,10,20,.0) 8px, rgba(90,8,16,.25) 100%); }
+  .schild--weihnacht .schild__marke { border-left-color: rgba(255,248,238,.5); color: #ffe7c2; }
+
   .person img { --x: -50%; }
   @media (prefers-reduced-motion: no-preference) {
     .name { animation: auftauchen 1100ms var(--ease-lux) both; }
@@ -182,7 +191,7 @@
         <span class="hinweis" aria-hidden="true">fang hier an<svg viewBox="0 0 26 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 3c9 1 15 7 14 16"/><path d="M12 14l6 6 5-6"/></svg></span>
         <a class="schild schild--start" href="/newsletter"><span class="schild__ziel">Berg-Starter</span><span class="schild__marke">gratis</span></a>
       </li>
-      <li style="--i:2"><a class="schild" href="https://smashtheapp.de/wichteln/mitmachen.html?von=links"><span class="schild__ziel">Wichteln</span><span class="schild__marke">Weihnachten</span></a></li>
+      <li style="--i:2"><a class="schild schild--weihnacht" href="https://smashtheapp.de/wichteln/mitmachen.html?von=links"><span class="schild__ziel">Wichteln</span><span class="schild__marke">Weihnachten</span></a></li>
       <li style="--i:3"><a class="schild" href="/touren/wendelstein/"><span class="schild__ziel">Wendelstein</span><span class="schild__marke">1.838 m</span></a></li>
       <li style="--i:4"><a class="schild" href="/touren/"><span class="schild__ziel">Hulk Hikes</span><span class="schild__marke">7 Touren</span></a></li>
       <li style="--i:5"><a class="schild" href="/partner-picks/"><span class="schild__ziel">Partner</span><span class="schild__marke">Codes</span></a></li>
