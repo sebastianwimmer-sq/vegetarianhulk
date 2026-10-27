@@ -613,6 +613,38 @@ async function handleNewsletter(request, env, origin) {
   }
 }
 
+/* ============================================================
+   INTERN  —  POST /intern/mail · POST /intern/newsletter (27.10.2026)
+   Nur für den Wichtel-Worker (smashtheapp.de/wichteln) über eine Service-Bindung.
+   Der Brevo-Schlüssel bleibt hier; Wichteln weist sich mit X-Intern (eigenes Secret
+   INTERN_SCHLUESSEL) aus. Ohne Secret: 503, falscher Schlüssel: 401 ohne Detail.
+   /intern/mail       {an, betreff, text}  → Transaktions-Mail (Absender Sebi · VegetarianHulk)
+   /intern/newsletter {mail, vorname}      → Kontakt in Liste #5 + Berg-Starter, wie nach dem
+                                             eigenen DOI; die Einwilligung (DOI) hat Wichteln
+                                             vorher mit Bestätigungs-Link eingeholt und gespeichert.
+   ============================================================ */
+const escHtml = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+async function handleIntern(request, env, weg) {
+  if (!env.INTERN_SCHLUESSEL || !env.BREVO_API_KEY) return json({ ok: false, error: 'nicht konfiguriert' }, 503, '');
+  if (!gleichKonstant(request.headers.get('X-Intern') || '', env.INTERN_SCHLUESSEL)) return json({ ok: false, error: 'nicht berechtigt' }, 401, '');
+  let b;
+  try { b = await request.json(); } catch { return json({ ok: false, error: 'invalid json' }, 400, ''); }
+  if (weg === 'mail') {
+    const an = String(b.an || '').trim(), betreff = String(b.betreff || '').slice(0, 160), text = String(b.text || '').slice(0, 8000);
+    if (!EMAIL_RE.test(an) || !betreff || !text) return json({ ok: false, error: 'Felder fehlen' }, 400, '');
+    const html = `<div style="font:16px/1.55 -apple-system,Segoe UI,sans-serif;color:#232a24;max-width:560px">${escHtml(text).replace(/\n/g, '<br>').replace(/(https:\/\/[^\s<]+)/g, '<a href="$1">$1</a>')}</div>`;
+    const res = await brevo(env, '/smtp/email', { method: 'POST', body: JSON.stringify({ sender: DOI_SENDER, to: [{ email: an }], subject: betreff, textContent: text, htmlContent: html }) });
+    if (!res.ok) { console.error('vh-forms intern/mail: Brevo', res.status); return json({ ok: false, error: 'Mail ging nicht raus' }, 502, ''); }
+    return json({ ok: true }, 200, '');
+  }
+  const mail = String(b.mail || '').trim().toLowerCase();
+  if (!EMAIL_RE.test(mail)) return json({ ok: false, error: 'Adresse fehlt' }, 400, '');
+  try { await addContactToList(env, mail, 'de'); await sendStarterMail(env, mail, 'de'); }
+  catch (e) { console.error('vh-forms intern/newsletter:', e.message); return json({ ok: false, error: 'Newsletter ging nicht' }, 502, ''); }
+  return json({ ok: true }, 200, '');
+}
+
 export default {
   async fetch(request, env) {
     const origin = request.headers.get('Origin') || '';
@@ -620,6 +652,9 @@ export default {
 
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: corsHeaders(origin) });
+    }
+    if (request.method === 'POST' && (url.pathname === '/intern/mail' || url.pathname === '/intern/newsletter')) {
+      return handleIntern(request, env, url.pathname.slice(8));
     }
     if (request.method === 'POST' && url.pathname === '/newsletter/subscribe') {
       const nlIp = request.headers.get('CF-Connecting-IP') || 'unknown';
