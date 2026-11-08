@@ -948,6 +948,13 @@ footer .claim { margin-top: 10px; font-size: 14px; color: var(--paper-dim); }
 footer .legal { margin-top: 20px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.4px; color: var(--paper-faint);
   display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
 footer .legal a:hover { color: var(--paper); }
+/* Fuss-Grat (v3.js): der Watzmann-Kamm als Horizont ueber jedem Fuss. Er
+   zieht die Linie, die bisher als Strich ueber dem Fuss lag. Unten loest
+   ihn die Maske auf, wie das Hero-Foto in den Raum (kein Kasten-Ende). */
+.fuss-grat { display: block; width: 100%; height: clamp(84px, 14vw, 170px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 45%, transparent 100%); }
+.fuss-grat + .inner { border-top-color: transparent; padding-top: 18px; }
 
 /* ============================================================
    NAV — helle Papier-Pille, TYPOGRAFISCH (keine Standard-Icons).

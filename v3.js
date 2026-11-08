@@ -193,3 +193,147 @@
     t.textContent = document.documentElement.lang === 'en' ? 'Day ' + days.toLocaleString('en-US') : 'Tag ' + days.toLocaleString('de-DE');
   }
 })();
+
+/* Fuss-Grat: Schneefahne am Watzmann-Kamm ueber jedem Seitenfuss (09.11.2026).
+ *
+ * WARUM
+ * Sebi 08./09.11.: Partikel live animiert auf der Website, Richtung B
+ * (Schneefahne am Grat) gewaehlt, "nicht zu viel" und "das ganze Design-
+ * System fuer alle Seiten". Deshalb EIN Baustein an EINER Stelle: jede Seite
+ * endet am Grat. Er haengt am <footer>, den alle v3-Seiten teilen — keine
+ * Seite muss etwas einbauen, DE und EN bekommen ihn gleich.
+ *
+ * NICHT ZU VIEL
+ * Keine Dauerschleife: kommt der Fuss ins Bild, zieht eine Boee ueber den
+ * Grat (Boee 3,2 s + Ausklang < 1,4 s), danach steht alles still und die Leinwand zeichnet nichts
+ * mehr. Maus oder Finger ueber dem Grat holt die naechste Boee. Endet von
+ * selbst unter 5 s, deshalb braucht es keinen Halte-Knopf (WCAG 2.2.2).
+ * Reduzierte Bewegung: nur der stehende Grat, kein Schnee.
+ *
+ * DIE LINIE ist der echte Kamm: je Spalte die hoechste Stelle aus
+ * watzmann-dem.json (72 Spalten, 0..1). Die Datei selbst ist 860 KB und
+ * wird hier nicht geladen. Neu rechnen: Maximum je Spalte ueber das auf
+ * 72 x 72 verkleinerte DEM. Drei Ebenen: fern blass wie Dunst, nah in der
+ * Farbe des Seitengrunds; nach unten loest die Maske in v3.css den Grat
+ * in den Grund auf (unten liegt je Seite ein anderes Licht). */
+(function () {
+  'use strict';
+  var fuss = document.querySelector('body > footer');
+  if (!fuss || !('getContext' in document.createElement('canvas'))) return;
+
+  var KAMM = [0.893, 0.886, 0.859, 0.787, 0.731, 0.709, 0.697, 0.704, 0.758, 0.777, 0.814, 0.86,
+    0.841, 0.83, 0.826, 0.806, 0.791, 0.782, 0.764, 0.752, 0.729, 0.708, 0.735, 0.774, 0.786, 0.788,
+    0.781, 0.778, 0.775, 0.82, 0.875, 0.948, 1.0, 0.977, 0.973, 0.994, 0.979, 0.97, 0.958, 0.923,
+    0.889, 0.837, 0.78, 0.762, 0.749, 0.747, 0.743, 0.736, 0.752, 0.798, 0.78, 0.718, 0.682, 0.632,
+    0.591, 0.578, 0.591, 0.578, 0.562, 0.531, 0.489, 0.424, 0.404, 0.404, 0.414, 0.42, 0.419, 0.402,
+    0.361, 0.335, 0.334, 0.315];
+  /* fern -> nah: Ausschnitt des Kamms, Hoehe, Anhebung, Farbe */
+  var EBENEN = [
+    { von: 0.30, bis: 1.00, hub: 0.46, unten: 0.62, farbe: '#24503f', schnee: 0.35 },
+    { von: 0.12, bis: 0.86, hub: 0.52, unten: 0.80, farbe: '#123a2c', schnee: 0.6 },
+    { von: 0.00, bis: 1.00, hub: 0.58, unten: 1.00, farbe: '#06231A', schnee: 1 }
+  ];
+  var SCHNEE = '243,235,217';      /* --paper */
+  var BOEE_MS = 3200, MAX_FLOCKEN = 240;
+  var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var cv = document.createElement('canvas');
+  cv.className = 'fuss-grat';
+  cv.setAttribute('aria-hidden', 'true');
+  fuss.insertBefore(cv, fuss.firstChild);
+  var ctx = cv.getContext('2d');
+  var w = 0, h = 0, flocken = [], boee = 0, boeeStart = 0, wind = 1, laeuft = false, sichtbar = false;
+
+  function kamm(u) {
+    var x = Math.max(0, Math.min(1, u)) * (KAMM.length - 1);
+    var i = Math.min(KAMM.length - 2, Math.floor(x)), f = x - i;
+    return KAMM[i] * (1 - f) + KAMM[i + 1] * f;
+  }
+  function gratY(e, x) {
+    var E = EBENEN[e], u = E.von + (x / w) * (E.bis - E.von);
+    return h * E.unten - (kamm(u) - 0.3) / 0.7 * h * E.hub;
+  }
+  function messen() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = cv.clientWidth; h = cv.clientHeight;
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function neueFlocke() {
+    var e = Math.random() < 0.5 ? 2 : Math.random() < 0.6 ? 1 : 0;
+    var x = Math.random() * w;
+    return { e: e, x: x, y: gratY(e, x), vx: 0, vy: 0, alter: 0, leben: 40 + Math.random() * 40 };
+  }
+  function zeichnen() {
+    ctx.clearRect(0, 0, w, h);
+    for (var e = 0; e < EBENEN.length; e++) {
+      ctx.fillStyle = EBENEN[e].farbe;
+      ctx.beginPath(); ctx.moveTo(0, h);
+      for (var x = 0; x <= w + 4; x += 4) ctx.lineTo(x, gratY(e, x));
+      ctx.lineTo(w, h); ctx.closePath(); ctx.fill();
+      for (var i = 0; i < flocken.length; i++) {
+        var p = flocken[i];
+        if (p.e !== e) continue;
+        var rest = 1 - p.alter / p.leben;
+        ctx.fillStyle = 'rgba(' + SCHNEE + ',' + (Math.min(1, rest * 1.6) * (0.35 + EBENEN[e].schnee * 0.5)).toFixed(3) + ')';
+        var r = 0.9 + EBENEN[e].schnee * 1.3;
+        ctx.fillRect(p.x, p.y, r, r);
+      }
+    }
+  }
+  function schritt(t) {
+    if (!sichtbar || document.hidden) { laeuft = false; return; }
+    boee = Math.max(0, 1 - (t - boeeStart) / BOEE_MS);
+    /* Dichte je Breite, nicht je Bild: am Handy sonst dreifach so dicht. */
+    var neu = boee > 0 ? Math.round(boee * 6 * Math.min(1, w / 1440) + Math.random() * 0.6) : 0;
+    while (neu-- > 0 && flocken.length < MAX_FLOCKEN * Math.min(1, w / 1200)) flocken.push(neueFlocke());
+    flocken = flocken.filter(function (p) {
+      var tiefe = 0.45 + EBENEN[p.e].schnee * 0.55;
+      p.vx += (wind * (0.25 + boee) * tiefe - p.vx) * 0.08;
+      p.vy += (-0.35 * tiefe - p.vy) * 0.05;
+      p.x += p.vx * 1.6; p.y += p.vy + Math.sin((p.alter + p.x) * 0.05) * 0.3;
+      p.alter++;
+      return p.alter < p.leben && p.x < w + 8;
+    });
+    zeichnen();
+    if (boee > 0 || flocken.length) requestAnimationFrame(schritt);
+    else laeuft = false;
+  }
+  function boeeAusloesen(staerke) {
+    if (ruhig) return;
+    wind = staerke;
+    boeeStart = performance.now();
+    if (!laeuft && sichtbar) { laeuft = true; requestAnimationFrame(schritt); }
+  }
+
+  messen(); zeichnen();
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(function () {
+      var alt = w; messen(); if (w !== alt) flocken = []; zeichnen();
+    }).observe(cv);
+  }
+  if (ruhig) return;
+
+  var schonGeweht = false;
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (eintraege) {
+      sichtbar = eintraege[0].isIntersecting;
+      if (sichtbar && !schonGeweht) { schonGeweht = true; boeeAusloesen(1.2); }
+    }, { threshold: 0.35 }).observe(cv);
+  }
+  /* Maus: Staerke aus der Position (links leise, rechts kraeftig), hoechstens
+     eine neue Boee je Sekunde. Finger: Tippen auf den Grat. */
+  var letzte = 0;
+  fuss.addEventListener('pointermove', function (ev) {
+    if (ev.pointerType !== 'mouse') return;
+    var r = cv.getBoundingClientRect();
+    if (ev.clientY > r.bottom || performance.now() - letzte < 1000) return;
+    letzte = performance.now();
+    boeeAusloesen(0.6 + (ev.clientX - r.left) / r.width * 1.4);
+  }, { passive: true });
+  fuss.addEventListener('pointerdown', function (ev) {
+    if (ev.pointerType === 'mouse') return;
+    var r = cv.getBoundingClientRect();
+    if (ev.clientY <= r.bottom) boeeAusloesen(1.4);
+  }, { passive: true });
+})();
