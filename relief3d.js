@@ -270,6 +270,12 @@ function init(DEM) {
   const head = document.querySelector('.route-head');
   const headAnchor = { el: head, v3: curve.getPointAt(0).clone(), oy: 0 };
   if (head) anchors.push(headAnchor);
+  /* Anker stehen auf 0/0 und fahren per `translate` — Layout bleibt still */
+  let frameNr = 0;
+  for (const a of anchors) {
+    a.istWp = !!(a.el.classList && a.el.classList.contains('wp'));
+    a.el.style.left = '0px'; a.el.style.top = '0px';
+  }
 
   /* ---- Panel ---- */
   /* Englische Seite (/en/, 20.10.2026): dieselben vier Werte in Sebis Ton. */
@@ -488,24 +494,18 @@ function init(DEM) {
       sparkDot.setAttribute('cy', sPt[1].toFixed(1));
     }
     lastP = p;
+    /* Erst alles lesen, dann alles schreiben (09.11.2026, Sebi: "Bild fuer
+       Bild, keine stabile Performance"). Vorher schrieb die Schleife left/top
+       und las gleich danach offsetWidth und getBoundingClientRect — jedes
+       Bild erzwang mehrere Layouts der ganzen Seite, auch im Stillstand.
+       Jetzt: Lesen am Bildanfang (Layout ist da noch sauber), Schreiben nur
+       ueber `translate` (nur Compositor) und nur, wenn sich etwas aendert. */
     const w = renderer.domElement.clientWidth, h2 = renderer.domElement.clientHeight;
-    for (const a of anchors) {
-      v.copy(a.v3).project(camera);
-      let x = (v.x * 0.5 + 0.5) * w;
-      const y = (-v.y * 0.5 + 0.5) * h2;
-      /* Wegweiser-Schilder nie am Displayrand abschneiden (Mobile) —
-         translate(-50%) heißt: halbe Schildbreite einrechnen */
-      if (a.el.classList && a.el.classList.contains('wp')) {
-        const hw = (a.el.offsetWidth || 160) / 2;
-        x = Math.min(w - hw - 8, Math.max(hw + 8, x));
-      }
-      a.el.style.left = x.toFixed(1) + 'px';
-      a.el.style.top = (y + a.oy).toFixed(1) + 'px';
-      a.el.style.visibility = v.z < 1 ? 'visible' : 'hidden';
-    }
+    if (!(frameNr++ % 30)) for (const a of anchors) a.hw = (a.el.offsetWidth || 160) / 2;
     /* Station weicht, wenn ein Wegschild unter ihr durchfaehrt (28.09.2026):
        der Berg dreht sich ~90 Grad, keine feste Ecke bleibt frei. Gemessen
-       vorher: am Handy lag sie ueber „04 · 2713 hm". */
+       vorher: am Handy lag sie ueber „04 · 2713 hm". Gemessen wird die Lage
+       des letzten Bildes — ein Bild Versatz sieht niemand. */
     if (hudEl && !hudEl.hidden) {
       const h = hudEl.getBoundingClientRect();
       let trifft = false;
@@ -516,6 +516,18 @@ function init(DEM) {
         if (r.right > h.left && r.left < h.right && r.bottom > h.top && r.top < h.bottom) { trifft = true; break; }
       }
       if (trifft !== hudWeicht) { hudWeicht = trifft; hudEl.classList.toggle('weicht', trifft); }
+    }
+    for (const a of anchors) {
+      v.copy(a.v3).project(camera);
+      let x = (v.x * 0.5 + 0.5) * w;
+      const y = (-v.y * 0.5 + 0.5) * h2;
+      /* Wegweiser-Schilder nie am Displayrand abschneiden (Mobile) —
+         translate(-50%) heißt: halbe Schildbreite einrechnen */
+      if (a.istWp) x = Math.min(w - a.hw - 8, Math.max(a.hw + 8, x));
+      const lage = x.toFixed(1) + 'px ' + (y + a.oy).toFixed(1) + 'px';
+      if (lage !== a.lage) { a.lage = lage; a.el.style.translate = lage; }
+      const sicht = v.z < 1 ? 'visible' : 'hidden';
+      if (sicht !== a.sicht) { a.sicht = sicht; a.el.style.visibility = sicht; }
     }
     renderer.render(scene, camera);
     rafId = active ? requestAnimationFrame(frame) : 0;

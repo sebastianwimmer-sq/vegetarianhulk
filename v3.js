@@ -63,7 +63,15 @@
     { p: 0.50, x: 56, y: 0, r: 240, g: 204, b: 140, a: 0.20 },
     { p: 1.00, x: 50, y: 100, r: 238, g: 150, b: 108, a: 0.24 }
   ];
-  var wurzel = document.documentElement;
+  /* Das Licht ist ein eigenes Blatt-Element, nicht :root. Variablen an :root
+     erben alle Elemente — jedes Scroll-Bild rechnete die Stile der ganzen Seite
+     neu (Messung 09.11.: 921 ms Stilberechnung je Durchlauf bei 4x gedrosselter
+     CPU, Sebi: "eher so Bild fuer Bild"). Ohne Skript bleibt main::before. */
+  var wurzel = document.createElement('div');
+  wurzel.className = 'tageslicht';
+  wurzel.setAttribute('aria-hidden', 'true');
+  var haupt = document.querySelector('main');
+  if (haupt) { haupt.insertBefore(wurzel, haupt.firstChild); haupt.classList.add('hat-licht'); }
   function licht(p) {
     var i = p < LICHT[1].p ? 0 : 1, A = LICHT[i], B = LICHT[i + 1];
     var f = (p - A.p) / (B.p - A.p); f = f * f * (3 - 2 * f);

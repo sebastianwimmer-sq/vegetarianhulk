@@ -90,7 +90,11 @@ Date.now = () => echtesNow() + 8 * 24 * 3600 * 1000;
 const alt = await worker.fetch(new Request(en.link), ENV);
 Date.now = echtesNow;
 fall('EN: abgelaufener Link → /en/thanks/?bestaetigung=abgelaufen', alt.headers.get('Location'), 'https://vegetarianhulk.de/en/thanks/?bestaetigung=abgelaufen');
-const kaputt = await worker.fetch(new Request(en.link.replace(/.$/, (c) => (c === 'A' ? 'B' : 'A'))), ENV);
+// Ein Zeichen VOR dem Ende verfaelschen: das letzte Base64-Zeichen traegt
+// Fuellbits, A<->B (und A..D) ergaben dieselben Bytes — der Test war in 1/4
+// der Laeufe rot (09.11.2026, 3 von 12).
+const vorEnde = (s, n) => s.slice(0, -n) + (s.at(-n) === 'A' ? 'Q' : 'A') + s.slice(-n + 1);
+const kaputt = await worker.fetch(new Request(vorEnde(en.link, 5)), ENV);
 fall('kaputter Link → abgelaufen (deutsch)', kaputt.headers.get('Location'), 'https://vegetarianhulk.de/danke.html?bestaetigung=abgelaufen');
 
 // Liste anlegen: geschützt, im Ordner der deutschen Liste, idempotent.

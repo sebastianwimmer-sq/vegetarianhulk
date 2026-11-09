@@ -150,7 +150,11 @@ body::after { content: ""; position: fixed; inset: 0; background-image: var(--gr
 .bg { position: absolute; inset: 0;
   background-color: var(--bg-deep);
   background-image:
-    url(mesh-bg-dark.svg),
+    /* Vorgerendert aus mesh-bg-dark.svg (Turbulenz + 70-px-Blur): das SVG
+       wurde bei jedem Scroll-Bild neu gerechnet, weil die Ebene mitfaehrt
+       und sich dreht — 47 ms je Bild in WebKit, jetzt 18 ms (09.11.2026).
+       Neu rendern: Chromium-Foto 1600 px, cwebp -q 80 -resize 800 800. */
+    url(mesh-bg-dark.webp),
     radial-gradient(70% 26% at 82% 6%,  rgba(201,169,106,0.5),  transparent 70%),
     radial-gradient(64% 22% at 14% 18%, rgba(15,126,91,0.8),    transparent 70%),
     radial-gradient(70% 24% at 78% 38%, rgba(63,191,128,0.6),   transparent 70%),
@@ -194,6 +198,11 @@ main { position: relative; z-index: 1; }
    liegt ueber der Lava, unter allem Inhalt. Ohne Skript / reduziert:
    ruhiges Gold von oben. */
 main::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(85% 65% at var(--licht-x, 56%) var(--licht-y, 0%), var(--licht-farbe, rgba(240,204,140,0.18)), transparent 70%);
+  mix-blend-mode: screen; }
+main.hat-licht::before { content: none; }
+.tageslicht { position: fixed; inset: 0; z-index: -1; pointer-events: none;
   background:
     radial-gradient(85% 65% at var(--licht-x, 56%) var(--licht-y, 0%), var(--licht-farbe, rgba(240,204,140,0.18)), transparent 70%);
   mix-blend-mode: screen; }
