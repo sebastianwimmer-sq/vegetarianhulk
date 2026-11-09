@@ -91,6 +91,9 @@ lauf "Platzhalter (Fixtures)"   python3 "$HOME/kit-build/platzhalter-check.py" -
 lauf "EN-Flächen aus DE erzeugt"     node scripts/en-flaechen.mjs --pruefen
 lauf "EN-Flächen (Fixtures)"        node scripts/en-flaechen.mjs --selbsttest
 lauf "Newsletter DE/EN (Worker)"     node scripts/newsletter-sprachen-test.mjs
+lauf "Brands-Zahlen frisch (<=45 T)" node scripts/ig-zahlen.mjs --pruefen
+lauf "Brands-Zahlen (Fixtures)"      node scripts/ig-zahlen.mjs --selbsttest
+lauf "Zahlen-Loop (Fixtures)"        python3 scripts/ig-zahlen-loop.py --selbsttest
 lauf "Marken-Signale fuer die Suche" python3 scripts/seo-check.py
 lauf "Marken-Signale (Fixtures)"      python3 scripts/seo-check.py --selbsttest
 lauf "Produktliste & Affiliate-Tags" node scripts/produkte-sync.mjs --pruefen
