@@ -181,45 +181,34 @@
   setTimeout(netz, 2500);
 })();
 
-/* Gipfelbuch: heutiges Datum + Tag-Zaehler (vegetarisch seit 2016) */
-(function () {
-  'use strict';
-  var d = document.querySelector('[data-gb-datum]');
-  var t = document.querySelector('[data-gb-tag]');
-  if (d) d.textContent = new Date().toLocaleDateString(document.documentElement.lang === 'en' ? 'en-US' : 'de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
-  if (t) {
-    var days = Math.floor((Date.now() - new Date(2016, 7, 15).getTime()) / 86400000);  /* Veggie-Start: 15.08.2016 (Sebi) */
-    // Englische Seiten (/en/): Day 3,800 statt Tag 3.800
-    t.textContent = document.documentElement.lang === 'en' ? 'Day ' + days.toLocaleString('en-US') : 'Tag ' + days.toLocaleString('de-DE');
-  }
-})();
-
-/* Fuss-Grat: Schneefahne am Watzmann-Kamm ueber jedem Seitenfuss (09.11.2026).
+/* Fuss-Grat: der Watzmann-Kamm als Ende jeder Seite (09.11.2026).
  *
  * WARUM
- * Sebi 08./09.11.: Partikel live animiert auf der Website, Richtung B
- * (Schneefahne am Grat) gewaehlt, "nicht zu viel" und "das ganze Design-
- * System fuer alle Seiten". Deshalb EIN Baustein an EINER Stelle: jede Seite
- * endet am Grat. Er haengt am <footer>, den alle v3-Seiten teilen — keine
- * Seite muss etwas einbauen, DE und EN bekommen ihn gleich.
- *
- * NICHT ZU VIEL
- * Keine Dauerschleife: kommt der Fuss ins Bild, zieht eine Boee ueber den
- * Grat (Boee 3,2 s + Ausklang < 1,4 s), danach steht alles still und die Leinwand zeichnet nichts
- * mehr. Maus oder Finger ueber dem Grat holt die naechste Boee. Endet von
- * selbst unter 5 s, deshalb braucht es keinen Halte-Knopf (WCAG 2.2.2).
- * Reduzierte Bewegung: nur der stehende Grat, kein Schnee.
+ * Sebi 08./09.11.: Partikel live animiert, Richtung B (Schneefahne am Grat),
+ * "nicht zu viel", "das ganze Design-System fuer alle Seiten". Runde 2 am
+ * selben Tag: "Eingang und Ausgang vom Berg optimieren", "beim Spruch alles
+ * so leer", "macht noch keinen Spass weiter zu scrollen" — auch Unterseiten.
+ * Deshalb ist das Seitenende jetzt ein Ankommen am Grat:
+ *   EINGANG — die drei Kaemme steigen beim Scrollen von unten auf, der
+ *     ferne langsamer als der nahe (Tiefe aus dem Scroll, kein Timer).
+ *   GIPFEL  — oben angekommen tritt der Spruch hervor ("Disziplin ueber
+ *     Hype." gross) und darunter Sebis Tag-Zaehler in Handschrift.
+ *   BOEE    — dann zieht Schnee ueber den Grat: schwillt an, flaut ab
+ *     (Boee 3,2 s + Ausklang < 1,4 s), danach kein Frame mehr. Maus oder
+ *     Finger ueber dem Grat holt die naechste. Endet von selbst < 5 s,
+ *     deshalb kein Halte-Knopf (WCAG 2.2.2).
+ * Haengt am <footer>, den alle v3-Seiten teilen: keine Seite baut etwas
+ * ein, DE und EN gleich. Reduzierte Bewegung: Grat steht oben, Spruch
+ * sichtbar, kein Schnee.
  *
  * DIE LINIE ist der echte Kamm: je Spalte die hoechste Stelle aus
- * watzmann-dem.json (72 Spalten, 0..1). Die Datei selbst ist 860 KB und
- * wird hier nicht geladen. Neu rechnen: Maximum je Spalte ueber das auf
- * 72 x 72 verkleinerte DEM. Drei Ebenen: fern blass wie Dunst, nah in der
- * Farbe des Seitengrunds; nach unten loest die Maske in v3.css den Grat
- * in den Grund auf (unten liegt je Seite ein anderes Licht). */
+ * watzmann-dem.json (72 Spalten, 0..1); die 860-KB-Datei laedt hier nicht.
+ * Neu rechnen: Maximum je Spalte ueber das auf 72 x 72 verkleinerte DEM. */
 (function () {
   'use strict';
   var fuss = document.querySelector('body > footer');
-  if (!fuss || !('getContext' in document.createElement('canvas'))) return;
+  var inner = fuss && fuss.querySelector('.inner');
+  if (!inner || !('getContext' in document.createElement('canvas'))) return;
 
   var KAMM = [0.893, 0.886, 0.859, 0.787, 0.731, 0.709, 0.697, 0.704, 0.758, 0.777, 0.814, 0.86,
     0.841, 0.83, 0.826, 0.806, 0.791, 0.782, 0.764, 0.752, 0.729, 0.708, 0.735, 0.774, 0.786, 0.788,
@@ -227,31 +216,53 @@
     0.889, 0.837, 0.78, 0.762, 0.749, 0.747, 0.743, 0.736, 0.752, 0.798, 0.78, 0.718, 0.682, 0.632,
     0.591, 0.578, 0.591, 0.578, 0.562, 0.531, 0.489, 0.424, 0.404, 0.404, 0.414, 0.42, 0.419, 0.402,
     0.361, 0.335, 0.334, 0.315];
-  /* fern -> nah: Ausschnitt des Kamms, Hoehe, Anhebung, Farbe */
+  /* fern -> nah: Ausschnitt des Kamms, Hoehe, Fusslinie, Farbe, Schnee-
+     Gewicht, Aufstieg (Anteil der Hoehe, um den die Ebene beim Eingang
+     tiefer startet — nah weiter als fern, das ergibt die Parallaxe). */
   var EBENEN = [
-    { von: 0.30, bis: 1.00, hub: 0.46, unten: 0.62, farbe: '#24503f', schnee: 0.35 },
-    { von: 0.12, bis: 0.86, hub: 0.52, unten: 0.80, farbe: '#123a2c', schnee: 0.6 },
-    { von: 0.00, bis: 1.00, hub: 0.58, unten: 1.00, farbe: '#06231A', schnee: 1 }
+    { von: 0.30, bis: 1.00, hub: 0.40, unten: 0.50, farbe: '#24503f', schnee: 0.35, steigt: 0.22 },
+    { von: 0.12, bis: 0.86, hub: 0.46, unten: 0.68, farbe: '#123a2c', schnee: 0.6, steigt: 0.42 },
+    { von: 0.00, bis: 1.00, hub: 0.52, unten: 0.86, farbe: '#06231A', schnee: 1, steigt: 0.66 }
   ];
   var SCHNEE = '243,235,217';      /* --paper */
-  var BOEE_MS = 3200, MAX_FLOCKEN = 240;
+  var BOEE_MS = 3200, ANSCHWELLEN_MS = 700, MAX_FLOCKEN = 240, OBEN_AB = 0.92;
   var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var en = document.documentElement.lang === 'en';
+
+  /* Spruch teilen: "Builder & Creator." klein, "Disziplin ueber Hype." gross.
+     Ohne Skript bleibt die eine Zeile wie bisher stehen. */
+  var claim = inner.querySelector('.claim');
+  var m = claim && claim.textContent.trim().match(/^(.+?\.)\s+(.+)$/);
+  if (m) {
+    claim.textContent = '';
+    var klein = document.createElement('span'); klein.className = 'claim__vor'; klein.textContent = m[1];
+    var gross = document.createElement('span'); gross.className = 'claim__satz'; gross.textContent = m[2];
+    claim.appendChild(klein); claim.appendChild(gross);
+    var tag = document.createElement('p'); tag.className = 'fuss-tag';
+    var zahl = document.createElement('span'); zahl.setAttribute('data-gb-tag', '');
+    tag.appendChild(zahl); tag.appendChild(document.createTextNode(en ? ' vegetarian.' : ' vegetarisch.'));
+    claim.parentNode.insertBefore(tag, claim.nextSibling);
+  }
 
   var cv = document.createElement('canvas');
   cv.className = 'fuss-grat';
   cv.setAttribute('aria-hidden', 'true');
-  fuss.insertBefore(cv, fuss.firstChild);
+  fuss.insertBefore(cv, inner);
+  fuss.classList.add('hat-grat');
   var ctx = cv.getContext('2d');
   var w = 0, h = 0, flocken = [], boee = 0, boeeStart = 0, wind = 1, laeuft = false, sichtbar = false;
+  var aufstieg = ruhig ? 1 : 0, obenGewesen = false;
 
   function kamm(u) {
     var x = Math.max(0, Math.min(1, u)) * (KAMM.length - 1);
     var i = Math.min(KAMM.length - 2, Math.floor(x)), f = x - i;
     return KAMM[i] * (1 - f) + KAMM[i + 1] * f;
   }
+  function weich(x) { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); }
+  function versatz(e) { return (1 - weich(aufstieg)) * h * EBENEN[e].steigt; }
   function gratY(e, x) {
     var E = EBENEN[e], u = E.von + (x / w) * (E.bis - E.von);
-    return h * E.unten - (kamm(u) - 0.3) / 0.7 * h * E.hub;
+    return h * E.unten - (kamm(u) - 0.3) / 0.7 * h * E.hub + versatz(e);
   }
   function messen() {
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -274,16 +285,23 @@
       for (var i = 0; i < flocken.length; i++) {
         var p = flocken[i];
         if (p.e !== e) continue;
-        var rest = 1 - p.alter / p.leben;
-        ctx.fillStyle = 'rgba(' + SCHNEE + ',' + (Math.min(1, rest * 1.6) * (0.35 + EBENEN[e].schnee * 0.5)).toFixed(3) + ')';
+        /* weich rein (erste 12 Bilder), weich raus (Lebensende) */
+        var deck = Math.min(1, p.alter / 12) * Math.min(1, (1 - p.alter / p.leben) * 1.6);
+        ctx.fillStyle = 'rgba(' + SCHNEE + ',' + (deck * (0.35 + EBENEN[e].schnee * 0.5)).toFixed(3) + ')';
         var r = 0.9 + EBENEN[e].schnee * 1.3;
         ctx.fillRect(p.x, p.y, r, r);
       }
     }
   }
+  /* Boee als Huellkurve: anschwellen, halten, abflauen — kein harter Start. */
+  function boeeStaerke(t) {
+    var d = t - boeeStart;
+    if (d >= BOEE_MS) return 0;
+    return d < ANSCHWELLEN_MS ? weich(d / ANSCHWELLEN_MS) : 1 - weich((d - ANSCHWELLEN_MS) / (BOEE_MS - ANSCHWELLEN_MS));
+  }
   function schritt(t) {
     if (!sichtbar || document.hidden) { laeuft = false; return; }
-    boee = Math.max(0, 1 - (t - boeeStart) / BOEE_MS);
+    boee = boeeStaerke(t);
     /* Dichte je Breite, nicht je Bild: am Handy sonst dreifach so dicht. */
     var neu = boee > 0 ? Math.round(boee * 6 * Math.min(1, w / 1440) + Math.random() * 0.6) : 0;
     while (neu-- > 0 && flocken.length < MAX_FLOCKEN * Math.min(1, w / 1200)) flocken.push(neueFlocke());
@@ -306,34 +324,80 @@
     if (!laeuft && sichtbar) { laeuft = true; requestAnimationFrame(schritt); }
   }
 
-  messen(); zeichnen();
+  /* EINGANG: Aufstieg 0..1 aus der Lage der Leinwand im Fenster. Bei 0
+     beruehrt ihre Oberkante den unteren Rand, bei 1 steht ihre Mitte im
+     unteren Drittel. Rueckwaerts scrollen laesst die Kaemme wieder sinken. */
+  function aufstiegMessen() {
+    var r = cv.getBoundingClientRect(), vh = window.innerHeight;
+    var ziel = vh * 0.72 - r.height * 0.5;
+    var a = (vh - r.top) / Math.max(1, vh - ziel);
+    /* Seiten, die schon am Ende enden, bevor die Leinwand hoch genug kommt
+       (kurze Seiten, grosses Fenster): dann gilt der Rest des Scrollwegs. */
+    var rest = document.documentElement.scrollHeight - vh - window.scrollY;
+    if (rest <= 2) a = 1;
+    return Math.max(0, Math.min(1, a));
+  }
+  function scrollen() {
+    if (ruhig) return;
+    var a = aufstiegMessen();
+    if (Math.abs(a - aufstieg) < 0.002) return;
+    aufstieg = a;
+    if (!laeuft) zeichnen();
+    if (a >= OBEN_AB && !obenGewesen) { obenGewesen = true; fuss.classList.add('ist-oben'); boeeAusloesen(1.2); }
+  }
+  var geplant = false;
+  function planen() { if (!geplant) { geplant = true; requestAnimationFrame(function () { geplant = false; scrollen(); }); } }
+
+  messen();
+  if (ruhig) fuss.classList.add('ist-oben');
+  else aufstieg = aufstiegMessen();
+  zeichnen();
   if ('ResizeObserver' in window) {
     new ResizeObserver(function () {
       var alt = w; messen(); if (w !== alt) flocken = []; zeichnen();
     }).observe(cv);
   }
   if (ruhig) return;
-
-  var schonGeweht = false;
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (eintraege) {
       sichtbar = eintraege[0].isIntersecting;
-      if (sichtbar && !schonGeweht) { schonGeweht = true; boeeAusloesen(1.2); }
-    }, { threshold: 0.35 }).observe(cv);
-  }
+      if (sichtbar) planen();
+    }).observe(cv);
+  } else { sichtbar = true; }
+  window.addEventListener('scroll', function () { if (sichtbar) planen(); }, { passive: true });
+  window.addEventListener('resize', planen, { passive: true });
+  scrollen();
+
   /* Maus: Staerke aus der Position (links leise, rechts kraeftig), hoechstens
      eine neue Boee je Sekunde. Finger: Tippen auf den Grat. */
   var letzte = 0;
-  fuss.addEventListener('pointermove', function (ev) {
-    if (ev.pointerType !== 'mouse') return;
+  /* Am Dokument, nicht am Fuss: der Fuss laesst Zeiger durch (v3.css). */
+  document.addEventListener('pointermove', function (ev) {
+    if (ev.pointerType !== 'mouse' || !obenGewesen || !sichtbar) return;
     var r = cv.getBoundingClientRect();
-    if (ev.clientY > r.bottom || performance.now() - letzte < 1000) return;
+    if (ev.clientY < r.top || ev.clientY > r.bottom || performance.now() - letzte < 1000) return;
     letzte = performance.now();
     boeeAusloesen(0.6 + (ev.clientX - r.left) / r.width * 1.4);
   }, { passive: true });
-  fuss.addEventListener('pointerdown', function (ev) {
-    if (ev.pointerType === 'mouse') return;
+  document.addEventListener('pointerdown', function (ev) {
+    if (ev.pointerType === 'mouse' || !sichtbar) return;
     var r = cv.getBoundingClientRect();
-    if (ev.clientY <= r.bottom) boeeAusloesen(1.4);
+    if (ev.clientY >= r.top && ev.clientY <= r.bottom) boeeAusloesen(1.4);
   }, { passive: true });
+})();
+
+/* Gipfelbuch: heutiges Datum + Tag-Zaehler (vegetarisch seit 2016) */
+(function () {
+  'use strict';
+  var d = document.querySelector('[data-gb-datum]');
+  /* Alle Zaehler: Gipfelbuch (Startseite) und Fuss (jede Seite, legt der
+     Fuss-Grat oben an — deshalb steht dieser Block nach ihm). */
+  var tage = document.querySelectorAll('[data-gb-tag]');
+  if (d) d.textContent = new Date().toLocaleDateString(document.documentElement.lang === 'en' ? 'en-US' : 'de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+  if (tage.length) {
+    var days = Math.floor((Date.now() - new Date(2016, 7, 15).getTime()) / 86400000);  /* Veggie-Start: 15.08.2016 (Sebi) */
+    // Englische Seiten (/en/): Day 3,800 statt Tag 3.800
+    var txt = document.documentElement.lang === 'en' ? 'Day ' + days.toLocaleString('en-US') : 'Tag ' + days.toLocaleString('de-DE');
+    tage.forEach(function (t) { t.textContent = txt; });
+  }
 })();

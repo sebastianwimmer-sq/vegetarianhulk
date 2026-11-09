@@ -948,13 +948,35 @@ footer .claim { margin-top: 10px; font-size: 14px; color: var(--paper-dim); }
 footer .legal { margin-top: 20px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.4px; color: var(--paper-faint);
   display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
 footer .legal a:hover { color: var(--paper); }
-/* Fuss-Grat (v3.js): der Watzmann-Kamm als Horizont ueber jedem Fuss. Er
-   zieht die Linie, die bisher als Strich ueber dem Fuss lag. Unten loest
-   ihn die Maske auf, wie das Hero-Foto in den Raum (kein Kasten-Ende). */
-.fuss-grat { display: block; width: 100%; height: clamp(84px, 14vw, 170px);
-  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
-          mask-image: linear-gradient(to bottom, #000 45%, transparent 100%); }
-.fuss-grat + .inner { border-top-color: transparent; padding-top: 18px; }
+/* Fuss-Grat (v3.js): jede Seite endet am Watzmann-Kamm. Er ersetzt den
+   Strich ueber dem Fuss und schliesst eng an den letzten Inhalt an (vorher
+   stand der Fuss 64 px abgesetzt im leeren Grund). Unten loest die Maske
+   den Kamm in den Grund auf, wie das Hero-Foto in den Raum. Der Spruch
+   steht auf dem nahen, dunklen Kamm — dort ist der Grund am ruhigsten. */
+/* Direkt unter dem letzten Inhalt, aber nie darunter greifend: der hohe
+   ferne Kamm reicht bis 10 % unter die Oberkante, Schnee darueber — ein
+   Ueberlappen schnitt am Handy die Quellenzeile der Tourseiten an (09.11.).
+   Klicks gehen durch die Leinwand hindurch (nur .inner nimmt sie an). */
+footer.hat-grat { margin-top: clamp(0px, 1vw, 12px); pointer-events: none; }
+footer.hat-grat .inner { pointer-events: auto; }
+.fuss-grat { display: block; width: 100%; height: clamp(170px, 32vw, 330px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 62%, transparent 100%); }
+.fuss-grat + .inner { position: relative; border-top-color: transparent;
+  margin-top: calc(-1 * clamp(64px, 12vw, 130px)); padding-top: 0; }
+footer .claim .claim__vor { display: block; font-size: 14px; color: var(--paper-dim); }
+footer .claim .claim__satz { display: block; margin-top: 8px; font-family: 'Playfair Display', 'Playfair Fallback', serif;
+  font-weight: 600; font-size: var(--t-h2); line-height: 1.08; color: var(--paper); text-wrap: balance; }
+.fuss-tag { margin-top: 10px; font-family: 'Caveat', cursive; font-size: 27px; line-height: 1.1; color: var(--leaf); }
+/* Gipfelmoment: Satz und Tag treten erst hervor, wenn der Grat oben ist
+   (Klasse vom Skript). Ohne Skript fehlt .hat-grat, alles steht. */
+footer.hat-grat .claim__satz, footer.hat-grat .fuss-tag {
+  transition: opacity var(--dur-6) var(--ease-lux), transform var(--dur-6) var(--ease-lux); }
+footer.hat-grat .fuss-tag { transition-delay: 260ms; }
+footer.hat-grat:not(.ist-oben) .claim__satz, footer.hat-grat:not(.ist-oben) .fuss-tag { opacity: 0; transform: translateY(16px); }
+@media (prefers-reduced-motion: reduce) {
+  footer.hat-grat .claim__satz, footer.hat-grat .fuss-tag { opacity: 1; transform: none; transition: none; }
+}
 
 /* ============================================================
    NAV — helle Papier-Pille, TYPOGRAFISCH (keine Standard-Icons).
@@ -1367,7 +1389,7 @@ html:active-view-transition-type(runter)::view-transition-new(root) { animation:
 @media print {
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .rv, .st, .tour-kreuz, .tour-blatt__text, .gipfelbuch, .closing, .home-outro, .shead,
-  .tk-row, .tk-close, .tk-bar, .tk-me, .tk-lead, .kicker {
+  .tk-row, .tk-close, .tk-bar, .tk-me, .tk-lead, .kicker, footer .claim__satz, .fuss-tag {
     opacity: 1 !important; transform: none !important; clip-path: none !important; filter: none !important;
   }
   nav.nav, .dock, .rail, .scroll-hint, .hero-scroll, .berg-overlays { display: none !important; }
