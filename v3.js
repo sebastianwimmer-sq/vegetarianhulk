@@ -53,6 +53,25 @@
   var b = document.querySelector('.bg2-wrap');
   if (!a || !b) return;
   var t = false;
+  /* Ein Licht fuer die ganze Seite (Runde 4, 09.11., Sebi: "alles so einzeln,
+     mit dem Background so lose"): die Seite ist ein Tag am Berg. Oben kuehles
+     Morgenlicht links, in der Mitte Gold von oben, am Ende Abendrot hinter
+     dem Grat im Fuss. Alle Abschnitte stehen im selben Licht, das mit dem
+     Scrollen wandert — keine Uhr, nur der Weg. */
+  var LICHT = [
+    { p: 0.00, x: 16, y: 6, r: 160, g: 230, b: 190, a: 0.12 },
+    { p: 0.50, x: 56, y: 0, r: 240, g: 204, b: 140, a: 0.20 },
+    { p: 1.00, x: 50, y: 100, r: 238, g: 150, b: 108, a: 0.24 }
+  ];
+  var wurzel = document.documentElement;
+  function licht(p) {
+    var i = p < LICHT[1].p ? 0 : 1, A = LICHT[i], B = LICHT[i + 1];
+    var f = (p - A.p) / (B.p - A.p); f = f * f * (3 - 2 * f);
+    function m(k) { return A[k] + (B[k] - A[k]) * f; }
+    wurzel.style.setProperty('--licht-x', m('x').toFixed(1) + '%');
+    wurzel.style.setProperty('--licht-y', m('y').toFixed(1) + '%');
+    wurzel.style.setProperty('--licht-farbe', 'rgba(' + Math.round(m('r')) + ',' + Math.round(m('g')) + ',' + Math.round(m('b')) + ',' + m('a').toFixed(3) + ')');
+  }
   function update() {
     var max = document.documentElement.scrollHeight - window.innerHeight;
     var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
@@ -61,11 +80,13 @@
     var vh = window.innerHeight;
     a.style.transform = 'translateY(' + (-p * 1.04 * vh) + 'px)';
     b.style.transform = 'translateY(' + (p * 0.38 * vh) + 'px) rotate(' + (p * 5) + 'deg)';
+    licht(p);
     t = false;
   }
   window.addEventListener('scroll', function () {
     if (!t) { requestAnimationFrame(update); t = true; }
   }, { passive: true });
+  update();
 })();
 
 /* Nav: steht fest — Handy unten, Desktop oben, nie beim Scrollen wechselnd (28.09.2026). Bis dahin fuhr sie am
@@ -355,26 +376,31 @@ var VH_KAMM = [0.893, 0.886, 0.859, 0.787, 0.731, 0.709, 0.697, 0.704, 0.758, 0.
 
   /* Spruch teilen: "Builder & Creator." klein, "Disziplin ueber Hype." gross.
      Ohne Skript bleibt die eine Zeile wie bisher stehen. */
-  var claim = inner.querySelector('.claim');
+  var claim = inner.querySelector('.claim'), gipfel = null;
   var m = claim && claim.textContent.trim().match(/^(.+?\.)\s+(.+)$/);
   if (m) {
     claim.textContent = '';
     var klein = document.createElement('span'); klein.className = 'claim__vor'; klein.textContent = m[1];
-    var gross = document.createElement('span'); gross.className = 'claim__satz'; gross.textContent = m[2];
-    claim.appendChild(klein); claim.appendChild(gross);
+    claim.appendChild(klein);
+    /* Runde 4 (09.11., Sebi: der Satz "geht unten total unter"): der grosse
+       Satz steht nicht mehr klein unter dem Kamm, sondern UEBER ihm im
+       Himmel — Disziplin ueber Hype, waehrend der Schnee daran vorbeizieht. */
+    gipfel = document.createElement('div'); gipfel.className = 'fuss-gipfel';
+    var gross = document.createElement('p'); gross.className = 'claim__satz'; gross.textContent = m[2];
     var tag = document.createElement('p'); tag.className = 'fuss-tag';
     var zahl = document.createElement('span'); zahl.setAttribute('data-gb-tag', '');
     tag.appendChild(zahl); tag.appendChild(document.createTextNode(en ? ' vegetarian.' : ' vegetarisch.'));
-    claim.parentNode.insertBefore(tag, claim.nextSibling);
+    gipfel.appendChild(gross); gipfel.appendChild(tag);
   }
 
   var cv = document.createElement('canvas');
   cv.className = 'fuss-grat';
   cv.setAttribute('aria-hidden', 'true');
   fuss.insertBefore(cv, inner);
+  if (gipfel) { fuss.insertBefore(gipfel, cv); fuss.classList.add('hat-gipfel'); }
   fuss.classList.add('hat-grat');
   var ctx = cv.getContext('2d');
-  var w = 0, h = 0, flocken = [], boee = 0, boeeStart = 0, wind = 1, laeuft = false, sichtbar = false;
+  var w = 0, h = 0, oy = 0, h2 = 0, flocken = [], boee = 0, boeeStart = 0, wind = 1, laeuft = false, sichtbar = false;
   var aufstieg = ruhig ? 1 : 0, obenGewesen = false;
 
   function kamm(u) {
@@ -383,21 +409,24 @@ var VH_KAMM = [0.893, 0.886, 0.859, 0.787, 0.731, 0.709, 0.697, 0.704, 0.758, 0.
     return KAMM[i] * (1 - f) + KAMM[i + 1] * f;
   }
   function weich(x) { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); }
-  function versatz(e) { return (1 - weich(aufstieg)) * h * EBENEN[e].steigt; }
+  function versatz(e) { return (1 - weich(aufstieg)) * h2 * EBENEN[e].steigt; }
   function gratY(e, x) {
     var E = EBENEN[e], u = E.von + (x / w) * (E.bis - E.von);
-    return h * E.unten - (kamm(u) - 0.3) / 0.7 * h * E.hub + versatz(e);
+    return oy + h2 * E.unten - (kamm(u) - 0.3) / 0.7 * h2 * E.hub + versatz(e);
   }
   function messen() {
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     w = cv.clientWidth; h = cv.clientHeight;
+    /* Himmel = Hoehe des Satzes darueber (CSS: --gipfel-h), der Kamm darunter */
+    oy = gipfel ? Math.min(h * 0.6, gipfel.offsetHeight) : 0;
+    h2 = h - oy;
     cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
   function neueFlocke() {
     var e = Math.random() < 0.5 ? 2 : Math.random() < 0.6 ? 1 : 0;
     var x = Math.random() * w;
-    return { e: e, x: x, y: gratY(e, x), vx: 0, vy: 0, alter: 0, leben: 40 + Math.random() * 40 };
+    return { e: e, x: x, y: gratY(e, x), vx: 0, vy: 0, alter: 0, leben: 60 + Math.random() * 70 };
   }
   function zeichnen() {
     ctx.clearRect(0, 0, w, h);
@@ -411,8 +440,8 @@ var VH_KAMM = [0.893, 0.886, 0.859, 0.787, 0.731, 0.709, 0.697, 0.704, 0.758, 0.
         if (p.e !== e) continue;
         /* weich rein (erste 12 Bilder), weich raus (Lebensende) */
         var deck = Math.min(1, p.alter / 12) * Math.min(1, (1 - p.alter / p.leben) * 1.6);
-        ctx.fillStyle = 'rgba(' + SCHNEE + ',' + (deck * (0.35 + EBENEN[e].schnee * 0.5)).toFixed(3) + ')';
-        var r = 0.9 + EBENEN[e].schnee * 1.3;
+        ctx.fillStyle = 'rgba(' + SCHNEE + ',' + (deck * (0.45 + EBENEN[e].schnee * 0.5)).toFixed(3) + ')';
+        var r = 1.2 + EBENEN[e].schnee * 1.8;
         ctx.fillRect(p.x, p.y, r, r);
       }
     }
@@ -427,12 +456,12 @@ var VH_KAMM = [0.893, 0.886, 0.859, 0.787, 0.731, 0.709, 0.697, 0.704, 0.758, 0.
     if (!sichtbar || document.hidden) { laeuft = false; return; }
     boee = boeeStaerke(t);
     /* Dichte je Breite, nicht je Bild: am Handy sonst dreifach so dicht. */
-    var neu = boee > 0 ? Math.round(boee * 6 * Math.min(1, w / 1440) + Math.random() * 0.6) : 0;
+    var neu = boee > 0 ? Math.round(boee * 8 * Math.min(1, w / 1440) + Math.random() * 0.6) : 0;
     while (neu-- > 0 && flocken.length < MAX_FLOCKEN * Math.min(1, w / 1200)) flocken.push(neueFlocke());
     flocken = flocken.filter(function (p) {
       var tiefe = 0.45 + EBENEN[p.e].schnee * 0.55;
       p.vx += (wind * (0.25 + boee) * tiefe - p.vx) * 0.08;
-      p.vy += (-0.35 * tiefe - p.vy) * 0.05;
+      p.vy += (-0.62 * tiefe - p.vy) * 0.05;
       p.x += p.vx * 1.6; p.y += p.vy + Math.sin((p.alter + p.x) * 0.05) * 0.3;
       p.alter++;
       return p.alter < p.leben && p.x < w + 8;
@@ -472,14 +501,17 @@ var VH_KAMM = [0.893, 0.886, 0.859, 0.787, 0.731, 0.709, 0.697, 0.704, 0.758, 0.
   var geplant = false;
   function planen() { if (!geplant) { geplant = true; requestAnimationFrame(function () { geplant = false; scrollen(); }); } }
 
+  function himmelSetzen() { if (gipfel) fuss.style.setProperty('--gipfel-h', gipfel.offsetHeight + 'px'); }
+  himmelSetzen();
   messen();
   if (ruhig) fuss.classList.add('ist-oben');
   else aufstieg = aufstiegMessen();
   zeichnen();
   if ('ResizeObserver' in window) {
     new ResizeObserver(function () {
-      var alt = w; messen(); if (w !== alt) flocken = []; zeichnen();
+      var alt = w; himmelSetzen(); messen(); if (w !== alt) flocken = []; zeichnen();
     }).observe(cv);
+    if (gipfel) new ResizeObserver(function () { himmelSetzen(); }).observe(gipfel);
   }
   if (ruhig) return;
   if ('IntersectionObserver' in window) {
