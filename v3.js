@@ -509,7 +509,16 @@ var VH_KAMM = [0.893, 0.886, 0.859, 0.787, 0.731, 0.709, 0.697, 0.704, 0.758, 0.
   var geplant = false;
   function planen() { if (!geplant) { geplant = true; requestAnimationFrame(function () { geplant = false; scrollen(); }); } }
 
-  function himmelSetzen() { if (gipfel) fuss.style.setProperty('--gipfel-h', gipfel.offsetHeight + 'px'); }
+  /* Nur bei echter Aenderung schreiben, und aus dem Groessenwaechter erst im
+     naechsten Bild: --gipfel-h aendert die Hoehe der Zeichenflaeche, deren
+     Waechter sonst im selben Bild erneut feuert ("ResizeObserver loop",
+     WebKit 768, 09.11.2026). */
+  var himmelH = -1;
+  function himmelSetzen() {
+    if (!gipfel) return;
+    var h = gipfel.offsetHeight;
+    if (h !== himmelH) { himmelH = h; fuss.style.setProperty('--gipfel-h', h + 'px'); }
+  }
   himmelSetzen();
   messen();
   if (ruhig) fuss.classList.add('ist-oben');
@@ -517,9 +526,9 @@ var VH_KAMM = [0.893, 0.886, 0.859, 0.787, 0.731, 0.709, 0.697, 0.704, 0.758, 0.
   zeichnen();
   if ('ResizeObserver' in window) {
     new ResizeObserver(function () {
-      var alt = w; himmelSetzen(); messen(); if (w !== alt) flocken = []; zeichnen();
+      var alt = w; messen(); if (w !== alt) flocken = []; zeichnen();
     }).observe(cv);
-    if (gipfel) new ResizeObserver(function () { himmelSetzen(); }).observe(gipfel);
+    if (gipfel) new ResizeObserver(function () { requestAnimationFrame(himmelSetzen); }).observe(gipfel);
   }
   if (ruhig) return;
   if ('IntersectionObserver' in window) {
@@ -564,4 +573,46 @@ var VH_KAMM = [0.893, 0.886, 0.859, 0.787, 0.731, 0.709, 0.697, 0.704, 0.758, 0.
     var txt = document.documentElement.lang === 'en' ? 'Day ' + days.toLocaleString('en-US') : 'Tag ' + days.toLocaleString('de-DE');
     tage.forEach(function (t) { t.textContent = txt; });
   }
+})();
+
+/* Messfenster fuer echte Geraete (09.11.2026): vegetarianhulk.de/?fps zeigt,
+   wie fluessig jeder Abschnitt am eigenen Handy laeuft. Die Mac-Messung sieht
+   den Grafikchip des iPhones nicht — diese Zahl kommt vom Geraet selbst.
+   Ohne ?fps laeuft hier nichts. */
+(function () {
+  'use strict';
+  if (!/[?&]fps\b/.test(location.search)) return;
+  var box = document.createElement('div');
+  var s = box.style;
+  s.position = 'fixed'; s.left = '8px'; s.top = '8px'; s.zIndex = '9999'; s.padding = '8px 10px';
+  s.background = 'rgba(3,15,9,0.88)'; s.color = '#F3EBD9'; s.font = '12px/1.45 ui-monospace,monospace';
+  s.borderRadius = '8px'; s.pointerEvents = 'none'; s.whiteSpace = 'pre'; s.maxWidth = '70vw';
+  document.body.appendChild(box);
+  var teile = Array.prototype.slice.call(document.querySelectorAll('main section[aria-label], footer'));
+  function name(el) { return el.tagName === 'FOOTER' ? 'Fuss' : el.getAttribute('aria-label').slice(0, 16); }
+  var stat = {}, letzte = performance.now(), fenster = [], gezeigt = 0;
+  function abschnitt() {
+    var m = innerHeight / 2;
+    for (var i = 0; i < teile.length; i++) { var r = teile[i].getBoundingClientRect(); if (r.top <= m && r.bottom > m) return name(teile[i]); }
+    return '-';
+  }
+  function bild(jetzt) {
+    var d = jetzt - letzte; letzte = jetzt;
+    if (d < 500) {
+      var a = abschnitt(), e = stat[a] || (stat[a] = { n: 0, sum: 0, lang: 0 });
+      e.n++; e.sum += d; if (d > 34) e.lang++;
+      fenster.push(d); if (fenster.length > 30) fenster.shift();
+    }
+    if (jetzt - gezeigt > 400) {
+      gezeigt = jetzt;
+      var avg = fenster.reduce(function (x, y) { return x + y; }, 0) / (fenster.length || 1);
+      var zeilen = ['jetzt ' + Math.round(1000 / avg) + ' fps'];
+      Object.keys(stat).forEach(function (k) {
+        var e = stat[k]; zeilen.push(k + '  ' + Math.round(1000 / (e.sum / e.n)) + ' fps  ' + Math.round(100 * e.lang / e.n) + '% Ruck');
+      });
+      box.textContent = zeilen.join('\n');
+    }
+    requestAnimationFrame(bild);
+  }
+  requestAnimationFrame(bild);
 })();

@@ -99,6 +99,16 @@ async function messen(seite) {
 
 const SELBSTTEST = process.argv.includes('--selbsttest');
 
+/* Deterministisch warten (09.11.2026): `networkidle` lief unter Last
+   (Rechner-Last 7–16 durch andere Sitzungen) in den 30-s-Timeout, obwohl
+   gemessen keine Anfrage offen war — auch auf dem alten Stand (1 von 3).
+   Das Tor braucht geladene Bilder, also wartet es genau darauf. */
+async function laden(seite, url) {
+  await seite.goto(url, { waitUntil: 'load', timeout: 60000 });
+  await seite.waitForFunction(() => Array.from(document.images)
+    .filter((i) => i.loading !== 'lazy' || i.getBoundingClientRect().top < innerHeight * 3)
+    .every((i) => i.complete), null, { timeout: 30000 });
+}
 const { s, port } = await server();
 const browser = await chromium.launch();
 
@@ -110,7 +120,7 @@ if (SELBSTTEST) {
   const slugs = await touren();
   const kontext = await browser.newContext({ viewport: { width: 1440, height: 900 } });
   const seite = await kontext.newPage();
-  await seite.goto(`http://localhost:${port}/touren/${slugs[0]}/`, { waitUntil: 'networkidle' });
+  await laden(seite, `http://localhost:${port}/touren/${slugs[0]}/`);
   const vorher = (await messen(seite)).map((f) => f.weg);
   await seite.addStyleTag({ content:
     '.tour-shot{aspect-ratio:auto !important;align-self:stretch !important;min-height:260px}' });
@@ -139,7 +149,7 @@ for (const slug of await touren()) {
   for (const [breite, hoehe, name] of BREITEN) {
     const kontext = await browser.newContext({ viewport: { width: breite, height: hoehe } });
     const seite = await kontext.newPage();
-    await seite.goto(`http://localhost:${port}/touren/${slug}/`, { waitUntil: 'networkidle' });
+    await laden(seite, `http://localhost:${port}/touren/${slug}/`);
     for (const f of await messen(seite)) {
       gemessen++;
       const grenze = f.gebunden ? GRENZE_GEBUNDEN : GRENZE;

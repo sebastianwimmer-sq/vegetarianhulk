@@ -271,7 +271,7 @@ function init(DEM) {
   const headAnchor = { el: head, v3: curve.getPointAt(0).clone(), oy: 0 };
   if (head) anchors.push(headAnchor);
   /* Anker stehen auf 0/0 und fahren per `translate` — Layout bleibt still */
-  let frameNr = 0;
+  let frameNr = 0, zeichnen = true;
   for (const a of anchors) {
     a.istWp = !!(a.el.classList && a.el.classList.contains('wp'));
     a.el.style.left = '0px'; a.el.style.top = '0px';
@@ -433,6 +433,7 @@ function init(DEM) {
   function resize() {
     const w = sticky.clientWidth, h = sticky.clientHeight;
     renderer.setSize(w, h, false);
+    zeichnen = true;
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
   }
@@ -443,7 +444,17 @@ function init(DEM) {
   const baseCenter = new THREE.Vector3(0, V_SCALE * 0.3, 0.2);
   const center = new THREE.Vector3();
   const v = new THREE.Vector3();
+  /* Nur malen, wenn sich etwas bewegt (09.11.2026, Runde 5b): vorher malte
+     der Berg jedes Bild neu, auch beim Lesen am Stopp — am Handy frisst das
+     den Grafikchip, den gleichzeitig Nebel und Licht brauchen. Das Bild haengt
+     nur an p/ein/aus; stehen alle, bleibt das letzte Bild stehen. */
   function frame() {
+    if (!zeichnen && walkT === 0 && Math.abs(target - p) < 1e-4
+        && Math.abs(einZiel - ein) < 1e-3 && Math.abs(ausZiel - aus) < 1e-3) {
+      rafId = active ? requestAnimationFrame(frame) : 0;
+      return;
+    }
+    zeichnen = false;
     p += (target - p) * 0.06;  /* smootheres Gleiten (war 0.075) */
     const sp0 = curve.getPointAt(Math.min(0.999, Math.max(0.001, p)));
     /* Kamera zieht ins Geschehen: Blickpunkt lerpt zur Route,
@@ -591,6 +602,7 @@ function init(DEM) {
         if (typeof paintTerrain === 'function' && ((wc >= 71 && wc <= 77) || d.current.temperature_2m <= 0)) {
           snowLine = Math.max(0.4, snowLine - 0.1);
           paintTerrain(snowLine);
+          zeichnen = true;
         }
       })
       .catch(() => {});
