@@ -16,6 +16,85 @@
   setTimeout(go, 2500);
 })();
 
+/* Wegweiser am Ende jeder Seite (09.11.2026, Runde 6, Sebi: "mach die
+   Unterseiten auch gleich mit aufs Level"). Die Startseite endet seit Runde 4
+   an einem Pfahl mit Schildern; jede Unterseite endete hart vor dem Fuss.
+   Jetzt steht derselbe Pfahl ueberall — mit den Wegen, die von DIESER Seite
+   aus Sinn ergeben. Eine Quelle fuer DE und EN (gleiche Gestaltung, Text je
+   Sprache eigen). Laeuft vor dem Reveal, damit .rv beobachtet wird. Seiten
+   mit eigener Gabelung (Startseite) und die 404 (eigene Anker) bleiben. */
+(function () {
+  'use strict';
+  var main = document.querySelector('main');
+  if (!main || document.querySelector('.gabelung, .err-anker')) return;
+  var en = document.documentElement.lang === 'en';
+  var weg = location.pathname.replace(/index\.html$/, '');
+  var Z = en ? {
+    touren: ['All hikes', 'Hulk Hikes', '/en/hikes/'],
+    picks: ['Gear', 'Partner Picks', '/en/partner-picks/'],
+    nl: ['Next summit first', 'Newsletter', '/en/newsletter/'],
+    brands: ['What I do', 'For brands', '/en/brands/'],
+    anfrage: ['Work with me', 'Inquiry', '/en/brand-inquiry/'],
+    berg3d: ['Watzmann in 3D', 'Home', '/en/#grat'],
+    start: ['Back', 'Home', '/en/'],
+    erste: ['First hike', 'Hulk Hikes', '/en/hikes/'],
+    schauen: ['Look first', 'Hulk Hikes', '/en/hikes/'],
+    wo: ['In use', 'Hulk Hikes', '/en/hikes/'],
+    insta: 'On the trail', kicker: 'Where it goes from here', label: 'Ways on'
+  } : {
+    touren: ['Alle Touren', 'Hulk Hikes', '/touren/'],
+    picks: ['Ausrüstung', 'Partner-Picks', '/partner-picks/'],
+    nl: ['Nächster Gipfel zuerst', 'Newsletter', '/newsletter'],
+    brands: ['Was ich mache', 'Für Brands', '/kooperationen.html'],
+    anfrage: ['Zusammenarbeiten', 'Anfrage', '/anfrage.html'],
+    berg3d: ['Watzmann in 3D', 'Start', '/#grat'],
+    start: ['Zurück', 'Start', '/'],
+    erste: ['Erste Tour', 'Hulk Hikes', '/touren/'],
+    schauen: ['Erst anschauen', 'Hulk Hikes', '/touren/'],
+    wo: ['Im Einsatz', 'Hulk Hikes', '/touren/'],
+    insta: 'Unterwegs', kicker: 'Wie es weitergeht', label: 'Weiter von hier'
+  };
+  var paar =
+    /^\/(touren|en\/hikes)\/[^/]+\/$/.test(weg) ? ['touren', 'picks'] :
+    /^\/(touren|en\/hikes)\/$/.test(weg) ? ['picks', 'berg3d'] :
+    /^\/(kooperationen\.html|en\/brands\/)$/.test(weg) ? ['anfrage', 'schauen'] :
+    /^\/(anfrage\.html|en\/brand-inquiry\/)$/.test(weg) ? ['brands', 'schauen'] :
+    /^\/(newsletter|berg-starter|en\/newsletter|en\/hike-starter)\/$/.test(weg) ? ['erste', 'picks'] :
+    /^\/(partner-picks|en\/partner-picks)\/$/.test(weg) ? ['wo', 'nl'] :
+    /^\/(danke\.html|en\/thanks\/)$/.test(weg) ? ['erste', 'start'] :
+    ['start', 'touren'];
+  function schild(k, art) {
+    var a = document.createElement('a');
+    a.className = 'gab-schild gab-schild--' + art;
+    a.href = Z[k][2];
+    a.textContent = Z[k][0] + ' · ' + Z[k][1];
+    return a;
+  }
+  var sec = document.createElement('section');
+  sec.className = 'closing closing--pfahl closing--weiter rv';
+  sec.setAttribute('aria-label', Z.kicker);
+  var kopf = document.createElement('div');
+  kopf.className = 'shead';
+  var k = document.createElement('p');
+  k.className = 'kicker';
+  k.textContent = Z.kicker;
+  kopf.appendChild(k);
+  var nav = document.createElement('nav');
+  nav.className = 'gabelung';
+  nav.setAttribute('aria-label', Z.label);
+  nav.appendChild(schild(paar[0], 'gelb'));
+  nav.appendChild(schild(paar[1], 'dunkel'));
+  var ig = document.createElement('a');
+  ig.className = 'gab-schild gab-schild--gelb gab-schild--klein';
+  ig.href = 'https://www.instagram.com/vegetarianhulk/';
+  ig.target = '_blank'; ig.rel = 'noopener';
+  ig.textContent = Z.insta + ' · @vegetarianhulk';
+  nav.appendChild(ig);
+  sec.appendChild(kopf);
+  sec.appendChild(nav);
+  main.appendChild(sec);
+})();
+
 /* Wordmark-Invert über hellen Inseln */
 (function () {
   'use strict';
@@ -237,9 +316,14 @@ var VH_KAMM = [0.893, 0.886, 0.859, 0.787, 0.731, 0.709, 0.697, 0.704, 0.758, 0.
 (function () {
   'use strict';
   var quote = document.querySelector('.quote');
-  if (!quote) return;
+  /* Runde 6 (09.11.): derselbe Kamm traegt die Koepfe der Unterseiten. Nur
+     Koepfe ohne eigenes Vollbild-Foto — die Tour-Koepfe haben ihren Gipfel. */
+  var koepfe = Array.prototype.slice.call(document.querySelectorAll(
+    '.tk-hero, .koop-hero, .nl-hero, .bs-hero, .pp-hero, .legal-hero, .err-hero'));
+  if (!quote && !koepfe.length) return;
   var NS = 'http://www.w3.org/2000/svg';
   var B = 1000, H = 300;
+  var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function kamm(u) {
     var x = Math.max(0, Math.min(1, u)) * (VH_KAMM.length - 1);
@@ -256,87 +340,132 @@ var VH_KAMM = [0.893, 0.886, 0.859, 0.787, 0.731, 0.709, 0.697, 0.704, 0.758, 0.
     return d;
   }
   var EBENEN = [
-    { cls: 'zs-fern', d: linie(0.05, 0.95, true, 70, 120), weg: 18, farben: ['#8fb59a', '#4a7a60', '#2a5541'] },
-    { cls: 'zs-mitte', d: linie(0.30, 1.00, false, 130, 110), weg: 46, farben: ['#3d7258', '#1d4a37', '#123a2c'] },
-    { cls: 'zs-nah', d: linie(0.00, 0.62, false, 190, 90), weg: 84, farben: ['#1a4835', '#0a2a1e', '#06231a'] }
+    { cls: 'zs-fern', d: linie(0.05, 0.95, true, 70, 120), weg: 18, tiefe: 0.55, farben: ['#8fb59a', '#4a7a60', '#2a5541'] },
+    { cls: 'zs-mitte', d: linie(0.30, 1.00, false, 130, 110), weg: 46, tiefe: 0.32, farben: ['#3d7258', '#1d4a37', '#123a2c'] },
+    { cls: 'zs-nah', d: linie(0.00, 0.62, false, 190, 90), weg: 84, tiefe: 0.12, farben: ['#1a4835', '#0a2a1e', '#06231a'] }
   ];
-
-  var szene = document.createElement('div');
-  szene.className = 'zitat-szene';
-  szene.setAttribute('aria-hidden', 'true');
-  var licht = document.createElement('div');
-  licht.className = 'zs-licht';
-  szene.appendChild(licht);
-  var teile = EBENEN.map(function (e) {
-    var svg = document.createElementNS(NS, 'svg');
-    svg.setAttribute('viewBox', '0 0 ' + B + ' ' + H);
-    svg.setAttribute('preserveAspectRatio', 'none');
-    svg.setAttribute('class', 'zs-ebene ' + e.cls);
-    /* Licht von hinten oben: Grat heller, Fuss im Dunst dunkler */
-    var defs = document.createElementNS(NS, 'defs');
-    var lg = document.createElementNS(NS, 'linearGradient');
-    var gid = 'zs-' + e.cls;
-    lg.setAttribute('id', gid);
-    lg.setAttribute('x1', '0'); lg.setAttribute('y1', '0'); lg.setAttribute('x2', '0'); lg.setAttribute('y2', '1');
-    e.farben.forEach(function (fa, k) {
-      var st = document.createElementNS(NS, 'stop');
-      st.setAttribute('offset', String(k / (e.farben.length - 1)));
-      st.setAttribute('stop-color', fa);
-      lg.appendChild(st);
+  var nr = 0;
+  /* Baut die Szene in `wirt` und gibt Ebenen + Licht zurueck. Verlaufs-IDs
+     je Szene eigen, sonst greifen zwei Szenen auf denselben Verlauf. */
+  function bauen(wirt, klasse) {
+    var szene = document.createElement('div');
+    szene.className = 'zitat-szene ' + klasse;
+    szene.setAttribute('aria-hidden', 'true');
+    var licht = document.createElement('div');
+    licht.className = 'zs-licht';
+    szene.appendChild(licht);
+    nr++;
+    var teile = EBENEN.map(function (e) {
+      var svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('viewBox', '0 0 ' + B + ' ' + H);
+      svg.setAttribute('preserveAspectRatio', 'none');
+      svg.setAttribute('class', 'zs-ebene ' + e.cls);
+      /* Licht von hinten oben: Grat heller, Fuss im Dunst dunkler */
+      var defs = document.createElementNS(NS, 'defs');
+      var lg = document.createElementNS(NS, 'linearGradient');
+      var gid = 'zs-' + nr + '-' + e.cls;
+      lg.setAttribute('id', gid);
+      lg.setAttribute('x1', '0'); lg.setAttribute('y1', '0'); lg.setAttribute('x2', '0'); lg.setAttribute('y2', '1');
+      e.farben.forEach(function (fa, k) {
+        var st = document.createElementNS(NS, 'stop');
+        st.setAttribute('offset', String(k / (e.farben.length - 1)));
+        st.setAttribute('stop-color', fa);
+        lg.appendChild(st);
+      });
+      defs.appendChild(lg);
+      svg.appendChild(defs);
+      var f = document.createElementNS(NS, 'path');
+      f.setAttribute('d', e.d + 'L' + B + ' ' + H + 'L0 ' + H + 'Z');
+      f.setAttribute('class', 'zs-flaeche');
+      f.setAttribute('fill', 'url(#' + gid + ')');
+      svg.appendChild(f);
+      if (e.cls === 'zs-fern') {
+        var g = document.createElementNS(NS, 'path');
+        g.setAttribute('d', e.d);
+        g.setAttribute('class', 'zs-grat');
+        g.setAttribute('vector-effect', 'non-scaling-stroke');
+        svg.appendChild(g);
+      }
+      szene.appendChild(svg);
+      return { el: svg, weg: e.weg, tiefe: e.tiefe };
     });
-    defs.appendChild(lg);
-    svg.appendChild(defs);
-    var f = document.createElementNS(NS, 'path');
-    f.setAttribute('d', e.d + 'L' + B + ' ' + H + 'L0 ' + H + 'Z');
-    f.setAttribute('class', 'zs-flaeche');
-    f.setAttribute('fill', 'url(#' + gid + ')');
-    svg.appendChild(f);
-    if (e.cls === 'zs-fern') {
-      var g = document.createElementNS(NS, 'path');
-      g.setAttribute('d', e.d);
-      g.setAttribute('class', 'zs-grat');
-      g.setAttribute('vector-effect', 'non-scaling-stroke');
-      svg.appendChild(g);
-    }
-    szene.appendChild(svg);
-    return { el: svg, weg: e.weg };
-  });
-  quote.insertBefore(szene, quote.firstChild);
-  quote.classList.add('hat-szene');
-
+    wirt.insertBefore(szene, wirt.firstChild);
+    return { szene: szene, licht: licht, teile: teile };
+  }
   var ss = function (x) { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); };
-  function setzen(q) {
-    var rest = 1 - ss(q);
-    teile.forEach(function (t) { t.el.style.transform = 'translate3d(0,' + (rest * t.weg).toFixed(1) + 'px,0)'; });
-    licht.style.transform = 'translate3d(-50%,' + (rest * 70).toFixed(1) + 'px,0)';
-    szene.style.setProperty('--licht', ss((q - 0.15) / 0.55).toFixed(3));
-    if (q > 0.55) quote.classList.add('gluehen');
+
+  /* Nur waehrend der Wirt im Bild ist am Scrollen haengen, ein rAF je Bild */
+  function folgen(wirt, messen) {
+    var wartet = false, dran = false;
+    function anstossen() {
+      if (wartet) return;
+      wartet = true;
+      requestAnimationFrame(function () { wartet = false; messen(); });
+    }
+    function dabei(an) {
+      if (an === dran) return;
+      dran = an;
+      window[an ? 'addEventListener' : 'removeEventListener']('scroll', anstossen, { passive: true });
+      if (an) anstossen();
+    }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { dabei(es[0].isIntersecting); }, { rootMargin: '20% 0px' }).observe(wirt);
+    } else { dabei(true); }
+    window.addEventListener('resize', anstossen, { passive: true });
+    messen();
   }
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setzen(1); return; }
+  /* Startseite: das Zitat — der Kamm steigt beim Herscrollen auf, das Licht
+     geht dahinter auf, dann gluehen die starken Woerter. */
+  if (quote) {
+    var z = bauen(quote, 'zs-zitat');
+    quote.classList.add('hat-szene');
+    var setzen = function (q) {
+      var rest = 1 - ss(q);
+      z.teile.forEach(function (t) { t.el.style.transform = 'translate3d(0,' + (rest * t.weg).toFixed(1) + 'px,0)'; });
+      z.licht.style.transform = 'translate3d(-50%,' + (rest * 70).toFixed(1) + 'px,0)';
+      z.szene.style.setProperty('--licht', ss((q - 0.15) / 0.55).toFixed(3));
+      if (q > 0.55) quote.classList.add('gluehen');
+    };
+    window.addEventListener('beforeprint', function () { setzen(1); });
+    if (ruhig) setzen(1);
+    else folgen(quote, function () {
+      var vh = window.innerHeight, r = quote.getBoundingClientRect();
+      setzen((vh - r.top) / Math.max(1, vh * 0.75 + r.height * 0.5));
+    });
+  }
 
-  function messen() {
-    var vh = window.innerHeight, r = quote.getBoundingClientRect();
-    setzen((vh - r.top) / Math.max(1, vh * 0.75 + r.height * 0.5));
-  }
-  var wartet = false, dran = false;
-  function anstossen() {
-    if (wartet) return;
-    wartet = true;
-    requestAnimationFrame(function () { wartet = false; messen(); });
-  }
-  function dabei(an) {
-    if (an === dran) return;
-    dran = an;
-    window[an ? 'addEventListener' : 'removeEventListener']('scroll', anstossen, { passive: true });
-    if (an) anstossen();
-  }
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (es) { dabei(es[0].isIntersecting); }, { rootMargin: '20% 0px' }).observe(quote);
-  } else { dabei(true); }
-  window.addEventListener('resize', anstossen, { passive: true });
-  messen();
-  window.addEventListener('beforeprint', function () { setzen(1); });
+  /* Unterseiten: der Kopf steht am Kamm. Beim Ankommen geht der Morgen auf
+     (Ebenen steigen einmal in ihre Lage, das Licht kommt nach), beim
+     Wegscrollen bleiben die fernen Grate zurueck — Tiefe aus Parallaxe. */
+  koepfe.forEach(function (kopf) {
+    var k = bauen(kopf, 'zs-kopf');
+    kopf.classList.add('hat-gratkopf');
+    function lage(rest, weg) {
+      k.teile.forEach(function (t) {
+        t.el.style.transform = 'translate3d(0,' + (rest * t.weg + weg * t.tiefe).toFixed(1) + 'px,0)';
+      });
+      k.licht.style.transform = 'translate3d(-50%,' + (rest * 70 + weg * 0.6).toFixed(1) + 'px,0)';
+    }
+    if (ruhig) { lage(0, 0); return; }
+    var angekommen = false, wegJetzt = 0;
+    lage(1, 0);
+    k.szene.style.setProperty('--licht', '0');
+    /* Ein Bild warten, dann mit Uebergang in die Lage — der Morgen bricht an */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        kopf.classList.add('zs-kommt');
+        lage(0, wegJetzt);
+        k.szene.style.setProperty('--licht', '1');
+        setTimeout(function () { kopf.classList.remove('zs-kommt'); angekommen = true; }, 1900);
+      });
+    });
+    folgen(kopf, function () {
+      var r = kopf.getBoundingClientRect();
+      wegJetzt = Math.max(0, Math.min(r.height + 200, -r.top));
+      if (angekommen) lage(0, wegJetzt);
+    });
+  });
 })();
 
 /* Fuss-Grat: der Watzmann-Kamm als Ende jeder Seite (09.11.2026).

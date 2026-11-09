@@ -89,14 +89,26 @@
   --t-body: 16px;
   --t-label: 11px;
 
+  /* Material im Licht (Runde 6, 09.11.): Papier und Glas liegen am Berg wie
+     das Gipfelbuch — Kontaktschatten, Mitte, langer Bodenschatten (1/10/30)
+     und von oben fallendes warmes Licht, das ueber die Oberkante streut.
+     Ein Token, alle Karten aller Seiten. */
   --shadow-paper:
     inset 0 1px 0 rgba(255,255,255,0.85),
+    inset 0 -1px 0 rgba(120,92,40,0.10),
     0 0 0 1px rgba(186,155,95,0.22),
-    0 30px 64px -28px rgba(0,0,0,0.6);
+    0 1px 2px rgba(2,12,7,0.28),
+    0 10px 22px -10px rgba(2,12,7,0.42),
+    0 34px 70px -30px rgba(2,12,7,0.66),
+    0 -16px 56px -30px rgba(240,204,140,0.32);
   --shadow-mid:
-    inset 0 1px 1px rgba(255,255,255,0.14),
+    inset 0 1px 0 rgba(243,226,196,0.10),
+    inset 0 1px 1px rgba(255,255,255,0.10),
     0 0 0 1px rgba(209,242,235,0.16),
-    0 26px 60px -28px rgba(0,0,0,0.65);
+    0 1px 2px rgba(2,12,7,0.32),
+    0 12px 26px -12px rgba(2,12,7,0.48),
+    0 30px 64px -28px rgba(0,0,0,0.65),
+    0 -14px 50px -30px rgba(240,204,140,0.20);
   /* ---- Kodex-Tokens (docs/design-kodex-v3.md), site-weit ----
      Regel 4: genau ZWEI Radien. Alles, was eine Flaeche mit Inhalt ist, bekommt
      --r-karte; alles, was man bedient (Button, Input, Chip, Tag), --r-control.
@@ -538,6 +550,22 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
   top: 46%; bottom: -10%; pointer-events: none; overflow: clip; --licht: 1;
   -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 28%, #000 62%, transparent 100%);
           mask-image: linear-gradient(180deg, transparent 0, #000 28%, #000 62%, transparent 100%); }
+/* Unterseiten-Koepfe am Kamm (Runde 6): der Grat steht unter dem Kopf und
+   laeuft in den Inhalt aus. Kopf isoliert, damit die Szene hinter Text und
+   Fotos bleibt; der Inhalt darunter liegt davor. */
+.hat-gratkopf { position: relative; isolation: isolate; }
+/* Der Grat beginnt unter dem Kopf, nie hinter Text: Oberkante knapp ueber
+   der Unterkante des Kopfs (die Szene ist oben ausgeblendet), die Grate
+   liegen im Abstand zum Inhalt darunter, der sich davor schiebt. */
+.zitat-szene.zs-kopf { top: calc(100% - clamp(30px, 4vw, 60px)); bottom: auto; height: clamp(170px, 28vw, 330px);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 30%, #000 58%, transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0, #000 30%, #000 58%, transparent 100%); }
+.zs-kopf .zs-licht { top: -6%; }
+.zs-kommt .zs-ebene { transition: transform 1500ms var(--ease-lux); }
+.zs-kommt .zs-ebene.zs-mitte { transition-delay: 90ms; }
+.zs-kommt .zs-ebene.zs-nah { transition-delay: 180ms; }
+.zs-kommt .zs-licht { transition: transform 1800ms var(--ease-lux), opacity 1800ms var(--ease-lux) 300ms; }
+.zs-kommt .zs-grat { transition: opacity 1600ms var(--ease-lux) 700ms; }
 .zs-ebene { position: absolute; left: -3%; width: 106%; bottom: -60px; height: calc(100% + 60px); will-change: transform; }
 .zs-fern .zs-flaeche { opacity: 0.42; }
 .zs-mitte .zs-flaeche { opacity: 0.78; }
@@ -966,6 +994,8 @@ body.loaded .cta .ring path { animation: draw-ring 1400ms var(--ease-lux) 1250ms
    Zusammenarbeit, Instagram) statt Gabelung + eigenem Newsletter-Block.
    Der Pfahl steht im selben Abendlicht und reicht bis an den Grat im Fuss. */
 .closing--pfahl { margin-top: clamp(56px, 10vw, 88px); }
+/* Unterseiten: Pfahl ohne eigene Ueberschrift, nur der Hinweis darueber */
+.closing--weiter { margin-top: clamp(64px, 12vw, 110px); }
 .closing--pfahl .shead { text-align: center; }
 .closing--pfahl .shead .kicker { justify-content: center; }
 .closing--pfahl .shead .kicker::before { content: ""; flex: 1; height: 1px; background: rgba(126,208,155,0.25); }
@@ -1480,7 +1510,7 @@ html:active-view-transition-type(runter)::view-transition-new(root) { animation:
   .tk-row, .tk-close, .tk-bar, .tk-me, .tk-lead, .kicker, footer .claim__satz, .fuss-tag {
     opacity: 1 !important; transform: none !important; clip-path: none !important; filter: none !important;
   }
-  nav.nav, .dock, .rail, .scroll-hint, .hero-scroll, .berg-overlays, .zitat-szene { display: none !important; }
+  nav.nav, .dock, .rail, .scroll-hint, .hero-scroll, .berg-overlays, .zitat-szene, .closing--weiter { display: none !important; }
 }
 
 /* Sprach-Umschalter (20.10.2026, scripts/sprachen.mjs): ein Link zur Schwesterseite,
