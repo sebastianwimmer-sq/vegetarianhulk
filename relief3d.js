@@ -348,6 +348,7 @@ function init(DEM) {
   /* ---- Scroll -> Fortschritt ---- */
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let target = 0, p = 0, lastP = 0, walkT = 0;
+  let einZiel = 1, ausZiel = 0, ein = 1, aus = 0;
   function readScroll() {
     const r = track.getBoundingClientRect();
     const span = track.offsetHeight - sticky.offsetHeight;
@@ -355,8 +356,24 @@ function init(DEM) {
     /* Einblend-Rampe: Szene blendet ein, waehrend der Track in den
        Viewport faehrt — kein hartes Platten-Reinschieben */
     const vh = window.innerHeight;
-    const vis = Math.min(1, Math.max(0, 1 - r.top / (vh * 0.7)));
-    sticky.style.opacity = (0.05 + 0.95 * vis * vis).toFixed(3);
+    /* Ein- und Ausfahrt (09.11.2026, Sebi: "Eingang und Ausgang vom Berg
+       optimieren"). Vorher: halb durchsichtiger Klumpen unter der Headline,
+       am Ende flog die Kamera ins Gelaende und die Szene wurde mit harten
+       Netzkanten abgeschnitten. Jetzt: EIN = Kamera kommt tief aus dem Tal
+       und steigt in die Startansicht, der Berg waechst aus dem Dunst.
+       AUS = nach dem Gipfel hebt die Kamera ab und zieht zurueck, das
+       Massiv wird klein und geht in Dunst ueber, waehrend das Gipfelbuch
+       kommt. Beides haengt am Scroll, nicht an einer Uhr. */
+    const vis = Math.min(1, Math.max(0, 1 - r.top / (vh * 0.9)));
+    const weg = Math.min(1, Math.max(0, 1 - r.bottom / (vh * 0.95)));
+    const ssv = x => x * x * (3 - 2 * x);
+    const rawA = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
+    const abheben = Math.min(1, Math.max(0, (rawA - AUS_AB) / (1 - AUS_AB)));
+    einZiel = ssv(vis);
+    /* Abheben passiert, solange das Bild steht; das Wegscrollen danach
+       zieht nur noch den Rest und blendet in den Dunst */
+    ausZiel = ssv(Math.min(1, 0.7 * abheben + 0.3 * weg));
+    sticky.style.opacity = ((0.04 + 0.96 * einZiel) * (1 - 0.9 * ssv(weg))).toFixed(3);
     /* Instrumente (HUD/Schilder/Hint) erst, wenn die Szene wirklich steht —
        vorher ragten sie halb transparent in die Sektions-Headline (Mobile-Bug) */
     section.classList.toggle('engaged', r.top <= vh * 0.08 && r.bottom > vh);
@@ -374,7 +391,10 @@ function init(DEM) {
   }
   /* Scroll-Dramaturgie: Anlauf -> 4 Stopps an festen Scroll-Positionen -> Auslauf.
      Smoothstep-Rampen = Seilbahn-Gefuehl statt linearem Ruck */
-  const STOP_R = [0.12, 0.38, 0.63, 0.88], STOP_W = 0.13;
+  /* Stopps auf 0..0.83 gestaucht, der Rest (0.86..1) ist die Ausfahrt im
+     festen Bild — dafuer ist der Track 380vh -> 430vh laenger (je Etappe
+     gleich viel Scrollweg wie vorher). */
+  const STOP_R = [0.106, 0.334, 0.556, 0.774], STOP_W = 0.115, AUS_AB = 0.86;
   function shape(raw) {
     const ss = x => { x = Math.min(1, Math.max(0, x)); return x * x * (3 - 2 * x); };
     let prevEnd = 0, prevT = 0;
@@ -385,7 +405,7 @@ function init(DEM) {
       prevEnd = c1; prevT = WP_T[i];
     }
     /* Auslauf: nach dem Gipfel-Stopp weich ausrollen, kein eingefrorenes Ende */
-    return prevT + (1 - prevT) * ss((raw - prevEnd) / Math.max(0.0001, 1 - prevEnd));
+    return prevT + (1 - prevT) * ss((raw - prevEnd) / Math.max(0.0001, AUS_AB - prevEnd));
   }
   if (!reduce) {
     window.addEventListener('scroll', readScroll, { passive: true });
@@ -428,13 +448,19 @@ function init(DEM) {
     const az = -2.35 + p * 1.75;
     const el = 0.52 - mid * 0.14;
     let R = 9.6 - mid * 3.4 - p * 0.8;
+    ein += (einZiel - ein) * 0.09;
+    aus += (ausZiel - aus) * 0.09;
+    const tal = 1 - ein;
+    center.y -= tal * 0.5;
+    R += tal * 3.4 + aus * 6.0;
+    const elA = el - tal * 0.24 + aus * 0.5;
     /* Portrait (Handy): Kamera deutlich weiter raus — sonst füllt der Hang
        den Screen als unscharfe grüne Wand statt als Massiv */
     if (camera.aspect < 0.8) R *= 1.55;
     camera.position.set(
-      center.x + R * Math.cos(el) * Math.sin(az),
-      center.y + R * Math.sin(el),
-      center.z + R * Math.cos(el) * Math.cos(az)
+      center.x + R * Math.cos(elA) * Math.sin(az),
+      center.y + R * Math.sin(elA),
+      center.z + R * Math.cos(elA) * Math.cos(az)
     );
     /* Bodenfreiheit: Kamera darf nie unter einen Vordergrund-Grat tauchen */
     const half = SIZE / 2;

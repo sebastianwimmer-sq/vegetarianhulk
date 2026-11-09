@@ -181,14 +181,143 @@
   setTimeout(netz, 2500);
 })();
 
+/* Der echte Watzmann-Kamm, 72 Spalten, 0..1: je Spalte die hoechste Stelle
+   aus watzmann-dem.json. Geteilt von Zitat-Szene und Fuss-Grat. */
+var VH_KAMM = [0.893, 0.886, 0.859, 0.787, 0.731, 0.709, 0.697, 0.704, 0.758, 0.777, 0.814, 0.86,
+  0.841, 0.83, 0.826, 0.806, 0.791, 0.782, 0.764, 0.752, 0.729, 0.708, 0.735, 0.774, 0.786, 0.788,
+  0.781, 0.778, 0.775, 0.82, 0.875, 0.948, 1.0, 0.977, 0.973, 0.994, 0.979, 0.97, 0.958, 0.923,
+  0.889, 0.837, 0.78, 0.762, 0.749, 0.747, 0.743, 0.736, 0.752, 0.798, 0.78, 0.718, 0.682, 0.632,
+  0.591, 0.578, 0.591, 0.578, 0.562, 0.531, 0.489, 0.424, 0.404, 0.404, 0.414, 0.42, 0.419, 0.402,
+  0.361, 0.335, 0.334, 0.315];
+
+/* Zitat vor dem Watzmann im Morgenlicht (09.11.2026, Runde 3).
+ *
+ * WARUM
+ * Sebi 09.11. mit Bildschirmfoto der Startseite: "beim Spruch alles so leer",
+ * "macht noch keinen Spass weiter zu scrollen", "kein generischer KI-Slop,
+ * nichts flach, high end". Gemeint war DIESES Zitat, nicht der Fuss.
+ * Deshalb steht der Satz jetzt an einem Ort: hinter ihm der echte Kamm in
+ * drei Ebenen (fern blass, nah dunkel), der beim Scrollen mit Tiefe aufsteigt,
+ * dahinter geht das Licht auf und faengt sich am fernen Grat. Wenn das Licht
+ * oben ist, gluehen die starken Woerter. Der nahe Kamm fuehrt in den 3D-Berg
+ * darunter (relief3d.js) — Szene statt Absatz.
+ * Kein Timer, kein Dauer-Frame: gezeichnet wird nur beim Scrollen, solange
+ * das Zitat im Bild ist. Text bleibt immer voll lesbar. Reduzierte
+ * Bewegung: Endbild ohne Versatz.
+ */
+(function () {
+  'use strict';
+  var quote = document.querySelector('.quote');
+  if (!quote) return;
+  var NS = 'http://www.w3.org/2000/svg';
+  var B = 1000, H = 300;
+
+  function kamm(u) {
+    var x = Math.max(0, Math.min(1, u)) * (VH_KAMM.length - 1);
+    var i = Math.min(VH_KAMM.length - 2, Math.floor(x)), f = x - i;
+    return VH_KAMM[i] * (1 - f) + VH_KAMM[i + 1] * f;
+  }
+  /* je Ebene ein anderer Ausschnitt des Kamms, damit es eine Kette wird */
+  function linie(von, bis, spiegel, oben, hub) {
+    var d = '';
+    for (var s = 0; s <= 120; s++) {
+      var u = s / 120, k = kamm(von + (bis - von) * (spiegel ? 1 - u : u));
+      d += (s ? 'L' : 'M') + (u * B).toFixed(1) + ' ' + (oben + (1 - k) * hub).toFixed(1);
+    }
+    return d;
+  }
+  var EBENEN = [
+    { cls: 'zs-fern', d: linie(0.05, 0.95, true, 70, 120), weg: 18, farben: ['#8fb59a', '#4a7a60', '#2a5541'] },
+    { cls: 'zs-mitte', d: linie(0.30, 1.00, false, 130, 110), weg: 46, farben: ['#3d7258', '#1d4a37', '#123a2c'] },
+    { cls: 'zs-nah', d: linie(0.00, 0.62, false, 190, 90), weg: 84, farben: ['#1a4835', '#0a2a1e', '#06231a'] }
+  ];
+
+  var szene = document.createElement('div');
+  szene.className = 'zitat-szene';
+  szene.setAttribute('aria-hidden', 'true');
+  var licht = document.createElement('div');
+  licht.className = 'zs-licht';
+  szene.appendChild(licht);
+  var teile = EBENEN.map(function (e) {
+    var svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 ' + B + ' ' + H);
+    svg.setAttribute('preserveAspectRatio', 'none');
+    svg.setAttribute('class', 'zs-ebene ' + e.cls);
+    /* Licht von hinten oben: Grat heller, Fuss im Dunst dunkler */
+    var defs = document.createElementNS(NS, 'defs');
+    var lg = document.createElementNS(NS, 'linearGradient');
+    var gid = 'zs-' + e.cls;
+    lg.setAttribute('id', gid);
+    lg.setAttribute('x1', '0'); lg.setAttribute('y1', '0'); lg.setAttribute('x2', '0'); lg.setAttribute('y2', '1');
+    e.farben.forEach(function (fa, k) {
+      var st = document.createElementNS(NS, 'stop');
+      st.setAttribute('offset', String(k / (e.farben.length - 1)));
+      st.setAttribute('stop-color', fa);
+      lg.appendChild(st);
+    });
+    defs.appendChild(lg);
+    svg.appendChild(defs);
+    var f = document.createElementNS(NS, 'path');
+    f.setAttribute('d', e.d + 'L' + B + ' ' + H + 'L0 ' + H + 'Z');
+    f.setAttribute('class', 'zs-flaeche');
+    f.setAttribute('fill', 'url(#' + gid + ')');
+    svg.appendChild(f);
+    if (e.cls === 'zs-fern') {
+      var g = document.createElementNS(NS, 'path');
+      g.setAttribute('d', e.d);
+      g.setAttribute('class', 'zs-grat');
+      g.setAttribute('vector-effect', 'non-scaling-stroke');
+      svg.appendChild(g);
+    }
+    szene.appendChild(svg);
+    return { el: svg, weg: e.weg };
+  });
+  quote.insertBefore(szene, quote.firstChild);
+  quote.classList.add('hat-szene');
+
+  var ss = function (x) { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); };
+  function setzen(q) {
+    var rest = 1 - ss(q);
+    teile.forEach(function (t) { t.el.style.transform = 'translate3d(0,' + (rest * t.weg).toFixed(1) + 'px,0)'; });
+    licht.style.transform = 'translate3d(-50%,' + (rest * 70).toFixed(1) + 'px,0)';
+    szene.style.setProperty('--licht', ss((q - 0.15) / 0.55).toFixed(3));
+    if (q > 0.55) quote.classList.add('gluehen');
+  }
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setzen(1); return; }
+
+  function messen() {
+    var vh = window.innerHeight, r = quote.getBoundingClientRect();
+    setzen((vh - r.top) / Math.max(1, vh * 0.75 + r.height * 0.5));
+  }
+  var wartet = false, dran = false;
+  function anstossen() {
+    if (wartet) return;
+    wartet = true;
+    requestAnimationFrame(function () { wartet = false; messen(); });
+  }
+  function dabei(an) {
+    if (an === dran) return;
+    dran = an;
+    window[an ? 'addEventListener' : 'removeEventListener']('scroll', anstossen, { passive: true });
+    if (an) anstossen();
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { dabei(es[0].isIntersecting); }, { rootMargin: '20% 0px' }).observe(quote);
+  } else { dabei(true); }
+  window.addEventListener('resize', anstossen, { passive: true });
+  messen();
+  window.addEventListener('beforeprint', function () { setzen(1); });
+})();
+
 /* Fuss-Grat: der Watzmann-Kamm als Ende jeder Seite (09.11.2026).
  *
  * WARUM
  * Sebi 08./09.11.: Partikel live animiert, Richtung B (Schneefahne am Grat),
  * "nicht zu viel", "das ganze Design-System fuer alle Seiten". Runde 2 am
- * selben Tag: "Eingang und Ausgang vom Berg optimieren", "beim Spruch alles
- * so leer", "macht noch keinen Spass weiter zu scrollen" — auch Unterseiten.
- * Deshalb ist das Seitenende jetzt ein Ankommen am Grat:
+ * selben Tag (als Fuss gelesen, gemeint waren Startseiten-Berg und -Zitat,
+ * siehe Runde 3 im Zitat-Block und in relief3d.js): das Seitenende ist ein
+ * Ankommen am Grat:
  *   EINGANG — die drei Kaemme steigen beim Scrollen von unten auf, der
  *     ferne langsamer als der nahe (Tiefe aus dem Scroll, kein Timer).
  *   GIPFEL  — oben angekommen tritt der Spruch hervor ("Disziplin ueber
@@ -210,12 +339,7 @@
   var inner = fuss && fuss.querySelector('.inner');
   if (!inner || !('getContext' in document.createElement('canvas'))) return;
 
-  var KAMM = [0.893, 0.886, 0.859, 0.787, 0.731, 0.709, 0.697, 0.704, 0.758, 0.777, 0.814, 0.86,
-    0.841, 0.83, 0.826, 0.806, 0.791, 0.782, 0.764, 0.752, 0.729, 0.708, 0.735, 0.774, 0.786, 0.788,
-    0.781, 0.778, 0.775, 0.82, 0.875, 0.948, 1.0, 0.977, 0.973, 0.994, 0.979, 0.97, 0.958, 0.923,
-    0.889, 0.837, 0.78, 0.762, 0.749, 0.747, 0.743, 0.736, 0.752, 0.798, 0.78, 0.718, 0.682, 0.632,
-    0.591, 0.578, 0.591, 0.578, 0.562, 0.531, 0.489, 0.424, 0.404, 0.404, 0.414, 0.42, 0.419, 0.402,
-    0.361, 0.335, 0.334, 0.315];
+  var KAMM = VH_KAMM;
   /* fern -> nah: Ausschnitt des Kamms, Hoehe, Fusslinie, Farbe, Schnee-
      Gewicht, Aufstieg (Anteil der Hoehe, um den die Ebene beim Eingang
      tiefer startet — nah weiter als fern, das ergibt die Parallaxe). */
