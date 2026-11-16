@@ -79,5 +79,30 @@ class Seiten(unittest.TestCase):
         self.assertEqual(klartext('23.11.&nbsp;–&nbsp;23.12.'), '23.11. - 23.12.')
 
 
+
+class Veranstalterschreibweisen(unittest.TestCase):
+    """Schreibweisen, die am 17.11.2026 auf Seiten bayerischer Veranstalter standen."""
+
+    FAELLE = {
+        'Christkindlmarkt 26. - 29.11 & 03. - 06.12.2026 DO 15-20 Uhr | FR-SO 12-20 Uhr': [(d(11, 26), d(11, 29)), (d(12, 3), d(12, 6))],
+        'Der Adventsmarkt findet vom 27. bis 29. November und vom 4. bis 6. Dezember 2026 statt.': [(d(11, 27), d(11, 29)), (d(12, 4), d(12, 6))],
+        'Christkindlmarkt Fr., 04.12. - So., 06.12.2026 & Fr., 11.12. - So., 13.12.2026 Karlsplatz': [(d(12, 4), d(12, 6)), (d(12, 11), d(12, 13))],
+        'Christkindlmarkt 2026 Do. 03. Dezember 2026 - So. 06. Dezember 2026 00:00 Uhr': [(d(12, 3), d(12, 6))],
+        'Weihnachtsmarkt 20 .November - 23.Dezember 2026 ( Totensonntag, 22.11. geschlossen )': [(d(11, 20), d(12, 23))],
+        'Adventsmarkt vom 28. bis 30. Dezember und vom 2. bis 4. Januar 2027': [(d(12, 28), d(12, 30)), (d(1, 2, J + 1), d(1, 4, J + 1))],
+    }
+
+    def test_schreibweisen(self):
+        for text, soll in self.FAELLE.items():
+            with self.subTest(text=text):
+                self.assertEqual(aus_seite(text, J)[0], soll)
+
+    def test_oeffnungszeiten_mit_wochentag_sind_kein_termin(self):
+        self.assertEqual(aus_seite('Weihnachtsmarkt geöffnet Do 15-20 Uhr, Fr 12-20 Uhr', J)[0], [])
+
+    def test_erstes_wochenende_ohne_jahr_bleibt_ohne_zweites_ungelesen(self):
+        self.assertEqual(aus_seite('Weihnachtsmarkt 26. - 29.11 täglich ab 15 Uhr', J)[0], [])
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -104,7 +104,7 @@ lauf "E-Mail-Vorlagen"               node scripts/mail-check.mjs --selbsttest
 lauf "Sicherungs-Werkzeug"           ./scripts/sicherung.sh --selbsttest
 lauf "Uebergaenge (Fixtures)"        node scripts/vt-check.mjs --selbsttest
 lauf "Sichtbarkeit (Fixtures)"       node scripts/sichtbar-check.mjs --selbsttest
-lauf "Radar: Termin-Leser + Daten-Tor" bash -c "cd scripts/markt && python3 -m unittest test_datum test_pruefen"
+lauf "Radar: Termin-Leser + Daten-Tor" bash -c "cd scripts/markt && python3 -m unittest test_datum test_pruefen test_kuratiert test_bezirk"
 lauf "Radar: Daten"                  python3 scripts/markt/pruefen.py
 lauf "Radar: Rueckmeldung (Worker)"  node --test workers/vh-forms/radar.test.mjs
 lauf "Motion-Loop (Fixtures)"        node "$HOME/kit-build/motion-loop/mess.mjs" --selbsttest

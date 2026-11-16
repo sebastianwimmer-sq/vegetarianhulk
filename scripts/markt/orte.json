@@ -1,10 +1,38 @@
 {
+"47.44178,11.26143": {
+"bezirk": "",
+"kreis": "Landkreis Garmisch-Partenkirchen",
+"land": "Bayern",
+"ort": "Mittenwald",
+"plz": "82481"
+},
+"47.49585,11.09035": {
+"bezirk": "",
+"kreis": "Landkreis Garmisch-Partenkirchen",
+"land": "Bayern",
+"ort": "Garmisch-Partenkirchen",
+"plz": "82467"
+},
 "47.54468,9.68371": {
 "bezirk": "",
 "kreis": "Landkreis Lindau",
 "land": "Bayern",
 "ort": "Lindau (Bodensee)",
 "plz": "88131"
+},
+"47.59734,11.06407": {
+"bezirk": "",
+"kreis": "Landkreis Garmisch-Partenkirchen",
+"land": "Bayern",
+"ort": "Oberammergau",
+"plz": "82487"
+},
+"47.63354,13.00325": {
+"bezirk": "",
+"kreis": "Landkreis Berchtesgadener Land",
+"land": "Bayern",
+"ort": "Berchtesgaden",
+"plz": "83471"
 },
 "47.65076,9.48217": {
 "bezirk": "",
@@ -41,11 +69,67 @@
 "ort": "Friedrichshafen",
 "plz": "88048"
 },
+"47.68449,13.09439": {
+"bezirk": "",
+"kreis": "Bezirk Hallein",
+"land": "Salzburg",
+"ort": "Hallein",
+"plz": ""
+},
 "47.70271,9.18637": {
 "bezirk": "",
 "kreis": "Landkreis Konstanz",
 "land": "Baden-Württemberg",
 "ort": "Konstanz",
+"plz": ""
+},
+"47.70992,11.75433": {
+"bezirk": "",
+"kreis": "Landkreis Miesbach",
+"land": "Bayern",
+"ort": "Tegernsee",
+"plz": "83684"
+},
+"47.7112,13.62342": {
+"bezirk": "",
+"kreis": "Bezirk Gmunden",
+"land": "Oberösterreich",
+"ort": "Bad Ischl",
+"plz": ""
+},
+"47.72217,12.87597": {
+"bezirk": "",
+"kreis": "Landkreis Berchtesgadener Land",
+"land": "Bayern",
+"ort": "Bad Reichenhall",
+"plz": "83435"
+},
+"47.74975,13.50269": {
+"bezirk": "",
+"kreis": "Bezirk Gmunden",
+"land": "Oberösterreich",
+"ort": "St. Wolfgang im Salzkammergut",
+"plz": ""
+},
+"47.75185,11.3763": {
+"bezirk": "",
+"kreis": "Landkreis Weilheim-Schongau",
+"land": "Bayern",
+"ort": "Penzberg",
+"plz": "82377"
+},
+"47.76095,11.55874": {
+"bezirk": "",
+"kreis": "Landkreis Bad Tölz-Wolfratshausen",
+"land": "Bayern",
+"ort": "Bad Tölz",
+"plz": "83646"
+},
+"47.76211,13.06027": {
+"bezirk": "",
+"kreis": "Salzburg",
+"land": "Salzburg",
+"ort": "Salzburg",
 "plz": ""
 },
 "47.78189,9.61341": {
@@ -54,6 +138,27 @@
 "land": "Baden-Württemberg",
 "ort": "Ravensburg",
 "plz": "88212"
+},
+"47.79521,13.0481": {
+"bezirk": "",
+"kreis": "Salzburg",
+"land": "Salzburg",
+"ort": "Salzburg",
+"plz": ""
+},
+"47.79813,13.04648": {
+"bezirk": "",
+"kreis": "Salzburg",
+"land": "Salzburg",
+"ort": "Salzburg",
+"plz": ""
+},
+"47.80518,13.04321": {
+"bezirk": "",
+"kreis": "Salzburg",
+"land": "Salzburg",
+"ort": "Salzburg",
+"plz": ""
 },
 "47.8112,10.89737": {
 "bezirk": "",
@@ -83,6 +188,20 @@
 "ort": "Weilheim in Oberbayern",
 "plz": "82362"
 },
+"47.83951,11.14164": {
+"bezirk": "",
+"kreis": "Landkreis Weilheim-Schongau",
+"land": "Bayern",
+"ort": "Weilheim in Oberbayern",
+"plz": "82362"
+},
+"47.84097,12.98239": {
+"bezirk": "",
+"kreis": "Landkreis Berchtesgadener Land",
+"land": "Bayern",
+"ort": "Freilassing",
+"plz": "83395"
+},
 "47.85583,12.12715": {
 "bezirk": "",
 "kreis": "",
@@ -97,6 +216,48 @@
 "ort": "Prien am Chiemsee",
 "plz": "83209"
 },
+"47.856,13.35007": {
+"bezirk": "",
+"kreis": "Bezirk Vöcklabruck",
+"land": "Oberösterreich",
+"ort": "Schlößl",
+"plz": ""
+},
+"47.86405,12.00977": {
+"bezirk": "",
+"kreis": "Landkreis Rosenheim",
+"land": "Bayern",
+"ort": "Bad Aibling",
+"plz": "83043"
+},
+"47.86957,12.64863": {
+"bezirk": "",
+"kreis": "Landkreis Traunstein",
+"land": "Bayern",
+"ort": "Traunstein",
+"plz": "83278"
+},
+"47.87351,12.42592": {
+"bezirk": "",
+"kreis": "Landkreis Rosenheim",
+"land": "Bayern",
+"ort": "Chiemsee",
+"plz": ""
+},
+"47.87496,11.46621": {
+"bezirk": "",
+"kreis": "Landkreis Bad Tölz-Wolfratshausen",
+"land": "Bayern",
+"ort": "Geretsried",
+"plz": "82538"
+},
+"47.87765,11.70108": {
+"bezirk": "",
+"kreis": "Landkreis Miesbach",
+"land": "Bayern",
+"ort": "Holzkirchen",
+"plz": "83607"
+},
 "47.88161,7.73151": {
 "bezirk": "",
 "kreis": "Landkreis Breisgau-Hochschwarzwald",
@@ -110,6 +271,27 @@
 "land": "Bayern",
 "ort": "Tuntenhausen",
 "plz": "83104"
+},
+"47.9033,13.14253": {
+"bezirk": "",
+"kreis": "Bezirk Salzburg-Umgebung",
+"land": "Salzburg",
+"ort": "Seekirchen am Wallersee",
+"plz": ""
+},
+"47.91046,11.42664": {
+"bezirk": "",
+"kreis": "Landkreis Bad Tölz-Wolfratshausen",
+"land": "Bayern",
+"ort": "Wolfratshausen",
+"plz": "82515"
+},
+"47.91859,13.8003": {
+"bezirk": "",
+"kreis": "Bezirk Gmunden",
+"land": "Oberösterreich",
+"ort": "Gmunden",
+"plz": ""
 },
 "47.91879,11.20673": {
 "bezirk": "",
@@ -131,6 +313,13 @@
 "land": "Bayern",
 "ort": "Baiern",
 "plz": "85625"
+},
+"47.96998,13.10266": {
+"bezirk": "",
+"kreis": "Bezirk Salzburg-Umgebung",
+"land": "Salzburg",
+"ort": "Mattsee",
+"plz": ""
 },
 "47.97121,11.65335": {
 "bezirk": "",
@@ -160,12 +349,47 @@
 "ort": "Freiburg im Breisgau",
 "plz": "79098"
 },
+"47.99819,11.34184": {
+"bezirk": "",
+"kreis": "Landkreis Starnberg",
+"land": "Bayern",
+"ort": "Starnberg",
+"plz": "82319"
+},
+"48.0268,12.55152": {
+"bezirk": "",
+"kreis": "Landkreis Traunstein",
+"land": "Bayern",
+"ort": "Trostberg",
+"plz": "83308"
+},
 "48.03724,8.77736": {
 "bezirk": "",
 "kreis": "Landkreis Tuttlingen",
 "land": "Baden-Württemberg",
 "ort": "Rietheim",
 "plz": "78604"
+},
+"48.0399,14.41762": {
+"bezirk": "",
+"kreis": "",
+"land": "Oberösterreich",
+"ort": "Steyr",
+"plz": ""
+},
+"48.04005,14.41987": {
+"bezirk": "",
+"kreis": "",
+"land": "Oberösterreich",
+"ort": "Steyr",
+"plz": ""
+},
+"48.04548,11.96636": {
+"bezirk": "",
+"kreis": "Landkreis Ebersberg",
+"land": "Bayern",
+"ort": "Grafing bei München",
+"plz": "85567"
 },
 "48.05064,10.87699": {
 "bezirk": "",
@@ -180,6 +404,13 @@
 "land": "Bayern",
 "ort": "Türkheim",
 "plz": "86842"
+},
+"48.06092,12.23331": {
+"bezirk": "",
+"kreis": "Landkreis Rosenheim",
+"land": "Bayern",
+"ort": "Wasserburg am Inn",
+"plz": "83512"
 },
 "48.06481,11.66508": {
 "bezirk": "",
@@ -208,6 +439,13 @@
 "land": "Baden-Württemberg",
 "ort": "Biberach an der Riß",
 "plz": "88400"
+},
+"48.10021,13.15126": {
+"bezirk": "",
+"kreis": "Bezirk Braunau",
+"land": "Oberösterreich",
+"ort": "Mattighofen",
+"plz": ""
 },
 "48.1016,11.63104": {
 "bezirk": "",
@@ -335,6 +573,20 @@
 "ort": "Anzing",
 "plz": "85646"
 },
+"48.15655,14.02438": {
+"bezirk": "",
+"kreis": "",
+"land": "Oberösterreich",
+"ort": "Wels",
+"plz": ""
+},
+"48.15886,12.83294": {
+"bezirk": "",
+"kreis": "Landkreis Altötting",
+"land": "Bayern",
+"ort": "Burghausen",
+"plz": "84489"
+},
 "48.16241,11.58684": {
 "bezirk": "",
 "kreis": "München",
@@ -377,6 +629,13 @@
 "ort": "Angelbrechting",
 "plz": "85586"
 },
+"48.17777,11.25232": {
+"bezirk": "",
+"kreis": "Landkreis Fürstenfeldbruck",
+"land": "Bayern",
+"ort": "Fürstenfeldbruck",
+"plz": "82256"
+},
 "48.18152,11.51714": {
 "bezirk": "",
 "kreis": "München",
@@ -405,6 +664,13 @@
 "ort": "Gelting",
 "plz": "85652"
 },
+"48.20859,13.48839": {
+"bezirk": "",
+"kreis": "Bezirk Ried",
+"land": "Oberösterreich",
+"ort": "Ried im Innkreis",
+"plz": ""
+},
 "48.21285,9.02815": {
 "bezirk": "",
 "kreis": "Zollernalbkreis",
@@ -425,6 +691,13 @@
 "land": "Bayern",
 "ort": "Illertissen",
 "plz": "89257"
+},
+"48.258,13.0375": {
+"bezirk": "",
+"kreis": "Bezirk Braunau",
+"land": "Oberösterreich",
+"ort": "Braunau am Inn",
+"plz": ""
 },
 "48.2765,10.07595": {
 "bezirk": "",
@@ -447,12 +720,33 @@
 "ort": "Kissing",
 "plz": "86438"
 },
+"48.30576,14.2868": {
+"bezirk": "",
+"kreis": "Linz",
+"land": "Oberösterreich",
+"ort": "Linz",
+"plz": ""
+},
+"48.30644,11.90766": {
+"bezirk": "",
+"kreis": "Landkreis Erding",
+"land": "Bayern",
+"ort": "Erding",
+"plz": "85435"
+},
 "48.30662,11.90771": {
 "bezirk": "",
 "kreis": "Landkreis Erding",
 "land": "Bayern",
 "ort": "Erding",
 "plz": "85435"
+},
+"48.30826,14.0204": {
+"bezirk": "",
+"kreis": "Bezirk Eferding",
+"land": "Oberösterreich",
+"ort": "Eferding",
+"plz": ""
 },
 "48.31254,10.72661": {
 "bezirk": "",
@@ -467,6 +761,20 @@
 "land": "Bayern",
 "ort": "Kissing",
 "plz": "86438"
+},
+"48.33203,11.44575": {
+"bezirk": "",
+"kreis": "Landkreis Dachau",
+"land": "Bayern",
+"ort": "Riedenzhofen",
+"plz": "85244"
+},
+"48.3485,13.31852": {
+"bezirk": "",
+"kreis": "Landkreis Passau",
+"land": "Bayern",
+"ort": "Bad Füssing",
+"plz": "94072"
 },
 "48.35501,10.97987": {
 "bezirk": "",
@@ -524,6 +832,13 @@
 "ort": "Ulm",
 "plz": "89075"
 },
+"48.40084,11.74384": {
+"bezirk": "",
+"kreis": "Landkreis Freising",
+"land": "Bayern",
+"ort": "Freising",
+"plz": ""
+},
 "48.40144,11.75016": {
 "bezirk": "",
 "kreis": "Landkreis Freising",
@@ -544,6 +859,20 @@
 "land": "Baden-Württemberg",
 "ort": "Blaubeuren",
 "plz": "89143"
+},
+"48.43857,12.96086": {
+"bezirk": "",
+"kreis": "Landkreis Rottal-Inn",
+"land": "Bayern",
+"ort": "Pfarrkirchen",
+"plz": "84347"
+},
+"48.4498,12.35339": {
+"bezirk": "",
+"kreis": "Landkreis Landshut",
+"land": "Bayern",
+"ort": "Vilsbiburg",
+"plz": "84137"
 },
 "48.4584,10.98291": {
 "bezirk": "",
@@ -614,6 +943,13 @@
 "land": "Baden-Württemberg",
 "ort": "Tübingen",
 "plz": ""
+},
+"48.53001,11.506": {
+"bezirk": "",
+"kreis": "Landkreis Pfaffenhofen an der Ilm",
+"land": "Bayern",
+"ort": "Pfaffenhofen an der Ilm",
+"plz": "85276"
 },
 "48.53153,8.07898": {
 "bezirk": "",
@@ -713,6 +1049,20 @@
 "ort": "Achern",
 "plz": "77855"
 },
+"48.62956,12.49888": {
+"bezirk": "",
+"kreis": "Landkreis Dingolfing-Landau",
+"land": "Bayern",
+"ort": "Dingolfing",
+"plz": "84130"
+},
+"48.63352,13.19045": {
+"bezirk": "",
+"kreis": "Landkreis Passau",
+"land": "Bayern",
+"ort": "Vilshofen an der Donau",
+"plz": "94474"
+},
 "48.64129,8.89569": {
 "bezirk": "",
 "kreis": "Landkreis Böblingen",
@@ -733,6 +1083,13 @@
 "land": "Baden-Württemberg",
 "ort": "Freistett",
 "plz": "77866"
+},
+"48.66997,12.69122": {
+"bezirk": "",
+"kreis": "Landkreis Dingolfing-Landau",
+"land": "Bayern",
+"ort": "Landau an der Isar",
+"plz": "94405"
 },
 "48.67649,10.15111": {
 "bezirk": "",
@@ -788,6 +1145,13 @@
 "kreis": "Baden-Baden",
 "land": "Baden-Württemberg",
 "ort": "Baden-Baden",
+"plz": ""
+},
+"48.76304,11.42764": {
+"bezirk": "",
+"kreis": "Ingolstadt",
+"land": "Bayern",
+"ort": "Ingolstadt",
 "plz": ""
 },
 "48.76323,11.42777": {
@@ -853,6 +1217,13 @@
 "ort": "Waiblingen",
 "plz": "71336"
 },
+"48.83324,11.85708": {
+"bezirk": "",
+"kreis": "Landkreis Kelheim",
+"land": "Bayern",
+"ort": "Baiern",
+"plz": "93326"
+},
 "48.83461,12.96215": {
 "bezirk": "",
 "kreis": "Landkreis Deggendorf",
@@ -867,6 +1238,13 @@
 "ort": "Aalen",
 "plz": "73431"
 },
+"48.84059,13.3359": {
+"bezirk": "",
+"kreis": "Landkreis Freyung-Grafenau",
+"land": "Bayern",
+"ort": "Schönberg",
+"plz": "94513"
+},
 "48.85139,10.49104": {
 "bezirk": "",
 "kreis": "Landkreis Donau-Ries",
@@ -880,6 +1258,13 @@
 "land": "Baden-Württemberg",
 "ort": "Aalen",
 "plz": "73433"
+},
+"48.85552,13.39671": {
+"bezirk": "",
+"kreis": "Landkreis Freyung-Grafenau",
+"land": "Bayern",
+"ort": "Grafenau",
+"plz": "94481"
 },
 "48.85773,10.35213": {
 "bezirk": "",
@@ -909,6 +1294,13 @@
 "ort": "Kornwestheim",
 "plz": "70806"
 },
+"48.88392,12.59558": {
+"bezirk": "",
+"kreis": "Straubing",
+"land": "Bayern",
+"ort": "Straubing",
+"plz": "94315"
+},
 "48.88442,10.04788": {
 "bezirk": "",
 "kreis": "Ostalbkreis",
@@ -929,6 +1321,13 @@
 "land": "Baden-Württemberg",
 "ort": "Ludwigsburg",
 "plz": ""
+},
+"48.9015,12.6969": {
+"bezirk": "",
+"kreis": "Landkreis Straubing-Bogen",
+"land": "Bayern",
+"ort": "Bogen",
+"plz": "94327"
 },
 "48.94148,8.40735": {
 "bezirk": "",
@@ -957,6 +1356,13 @@
 "land": "Baden-Württemberg",
 "ort": "Rheinstetten",
 "plz": ""
+},
+"48.97237,13.13236": {
+"bezirk": "",
+"kreis": "Landkreis Regen",
+"land": "Bayern",
+"ort": "Regen",
+"plz": "94209"
 },
 "48.99694,8.48532": {
 "bezirk": "",
@@ -1041,6 +1447,13 @@
 "land": "Baden-Württemberg",
 "ort": "Oberstenfeld",
 "plz": "71720"
+},
+"49.02493,13.21769": {
+"bezirk": "",
+"kreis": "Landkreis Regen",
+"land": "Bayern",
+"ort": "Zwiesel",
+"plz": "94227"
 },
 "49.03055,10.97194": {
 "bezirk": "",

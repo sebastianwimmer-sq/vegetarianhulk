@@ -1,0 +1,659 @@
+[
+ {
+  "id": "hand-abensberg-kuchlbauers-turmweihnacht",
+  "name": "Kuchlbauers Turmweihnacht",
+  "ort": "Abensberg",
+  "platz": "Kuchlbauer Turm",
+  "link": "https://www.abensberg.de/kalender/kuchlbauers-turmweihnacht-veranstaltung-5489",
+  "lat": 48.83324,
+  "lon": 11.85708
+ },
+ {
+  "id": "hand-altotting-altottinger-christkindlmarkt",
+  "name": "Altöttinger Christkindlmarkt",
+  "ort": "Altötting",
+  "platz": "Kapellplatz",
+  "link": "https://www.altoetting.de/tourismus/veranstaltungen/veranstaltung/altoettinger-christkindlmarkt-28-11-2026/",
+  "lat": 48.22634,
+  "lon": 12.67707
+ },
+ {
+  "id": "hand-bad-aibling-bad-aiblinger-christkindlmarkt",
+  "name": "Bad Aiblinger Christkindlmarkt",
+  "ort": "Bad Aibling",
+  "platz": "Kurpark am Irlachweiher",
+  "link": "https://www.bad-aibling.de/event/bad-aiblinger-christkindlmarkt",
+  "lat": 47.86405,
+  "lon": 12.00977
+ },
+ {
+  "id": "hand-bad-fussing-bad-fussinger-winterzauber",
+  "name": "Bad Füssinger Winterzauber",
+  "ort": "Bad Füssing",
+  "platz": "Kurpark",
+  "link": "https://www.badfuessing.com/winterzauber",
+  "lat": 48.3485,
+  "lon": 13.31852
+ },
+ {
+  "id": "hand-bad-ischl-christkindlmarkt-der-ischler-handwerker",
+  "name": "Christkindlmarkt der Ischler Handwerker",
+  "ort": "Bad Ischl",
+  "platz": "Trinkhalle",
+  "link": "https://www.oberoesterreich.at/die-schoensten-adventmaerkte/oesterreich-veranstaltung/detail/430005295/christkindlmarkt-der-ischler-handwerker.html",
+  "lat": 47.7112,
+  "lon": 13.62342
+ },
+ {
+  "id": "hand-bad-reichenhall-bad-reichenhaller-christkindlmarkt",
+  "name": "Bad Reichenhaller Christkindlmarkt",
+  "ort": "Bad Reichenhall",
+  "platz": "Rathausplatz",
+  "link": "https://www.bad-reichenhall.de/en/living-culture/culture-and-special-events/special-events/christmas",
+  "lat": 47.72217,
+  "lon": 12.87597
+ },
+ {
+  "id": "hand-bad-tolz-christkindlmarkt-bad-tolz",
+  "name": "Christkindlmarkt Bad Tölz",
+  "ort": "Bad Tölz",
+  "platz": "Marktstraße",
+  "link": "https://www.bad-toelz.de/de/genuss-und-kulinarik/maerkte/christkindlmarkt.html",
+  "lat": 47.76095,
+  "lon": 11.55874
+ },
+ {
+  "id": "hand-berchtesgaden-berchtesgadener-advent",
+  "name": "Berchtesgadener Advent",
+  "ort": "Berchtesgaden",
+  "platz": "Schlossplatz",
+  "link": "https://www.berchtesgaden.de/pois/berchtesgadener-advent",
+  "lat": 47.63354,
+  "lon": 13.00325
+ },
+ {
+  "id": "hand-bogen-christkindlmarkt-bogenberg",
+  "name": "Christkindlmarkt Bogenberg",
+  "ort": "Bogen",
+  "platz": "Bogenberg",
+  "link": "https://www.bogen.de/freizeit-und-tourismus/maerkte/christkindlmarkt-bogenberg",
+  "lat": 48.9015,
+  "lon": 12.6969
+ },
+ {
+  "id": "hand-braunau-am-inn-christkindlmarkt-im-palmpark",
+  "name": "Christkindlmarkt im Palmpark",
+  "ort": "Braunau am Inn",
+  "platz": "Palmpark",
+  "link": "https://www.oberoesterreich.at/oesterreich-veranstaltung/detail/430255343/christkindlmarkt-im-palmpark-braunau.html",
+  "lat": 48.258,
+  "lon": 13.0375
+ },
+ {
+  "id": "hand-burghausen-advent-in-den-gruben",
+  "name": "Advent in den Grüben",
+  "ort": "Burghausen",
+  "platz": "Platz am Bichl, Mautnerschloss",
+  "link": "https://www.burghausen.de/aktuelles-allgemein/advent-in-den-grueben-lichterglanz-und-weihnachtsromantik-in-burghausen/",
+  "lat": 48.15886,
+  "lon": 12.83294
+ },
+ {
+  "id": "hand-chiemsee-christkindlmarkt-fraueninsel",
+  "name": "Christkindlmarkt Fraueninsel",
+  "ort": "Chiemsee",
+  "platz": "Fraueninsel",
+  "link": "https://fraueninsel-christkindlmarkt.de/",
+  "lat": 47.87351,
+  "lon": 12.42592
+ },
+ {
+  "id": "hand-dachau-dachauer-christkindlmarkt",
+  "name": "Dachauer Christkindlmarkt",
+  "ort": "Dachau",
+  "platz": "Rathausplatz",
+  "link": "https://www.dachau.de/dachauer-christkindlmarkt/",
+  "lat": 48.33203,
+  "lon": 11.44575
+ },
+ {
+  "id": "hand-deggendorf-christkindlmarkt-am-alten-rathaus",
+  "name": "Christkindlmarkt am Alten Rathaus",
+  "ort": "Deggendorf",
+  "platz": "Oberer Stadtplatz",
+  "link": "https://www.deggendorf.de/christkindlmarkt",
+  "lat": 48.83461,
+  "lon": 12.96215
+ },
+ {
+  "id": "hand-dingolfing-dingolfinger-nikolausmarkt",
+  "name": "Dingolfinger Nikolausmarkt",
+  "ort": "Dingolfing",
+  "platz": "Marienplatz",
+  "link": "https://www.dingolfing.de/freizeit/maerkte-und-feste/dingolfinger-nikolausmarkt",
+  "lat": 48.62956,
+  "lon": 12.49888
+ },
+ {
+  "id": "hand-eferding-eferdinger-stadtadvent",
+  "name": "Eferdinger Stadtadvent",
+  "ort": "Eferding",
+  "platz": "Stadtplatz und Historisches Stadtamt",
+  "link": "https://www.oberoesterreich.at/oesterreich-veranstaltung/detail/430300057/eferdinger-stadtadvent.html",
+  "lat": 48.30826,
+  "lon": 14.0204
+ },
+ {
+  "id": "hand-erding-erdinger-christkindlmarkt",
+  "name": "Erdinger Christkindlmarkt",
+  "ort": "Erding",
+  "platz": "Schrannenplatz und Kleiner Platz",
+  "link": "https://www.erding.de/christkindlmarkt",
+  "lat": 48.30644,
+  "lon": 11.90766
+ },
+ {
+  "id": "hand-freilassing-freilassinger-christkindlmarkt",
+  "name": "Freilassinger Christkindlmarkt",
+  "ort": "Freilassing",
+  "platz": "Fußgängerzone",
+  "link": "https://www.freilassing.de/veranstaltung/freilassinger-christkindlmarkt-3/",
+  "lat": 47.84097,
+  "lon": 12.98239
+ },
+ {
+  "id": "hand-freising-freisinger-christkindlmarkt",
+  "name": "Freisinger Christkindlmarkt",
+  "ort": "Freising",
+  "platz": "Marienplatz",
+  "link": "https://www.freising.de/leben-wohnen/maerkte-in-freising",
+  "lat": 48.40084,
+  "lon": 11.74384
+ },
+ {
+  "id": "hand-freyung-freyunger-weihnachtsmarkt",
+  "name": "Freyunger Weihnachtsmarkt",
+  "ort": "Freyung",
+  "platz": "Kirchplatz",
+  "link": "https://www.freyung.de/de/kultur-und-kulinarik/feste/weihnachtsmarkt-mit-riesen-adventskalender.html",
+  "lat": 48.84059,
+  "lon": 13.3359
+ },
+ {
+  "id": "hand-furstenfeldbruck-brucker-christkindlmarkt",
+  "name": "Brucker Christkindlmarkt",
+  "ort": "Fürstenfeldbruck",
+  "platz": "Viehmarktplatz",
+  "link": "https://www.fuerstenfeldbruck.de/ffb/web.nsf/id/pa_christkindlmarkt.html",
+  "lat": 48.17777,
+  "lon": 11.25232
+ },
+ {
+  "id": "hand-garmisch-partenkirchen-christkindlmarkt-garmisch-partenkirch",
+  "name": "Christkindlmarkt Garmisch-Partenkirchen",
+  "ort": "Garmisch-Partenkirchen",
+  "platz": "Michael-Ende-Kurpark",
+  "link": "https://www.gapa-tourismus.de/winter-im-park/christkindlmarkt",
+  "lat": 47.49585,
+  "lon": 11.09035
+ },
+ {
+  "id": "hand-geretsried-geretsrieder-christkindlmarkt",
+  "name": "Geretsrieder Christkindlmarkt",
+  "ort": "Geretsried",
+  "platz": "Karl-Lederer-Platz",
+  "link": "https://www.geretsried.de/christkindlmarkt",
+  "lat": 47.87496,
+  "lon": 11.46621
+ },
+ {
+  "id": "hand-gmunden-adventmarkt-in-gmunden",
+  "name": "Adventmarkt in Gmunden",
+  "ort": "Gmunden",
+  "platz": "Rathausplatz und Rinnholzplatz",
+  "link": "https://www.oberoesterreich.at/oesterreich-veranstaltung/detail/430129628/adventmarkt-in-gmunden.html",
+  "lat": 47.91859,
+  "lon": 13.8003
+ },
+ {
+  "id": "hand-grafenau-grafenauer-weihnachtsmarkt",
+  "name": "Grafenauer Weihnachtsmarkt",
+  "ort": "Grafenau",
+  "platz": "Stadtplatz",
+  "link": "https://www.grafenau.de/tourismus-grafenau/de/feste/veranstaltungshighlights/grafenauer-weihnachtsmarkt",
+  "lat": 48.85552,
+  "lon": 13.39671
+ },
+ {
+  "id": "hand-grafing-grafinger-weihnachtsmarkt",
+  "name": "Grafinger Weihnachtsmarkt",
+  "ort": "Grafing",
+  "platz": "Marktplatz",
+  "link": "https://www.grafing.de/wirtschaft-und-tourismus/wirtschaftsfoerderung/grafinger-weihnachtsmarkt-2026",
+  "lat": 48.04548,
+  "lon": 11.96636
+ },
+ {
+  "id": "hand-grossweil-glentleitner-christkindlmarkt",
+  "name": "Glentleitner Christkindlmarkt",
+  "ort": "Großweil",
+  "platz": "Freilichtmuseum Glentleiten",
+  "link": "https://www.glentleiten.de/christkindlmarkt",
+  "lat": 47.66589,
+  "lon": 11.28643
+ },
+ {
+  "id": "hand-hallein-weihnachtsmarkt-hallein",
+  "name": "Weihnachtsmarkt Hallein",
+  "ort": "Hallein",
+  "platz": "Pernerinsel / Mauttorpromenade",
+  "link": "https://www.weihnachtsmarkt-hallein.at/",
+  "lat": 47.68449,
+  "lon": 13.09439
+ },
+ {
+  "id": "hand-holzkirchen-holzkirchner-winterzauber-und-weihnachtsmarkt",
+  "name": "Holzkirchner WinterZauber und Weihnachtsmarkt",
+  "ort": "Holzkirchen",
+  "platz": "Marktplatz",
+  "link": "https://www.holzkirchen.de/Erleben/Maerkte",
+  "lat": 47.87765,
+  "lon": 11.70108
+ },
+ {
+  "id": "hand-ingolstadt-ingolstadter-christkindlmarkt",
+  "name": "Ingolstädter Christkindlmarkt",
+  "ort": "Ingolstadt",
+  "platz": "Theaterplatz",
+  "link": "https://www.ingolstadt.de/Kultur/Veranstaltungen/Volksfeste-M%C3%A4rkte/Christkindlmarkt/",
+  "lat": 48.76304,
+  "lon": 11.42764
+ },
+ {
+  "id": "hand-kelheim-kelheimer-christkindlmarkt",
+  "name": "Kelheimer Christkindlmarkt",
+  "ort": "Kelheim",
+  "platz": "Ludwigsplatz",
+  "link": "https://tourismus.kelheim.de/christkindlmarkt/",
+  "lat": 48.91823,
+  "lon": 11.87315
+ },
+ {
+  "id": "hand-landau-an-der-isar-christkindlmarkt-landau-a-d-isar",
+  "name": "Christkindlmarkt Landau a.d.Isar",
+  "ort": "Landau an der Isar",
+  "platz": "Stadtpark und Stadthalle",
+  "link": "https://www.landau-isar.de/aktuelles/christkindlmarkt-landau-a-d-isar-2026/",
+  "lat": 48.66997,
+  "lon": 12.69122
+ },
+ {
+  "id": "hand-landsberg-am-lech-landsberger-christkindlmarkt",
+  "name": "Landsberger Christkindlmarkt",
+  "ort": "Landsberg am Lech",
+  "platz": "Hauptplatz, Hellmairplatz",
+  "link": "https://www.landsberg.de/rathaus/meine-stadt/maerkte/",
+  "lat": 48.05064,
+  "lon": 10.87699
+ },
+ {
+  "id": "hand-landshut-landshuter-christkindlmarkt",
+  "name": "Landshuter Christkindlmarkt",
+  "ort": "Landshut",
+  "platz": "Ringelstecherwiese und Altstadt",
+  "link": "https://erleben.landshut.de/adventsstadt-landshut/",
+  "lat": 48.5348,
+  "lon": 12.14834
+ },
+ {
+  "id": "hand-linz-christkindlmarkt-am-hauptplatz",
+  "name": "Christkindlmarkt am Hauptplatz",
+  "ort": "Linz",
+  "platz": "Hauptplatz",
+  "link": "https://www.christkindlmarkt-linz.at/",
+  "lat": 48.30576,
+  "lon": 14.2868
+ },
+ {
+  "id": "hand-mattighofen-mattighofner-christkindlmarkt",
+  "name": "Mattighofner Christkindlmarkt",
+  "ort": "Mattighofen",
+  "platz": "Voglpark",
+  "link": "https://www.oberoesterreich.at/oesterreich-veranstaltung/detail/430283931/mattighofner-christkindlmarkt-2026-und-ausstellung-der-mattigtaler-fotoamateure.html",
+  "lat": 48.10021,
+  "lon": 13.15126
+ },
+ {
+  "id": "hand-mattsee-mattseer-advent-am-see",
+  "name": "Mattseer Advent am See",
+  "ort": "Mattsee",
+  "platz": "Seeufer",
+  "link": "https://www.salzburger-seenland.at/adventprogramm/mattseer-advent-am-see/",
+  "lat": 47.96998,
+  "lon": 13.10266
+ },
+ {
+  "id": "hand-mittenwald-mittenwalder-christkindlmarkt",
+  "name": "Mittenwalder Christkindlmarkt",
+  "ort": "Mittenwald",
+  "platz": "Pfarrkirche St. Peter und Paul",
+  "link": "https://www.alpenwelt-karwendel.de/e-mittenwalder-christkindlmarkt",
+  "lat": 47.44178,
+  "lon": 11.26143
+ },
+ {
+  "id": "hand-mondsee-advent-in-mondsee",
+  "name": "Advent in Mondsee",
+  "ort": "Mondsee",
+  "platz": "Stiftsplatz",
+  "link": "https://mondsee.salzkammergut.at/veranstaltungen/advent-in-mondsee.html",
+  "lat": 47.856,
+  "lon": 13.35007
+ },
+ {
+  "id": "hand-muhldorf-am-inn-muhldorfer-christkindlmarkt-und-altstadtweih",
+  "name": "Mühldorfer Christkindlmarkt und Altstadtweihnacht",
+  "ort": "Mühldorf am Inn",
+  "platz": "Nikolauskirche, Haberkasten, Stadtplatz",
+  "link": "https://www.muehldorf.de/223-Christkindlmarkt.html",
+  "lat": 48.24169,
+  "lon": 12.52658
+ },
+ {
+  "id": "hand-munchen-mittelaltermarkt",
+  "name": "Mittelaltermarkt",
+  "ort": "München",
+  "platz": "Wittelsbacherplatz",
+  "link": "https://www.mittelaltermarkt-muenchen.de/",
+  "lat": 48.14345,
+  "lon": 11.57616
+ },
+ {
+  "id": "hand-munchen-munchner-christkindlmarkt-am-marienplatz",
+  "name": "Münchner Christkindlmarkt am Marienplatz",
+  "ort": "München",
+  "platz": "Marienplatz",
+  "link": "https://www.muenchen.de/veranstaltungen/muenchner-christkindlmarkt-marienplatz",
+  "lat": 48.14334,
+  "lon": 11.57611
+ },
+ {
+  "id": "hand-munchen-tollwood-winterfestival",
+  "name": "Tollwood Winterfestival",
+  "ort": "München",
+  "platz": "Theresienwiese",
+  "link": "https://www.tollwood.de/tollwood-winterfestival/",
+  "lat": 48.13339,
+  "lon": 11.55073
+ },
+ {
+  "id": "hand-neuburg-an-der-donau-historischer-christkindlmarkt-neuburg",
+  "name": "Historischer Christkindlmarkt Neuburg",
+  "ort": "Neuburg an der Donau",
+  "platz": "Karlsplatz",
+  "link": "https://www.neuburg-donau.de/leben/feste-maerkte-und-messen/neuburger-weihnacht/christkindlmarkt",
+  "lat": 48.73746,
+  "lon": 11.1786
+ },
+ {
+  "id": "hand-oberammergau-oberammergauer-christkindlmarkt",
+  "name": "Oberammergauer Christkindlmarkt",
+  "ort": "Oberammergau",
+  "platz": "Kirchplatz",
+  "link": "https://www.ammergauer-alpen.de/event/oberammergauer-christkindlmarkt",
+  "lat": 47.59734,
+  "lon": 11.06407
+ },
+ {
+  "id": "hand-passau-passauer-christkindlmarkt-am-dom",
+  "name": "Passauer Christkindlmarkt am Dom",
+  "ort": "Passau",
+  "platz": "Domplatz",
+  "link": "https://passauer-christkindlmarkt.de/",
+  "lat": 48.57446,
+  "lon": 13.46437
+ },
+ {
+  "id": "hand-penzberg-penzberger-christkindlmarkt",
+  "name": "Penzberger Christkindlmarkt",
+  "ort": "Penzberg",
+  "platz": "Innenstadt / Bahnhofstraße",
+  "link": "https://veranstaltungen.penzberg.de/penzberg/penzberger-christkindlmarkt-e4e1c7e7a68333528ccb0ba872feacbfd.html",
+  "lat": 47.75185,
+  "lon": 11.3763
+ },
+ {
+  "id": "hand-pfaffenhofen-an-der-ilm-pfaffenhofener-christkindlmarkt",
+  "name": "Pfaffenhofener Christkindlmarkt",
+  "ort": "Pfaffenhofen an der Ilm",
+  "platz": "Hauptplatz",
+  "link": "https://pfaffenhofen.de/artikel/wichtelzeit-und-weihnachtszauber/",
+  "lat": 48.53001,
+  "lon": 11.506
+ },
+ {
+  "id": "hand-pfarrkirchen-pfarrkirchner-weihnachtsmarkt",
+  "name": "Pfarrkirchner Weihnachtsmarkt",
+  "ort": "Pfarrkirchen",
+  "platz": "Pflegstraße und Spitalplatz",
+  "link": "https://pfarrkirchen.de/aktuelles/veranstaltungen/pfarrkirchner-weihnachtsmarkt_827/",
+  "lat": 48.43857,
+  "lon": 12.96086
+ },
+ {
+  "id": "hand-regen-regener-christkindlmarkt-im-kurpark",
+  "name": "Regener Christkindlmarkt im Kurpark",
+  "ort": "Regen",
+  "platz": "Kurpark",
+  "link": "https://www.regen.de/startseite/veranstaltungen/christkindlmarkt-kurpark",
+  "lat": 48.97237,
+  "lon": 13.13236
+ },
+ {
+  "id": "hand-ried-im-innkreis-rieder-advent",
+  "name": "Rieder Advent",
+  "ort": "Ried im Innkreis",
+  "platz": "Hauptplatz, Dietmarbrunnen",
+  "link": "https://www.oberoesterreich.at/oesterreich-veranstaltung/detail/430015657/eroeffnung-rieder-advent.html",
+  "lat": 48.20859,
+  "lon": 13.48839
+ },
+ {
+  "id": "hand-rosenheim-rosenheimer-christkindlmarkt",
+  "name": "Rosenheimer Christkindlmarkt",
+  "ort": "Rosenheim",
+  "platz": "Max-Josefs-Platz",
+  "link": "https://www.rosenheim.de/pressemitteilungen/rosenheim-wird-weihnachtlich",
+  "lat": 47.85583,
+  "lon": 12.12715
+ },
+ {
+  "id": "hand-salzburg-hellbrunner-adventzauber",
+  "name": "Hellbrunner Adventzauber",
+  "ort": "Salzburg",
+  "platz": "Schloss Hellbrunn",
+  "link": "https://www.hellbrunneradventzauber.at/",
+  "lat": 47.76211,
+  "lon": 13.06027
+ },
+ {
+  "id": "hand-salzburg-salzburger-christkindlmarkt-am-dom-und-residenzplat",
+  "name": "Salzburger Christkindlmarkt am Dom- und Residenzplatz",
+  "ort": "Salzburg",
+  "platz": "Dom- und Residenzplatz",
+  "link": "https://www.christkindlmarkt.co.at/",
+  "lat": 47.79813,
+  "lon": 13.04648
+ },
+ {
+  "id": "hand-salzburg-salzburger-festungsadvent",
+  "name": "Salzburger Festungsadvent",
+  "ort": "Salzburg",
+  "platz": "Festung Hohensalzburg",
+  "link": "https://www.festung-hohensalzburg.at/de/event-details/adventmarkt-auf-der-festung-hohensalzburg",
+  "lat": 47.79521,
+  "lon": 13.0481
+ },
+ {
+  "id": "hand-salzburg-sternadvent-mit-wintermarkt",
+  "name": "Sternadvent mit Wintermarkt",
+  "ort": "Salzburg",
+  "platz": "Sternbräu, Getreidegasse",
+  "link": "https://www.salzburg.info/de/veranstaltungen/veranstaltungskalender/sternadvent-mit-wintermarkt_event_42164489",
+  "lat": 47.79813,
+  "lon": 13.04648
+ },
+ {
+  "id": "hand-salzburg-weihnachtsmarkt-am-mirabellplatz",
+  "name": "Weihnachtsmarkt am Mirabellplatz",
+  "ort": "Salzburg",
+  "platz": "Mirabellplatz",
+  "link": "https://www.salzburg.info/en/events/events-calendar/christmas-market-mirabellplatz_event_42164427",
+  "lat": 47.80518,
+  "lon": 13.04321
+ },
+ {
+  "id": "hand-seekirchen-am-wallersee-lichterleuchten-am-wallersee",
+  "name": "LichterLeuchten am Wallersee",
+  "ort": "Seekirchen am Wallersee",
+  "platz": "Strandbad Seekirchen",
+  "link": "https://www.salzburger-seenland.at/adventprogramm/lichterleuchten-am-wallersee/",
+  "lat": 47.9033,
+  "lon": 13.14253
+ },
+ {
+  "id": "hand-st-wolfgang-im-salzkammergut-wolfgangseer-advent",
+  "name": "Wolfgangseer Advent",
+  "ort": "St. Wolfgang im Salzkammergut",
+  "platz": "St. Gilgen, Strobl, St. Wolfgang",
+  "link": "https://wolfgangseer-advent.at/",
+  "lat": 47.74975,
+  "lon": 13.50269
+ },
+ {
+  "id": "hand-starnberg-starnberger-christkindlmarkt",
+  "name": "Starnberger Christkindlmarkt",
+  "ort": "Starnberg",
+  "platz": "Kirchplatz",
+  "link": "https://www.starnberg.de/starnberger-christkindlmarkt-2026",
+  "lat": 47.99819,
+  "lon": 11.34184
+ },
+ {
+  "id": "hand-steyr-adventdorf-am-stadtplatz",
+  "name": "Adventdorf am Stadtplatz",
+  "ort": "Steyr",
+  "platz": "Stadtplatz",
+  "link": "https://www.adventdorf-steyr.at/",
+  "lat": 48.04005,
+  "lon": 14.41987
+ },
+ {
+  "id": "hand-steyr-steyrer-christkindlmarkt-promenade",
+  "name": "Steyrer Christkindlmarkt Promenade",
+  "ort": "Steyr",
+  "platz": "Promenade",
+  "link": "https://www.oberoesterreich.at/oesterreich-veranstaltung/detail/430000298/steyrer-christkindlmarkt-promenade.html",
+  "lat": 48.0399,
+  "lon": 14.41762
+ },
+ {
+  "id": "hand-straubing-straubinger-christkindlmarkt",
+  "name": "Straubinger Christkindlmarkt",
+  "ort": "Straubing",
+  "platz": "Ludwigsplatz und Theresienplatz",
+  "link": "https://www.straubing.de/entdecken-erleben/veranstaltungen/christkindlmarkt/index.html",
+  "lat": 48.88392,
+  "lon": 12.59558
+ },
+ {
+  "id": "hand-tegernsee-tegernseer-adventszauber",
+  "name": "Tegernseer Adventszauber",
+  "ort": "Tegernsee",
+  "platz": "",
+  "link": "https://www.tegernsee.com/advent",
+  "lat": 47.70992,
+  "lon": 11.75433
+ },
+ {
+  "id": "hand-traunstein-traunsteiner-christkindlmarkt",
+  "name": "Traunsteiner Christkindlmarkt",
+  "ort": "Traunstein",
+  "platz": "Stadtplatz",
+  "link": "https://www.traunstein.de/kultur-brauchtum/kultur/konzertreihen-veranstaltungen/christkindlmarkt-traunstein/",
+  "lat": 47.86957,
+  "lon": 12.64863
+ },
+ {
+  "id": "hand-trostberg-trostberger-weihnachtsmarkt",
+  "name": "Trostberger Weihnachtsmarkt",
+  "ort": "Trostberg",
+  "platz": "Postsaal",
+  "link": "https://www.trostberg.de/kunst-kultur/feste-maerkte/weihnachtsmarkt/",
+  "lat": 48.0268,
+  "lon": 12.55152
+ },
+ {
+  "id": "hand-vilsbiburg-nikolausmarkt-am-stadtplatz",
+  "name": "Nikolausmarkt am Stadtplatz",
+  "ort": "Vilsbiburg",
+  "platz": "Stadtplatz",
+  "link": "https://www.vilsbiburg.de/nikolausmarkt-am-stadtplatz-kunstgewerblicher-weihnachtsmarkt-im-urbanhof",
+  "lat": 48.4498,
+  "lon": 12.35339
+ },
+ {
+  "id": "hand-vilshofen-an-der-donau-schwimmender-christkindlmarkt",
+  "name": "Schwimmender Christkindlmarkt",
+  "ort": "Vilshofen an der Donau",
+  "platz": "Donaupromenade",
+  "link": "https://www.vilshofen.de/freizeit-geniessen/was-ist-los-in-vilshofen/veranstaltungs-highlights/christkindlmarkt",
+  "lat": 48.63352,
+  "lon": 13.19045
+ },
+ {
+  "id": "hand-wasserburg-am-inn-wasserburger-christkindlmarkt",
+  "name": "Wasserburger Christkindlmarkt",
+  "ort": "Wasserburg am Inn",
+  "platz": "Marienplatz",
+  "link": "https://www.wfv-wasserburg.de/christkindlmarkt",
+  "lat": 48.06092,
+  "lon": 12.23331
+ },
+ {
+  "id": "hand-weilheim-weilheimer-christkindlmarkt",
+  "name": "Weilheimer Christkindlmarkt",
+  "ort": "Weilheim",
+  "platz": "Marienplatz und Kirchplatz",
+  "link": "https://www.weilheim.de/touristinfo/freizeit-gastronomie/eventkalender/15795-weilheimer-christkindlmarkt-2041",
+  "lat": 47.83951,
+  "lon": 11.14164
+ },
+ {
+  "id": "hand-wels-welser-weihnachtswelt",
+  "name": "Welser Weihnachtswelt",
+  "ort": "Wels",
+  "platz": "Innenstadt",
+  "link": "https://www.wels.at/weihnachtswelt",
+  "lat": 48.15655,
+  "lon": 14.02438
+ },
+ {
+  "id": "hand-wolfratshausen-wolfratshauser-christkindlmarkt",
+  "name": "Wolfratshauser Christkindlmarkt",
+  "ort": "Wolfratshausen",
+  "platz": "",
+  "link": "https://www.wolfratshausen.de/leben-in-wolfratshausen/kultur/veranstaltungen/veranstaltung/christkindlmarkt",
+  "lat": 47.91046,
+  "lon": 11.42664
+ },
+ {
+  "id": "hand-zwiesel-zwieseler-glasweihnacht",
+  "name": "Zwieseler Glasweihnacht",
+  "ort": "Zwiesel",
+  "platz": "Glaspyramide Zwiesel Glas",
+  "link": "https://www.zwiesel.de/zwieseler-glasweihnacht.html",
+  "lat": 49.02493,
+  "lon": 13.21769
+ }
+]

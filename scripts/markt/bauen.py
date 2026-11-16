@@ -18,6 +18,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from datum import THEMA, aus_seite, klartext  # noqa: E402
 from netz import hole  # noqa: E402
+import bezirk  # noqa: E402
 import quellen  # noqa: E402
 
 JAHR = 2026
@@ -143,7 +144,8 @@ def fertig(m, heute):
     art = next((titel for wort, titel in ARTEN if wort in name.lower()), 'Weihnachtsmarkt')
     aus = {
         'id': m['id'], 'name': name, 'name_abgeleitet': not m['name'], 'art': art,
-        'ort': m['ort'], 'plz': m['plz'], 'kreis': m['kreis'], 'bezirk': m['bezirk'], 'land': m['land'],
+        'ort': m['ort'], 'plz': m['plz'], 'kreis': m['kreis'], 'land': m['land'],
+        'bezirk': m['bezirk'] or (bezirk.von_kreis(m['kreis']) if m['land'] == 'Bayern' else ''),
         'platz': m.get('platz', ''), 'lat': round(m['lat'], 5), 'lon': round(m['lon'], 5),
         'status': 'bestaetigt' if m['termine'] else 'offen',
         'termine': [[v.isoformat(), b.isoformat()] for v, b in m['termine']],
