@@ -18,7 +18,7 @@
   </url>
   <url>
     <loc>https://vegetarianhulk.de/datenschutz.html</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
@@ -44,6 +44,14 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://vegetarianhulk.de/kooperationen.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://vegetarianhulk.de/en/brands/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://vegetarianhulk.de/kooperationen.html"/>
+  </url>
+  <url>
+    <loc>https://vegetarianhulk.de/en/christmas-markets/</loc>
+    <lastmod>2026-11-16</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://vegetarianhulk.de/weihnachtsmarkt/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vegetarianhulk.de/en/christmas-markets/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vegetarianhulk.de/weihnachtsmarkt/"/>
   </url>
   <url>
     <loc>https://vegetarianhulk.de/en/hikes/</loc>
@@ -217,5 +225,13 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://vegetarianhulk.de/touren/wendelstein/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://vegetarianhulk.de/en/hikes/wendelstein/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://vegetarianhulk.de/touren/wendelstein/"/>
+  </url>
+  <url>
+    <loc>https://vegetarianhulk.de/weihnachtsmarkt/</loc>
+    <lastmod>2026-11-16</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://vegetarianhulk.de/weihnachtsmarkt/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vegetarianhulk.de/en/christmas-markets/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vegetarianhulk.de/weihnachtsmarkt/"/>
   </url>
 </urlset>

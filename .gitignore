@@ -50,3 +50,7 @@ audit/
 # Python-Bytecode der Bau-Skripte — gehoert nicht in die Auslieferung
 __pycache__/
 *.pyc
+
+# === Weihnachtsmarkt-Radar: Zwischenablage der Abrufe ===
+scripts/markt/.ablage/
+__pycache__/

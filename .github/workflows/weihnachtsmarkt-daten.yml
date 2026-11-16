@@ -1,0 +1,49 @@
+# Frischt jede Woche die Daten des Weihnachtsmarkt-Radars auf (Sebi 16.11.2026:
+# „woechentlichen Refresher mit einbauen“). Quellen: Tourismus-Datenbank der DZT,
+# Stadt Essen, OpenStreetMap, Seiten der Veranstalter. Veroeffentlicht wird nur,
+# wenn Tests und Daten-Tor gruen sind – sonst bleibt der alte Stand live und der
+# Lauf ist rot.
+# Nur in der Saison (Oktober bis Januar): ausserhalb gibt es keine Termine, das
+# Tor staende dauerhaft rot und wuerde ignoriert.
+name: Weihnachtsmarkt-Daten
+on:
+  schedule:
+    - cron: '17 4 * 10-12,1 1'   # montags 04:17 UTC
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: weihnachtsmarkt-daten
+  cancel-in-progress: false
+jobs:
+  auffrischen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Zwischenablage (Ortsnachschlag, Postleitzahlen)
+        uses: actions/cache@v4
+        with:
+          path: scripts/markt/.ablage
+          key: radar-ablage-${{ github.run_id }}
+          restore-keys: radar-ablage-
+      - name: Tests
+        run: cd scripts/markt && python3 -m unittest test_datum test_pruefen
+      - name: Daten bauen
+        env:
+          DZT_KEY: ${{ secrets.DZT_KEY }}
+        run: python3 -u scripts/markt/bauen.py --frisch
+      - name: Daten-Tor
+        run: python3 scripts/markt/pruefen.py
+      - name: Veroeffentlichen, wenn sich etwas geaendert hat
+        run: |
+          if git diff --quiet -- weihnachtsmarkt/daten; then echo "keine Aenderung"; exit 0; fi
+          git config user.name "weihnachtsmarkt-daten"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add weihnachtsmarkt/daten
+          git commit -m "chore(radar): Daten aufgefrischt"
+          git pull --rebase origin main
+          git push origin HEAD:main
