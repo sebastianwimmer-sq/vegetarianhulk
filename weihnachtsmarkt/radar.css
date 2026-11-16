@@ -59,7 +59,10 @@ html:has(.wm-seite) { background: #1a0907; }
 
 /* ── Filter: frei auf dem Grund, drei benannte Gruppen ── */
 .wm-arbeit { margin-top: 36px; scroll-margin-top: 16px; }
-.wm-filter { display: flex; flex-direction: column; gap: 22px; margin-top: 24px; }
+.wm-filter { display: flex; flex-direction: column; gap: 16px; margin-top: 18px; }
+/* schmal: „10 km 25 km …“ und die Art-Wörter erklären sich selbst; ihre Überschriften bleiben für Vorlesegeräte.
+   So steht die erste Trefferzeile nach der Suche im Bild statt am unteren Rand (Besucher-Probe 17.11.2026). */
+#wm-umkreis .wm-gruppe-kopf, #wm-arten .wm-gruppe-kopf { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .wm-gruppe-kopf { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 0 0 10px; font-weight: 600; font-size: 17px; }
 .wm-gruppe-kopf span + span { font-weight: 400; font-size: 15px; color: var(--wm-zucker-leise); font-variant-numeric: tabular-nums; }
 .wm-segment { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 4px; border-radius: var(--wm-r); background: rgba(0,0,0,.34); box-shadow: inset 0 0 0 1px var(--wm-linie); }
@@ -97,7 +100,7 @@ html:has(.wm-seite) { background: #1a0907; }
 .wm-tag[aria-pressed="true"] { color: var(--wm-zucker); }
 
 /* ── Treffer: eine Tafel, Zeile je Markt ── */
-.wm-treffer { margin-top: 26px; }
+.wm-treffer { margin-top: 20px; }
 .wm-nw { white-space: nowrap; }
 .wm-zahl { margin: 0; font: 700 clamp(26px, 6.6vw, 34px)/1.15 'Playfair Display', Georgia, serif; letter-spacing: -.005em; text-wrap: balance; }
 .wm-zahl-unter { margin: 6px 0 0; font-size: 16px; line-height: 1.4; color: var(--wm-zucker-leise); }
@@ -189,6 +192,7 @@ html:has(.wm-seite) { background: #1a0907; }
   .wm-arbeit { display: grid; grid-template-columns: 332px minmax(0, 1fr); gap: 0 56px; align-items: start; margin-top: 48px; scroll-margin-top: 112px; }
   .wm-ergebnis-kopf { grid-column: 2; grid-row: 1; }
   .wm-filter { grid-column: 1; grid-row: 1 / span 2; gap: 28px; margin-top: 6px; }
+  #wm-umkreis .wm-gruppe-kopf, #wm-arten .wm-gruppe-kopf { position: static; width: auto; height: auto; overflow: visible; clip-path: none; white-space: normal; }
   .wm-treffer { grid-column: 2; grid-row: 2; margin-top: 20px; }
   .wm-chips { flex-wrap: wrap; overflow: visible; margin-inline: 0; padding: 0; -webkit-mask-image: none; mask-image: none; }
   .wm-chips::after, .wm-tage::after { content: none; }
