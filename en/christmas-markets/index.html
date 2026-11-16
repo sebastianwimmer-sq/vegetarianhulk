@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="vh-quelle" content="/weihnachtsmarkt/@30d6988509bc95bd">
+<meta name="vh-quelle" content="/weihnachtsmarkt/@cde40f2a151c8ca9">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://*.challenges.cloudflare.com https://vh-forms.peaking.workers.dev; base-uri 'none'; form-action 'self'; frame-src https://challenges.cloudflare.com">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -64,30 +64,46 @@
         <button class="wm-knopf" type="submit">Search</button>
       </div>
       <p class="wm-fehler" role="alert" hidden></p>
-      <div class="wm-gruppe" id="wm-umkreis" role="group" aria-label="Radius">
-        <span>Radius</span>
-        <button class="wm-wahl" type="button" data-km="10" aria-pressed="false">10 km</button>
-        <button class="wm-wahl" type="button" data-km="25" aria-pressed="true">25 km</button>
-        <button class="wm-wahl" type="button" data-km="50" aria-pressed="false">50 km</button>
-        <button class="wm-wahl" type="button" data-km="100" aria-pressed="false">100 km</button>
-      </div>
-      <div class="wm-gruppe" id="wm-arten" role="group" aria-label="What kind of market?" hidden>
-        <span>What kind of market?</span>
-      </div>
     </form>
+    <p class="wm-vertrauen"></p>
 
-    <div class="wm-tage" role="group" aria-label="Pick a day" hidden></div>
-    <h2 class="wm-zahl" aria-live="polite"></h2>
-    <div class="wm-liste"></div>
-    <details class="wm-offen" hidden></details>
-    <p class="wm-stand"></p>
+    <div class="wm-arbeit" hidden>
+      <div class="wm-ergebnis-kopf">
+        <h2 class="wm-zahl" aria-live="polite"></h2>
+        <p class="wm-zahl-unter"></p>
+      </div>
+      <aside class="wm-filter" aria-label="Narrow your search">
+        <div id="wm-umkreis" role="group" aria-label="Radius">
+          <p class="wm-gruppe-kopf"><span>Radius</span></p>
+          <div class="wm-segment">
+            <button class="wm-wahl" type="button" data-km="10" aria-pressed="false">10 km</button>
+            <button class="wm-wahl" type="button" data-km="25" aria-pressed="true">25 km</button>
+            <button class="wm-wahl" type="button" data-km="50" aria-pressed="false">50 km</button>
+            <button class="wm-wahl" type="button" data-km="100" aria-pressed="false">100 km</button>
+          </div>
+        </div>
+        <div role="group" aria-label="When?">
+          <p class="wm-gruppe-kopf"><span>When?</span><span class="wm-spanne"></span></p>
+          <div class="wm-tage"></div>
+        </div>
+        <div id="wm-arten" role="group" aria-label="What kind of market?" hidden>
+          <p class="wm-gruppe-kopf"><span>What kind of market?</span></p>
+          <div class="wm-chips"></div>
+        </div>
+      </aside>
+      <div class="wm-treffer">
+        <div class="wm-liste"></div>
+        <details class="wm-offen" hidden></details>
+        <p class="wm-stand"></p>
+      </div>
+    </div>
 
     <section class="wm-rueck" hidden>
       <div class="wm-r-frage">
         <h2>Did you find what you were looking for?</h2>
         <div class="wm-zeile">
-          <button class="wm-knopf" type="button" id="wm-r-ja">Yes</button>
-          <button class="wm-knopf" type="button" id="wm-r-nein">No</button>
+          <button class="wm-knopf wm-knopf--leise" type="button" id="wm-r-ja">Yes</button>
+          <button class="wm-knopf wm-knopf--leise" type="button" id="wm-r-nein">No</button>
         </div>
       </div>
       <form class="wm-r-ja" hidden novalidate>
@@ -101,10 +117,10 @@
       </form>
       <form class="wm-r-nein" hidden novalidate>
         <h2>What was missing?</h2>
-        <div class="wm-gruppe" role="radiogroup" aria-label="What was missing?">
-          <label><input type="radio" name="wm-grund" value="markt-fehlt" checked> A market is missing</label>
-          <label><input type="radio" name="wm-grund" value="termin-falsch"> A date is wrong</label>
-          <label><input type="radio" name="wm-grund" value="anderes"> Something else</label>
+        <div class="wm-gruende" role="radiogroup" aria-label="What was missing?">
+          <label class="wm-grund"><input type="radio" name="wm-grund" value="markt-fehlt" checked> A market is missing</label>
+          <label class="wm-grund"><input type="radio" name="wm-grund" value="termin-falsch"> A date is wrong</label>
+          <label class="wm-grund"><input type="radio" name="wm-grund" value="anderes"> Something else</label>
         </div>
         <label for="wm-r-markt">Which market, in which town? (optional)</label>
         <input id="wm-r-markt" type="text" maxlength="160">
