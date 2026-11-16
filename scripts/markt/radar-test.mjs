@@ -47,6 +47,12 @@ async function ablauf(browser, kontext, pfad, name, sprache) {
   pruef(await s.locator('.wm-arbeit').isHidden(), `${name}: Filter und Treffer sind vor der Suche sichtbar`);
   await s.waitForFunction(() => /\d/.test(document.querySelector('.wm-vertrauen').textContent), null, { timeout: 5000 }).catch(() => pruef(false, `${name}: Zeile unter der Suche nennt keine Zahl`));
 
+  // Vor der Suche ist die Seite nicht leer: bis zu sechs Märkte mit Termin, die offen sind oder bald öffnen
+  await s.waitForFunction(() => document.querySelectorAll('.wm-auf').length > 0, null, { timeout: 8000 }).catch(() => pruef(false, `${name}: keine Liste „offen und bald los“ vor der Suche`));
+  const auf = await s.locator('.wm-auf').count();
+  pruef(auf >= 1 && auf <= 6, `${name}: ${auf} Zeilen in der Liste vor der Suche (1 bis 6 erwartet)`);
+  if (auf) pruef(/\d/.test(await s.locator('.wm-auf .wm-auf-wann').first().innerText()), `${name}: erste Zeile vor der Suche ohne Termin`);
+
   // Falsche Eingabe sagt, was zu tun ist
   await s.fill('#wm-plz', '123'); await s.click('#wm-form .wm-knopf');
   pruef(await s.locator('#wm-form .wm-fehler').isVisible(), `${name}: keine Meldung bei dreistelliger Postleitzahl`);
@@ -61,6 +67,7 @@ async function ablauf(browser, kontext, pfad, name, sprache) {
   await s.evaluate(() => document.getAnimations().forEach((a) => { if (a.effect?.getComputedTiming().iterations !== Infinity) a.finish(); }));
   const sicht = await s.locator('.wm-karte').first().evaluate((e) => ({ o: getComputedStyle(e).opacity, h: e.getBoundingClientRect().height }));
   pruef(sicht.o === '1' && sicht.h > 80, `${name}: erste Karte nach der Bewegung nicht sichtbar (Deckkraft ${sicht.o}, Höhe ${Math.round(sicht.h)})`);
+  pruef(await s.locator('.wm-auftakt').isHidden(), `${name}: Liste von vor der Suche steht noch neben den Treffern`);
   const n25 = await s.locator('.wm-tag').first().locator('span').last().innerText();
   const erste = s.locator('.wm-karte').first();
   pruef((await erste.locator('h3').innerText()).length > 3, `${name}: erste Karte ohne Namen`);
@@ -142,6 +149,17 @@ try {
   pruef(await s.locator('.wm-halt').isHidden(), 'ruhig: Halte-Knopf sichtbar, obwohl nichts läuft');
   pruef((await s.locator('.wm-karte').first().evaluate((e) => getComputedStyle(e).opacity)) === '1', 'ruhig: erste Karte nicht voll sichtbar');
   await k.close();
+  // Tipp auf einen Markt vor der Suche sucht rund um ihn, ohne Postleitzahl in der Adresse; „Markt melden“ öffnet die Meldung auch ohne Suche
+  const k2 = await safari.newContext(devices['iPhone 15 Pro']); const t = await k2.newPage();
+  await t.goto(`${basis}/weihnachtsmarkt/`);
+  await t.waitForFunction(() => document.querySelectorAll('.wm-auf').length > 0);
+  const ort = await t.locator('.wm-auf span').last().innerText();
+  await t.click('.wm-melden');
+  pruef(await t.locator('#wm-r-text-nein').isVisible(), 'melden: „Markt melden“ öffnet die Meldung nicht');
+  await t.locator('.wm-auf').first().click();
+  await t.waitForFunction(() => document.querySelectorAll('.wm-karte').length > 0, null, { timeout: 15000 }).catch(() => pruef(false, 'tipp: keine Treffer nach Tipp auf einen Markt'));
+  pruef((await t.locator('.wm-zahl').innerText()).length > 5 && new URL(t.url()).hash === '', `tipp: Titel oder Adresse stimmt nicht (${await t.locator('.wm-zahl').innerText()} · ${new URL(t.url()).hash}; letzter Ort der Liste ${ort})`);
+  await k2.close();
 } catch (e) {
   befunde.push(`Lauf abgebrochen (nicht gemessen): ${String(e).slice(0, 300)}`);
 } finally {

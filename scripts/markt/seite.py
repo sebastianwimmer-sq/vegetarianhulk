@@ -18,17 +18,17 @@ T = {
         lang='de', pfad='/weihnachtsmarkt/', ziel='weihnachtsmarkt/index.html', start='/', locale='de_DE',
         titel='Weihnachtsmarkt-Radar: Märkte in deiner Nähe mit Termin | VegetarianHulk',
         beschreibung='Postleitzahl eintippen und sehen, welche Weihnachtsmärkte, Christkindlmärkte und Adventsmärkte in deinem Umkreis offen haben. Mit Termin und Quelle, für ganz Deutschland.',
-        bild_alt='Christkindlmarkt bei Nacht: ein Christbaum voller Lichter, davor eine Feuerschale mit Funken, darüber ein goldener Engel',
+        bild_alt='Verschneite Winternacht im Alpenvorland: zwischen dunklen Tannen leuchtet in der Ferne ein kleiner Christkindlmarkt warm und golden',
         h1='Wo riecht es heute nach Glühwein?', unter='Weihnachtsmärkte, Christkindlmärkte und Adventsmärkte in deiner Nähe, mit Termin.',
-        halt='Funken anhalten', plz='Deine Postleitzahl', suchen='Suchen', umkreis='Umkreis', arten='Was für ein Markt?', tage_label='Wann?', filter='Suche eingrenzen',
+        halt='Schnee anhalten', auftakt_titel='Gerade offen und bald los', auftakt_text='Tipp auf einen Markt und du siehst, was drumherum offen hat.', plz='Deine Postleitzahl', suchen='Suchen', umkreis='Umkreis', arten='Was für ein Markt?', tage_label='Wann?', filter='Suche eingrenzen',
         r_frage='Hast du gefunden, was du gesucht hast?', r_ja='Ja', r_nein='Nein',
         r_ja_titel='Schön. Wie gefällt dir der Radar?', r_ja_text='Magst du noch was dazu sagen? (freiwillig)',
         r_nein_titel='Was hat gefehlt?', g1='Ein Markt fehlt', g2='Ein Termin stimmt nicht', g3='Etwas anderes',
         r_markt='Welcher Markt, in welchem Ort? (freiwillig)', r_nein_text='Schreib kurz, was gefehlt hat', senden='Abschicken', falle='Dieses Feld bitte leer lassen',
         r_hinweis='Mit dem Abschicken geht dein Text an mich, dazu die ersten zwei Ziffern deiner Postleitzahl und der Umkreis. Mehr in der <a href="/datenschutz.html#radar">Datenschutzerklärung</a>.',
-        tisch_alt='Holztisch im Kerzenlicht mit Glühwein, Zimtsternen, Orangen mit Nelken und Zimtstangen',
-        tisch_titel='Magst du mehr von draußen?', tisch_text='Im Letter schreibe ich, was ich am Berg und unterwegs erlebe. Zum Einstieg gibt es den Berg-Starter.',
-        bilder='Die beiden Bilder auf dieser Seite sind mit KI erzeugt.',
+        tisch_alt='Dampfende Tasse Glühwein auf einem verschneiten Geländer in kalter, blauer Winternacht, daneben ein Zimtstern und eine Orangenscheibe',
+        tisch_titel='Fehlt dein Markt?', tisch_text='Schreib mir, welcher fehlt. Ich trage ihn nach.', tisch_knopf='Markt melden',
+        bilder='Die Bilder auf dieser Seite sind mit KI erzeugt.',
         claim='Builder &amp; Creator. Disziplin über Hype.', legal='Rechtliches', impressum='Impressum', datenschutz='Datenschutz', recht_attr='',
         nav_label='Hauptnavigation', nav=[('/', 'Start'), ('/partner-picks/', 'P&amp;P'), ('/touren/', 'Hulk&nbsp;Hikes'), ('/newsletter', 'News'), ('/kooperationen.html', 'Brands')],
     ),
@@ -36,17 +36,17 @@ T = {
         lang='en', pfad='/en/christmas-markets/', ziel='en/christmas-markets/index.html', start='/en/', locale='en_GB',
         titel='Christmas Market Radar: German markets near you, with dates | VegetarianHulk',
         beschreibung='Type a German postcode and see which Christmas markets are open near you. With dates and sources, for all of Germany.',
-        bild_alt='A Bavarian Christmas market at night: a tree full of lights, a fire bowl with sparks in front, a golden angel above',
+        bild_alt='A snowy winter night in the Alpine foothills: between dark firs, a small Christmas market glows warm and golden in the distance',
         h1='Where does it smell of mulled wine today?', unter='Christmas markets in Germany near you, with dates.',
-        halt='Pause sparks', plz='Your German postcode', suchen='Search', umkreis='Radius', arten='What kind of market?', tage_label='When?', filter='Narrow your search',
+        halt='Pause snow', auftakt_titel='Open now and opening soon', auftakt_text='Tap a market to see what is open around it.', plz='Your German postcode', suchen='Search', umkreis='Radius', arten='What kind of market?', tage_label='When?', filter='Narrow your search',
         r_frage='Did you find what you were looking for?', r_ja='Yes', r_nein='No',
         r_ja_titel='Great. How do you like the radar?', r_ja_text='Anything you want to add? (optional)',
         r_nein_titel='What was missing?', g1='A market is missing', g2='A date is wrong', g3='Something else',
         r_markt='Which market, in which town? (optional)', r_nein_text='Tell me briefly what was missing', senden='Send', falle='Please leave this field empty',
         r_hinweis='When you send this, your text goes to me, together with the first two digits of your postcode and the radius. More in the <a href="/datenschutz.html#radar" hreflang="de">privacy policy (German)</a>.',
-        tisch_alt='A wooden table in candlelight with mulled wine, cinnamon stars, clove-studded oranges and cinnamon sticks',
-        tisch_titel='Want more from the outdoors?', tisch_text='In my letter I write about what I experience in the mountains and on the road. You get the Hike Starter to begin with.',
-        bilder='Both images on this page are AI-generated.',
+        tisch_alt='A steaming mug of mulled wine on a snowy railing in a cold blue winter night, with a cinnamon star and a slice of orange',
+        tisch_titel='Is your market missing?', tisch_text='Tell me which one. I will add it.', tisch_knopf='Report a market',
+        bilder='The images on this page are AI-generated.',
         claim='Builder &amp; creator. Discipline over hype.', legal='Legal', impressum='Legal notice (German)', datenschutz='Privacy (German)', recht_attr=' hreflang="de"',
         nav_label='Main navigation', nav=[('/en/', 'Home'), ('/en/partner-picks/', 'P&amp;P'), ('/en/hikes/', 'Hulk&nbsp;Hikes'), ('/en/newsletter/', 'News'), ('/en/brands/', 'Brands')],
     ),
@@ -62,12 +62,12 @@ VORLAGE = '''<!DOCTYPE html>
 <title>{titel}</title>
 <meta name="description" content="{beschreibung}">
 <link rel="canonical" href="https://vegetarianhulk.de{pfad}">
-<meta name="theme-color" content="#1a0907">
+<meta name="theme-color" content="#0a1226">
 <meta property="og:type" content="website">
 <meta property="og:title" content="{titel}">
 <meta property="og:description" content="{beschreibung}">
 <meta property="og:url" content="https://vegetarianhulk.de{pfad}">
-<meta property="og:image" content="https://vegetarianhulk.de/weihnachtsmarkt/img/christbaum.webp">
+<meta property="og:image" content="https://vegetarianhulk.de/weihnachtsmarkt/img/winternacht-quer.webp">
 <meta property="og:locale" content="{locale}">
 <meta property="og:site_name" content="VegetarianHulk">
 <meta name="twitter:card" content="summary_large_image">
@@ -78,16 +78,19 @@ VORLAGE = '''<!DOCTYPE html>
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/weihnachtsmarkt/img/christbaum.webp" as="image" fetchpriority="high">
+<link rel="preload" href="/weihnachtsmarkt/img/winternacht-hoch.webp" as="image" fetchpriority="high" media="(max-width: 899px)">
+<link rel="preload" href="/weihnachtsmarkt/img/winternacht-quer.webp" as="image" fetchpriority="high" media="(min-width: 900px)">
 <link rel="stylesheet" href="/fonts.css?v=0">
 <link rel="stylesheet" href="/v3.css?v=0">
 <link rel="stylesheet" href="/weihnachtsmarkt/radar.css?v=0">
-<script src="/newsletter-form.js?v=0" defer></script>
 </head>
 <body class="wm-seite">
 <main>
   <section class="wm-szene">
-    <img src="/weihnachtsmarkt/img/christbaum.webp" alt="{bild_alt}" width="1500" height="1500" fetchpriority="high">
+    <picture>
+      <source media="(min-width: 900px)" srcset="/weihnachtsmarkt/img/winternacht-quer.webp" width="1920" height="1080">
+      <img src="/weihnachtsmarkt/img/winternacht-hoch.webp" alt="{bild_alt}" width="1080" height="1920" fetchpriority="high">
+    </picture>
     <div class="wm-schleier"></div>
     <canvas aria-hidden="true"></canvas>
     <header class="topbar">
@@ -112,6 +115,12 @@ VORLAGE = '''<!DOCTYPE html>
       <p class="wm-fehler" role="alert" hidden></p>
     </form>
     <p class="wm-vertrauen"></p>
+
+    <section class="wm-auftakt" hidden>
+      <h2>{auftakt_titel}</h2>
+      <p>{auftakt_text}</p>
+      <div class="wm-auf-liste"></div>
+    </section>
 
     <div class="wm-arbeit" hidden>
       <div class="wm-ergebnis-kopf">
@@ -182,11 +191,11 @@ VORLAGE = '''<!DOCTYPE html>
   </div>
 
   <section class="wm-tisch">
-    <img src="/weihnachtsmarkt/img/tisch.webp" alt="{tisch_alt}" width="1200" height="891" loading="lazy">
+    <img src="/weihnachtsmarkt/img/tasse.webp" alt="{tisch_alt}" width="1440" height="1000" loading="lazy">
     <div class="wrap">
       <h2>{tisch_titel}</h2>
       <p>{tisch_text}</p>
-      <div class="wm-brief"><vh-newsletter-form></vh-newsletter-form></div>
+      <button class="wm-knopf wm-melden" type="button">{tisch_knopf}</button>
       <p class="wm-bild-hinweis">{bilder}</p>
     </div>
   </section>

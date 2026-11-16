@@ -100,6 +100,20 @@ class Veranstalterschreibweisen(unittest.TestCase):
     def test_oeffnungszeiten_mit_wochentag_sind_kein_termin(self):
         self.assertEqual(aus_seite('Weihnachtsmarkt geöffnet Do 15-20 Uhr, Fr 12-20 Uhr', J)[0], [])
 
+    def test_frist_auf_der_marktseite_ist_kein_markttermin(self):
+        seite = ('Christkindlmarkt Prien. Wunschzettelabgabe: vom 16. November 2026 bis 14. Dezember 2026 im Tourismusbüro. '
+                 'Sternenkauf: vom 24. November 2026 bis 14. Dezember 2026.')
+        self.assertEqual(aus_seite(seite, J)[0], [])
+
+    def test_wort_bewerben_in_der_naehe_nimmt_keinen_termin(self):
+        seite = 'Zwieseler Glasweihnacht jetzt mit einem Stand bewerben! Vom 27. bis 29. November 2026 am Stadtplatz.'
+        self.assertEqual(aus_seite(seite, J)[0], [(d(11, 27), d(11, 29))])
+
+    def test_markttermin_neben_einer_frist_wird_gelesen(self):
+        seite = ('Der Christkindlmarkt findet vom 27. November bis 20. Dezember 2026 statt. '
+                 'Anmeldung für Aussteller: 1. November bis 10. November 2026.')
+        self.assertEqual(aus_seite(seite, J)[0], [(d(11, 27), d(12, 20))])
+
     def test_erstes_wochenende_ohne_jahr_bleibt_ohne_zweites_ungelesen(self):
         self.assertEqual(aus_seite('Weihnachtsmarkt 26. - 29.11 täglich ab 15 Uhr', J)[0], [])
 

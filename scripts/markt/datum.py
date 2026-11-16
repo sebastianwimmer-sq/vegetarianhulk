@@ -19,6 +19,13 @@ _UND = r'(?:-|bis(?:\s+zum)?|und|\+|/)'
 
 THEMA = re.compile(r'weihnacht|advent|christkind|nikolaus|winter|lichter|budenzauber|gl(?:ü|ue)hwein|markt|christmas', re.I)
 KONTEXT_ZEICHEN = 300
+# Zeitraeume, die auf einer Marktseite stehen, aber etwas anderes meinen (17.11.2026: Prien zeigte die Frist
+# der Wunschzettelabgabe als Markttermin). Geprueft wird nur der Vorspann direkt vor dem Datum.
+# Nur als Etikett mit Doppelpunkt direkt vor dem Datum („Wunschzettelabgabe: vom …“): das blosse Wort in der Naehe
+# („jetzt mit einem Stand bewerben! Vom 27. bis 29. November“) nahm zwei echten Maerkten den Termin.
+KEIN_MARKT = re.compile(r'(?:wunschzettel|abgabe|anmeld\w*|bewerb\w*|sternenkauf|einsendeschluss|vorverkauf|ticketverkauf|verlosung|gewinnspiel|frist)'
+                        r'[^.!?:]{0,30}:\s*(?:vom\s+|ab\s+|von\s+)?$', re.I)
+VORSPANN_ZEICHEN = 70
 MAX_TAGE = 70
 WOCHENEND_TAGE = 4
 MAX_TEILE = 6
@@ -107,7 +114,8 @@ def funde(text, jahr, nur_im_thema=True):
             wert = bau(m.groups())
             von, bis = (wert, wert) if ist_einzel else wert
             a, b = max(0, m.start() - KONTEXT_ZEICHEN), min(len(text), m.end() + KONTEXT_ZEICHEN)
-            if _gueltig(von, bis, jahr) and (not nur_im_thema or THEMA.search(text[a:b])):
+            fremd = nur_im_thema and KEIN_MARKT.search(text[max(0, m.start() - VORSPANN_ZEICHEN):m.start()])
+            if _gueltig(von, bis, jahr) and not fremd and (not nur_im_thema or THEMA.search(text[a:b])):
                 ausschnitt = text[max(0, m.start() - 60):m.end() + 40].strip()
                 (einzel if ist_einzel else bereiche).append((von, bis, ausschnitt))
             # Fundstelle schwaerzen, damit ein Einzeltag nicht aus einem Zeitraum gelesen wird
