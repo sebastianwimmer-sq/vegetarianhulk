@@ -42,6 +42,8 @@ ASSETS=(
   newsletter/form.js
   codes/partners.js
   lieblingsprodukte/products.js
+  weihnachtsmarkt/radar.css
+  weihnachtsmarkt/radar.js
 )
 
 # Interne Verzeichnisse, deren HTML nicht angefasst wird

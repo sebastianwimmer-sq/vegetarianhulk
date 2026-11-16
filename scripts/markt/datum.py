@@ -139,9 +139,38 @@ def aus_feld(wert, jahr):
     return entscheide(bereiche + einzel)
 
 
+_WOCHENTAG = re.compile(r'\b(?:Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Samstag|Sonntag|Mo|Di|Mi|Do|Fr|Sa|So)\b\.?,?\s+(?=\d{1,2}\s?\.)')
+_PUNKT_LOSE = re.compile(r'(?<!\d)(\d{1,2})\s\.(?=\s?[A-Za-zÄÖÜ])')
+_ZWEI = r'\s*(?:&|und|sowie)\s*(?:vom\s+)?'
+_TEIL = r'\d{1,2}\.\s?(?:-|bis)\s?\d{1,2}\.\s?'
+_ERBE_ZAHL = re.compile(r'(?<![\d.])(' + _TEIL + r'\d{1,2})\.?(' + _ZWEI + _TEIL + r'\d{1,2}\.\s?(20\d\d))', re.I)
+_ERBE_WORT = re.compile(r'(?<![\d.])(' + _TEIL + _MON + r')\.?(' + _ZWEI + _TEIL + _MON + r'\.?\s*(20\d\d))', re.I)
+
+
+def glatt(text):
+    """Schreibweisen von Veranstalterseiten vereinheitlichen, ohne ein Datum zu erfinden:
+    Wochentage vor dem Tag fallen weg („Fr., 04.12. - So., 06.12.2026“), „20 .November“ wird
+    „20. November“, und bei „26. - 29.11 & 03. - 06.12.2026“ erbt das erste Wochenende das Jahr
+    des zweiten. Ein so gewonnener Zeitraum muss danach wie jeder andere in die Saison passen."""
+    t = _WOCHENTAG.sub('', text)
+    t = _PUNKT_LOSE.sub(r'\1. ', t)
+    def jahr_davor(monat_erst, monat_zweit, jahr):      # Dezember & Januar 2027: das erste Wochenende liegt im Vorjahr
+        return int(jahr) - 1 if monat_erst > monat_zweit else int(jahr)
+
+    def zahl(m):
+        erst = int(re.search(r'(\d{1,2})$', m.group(1)).group(1))
+        zweit = int(re.search(r'(\d{1,2})\.\s?20\d\d$', m.group(2)).group(1))
+        return f'{m.group(1)}.{jahr_davor(erst, zweit, m.group(3))}{m.group(2)}'
+
+    def wort(m):
+        return f'{m.group(1)} {jahr_davor(MONATE[m.group(2).lower()], MONATE[m.group(4).lower()], m.group(5))}{m.group(3)}'
+
+    return _ERBE_WORT.sub(wort, _ERBE_ZAHL.sub(zahl, t))
+
+
 def aus_seite(roh, jahr):
     """Veranstalterseite: nur Zeitraeume im Themen-Umfeld, Einzeltage zaehlen nicht."""
-    bereiche, einzel = funde(klartext(roh), jahr)
+    bereiche, einzel = funde(glatt(klartext(roh)), jahr)
     termine, grund = entscheide(bereiche)
     if not termine and not bereiche and einzel:
         grund = 'nur Einzeltage'

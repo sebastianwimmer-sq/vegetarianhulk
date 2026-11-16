@@ -6,6 +6,7 @@ import json
 import re
 from datetime import datetime, timezone
 
+import kuratiert
 import quelle_dzt
 from datum import _gueltig, aus_feld
 from netz import hole, overpass
@@ -90,5 +91,12 @@ def dzt(jahr, frisch=False):
     return liste
 
 
-# Reihenfolge = Vorrang beim Zusammenfuehren: Stadtdaten, dann Tourismus-Datenbank, dann OpenStreetMap.
-QUELLEN = [('essen', essen), ('dzt', dzt), ('osm', osm)]
+def hand(jahr, frisch=False):
+    """Von Hand gepflegte Maerkte (kuratiert.json): nur Name, Ort und Seite des Veranstalters, nie ein Termin."""
+    return [_roh(m['id'], m['name'], m['lat'], m['lon'], link=m['link'], platz=m.get('platz', ''), ort=m['ort'])
+            for m in kuratiert.lade()]
+
+
+# Reihenfolge = Vorrang beim Zusammenfuehren: Stadtdaten, dann Tourismus-Datenbank, dann die von Hand
+# gepflegten Veranstalterseiten (ihr Link schlaegt den aus OpenStreetMap), dann OpenStreetMap.
+QUELLEN = [('essen', essen), ('dzt', dzt), ('hand', hand), ('osm', osm)]
