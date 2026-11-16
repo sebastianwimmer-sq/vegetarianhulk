@@ -160,6 +160,16 @@ try {
   await t.waitForFunction(() => document.querySelectorAll('.wm-karte').length > 0, null, { timeout: 15000 }).catch(() => pruef(false, 'tipp: keine Treffer nach Tipp auf einen Markt'));
   pruef((await t.locator('.wm-zahl').innerText()).length > 5 && new URL(t.url()).hash === '', `tipp: Titel oder Adresse stimmt nicht (${await t.locator('.wm-zahl').innerText()} · ${new URL(t.url()).hash}; letzter Ort der Liste ${ort})`);
   await k2.close();
+  // Radar-Anmeldung: eigenes Formular mit eigenem Versprechen (kein Berg-Starter), Rückkehr aus der Mail zeigt den Stand und räumt die Adresse auf
+  const k3 = await chrom.newContext({ viewport: { width: 390, height: 844 } }); const b = await k3.newPage();
+  await b.route('**/challenges.cloudflare.com/**', (r) => r.abort());
+  await b.goto(`${basis}/weihnachtsmarkt/#dabei`);
+  await b.waitForFunction(() => !document.querySelector('.wm-bescheid-stand').hidden);
+  pruef(/Du bist dabei/.test(await b.locator('.wm-bescheid-stand').innerText()) && new URL(b.url()).hash === '', `anmeldung: Rückkehr aus der Mail zeigt den Stand nicht (${await b.locator('.wm-bescheid-stand').innerText()} · ${new URL(b.url()).hash})`);
+  const formText = await b.locator('vh-newsletter-form').evaluate((e) => e.shadowRoot.textContent);
+  pruef(/Bescheid geben/.test(formText) && /Weihnachtsmarkt-Radar/.test(formText) && !/Berg-Starter/.test(formText), 'anmeldung: Formular trägt nicht den Radar-Wortlaut oder verspricht den Berg-Starter');
+  pruef(await b.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'anmeldung: Seite ist breiter als der Schirm');
+  await k3.close();
 } catch (e) {
   befunde.push(`Lauf abgebrochen (nicht gemessen): ${String(e).slice(0, 300)}`);
 } finally {
