@@ -79,6 +79,7 @@ lauf "Erklaer-Fussnoten"             python3 scripts/text-check.py
 lauf "Text (Fixtures)"               python3 scripts/text-check.py --selbsttest
 lauf "Quellen (Fixtures)"            python3 scripts/quellen-einbauen.py --selbsttest
 lauf "Schild (Fixtures)"             python3 scripts/schild-check.py --selbsttest
+lauf "Saison-Schilder (Fixtures)"    python3 scripts/saison-schilder.py --selbsttest
 lauf "Fremde Hosts & Ordner"         python3 scripts/fremdhosts-check.py
 lauf "Inline-Handler gegen CSP"      python3 scripts/inline-handler-check.py
 lauf "Inline-Handler (Fixtures)"      python3 scripts/inline-handler-check.py --selbsttest

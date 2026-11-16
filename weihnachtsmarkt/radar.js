@@ -9,38 +9,42 @@
   var KONTAKT = 'info@vegetarianhulk.de';
   var JE_SEITE = 12, TAGE_VORAUS = 28, FEUER_X = 0.51, FEUER_Y = 0.835, BILD_LAGE_X = 0.76;
   var T = EN ? {
-    wt: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], mon: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    wt: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], woche: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], mon: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     bis: ' to ', plzFalsch: 'A German postcode has five digits. Please check yours.', plzFremd: 'We don’t know this postcode. Please check the five digits.',
     laden: 'Could not load the markets. Please check your connection and tap “Search” again.',
     alle: 'all', tage: 'days', offen: ' open', zu: 'none', maerkte: ' markets', einMarkt: '1 market',
-    zahlAlle: function (n) { return n === 1 ? '1 market near you' : n + ' markets near you'; },
+    zahlAlle: function (n, o) { return (n === 1 ? '1 market' : n + ' markets') + (o ? ' around ' + o : ' near you'); },
+    unter: function (k) { return 'Within ' + k + ' km, nearest first'; },
+    vertrauen: function (s) { return zahl(s.bestaetigt) + ' markets with a confirmed 2026 date. Updated ' + datumLang(s.gebaut) + '.'; },
     zahlTag: function (d, n) { return n === 1 ? '1 market is open on ' + d : n + ' markets are open on ' + d; },
     keinTag: function (d) { return 'No market we know is open on ' + d; },
     keiner: 'We don’t know a market for this choice yet. Try a wider radius or fewer filters.',
     heute: 'Open today', morgen: 'Starts tomorrow', inTagen: function (n) { return 'Starts in ' + n + ' days'; },
-    veranstalter: 'Organiser’s page', karte: 'Show on map', zeiten: 'Opening hours: ', zeitenOsm: 'Opening hours (OpenStreetMap): ',
+    veranstalter: 'Organiser', veranstalterLang: 'Open the organiser’s page', karte: 'Map', karteLang: 'Show on the map', zeiten: 'Opening hours: ', zeitenOsm: 'Opening hours (OpenStreetMap): ',
     quelle: 'Source: ', lizenz: 'Licence', geprueft: 'checked ', seiteVeranstalter: 'organiser’s page', mehr: 'Show more',
     ohneTermin: function (n) { return n === 1 ? '1 more market without a confirmed 2026 date' : n + ' more markets without a confirmed 2026 date'; },
-    stand: function (s) { return s.maerkte + ' markets in Germany, ' + s.bestaetigt + ' with a confirmed 2026 date. Last update ' + datumLang(s.gebaut) + '. Dates as stated by the sources, without guarantee. Location data © OpenStreetMap contributors. Dates: open data of the German tourism boards via the German National Tourist Board, City of Essen, and the organisers’ pages.'; },
+    stand: function (s) { return zahl(s.maerkte) + ' markets in Germany, ' + zahl(s.bestaetigt) + ' with a confirmed 2026 date. Last update ' + datumLang(s.gebaut) + '. Dates as stated by the sources, without guarantee. Location data © OpenStreetMap contributors. Dates: open data of the German tourism boards via the German National Tourist Board, City of Essen, and the organisers’ pages.'; },
     vorbei: 'The season is over. The radar is back in November.',
     funkenAn: 'Pause sparks', funkenAus: 'Resume sparks',
     arten: { christkindl: 'Christkindlmarkt', advent: 'Advent market', wald: 'Forest, mountain, castle', mittelalter: 'Medieval', nikolaus: 'St Nicholas', kurz: 'One weekend', lang: 'All Advent' },
     danke: 'Thank you, that reached me.', sendeFehler: 'Could not send. Please try again, or write to ', pflichtText: 'Please write a few words about what was missing.',
     sterneLabel: function (n) { return n + ' of 5 cinnamon stars'; }
   } : {
-    wt: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'], mon: null,
+    wt: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'], woche: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'], mon: ['Jan.', 'Feb.', 'März', 'Apr.', 'Mai', 'Juni', 'Juli', 'Aug.', 'Sep.', 'Okt.', 'Nov.', 'Dez.'],
     bis: ' bis ', plzFalsch: 'Eine Postleitzahl hat fünf Ziffern. Schau bitte nochmal drauf.', plzFremd: 'Diese Postleitzahl kennen wir nicht. Prüf bitte die fünf Ziffern.',
     laden: 'Die Märkte konnten nicht geladen werden. Prüf deine Verbindung und tipp nochmal auf „Suchen“.',
     alle: 'alle', tage: 'Tage', offen: ' offen', zu: 'keiner', maerkte: ' Märkte', einMarkt: '1 Markt',
-    zahlAlle: function (n) { return n === 1 ? '1 Markt in deinem Umkreis' : n + ' Märkte in deinem Umkreis'; },
+    zahlAlle: function (n, o) { return (n === 1 ? '1 Markt' : n + ' Märkte') + (o ? ' rund um ' + o : ' in deinem Umkreis'); },
+    unter: function (k) { return 'Im Umkreis von ' + k + ' km, der nächste zuerst'; },
+    vertrauen: function (s) { return zahl(s.bestaetigt) + ' Märkte mit bestätigtem Termin 2026. Stand ' + datumLang(s.gebaut) + '.'; },
     zahlTag: function (d, n) { return n === 1 ? d + ' hat ein Markt offen' : d + ' haben ' + n + ' Märkte offen'; },
     keinTag: function (d) { return d + ' hat kein Markt offen, den wir kennen'; },
     keiner: 'Dazu kennen wir noch keinen Markt. Nimm einen größeren Umkreis oder weniger Filter.',
     heute: 'Heute offen', morgen: 'Startet morgen', inTagen: function (n) { return 'Startet in ' + n + ' Tagen'; },
-    veranstalter: 'Zum Veranstalter', karte: 'Auf der Karte zeigen', zeiten: 'Öffnungszeiten: ', zeitenOsm: 'Öffnungszeiten (OpenStreetMap): ',
+    veranstalter: 'Veranstalter', veranstalterLang: 'Seite des Veranstalters öffnen', karte: 'Karte', karteLang: 'Auf der Karte zeigen', zeiten: 'Öffnungszeiten: ', zeitenOsm: 'Öffnungszeiten (OpenStreetMap): ',
     quelle: 'Quelle: ', lizenz: 'Lizenz', geprueft: 'geprüft am ', seiteVeranstalter: 'Seite des Veranstalters', mehr: 'Mehr zeigen',
     ohneTermin: function (n) { return n === 1 ? '1 weiterer Markt ohne bestätigten Termin 2026' : n + ' weitere Märkte ohne bestätigten Termin 2026'; },
-    stand: function (s) { return s.maerkte + ' Märkte in Deutschland, ' + s.bestaetigt + ' mit bestätigtem Termin 2026. Stand ' + datumLang(s.gebaut) + '. Termine laut Quelle, ohne Gewähr. Ortsdaten © OpenStreetMap-Mitwirkende. Termine: offene Daten der Tourismusverbände über die Deutsche Zentrale für Tourismus, Stadt Essen und die Seiten der Veranstalter.'; },
+    stand: function (s) { return zahl(s.maerkte) + ' Märkte in Deutschland, ' + zahl(s.bestaetigt) + ' mit bestätigtem Termin 2026. Stand ' + datumLang(s.gebaut) + '. Termine laut Quelle, ohne Gewähr. Ortsdaten © OpenStreetMap-Mitwirkende. Termine: offene Daten der Tourismusverbände über die Deutsche Zentrale für Tourismus, Stadt Essen und die Seiten der Veranstalter.'; },
     vorbei: 'Die Saison ist vorbei. Im November ist der Radar wieder da.',
     funkenAn: 'Funken anhalten', funkenAus: 'Funken weiter',
     arten: { christkindl: 'Christkindlmarkt', advent: 'Adventsmarkt', wald: 'Wald, Berg und Burg', mittelalter: 'Mittelalter', nikolaus: 'Nikolaus', kurz: 'Nur ein Wochenende', lang: 'Ganze Adventszeit' },
@@ -55,7 +59,8 @@
 
   var $ = function (s, w) { return (w || document).querySelector(s); };
   var seite = $('.wm-seite'), form = $('#wm-form'), eingabe = $('#wm-plz'), fehler = $('.wm-fehler'), tageEl = $('.wm-tage'),
-    zahlEl = $('.wm-zahl'), liste = $('.wm-liste'), offenEl = $('.wm-offen'), standEl = $('.wm-stand'), artenEl = $('#wm-arten'), rueck = $('.wm-rueck');
+    zahlEl = $('.wm-zahl'), unterEl = $('.wm-zahl-unter'), liste = $('.wm-liste'), offenEl = $('.wm-offen'), standEl = $('.wm-stand'), artenEl = $('#wm-arten'), chipsEl = $('#wm-arten .wm-chips'),
+    arbeit = $('.wm-arbeit'), spanneEl = $('.wm-spanne'), vertrauenEl = $('.wm-vertrauen'), rueck = $('.wm-rueck');
   if (!seite || !form) return;
   var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var daten = null, zustand = { plz: '', km: 25, arten: [], tag: '', gezeigt: JE_SEITE, ort: null };
@@ -63,11 +68,19 @@
   /* Adressen kommen aus fremden Daten: nur http(s) wird ein Link, alles andere bleibt Text. */
   function sicher(u) { return /^https?:\/\//i.test(u || '') ? u : ''; }
   function el(name, klasse, text) { var e = document.createElement(name); if (klasse) e.className = klasse; if (text != null) e.textContent = text; return e; }
+  function zahl(n) { return Number(n).toLocaleString(EN ? 'en-GB' : 'de-DE'); }
   function tag(s) { var a = s.split('-'); return new Date(+a[0], +a[1] - 1, +a[2]); }
   function iso(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
   function kurz(d) { return EN ? T.wt[d.getDay()] + ' ' + d.getDate() + ' ' + T.mon[d.getMonth()] : T.wt[d.getDay()] + ' ' + d.getDate() + '.' + (d.getMonth() + 1) + '.'; }
   function datumLang(s) { var d = tag(s); return EN ? d.getDate() + ' ' + T.mon[d.getMonth()] + ' ' + d.getFullYear() : d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear(); }
-  function wann(m) { return m.termine.map(function (r) { return r[0] === r[1] ? kurz(tag(r[0])) : kurz(tag(r[0])) + T.bis + kurz(tag(r[1])); }).join(', '); }
+  /* Termin als Teile, die nie mitten im Datum umbrechen: „Fr 27.11.“ · „bis So 20.12.“ */
+  function wann(m, ziel) {
+    m.termine.forEach(function (r, i) {
+      ziel.append(el('span', 'wm-nw', (i ? ', ' : '') + kurz(tag(r[0]))));
+      if (r[0] !== r[1]) ziel.append(' ', el('span', 'wm-nw', T.bis.trim() + ' ' + kurz(tag(r[1]))));
+    });
+    return ziel;
+  }
   function offenAm(m, s) { return m.termine.some(function (r) { return r[0] <= s && s <= r[1]; }); }
   function heute() { var d = new Date(); d.setHours(0, 0, 0, 0); return d; }
   function km(a, b) {
@@ -99,28 +112,33 @@
     return daten.maerkte.map(function (m) { return { m: m, km: km(zustand.ort, m) }; })
       .filter(function (t) { return t.km <= zustand.km; }).sort(function (a, b) { return a.km - b.km; });
   }
+  function ortsname() { return String(zustand.ort[2] || '').replace(/\s*\(.*$/, ''); }
   function passtArt(t) { return !zustand.arten.length || zustand.arten.some(function (a) { return t.m.arten.indexOf(a) > -1; }); }
 
   function karte(t, i) {
-    var m = t.m, k = el('article', 'wm-karte'), stern = el('span', 'wm-zimt'), h = iso(heute());
-    stern.innerHTML = ZIMTSTERN; stern.append(el('span', '', entf(t.km)));
-    k.append(stern, el('h3', '', m.name), el('p', '', m.platz && m.platz !== m.ort ? m.ort + ', ' + m.platz : m.ort), el('p', 'wm-wann', wann(m)));
+    var m = t.m, k = el('article', 'wm-karte'), kopf = el('div', 'wm-k-kopf'), zeit = el('div', 'wm-k-zeit'), h = iso(heute());
+    kopf.append(el('h3', '', m.name), el('span', 'wm-km', entf(t.km)));
+    zeit.append(wann(m, el('p', 'wm-wann')));
     var naechster = m.termine.filter(function (r) { return r[1] >= h; })[0];
     if (naechster) {
-      var bis = Math.round((tag(naechster[0]) - heute()) / 864e5);
-      k.append(el('p', 'wm-jetzt', bis <= 0 ? T.heute : bis === 1 ? T.morgen : T.inTagen(bis)));
+      var bis = Math.round((tag(naechster[0]) - heute()) / 864e5), jetzt = el('p', 'wm-jetzt' + (bis <= 0 ? ' wm-heute' : ''));
+      if (bis <= 0) jetzt.innerHTML = ZIMTSTERN;
+      jetzt.append(bis <= 0 ? T.heute : bis === 1 ? T.morgen : T.inTagen(bis)); zeit.append(jetzt);
     }
+    var fuss = el('div', 'wm-k-fuss'); fuss.append(zeit);
+    k.append(kopf, el('p', 'wm-ort', m.platz && m.platz !== m.ort ? m.ort + ', ' + m.platz : m.ort), fuss);
     if (m.zeiten) {
       var z = m.zeiten; if (m.quelle === 'osm' && !EN) OSM_ZEIT.forEach(function (p) { z = z.replace(p[0], p[1]); });
       k.append(el('p', '', (m.quelle === 'osm' ? T.zeitenOsm : T.zeiten) + z));
     }
     var wege = el('p', 'wm-wege');
-    if (sicher(m.link)) { var a = el('a', '', T.veranstalter); a.href = m.link; a.rel = 'noopener nofollow'; a.target = '_blank'; wege.append(a); }
-    var ka = el('a', '', T.karte); ka.href = 'https://www.openstreetmap.org/?mlat=' + m.lat + '&mlon=' + m.lon + '#map=16/' + m.lat + '/' + m.lon; ka.rel = 'noopener'; ka.target = '_blank'; wege.append(ka);
-    k.append(wege);
+    if (sicher(m.link)) { var a = el('a', '', T.veranstalter); a.href = m.link; a.rel = 'noopener nofollow'; a.target = '_blank'; a.setAttribute('aria-label', T.veranstalterLang + ': ' + m.name); wege.append(a); }
+    var ka = el('a', '', T.karte); ka.href = 'https://www.openstreetmap.org/?mlat=' + m.lat + '&mlon=' + m.lon + '#map=16/' + m.lat + '/' + m.lon; ka.rel = 'noopener'; ka.target = '_blank'; ka.setAttribute('aria-label', T.karteLang + ': ' + m.name); wege.append(ka);
+    fuss.append(wege);
     var quelle = m.quelle === 'osm' ? '© OpenStreetMap-Mitwirkende' : m.quelle === 'veranstalter' ? T.seiteVeranstalter : (m.vermerk || 'Stadt Essen, Datenlizenz Deutschland – Namensnennung – Version 2.0');
-    var q = el('p', 'wm-quelle', T.quelle + quelle.replace(/\s*\(https?:[^)]*\)/, '') + ' · ' + T.geprueft + datumLang(m.geprueft));
-    if (sicher(m.lizenz)) { var li = el('a', '', T.lizenz); li.href = m.lizenz; li.rel = 'noopener license'; li.target = '_blank'; q.append(' · ', li); }
+    var q = el('p', 'wm-quelle', T.quelle), vermerk = quelle.replace(/\s*\(https?:[^)]*\)/, '');
+    if (sicher(m.lizenz)) { var li = el('a', '', vermerk); li.href = m.lizenz; li.rel = 'noopener license'; li.target = '_blank'; li.title = T.lizenz; q.append(li); } else q.append(vermerk);
+    q.append(' · ', el('span', 'wm-nw', T.geprueft + datumLang(m.geprueft)));
     k.append(q);
     k.style.setProperty('--i', Math.min(i, JE_SEITE));
     return k;
@@ -138,7 +156,7 @@
         var i = zustand.arten.indexOf(a); if (i > -1) zustand.arten.splice(i, 1); else zustand.arten.push(a);
         zustand.gezeigt = JE_SEITE; zeichne(true);
       });
-      artenEl.append(b);
+      chipsEl.append(b);
     });
     artenEl.hidden = !artenEl.querySelector('.wm-wahl');
   }
@@ -146,19 +164,22 @@
   function zeichneTage(bestaetigt) {
     tageEl.textContent = '';
     function knopf(wert, oben, unten, zahl, hat) {
-      var b = el('button', 'wm-tag' + (hat ? ' wm-hat' : '')), k = el('span', 'wm-kugel'); b.type = 'button';
-      b.setAttribute('aria-pressed', String(zustand.tag === wert)); k.append(el('span', '', oben), el('b', '', unten)); b.append(k, el('span', '', zahl));
+      var b = el('button', 'wm-tag' + (hat ? ' wm-hat' : '') + (wert ? '' : ' wm-tag--alle')), k = el('span', 'wm-kugel'); b.type = 'button';
+      b.setAttribute('aria-pressed', String(zustand.tag === wert)); k.append(el('span', 'wm-wt', oben), el('b', '', unten)); b.append(k, el('span', hat ? '' : 'wm-leer', zahl));
+      if (wert) b.title = kurz(tag(wert)) + ': ' + zahl;
       b.addEventListener('click', function () { zustand.tag = wert; zustand.gezeigt = JE_SEITE; zeichne(true); });
-      tageEl.append(b);
+      tageEl.append(b); return b;
     }
     knopf('', T.alle, T.tage, bestaetigt.length === 1 ? T.einMarkt : bestaetigt.length + T.maerkte, true);
-    var d = heute();
+    T.woche.forEach(function (w) { var k = el('span', 'wm-kalkopf', w); k.setAttribute('aria-hidden', 'true'); tageEl.append(k); });
+    var d = heute(), ende = new Date(d.getFullYear(), d.getMonth(), d.getDate() + TAGE_VORAUS - 1);
+    spanneEl.textContent = d.getDate() + '. ' + T.mon[d.getMonth()] + T.bis + ende.getDate() + '. ' + T.mon[ende.getMonth()];
     for (var i = 0; i < TAGE_VORAUS; i++) {
       var s = iso(d), n = bestaetigt.filter(function (t) { return offenAm(t.m, s); }).length;
-      knopf(s, T.wt[d.getDay()], d.getDate() + '.', n ? n + T.offen : T.zu, n > 0);
+      var b = knopf(s, T.wt[d.getDay()], d.getDate() + '.', n ? n + T.offen : T.zu, n > 0);
+      if (!i) b.style.gridColumnStart = (d.getDay() + 6) % 7 + 1;   /* Kalender am Desktop: Woche beginnt am Montag */
       d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
     }
-    tageEl.hidden = false;
   }
 
   function zeichne(neu) {
@@ -168,12 +189,13 @@
     zeichneTage(bestaetigt);
     var treffer = zustand.tag ? bestaetigt.filter(function (t) { return offenAm(t.m, zustand.tag); }) : bestaetigt;
     zahlEl.textContent = !daten.maerkte.some(function (m) { return m.status === 'bestaetigt'; }) ? T.vorbei
-      : zustand.tag ? (treffer.length ? T.zahlTag(kurz(tag(zustand.tag)), treffer.length) : T.keinTag(kurz(tag(zustand.tag)))) : (treffer.length ? T.zahlAlle(treffer.length) : T.keiner);
+      : zustand.tag ? (treffer.length ? T.zahlTag(kurz(tag(zustand.tag)), treffer.length) : T.keinTag(kurz(tag(zustand.tag)))) : (treffer.length ? T.zahlAlle(treffer.length, ortsname()) : T.keiner);
+    unterEl.textContent = treffer.length ? T.unter(zustand.km) : ''; unterEl.hidden = !treffer.length;
     liste.textContent = '';
     treffer.slice(0, zustand.gezeigt).forEach(function (t, i) { liste.append(karte(t, i)); });
     if (treffer.length > zustand.gezeigt) {
-      var mehr = el('button', 'wm-knopf wm-mehr', T.mehr + ' (' + (treffer.length - zustand.gezeigt) + ')'); mehr.type = 'button';
-      mehr.addEventListener('click', function () { zustand.gezeigt += JE_SEITE; zeichne(false); }); liste.append(mehr);
+      var mehr = el('button', 'wm-knopf wm-knopf--leise wm-mehr', T.mehr + ' (' + (treffer.length - zustand.gezeigt) + ')'), zeile = el('div', 'wm-mehr-zeile'); mehr.type = 'button';
+      mehr.addEventListener('click', function () { zustand.gezeigt += JE_SEITE; zeichne(false); }); zeile.append(mehr); liste.append(zeile);
     }
     if (neu && !ruhig) { liste.classList.remove('wm-neu'); void liste.offsetWidth; liste.classList.add('wm-neu'); }
     var ohne = gefiltert.filter(function (t) { return t.m.status !== 'bestaetigt'; });
@@ -187,7 +209,7 @@
       });
     }
     standEl.textContent = T.stand(daten.stand);
-    rueck.hidden = false; seite.classList.add('wm-an');
+    arbeit.hidden = false; rueck.hidden = false; seite.classList.add('wm-an');
     var q = new URLSearchParams(); q.set('plz', zustand.plz); if (zustand.km !== 25) q.set('km', zustand.km);
     try { history.replaceState(null, '', location.pathname + '?' + q); } catch (e) { /* Adresse bleibt, Suche läuft trotzdem */ }
   }
@@ -200,7 +222,7 @@
       var ort = daten.plz[plz];
       if (!ort) { fehler.textContent = T.plzFremd; fehler.hidden = false; eingabe.focus(); return; }
       zustand.plz = plz; zustand.ort = ort; zustand.gezeigt = JE_SEITE; zeichne(true);
-      if (springe) zahlEl.scrollIntoView({ behavior: ruhig ? 'auto' : 'smooth', block: 'start' });
+      if (springe) arbeit.scrollIntoView({ behavior: ruhig ? 'auto' : 'smooth', block: 'start' });
     }).catch(function () { fehler.textContent = T.laden; fehler.hidden = false; });
   }
   form.addEventListener('submit', function (e) { e.preventDefault(); suche(true); });
@@ -211,6 +233,7 @@
       if (zustand.ort) { zustand.gezeigt = JE_SEITE; zeichne(true); }
     });
   });
+  fetch(DATEN + 'stand.json').then(function (a) { return a.ok ? a.json() : null; }).then(function (s) { if (s) vertrauenEl.textContent = T.vertrauen(s); }).catch(function () { /* die Zeile bleibt leer, die Suche geht trotzdem */ });
   var start = new URLSearchParams(location.search), startPlz = (start.get('plz') || '').replace(/\D/g, '');
   if (startPlz.length === 5) {
     eingabe.value = startPlz;

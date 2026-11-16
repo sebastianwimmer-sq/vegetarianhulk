@@ -44,6 +44,8 @@ async function ablauf(browser, kontext, pfad, name, sprache) {
   const knopf = await s.locator('#wm-form .wm-knopf').boundingBox();
   pruef(knopf && knopf.y + knopf.height <= s.viewportSize().height, `${name}: „Suchen“ liegt unter dem Falz (${Math.round(knopf?.y ?? -1)} px bei ${s.viewportSize().height})`);
   pruef(await s.locator('.wm-rueck').isHidden(), `${name}: Rückmeldung ist vor der Suche sichtbar`);
+  pruef(await s.locator('.wm-arbeit').isHidden(), `${name}: Filter und Treffer sind vor der Suche sichtbar`);
+  await s.waitForFunction(() => /\d/.test(document.querySelector('.wm-vertrauen').textContent), null, { timeout: 5000 }).catch(() => pruef(false, `${name}: Zeile unter der Suche nennt keine Zahl`));
 
   // Falsche Eingabe sagt, was zu tun ist
   await s.fill('#wm-plz', '123'); await s.click('#wm-form .wm-knopf');
@@ -65,6 +67,16 @@ async function ablauf(browser, kontext, pfad, name, sprache) {
   pruef(/\d/.test(await erste.locator('.wm-wann').innerText()), `${name}: erste Karte ohne Termin`);
   pruef((await erste.locator('.wm-quelle').innerText()).length > 12, `${name}: erste Karte ohne Quelle`);
   pruef(new URL(s.url()).searchParams.get('plz') === PLZ, `${name}: Postleitzahl steht nicht in der Adresse`);
+  // Ordnung: breit steht die Filterleiste links neben der Tafel, schmal steht die Zahl über den Filtern und die über der Tafel
+  const lage = await s.evaluate(() => { const r = (q) => document.querySelector(q).getBoundingClientRect(); return { zahl: r('.wm-zahl'), filter: r('.wm-filter'), liste: r('.wm-liste'), breit: innerWidth >= 900 }; });
+  if (lage.breit) pruef(lage.filter.right <= lage.liste.left && lage.filter.top < lage.liste.top + 200, `${name}: Filterleiste steht nicht links neben den Treffern (Filter rechts ${Math.round(lage.filter.right)}, Tafel links ${Math.round(lage.liste.left)})`);
+  else pruef(lage.zahl.bottom <= lage.filter.top && lage.filter.bottom <= lage.liste.top, `${name}: Reihenfolge Zahl, Filter, Tafel stimmt nicht (${Math.round(lage.zahl.bottom)}, ${Math.round(lage.filter.top)}, ${Math.round(lage.filter.bottom)}, ${Math.round(lage.liste.top)})`);
+  // Kalender: der erste Tag steht breit in der Spalte seines Wochentags (Montag = 1)
+  const spalte = await s.evaluate(() => { const t = document.querySelectorAll('.wm-tag')[1], k = document.querySelectorAll('.wm-kalkopf'); const m = t.getBoundingClientRect(); return [...k].findIndex((e) => { const r = e.getBoundingClientRect(); return r.width && Math.abs((r.left + r.right) / 2 - (m.left + m.right) / 2) < 3; }) + 1; });
+  if (lage.breit) pruef(spalte === (new Date().getDay() + 6) % 7 + 1, `${name}: erster Kalendertag steht in Spalte ${spalte}, heute wäre ${(new Date().getDay() + 6) % 7 + 1}`);
+  // Trefferfläche der Wege reicht fürs Tippen
+  const weg = await s.locator('.wm-karte .wm-wege a').first().boundingBox();
+  pruef(weg && weg.height >= 44, `${name}: „Karte“ ist nur ${Math.round(weg?.height ?? 0)} px hoch`);
   if (BILDER) await s.screenshot({ path: join(BILDER, `${name}-suche.png`), fullPage: true });
 
   // Umkreis: 10 km zeigt nie mehr als 25 km, 100 km nie weniger

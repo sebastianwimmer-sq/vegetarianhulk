@@ -20,7 +20,7 @@ T = {
         beschreibung='Postleitzahl eintippen und sehen, welche Weihnachtsmärkte, Christkindlmärkte und Adventsmärkte in deinem Umkreis offen haben. Mit Termin und Quelle, für ganz Deutschland.',
         bild_alt='Christkindlmarkt bei Nacht: ein Christbaum voller Lichter, davor eine Feuerschale mit Funken, darüber ein goldener Engel',
         h1='Wo riecht es heute nach Glühwein?', unter='Weihnachtsmärkte, Christkindlmärkte und Adventsmärkte in deiner Nähe, mit Termin.',
-        halt='Funken anhalten', plz='Deine Postleitzahl', suchen='Suchen', umkreis='Umkreis', arten='Was für ein Markt?', tage_label='Tag wählen',
+        halt='Funken anhalten', plz='Deine Postleitzahl', suchen='Suchen', umkreis='Umkreis', arten='Was für ein Markt?', tage_label='Wann?', filter='Suche eingrenzen',
         r_frage='Hast du gefunden, was du gesucht hast?', r_ja='Ja', r_nein='Nein',
         r_ja_titel='Schön. Wie gefällt dir der Radar?', r_ja_text='Magst du noch was dazu sagen? (freiwillig)',
         r_nein_titel='Was hat gefehlt?', g1='Ein Markt fehlt', g2='Ein Termin stimmt nicht', g3='Etwas anderes',
@@ -38,7 +38,7 @@ T = {
         beschreibung='Type a German postcode and see which Christmas markets are open near you. With dates and sources, for all of Germany.',
         bild_alt='A Bavarian Christmas market at night: a tree full of lights, a fire bowl with sparks in front, a golden angel above',
         h1='Where does it smell of mulled wine today?', unter='Christmas markets in Germany near you, with dates.',
-        halt='Pause sparks', plz='Your German postcode', suchen='Search', umkreis='Radius', arten='What kind of market?', tage_label='Pick a day',
+        halt='Pause sparks', plz='Your German postcode', suchen='Search', umkreis='Radius', arten='What kind of market?', tage_label='When?', filter='Narrow your search',
         r_frage='Did you find what you were looking for?', r_ja='Yes', r_nein='No',
         r_ja_titel='Great. How do you like the radar?', r_ja_text='Anything you want to add? (optional)',
         r_nein_titel='What was missing?', g1='A market is missing', g2='A date is wrong', g3='Something else',
@@ -110,30 +110,46 @@ VORLAGE = '''<!DOCTYPE html>
         <button class="wm-knopf" type="submit">{suchen}</button>
       </div>
       <p class="wm-fehler" role="alert" hidden></p>
-      <div class="wm-gruppe" id="wm-umkreis" role="group" aria-label="{umkreis}">
-        <span>{umkreis}</span>
-        <button class="wm-wahl" type="button" data-km="10" aria-pressed="false">10 km</button>
-        <button class="wm-wahl" type="button" data-km="25" aria-pressed="true">25 km</button>
-        <button class="wm-wahl" type="button" data-km="50" aria-pressed="false">50 km</button>
-        <button class="wm-wahl" type="button" data-km="100" aria-pressed="false">100 km</button>
-      </div>
-      <div class="wm-gruppe" id="wm-arten" role="group" aria-label="{arten}" hidden>
-        <span>{arten}</span>
-      </div>
     </form>
+    <p class="wm-vertrauen"></p>
 
-    <div class="wm-tage" role="group" aria-label="{tage_label}" hidden></div>
-    <h2 class="wm-zahl" aria-live="polite"></h2>
-    <div class="wm-liste"></div>
-    <details class="wm-offen" hidden></details>
-    <p class="wm-stand"></p>
+    <div class="wm-arbeit" hidden>
+      <div class="wm-ergebnis-kopf">
+        <h2 class="wm-zahl" aria-live="polite"></h2>
+        <p class="wm-zahl-unter"></p>
+      </div>
+      <aside class="wm-filter" aria-label="{filter}">
+        <div id="wm-umkreis" role="group" aria-label="{umkreis}">
+          <p class="wm-gruppe-kopf"><span>{umkreis}</span></p>
+          <div class="wm-segment">
+            <button class="wm-wahl" type="button" data-km="10" aria-pressed="false">10 km</button>
+            <button class="wm-wahl" type="button" data-km="25" aria-pressed="true">25 km</button>
+            <button class="wm-wahl" type="button" data-km="50" aria-pressed="false">50 km</button>
+            <button class="wm-wahl" type="button" data-km="100" aria-pressed="false">100 km</button>
+          </div>
+        </div>
+        <div role="group" aria-label="{tage_label}">
+          <p class="wm-gruppe-kopf"><span>{tage_label}</span><span class="wm-spanne"></span></p>
+          <div class="wm-tage"></div>
+        </div>
+        <div id="wm-arten" role="group" aria-label="{arten}" hidden>
+          <p class="wm-gruppe-kopf"><span>{arten}</span></p>
+          <div class="wm-chips"></div>
+        </div>
+      </aside>
+      <div class="wm-treffer">
+        <div class="wm-liste"></div>
+        <details class="wm-offen" hidden></details>
+        <p class="wm-stand"></p>
+      </div>
+    </div>
 
     <section class="wm-rueck" hidden>
       <div class="wm-r-frage">
         <h2>{r_frage}</h2>
         <div class="wm-zeile">
-          <button class="wm-knopf" type="button" id="wm-r-ja">{r_ja}</button>
-          <button class="wm-knopf" type="button" id="wm-r-nein">{r_nein}</button>
+          <button class="wm-knopf wm-knopf--leise" type="button" id="wm-r-ja">{r_ja}</button>
+          <button class="wm-knopf wm-knopf--leise" type="button" id="wm-r-nein">{r_nein}</button>
         </div>
       </div>
       <form class="wm-r-ja" hidden novalidate>
@@ -147,10 +163,10 @@ VORLAGE = '''<!DOCTYPE html>
       </form>
       <form class="wm-r-nein" hidden novalidate>
         <h2>{r_nein_titel}</h2>
-        <div class="wm-gruppe" role="radiogroup" aria-label="{r_nein_titel}">
-          <label><input type="radio" name="wm-grund" value="markt-fehlt" checked> {g1}</label>
-          <label><input type="radio" name="wm-grund" value="termin-falsch"> {g2}</label>
-          <label><input type="radio" name="wm-grund" value="anderes"> {g3}</label>
+        <div class="wm-gruende" role="radiogroup" aria-label="{r_nein_titel}">
+          <label class="wm-grund"><input type="radio" name="wm-grund" value="markt-fehlt" checked> {g1}</label>
+          <label class="wm-grund"><input type="radio" name="wm-grund" value="termin-falsch"> {g2}</label>
+          <label class="wm-grund"><input type="radio" name="wm-grund" value="anderes"> {g3}</label>
         </div>
         <label for="wm-r-markt">{r_markt}</label>
         <input id="wm-r-markt" type="text" maxlength="160">

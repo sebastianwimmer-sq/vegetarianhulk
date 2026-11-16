@@ -63,30 +63,46 @@
         <button class="wm-knopf" type="submit">Suchen</button>
       </div>
       <p class="wm-fehler" role="alert" hidden></p>
-      <div class="wm-gruppe" id="wm-umkreis" role="group" aria-label="Umkreis">
-        <span>Umkreis</span>
-        <button class="wm-wahl" type="button" data-km="10" aria-pressed="false">10 km</button>
-        <button class="wm-wahl" type="button" data-km="25" aria-pressed="true">25 km</button>
-        <button class="wm-wahl" type="button" data-km="50" aria-pressed="false">50 km</button>
-        <button class="wm-wahl" type="button" data-km="100" aria-pressed="false">100 km</button>
-      </div>
-      <div class="wm-gruppe" id="wm-arten" role="group" aria-label="Was für ein Markt?" hidden>
-        <span>Was für ein Markt?</span>
-      </div>
     </form>
+    <p class="wm-vertrauen"></p>
 
-    <div class="wm-tage" role="group" aria-label="Tag wählen" hidden></div>
-    <h2 class="wm-zahl" aria-live="polite"></h2>
-    <div class="wm-liste"></div>
-    <details class="wm-offen" hidden></details>
-    <p class="wm-stand"></p>
+    <div class="wm-arbeit" hidden>
+      <div class="wm-ergebnis-kopf">
+        <h2 class="wm-zahl" aria-live="polite"></h2>
+        <p class="wm-zahl-unter"></p>
+      </div>
+      <aside class="wm-filter" aria-label="Suche eingrenzen">
+        <div id="wm-umkreis" role="group" aria-label="Umkreis">
+          <p class="wm-gruppe-kopf"><span>Umkreis</span></p>
+          <div class="wm-segment">
+            <button class="wm-wahl" type="button" data-km="10" aria-pressed="false">10 km</button>
+            <button class="wm-wahl" type="button" data-km="25" aria-pressed="true">25 km</button>
+            <button class="wm-wahl" type="button" data-km="50" aria-pressed="false">50 km</button>
+            <button class="wm-wahl" type="button" data-km="100" aria-pressed="false">100 km</button>
+          </div>
+        </div>
+        <div role="group" aria-label="Wann?">
+          <p class="wm-gruppe-kopf"><span>Wann?</span><span class="wm-spanne"></span></p>
+          <div class="wm-tage"></div>
+        </div>
+        <div id="wm-arten" role="group" aria-label="Was für ein Markt?" hidden>
+          <p class="wm-gruppe-kopf"><span>Was für ein Markt?</span></p>
+          <div class="wm-chips"></div>
+        </div>
+      </aside>
+      <div class="wm-treffer">
+        <div class="wm-liste"></div>
+        <details class="wm-offen" hidden></details>
+        <p class="wm-stand"></p>
+      </div>
+    </div>
 
     <section class="wm-rueck" hidden>
       <div class="wm-r-frage">
         <h2>Hast du gefunden, was du gesucht hast?</h2>
         <div class="wm-zeile">
-          <button class="wm-knopf" type="button" id="wm-r-ja">Ja</button>
-          <button class="wm-knopf" type="button" id="wm-r-nein">Nein</button>
+          <button class="wm-knopf wm-knopf--leise" type="button" id="wm-r-ja">Ja</button>
+          <button class="wm-knopf wm-knopf--leise" type="button" id="wm-r-nein">Nein</button>
         </div>
       </div>
       <form class="wm-r-ja" hidden novalidate>
@@ -100,10 +116,10 @@
       </form>
       <form class="wm-r-nein" hidden novalidate>
         <h2>Was hat gefehlt?</h2>
-        <div class="wm-gruppe" role="radiogroup" aria-label="Was hat gefehlt?">
-          <label><input type="radio" name="wm-grund" value="markt-fehlt" checked> Ein Markt fehlt</label>
-          <label><input type="radio" name="wm-grund" value="termin-falsch"> Ein Termin stimmt nicht</label>
-          <label><input type="radio" name="wm-grund" value="anderes"> Etwas anderes</label>
+        <div class="wm-gruende" role="radiogroup" aria-label="Was hat gefehlt?">
+          <label class="wm-grund"><input type="radio" name="wm-grund" value="markt-fehlt" checked> Ein Markt fehlt</label>
+          <label class="wm-grund"><input type="radio" name="wm-grund" value="termin-falsch"> Ein Termin stimmt nicht</label>
+          <label class="wm-grund"><input type="radio" name="wm-grund" value="anderes"> Etwas anderes</label>
         </div>
         <label for="wm-r-markt">Welcher Markt, in welchem Ort? (freiwillig)</label>
         <input id="wm-r-markt" type="text" maxlength="160">
