@@ -27,6 +27,7 @@ T = {
         r_markt='Welcher Markt, in welchem Ort? (freiwillig)', r_nein_text='Schreib kurz, was gefehlt hat', senden='Abschicken', falle='Dieses Feld bitte leer lassen',
         r_hinweis='Mit dem Abschicken geht dein Text an mich, dazu die ersten zwei Ziffern deiner Postleitzahl und der Umkreis. Mehr in der <a href="/datenschutz.html#radar">Datenschutzerklärung</a>.',
         tisch_alt='Dampfende Tasse Glühwein auf einem verschneiten Geländer in kalter, blauer Winternacht, daneben ein Zimtstern und eine Orangenscheibe',
+        b_titel='Soll ich dir Bescheid geben?', b_text='Ich schreibe dir, wenn neue Märkte dazukommen und wenn der Radar im nächsten Advent wieder startet. Das sind ein bis zwei Mails im Jahr.',
         tisch_titel='Fehlt dein Markt?', tisch_text='Schreib mir, welcher fehlt. Ich trage ihn nach.', tisch_knopf='Markt melden',
         bilder='Die Bilder auf dieser Seite sind mit KI erzeugt.',
         claim='Builder &amp; Creator. Disziplin über Hype.', legal='Rechtliches', impressum='Impressum', datenschutz='Datenschutz', recht_attr='',
@@ -45,6 +46,7 @@ T = {
         r_markt='Which market, in which town? (optional)', r_nein_text='Tell me briefly what was missing', senden='Send', falle='Please leave this field empty',
         r_hinweis='When you send this, your text goes to me, together with the first two digits of your postcode and the radius. More in the <a href="/datenschutz.html#radar" hreflang="de">privacy policy (German)</a>.',
         tisch_alt='A steaming mug of mulled wine on a snowy railing in a cold blue winter night, with a cinnamon star and a slice of orange',
+        b_titel='Want me to let you know?', b_text='I will write when new markets are added and when the radar starts again next Advent. That is one or two emails a year.',
         tisch_titel='Is your market missing?', tisch_text='Tell me which one. I will add it.', tisch_knopf='Report a market',
         bilder='The images on this page are AI-generated.',
         claim='Builder &amp; creator. Discipline over hype.', legal='Legal', impressum='Legal notice (German)', datenschutz='Privacy (German)', recht_attr=' hreflang="de"',
@@ -83,6 +85,7 @@ VORLAGE = '''<!DOCTYPE html>
 <link rel="stylesheet" href="/fonts.css?v=0">
 <link rel="stylesheet" href="/v3.css?v=0">
 <link rel="stylesheet" href="/weihnachtsmarkt/radar.css?v=0">
+<script src="/newsletter-form.js?v=0" defer></script>
 </head>
 <body class="wm-seite">
 <main>
@@ -187,6 +190,13 @@ VORLAGE = '''<!DOCTYPE html>
       </form>
       <p class="wm-r-fertig" role="status" hidden></p>
       <p class="wm-r-meldung wm-fehler" role="alert" hidden></p>
+    </section>
+
+    <section class="wm-bescheid" id="bescheid">
+      <h2>{b_titel}</h2>
+      <p>{b_text}</p>
+      <p class="wm-bescheid-stand" role="status" hidden></p>
+      <div class="wm-brief"><vh-newsletter-form thema="radar"></vh-newsletter-form></div>
     </section>
   </div>
 

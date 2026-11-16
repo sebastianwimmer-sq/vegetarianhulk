@@ -20,7 +20,7 @@
    ============================================================ */
 
 // Bestätigungs-Mail-Design (Quelle: email-templates/confirm-doi.html — bei Änderung neu rüberkopieren)
-import { handleRadarRueckmeldung } from './radar.js';
+import { handleRadarRueckmeldung, themaVon, doiNutzlast, doiLesen } from './radar.js';
 import DOI_HTML from '../../email-templates/confirm-doi.html';
 /* Beide Vorlagen kommen direkt aus email-templates/, nicht aus einer Kopie
    im Worker-Ordner. Die Kopie musste bisher bei jeder Änderung von Hand
@@ -30,6 +30,10 @@ import WELCOME_HTML from '../../email-templates/welcome-berg-starter.html';
 /* Englische Fassungen (Sebi 25.10.2026: Newsletter zweisprachig). Erzeugt aus den deutschen
    Vorlagen per scripts/en-flaechen.mjs — nie von Hand aendern, dort die Tabelle nachziehen. */
 import DOI_HTML_EN from '../../email-templates/confirm-doi.en.html';
+import RADAR_DOI_HTML from '../../email-templates/confirm-radar.html';
+import RADAR_DOI_HTML_EN from '../../email-templates/confirm-radar.en.html';
+import RADAR_WILLKOMMEN_HTML from '../../email-templates/welcome-radar.html';
+import RADAR_WILLKOMMEN_HTML_EN from '../../email-templates/welcome-radar.en.html';
 import WELCOME_HTML_EN from '../../email-templates/welcome-berg-starter.en.html';
 
 /* Je Sprache: Liste, Mails, Danke-Seite. Englisch geht auf eine eigene Brevo-Liste
@@ -37,10 +41,12 @@ import WELCOME_HTML_EN from '../../email-templates/welcome-berg-starter.en.html'
 const SPRACHEN = {
   de: { liste: (env) => Number(env.NL_LIST_ID), doi: () => DOI_HTML, starter: () => WELCOME_HTML,
     doiBetreff: 'Fast dabei — einmal bestätigen 🏔️', starterBetreff: 'Dein Berg-Starter 🏔️',
-    danke: 'https://vegetarianhulk.de/danke.html', abmelden: 'Abmelden' },
+    danke: 'https://vegetarianhulk.de/danke.html', abmelden: 'Abmelden',
+    radar: { doi: () => RADAR_DOI_HTML, willkommen: () => RADAR_WILLKOMMEN_HTML, doiBetreff: 'Weihnachtsmarkt-Radar: einmal bestätigen', betreff: 'Du bist dabei: Weihnachtsmarkt-Radar', seite: 'https://vegetarianhulk.de/weihnachtsmarkt/' } },
   en: { liste: (env) => Number(env.NL_LIST_ID_EN), doi: () => DOI_HTML_EN, starter: () => WELCOME_HTML_EN,
     doiBetreff: 'Almost there — confirm once 🏔️', starterBetreff: 'Your Hike Starter 🏔️',
-    danke: 'https://vegetarianhulk.de/en/thanks/', abmelden: 'Unsubscribe' },
+    danke: 'https://vegetarianhulk.de/en/thanks/', abmelden: 'Unsubscribe',
+    radar: { doi: () => RADAR_DOI_HTML_EN, willkommen: () => RADAR_WILLKOMMEN_HTML_EN, doiBetreff: 'Christmas Market Radar: confirm once', betreff: 'You are in: Christmas Market Radar', seite: 'https://vegetarianhulk.de/en/christmas-markets/' } },
 };
 /** Nur 'en' ist englisch; alles andere (auch Fehlendes) bleibt deutsch. */
 const spracheVon = (wert) => (wert === 'en' ? 'en' : 'de');
@@ -205,8 +211,8 @@ async function doiKey(env) {
 }
 
 /* Die Sprache steht mit im signierten Link (dritter Teil) — aeltere Links ohne sie bleiben deutsch. */
-async function makeDoiToken(env, email, sprache = 'de') {
-  const payload = new TextEncoder().encode(`${email}|${Date.now() + DOI_TOKEN_TTL_MS}${sprache === 'en' ? '|en' : ''}`);
+async function makeDoiToken(env, email, sprache = 'de', thema = '') {
+  const payload = new TextEncoder().encode(doiNutzlast(email, Date.now() + DOI_TOKEN_TTL_MS, sprache, thema));
   const sig = await crypto.subtle.sign('HMAC', await doiKey(env), payload);
   return `${b64url(payload)}.${b64url(sig)}`;
 }
@@ -219,11 +225,11 @@ async function verifyDoiToken(env, token) {
     const payload = b64urlDecode(p);
     const valid = await crypto.subtle.verify('HMAC', await doiKey(env), b64urlDecode(s), payload);
     if (!valid) return null;
-    const [email, exp, sprache] = new TextDecoder().decode(payload).split('|');
+    const { email, ablauf, sprache, thema } = doiLesen(new TextDecoder().decode(payload));
     if (!EMAIL_RE.test(email)) return null;
-    // Abgelaufen, aber echt signiert: die Sprache ist bekannt, damit die Erklaerung passt.
-    if (Date.now() > Number(exp)) return { abgelaufen: true, sprache: spracheVon(sprache) };
-    return { email, sprache: spracheVon(sprache) };
+    // Abgelaufen, aber echt signiert: Sprache und Thema sind bekannt, damit die Erklaerung passt.
+    if (Date.now() > ablauf) return { abgelaufen: true, sprache, thema };
+    return { email, sprache, thema };
   } catch {
     return null;
   }
@@ -238,15 +244,16 @@ function fuellen(html, s) {
     .replaceAll('{{ unsubscribe }}', 'mailto:info@vegetarianhulk.de?subject=' + s.abmelden);
 }
 
-async function sendDoiMail(env, email, confirmUrl, sprache = 'de') {
+async function sendDoiMail(env, email, confirmUrl, sprache = 'de', thema = '') {
   const s = SPRACHEN[sprache];
-  const html = fuellen(s.doi().replaceAll('{{ doubleoptin }}', confirmUrl), s);
+  const vorlage = thema === 'radar' ? s.radar.doi() : s.doi();
+  const html = fuellen(vorlage.replaceAll('{{ doubleoptin }}', confirmUrl), s);
   const res = await brevo(env, '/smtp/email', {
     method: 'POST',
     body: JSON.stringify({
       sender: DOI_SENDER,
       to: [{ email }],
-      subject: s.doiBetreff,
+      subject: thema === 'radar' ? s.radar.doiBetreff : s.doiBetreff,
       htmlContent: html,
     }),
   });
@@ -280,9 +287,25 @@ async function sendStarterMail(env, email, sprache = 'de') {
   }
 }
 
+/* Willkommen zum Radar: sagt noch einmal, was kommt (ein bis zwei Mails im Jahr) und führt zurück auf die Seite. */
+async function sendRadarWillkommen(env, email, sprache = 'de') {
+  const s = SPRACHEN[sprache];
+  const res = await brevo(env, '/smtp/email', {
+    method: 'POST',
+    body: JSON.stringify({ sender: DOI_SENDER, to: [{ email }], subject: s.radar.betreff, htmlContent: fuellen(s.radar.willkommen(), s) }),
+  });
+  if (!res.ok) {
+    const detail = await res.text().catch(() => '');
+    throw new Error(`Brevo Radar-Willkommen ${res.status}: ${detail.slice(0, 200)}`);
+  }
+}
+
+/* Radar-Liste: eine für beide Sprachen (die Mails dazu schreibt Sebi von Hand, ein bis zwei im Jahr). */
+const radarListe = (env) => Number(env.NL_LIST_ID_RADAR) || 0;
+
 /* Nach Bestätigungs-Klick: Kontakt in die Liste (idempotent). */
-async function addContactToList(env, email, sprache = 'de') {
-  const liste = SPRACHEN[sprache].liste(env);
+async function addContactToList(env, email, sprache = 'de', listeFest = 0) {
+  const liste = listeFest || SPRACHEN[sprache].liste(env);
   if (!liste) throw new Error(`keine Liste fuer Sprache ${sprache}`);
   const res = await brevo(env, '/contacts', {
     method: 'POST',
@@ -528,8 +551,9 @@ async function handleKampagneSenden(request, env) {
    die Kampagnen-Endpunkte (NL_ADMIN_TOKEN); der Brevo-Key verlaesst den Worker nie.
    ============================================================ */
 const LISTE_EN_NAME = 'vegetarianhulk-newsletter-en';
+const LISTE_RADAR_NAME = 'vegetarianhulk-weihnachtsmarkt-radar';   // 17.11.2026, Nummer danach als NL_LIST_ID_RADAR
 
-async function handleListeEn(request, env) {
+async function handleListeEn(request, env, name = LISTE_EN_NAME) {
   if (!env.NL_ADMIN_TOKEN || !env.BREVO_API_KEY) return json({ ok: false, error: 'nicht konfiguriert' }, 503, '');
   const kopf = request.headers.get('Authorization') || '';
   if (!gleichKonstant(kopf.startsWith('Bearer ') ? kopf.slice(7) : '', env.NL_ADMIN_TOKEN)) {
@@ -537,12 +561,12 @@ async function handleListeEn(request, env) {
   }
   const alle = await brevo(env, '/contacts/lists?limit=50&offset=0');
   if (!alle.ok) return json({ ok: false, error: `Brevo ${alle.status}` }, 502, '');
-  const da = ((await alle.json()).lists || []).find((l) => l.name === LISTE_EN_NAME);
+  const da = ((await alle.json()).lists || []).find((l) => l.name === name);
   if (da) return json({ ok: true, id: da.id, neu: false }, 200, '');
   const de = await brevo(env, `/contacts/lists/${Number(env.NL_LIST_ID)}`);
   if (!de.ok) return json({ ok: false, error: `deutsche Liste nicht lesbar: Brevo ${de.status}` }, 502, '');
   const { folderId } = await de.json();
-  const neu = await brevo(env, '/contacts/lists', { method: 'POST', body: JSON.stringify({ name: LISTE_EN_NAME, folderId }) });
+  const neu = await brevo(env, '/contacts/lists', { method: 'POST', body: JSON.stringify({ name, folderId }) });
   const text = await neu.text().catch(() => '');
   if (!neu.ok) return json({ ok: false, error: `Brevo ${neu.status}: ${text.slice(0, 160)}` }, 502, '');
   return json({ ok: true, id: JSON.parse(text).id, neu: true }, 200, '');
@@ -552,10 +576,24 @@ async function handleNewsletterConfirm(request, env) {
   const token = new URL(request.url).searchParams.get('t');
   const gueltig = await verifyDoiToken(env, token);
   if (!gueltig || gueltig.abgelaufen || !env.BREVO_API_KEY) {
-    // abgelaufen/ungültig → Danke-Seite erklärt es und bietet neues Eintragen an
+    // abgelaufen/ungültig → Danke-Seite erklärt es und bietet neues Eintragen an (Radar: zurück auf die Radar-Seite)
+    if (gueltig?.thema === 'radar') return Response.redirect(SPRACHEN[gueltig.sprache].radar.seite + '#anmeldung-abgelaufen', 302);
     return Response.redirect(bestaetigungsZiel(env, 'abgelaufen', gueltig?.sprache), 302);
   }
-  const { email, sprache } = gueltig;
+  const { email, sprache, thema } = gueltig;
+  if (thema === 'radar') {
+    /* Radar: nur die Radar-Liste, nie der Letter. Zurück geht es auf die Radar-Seite; der Zustand steht hinter dem #. */
+    const seite = SPRACHEN[sprache].radar.seite;
+    try {
+      if (!radarListe(env)) throw new Error('NL_LIST_ID_RADAR fehlt');
+      await addContactToList(env, email, sprache, radarListe(env));
+      try { await sendRadarWillkommen(env, email, sprache); } catch (mailErr) { console.error('vh-forms radar welcome failed:', mailErr.message || mailErr); }
+      return Response.redirect(seite + '#dabei', 302);
+    } catch (err) {
+      console.error('vh-forms radar confirm failed:', err.message || err);
+      return Response.redirect(seite + '#anmeldung-fehler', 302);
+    }
+  }
   try {
     await addContactToList(env, email, sprache);
     /* Getrennt abgefangen: die Eintragung IST gelungen, auch wenn der Versand
@@ -598,15 +636,20 @@ async function handleNewsletter(request, env, origin) {
     return json({ ok: false, error: 'Gültige E-Mail ist Pflicht.' }, 400, origin);
   }
   const sprache = spracheVon(body.sprache);
+  const thema = themaVon(body.thema);
+  // Ohne Radar-Liste keine Radar-Anmeldung — nie still auf die Letter-Liste (dafür hat niemand eingewilligt).
+  if (thema === 'radar' && !radarListe(env)) {
+    return json({ ok: false, error: 'newsletter not configured' }, 503, origin);
+  }
   // Ohne englische Liste keine englische Anmeldung — nie still auf die deutsche Liste.
   if (!env.BREVO_API_KEY || !SPRACHEN[sprache].liste(env)) {
     return json({ ok: false, error: 'newsletter not configured' }, 503, origin);
   }
 
   try {
-    const token = await makeDoiToken(env, email, sprache);
+    const token = await makeDoiToken(env, email, sprache, thema);
     const confirmUrl = new URL(request.url).origin + '/newsletter/confirm?t=' + encodeURIComponent(token);
-    await sendDoiMail(env, email, confirmUrl, sprache);
+    await sendDoiMail(env, email, confirmUrl, sprache, thema);
     return json({ ok: true }, 200, origin);
   } catch (err) {
     console.error('vh-forms newsletter failed:', err.message || err);
@@ -690,6 +733,9 @@ export default {
     }
     if (request.method === 'POST' && url.pathname === '/newsletter/liste-en') {
       return handleListeEn(request, env);
+    }
+    if (request.method === 'POST' && url.pathname === '/newsletter/liste-radar') {
+      return handleListeEn(request, env, LISTE_RADAR_NAME);
     }
     if (request.method === 'GET' && url.pathname === '/newsletter/confirm') {
       return handleNewsletterConfirm(request, env);

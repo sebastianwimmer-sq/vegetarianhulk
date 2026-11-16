@@ -1,7 +1,7 @@
 /* Tests fuer die Radar-Rueckmeldung:  node --test workers/vh-forms/radar.test.mjs */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { radarFelder, radarMail, handleRadarRueckmeldung } from './radar.js';
+import { radarFelder, radarMail, handleRadarRueckmeldung, themaVon, doiNutzlast, doiLesen } from './radar.js';
 
 const json = (body, status) => new Response(JSON.stringify(body), { status });
 const treffer = new Map();
@@ -41,4 +41,21 @@ test('Route: ohne Mail-Schluessel 503, falscher Inhalt 400, sechste Meldung ders
   let letzter = 0;
   for (let i = 0; i < 6; i++) letzter = (await route(anfrage({ gefunden: true, sterne: 5 }, '203.0.113.99'), {})).status;
   assert.equal(letzter, 429);
+});
+
+test('Bestätigungs-Link: alte Formen bleiben lesbar, das Thema reist mit', () => {
+  // alte Links: ohne Sprache (deutsch) und mit |en
+  assert.equal(doiNutzlast('a@b.de', 123), 'a@b.de|123');
+  assert.equal(doiNutzlast('a@b.de', 123, 'en'), 'a@b.de|123|en');
+  assert.deepEqual(doiLesen('a@b.de|123'), { email: 'a@b.de', ablauf: 123, sprache: 'de', thema: '' });
+  assert.deepEqual(doiLesen('a@b.de|123|en'), { email: 'a@b.de', ablauf: 123, sprache: 'en', thema: '' });
+  // Radar: die Sprache steht dann immer mit drin, damit das Thema an fester Stelle sitzt
+  assert.equal(doiNutzlast('a@b.de', 123, 'de', 'radar'), 'a@b.de|123|de|radar');
+  assert.deepEqual(doiLesen(doiNutzlast('a@b.de', 123, 'en', 'radar')), { email: 'a@b.de', ablauf: 123, sprache: 'en', thema: 'radar' });
+});
+
+test('Thema: nur „radar“ gilt, alles andere ist der normale Letter', () => {
+  assert.equal(themaVon('radar'), 'radar');
+  for (const w of ['Radar', 'radar ', 'x', '', null, undefined, 1, { a: 1 }]) assert.equal(themaVon(w), '');
+  assert.equal(doiLesen('a@b.de|123|de|irgendwas').thema, '');
 });

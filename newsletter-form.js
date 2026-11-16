@@ -60,6 +60,25 @@
     }
   }[SPRACHE];
 
+  /* Variante <vh-newsletter-form thema="radar"> (17.11.2026, Weihnachtsmarkt-Radar): eigenes Versprechen, eigene
+     Einwilligung, eigene Liste im Worker. Wer sich hier einträgt, bekommt keinen Berg-Starter und nicht den Letter. */
+  var RADAR = {
+    de: {
+      knopf: 'Bescheid geben',
+      einwilligung: 'Ja, schreib mir, wenn beim Weihnachtsmarkt-Radar neue M&auml;rkte dazukommen und wenn er im n&auml;chsten Advent wieder startet. Ich best&auml;tige per Mail (Double-Opt-In) und kann mich jederzeit abmelden. Mehr in der <a href="/datenschutz.html#radar">Datenschutzerkl&auml;rung</a>.',
+      erfolg: '<strong>Fast geschafft.</strong> Best&auml;tige kurz den Link in deiner Mail, dann bist du dabei.',
+      mailtoBetreff: 'Weihnachtsmarkt-Radar: bitte eintragen', mailtoText: 'Hi Sebi,\n\nbitte trag mich f\u00fcr den Weihnachtsmarkt-Radar ein.\n\n',
+      einwilligungText: 'Weihnachtsmarkt-Radar: Mails bei neuen Maerkten und zum Start im naechsten Advent, Double-Opt-In, Abmeldung jederzeit'
+    },
+    en: {
+      knopf: 'Let me know',
+      einwilligung: 'Yes, write to me when new markets are added to the Christmas Market Radar and when it starts again next Advent. I confirm by email (double opt-in) and can unsubscribe anytime. More in the <a href="/datenschutz.html#radar" hreflang="de">privacy policy (German)</a>.',
+      erfolg: '<strong>Almost done.</strong> Just confirm the link in your email, then you are in.',
+      mailtoBetreff: 'Christmas Market Radar: please add me', mailtoText: 'Hi Sebi,\n\nplease add me to the Christmas Market Radar list.\n\n',
+      einwilligungText: 'Christmas Market Radar: emails about new markets and the start next Advent, double opt-in, unsubscribe anytime'
+    }
+  }[SPRACHE];
+
   var TEMPLATE = '' +
     '<style>' +
     '  :host { display: block; }' +
@@ -180,6 +199,15 @@
     this._wired = true;
     var root = this.attachShadow({ mode: 'open' });
     root.innerHTML = TEMPLATE;
+    /* Texte dieser Instanz: Standard oder die Radar-Variante */
+    this._thema = this.getAttribute('thema') === 'radar' ? 'radar' : '';
+    this._t = T;
+    if (this._thema) {
+      this._t = Object.assign({}, T, RADAR);
+      root.querySelector('.label').textContent = RADAR.knopf;
+      var zeilen = root.querySelectorAll('.consent span');
+      zeilen[zeilen.length - 1].innerHTML = RADAR.einwilligung;
+    }
 
     this._form = root.querySelector('form');
     this._email = root.querySelector('#vhnf-email');
@@ -245,7 +273,7 @@
     }
     if (state === 'success') {
       this._msg.className = 'msg is-visible msg--success';
-      this._msg.innerHTML = T.erfolg;
+      this._msg.innerHTML = this._t.erfolg;
       return;
     }
     if (state === 'already') {
@@ -311,7 +339,7 @@
     fetch(ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, brand: BRAND, firstName: firstName, turnstileToken: turnstileToken, consent: true, consentText: T.einwilligungText, sprache: SPRACHE })
+      body: JSON.stringify({ email: email, brand: BRAND, firstName: firstName, turnstileToken: turnstileToken, consent: true, consentText: self._t.einwilligungText, sprache: SPRACHE, thema: self._thema || undefined })
     })
       .then(function (res) {
         return res.json().catch(function () { return {}; }).then(function (data) {
@@ -319,6 +347,11 @@
         });
       })
       .then(function (r) {
+        if (r.res.ok && r.data.ok && self._thema) {
+          /* Radar: nur dieses Formular quittieren; der Letter gilt damit nicht als abonniert */
+          self.showState(r.data.already ? 'already' : 'success');
+          return;
+        }
         if (r.res.ok && r.data.ok) {
           setLocalStorageSubscribed();
           emitSubscribed();
@@ -327,16 +360,15 @@
         }
         // 503 Brevo not configured → mailto-Fallback (smooth)
         if (r.res.status === 503) {
-          setLocalStorageSubscribed();
-          emitSubscribed();
-          var subject = encodeURIComponent(T.mailtoBetreff);
+          if (!self._thema) { setLocalStorageSubscribed(); emitSubscribed(); }
+          var subject = encodeURIComponent(self._t.mailtoBetreff);
           var body = encodeURIComponent(
-            T.mailtoText +
+            self._t.mailtoText +
             (firstName ? T.mailtoVorname + firstName + '\n' : '') +
             T.mailtoMail + email + T.mailtoDanke
           );
           window.location.href = 'mailto:' + CONTACT + '?subject=' + subject + '&body=' + body;
-          syncAllToSuccess('success');
+          if (self._thema) self.showState('success'); else syncAllToSuccess('success');
           return;
         }
         throw new Error(r.data.error || ('Status ' + r.res.status));

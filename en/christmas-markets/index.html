@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="vh-quelle" content="/weihnachtsmarkt/@6337717e38db6446">
+<meta name="vh-quelle" content="/weihnachtsmarkt/@3ebce68e6013943d">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://*.challenges.cloudflare.com https://vh-forms.peaking.workers.dev; base-uri 'none'; form-action 'self'; frame-src https://challenges.cloudflare.com">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -29,7 +29,8 @@
 <link rel="preload" href="/weihnachtsmarkt/img/winternacht-quer.webp" as="image" fetchpriority="high" media="(min-width: 900px)">
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
 <link rel="stylesheet" href="/v3.css?v=7afa4266">
-<link rel="stylesheet" href="/weihnachtsmarkt/radar.css?v=a7765f1b">
+<link rel="stylesheet" href="/weihnachtsmarkt/radar.css?v=7efdd0fc">
+<script src="/newsletter-form.js?v=94ea6df2" defer></script>
 <!-- SPRACHE:KOPF -->
 <link rel="alternate" hreflang="de" href="https://vegetarianhulk.de/weihnachtsmarkt/">
 <link rel="alternate" hreflang="en" href="https://vegetarianhulk.de/en/christmas-markets/">
@@ -142,6 +143,13 @@
       <p class="wm-r-fertig" role="status" hidden></p>
       <p class="wm-r-meldung wm-fehler" role="alert" hidden></p>
     </section>
+
+    <section class="wm-bescheid" id="bescheid">
+      <h2>Want me to let you know?</h2>
+      <p>I will write when new markets are added and when the radar starts again next Advent. That is one or two emails a year.</p>
+      <p class="wm-bescheid-stand" role="status" hidden></p>
+      <div class="wm-brief"><vh-newsletter-form thema="radar"></vh-newsletter-form></div>
+    </section>
   </div>
 
   <section class="wm-tisch">
@@ -178,7 +186,7 @@
   <a href="/en/brands/">Brands</a>
 </nav>
 
-<script src="/weihnachtsmarkt/radar.js?v=0a6edb4a" defer></script>
+<script src="/weihnachtsmarkt/radar.js?v=674ea161" defer></script>
 <script src="/v3.js?v=cd38f186" defer></script>
 </body>
 </html>

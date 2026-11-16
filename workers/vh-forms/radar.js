@@ -81,3 +81,24 @@ export async function handleRadarRueckmeldung(request, env, origin, { json, isRa
   }
   return json({ ok: true }, 200, origin);
 }
+
+/* --- Radar-Anmeldung (17.11.2026): eigene Liste, eigene Mails, eigenes Versprechen ---
+   Wer sich auf der Radar-Seite einträgt, hat nur in Radar-Mails eingewilligt („wenn neue Märkte dazukommen und
+   wenn der Radar im nächsten Advent wieder startet“), nicht in den Letter. Das Thema steht deshalb mit im
+   signierten Bestätigungs-Link; ältere Links ohne Thema bleiben, was sie waren. */
+export const themaVon = (wert) => (wert === 'radar' ? 'radar' : '');
+
+/* Nutzlast des Bestätigungs-Links: email|ablauf[|sprache[|thema]]. Die Sprache steht nur drin, wenn sie
+   englisch ist oder ein Thema folgt (alte Links: email|ablauf und email|ablauf|en). */
+export function doiNutzlast(email, ablauf, sprache = 'de', thema = '') {
+  const teile = [email, String(ablauf)];
+  const en = sprache === 'en';
+  if (en || themaVon(thema)) teile.push(en ? 'en' : 'de');
+  if (themaVon(thema)) teile.push(themaVon(thema));
+  return teile.join('|');
+}
+
+export function doiLesen(text) {
+  const [email = '', ablauf = '', sprache = '', thema = ''] = String(text).split('|');
+  return { email, ablauf: Number(ablauf), sprache: sprache === 'en' ? 'en' : 'de', thema: themaVon(thema) };
+}

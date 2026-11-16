@@ -25,7 +25,8 @@
     ohneTermin: function (n) { return n === 1 ? '1 more market without a confirmed 2026 date' : n + ' more markets without a confirmed 2026 date'; },
     stand: function (s) { return zahl(s.maerkte) + ' markets in Germany and just across the Austrian border, ' + zahl(s.bestaetigt) + ' with a confirmed 2026 date. Last update ' + datumLang(s.gebaut) + '. Dates as stated by the sources, without guarantee. Location data © OpenStreetMap contributors. Dates: open data of the German tourism boards via the German National Tourist Board, City of Essen, and the organisers’ pages.'; },
     vorbei: 'The season is over. The radar is back in November.',
-    funkenAn: 'Pause snow', funkenAus: 'Resume snow', laeuft: 'Open now', ab: 'from ',
+    funkenAn: 'Pause snow', funkenAus: 'Resume snow',
+    bescheid: { dabei: 'You are in. I will write when something happens on the radar.', 'anmeldung-abgelaufen': 'The link from the email has expired. Just sign up again.', 'anmeldung-fehler': 'Signing up did not work. Please try again or write to ' }, laeuft: 'Open now', ab: 'from ',
     arten: { christkindl: 'Christkindlmarkt', advent: 'Advent market', wald: 'Forest, mountain, castle', mittelalter: 'Medieval', nikolaus: 'St Nicholas', kurz: 'One weekend', lang: 'All Advent' },
     danke: 'Thank you, that reached me.', sendeFehler: 'Could not send. Please try again, or write to ', pflichtText: 'Please write a few words about what was missing.',
     sterneLabel: function (n) { return n + ' of 5 cinnamon stars'; }
@@ -46,7 +47,8 @@
     ohneTermin: function (n) { return n === 1 ? '1 weiterer Markt ohne bestätigten Termin 2026' : n + ' weitere Märkte ohne bestätigten Termin 2026'; },
     stand: function (s) { return zahl(s.maerkte) + ' Märkte in Deutschland und im grenznahen Österreich, ' + zahl(s.bestaetigt) + ' mit bestätigtem Termin 2026. Stand ' + datumLang(s.gebaut) + '. Termine laut Quelle, ohne Gewähr. Ortsdaten © OpenStreetMap-Mitwirkende. Termine: offene Daten der Tourismusverbände über die Deutsche Zentrale für Tourismus, Stadt Essen und die Seiten der Veranstalter.'; },
     vorbei: 'Die Saison ist vorbei. Im November ist der Radar wieder da.',
-    funkenAn: 'Schnee anhalten', funkenAus: 'Schnee weiter', laeuft: 'Jetzt offen', ab: 'ab ',
+    funkenAn: 'Schnee anhalten', funkenAus: 'Schnee weiter',
+    bescheid: { dabei: 'Du bist dabei. Ich melde mich, wenn sich am Radar etwas tut.', 'anmeldung-abgelaufen': 'Der Link aus der Mail ist abgelaufen. Trag dich einfach nochmal ein.', 'anmeldung-fehler': 'Das Eintragen hat nicht geklappt. Versuch es nochmal oder schreib an ' }, laeuft: 'Jetzt offen', ab: 'ab ',
     arten: { christkindl: 'Christkindlmarkt', advent: 'Adventsmarkt', wald: 'Wald, Berg und Burg', mittelalter: 'Mittelalter', nikolaus: 'Nikolaus', kurz: 'Nur ein Wochenende', lang: 'Ganze Adventszeit' },
     danke: 'Danke dir, das ist bei mir angekommen.', sendeFehler: 'Das Senden hat nicht geklappt. Versuch es nochmal oder schreib an ', pflichtText: 'Schreib bitte kurz dazu, was gefehlt hat.',
     sterneLabel: function (n) { return n + ' von 5 Zimtsternen'; }
@@ -265,6 +267,15 @@
     });
   });
   fetch(DATEN + 'stand.json').then(function (a) { return a.ok ? a.json() : null; }).then(function (s) { if (s) vertrauenEl.textContent = T.vertrauen(s); }).catch(function () { /* die Zeile bleibt leer, die Suche geht trotzdem */ });
+  /* Rückkehr aus der Bestätigungsmail der Radar-Anmeldung: der Worker schickt auf #dabei, #anmeldung-abgelaufen oder #anmeldung-fehler */
+  (function () {
+    var art = location.hash.slice(1), text = T.bescheid[art], stand = $('.wm-bescheid-stand');
+    if (!text || !stand) return;
+    stand.textContent = text + (art === 'anmeldung-fehler' ? KONTAKT + '.' : ''); stand.classList.toggle('wm-warn', art !== 'dabei'); stand.hidden = false;
+    try { history.replaceState(null, '', location.pathname); } catch (e) { /* Adresse bleibt */ }
+    requestAnimationFrame(function () { $('.wm-bescheid').scrollIntoView({ block: 'start' }); });
+  })();
+
   /* alte geteilte Adressen trugen ?plz=…: weiter lesen, nach der Suche steht sie hinter dem # */
   var start = new URLSearchParams(location.hash.length > 1 ? location.hash.slice(1) : location.search), startPlz = (start.get('plz') || '').replace(/\D/g, '');
   if (startPlz.length === 5) {

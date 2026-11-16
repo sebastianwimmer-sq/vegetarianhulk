@@ -43,11 +43,11 @@ const post = (pfad, daten, kopf = {}) => worker.fetch(new Request('https://vh-fo
   method: 'POST', headers: { 'Content-Type': 'application/json', 'CF-Connecting-IP': '10.0.0.' + (++ip), Origin: 'https://vegetarianhulk.de', ...kopf },
   body: JSON.stringify(daten) }), ENV);
 
-async function durchlauf(sprache, env = ENV) {
+async function durchlauf(sprache, env = ENV, mehr = {}) {
   aufrufe = [];
   const r = await worker.fetch(new Request('https://vh-forms.peaking.workers.dev/newsletter/subscribe', {
     method: 'POST', headers: { 'Content-Type': 'application/json', 'CF-Connecting-IP': '10.0.1.' + (++ip) },
-    body: JSON.stringify({ email: `test-${sprache}@example.com`, ...(sprache ? { sprache } : {}) }) }), env);
+    body: JSON.stringify({ email: `test-${sprache}@example.com`, ...(sprache ? { sprache } : {}), ...mehr }) }), env);
   const doi = aufrufe.find((a) => a.pfad === '/v3/smtp/email');
   if (r.status !== 200 || !doi) return { status: r.status };
   const link = doi.body.htmlContent.match(/href="(https:\/\/vh-forms[^"]+)"/)[1];
@@ -84,6 +84,33 @@ fall('EN: Danke-Seite englisch', en.ziel, 'https://vegetarianhulk.de/en/thanks/?
 const ohneListe = await durchlauf('en', { ...ENV, NL_LIST_ID_EN: '' });
 fall('EN ohne englische Liste → 503, keine Mail (nie auf die deutsche Liste)', [ohneListe.status, ohneListe.doi], [503, undefined]);
 
+// Radar-Anmeldung (17.11.2026): wer sich auf der Radar-Seite einträgt, hat nur in Radar-Mails eingewilligt.
+// Rot, sobald so jemand auf der Letter-Liste landet, den Berg-Starter bekommt oder auf der Danke-Seite des Letters endet.
+const ENV_R = { ...ENV, NL_LIST_ID_RADAR: '12' };
+const rd = await durchlauf(undefined, ENV_R, { thema: 'radar' });
+fall('Radar DE: eigene Bestätigungs-Mail', rd.doi.body.subject, 'Weihnachtsmarkt-Radar: einmal bestätigen');
+fall('Radar DE: Mail nennt das Versprechen und keinen Berg-Starter', [/im nächsten Advent wieder startet/.test(rd.doi.body.htmlContent), /Berg-Starter|Start-Geschenk/.test(rd.doi.body.htmlContent)], [true, false]);
+fall('Radar DE: kein Merge-Tag übrig', /\{\{/.test(rd.doi.body.htmlContent), false);
+fall('Radar DE: nur die Radar-Liste, nie der Letter', rd.liste, [12]);
+fall('Radar DE: Willkommen statt Berg-Starter', [rd.starter.subject, /Berg-Starter/.test(rd.starter.htmlContent), /\{\{/.test(rd.starter.htmlContent)], ['Du bist dabei: Weihnachtsmarkt-Radar', false, false]);
+fall('Radar DE: zurück auf die Radar-Seite', rd.ziel, 'https://vegetarianhulk.de/weihnachtsmarkt/#dabei');
+const rEn = await durchlauf('en', ENV_R, { thema: 'radar' });
+fall('Radar EN: englische Mails ohne Deutsch', [rEn.doi.body.subject, deutscheReste(rEn.doi.body.htmlContent), rEn.starter.subject, deutscheReste(rEn.starter.htmlContent)], ['Christmas Market Radar: confirm once', [], 'You are in: Christmas Market Radar', []]);
+fall('Radar EN: Radar-Liste und englische Radar-Seite', [rEn.liste, rEn.ziel], [[12], 'https://vegetarianhulk.de/en/christmas-markets/#dabei']);
+const rOhne = await durchlauf(undefined, ENV, { thema: 'radar' });
+fall('Radar ohne Radar-Liste → 503, keine Mail (nie auf die Letter-Liste)', [rOhne.status, rOhne.doi], [503, undefined]);
+const letter = await durchlauf(undefined, ENV_R);
+fall('Letter bleibt Letter, auch wenn es die Radar-Liste gibt', [letter.liste, letter.starter.subject], [[5], 'Dein Berg-Starter 🏔️']);
+const fremd = await durchlauf(undefined, ENV_R, { thema: 'irgendwas' });
+fall('unbekanntes Thema → normaler Letter', fremd.liste, [5]);
+{
+  const jetzt = Date.now;
+  Date.now = () => jetzt() + 8 * 24 * 3600 * 1000;
+  const altRadar = await worker.fetch(new Request(rd.link), ENV_R);
+  Date.now = jetzt;
+  fall('Radar: abgelaufener Link → zurück auf die Radar-Seite', altRadar.headers.get('Location'), 'https://vegetarianhulk.de/weihnachtsmarkt/#anmeldung-abgelaufen');
+}
+
 // Abgelaufener englischer Link → englische Erklärung.
 const echtesNow = Date.now;
 Date.now = () => echtesNow() + 8 * 24 * 3600 * 1000;
@@ -103,6 +130,10 @@ aufrufe = [];
 const neu = await (await post('/newsletter/liste-en', {}, { Authorization: 'Bearer geheim' })).json();
 fall('Liste anlegen → neu, Ordner der deutschen Liste', [neu, aufrufe.find((a) => a.methode === 'POST')?.body], [{ ok: true, id: 9, neu: true }, { name: 'vegetarianhulk-newsletter-en', folderId: 7 }]);
 fall('zweiter Aufruf → dieselbe Liste, nichts neu', await (await post('/newsletter/liste-en', {}, { Authorization: 'Bearer geheim' })).json(), { ok: true, id: 9, neu: false });
+fall('Radar-Liste anlegen ohne Token → 401', (await post('/newsletter/liste-radar', {})).status, 401);
+aufrufe = [];
+const neuRadar = await (await post('/newsletter/liste-radar', {}, { Authorization: 'Bearer geheim' })).json();
+fall('Radar-Liste anlegen → eigener Name, Ordner der deutschen Liste', [neuRadar.neu, aufrufe.find((a) => a.methode === 'POST')?.body], [true, { name: 'vegetarianhulk-weihnachtsmarkt-radar', folderId: 7 }]);
 
 // Kampagnen-Entwurf je Sprache an die richtige Liste.
 for (const [sprache, liste] of [[undefined, 5], ['en', 9]]) {
