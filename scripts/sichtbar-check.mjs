@@ -117,7 +117,13 @@ for (const pfad of seiten) {
         && a.effect && a.effect.getComputedTiming().iterations !== Infinity);
       window.__letzte = window.__letzte === undefined ? -1 : window.__vor;
       window.__vor = zahl;
-      return !laeuft && window.__letzte === zahl;
+      /* Die Seite scrollt weich (html { scroll-behavior: smooth }): der letzte Sprung nach unten
+         ist dann noch unterwegs. Auf einer Seite, deren einzige Einblendung ganz unten sitzt und
+         auf der sonst nichts laeuft, kam die „Ruhe“ nach zwei Bildern – gemessen wurde, bevor die
+         Seite unten war (Weihnachtsmarkt-Radar 16.11.2026: Block meldete 0.00, erschien aber).
+         Ruhe heisst deshalb auch: unten angekommen. */
+      const unten = Math.abs(scrollY + innerHeight - document.documentElement.scrollHeight) < 4;
+      return !laeuft && unten && window.__letzte === zahl;
     }, null, { timeout: 15000 }).catch(() => { /* Ruhe kam nicht — wird unten gemessen */ });
 
     const offen = await page.evaluate((l) => [...document.querySelectorAll('.rv,.st,.zug')]

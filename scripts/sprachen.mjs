@@ -31,6 +31,7 @@ export const PAARE = [
   { de: '/partner-picks/', en: '/en/partner-picks/' },
   { de: '/touren/', en: '/en/hikes/' },
   { de: '/newsletter/', en: '/en/newsletter/' },
+  { de: '/weihnachtsmarkt/', en: '/en/christmas-markets/' },
   ...TOUREN.map((t) => ({ de: `/touren/${t}/`, en: `/en/hikes/${t}/` })),
 ];
 

@@ -103,6 +103,9 @@ lauf "E-Mail-Vorlagen"               node scripts/mail-check.mjs --selbsttest
 lauf "Sicherungs-Werkzeug"           ./scripts/sicherung.sh --selbsttest
 lauf "Uebergaenge (Fixtures)"        node scripts/vt-check.mjs --selbsttest
 lauf "Sichtbarkeit (Fixtures)"       node scripts/sichtbar-check.mjs --selbsttest
+lauf "Radar: Termin-Leser + Daten-Tor" bash -c "cd scripts/markt && python3 -m unittest test_datum test_pruefen"
+lauf "Radar: Daten"                  python3 scripts/markt/pruefen.py
+lauf "Radar: Rueckmeldung (Worker)"  node --test workers/vh-forms/radar.test.mjs
 lauf "Motion-Loop (Fixtures)"        node "$HOME/kit-build/motion-loop/mess.mjs" --selbsttest
 
 if [ "$SCHNELL" -eq 0 ]; then
@@ -113,6 +116,7 @@ if [ "$SCHNELL" -eq 0 ]; then
   lauf "Hoehenmeter (Selbsttest)"       node scripts/hoehenmeter-check.mjs --selbsttest
   lauf "Hoehenmeter-Leiste"             node scripts/hoehenmeter-check.mjs
   lauf "Nichts bleibt unsichtbar"        node scripts/sichtbar-check.mjs
+  lauf "Radar im Browser (3 Geraete)"    node scripts/markt/radar-test.mjs
   # Bewegung gegen die Entscheidung (motion-loop/marken/vh.json) — misst DIESEN Baum
   lauf "Bewegung gegen Entscheidung"    env MOTION_WURZEL="$PWD" node "$HOME/kit-build/motion-loop/mess.mjs" vh
   lauf "Barrierefreiheit, alle v3-Seiten" node scripts/a11y-check.mjs

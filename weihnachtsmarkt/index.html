@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://*.challenges.cloudflare.com https://vh-forms.peaking.workers.dev; base-uri 'none'; form-action 'self'; frame-src https://challenges.cloudflare.com">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Weihnachtsmarkt-Radar: Märkte in deiner Nähe mit Termin | VegetarianHulk</title>
+<meta name="description" content="Postleitzahl eintippen und sehen, welche Weihnachtsmärkte, Christkindlmärkte und Adventsmärkte in deinem Umkreis offen haben. Mit Termin und Quelle, für ganz Deutschland.">
+<link rel="canonical" href="https://vegetarianhulk.de/weihnachtsmarkt/">
+<meta name="theme-color" content="#1a0907">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Weihnachtsmarkt-Radar: Märkte in deiner Nähe mit Termin | VegetarianHulk">
+<meta property="og:description" content="Postleitzahl eintippen und sehen, welche Weihnachtsmärkte, Christkindlmärkte und Adventsmärkte in deinem Umkreis offen haben. Mit Termin und Quelle, für ganz Deutschland.">
+<meta property="og:url" content="https://vegetarianhulk.de/weihnachtsmarkt/">
+<meta property="og:image" content="https://vegetarianhulk.de/weihnachtsmarkt/img/christbaum.webp">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="VegetarianHulk">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/weihnachtsmarkt/img/christbaum.webp" as="image" fetchpriority="high">
+<link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
+<link rel="stylesheet" href="/v3.css?v=7afa4266">
+<link rel="stylesheet" href="/weihnachtsmarkt/radar.css?v=0">
+<script src="/newsletter-form.js?v=432713ec" defer></script>
+<!-- SPRACHE:KOPF -->
+<link rel="alternate" hreflang="de" href="https://vegetarianhulk.de/weihnachtsmarkt/">
+<link rel="alternate" hreflang="en" href="https://vegetarianhulk.de/en/christmas-markets/">
+<link rel="alternate" hreflang="x-default" href="https://vegetarianhulk.de/weihnachtsmarkt/">
+<meta property="og:locale:alternate" content="en_US">
+<!-- /SPRACHE:KOPF -->
+</head>
+<body class="wm-seite">
+<main>
+  <section class="wm-szene">
+    <img src="/weihnachtsmarkt/img/christbaum.webp" alt="Christkindlmarkt bei Nacht: ein Christbaum voller Lichter, davor eine Feuerschale mit Funken, darüber ein goldener Engel" width="1500" height="1500" fetchpriority="high">
+    <div class="wm-schleier"></div>
+    <canvas aria-hidden="true"></canvas>
+    <header class="topbar">
+      <span class="brandbox">
+        <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+      </span>
+      <!-- SPRACHE:WECHSEL --><a class="sprache" href="/en/christmas-markets/" hreflang="en" lang="en" data-sprache="en"><svg class="sprache-flagge" viewBox="0 0 60 30" width="20" height="12" aria-hidden="true" focusable="false"><path fill="#012169" d="M0 0v30h60V0z"/><path stroke="#fff" stroke-width="6" d="M0 0l60 30m0-30L0 30"/><path stroke="#C8102E" stroke-width="4" d="M0 0l60 30m0-30L0 30"/><path stroke="#fff" stroke-width="10" d="M30 0v30M0 15h60"/><path stroke="#C8102E" stroke-width="6" d="M30 0v30M0 15h60"/></svg><span>English</span></a><!-- /SPRACHE:WECHSEL -->
+    </header>
+    <div class="wm-kopf">
+      <h1>Wo riecht es heute nach Glühwein?</h1>
+      <p>Weihnachtsmärkte, Christkindlmärkte und Adventsmärkte in deiner Nähe, mit Termin.</p>
+    </div>
+    <button class="wm-halt" type="button">Funken anhalten</button>
+  </section>
+
+  <div class="wrap">
+    <form class="wm-such" id="wm-form" novalidate>
+      <label for="wm-plz">Deine Postleitzahl</label>
+      <div class="wm-zeile">
+        <input id="wm-plz" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" autocomplete="postal-code" placeholder="84489">
+        <button class="wm-knopf" type="submit">Suchen</button>
+      </div>
+      <p class="wm-fehler" role="alert" hidden></p>
+      <div class="wm-gruppe" id="wm-umkreis" role="group" aria-label="Umkreis">
+        <span>Umkreis</span>
+        <button class="wm-wahl" type="button" data-km="10" aria-pressed="false">10 km</button>
+        <button class="wm-wahl" type="button" data-km="25" aria-pressed="true">25 km</button>
+        <button class="wm-wahl" type="button" data-km="50" aria-pressed="false">50 km</button>
+        <button class="wm-wahl" type="button" data-km="100" aria-pressed="false">100 km</button>
+      </div>
+      <div class="wm-gruppe" id="wm-arten" role="group" aria-label="Was für ein Markt?" hidden>
+        <span>Was für ein Markt?</span>
+      </div>
+    </form>
+
+    <div class="wm-tage" role="group" aria-label="Tag wählen" hidden></div>
+    <h2 class="wm-zahl" aria-live="polite"></h2>
+    <div class="wm-liste"></div>
+    <details class="wm-offen" hidden></details>
+    <p class="wm-stand"></p>
+
+    <section class="wm-rueck" hidden>
+      <div class="wm-r-frage">
+        <h2>Hast du gefunden, was du gesucht hast?</h2>
+        <div class="wm-zeile">
+          <button class="wm-knopf" type="button" id="wm-r-ja">Ja</button>
+          <button class="wm-knopf" type="button" id="wm-r-nein">Nein</button>
+        </div>
+      </div>
+      <form class="wm-r-ja" hidden novalidate>
+        <h2>Schön. Wie gefällt dir der Radar?</h2>
+        <div class="wm-sterne" role="group" aria-label="Schön. Wie gefällt dir der Radar?"></div>
+        <label for="wm-r-text-ja">Magst du noch was dazu sagen? (freiwillig)</label>
+        <textarea id="wm-r-text-ja" maxlength="1500"></textarea>
+        <div class="wm-falle" aria-hidden="true"><label>Dieses Feld bitte leer lassen<input type="text" tabindex="-1" autocomplete="off"></label></div>
+        <button class="wm-knopf" type="submit">Abschicken</button>
+        <p>Mit dem Abschicken geht dein Text an mich, dazu die ersten zwei Ziffern deiner Postleitzahl und der Umkreis. Mehr in der <a href="/datenschutz.html#radar">Datenschutzerklärung</a>.</p>
+      </form>
+      <form class="wm-r-nein" hidden novalidate>
+        <h2>Was hat gefehlt?</h2>
+        <div class="wm-gruppe" role="radiogroup" aria-label="Was hat gefehlt?">
+          <label><input type="radio" name="wm-grund" value="markt-fehlt" checked> Ein Markt fehlt</label>
+          <label><input type="radio" name="wm-grund" value="termin-falsch"> Ein Termin stimmt nicht</label>
+          <label><input type="radio" name="wm-grund" value="anderes"> Etwas anderes</label>
+        </div>
+        <label for="wm-r-markt">Welcher Markt, in welchem Ort? (freiwillig)</label>
+        <input id="wm-r-markt" type="text" maxlength="160">
+        <label for="wm-r-text-nein">Schreib kurz, was gefehlt hat</label>
+        <textarea id="wm-r-text-nein" maxlength="1500"></textarea>
+        <div class="wm-falle" aria-hidden="true"><label>Dieses Feld bitte leer lassen<input type="text" tabindex="-1" autocomplete="off"></label></div>
+        <button class="wm-knopf" type="submit">Abschicken</button>
+        <p>Mit dem Abschicken geht dein Text an mich, dazu die ersten zwei Ziffern deiner Postleitzahl und der Umkreis. Mehr in der <a href="/datenschutz.html#radar">Datenschutzerklärung</a>.</p>
+      </form>
+      <p class="wm-r-fertig" role="status" hidden></p>
+      <p class="wm-r-meldung wm-fehler" role="alert" hidden></p>
+    </section>
+  </div>
+
+  <section class="wm-tisch">
+    <img src="/weihnachtsmarkt/img/tisch.webp" alt="Holztisch im Kerzenlicht mit Glühwein, Zimtsternen, Orangen mit Nelken und Zimtstangen" width="1200" height="891" loading="lazy">
+    <div class="wrap">
+      <h2>Magst du mehr von draußen?</h2>
+      <p>Im Letter schreibe ich, was ich am Berg und unterwegs erlebe. Zum Einstieg gibt es den Berg-Starter.</p>
+      <div class="wm-brief"><vh-newsletter-form></vh-newsletter-form></div>
+      <p class="wm-bild-hinweis">Die beiden Bilder auf dieser Seite sind mit KI erzeugt.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="inner">
+    <a class="wordmark" href="/">VEGETARIAN<b>HULK</b></a>
+    <p class="claim">Builder &amp; Creator. Disziplin über Hype.</p>
+    <nav class="legal" aria-label="Rechtliches">
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+      <span>© 2026 Sebastian Wimmer</span>
+    </nav>
+  </div>
+</footer>
+
+<nav class="nav" aria-label="Hauptnavigation">
+  <a href="/">Start</a>
+  <a href="/partner-picks/">P&amp;P</a>
+  <a class="center" href="/touren/">
+    <span class="mtn"><svg viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 50 26 16l10 16 8-12 22 30"/><path d="M22 23.5 26 20l4 5" opacity="0.85"/><path d="M40.5 25.5 44 21.5l3.5 5" opacity="0.85"/><circle cx="58" cy="11" r="4.5" opacity="0.9"/><path d="M12 50c8-4 16-3.4 22 0" opacity="0.45"/></svg></span>
+    Hulk&nbsp;Hikes
+  </a>
+  <a href="/newsletter">News</a>
+  <a href="/kooperationen.html">Brands</a>
+</nav>
+
+<script src="/weihnachtsmarkt/radar.js?v=0" defer></script>
+<script src="/v3.js?v=cd38f186" defer></script>
+</body>
+</html>

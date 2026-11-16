@@ -20,6 +20,7 @@
    ============================================================ */
 
 // Bestätigungs-Mail-Design (Quelle: email-templates/confirm-doi.html — bei Änderung neu rüberkopieren)
+import { handleRadarRueckmeldung } from './radar.js';
 import DOI_HTML from '../../email-templates/confirm-doi.html';
 /* Beide Vorlagen kommen direkt aus email-templates/, nicht aus einer Kopie
    im Worker-Ordner. Die Kopie musste bisher bei jeder Änderung von Hand
@@ -664,6 +665,9 @@ export default {
     }
     if (request.method === 'POST' && ['/intern/mail', '/intern/newsletter', '/intern/kontakt'].includes(url.pathname)) {
       return handleIntern(request, env, url.pathname.slice(8));
+    }
+    if (request.method === 'POST' && url.pathname === '/radar/rueckmeldung') {
+      return handleRadarRueckmeldung(request, env, origin, { json, isRateLimited, sender: MAIL_FROM, an: MAIL_TO });
     }
     if (request.method === 'POST' && url.pathname === '/newsletter/subscribe') {
       const nlIp = request.headers.get('CF-Connecting-IP') || 'unknown';
