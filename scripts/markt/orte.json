@@ -258,6 +258,13 @@
 "ort": "München",
 "plz": ""
 },
+"48.13045,11.36637": {
+"bezirk": "",
+"kreis": "Landkreis Fürstenfeldbruck",
+"land": "Bayern",
+"ort": "Germering",
+"plz": ""
+},
 "48.13098,11.56668": {
 "bezirk": "",
 "kreis": "München",
@@ -4940,6 +4947,13 @@
 "land": "Hamburg",
 "ort": "Hamburg",
 "plz": "20095"
+},
+"53.55224,9.93338": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": "22763"
 },
 "53.55336,9.99309": {
 "bezirk": "",
