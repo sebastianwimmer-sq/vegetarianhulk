@@ -63,7 +63,7 @@
     arbeit = $('.wm-arbeit'), spanneEl = $('.wm-spanne'), vertrauenEl = $('.wm-vertrauen'), rueck = $('.wm-rueck');
   if (!seite || !form) return;
   var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var daten = null, zustand = { plz: '', km: 25, arten: [], tag: '', gezeigt: JE_SEITE, ort: null };
+  var daten = null, laedt = null, zustand = { plz: '', km: 25, arten: [], tag: '', gezeigt: JE_SEITE, ort: null };
 
   /* Adressen kommen aus fremden Daten: nur http(s) wird ein Link, alles andere bleibt Text. */
   function sicher(u) { return /^https?:\/\//i.test(u || '') ? u : ''; }
@@ -98,14 +98,15 @@
 
   function lade() {
     if (daten) return Promise.resolve(daten);
-    return Promise.all(['maerkte.json', 'plz.json', 'stand.json'].map(function (f) {
+    if (laedt) return laedt;
+    return laedt = Promise.all(['maerkte.json', 'plz.json', 'stand.json'].map(function (f) {
       return fetch(DATEN + f).then(function (a) { if (!a.ok) throw new Error(f); return a.json(); });
     })).then(function (d) {
       var h = iso(heute());
       d[0].forEach(function (m) { m.termine = m.termine || []; m.arten = artenVon(m); });
-      daten = { maerkte: d[0].filter(function (m) { return m.status !== 'bestaetigt' || m.termine.some(function (r) { return r[1] >= h; }); }), plz: d[1], stand: d[2] };
+      laedt = null; daten = { maerkte: d[0].filter(function (m) { return m.status !== 'bestaetigt' || m.termine.some(function (r) { return r[1] >= h; }); }), plz: d[1], stand: d[2] };
       return daten;
-    });
+    }).catch(function (e) { laedt = null; throw e; });   /* nach einem Fehler darf der nächste Versuch neu laden */
   }
 
   function imUmkreis() {
@@ -211,7 +212,8 @@
     standEl.textContent = T.stand(daten.stand);
     arbeit.hidden = false; rueck.hidden = false; seite.classList.add('wm-an');
     var q = new URLSearchParams(); q.set('plz', zustand.plz); if (zustand.km !== 25) q.set('km', zustand.km);
-    try { history.replaceState(null, '', location.pathname + '?' + q); } catch (e) { /* Adresse bleibt, Suche läuft trotzdem */ }
+    /* hinter dem #: dieser Teil der Adresse geht nie an den Server, die Postleitzahl bleibt wirklich auf dem Gerät */
+    try { history.replaceState(null, '', location.pathname + '#' + q); } catch (e) { /* Adresse bleibt, Suche läuft trotzdem */ }
   }
 
   function suche(springe) {
@@ -226,6 +228,8 @@
     }).catch(function () { fehler.textContent = T.laden; fehler.hidden = false; });
   }
   form.addEventListener('submit', function (e) { e.preventDefault(); suche(true); });
+  /* Daten schon holen, sobald jemand ins Feld tippt: am Handy lagen sonst 3 bis 8 s zwischen „Suchen“ und Treffern (17.11.2026) */
+  eingabe.addEventListener('focus', function () { lade().catch(function () { /* der Fehler kommt beim Suchen mit Meldung */ }); }, { once: true });
   document.querySelectorAll('#wm-umkreis .wm-wahl').forEach(function (b) {
     b.addEventListener('click', function () {
       zustand.km = +b.dataset.km;
@@ -234,7 +238,8 @@
     });
   });
   fetch(DATEN + 'stand.json').then(function (a) { return a.ok ? a.json() : null; }).then(function (s) { if (s) vertrauenEl.textContent = T.vertrauen(s); }).catch(function () { /* die Zeile bleibt leer, die Suche geht trotzdem */ });
-  var start = new URLSearchParams(location.search), startPlz = (start.get('plz') || '').replace(/\D/g, '');
+  /* alte geteilte Adressen trugen ?plz=…: weiter lesen, nach der Suche steht sie hinter dem # */
+  var start = new URLSearchParams(location.hash.length > 1 ? location.hash.slice(1) : location.search), startPlz = (start.get('plz') || '').replace(/\D/g, '');
   if (startPlz.length === 5) {
     eingabe.value = startPlz;
     var startKm = document.querySelector('#wm-umkreis .wm-wahl[data-km="' + (+start.get('km') || 25) + '"]'); if (startKm) startKm.click();

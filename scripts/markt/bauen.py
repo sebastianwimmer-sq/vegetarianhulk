@@ -26,6 +26,7 @@ ZIEL = Path(__file__).resolve().parents[2] / 'weihnachtsmarkt' / 'daten'
 ORTE = Path(__file__).parent / 'orte.json'
 GLEICHER_MARKT_M = 150
 ABRUFE_GLEICHZEITIG = 8
+MERKEN_TAGE = 21      # so lange gilt ein gelesener Termin weiter, wenn die Seite nicht antwortet
 NOMINATIM = 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=14&accept-language=de&lat={lat}&lon={lon}'
 NOMINATIM_PAUSE_S = 1.1
 ARTEN = [('christkind', 'Christkindlmarkt'), ('advent', 'Adventsmarkt'), ('nikolaus', 'Nikolausmarkt'),
@@ -84,8 +85,26 @@ def zusammenfuehren(listen):
     return alle
 
 
-def termine_von_seiten(maerkte, frisch):
+def gemerkt(alte_maerkte, heute):
+    """Zuletzt von Veranstalterseiten gelesene Termine je Adresse: {link: (termine, geprueft)}.
+
+    17.11.2026: ein Markt verlor seinen Termin, weil seine Seite beim Lauf einmal nicht antwortete.
+    Ein Abruf-Fehler ist kein Beleg gegen den Termin; er bleibt bis MERKEN_TAGE nach dem letzten
+    echten Lesen stehen, mit dem ALTEN Prüfdatum. Antwortet die Seite ohne Termin, gilt das Neue.
+    """
+    aus = {}
+    for m in alte_maerkte:
+        if m.get('quelle') != 'veranstalter' or not m.get('termine') or not m.get('link') or not m.get('geprueft'):
+            continue
+        if (date.fromisoformat(heute) - date.fromisoformat(m['geprueft'])).days > MERKEN_TAGE:
+            continue
+        aus[m['link']] = ([(date.fromisoformat(v), date.fromisoformat(b)) for v, b in m['termine']], m['geprueft'])
+    return aus
+
+
+def termine_von_seiten(maerkte, frisch, merk=None):
     """Fuer Maerkte ohne Termin die Veranstalterseite lesen. Jede Adresse nur einmal."""
+    merk = merk or {}
     offen = [m for m in maerkte if not m['termine'] and m['link']]
     adressen = sorted({m['link'] for m in offen})
     with ThreadPoolExecutor(ABRUFE_GLEICHZEITIG) as pool:
@@ -93,7 +112,11 @@ def termine_von_seiten(maerkte, frisch):
     zaehler = {}
     for m in offen:
         status, text = antworten[m['link']]
-        if status != '200':
+        if status != '200' and m['link'] in merk and sum(1 for x in offen if x['link'] == m['link']) == 1:
+            termine, geprueft = merk[m['link']]
+            m.update(termine=termine, quelle='veranstalter', quelle_url=m['link'], geprueft_alt=geprueft)
+            grund = 'Seite antwortet nicht, Termin vom letzten Lesen behalten'
+        elif status != '200':
             m['link_tot'], grund = True, 'Link tot'
         else:
             termine, grund, beleg = aus_seite(text, JAHR)
@@ -154,7 +177,7 @@ def fertig(m, heute):
         'link': '' if m.get('link_tot') else m['link'],
         'quelle': m['quelle'], 'quelle_url': m['quelle_url'],
         'lizenz': m.get('lizenz', '') if m['termine'] else '', 'vermerk': m.get('vermerk', '') if m['termine'] else '',
-        'geprueft': heute if m['termine'] else '',
+        'geprueft': (m.get('geprueft_alt') or heute) if m['termine'] else '',
     }
     # leere Felder nicht ausliefern: die Datei laedt am Handy
     return {k: v for k, v in aus.items() if v not in ('', [], False)}
@@ -180,7 +203,9 @@ def main():
         listen.append(liste)
     maerkte = zusammenfuehren(listen)
     print(f'Zusammengeführt: {len(maerkte)} Märkte')
-    print('Veranstalterseiten:', termine_von_seiten(maerkte, frisch))
+    alt_datei = ZIEL / 'maerkte.json'
+    merk = gemerkt(json.loads(alt_datei.read_text(encoding='utf-8')) if alt_datei.exists() else [], heute)
+    print('Veranstalterseiten:', termine_von_seiten(maerkte, frisch, merk))
     orte(maerkte, frisch)
     raus = sorted((fertig(m, heute) for m in maerkte), key=lambda m: m['id'])
     raus = [m for m in raus if m.get('name') and m.get('ort')]

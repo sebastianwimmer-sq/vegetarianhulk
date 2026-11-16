@@ -66,11 +66,16 @@ async function ablauf(browser, kontext, pfad, name, sprache) {
   pruef((await erste.locator('h3').innerText()).length > 3, `${name}: erste Karte ohne Namen`);
   pruef(/\d/.test(await erste.locator('.wm-wann').innerText()), `${name}: erste Karte ohne Termin`);
   pruef((await erste.locator('.wm-quelle').innerText()).length > 12, `${name}: erste Karte ohne Quelle`);
-  pruef(new URL(s.url()).searchParams.get('plz') === PLZ, `${name}: Postleitzahl steht nicht in der Adresse`);
+  const adresse = new URL(s.url());
+  pruef(new URLSearchParams(adresse.hash.slice(1)).get('plz') === PLZ, `${name}: Postleitzahl steht nicht hinter dem # in der Adresse`);
+  pruef(adresse.search === '', `${name}: Postleitzahl steht im Abfrageteil der Adresse (ginge an den Server): ${adresse.search}`);
   // Ordnung: breit steht die Filterleiste links neben der Tafel, schmal steht die Zahl über den Filtern und die über der Tafel
   const lage = await s.evaluate(() => { const r = (q) => document.querySelector(q).getBoundingClientRect(); return { zahl: r('.wm-zahl'), filter: r('.wm-filter'), liste: r('.wm-liste'), breit: innerWidth >= 900 }; });
   if (lage.breit) pruef(lage.filter.right <= lage.liste.left && lage.filter.top < lage.liste.top + 200, `${name}: Filterleiste steht nicht links neben den Treffern (Filter rechts ${Math.round(lage.filter.right)}, Tafel links ${Math.round(lage.liste.left)})`);
   else pruef(lage.zahl.bottom <= lage.filter.top && lage.filter.bottom <= lage.liste.top, `${name}: Reihenfolge Zahl, Filter, Tafel stimmt nicht (${Math.round(lage.zahl.bottom)}, ${Math.round(lage.filter.top)}, ${Math.round(lage.filter.bottom)}, ${Math.round(lage.liste.top)})`);
+  // schmal: nach der Suche steht die erste Trefferzeile mit Namen im Bild, wenn der Ergebnis-Kopf oben anliegt
+  // 440 px: mit Überschriften über Umkreis und Art waren es rund 500 px, die Zeile lag am unteren Rand (17.11.2026); jetzt 411 px
+  if (!lage.breit) pruef(lage.liste.top - lage.zahl.top <= 440, `${name}: erste Trefferzeile liegt ${Math.round(lage.liste.top - lage.zahl.top)} px unter dem Ergebnis-Kopf (höchstens 440)`);
   // Kalender: der erste Tag steht breit in der Spalte seines Wochentags (Montag = 1)
   const spalte = await s.evaluate(() => { const t = document.querySelectorAll('.wm-tag')[1], k = document.querySelectorAll('.wm-kalkopf'); const m = t.getBoundingClientRect(); return [...k].findIndex((e) => { const r = e.getBoundingClientRect(); return r.width && Math.abs((r.left + r.right) / 2 - (m.left + m.right) / 2) < 3; }) + 1; });
   if (lage.breit) pruef(spalte === (new Date().getDay() + 6) % 7 + 1, `${name}: erster Kalendertag steht in Spalte ${spalte}, heute wäre ${(new Date().getDay() + 6) % 7 + 1}`);
@@ -132,7 +137,7 @@ try {
   // Ruhig: kein Halte-Knopf, Karten trotzdem sichtbar
   const k = await chrom.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
   const s = await k.newPage();
-  await s.goto(`${basis}/weihnachtsmarkt/?plz=${PLZ}`);
+  await s.goto(`${basis}/weihnachtsmarkt/#plz=${PLZ}`);
   await s.waitForFunction(() => document.querySelectorAll('.wm-karte').length > 0);
   pruef(await s.locator('.wm-halt').isHidden(), 'ruhig: Halte-Knopf sichtbar, obwohl nichts läuft');
   pruef((await s.locator('.wm-karte').first().evaluate((e) => getComputedStyle(e).opacity)) === '1', 'ruhig: erste Karte nicht voll sichtbar');

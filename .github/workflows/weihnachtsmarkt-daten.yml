@@ -25,7 +25,7 @@ jobs:
         with:
           python-version: '3.13'
       - name: Tests
-        run: cd scripts/markt && python3 -m unittest test_datum test_pruefen test_kuratiert test_bezirk
+        run: cd scripts/markt && python3 -m unittest test_datum test_pruefen test_kuratiert test_bezirk test_bauen
       - name: Daten bauen
         env:
           DZT_KEY: ${{ secrets.DZT_KEY }}

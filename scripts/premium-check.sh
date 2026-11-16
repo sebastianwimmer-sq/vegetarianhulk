@@ -104,7 +104,7 @@ lauf "E-Mail-Vorlagen"               node scripts/mail-check.mjs --selbsttest
 lauf "Sicherungs-Werkzeug"           ./scripts/sicherung.sh --selbsttest
 lauf "Uebergaenge (Fixtures)"        node scripts/vt-check.mjs --selbsttest
 lauf "Sichtbarkeit (Fixtures)"       node scripts/sichtbar-check.mjs --selbsttest
-lauf "Radar: Termin-Leser + Daten-Tor" bash -c "cd scripts/markt && python3 -m unittest test_datum test_pruefen test_kuratiert test_bezirk"
+lauf "Radar: Termin-Leser + Daten-Tor" bash -c "cd scripts/markt && python3 -m unittest test_datum test_pruefen test_kuratiert test_bezirk test_bauen"
 lauf "Radar: Daten"                  python3 scripts/markt/pruefen.py
 # 17.11.2026: radar.css/js standen nie in bump-asset-versions.sh, die Seiten trugen ?v=0 – alter Stil im Zwischenspeicher
 lauf "Radar: Versionsstempel"        bash -c '! grep -HoE "[a-z./-]+\?v=0\b" weihnachtsmarkt/index.html en/christmas-markets/index.html'
