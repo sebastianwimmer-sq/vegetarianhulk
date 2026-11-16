@@ -1,0 +1,5273 @@
+{
+"47.54468,9.68371": {
+"bezirk": "",
+"kreis": "Landkreis Lindau",
+"land": "Bayern",
+"ort": "Lindau (Bodensee)",
+"plz": "88131"
+},
+"47.65076,9.48217": {
+"bezirk": "",
+"kreis": "Bodenseekreis",
+"land": "Baden-Württemberg",
+"ort": "Friedrichshafen",
+"plz": "88045"
+},
+"47.66081,9.17903": {
+"bezirk": "",
+"kreis": "Landkreis Konstanz",
+"land": "Baden-Württemberg",
+"ort": "Konstanz",
+"plz": "78462"
+},
+"47.66589,11.28643": {
+"bezirk": "",
+"kreis": "Landkreis Garmisch-Partenkirchen",
+"land": "Bayern",
+"ort": "Großweil",
+"plz": "82439"
+},
+"47.66599,11.05179": {
+"bezirk": "",
+"kreis": "Landkreis Garmisch-Partenkirchen",
+"land": "Bayern",
+"ort": "Bad Kohlgrub",
+"plz": "82433"
+},
+"47.6731,9.43057": {
+"bezirk": "",
+"kreis": "Bodenseekreis",
+"land": "Baden-Württemberg",
+"ort": "Friedrichshafen",
+"plz": "88048"
+},
+"47.70271,9.18637": {
+"bezirk": "",
+"kreis": "Landkreis Konstanz",
+"land": "Baden-Württemberg",
+"ort": "Konstanz",
+"plz": ""
+},
+"47.78189,9.61341": {
+"bezirk": "",
+"kreis": "Landkreis Ravensburg",
+"land": "Baden-Württemberg",
+"ort": "Ravensburg",
+"plz": "88212"
+},
+"47.8112,10.89737": {
+"bezirk": "",
+"kreis": "Landkreis Weilheim-Schongau",
+"land": "Bayern",
+"ort": "Schongau",
+"plz": "86956"
+},
+"47.81169,11.13129": {
+"bezirk": "",
+"kreis": "Landkreis Weilheim-Schongau",
+"land": "Bayern",
+"ort": "Etting",
+"plz": "82398"
+},
+"47.81587,9.62964": {
+"bezirk": "",
+"kreis": "Landkreis Ravensburg",
+"land": "Baden-Württemberg",
+"ort": "Weingarten",
+"plz": "88250"
+},
+"47.83945,11.14178": {
+"bezirk": "",
+"kreis": "Landkreis Weilheim-Schongau",
+"land": "Bayern",
+"ort": "Weilheim in Oberbayern",
+"plz": "82362"
+},
+"47.85583,12.12715": {
+"bezirk": "",
+"kreis": "",
+"land": "Bayern",
+"ort": "Rosenheim",
+"plz": "83022"
+},
+"47.85584,12.34421": {
+"bezirk": "",
+"kreis": "Landkreis Rosenheim",
+"land": "Bayern",
+"ort": "Prien am Chiemsee",
+"plz": "83209"
+},
+"47.88161,7.73151": {
+"bezirk": "",
+"kreis": "Landkreis Breisgau-Hochschwarzwald",
+"land": "Baden-Württemberg",
+"ort": "Staufen (Kernstadt)",
+"plz": "79219"
+},
+"47.89797,11.98803": {
+"bezirk": "",
+"kreis": "Landkreis Rosenheim",
+"land": "Bayern",
+"ort": "Tuntenhausen",
+"plz": "83104"
+},
+"47.91879,11.20673": {
+"bezirk": "",
+"kreis": "Landkreis Weilheim-Schongau",
+"land": "Bayern",
+"ort": "Pähl",
+"plz": "82396"
+},
+"47.92956,12.37311": {
+"bezirk": "",
+"kreis": "Landkreis Rosenheim",
+"land": "Bayern",
+"ort": "Eggstätt",
+"plz": "83125"
+},
+"47.95863,11.91796": {
+"bezirk": "",
+"kreis": "Landkreis Ebersberg",
+"land": "Bayern",
+"ort": "Baiern",
+"plz": "85625"
+},
+"47.97121,11.65335": {
+"bezirk": "",
+"kreis": "Landkreis München",
+"land": "Bayern",
+"ort": "Grafing",
+"plz": "82054"
+},
+"47.98154,12.30843": {
+"bezirk": "",
+"kreis": "Landkreis Rosenheim",
+"land": "Bayern",
+"ort": "Amerang",
+"plz": "83123"
+},
+"47.9878,11.86584": {
+"bezirk": "",
+"kreis": "Landkreis Ebersberg",
+"land": "Bayern",
+"ort": "Glonn",
+"plz": "85625"
+},
+"47.99622,7.84943": {
+"bezirk": "",
+"kreis": "Freiburg im Breisgau",
+"land": "Baden-Württemberg",
+"ort": "Freiburg im Breisgau",
+"plz": "79098"
+},
+"48.03724,8.77736": {
+"bezirk": "",
+"kreis": "Landkreis Tuttlingen",
+"land": "Baden-Württemberg",
+"ort": "Rietheim",
+"plz": "78604"
+},
+"48.05064,10.87699": {
+"bezirk": "",
+"kreis": "Landkreis Landsberg am Lech",
+"land": "Bayern",
+"ort": "Landsberg am Lech",
+"plz": "86899"
+},
+"48.0602,10.63969": {
+"bezirk": "",
+"kreis": "Landkreis Unterallgäu",
+"land": "Bayern",
+"ort": "Türkheim",
+"plz": "86842"
+},
+"48.06481,11.66508": {
+"bezirk": "",
+"kreis": "Landkreis München",
+"land": "Bayern",
+"ort": "Ottobrunn",
+"plz": ""
+},
+"48.0765,11.66252": {
+"bezirk": "",
+"kreis": "Landkreis München",
+"land": "Bayern",
+"ort": "Neubiberg",
+"plz": "85579"
+},
+"48.08244,11.6285": {
+"bezirk": "",
+"kreis": "Landkreis München",
+"land": "Bayern",
+"ort": "Neubiberg",
+"plz": "85579"
+},
+"48.09829,9.7884": {
+"bezirk": "",
+"kreis": "Landkreis Biberach",
+"land": "Baden-Württemberg",
+"ort": "Biberach an der Riß",
+"plz": "88400"
+},
+"48.1016,11.63104": {
+"bezirk": "",
+"kreis": "München",
+"land": "Bayern",
+"ort": "München",
+"plz": "81737"
+},
+"48.10291,11.41982": {
+"bezirk": "",
+"kreis": "Landkreis München",
+"land": "Bayern",
+"ort": "Planegg",
+"plz": "82152"
+},
+"48.10738,11.45293": {
+"bezirk": "",
+"kreis": "Landkreis München",
+"land": "Bayern",
+"ort": "Planegg",
+"plz": "82152"
+},
+"48.11655,11.57086": {
+"bezirk": "",
+"kreis": "München",
+"land": "Bayern",
+"ort": "München",
+"plz": "81547"
+},
+"48.11704,11.53942": {
+"bezirk": "",
+"kreis": "München",
+"land": "Bayern",
+"ort": "München",
+"plz": "81369"
+},
+"48.12035,11.42745": {
+"bezirk": "",
+"kreis": "Landkreis München",
+"land": "Bayern",
+"ort": "Gräfelfing",
+"plz": "82166"
+},
+"48.12503,11.53046": {
+"bezirk": "",
+"kreis": "München",
+"land": "Bayern",
+"ort": "München",
+"plz": ""
+},
+"48.13098,11.56668": {
+"bezirk": "",
+"kreis": "München",
+"land": "Bayern",
+"ort": "München",
+"plz": "80469"
+},
+"48.13113,12.71482": {
+"bezirk": "",
+"kreis": "Landkreis Altötting",
+"land": "Bayern",
+"ort": "Halsbach",
+"plz": "84553"
+},
+"48.13339,11.55073": {
+"bezirk": "",
+"kreis": "München",
+"land": "Bayern",
+"ort": "München",
+"plz": "80336"
+},
+"48.13515,11.58174": {
+"bezirk": "",
+"kreis": "München",
+"land": "Bayern",
+"ort": "München",
+"plz": "80331"
+},
+"48.14314,11.59008": {
+"bezirk": "",
+"kreis": "München",
+"land": "Bayern",
+"ort": "München",
+"plz": "80331"
+},
+"48.14367,11.57423": {
+"bezirk": "",
+"kreis": "München",
+"land": "Bayern",
+"ort": "München",
+"plz": ""
+},
+"48.14796,11.46366": {
+"bezirk": "",
+"kreis": "München",
+"land": "Bayern",
+"ort": "München",
+"plz": "81245"
+},
+"48.14816,11.82134": {
+"bezirk": "",
+"kreis": "Landkreis Ebersberg",
+"land": "Bayern",
+"ort": "Vaterstetten",
+"plz": "85646"
+},
+"48.15393,11.62875": {
+"bezirk": "",
+"kreis": "München",
+"land": "Bayern",
+"ort": "München",
+"plz": "81925"
+},
+"48.15459,11.85303": {
+"bezirk": "",
+"kreis": "Landkreis Ebersberg",
+"land": "Bayern",
+"ort": "Anzing",
+"plz": "85646"
+},
+"48.16241,11.58684": {
+"bezirk": "",
+"kreis": "München",
+"land": "Bayern",
+"ort": "München",
+"plz": "80802"
+},
+"48.1625,11.75701": {
+"bezirk": "",
+"kreis": "Landkreis München",
+"land": "Bayern",
+"ort": "Heimstetten",
+"plz": "85551"
+},
+"48.16327,11.45683": {
+"bezirk": "",
+"kreis": "München",
+"land": "Bayern",
+"ort": "München",
+"plz": "81245"
+},
+"48.16779,11.54926": {
+"bezirk": "",
+"kreis": "München",
+"land": "Bayern",
+"ort": "München",
+"plz": "80637"
+},
+"48.16961,11.91283": {
+"bezirk": "",
+"kreis": "Landkreis Ebersberg",
+"land": "Bayern",
+"ort": "Forstinning",
+"plz": "85661"
+},
+"48.17207,11.80893": {
+"bezirk": "",
+"kreis": "Landkreis Ebersberg",
+"land": "Bayern",
+"ort": "Angelbrechting",
+"plz": "85586"
+},
+"48.18152,11.51714": {
+"bezirk": "",
+"kreis": "München",
+"land": "Bayern",
+"ort": "München",
+"plz": "80992"
+},
+"48.19,11.86861": {
+"bezirk": "",
+"kreis": "Landkreis Ebersberg",
+"land": "Bayern",
+"ort": "Markt Schwaben",
+"plz": "85570"
+},
+"48.19643,11.80727": {
+"bezirk": "",
+"kreis": "Landkreis Ebersberg",
+"land": "Bayern",
+"ort": "Gelting",
+"plz": "85652"
+},
+"48.19674,11.80646": {
+"bezirk": "",
+"kreis": "Landkreis Ebersberg",
+"land": "Bayern",
+"ort": "Gelting",
+"plz": "85652"
+},
+"48.21285,9.02815": {
+"bezirk": "",
+"kreis": "Zollernalbkreis",
+"land": "Baden-Württemberg",
+"ort": "Albstadt",
+"plz": "72458"
+},
+"48.22051,11.80227": {
+"bezirk": "",
+"kreis": "Landkreis Erding",
+"land": "Bayern",
+"ort": "Neufinsing",
+"plz": "85464"
+},
+"48.22326,10.10818": {
+"bezirk": "",
+"kreis": "Landkreis Neu-Ulm",
+"land": "Bayern",
+"ort": "Illertissen",
+"plz": "89257"
+},
+"48.2765,10.07595": {
+"bezirk": "",
+"kreis": "Landkreis Neu-Ulm",
+"land": "Bayern",
+"ort": "Vöhringen",
+"plz": "89269"
+},
+"48.28298,9.72607": {
+"bezirk": "",
+"kreis": "Alb-Donau-Kreis",
+"land": "Baden-Württemberg",
+"ort": "Ehingen (Donau)",
+"plz": "89584"
+},
+"48.30406,10.97732": {
+"bezirk": "",
+"kreis": "Landkreis Aichach-Friedberg",
+"land": "Bayern",
+"ort": "Kissing",
+"plz": "86438"
+},
+"48.30662,11.90771": {
+"bezirk": "",
+"kreis": "Landkreis Erding",
+"land": "Bayern",
+"ort": "Erding",
+"plz": "85435"
+},
+"48.31254,10.72661": {
+"bezirk": "",
+"kreis": "Landkreis Augsburg",
+"land": "Bayern",
+"ort": "Dietkirch",
+"plz": "86459"
+},
+"48.31445,10.9946": {
+"bezirk": "",
+"kreis": "Landkreis Aichach-Friedberg",
+"land": "Bayern",
+"ort": "Kissing",
+"plz": "86438"
+},
+"48.35501,10.97987": {
+"bezirk": "",
+"kreis": "Landkreis Aichach-Friedberg",
+"land": "Bayern",
+"ort": "Friedberg",
+"plz": "86316"
+},
+"48.36606,10.89685": {
+"bezirk": "",
+"kreis": "Augsburg",
+"land": "Bayern",
+"ort": "Augsburg",
+"plz": "86152"
+},
+"48.38398,11.04697": {
+"bezirk": "",
+"kreis": "Landkreis Aichach-Friedberg",
+"land": "Bayern",
+"ort": "Wessiszell",
+"plz": "86453"
+},
+"48.39517,9.95618": {
+"bezirk": "",
+"kreis": "Ulm",
+"land": "Baden-Württemberg",
+"ort": "Ulm",
+"plz": ""
+},
+"48.39534,10.00083": {
+"bezirk": "",
+"kreis": "Landkreis Neu-Ulm",
+"land": "Bayern",
+"ort": "Neu-Ulm",
+"plz": ""
+},
+"48.39576,9.95468": {
+"bezirk": "",
+"kreis": "Ulm",
+"land": "Baden-Württemberg",
+"ort": "Ulm",
+"plz": ""
+},
+"48.39683,9.95432": {
+"bezirk": "",
+"kreis": "Ulm",
+"land": "Baden-Württemberg",
+"ort": "Ulm",
+"plz": ""
+},
+"48.39831,9.99178": {
+"bezirk": "",
+"kreis": "Ulm",
+"land": "Baden-Württemberg",
+"ort": "Ulm",
+"plz": "89075"
+},
+"48.40144,11.75016": {
+"bezirk": "",
+"kreis": "Landkreis Freising",
+"land": "Bayern",
+"ort": "Freising",
+"plz": ""
+},
+"48.40403,8.01542": {
+"bezirk": "",
+"kreis": "Ortenaukreis",
+"land": "Baden-Württemberg",
+"ort": "Gengenbach",
+"plz": "77723"
+},
+"48.41529,9.78415": {
+"bezirk": "",
+"kreis": "Alb-Donau-Kreis",
+"land": "Baden-Württemberg",
+"ort": "Blaubeuren",
+"plz": "89143"
+},
+"48.4584,10.98291": {
+"bezirk": "",
+"kreis": "Landkreis Aichach-Friedberg",
+"land": "Bayern",
+"ort": "Gebenhofen",
+"plz": "86444"
+},
+"48.45913,11.13097": {
+"bezirk": "",
+"kreis": "Landkreis Aichach-Friedberg",
+"land": "Bayern",
+"ort": "Aichach",
+"plz": ""
+},
+"48.46094,10.1032": {
+"bezirk": "",
+"kreis": "Landkreis Neu-Ulm",
+"land": "Bayern",
+"ort": "Unterelchingen",
+"plz": "89275"
+},
+"48.46473,8.41169": {
+"bezirk": "",
+"kreis": "Landkreis Freudenstadt",
+"land": "Baden-Württemberg",
+"ort": "Freudenstadt",
+"plz": "72250"
+},
+"48.46866,11.93497": {
+"bezirk": "",
+"kreis": "Landkreis Freising",
+"land": "Bayern",
+"ort": "Moosburg",
+"plz": "85368"
+},
+"48.46998,7.94202": {
+"bezirk": "",
+"kreis": "Ortenaukreis",
+"land": "Baden-Württemberg",
+"ort": "Offenburg",
+"plz": "77652"
+},
+"48.49097,9.21303": {
+"bezirk": "",
+"kreis": "Landkreis Reutlingen",
+"land": "Baden-Württemberg",
+"ort": "Reutlingen",
+"plz": ""
+},
+"48.49833,12.06268": {
+"bezirk": "",
+"kreis": "Landkreis Landshut",
+"land": "Bayern",
+"ort": "Eching",
+"plz": "84174"
+},
+"48.5161,11.89641": {
+"bezirk": "",
+"kreis": "Landkreis Freising",
+"land": "Bayern",
+"ort": "Mauern",
+"plz": "85419"
+},
+"48.52083,9.05708": {
+"bezirk": "",
+"kreis": "Landkreis Tübingen",
+"land": "Baden-Württemberg",
+"ort": "Tübingen",
+"plz": ""
+},
+"48.53153,8.07898": {
+"bezirk": "",
+"kreis": "Ortenaukreis",
+"land": "Baden-Württemberg",
+"ort": "Oberkirch",
+"plz": ""
+},
+"48.5329,12.14611": {
+"bezirk": "",
+"kreis": "",
+"land": "Bayern",
+"ort": "Landshut",
+"plz": ""
+},
+"48.53535,12.14878": {
+"bezirk": "",
+"kreis": "",
+"land": "Bayern",
+"ort": "Landshut",
+"plz": ""
+},
+"48.53951,9.28332": {
+"bezirk": "",
+"kreis": "Landkreis Reutlingen",
+"land": "Baden-Württemberg",
+"ort": "Metzingen",
+"plz": ""
+},
+"48.54043,9.28652": {
+"bezirk": "",
+"kreis": "Landkreis Reutlingen",
+"land": "Baden-Württemberg",
+"ort": "Metzingen",
+"plz": ""
+},
+"48.54104,7.89479": {
+"bezirk": "",
+"kreis": "Ortenaukreis",
+"land": "Baden-Württemberg",
+"ort": "Hesselhurst",
+"plz": "77731"
+},
+"48.55995,11.26396": {
+"bezirk": "",
+"kreis": "Landkreis Neuburg-Schrobenhausen",
+"land": "Bayern",
+"ort": "Schrobenhausen",
+"plz": "86529"
+},
+"48.56144,11.26524": {
+"bezirk": "",
+"kreis": "Landkreis Neuburg-Schrobenhausen",
+"land": "Bayern",
+"ort": "Schrobenhausen",
+"plz": "86529"
+},
+"48.57082,10.43072": {
+"bezirk": "",
+"kreis": "Landkreis Dillingen an der Donau",
+"land": "Bayern",
+"ort": "Lauingen (Donau)",
+"plz": "89415"
+},
+"48.57331,7.81132": {
+"bezirk": "",
+"kreis": "Ortenaukreis",
+"land": "Baden-Württemberg",
+"ort": "Kehl",
+"plz": "77694"
+},
+"48.57603,10.4952": {
+"bezirk": "",
+"kreis": "Landkreis Dillingen an der Donau",
+"land": "Bayern",
+"ort": "Dillingen a.d.Donau",
+"plz": "89407"
+},
+"48.6185,10.1786": {
+"bezirk": "",
+"kreis": "Landkreis Heidenheim",
+"land": "Baden-Württemberg",
+"ort": "Herbrechtingen",
+"plz": "89542"
+},
+"48.62104,10.24167": {
+"bezirk": "",
+"kreis": "Landkreis Heidenheim",
+"land": "Baden-Württemberg",
+"ort": "Giengen",
+"plz": "89537"
+},
+"48.62866,8.07185": {
+"bezirk": "",
+"kreis": "Ortenaukreis",
+"land": "Baden-Württemberg",
+"ort": "Achern",
+"plz": "77855"
+},
+"48.64129,8.89569": {
+"bezirk": "",
+"kreis": "Landkreis Böblingen",
+"land": "Baden-Württemberg",
+"ort": "Gärtringen",
+"plz": "71116"
+},
+"48.66131,13.15279": {
+"bezirk": "",
+"kreis": "Landkreis Passau",
+"land": "Bayern",
+"ort": "Zaundorf",
+"plz": "94544"
+},
+"48.66762,7.93566": {
+"bezirk": "",
+"kreis": "Ortenaukreis",
+"land": "Baden-Württemberg",
+"ort": "Freistett",
+"plz": "77866"
+},
+"48.67649,10.15111": {
+"bezirk": "",
+"kreis": "Landkreis Heidenheim",
+"land": "Baden-Württemberg",
+"ort": "Heidenheim an der Brenz",
+"plz": "89522"
+},
+"48.68374,11.61195": {
+"bezirk": "",
+"kreis": "Landkreis Pfaffenhofen an der Ilm",
+"land": "Bayern",
+"ort": "Geisenfeld",
+"plz": "85290"
+},
+"48.68606,8.18871": {
+"bezirk": "",
+"kreis": "Landkreis Rastatt",
+"land": "Baden-Württemberg",
+"ort": "Bühlertal",
+"plz": "77830"
+},
+"48.69218,10.9181": {
+"bezirk": "",
+"kreis": "Landkreis Donau-Ries",
+"land": "Bayern",
+"ort": "Rain",
+"plz": "86641"
+},
+"48.69583,8.13513": {
+"bezirk": "",
+"kreis": "Landkreis Rastatt",
+"land": "Baden-Württemberg",
+"ort": "Bühl",
+"plz": "77815"
+},
+"48.72363,10.39151": {
+"bezirk": "",
+"kreis": "Landkreis Heidenheim",
+"land": "Baden-Württemberg",
+"ort": "Dischingen",
+"plz": "89561"
+},
+"48.74272,9.30764": {
+"bezirk": "",
+"kreis": "Landkreis Esslingen",
+"land": "Baden-Württemberg",
+"ort": "Esslingen am Neckar",
+"plz": "73728"
+},
+"48.76017,8.23769": {
+"bezirk": "",
+"kreis": "Baden-Baden",
+"land": "Baden-Württemberg",
+"ort": "Baden-Baden",
+"plz": ""
+},
+"48.76323,11.42777": {
+"bezirk": "",
+"kreis": "Ingolstadt",
+"land": "Bayern",
+"ort": "Ingolstadt",
+"plz": ""
+},
+"48.77367,13.0515": {
+"bezirk": "",
+"kreis": "Landkreis Deggendorf",
+"land": "Bayern",
+"ort": "Buch",
+"plz": "94491"
+},
+"48.77523,9.17834": {
+"bezirk": "",
+"kreis": "Stuttgart",
+"land": "Baden-Württemberg",
+"ort": "Stuttgart",
+"plz": ""
+},
+"48.77668,12.87199": {
+"bezirk": "",
+"kreis": "Landkreis Deggendorf",
+"land": "Bayern",
+"ort": "Plattling",
+"plz": "94447"
+},
+"48.7893,8.83535": {
+"bezirk": "",
+"kreis": "Landkreis Böblingen",
+"land": "Baden-Württemberg",
+"ort": "Weil der Stadt",
+"plz": "71263"
+},
+"48.80008,9.79752": {
+"bezirk": "",
+"kreis": "Ostalbkreis",
+"land": "Baden-Württemberg",
+"ort": "Schwäbisch Gmünd",
+"plz": "73527"
+},
+"48.80111,9.01526": {
+"bezirk": "",
+"kreis": "Landkreis Böblingen",
+"land": "Baden-Württemberg",
+"ort": "Leonberg",
+"plz": "71229"
+},
+"48.80534,9.52728": {
+"bezirk": "",
+"kreis": "Rems-Murr-Kreis",
+"land": "Baden-Württemberg",
+"ort": "Schorndorf",
+"plz": "73614"
+},
+"48.83252,9.31649": {
+"bezirk": "",
+"kreis": "Rems-Murr-Kreis",
+"land": "Baden-Württemberg",
+"ort": "Waiblingen",
+"plz": "71336"
+},
+"48.83461,12.96215": {
+"bezirk": "",
+"kreis": "Landkreis Deggendorf",
+"land": "Bayern",
+"ort": "Deggendorf",
+"plz": "94469"
+},
+"48.8392,10.09366": {
+"bezirk": "",
+"kreis": "Ostalbkreis",
+"land": "Baden-Württemberg",
+"ort": "Aalen",
+"plz": "73431"
+},
+"48.85139,10.49104": {
+"bezirk": "",
+"kreis": "Landkreis Donau-Ries",
+"land": "Bayern",
+"ort": "Nördlingen",
+"plz": "86720"
+},
+"48.85519,10.12064": {
+"bezirk": "",
+"kreis": "Ostalbkreis",
+"land": "Baden-Württemberg",
+"ort": "Aalen",
+"plz": "73433"
+},
+"48.85773,10.35213": {
+"bezirk": "",
+"kreis": "Ostalbkreis",
+"land": "Baden-Württemberg",
+"ort": "Bopfingen",
+"plz": "73441"
+},
+"48.85781,8.20242": {
+"bezirk": "",
+"kreis": "Landkreis Rastatt",
+"land": "Baden-Württemberg",
+"ort": "Rastatt",
+"plz": "76437"
+},
+"48.85873,8.20475": {
+"bezirk": "",
+"kreis": "Landkreis Rastatt",
+"land": "Baden-Württemberg",
+"ort": "Rastatt",
+"plz": "76437"
+},
+"48.85929,9.1863": {
+"bezirk": "",
+"kreis": "Landkreis Ludwigsburg",
+"land": "Baden-Württemberg",
+"ort": "Kornwestheim",
+"plz": "70806"
+},
+"48.88442,10.04788": {
+"bezirk": "",
+"kreis": "Ostalbkreis",
+"land": "Baden-Württemberg",
+"ort": "Aalen",
+"plz": "73434"
+},
+"48.89112,8.70252": {
+"bezirk": "",
+"kreis": "Pforzheim",
+"land": "Baden-Württemberg",
+"ort": "Pforzheim",
+"plz": "75175"
+},
+"48.89738,9.1915": {
+"bezirk": "",
+"kreis": "Landkreis Ludwigsburg",
+"land": "Baden-Württemberg",
+"ort": "Ludwigsburg",
+"plz": ""
+},
+"48.94148,8.40735": {
+"bezirk": "",
+"kreis": "Landkreis Karlsruhe",
+"land": "Baden-Württemberg",
+"ort": "Ettlingen",
+"plz": "76275"
+},
+"48.94619,8.84113": {
+"bezirk": "",
+"kreis": "Enzkreis",
+"land": "Baden-Württemberg",
+"ort": "Mühlacker",
+"plz": "75417"
+},
+"48.96105,10.13065": {
+"bezirk": "",
+"kreis": "Ostalbkreis",
+"land": "Baden-Württemberg",
+"ort": "Ellwangen (Jagst)",
+"plz": "73479"
+},
+"48.97066,8.26436": {
+"bezirk": "",
+"kreis": "Landkreis Karlsruhe",
+"land": "Baden-Württemberg",
+"ort": "Rheinstetten",
+"plz": ""
+},
+"48.99694,8.48532": {
+"bezirk": "",
+"kreis": "Karlsruhe",
+"land": "Baden-Württemberg",
+"ort": "Karlsruhe",
+"plz": ""
+},
+"48.9985,8.4742": {
+"bezirk": "",
+"kreis": "Karlsruhe",
+"land": "Baden-Württemberg",
+"ort": "Karlsruhe",
+"plz": ""
+},
+"48.99908,8.47077": {
+"bezirk": "",
+"kreis": "Karlsruhe",
+"land": "Baden-Württemberg",
+"ort": "Karlsruhe",
+"plz": ""
+},
+"49.00729,8.40388": {
+"bezirk": "",
+"kreis": "Karlsruhe",
+"land": "Baden-Württemberg",
+"ort": "Karlsruhe",
+"plz": ""
+},
+"49.00741,8.49595": {
+"bezirk": "",
+"kreis": "Karlsruhe",
+"land": "Baden-Württemberg",
+"ort": "Karlsruhe",
+"plz": "76229"
+},
+"49.00793,8.40086": {
+"bezirk": "",
+"kreis": "Karlsruhe",
+"land": "Baden-Württemberg",
+"ort": "Karlsruhe",
+"plz": ""
+},
+"49.0088,8.39892": {
+"bezirk": "",
+"kreis": "Karlsruhe",
+"land": "Baden-Württemberg",
+"ort": "Karlsruhe",
+"plz": ""
+},
+"49.00906,8.37569": {
+"bezirk": "",
+"kreis": "Karlsruhe",
+"land": "Baden-Württemberg",
+"ort": "Karlsruhe",
+"plz": ""
+},
+"49.00934,8.40261": {
+"bezirk": "",
+"kreis": "Karlsruhe",
+"land": "Baden-Württemberg",
+"ort": "Karlsruhe",
+"plz": ""
+},
+"49.01971,12.09317": {
+"bezirk": "",
+"kreis": "Regensburg",
+"land": "Bayern",
+"ort": "Regensburg",
+"plz": "93047"
+},
+"49.0236,8.49433": {
+"bezirk": "",
+"kreis": "Karlsruhe",
+"land": "Baden-Württemberg",
+"ort": "Karlsruhe",
+"plz": "76229"
+},
+"49.02439,9.31969": {
+"bezirk": "",
+"kreis": "Landkreis Ludwigsburg",
+"land": "Baden-Württemberg",
+"ort": "Oberstenfeld",
+"plz": "71720"
+},
+"49.03055,10.97194": {
+"bezirk": "",
+"kreis": "Landkreis Weißenburg-Gunzenhausen",
+"land": "Bayern",
+"ort": "Weißenburg in Bayern",
+"plz": "91781"
+},
+"49.03699,8.70724": {
+"bezirk": "",
+"kreis": "Landkreis Karlsruhe",
+"land": "Baden-Württemberg",
+"ort": "Bretten",
+"plz": "75015"
+},
+"49.04044,9.31453": {
+"bezirk": "",
+"kreis": "Landkreis Heilbronn",
+"land": "Baden-Württemberg",
+"ort": "Beilstein",
+"plz": ""
+},
+"49.05537,9.24636": {
+"bezirk": "",
+"kreis": "Landkreis Heilbronn",
+"land": "Baden-Württemberg",
+"ort": "Schozach",
+"plz": "74360"
+},
+"49.05625,9.2502": {
+"bezirk": "",
+"kreis": "Landkreis Heilbronn",
+"land": "Baden-Württemberg",
+"ort": "Wüstenhausen",
+"plz": "74360"
+},
+"49.06494,8.47168": {
+"bezirk": "",
+"kreis": "Landkreis Karlsruhe",
+"land": "Baden-Württemberg",
+"ort": "Blankenloch",
+"plz": ""
+},
+"49.06623,9.214": {
+"bezirk": "",
+"kreis": "Landkreis Heilbronn",
+"land": "Baden-Württemberg",
+"ort": "Schozach",
+"plz": "74360"
+},
+"49.07015,9.29198": {
+"bezirk": "",
+"kreis": "Landkreis Heilbronn",
+"land": "Baden-Württemberg",
+"ort": "Happenbach",
+"plz": "74232"
+},
+"49.07106,10.31929": {
+"bezirk": "",
+"kreis": "Landkreis Ansbach",
+"land": "Bayern",
+"ort": "Dinkelsbühl",
+"plz": "91550"
+},
+"49.07611,9.15418": {
+"bezirk": "",
+"kreis": "Landkreis Heilbronn",
+"land": "Baden-Württemberg",
+"ort": "Lauffen am Neckar",
+"plz": "74348"
+},
+"49.08719,9.88192": {
+"bezirk": "",
+"kreis": "Landkreis Schwäbisch Hall",
+"land": "Baden-Württemberg",
+"ort": "Vellberg",
+"plz": "74541"
+},
+"49.10352,8.74664": {
+"bezirk": "",
+"kreis": "Landkreis Karlsruhe",
+"land": "Baden-Württemberg",
+"ort": "Gochsheim",
+"plz": ""
+},
+"49.1124,9.73724": {
+"bezirk": "",
+"kreis": "Landkreis Schwäbisch Hall",
+"land": "Baden-Württemberg",
+"ort": "Schwäbisch Hall",
+"plz": ""
+},
+"49.12292,8.5999": {
+"bezirk": "",
+"kreis": "Landkreis Karlsruhe",
+"land": "Baden-Württemberg",
+"ort": "Bruchsal",
+"plz": "76646"
+},
+"49.14231,9.2187": {
+"bezirk": "",
+"kreis": "Heilbronn",
+"land": "Baden-Württemberg",
+"ort": "Heilbronn",
+"plz": ""
+},
+"49.2004,7.6048": {
+"bezirk": "",
+"kreis": "",
+"land": "Rheinland-Pfalz",
+"ort": "Pirmasens",
+"plz": "66955"
+},
+"49.20048,9.50252": {
+"bezirk": "",
+"kreis": "Hohenlohekreis",
+"land": "Baden-Württemberg",
+"ort": "Öhringen",
+"plz": "74613"
+},
+"49.22559,6.96363": {
+"bezirk": "",
+"kreis": "Regionalverband Saarbrücken",
+"land": "Saarland",
+"ort": "Saarbrücken",
+"plz": "66117"
+},
+"49.23037,9.16216": {
+"bezirk": "",
+"kreis": "Landkreis Heilbronn",
+"land": "Baden-Württemberg",
+"ort": "Bad Wimpfen",
+"plz": "74206"
+},
+"49.23284,6.99584": {
+"bezirk": "",
+"kreis": "Regionalverband Saarbrücken",
+"land": "Saarland",
+"ort": "Saarbrücken",
+"plz": ""
+},
+"49.23729,7.25955": {
+"bezirk": "",
+"kreis": "Saarpfalz-Kreis",
+"land": "Saarland",
+"ort": "Blieskastel",
+"plz": ""
+},
+"49.2583,8.48295": {
+"bezirk": "",
+"kreis": "Landkreis Karlsruhe",
+"land": "Baden-Württemberg",
+"ort": "Oberhausen",
+"plz": "68794"
+},
+"49.27998,7.11771": {
+"bezirk": "",
+"kreis": "Saarpfalz-Kreis",
+"land": "Saarland",
+"ort": "St. Ingbert",
+"plz": "66386"
+},
+"49.2826,8.4737": {
+"bezirk": "",
+"kreis": "Landkreis Karlsruhe",
+"land": "Baden-Württemberg",
+"ort": "Rheinhausen",
+"plz": ""
+},
+"49.28305,7.24029": {
+"bezirk": "",
+"kreis": "Saarpfalz-Kreis",
+"land": "Saarland",
+"ort": "Kirkel",
+"plz": "66459"
+},
+"49.28456,7.16089": {
+"bezirk": "",
+"kreis": "Saarpfalz-Kreis",
+"land": "Saarland",
+"ort": "St. Ingbert",
+"plz": ""
+},
+"49.30043,8.49832": {
+"bezirk": "",
+"kreis": "Rhein-Neckar-Kreis",
+"land": "Baden-Württemberg",
+"ort": "Altlußheim",
+"plz": "68804"
+},
+"49.30287,10.57292": {
+"bezirk": "",
+"kreis": "Ansbach",
+"land": "Bayern",
+"ort": "Ansbach",
+"plz": "91522"
+},
+"49.31365,6.75317": {
+"bezirk": "",
+"kreis": "Landkreis Saarlouis",
+"land": "Saarland",
+"ort": "Saarlouis",
+"plz": "66740"
+},
+"49.31534,7.15175": {
+"bezirk": "",
+"kreis": "Landkreis Neunkirchen",
+"land": "Saarland",
+"ort": "Spiesen-Elversberg",
+"plz": "66583"
+},
+"49.31744,8.43821": {
+"bezirk": "",
+"kreis": "",
+"land": "Rheinland-Pfalz",
+"ort": "Speyer",
+"plz": "67346"
+},
+"49.32234,7.33932": {
+"bezirk": "",
+"kreis": "Saarpfalz-Kreis",
+"land": "Saarland",
+"ort": "Homburg",
+"plz": "66424"
+},
+"49.32871,9.50478": {
+"bezirk": "",
+"kreis": "Hohenlohekreis",
+"land": "Baden-Württemberg",
+"ort": "Schöntal",
+"plz": "74214"
+},
+"49.33525,7.1926": {
+"bezirk": "",
+"kreis": "Landkreis Neunkirchen",
+"land": "Saarland",
+"ort": "Neunkirchen",
+"plz": "66538"
+},
+"49.34322,8.65786": {
+"bezirk": "",
+"kreis": "Rhein-Neckar-Kreis",
+"land": "Baden-Württemberg",
+"ort": "Sandhausen",
+"plz": "69207"
+},
+"49.37206,7.18563": {
+"bezirk": "",
+"kreis": "Landkreis Neunkirchen",
+"land": "Saarland",
+"ort": "Neunkirchen",
+"plz": "66540"
+},
+"49.37582,11.21289": {
+"bezirk": "",
+"kreis": "Landkreis Nürnberger Land",
+"land": "Bayern",
+"ort": "Feucht",
+"plz": "90537"
+},
+"49.3778,7.05365": {
+"bezirk": "",
+"kreis": "Landkreis Neunkirchen",
+"land": "Saarland",
+"ort": "Illingen",
+"plz": ""
+},
+"49.37789,11.02691": {
+"bezirk": "",
+"kreis": "Nürnberg",
+"land": "Bayern",
+"ort": "Nürnberg",
+"plz": "90453"
+},
+"49.40233,11.13612": {
+"bezirk": "",
+"kreis": "Nürnberg",
+"land": "Bayern",
+"ort": "Nürnberg",
+"plz": "90473"
+},
+"49.40293,11.0355": {
+"bezirk": "",
+"kreis": "Nürnberg",
+"land": "Bayern",
+"ort": "Nürnberg",
+"plz": ""
+},
+"49.40366,7.16097": {
+"bezirk": "",
+"kreis": "Landkreis Neunkirchen",
+"land": "Saarland",
+"ort": "Ottweiler",
+"plz": "66564"
+},
+"49.4109,8.70643": {
+"bezirk": "",
+"kreis": "Heidelberg",
+"land": "Baden-Württemberg",
+"ort": "Heidelberg",
+"plz": "69117"
+},
+"49.41237,7.56973": {
+"bezirk": "",
+"kreis": "Landkreis Kaiserslautern",
+"land": "Rheinland-Pfalz",
+"ort": "Landstuhl",
+"plz": "66849"
+},
+"49.44138,10.95725": {
+"bezirk": "",
+"kreis": "Landkreis Fürth",
+"land": "Bayern",
+"ort": "Zirndorf",
+"plz": "90513"
+},
+"49.44327,6.63789": {
+"bezirk": "",
+"kreis": "Landkreis Merzig-Wadern",
+"land": "Saarland",
+"ort": "Merzig",
+"plz": ""
+},
+"49.44361,6.64179": {
+"bezirk": "",
+"kreis": "Landkreis Merzig-Wadern",
+"land": "Saarland",
+"ort": "Merzig",
+"plz": ""
+},
+"49.44481,7.77113": {
+"bezirk": "",
+"kreis": "Kaiserslautern",
+"land": "Rheinland-Pfalz",
+"ort": "Kaiserslautern",
+"plz": "67663"
+},
+"49.4475,11.08125": {
+"bezirk": "",
+"kreis": "Nürnberg",
+"land": "Bayern",
+"ort": "Nürnberg",
+"plz": ""
+},
+"49.44988,11.07001": {
+"bezirk": "",
+"kreis": "Nürnberg",
+"land": "Bayern",
+"ort": "Nürnberg",
+"plz": ""
+},
+"49.45019,11.13902": {
+"bezirk": "",
+"kreis": "Nürnberg",
+"land": "Bayern",
+"ort": "Nürnberg",
+"plz": "90480"
+},
+"49.45523,11.11213": {
+"bezirk": "",
+"kreis": "Nürnberg",
+"land": "Bayern",
+"ort": "Nürnberg",
+"plz": ""
+},
+"49.45833,10.85174": {
+"bezirk": "",
+"kreis": "Landkreis Fürth",
+"land": "Bayern",
+"ort": "Cadolzburg",
+"plz": "90556"
+},
+"49.46695,7.16948": {
+"bezirk": "",
+"kreis": "Landkreis St. Wendel",
+"land": "Saarland",
+"ort": "Sankt Wendel",
+"plz": "66606"
+},
+"49.47212,10.99175": {
+"bezirk": "",
+"kreis": "Fürth",
+"land": "Bayern",
+"ort": "Fürth",
+"plz": ""
+},
+"49.47239,10.99126": {
+"bezirk": "",
+"kreis": "Fürth",
+"land": "Bayern",
+"ort": "Fürth",
+"plz": ""
+},
+"49.47853,10.98807": {
+"bezirk": "",
+"kreis": "Fürth",
+"land": "Bayern",
+"ort": "Fürth",
+"plz": ""
+},
+"49.47992,8.4512": {
+"bezirk": "",
+"kreis": "Ludwigshafen am Rhein",
+"land": "Rheinland-Pfalz",
+"ort": "Ludwigshafen am Rhein",
+"plz": ""
+},
+"49.48417,8.47521": {
+"bezirk": "",
+"kreis": "Mannheim",
+"land": "Baden-Württemberg",
+"ort": "Mannheim",
+"plz": "68165"
+},
+"49.48547,8.46977": {
+"bezirk": "",
+"kreis": "Mannheim",
+"land": "Baden-Württemberg",
+"ort": "Mannheim",
+"plz": "68161"
+},
+"49.48707,11.11193": {
+"bezirk": "",
+"kreis": "Nürnberg",
+"land": "Bayern",
+"ort": "Nürnberg",
+"plz": ""
+},
+"49.4873,8.46638": {
+"bezirk": "",
+"kreis": "Mannheim",
+"land": "Baden-Württemberg",
+"ort": "Mannheim",
+"plz": "68161"
+},
+"49.50016,11.11216": {
+"bezirk": "",
+"kreis": "Nürnberg",
+"land": "Bayern",
+"ort": "Nürnberg",
+"plz": ""
+},
+"49.50237,10.41761": {
+"bezirk": "",
+"kreis": "Landkreis Neustadt an der Aisch-Bad Windsheim",
+"land": "Bayern",
+"ort": "Bad Windsheim",
+"plz": "91438"
+},
+"49.50844,11.42912": {
+"bezirk": "",
+"kreis": "Landkreis Nürnberger Land",
+"land": "Bayern",
+"ort": "Hersbruck",
+"plz": "91217"
+},
+"49.51187,11.28147": {
+"bezirk": "",
+"kreis": "Landkreis Nürnberger Land",
+"land": "Bayern",
+"ort": "Lauf an der Pegnitz",
+"plz": "91207"
+},
+"49.52482,11.0125": {
+"bezirk": "",
+"kreis": "Nürnberg",
+"land": "Bayern",
+"ort": "Nürnberg",
+"plz": ""
+},
+"49.5446,11.94629": {
+"bezirk": "",
+"kreis": "Landkreis Amberg-Sulzbach",
+"land": "Bayern",
+"ort": "Hirschau",
+"plz": "92242"
+},
+"49.54761,12.00129": {
+"bezirk": "",
+"kreis": "Landkreis Amberg-Sulzbach",
+"land": "Bayern",
+"ort": "Schnaittenbach",
+"plz": "92253"
+},
+"49.5559,7.35635": {
+"bezirk": "",
+"kreis": "Landkreis Kusel",
+"land": "Rheinland-Pfalz",
+"ort": "Thallichtenberg",
+"plz": ""
+},
+"49.55938,11.33968": {
+"bezirk": "",
+"kreis": "Landkreis Nürnberger Land",
+"land": "Bayern",
+"ort": "Schnaittach",
+"plz": "91220"
+},
+"49.56896,10.88195": {
+"bezirk": "",
+"kreis": "Landkreis Erlangen-Höchstadt",
+"land": "Bayern",
+"ort": "Herzogenaurach",
+"plz": "91074"
+},
+"49.57398,11.19866": {
+"bezirk": "",
+"kreis": "Landkreis Erlangen-Höchstadt",
+"land": "Bayern",
+"ort": "Eckental",
+"plz": "90542"
+},
+"49.57654,11.20596": {
+"bezirk": "",
+"kreis": "Landkreis Erlangen-Höchstadt",
+"land": "Bayern",
+"ort": "Eckental",
+"plz": "90542"
+},
+"49.5782,10.84054": {
+"bezirk": "",
+"kreis": "Landkreis Erlangen-Höchstadt",
+"land": "Bayern",
+"ort": "Falkendorf",
+"plz": "91086"
+},
+"49.59555,11.24031": {
+"bezirk": "",
+"kreis": "Landkreis Erlangen-Höchstadt",
+"land": "Bayern",
+"ort": "Eckental",
+"plz": "90542"
+},
+"49.59578,11.00615": {
+"bezirk": "",
+"kreis": "Erlangen",
+"land": "Bayern",
+"ort": "Erlangen",
+"plz": "91054"
+},
+"49.59785,11.00405": {
+"bezirk": "",
+"kreis": "Erlangen",
+"land": "Bayern",
+"ort": "Erlangen",
+"plz": "91054"
+},
+"49.59924,11.07663": {
+"bezirk": "",
+"kreis": "Landkreis Erlangen-Höchstadt",
+"land": "Bayern",
+"ort": "Uttenreuth",
+"plz": "91080"
+},
+"49.60133,11.00419": {
+"bezirk": "",
+"kreis": "Erlangen",
+"land": "Bayern",
+"ort": "Erlangen",
+"plz": "91054"
+},
+"49.62036,10.82127": {
+"bezirk": "",
+"kreis": "Landkreis Erlangen-Höchstadt",
+"land": "Bayern",
+"ort": "Weisendorf",
+"plz": "91085"
+},
+"49.62102,12.34306": {
+"bezirk": "",
+"kreis": "Landkreis Neustadt an der Waldnaab",
+"land": "Bayern",
+"ort": "Vohenstrauß",
+"plz": "92648"
+},
+"49.65715,8.99277": {
+"bezirk": "",
+"kreis": "Odenwaldkreis",
+"land": "Hessen",
+"ort": "Erbach",
+"plz": ""
+},
+"49.66814,10.92666": {
+"bezirk": "",
+"kreis": "Landkreis Erlangen-Höchstadt",
+"land": "Bayern",
+"ort": "Röttenbach",
+"plz": "91341"
+},
+"49.6754,12.16341": {
+"bezirk": "",
+"kreis": "",
+"land": "Bayern",
+"ort": "Weiden in der Oberpfalz",
+"plz": "92637"
+},
+"49.683,10.93813": {
+"bezirk": "",
+"kreis": "Landkreis Erlangen-Höchstadt",
+"land": "Bayern",
+"ort": "Hemhofen",
+"plz": "91334"
+},
+"49.70352,10.80466": {
+"bezirk": "",
+"kreis": "Landkreis Erlangen-Höchstadt",
+"land": "Bayern",
+"ort": "Höchstadt an der Aisch",
+"plz": "91315"
+},
+"49.70594,10.02416": {
+"bezirk": "",
+"kreis": "Landkreis Würzburg",
+"land": "Bayern",
+"ort": "Sommerhausen",
+"plz": ""
+},
+"49.70698,10.0154": {
+"bezirk": "",
+"kreis": "Landkreis Würzburg",
+"land": "Bayern",
+"ort": "Winterhausen",
+"plz": "97286"
+},
+"49.72014,11.05772": {
+"bezirk": "",
+"kreis": "Landkreis Forchheim",
+"land": "Bayern",
+"ort": "Forchheim",
+"plz": "91301"
+},
+"49.73196,12.06774": {
+"bezirk": "",
+"kreis": "Landkreis Neustadt an der Waldnaab",
+"land": "Bayern",
+"ort": "Parkstein",
+"plz": "92711"
+},
+"49.73751,11.26739": {
+"bezirk": "",
+"kreis": "Landkreis Forchheim",
+"land": "Bayern",
+"ort": "Gößweinstein",
+"plz": "91327"
+},
+"49.74539,8.11302": {
+"bezirk": "",
+"kreis": "Landkreis Alzey-Worms",
+"land": "Rheinland-Pfalz",
+"ort": "Alzey",
+"plz": ""
+},
+"49.79445,9.92905": {
+"bezirk": "",
+"kreis": "Würzburg",
+"land": "Bayern",
+"ort": "Würzburg",
+"plz": "97070"
+},
+"49.80835,12.43178": {
+"bezirk": "",
+"kreis": "Landkreis Tirschenreuth",
+"land": "Bayern",
+"ort": "Bärnau",
+"plz": "95671"
+},
+"49.81077,12.43346": {
+"bezirk": "",
+"kreis": "Landkreis Tirschenreuth",
+"land": "Bayern",
+"ort": "Bärnau",
+"plz": "95671"
+},
+"49.84559,10.968": {
+"bezirk": "",
+"kreis": "Landkreis Bamberg",
+"land": "Bayern",
+"ort": "Amlingstadt",
+"plz": "96129"
+},
+"49.84701,7.85619": {
+"bezirk": "",
+"kreis": "Landkreis Bad Kreuznach",
+"land": "Rheinland-Pfalz",
+"ort": "Bad Kreuznach",
+"plz": "55545"
+},
+"49.8786,12.33702": {
+"bezirk": "",
+"kreis": "Landkreis Tirschenreuth",
+"land": "Bayern",
+"ort": "Tirschenreuth",
+"plz": "95643"
+},
+"49.87936,12.34288": {
+"bezirk": "",
+"kreis": "Landkreis Tirschenreuth",
+"land": "Bayern",
+"ort": "Tirschenreuth",
+"plz": "95643"
+},
+"49.89283,10.88284": {
+"bezirk": "",
+"kreis": "",
+"land": "Bayern",
+"ort": "Bamberg",
+"plz": "96047"
+},
+"49.90557,10.86429": {
+"bezirk": "",
+"kreis": "",
+"land": "Bayern",
+"ort": "Bamberg",
+"plz": "96049"
+},
+"49.91275,11.00952": {
+"bezirk": "",
+"kreis": "Landkreis Bamberg",
+"land": "Bayern",
+"ort": "Naisa",
+"plz": "96123"
+},
+"49.92809,10.7505": {
+"bezirk": "",
+"kreis": "Landkreis Bamberg",
+"land": "Bayern",
+"ort": "Viereth-Trunstadt",
+"plz": "96191"
+},
+"49.97091,10.88493": {
+"bezirk": "",
+"kreis": "Landkreis Bamberg",
+"land": "Bayern",
+"ort": "Unteroberndorf",
+"plz": "96149"
+},
+"49.99479,9.57377": {
+"bezirk": "",
+"kreis": "Landkreis Main-Spessart",
+"land": "Bayern",
+"ort": "Lohr am Main",
+"plz": "97816"
+},
+"50.00156,8.2595": {
+"bezirk": "",
+"kreis": "Mainz",
+"land": "Rheinland-Pfalz",
+"ort": "Mainz",
+"plz": "55120"
+},
+"50.00251,9.06418": {
+"bezirk": "",
+"kreis": "Landkreis Aschaffenburg",
+"land": "Bayern",
+"ort": "Kleinostheim",
+"plz": "63801"
+},
+"50.01583,10.94021": {
+"bezirk": "",
+"kreis": "Landkreis Bamberg",
+"land": "Bayern",
+"ort": "Zapfendorf",
+"plz": "96199"
+},
+"50.02024,8.09521": {
+"bezirk": "",
+"kreis": "Rheingau-Taunus-Kreis",
+"land": "Hessen",
+"ort": "Erbach",
+"plz": "65346"
+},
+"50.02598,8.88401": {
+"bezirk": "",
+"kreis": "Landkreis Offenbach",
+"land": "Hessen",
+"ort": "Rodgau",
+"plz": ""
+},
+"50.03144,10.50942": {
+"bezirk": "",
+"kreis": "Landkreis Haßberge",
+"land": "Bayern",
+"ort": "Haßfurt",
+"plz": "97437"
+},
+"50.04498,10.23429": {
+"bezirk": "",
+"kreis": "",
+"land": "Bayern",
+"ort": "Schweinfurt",
+"plz": "97421"
+},
+"50.0558,8.69709": {
+"bezirk": "",
+"kreis": "Landkreis Offenbach",
+"land": "Hessen",
+"ort": "Neu-Isenburg",
+"plz": "63263"
+},
+"50.06118,8.80761": {
+"bezirk": "",
+"kreis": "Landkreis Offenbach",
+"land": "Hessen",
+"ort": "Heusenstamm",
+"plz": "63150"
+},
+"50.06681,10.9576": {
+"bezirk": "",
+"kreis": "Landkreis Lichtenfels",
+"land": "Bayern",
+"ort": "Oberbrunn",
+"plz": "96250"
+},
+"50.08214,8.24173": {
+"bezirk": "",
+"kreis": "Wiesbaden",
+"land": "Hessen",
+"ort": "Wiesbaden",
+"plz": ""
+},
+"50.09437,9.00738": {
+"bezirk": "",
+"kreis": "Landkreis Aschaffenburg",
+"land": "Bayern",
+"ort": "Kahl am Main",
+"plz": "63796"
+},
+"50.10157,10.99992": {
+"bezirk": "",
+"kreis": "Landkreis Lichtenfels",
+"land": "Bayern",
+"ort": "Bad Staffelstein",
+"plz": "96231"
+},
+"50.11055,8.68218": {
+"bezirk": "",
+"kreis": "Frankfurt am Main",
+"land": "Hessen",
+"ort": "Frankfurt am Main",
+"plz": "60311"
+},
+"50.11278,8.67969": {
+"bezirk": "",
+"kreis": "Frankfurt am Main",
+"land": "Hessen",
+"ort": "Frankfurt am Main",
+"plz": "60311"
+},
+"50.13276,8.91702": {
+"bezirk": "",
+"kreis": "Hanau",
+"land": "Hessen",
+"ort": "Hanau",
+"plz": ""
+},
+"50.14012,8.39208": {
+"bezirk": "",
+"kreis": "Main-Taunus-Kreis",
+"land": "Hessen",
+"ort": "Eppstein",
+"plz": "65817"
+},
+"50.14603,11.06363": {
+"bezirk": "",
+"kreis": "Landkreis Lichtenfels",
+"land": "Bayern",
+"ort": "Lichtenfels",
+"plz": "96215"
+},
+"50.19971,10.07599": {
+"bezirk": "",
+"kreis": "Landkreis Bad Kissingen",
+"land": "Bayern",
+"ort": "Bad Kissingen",
+"plz": "97688"
+},
+"50.20279,9.19049": {
+"bezirk": "",
+"kreis": "Main-Kinzig-Kreis",
+"land": "Hessen",
+"ort": "Gelnhausen",
+"plz": "63571"
+},
+"50.20802,9.15999": {
+"bezirk": "",
+"kreis": "Main-Kinzig-Kreis",
+"land": "Hessen",
+"ort": "Gelnhausen",
+"plz": ""
+},
+"50.20985,9.13717": {
+"bezirk": "",
+"kreis": "Main-Kinzig-Kreis",
+"land": "Hessen",
+"ort": "Lieblos",
+"plz": ""
+},
+"50.22772,8.61014": {
+"bezirk": "",
+"kreis": "Hochtaunuskreis",
+"land": "Hessen",
+"ort": "Bad Homburg vor der Höhe",
+"plz": "61348"
+},
+"50.25832,10.96467": {
+"bezirk": "",
+"kreis": "",
+"land": "Bayern",
+"ort": "Coburg",
+"plz": "96450"
+},
+"50.29262,9.1166": {
+"bezirk": "",
+"kreis": "Wetteraukreis",
+"land": "Hessen",
+"ort": "Büdingen",
+"plz": "63654"
+},
+"50.3615,7.59431": {
+"bezirk": "",
+"kreis": "Koblenz",
+"land": "Rheinland-Pfalz",
+"ort": "Koblenz",
+"plz": ""
+},
+"50.3631,8.74195": {
+"bezirk": "",
+"kreis": "Wetteraukreis",
+"land": "Hessen",
+"ort": "Bad Nauheim",
+"plz": "61231"
+},
+"50.3656,8.73939": {
+"bezirk": "",
+"kreis": "Wetteraukreis",
+"land": "Hessen",
+"ort": "Bad Nauheim",
+"plz": "61231"
+},
+"50.40045,11.69304": {
+"bezirk": "",
+"kreis": "Saale-Orla-Kreis",
+"land": "Thüringen",
+"ort": "Rosenthal am Rennsteig",
+"plz": ""
+},
+"50.41933,12.97097": {
+"bezirk": "",
+"kreis": "Erzgebirgskreis",
+"land": "Sachsen",
+"ort": "Oberwiesenthal",
+"plz": "09484"
+},
+"50.43487,7.83274": {
+"bezirk": "",
+"kreis": "Westerwaldkreis",
+"land": "Rheinland-Pfalz",
+"ort": "Montabaur",
+"plz": "56410"
+},
+"50.43886,7.39925": {
+"bezirk": "",
+"kreis": "Landkreis Mayen-Koblenz",
+"land": "Rheinland-Pfalz",
+"ort": "Andernach",
+"plz": "56626"
+},
+"50.47595,11.44722": {
+"bezirk": "",
+"kreis": "Landkreis Saalfeld-Rudolstadt",
+"land": "Thüringen",
+"ort": "Lehesten",
+"plz": "07349"
+},
+"50.50914,11.13874": {
+"bezirk": "",
+"kreis": "Landkreis Sonneberg",
+"land": "Thüringen",
+"ort": "Neuhaus am Rennweg",
+"plz": "98724"
+},
+"50.54685,8.53769": {
+"bezirk": "",
+"kreis": "Lahn-Dill-Kreis",
+"land": "Hessen",
+"ort": "Wetzlar",
+"plz": "35578"
+},
+"50.55286,8.50081": {
+"bezirk": "",
+"kreis": "Lahn-Dill-Kreis",
+"land": "Hessen",
+"ort": "Wetzlar",
+"plz": "35578"
+},
+"50.55349,11.71559": {
+"bezirk": "",
+"kreis": "Saale-Orla-Kreis",
+"land": "Thüringen",
+"ort": "Burgk",
+"plz": "07907"
+},
+"50.55524,6.24228": {
+"bezirk": "",
+"kreis": "Städteregion Aachen",
+"land": "Nordrhein-Westfalen",
+"ort": "Monschau",
+"plz": "52156"
+},
+"50.55568,8.50181": {
+"bezirk": "",
+"kreis": "Lahn-Dill-Kreis",
+"land": "Hessen",
+"ort": "Wetzlar",
+"plz": "35578"
+},
+"50.5775,11.80882": {
+"bezirk": "",
+"kreis": "Saale-Orla-Kreis",
+"land": "Thüringen",
+"ort": "Schleiz",
+"plz": ""
+},
+"50.58141,10.8596": {
+"bezirk": "",
+"kreis": "Ilm-Kreis",
+"land": "Thüringen",
+"ort": "Ilmenau",
+"plz": ""
+},
+"50.59135,11.13368": {
+"bezirk": "",
+"kreis": "Landkreis Saalfeld-Rudolstadt",
+"land": "Thüringen",
+"ort": "Schwarzatal",
+"plz": "98744"
+},
+"50.60612,6.62845": {
+"bezirk": "",
+"kreis": "Kreis Euskirchen",
+"land": "Nordrhein-Westfalen",
+"ort": "Mechernich",
+"plz": "53894"
+},
+"50.61077,10.69323": {
+"bezirk": "",
+"kreis": "",
+"land": "Thüringen",
+"ort": "Suhl",
+"plz": "98528"
+},
+"50.62417,12.92343": {
+"bezirk": "",
+"kreis": "Erzgebirgskreis",
+"land": "Sachsen",
+"ort": "Geyer",
+"plz": "09468"
+},
+"50.63012,12.81346": {
+"bezirk": "",
+"kreis": "Erzgebirgskreis",
+"land": "Sachsen",
+"ort": "Zwönitz",
+"plz": "08297"
+},
+"50.63468,11.34236": {
+"bezirk": "",
+"kreis": "Landkreis Saalfeld-Rudolstadt",
+"land": "Thüringen",
+"ort": "Saalfeld/Saale",
+"plz": "07318"
+},
+"50.637,10.86207": {
+"bezirk": "",
+"kreis": "Ilm-Kreis",
+"land": "Thüringen",
+"ort": "Ilmenau",
+"plz": ""
+},
+"50.64075,12.17831": {
+"bezirk": "",
+"kreis": "Greiz",
+"land": "Thüringen",
+"ort": "Greiz",
+"plz": "07973"
+},
+"50.64764,11.00494": {
+"bezirk": "",
+"kreis": "Ilm-Kreis",
+"land": "Thüringen",
+"ort": "Ilmenau",
+"plz": "98694"
+},
+"50.64789,11.36059": {
+"bezirk": "",
+"kreis": "Landkreis Saalfeld-Rudolstadt",
+"land": "Thüringen",
+"ort": "Saalfeld/Saale",
+"plz": "07318"
+},
+"50.64899,11.97895": {
+"bezirk": "",
+"kreis": "Greiz",
+"land": "Thüringen",
+"ort": "Zeulenroda",
+"plz": "07937"
+},
+"50.65652,12.19993": {
+"bezirk": "",
+"kreis": "Greiz",
+"land": "Thüringen",
+"ort": "Greiz",
+"plz": "07973"
+},
+"50.65792,10.6626": {
+"bezirk": "",
+"kreis": "Landkreis Schmalkalden-Meiningen",
+"land": "Thüringen",
+"ort": "Zella-Mehlis",
+"plz": "98544"
+},
+"50.65833,6.88801": {
+"bezirk": "",
+"kreis": "Rhein-Sieg-Kreis",
+"land": "Nordrhein-Westfalen",
+"ort": "Swisttal",
+"plz": ""
+},
+"50.6616,11.09723": {
+"bezirk": "",
+"kreis": "Landkreis Saalfeld-Rudolstadt",
+"land": "Thüringen",
+"ort": "Königsee",
+"plz": ""
+},
+"50.66163,12.6716": {
+"bezirk": "",
+"kreis": "Zwickau",
+"land": "Sachsen",
+"ort": "Hartenstein",
+"plz": ""
+},
+"50.66252,11.564": {
+"bezirk": "",
+"kreis": "Saale-Orla-Kreis",
+"land": "Thüringen",
+"ort": "Ranis",
+"plz": ""
+},
+"50.66451,12.24109": {
+"bezirk": "",
+"kreis": "Greiz",
+"land": "Thüringen",
+"ort": "Raasdorf",
+"plz": ""
+},
+"50.67094,12.95128": {
+"bezirk": "",
+"kreis": "Erzgebirgskreis",
+"land": "Sachsen",
+"ort": "Thum",
+"plz": "09419"
+},
+"50.67361,9.56117": {
+"bezirk": "",
+"kreis": "Vogelsbergkreis",
+"land": "Hessen",
+"ort": "Schlitz",
+"plz": "36110"
+},
+"50.67477,12.514": {
+"bezirk": "",
+"kreis": "Zwickau",
+"land": "Sachsen",
+"ort": "Wilkau-Haßlau",
+"plz": "08112"
+},
+"50.6807,10.86227": {
+"bezirk": "",
+"kreis": "Ilm-Kreis",
+"land": "Thüringen",
+"ort": "Ilmenau",
+"plz": ""
+},
+"50.68375,12.01895": {
+"bezirk": "",
+"kreis": "Greiz",
+"land": "Thüringen",
+"ort": "Zeulenroda-Triebes",
+"plz": "07950"
+},
+"50.68426,11.26378": {
+"bezirk": "",
+"kreis": "Landkreis Saalfeld-Rudolstadt",
+"land": "Thüringen",
+"ort": "Bad Blankenburg",
+"plz": "07422"
+},
+"50.6859,10.91479": {
+"bezirk": "",
+"kreis": "Ilm-Kreis",
+"land": "Thüringen",
+"ort": "Ilmenau",
+"plz": "98693"
+},
+"50.68741,12.02417": {
+"bezirk": "",
+"kreis": "Greiz",
+"land": "Thüringen",
+"ort": "Zeulenroda-Triebes",
+"plz": "07950"
+},
+"50.68805,12.02283": {
+"bezirk": "",
+"kreis": "Greiz",
+"land": "Thüringen",
+"ort": "Zeulenroda-Triebes",
+"plz": "07950"
+},
+"50.68809,13.03128": {
+"bezirk": "",
+"kreis": "Erzgebirgskreis",
+"land": "Sachsen",
+"ort": "Grießbach",
+"plz": "09430"
+},
+"50.69395,11.59439": {
+"bezirk": "",
+"kreis": "Saale-Orla-Kreis",
+"land": "Thüringen",
+"ort": "Pößneck",
+"plz": "07381"
+},
+"50.69952,11.90042": {
+"bezirk": "",
+"kreis": "Greiz",
+"land": "Thüringen",
+"ort": "Gütterlitz",
+"plz": "07955"
+},
+"50.70219,10.9322": {
+"bezirk": "",
+"kreis": "Ilm-Kreis",
+"land": "Thüringen",
+"ort": "Ilmenau",
+"plz": "98693"
+},
+"50.70247,12.85129": {
+"bezirk": "",
+"kreis": "Erzgebirgskreis",
+"land": "Sachsen",
+"ort": "Thalheim/Erzgebirge",
+"plz": "09380"
+},
+"50.70392,10.85162": {
+"bezirk": "",
+"kreis": "Ilm-Kreis",
+"land": "Thüringen",
+"ort": "Elgersburg",
+"plz": "98716"
+},
+"50.7109,12.05342": {
+"bezirk": "",
+"kreis": "Greiz",
+"land": "Thüringen",
+"ort": "Brückla",
+"plz": "07958"
+},
+"50.71811,10.84677": {
+"bezirk": "",
+"kreis": "Ilm-Kreis",
+"land": "Thüringen",
+"ort": "Arlesberg",
+"plz": "99331"
+},
+"50.71843,12.2436": {
+"bezirk": "",
+"kreis": "Greiz",
+"land": "Thüringen",
+"ort": "Mohlsdorf-Teichwolframsdorf",
+"plz": "07987"
+},
+"50.72032,10.8485": {
+"bezirk": "",
+"kreis": "Ilm-Kreis",
+"land": "Thüringen",
+"ort": "Arlesberg",
+"plz": "99331"
+},
+"50.72766,7.31201": {
+"bezirk": "",
+"kreis": "Rhein-Sieg-Kreis",
+"land": "Nordrhein-Westfalen",
+"ort": "Hennef (Sieg)",
+"plz": "53773"
+},
+"50.73639,11.74434": {
+"bezirk": "",
+"kreis": "Saale-Orla-Kreis",
+"land": "Thüringen",
+"ort": "Neustadt an der Orla",
+"plz": "07806"
+},
+"50.74821,12.13138": {
+"bezirk": "",
+"kreis": "Greiz",
+"land": "Thüringen",
+"ort": "Zickra",
+"plz": "07980"
+},
+"50.74856,6.16386": {
+"bezirk": "",
+"kreis": "Städteregion Aachen",
+"land": "Nordrhein-Westfalen",
+"ort": "Aachen",
+"plz": "52076"
+},
+"50.75271,12.16425": {
+"bezirk": "",
+"kreis": "Greiz",
+"land": "Thüringen",
+"ort": "Berga/Elster",
+"plz": "07980"
+},
+"50.76194,7.36298": {
+"bezirk": "",
+"kreis": "Rhein-Sieg-Kreis",
+"land": "Nordrhein-Westfalen",
+"ort": "Hennef (Sieg)",
+"plz": ""
+},
+"50.76228,6.09237": {
+"bezirk": "",
+"kreis": "Städteregion Aachen",
+"land": "Nordrhein-Westfalen",
+"ort": "Aachen",
+"plz": "52066"
+},
+"50.77266,7.2682": {
+"bezirk": "",
+"kreis": "Rhein-Sieg-Kreis",
+"land": "Nordrhein-Westfalen",
+"ort": "Hennef (Sieg)",
+"plz": ""
+},
+"50.77416,7.28643": {
+"bezirk": "",
+"kreis": "Rhein-Sieg-Kreis",
+"land": "Nordrhein-Westfalen",
+"ort": "Hennef (Sieg)",
+"plz": ""
+},
+"50.77472,7.28377": {
+"bezirk": "",
+"kreis": "Rhein-Sieg-Kreis",
+"land": "Nordrhein-Westfalen",
+"ort": "Hennef (Sieg)",
+"plz": ""
+},
+"50.77485,12.06108": {
+"bezirk": "",
+"kreis": "Greiz",
+"land": "Thüringen",
+"ort": "Weida",
+"plz": "07570"
+},
+"50.77993,6.15476": {
+"bezirk": "",
+"kreis": "Städteregion Aachen",
+"land": "Nordrhein-Westfalen",
+"ort": "Aachen",
+"plz": "52078"
+},
+"50.78522,12.13673": {
+"bezirk": "",
+"kreis": "Greiz",
+"land": "Thüringen",
+"ort": "Letzendorf",
+"plz": "07570"
+},
+"50.79671,7.20671": {
+"bezirk": "",
+"kreis": "Rhein-Sieg-Kreis",
+"land": "Nordrhein-Westfalen",
+"ort": "Siegburg",
+"plz": ""
+},
+"50.79906,6.38765": {
+"bezirk": "",
+"kreis": "Kreis Düren",
+"land": "Nordrhein-Westfalen",
+"ort": "Merode",
+"plz": ""
+},
+"50.80398,11.61169": {
+"bezirk": "",
+"kreis": "Saale-Holzland-Kreis",
+"land": "Thüringen",
+"ort": "Seitenroda",
+"plz": ""
+},
+"50.80835,7.02627": {
+"bezirk": "",
+"kreis": "Rhein-Erft-Kreis",
+"land": "Nordrhein-Westfalen",
+"ort": "Wesseling",
+"plz": ""
+},
+"50.81131,6.06122": {
+"bezirk": "",
+"kreis": "Städteregion Aachen",
+"land": "Nordrhein-Westfalen",
+"ort": "Aachen",
+"plz": "52072"
+},
+"50.81233,6.96797": {
+"bezirk": "",
+"kreis": "Rhein-Erft-Kreis",
+"land": "Nordrhein-Westfalen",
+"ort": "Wesseling",
+"plz": ""
+},
+"50.81309,10.23558": {
+"bezirk": "",
+"kreis": "Wartburgkreis",
+"land": "Thüringen",
+"ort": "Bad Salzungen",
+"plz": "36433"
+},
+"50.81443,13.09972": {
+"bezirk": "",
+"kreis": "Mittelsachsen",
+"land": "Sachsen",
+"ort": "Augustusburg",
+"plz": ""
+},
+"50.82472,6.98131": {
+"bezirk": "",
+"kreis": "Rhein-Erft-Kreis",
+"land": "Nordrhein-Westfalen",
+"ort": "Wesseling",
+"plz": "50389"
+},
+"50.82783,6.90458": {
+"bezirk": "",
+"kreis": "Rhein-Erft-Kreis",
+"land": "Nordrhein-Westfalen",
+"ort": "Brühl",
+"plz": "50321"
+},
+"50.83374,10.94531": {
+"bezirk": "",
+"kreis": "Ilm-Kreis",
+"land": "Thüringen",
+"ort": "Arnstadt",
+"plz": "99310"
+},
+"50.83731,13.67539": {
+"bezirk": "",
+"kreis": "Sächsische Schweiz-Osterzgebirge",
+"land": "Sachsen",
+"ort": "Dippoldiswalde",
+"plz": ""
+},
+"50.85116,11.19308": {
+"bezirk": "",
+"kreis": "Landkreis Weimarer Land",
+"land": "Thüringen",
+"ort": "Kranichfeld",
+"plz": "99448"
+},
+"50.85743,12.42215": {
+"bezirk": "",
+"kreis": "Altenburger Land",
+"land": "Thüringen",
+"ort": "Zschöpel",
+"plz": "04639"
+},
+"50.85889,11.2443": {
+"bezirk": "",
+"kreis": "Landkreis Weimarer Land",
+"land": "Thüringen",
+"ort": "Bad Berka",
+"plz": "99438"
+},
+"50.8604,11.34215": {
+"bezirk": "",
+"kreis": "Landkreis Weimarer Land",
+"land": "Thüringen",
+"ort": "Blankenhain",
+"plz": "99444"
+},
+"50.86078,13.65231": {
+"bezirk": "",
+"kreis": "Sächsische Schweiz-Osterzgebirge",
+"land": "Sachsen",
+"ort": "Dippoldiswalde",
+"plz": "01744"
+},
+"50.86143,12.18349": {
+"bezirk": "",
+"kreis": "Greiz",
+"land": "Thüringen",
+"ort": "Ronneburg",
+"plz": "07580"
+},
+"50.86174,13.16737": {
+"bezirk": "",
+"kreis": "Mittelsachsen",
+"land": "Sachsen",
+"ort": "Oederan",
+"plz": "09569"
+},
+"50.87429,10.97216": {
+"bezirk": "",
+"kreis": "Ilm-Kreis",
+"land": "Thüringen",
+"ort": "Amt Wachsenburg",
+"plz": ""
+},
+"50.87438,8.01855": {
+"bezirk": "",
+"kreis": "Kreis Siegen-Wittgenstein",
+"land": "Nordrhein-Westfalen",
+"ort": "Siegen",
+"plz": "57072"
+},
+"50.87655,12.08335": {
+"bezirk": "",
+"kreis": "",
+"land": "Thüringen",
+"ort": "Gera",
+"plz": "07546"
+},
+"50.88854,12.42974": {
+"bezirk": "",
+"kreis": "Altenburger Land",
+"land": "Thüringen",
+"ort": "Gößnitz",
+"plz": "04639"
+},
+"50.88869,12.43379": {
+"bezirk": "",
+"kreis": "Altenburger Land",
+"land": "Thüringen",
+"ort": "Gößnitz",
+"plz": "04639"
+},
+"50.88894,11.20447": {
+"bezirk": "",
+"kreis": "Landkreis Weimarer Land",
+"land": "Thüringen",
+"ort": "Tonndorf",
+"plz": ""
+},
+"50.89423,11.20965": {
+"bezirk": "",
+"kreis": "Landkreis Weimarer Land",
+"land": "Thüringen",
+"ort": "Tonndorf",
+"plz": ""
+},
+"50.89569,12.3531": {
+"bezirk": "",
+"kreis": "Altenburger Land",
+"land": "Thüringen",
+"ort": "Schmölln",
+"plz": "04626"
+},
+"50.89678,13.66749": {
+"bezirk": "",
+"kreis": "Sächsische Schweiz-Osterzgebirge",
+"land": "Sachsen",
+"ort": "Dippoldiswalde",
+"plz": ""
+},
+"50.89773,10.55608": {
+"bezirk": "",
+"kreis": "Landkreis Gotha",
+"land": "Thüringen",
+"ort": "Waltershausen",
+"plz": "99880"
+},
+"50.91215,13.03237": {
+"bezirk": "",
+"kreis": "Mittelsachsen",
+"land": "Sachsen",
+"ort": "Frankenberg/Sachsen",
+"plz": "09669"
+},
+"50.91714,13.34264": {
+"bezirk": "",
+"kreis": "Mittelsachsen",
+"land": "Sachsen",
+"ort": "Freiberg",
+"plz": ""
+},
+"50.91992,6.95301": {
+"bezirk": "",
+"kreis": "Köln",
+"land": "Nordrhein-Westfalen",
+"ort": "Köln",
+"plz": ""
+},
+"50.9217,6.95945": {
+"bezirk": "",
+"kreis": "Köln",
+"land": "Nordrhein-Westfalen",
+"ort": "Köln",
+"plz": ""
+},
+"50.92805,11.58797": {
+"bezirk": "",
+"kreis": "Jena",
+"land": "Thüringen",
+"ort": "Jena",
+"plz": ""
+},
+"50.93034,12.01171": {
+"bezirk": "",
+"kreis": "Greiz",
+"land": "Thüringen",
+"ort": "Dürrenberg",
+"plz": "07586"
+},
+"50.93512,6.94042": {
+"bezirk": "",
+"kreis": "Köln",
+"land": "Nordrhein-Westfalen",
+"ort": "Köln",
+"plz": ""
+},
+"50.93606,6.94755": {
+"bezirk": "",
+"kreis": "Köln",
+"land": "Nordrhein-Westfalen",
+"ort": "Köln",
+"plz": ""
+},
+"50.93657,6.93953": {
+"bezirk": "",
+"kreis": "Köln",
+"land": "Nordrhein-Westfalen",
+"ort": "Köln",
+"plz": ""
+},
+"50.93693,6.96068": {
+"bezirk": "",
+"kreis": "Köln",
+"land": "Nordrhein-Westfalen",
+"ort": "Köln",
+"plz": "50667"
+},
+"50.93823,6.96001": {
+"bezirk": "",
+"kreis": "Köln",
+"land": "Nordrhein-Westfalen",
+"ort": "Köln",
+"plz": "50667"
+},
+"50.94559,10.70438": {
+"bezirk": "",
+"kreis": "Landkreis Gotha",
+"land": "Thüringen",
+"ort": "Gotha",
+"plz": "99867"
+},
+"50.94625,10.70969": {
+"bezirk": "",
+"kreis": "Landkreis Gotha",
+"land": "Thüringen",
+"ort": "Gotha",
+"plz": "99867"
+},
+"50.94872,11.88647": {
+"bezirk": "",
+"kreis": "Saale-Holzland-Kreis",
+"land": "Thüringen",
+"ort": "Eisenberg",
+"plz": "07607"
+},
+"50.95114,11.14742": {
+"bezirk": "",
+"kreis": "Landkreis Weimarer Land",
+"land": "Thüringen",
+"ort": "Obernissa",
+"plz": "99428"
+},
+"50.9542,6.64073": {
+"bezirk": "",
+"kreis": "Rhein-Erft-Kreis",
+"land": "Nordrhein-Westfalen",
+"ort": "Bergheim",
+"plz": "50126"
+},
+"50.95712,6.9191": {
+"bezirk": "",
+"kreis": "Köln",
+"land": "Nordrhein-Westfalen",
+"ort": "Köln",
+"plz": ""
+},
+"50.95728,7.27412": {
+"bezirk": "",
+"kreis": "Rheinisch-Bergischer Kreis",
+"land": "Nordrhein-Westfalen",
+"ort": "Overath",
+"plz": "51491"
+},
+"50.95778,11.28218": {
+"bezirk": "",
+"kreis": "",
+"land": "Thüringen",
+"ort": "Weimar",
+"plz": "99428"
+},
+"50.96553,11.34392": {
+"bezirk": "",
+"kreis": "",
+"land": "Thüringen",
+"ort": "Weimar",
+"plz": "99425"
+},
+"50.96582,10.30632": {
+"bezirk": "",
+"kreis": "Wartburgkreis",
+"land": "Thüringen",
+"ort": "Eisenach",
+"plz": "99817"
+},
+"50.96825,11.90567": {
+"bezirk": "",
+"kreis": "Saale-Holzland-Kreis",
+"land": "Thüringen",
+"ort": "Eisenberg",
+"plz": "07607"
+},
+"50.97463,10.31964": {
+"bezirk": "",
+"kreis": "Wartburgkreis",
+"land": "Thüringen",
+"ort": "Eisenach",
+"plz": "99817"
+},
+"50.97515,9.31902": {
+"bezirk": "",
+"kreis": "Schwalm-Eder-Kreis",
+"land": "Hessen",
+"ort": "Frielendorf",
+"plz": "34621"
+},
+"50.97687,11.02349": {
+"bezirk": "",
+"kreis": "Erfurt",
+"land": "Thüringen",
+"ort": "Erfurt",
+"plz": "99084"
+},
+"50.97788,11.02873": {
+"bezirk": "",
+"kreis": "Erfurt",
+"land": "Thüringen",
+"ort": "Erfurt",
+"plz": "99084"
+},
+"50.9786,11.03221": {
+"bezirk": "",
+"kreis": "Erfurt",
+"land": "Thüringen",
+"ort": "Erfurt",
+"plz": "99084"
+},
+"50.98357,7.40935": {
+"bezirk": "",
+"kreis": "Oberbergischer Kreis",
+"land": "Nordrhein-Westfalen",
+"ort": "Engelskirchen",
+"plz": "51766"
+},
+"50.98535,12.43349": {
+"bezirk": "",
+"kreis": "Altenburger Land",
+"land": "Thüringen",
+"ort": "Altenburg",
+"plz": "04600"
+},
+"50.98538,12.98101": {
+"bezirk": "",
+"kreis": "Mittelsachsen",
+"land": "Sachsen",
+"ort": "Mittweida",
+"plz": "09648"
+},
+"51.00122,11.14731": {
+"bezirk": "",
+"kreis": "Erfurt",
+"land": "Thüringen",
+"ort": "Erfurt",
+"plz": ""
+},
+"51.00422,11.36898": {
+"bezirk": "",
+"kreis": "Landkreis Weimarer Land",
+"land": "Thüringen",
+"ort": "Denstedt",
+"plz": "99510"
+},
+"51.02286,11.51284": {
+"bezirk": "",
+"kreis": "Landkreis Weimarer Land",
+"land": "Thüringen",
+"ort": "Apolda",
+"plz": "99510"
+},
+"51.02987,13.30804": {
+"bezirk": "",
+"kreis": "Mittelsachsen",
+"land": "Sachsen",
+"ort": "Großschirma",
+"plz": "09603"
+},
+"51.03236,13.89506": {
+"bezirk": "",
+"kreis": "Dresden",
+"land": "Sachsen",
+"ort": "Dresden",
+"plz": "01328"
+},
+"51.03252,6.98758": {
+"bezirk": "",
+"kreis": "Leverkusen",
+"land": "Nordrhein-Westfalen",
+"ort": "Leverkusen",
+"plz": "51373"
+},
+"51.04105,12.37969": {
+"bezirk": "",
+"kreis": "Altenburger Land",
+"land": "Thüringen",
+"ort": "Meuselwitz",
+"plz": "04610"
+},
+"51.04372,13.73555": {
+"bezirk": "",
+"kreis": "Dresden",
+"land": "Sachsen",
+"ort": "Dresden",
+"plz": "01069"
+},
+"51.04567,12.79892": {
+"bezirk": "",
+"kreis": "Mittelsachsen",
+"land": "Sachsen",
+"ort": "Rochlitz",
+"plz": ""
+},
+"51.04592,11.40998": {
+"bezirk": "",
+"kreis": "Landkreis Weimarer Land",
+"land": "Thüringen",
+"ort": "Goldbach",
+"plz": "99510"
+},
+"51.04941,12.13554": {
+"bezirk": "",
+"kreis": "Burgenlandkreis",
+"land": "Sachsen-Anhalt",
+"ort": "Zeitz",
+"plz": "06712"
+},
+"51.05083,12.12562": {
+"bezirk": "",
+"kreis": "Burgenlandkreis",
+"land": "Sachsen-Anhalt",
+"ort": "Zeitz",
+"plz": "06712"
+},
+"51.05139,13.73235": {
+"bezirk": "",
+"kreis": "Dresden",
+"land": "Sachsen",
+"ort": "Dresden",
+"plz": ""
+},
+"51.05145,13.74057": {
+"bezirk": "",
+"kreis": "Dresden",
+"land": "Sachsen",
+"ort": "Dresden",
+"plz": ""
+},
+"51.05177,13.73711": {
+"bezirk": "",
+"kreis": "Dresden",
+"land": "Sachsen",
+"ort": "Dresden",
+"plz": ""
+},
+"51.05256,13.73894": {
+"bezirk": "",
+"kreis": "Dresden",
+"land": "Sachsen",
+"ort": "Dresden",
+"plz": ""
+},
+"51.05423,12.69491": {
+"bezirk": "",
+"kreis": "Landkreis Leipzig",
+"land": "Sachsen",
+"ort": "Geithain",
+"plz": ""
+},
+"51.05524,6.22351": {
+"bezirk": "",
+"kreis": "Kreis Heinsberg",
+"land": "Nordrhein-Westfalen",
+"ort": "Hückelhoven",
+"plz": "41836"
+},
+"51.05636,13.72927": {
+"bezirk": "",
+"kreis": "Dresden",
+"land": "Sachsen",
+"ort": "Dresden",
+"plz": ""
+},
+"51.05963,13.74288": {
+"bezirk": "",
+"kreis": "Dresden",
+"land": "Sachsen",
+"ort": "Dresden",
+"plz": "01097"
+},
+"51.06376,6.09653": {
+"bezirk": "",
+"kreis": "Kreis Heinsberg",
+"land": "Nordrhein-Westfalen",
+"ort": "Heinsberg",
+"plz": "52525"
+},
+"51.07463,11.58032": {
+"bezirk": "",
+"kreis": "Landkreis Weimarer Land",
+"land": "Thüringen",
+"ort": "Eberstedt",
+"plz": ""
+},
+"51.07523,13.74898": {
+"bezirk": "",
+"kreis": "Dresden",
+"land": "Sachsen",
+"ort": "Dresden",
+"plz": ""
+},
+"51.07986,6.31628": {
+"bezirk": "",
+"kreis": "Kreis Heinsberg",
+"land": "Nordrhein-Westfalen",
+"ort": "Erkelenz",
+"plz": "41812"
+},
+"51.0816,6.31569": {
+"bezirk": "",
+"kreis": "Kreis Heinsberg",
+"land": "Nordrhein-Westfalen",
+"ort": "Erkelenz",
+"plz": "41812"
+},
+"51.08764,11.62309": {
+"bezirk": "",
+"kreis": "Landkreis Weimarer Land",
+"land": "Thüringen",
+"ort": "Bad Sulza",
+"plz": "99518"
+},
+"51.08876,6.58943": {
+"bezirk": "",
+"kreis": "Rhein-Kreis Neuss",
+"land": "Nordrhein-Westfalen",
+"ort": "Grevenbroich",
+"plz": "41515"
+},
+"51.09998,6.15495": {
+"bezirk": "",
+"kreis": "Kreis Heinsberg",
+"land": "Nordrhein-Westfalen",
+"ort": "Wassenberg",
+"plz": "41849"
+},
+"51.10012,6.23964": {
+"bezirk": "",
+"kreis": "Kreis Heinsberg",
+"land": "Nordrhein-Westfalen",
+"ort": "Erkelenz",
+"plz": "41812"
+},
+"51.10076,6.50241": {
+"bezirk": "",
+"kreis": "Rhein-Kreis Neuss",
+"land": "Nordrhein-Westfalen",
+"ort": "Jüchen",
+"plz": "41363"
+},
+"51.10863,10.64519": {
+"bezirk": "",
+"kreis": "Unstrut-Hainich-Kreis",
+"land": "Thüringen",
+"ort": "Bad Langensalza",
+"plz": "99947"
+},
+"51.11852,7.39817": {
+"bezirk": "",
+"kreis": "Oberbergischer Kreis",
+"land": "Nordrhein-Westfalen",
+"ort": "Wipperfürth",
+"plz": "51688"
+},
+"51.1211,13.69415": {
+"bezirk": "",
+"kreis": "Meißen",
+"land": "Sachsen",
+"ort": "Boxdorf",
+"plz": "01468"
+},
+"51.12656,6.97929": {
+"bezirk": "",
+"kreis": "Kreis Mettmann",
+"land": "Nordrhein-Westfalen",
+"ort": "Langenfeld (Rheinland)",
+"plz": "40764"
+},
+"51.12673,13.84399": {
+"bezirk": "",
+"kreis": "Dresden",
+"land": "Sachsen",
+"ort": "Dresden",
+"plz": "01465"
+},
+"51.13064,6.41257": {
+"bezirk": "",
+"kreis": "Mönchengladbach",
+"land": "Nordrhein-Westfalen",
+"ort": "Mönchengladbach",
+"plz": ""
+},
+"51.13238,6.30653": {
+"bezirk": "",
+"kreis": "Kreis Heinsberg",
+"land": "Nordrhein-Westfalen",
+"ort": "Wegberg",
+"plz": "41844"
+},
+"51.13989,6.27661": {
+"bezirk": "",
+"kreis": "Kreis Heinsberg",
+"land": "Nordrhein-Westfalen",
+"ort": "Wegberg",
+"plz": "41844"
+},
+"51.14195,6.55738": {
+"bezirk": "",
+"kreis": "Rhein-Kreis Neuss",
+"land": "Nordrhein-Westfalen",
+"ort": "Jüchen",
+"plz": "41363"
+},
+"51.14788,6.36168": {
+"bezirk": "",
+"kreis": "Mönchengladbach",
+"land": "Nordrhein-Westfalen",
+"ort": "Mönchengladbach",
+"plz": ""
+},
+"51.1562,12.09782": {
+"bezirk": "",
+"kreis": "Burgenlandkreis",
+"land": "Sachsen-Anhalt",
+"ort": "Hohenmölsen",
+"plz": "06679"
+},
+"51.15637,13.62218": {
+"bezirk": "",
+"kreis": "Meißen",
+"land": "Sachsen",
+"ort": "Coswig",
+"plz": "01640"
+},
+"51.16179,11.11767": {
+"bezirk": "",
+"kreis": "Landkreis Sömmerda",
+"land": "Thüringen",
+"ort": "Sömmerda",
+"plz": "99610"
+},
+"51.16215,13.5644": {
+"bezirk": "",
+"kreis": "Meißen",
+"land": "Sachsen",
+"ort": "Weinböhla",
+"plz": ""
+},
+"51.16334,6.87385": {
+"bezirk": "",
+"kreis": "Düsseldorf",
+"land": "Nordrhein-Westfalen",
+"ort": "Düsseldorf",
+"plz": "40597"
+},
+"51.16373,13.67623": {
+"bezirk": "",
+"kreis": "Meißen",
+"land": "Sachsen",
+"ort": "Dippelsdorf",
+"plz": "01468"
+},
+"51.16397,6.54217": {
+"bezirk": "",
+"kreis": "Rhein-Kreis Neuss",
+"land": "Nordrhein-Westfalen",
+"ort": "Korschenbroich",
+"plz": "41352"
+},
+"51.16538,10.31145": {
+"bezirk": "",
+"kreis": "Unstrut-Hainich-Kreis",
+"land": "Thüringen",
+"ort": "Heyerode",
+"plz": "99988"
+},
+"51.16727,13.67935": {
+"bezirk": "",
+"kreis": "Meißen",
+"land": "Sachsen",
+"ort": "Dippelsdorf",
+"plz": "01468"
+},
+"51.16768,6.44566": {
+"bezirk": "",
+"kreis": "Mönchengladbach",
+"land": "Nordrhein-Westfalen",
+"ort": "Mönchengladbach",
+"plz": "41236"
+},
+"51.17921,13.47558": {
+"bezirk": "",
+"kreis": "Meißen",
+"land": "Sachsen",
+"ort": "Meißen",
+"plz": ""
+},
+"51.1814,14.42392": {
+"bezirk": "",
+"kreis": "Bautzen",
+"land": "Sachsen",
+"ort": "Bautzen",
+"plz": ""
+},
+"51.18221,7.18605": {
+"bezirk": "",
+"kreis": "Remscheid",
+"land": "Nordrhein-Westfalen",
+"ort": "Remscheid",
+"plz": ""
+},
+"51.19381,6.43746": {
+"bezirk": "",
+"kreis": "Mönchengladbach",
+"land": "Nordrhein-Westfalen",
+"ort": "Mönchengladbach",
+"plz": "41061"
+},
+"51.1943,6.43174": {
+"bezirk": "",
+"kreis": "Mönchengladbach",
+"land": "Nordrhein-Westfalen",
+"ort": "Mönchengladbach",
+"plz": "41061"
+},
+"51.19896,6.6922": {
+"bezirk": "",
+"kreis": "Rhein-Kreis Neuss",
+"land": "Nordrhein-Westfalen",
+"ort": "Neuss",
+"plz": ""
+},
+"51.20074,11.06287": {
+"bezirk": "",
+"kreis": "Landkreis Sömmerda",
+"land": "Thüringen",
+"ort": "Weißensee",
+"plz": "99631"
+},
+"51.201,11.97243": {
+"bezirk": "",
+"kreis": "Burgenlandkreis",
+"land": "Sachsen-Anhalt",
+"ort": "Weißenfels",
+"plz": "06667"
+},
+"51.21198,11.77099": {
+"bezirk": "",
+"kreis": "Burgenlandkreis",
+"land": "Sachsen-Anhalt",
+"ort": "Freyburg (Unstrut)",
+"plz": "06632"
+},
+"51.21357,10.22105": {
+"bezirk": "",
+"kreis": "Unstrut-Hainich-Kreis",
+"land": "Thüringen",
+"ort": "Lengenfeld unterm Stein",
+"plz": "99976"
+},
+"51.21613,6.66484": {
+"bezirk": "",
+"kreis": "Rhein-Kreis Neuss",
+"land": "Nordrhein-Westfalen",
+"ort": "Neuss",
+"plz": "41462"
+},
+"51.21623,7.62937": {
+"bezirk": "",
+"kreis": "Märkischer Kreis",
+"land": "Nordrhein-Westfalen",
+"ort": "Lüdenscheid",
+"plz": "58511"
+},
+"51.2175,7.07691": {
+"bezirk": "",
+"kreis": "Solingen",
+"land": "Nordrhein-Westfalen",
+"ort": "Solingen",
+"plz": "42653"
+},
+"51.21802,6.94896": {
+"bezirk": "",
+"kreis": "Kreis Mettmann",
+"land": "Nordrhein-Westfalen",
+"ort": "Erkrath",
+"plz": "40699"
+},
+"51.22523,6.77382": {
+"bezirk": "",
+"kreis": "Düsseldorf",
+"land": "Nordrhein-Westfalen",
+"ort": "Düsseldorf",
+"plz": "40213"
+},
+"51.22535,6.77919": {
+"bezirk": "",
+"kreis": "Düsseldorf",
+"land": "Nordrhein-Westfalen",
+"ort": "Düsseldorf",
+"plz": ""
+},
+"51.22575,6.77192": {
+"bezirk": "",
+"kreis": "Düsseldorf",
+"land": "Nordrhein-Westfalen",
+"ort": "Düsseldorf",
+"plz": "40213"
+},
+"51.22629,6.78061": {
+"bezirk": "",
+"kreis": "Düsseldorf",
+"land": "Nordrhein-Westfalen",
+"ort": "Düsseldorf",
+"plz": ""
+},
+"51.22663,6.61928": {
+"bezirk": "",
+"kreis": "Rhein-Kreis Neuss",
+"land": "Nordrhein-Westfalen",
+"ort": "Kaarst",
+"plz": ""
+},
+"51.22689,6.78442": {
+"bezirk": "",
+"kreis": "Düsseldorf",
+"land": "Nordrhein-Westfalen",
+"ort": "Düsseldorf",
+"plz": ""
+},
+"51.22699,6.78272": {
+"bezirk": "",
+"kreis": "Düsseldorf",
+"land": "Nordrhein-Westfalen",
+"ort": "Düsseldorf",
+"plz": ""
+},
+"51.22716,6.78017": {
+"bezirk": "",
+"kreis": "Düsseldorf",
+"land": "Nordrhein-Westfalen",
+"ort": "Düsseldorf",
+"plz": ""
+},
+"51.23854,10.92002": {
+"bezirk": "",
+"kreis": "Kyffhäuserkreis",
+"land": "Thüringen",
+"ort": "Westgreußen",
+"plz": "99718"
+},
+"51.23856,6.77972": {
+"bezirk": "",
+"kreis": "Düsseldorf",
+"land": "Nordrhein-Westfalen",
+"ort": "Düsseldorf",
+"plz": ""
+},
+"51.24329,6.71351": {
+"bezirk": "",
+"kreis": "Rhein-Kreis Neuss",
+"land": "Nordrhein-Westfalen",
+"ort": "Meerbusch",
+"plz": "40667"
+},
+"51.25138,6.3339": {
+"bezirk": "",
+"kreis": "Kreis Viersen",
+"land": "Nordrhein-Westfalen",
+"ort": "Dülken",
+"plz": "41751"
+},
+"51.25142,6.97671": {
+"bezirk": "",
+"kreis": "Kreis Mettmann",
+"land": "Nordrhein-Westfalen",
+"ort": "Mettmann",
+"plz": "40822"
+},
+"51.25529,7.14962": {
+"bezirk": "",
+"kreis": "Wuppertal",
+"land": "Nordrhein-Westfalen",
+"ort": "Wuppertal",
+"plz": ""
+},
+"51.25863,7.14663": {
+"bezirk": "",
+"kreis": "Wuppertal",
+"land": "Nordrhein-Westfalen",
+"ort": "Wuppertal",
+"plz": ""
+},
+"51.26537,11.41234": {
+"bezirk": "",
+"kreis": "Kyffhäuserkreis",
+"land": "Thüringen",
+"ort": "Roßleben-Wiehe",
+"plz": ""
+},
+"51.27179,7.20037": {
+"bezirk": "",
+"kreis": "Wuppertal",
+"land": "Nordrhein-Westfalen",
+"ort": "Wuppertal",
+"plz": ""
+},
+"51.27871,6.46212": {
+"bezirk": "",
+"kreis": "Kreis Viersen",
+"land": "Nordrhein-Westfalen",
+"ort": "Willich",
+"plz": "47877"
+},
+"51.28546,6.3712": {
+"bezirk": "",
+"kreis": "Kreis Viersen",
+"land": "Nordrhein-Westfalen",
+"ort": "Süchteln",
+"plz": "41749"
+},
+"51.30389,7.52921": {
+"bezirk": "",
+"kreis": "Hagen",
+"land": "Nordrhein-Westfalen",
+"ort": "Hagen",
+"plz": "58091"
+},
+"51.30595,7.527": {
+"bezirk": "",
+"kreis": "Hagen",
+"land": "Nordrhein-Westfalen",
+"ort": "Hagen",
+"plz": "58091"
+},
+"51.31401,9.49585": {
+"bezirk": "",
+"kreis": "Kassel",
+"land": "Hessen",
+"ort": "Kassel",
+"plz": "34117"
+},
+"51.31443,7.06782": {
+"bezirk": "",
+"kreis": "Kreis Mettmann",
+"land": "Nordrhein-Westfalen",
+"ort": "Velbert",
+"plz": ""
+},
+"51.31664,7.08581": {
+"bezirk": "",
+"kreis": "Kreis Mettmann",
+"land": "Nordrhein-Westfalen",
+"ort": "Velbert",
+"plz": "42553"
+},
+"51.32585,7.48293": {
+"bezirk": "",
+"kreis": "Hagen",
+"land": "Nordrhein-Westfalen",
+"ort": "Hagen",
+"plz": "58091"
+},
+"51.33116,13.95667": {
+"bezirk": "",
+"kreis": "Bautzen",
+"land": "Sachsen",
+"ort": "Schwepnitz",
+"plz": ""
+},
+"51.33249,6.83058": {
+"bezirk": "",
+"kreis": "Kreis Mettmann",
+"land": "Nordrhein-Westfalen",
+"ort": "Ratingen",
+"plz": "40885"
+},
+"51.33397,6.63712": {
+"bezirk": "",
+"kreis": "Krefeld",
+"land": "Nordrhein-Westfalen",
+"ort": "Krefeld",
+"plz": "47809"
+},
+"51.33408,7.51184": {
+"bezirk": "",
+"kreis": "Hagen",
+"land": "Nordrhein-Westfalen",
+"ort": "Hagen",
+"plz": "58091"
+},
+"51.34045,7.04393": {
+"bezirk": "",
+"kreis": "Kreis Mettmann",
+"land": "Nordrhein-Westfalen",
+"ort": "Velbert",
+"plz": "42551"
+},
+"51.34051,12.37474": {
+"bezirk": "",
+"kreis": "Leipzig",
+"land": "Sachsen",
+"ort": "Leipzig",
+"plz": ""
+},
+"51.34115,7.13341": {
+"bezirk": "",
+"kreis": "Kreis Mettmann",
+"land": "Nordrhein-Westfalen",
+"ort": "Velbert",
+"plz": "42555"
+},
+"51.34487,7.57046": {
+"bezirk": "",
+"kreis": "Hagen",
+"land": "Nordrhein-Westfalen",
+"ort": "Hagen",
+"plz": "58119"
+},
+"51.3476,7.42154": {
+"bezirk": "",
+"kreis": "Hagen",
+"land": "Nordrhein-Westfalen",
+"ort": "Hagen",
+"plz": "58135"
+},
+"51.35336,7.566": {
+"bezirk": "",
+"kreis": "Hagen",
+"land": "Nordrhein-Westfalen",
+"ort": "Hagen",
+"plz": "58119"
+},
+"51.35394,6.64962": {
+"bezirk": "",
+"kreis": "Krefeld",
+"land": "Nordrhein-Westfalen",
+"ort": "Krefeld",
+"plz": "47829"
+},
+"51.35596,11.10063": {
+"bezirk": "",
+"kreis": "Kyffhäuserkreis",
+"land": "Thüringen",
+"ort": "Bad Frankenhausen/Kyffhäuser",
+"plz": "99707"
+},
+"51.35951,7.47059": {
+"bezirk": "",
+"kreis": "Hagen",
+"land": "Nordrhein-Westfalen",
+"ort": "Hagen",
+"plz": "58095"
+},
+"51.36013,7.56204": {
+"bezirk": "",
+"kreis": "Hagen",
+"land": "Nordrhein-Westfalen",
+"ort": "Hagen",
+"plz": "58119"
+},
+"51.36288,6.93758": {
+"bezirk": "",
+"kreis": "Essen",
+"land": "Nordrhein-Westfalen",
+"ort": "Essen",
+"plz": "45219"
+},
+"51.36485,11.29019": {
+"bezirk": "",
+"kreis": "Kyffhäuserkreis",
+"land": "Thüringen",
+"ort": "Artern",
+"plz": "06556"
+},
+"51.36947,10.42665": {
+"bezirk": "",
+"kreis": "Landkreis Eichsfeld",
+"land": "Thüringen",
+"ort": "Niederorschel",
+"plz": "37355"
+},
+"51.36954,7.37763": {
+"bezirk": "",
+"kreis": "Ennepe-Ruhr-Kreis",
+"land": "Nordrhein-Westfalen",
+"ort": "Wetter (Ruhr)",
+"plz": ""
+},
+"51.38015,9.0157": {
+"bezirk": "",
+"kreis": "Landkreis Waldeck-Frankenberg",
+"land": "Hessen",
+"ort": "Bad Arolsen",
+"plz": "34454"
+},
+"51.38649,7.38851": {
+"bezirk": "",
+"kreis": "Ennepe-Ruhr-Kreis",
+"land": "Nordrhein-Westfalen",
+"ort": "Wetter (Ruhr)",
+"plz": ""
+},
+"51.38864,10.3279": {
+"bezirk": "",
+"kreis": "Landkreis Eichsfeld",
+"land": "Thüringen",
+"ort": "Breitenbach",
+"plz": "37327"
+},
+"51.38908,7.00146": {
+"bezirk": "",
+"kreis": "Essen",
+"land": "Nordrhein-Westfalen",
+"ort": "Essen",
+"plz": ""
+},
+"51.39093,7.0816": {
+"bezirk": "",
+"kreis": "Essen",
+"land": "Nordrhein-Westfalen",
+"ort": "Essen",
+"plz": "45257"
+},
+"51.39216,6.79731": {
+"bezirk": "",
+"kreis": "Duisburg",
+"land": "Nordrhein-Westfalen",
+"ort": "Duisburg",
+"plz": "47279"
+},
+"51.39479,7.47104": {
+"bezirk": "",
+"kreis": "Hagen",
+"land": "Nordrhein-Westfalen",
+"ort": "Hagen",
+"plz": "58099"
+},
+"51.40157,7.06892": {
+"bezirk": "",
+"kreis": "Essen",
+"land": "Nordrhein-Westfalen",
+"ort": "Essen",
+"plz": "45259"
+},
+"51.41724,7.12291": {
+"bezirk": "",
+"kreis": "Essen",
+"land": "Nordrhein-Westfalen",
+"ort": "Essen",
+"plz": "45289"
+},
+"51.41963,6.95703": {
+"bezirk": "",
+"kreis": "Essen",
+"land": "Nordrhein-Westfalen",
+"ort": "Essen",
+"plz": "45149"
+},
+"51.42189,7.07264": {
+"bezirk": "",
+"kreis": "Essen",
+"land": "Nordrhein-Westfalen",
+"ort": "Essen",
+"plz": "45277"
+},
+"51.43246,6.97703": {
+"bezirk": "",
+"kreis": "Essen",
+"land": "Nordrhein-Westfalen",
+"ort": "Essen",
+"plz": ""
+},
+"51.43314,11.03954": {
+"bezirk": "",
+"kreis": "Mansfeld-Südharz",
+"land": "Sachsen-Anhalt",
+"ort": "Kelbra (Kyffhäuser)",
+"plz": "06537"
+},
+"51.43446,6.75985": {
+"bezirk": "",
+"kreis": "Duisburg",
+"land": "Nordrhein-Westfalen",
+"ort": "Duisburg",
+"plz": ""
+},
+"51.43753,7.00611": {
+"bezirk": "",
+"kreis": "Essen",
+"land": "Nordrhein-Westfalen",
+"ort": "Essen",
+"plz": ""
+},
+"51.4391,14.24377": {
+"bezirk": "",
+"kreis": "Bautzen",
+"land": "Sachsen",
+"ort": "Hoyerswerda",
+"plz": "02977"
+},
+"51.44129,7.01504": {
+"bezirk": "",
+"kreis": "Essen",
+"land": "Nordrhein-Westfalen",
+"ort": "Essen",
+"plz": "45128"
+},
+"51.44796,10.87679": {
+"bezirk": "",
+"kreis": "Landkreis Nordhausen",
+"land": "Thüringen",
+"ort": "Heringen/Helme",
+"plz": "99765"
+},
+"51.44824,7.07579": {
+"bezirk": "",
+"kreis": "Essen",
+"land": "Nordrhein-Westfalen",
+"ort": "Essen",
+"plz": "45276"
+},
+"51.44835,7.07432": {
+"bezirk": "",
+"kreis": "Essen",
+"land": "Nordrhein-Westfalen",
+"ort": "Essen",
+"plz": "45276"
+},
+"51.44952,6.97302": {
+"bezirk": "",
+"kreis": "Essen",
+"land": "Nordrhein-Westfalen",
+"ort": "Essen",
+"plz": ""
+},
+"51.45251,7.0129": {
+"bezirk": "",
+"kreis": "Essen",
+"land": "Nordrhein-Westfalen",
+"ort": "Essen",
+"plz": "45127"
+},
+"51.4578,7.01266": {
+"bezirk": "",
+"kreis": "Essen",
+"land": "Nordrhein-Westfalen",
+"ort": "Essen",
+"plz": "45127"
+},
+"51.47409,6.94989": {
+"bezirk": "",
+"kreis": "Essen",
+"land": "Nordrhein-Westfalen",
+"ort": "Essen",
+"plz": "45355"
+},
+"51.47634,10.48099": {
+"bezirk": "",
+"kreis": "Landkreis Eichsfeld",
+"land": "Thüringen",
+"ort": "Großbodungen",
+"plz": "37345"
+},
+"51.47752,6.97536": {
+"bezirk": "",
+"kreis": "Essen",
+"land": "Nordrhein-Westfalen",
+"ort": "Essen",
+"plz": ""
+},
+"51.48022,7.21882": {
+"bezirk": "",
+"kreis": "Bochum",
+"land": "Nordrhein-Westfalen",
+"ort": "Bochum",
+"plz": ""
+},
+"51.48023,7.21633": {
+"bezirk": "",
+"kreis": "Bochum",
+"land": "Nordrhein-Westfalen",
+"ort": "Bochum",
+"plz": ""
+},
+"51.48216,11.96662": {
+"bezirk": "",
+"kreis": "Halle (Saale)",
+"land": "Sachsen-Anhalt",
+"ort": "Halle (Saale)",
+"plz": ""
+},
+"51.48272,11.97016": {
+"bezirk": "",
+"kreis": "Halle (Saale)",
+"land": "Sachsen-Anhalt",
+"ort": "Halle (Saale)",
+"plz": ""
+},
+"51.48412,11.97065": {
+"bezirk": "",
+"kreis": "Halle (Saale)",
+"land": "Sachsen-Anhalt",
+"ort": "Halle (Saale)",
+"plz": ""
+},
+"51.4866,11.96734": {
+"bezirk": "",
+"kreis": "Halle (Saale)",
+"land": "Sachsen-Anhalt",
+"ort": "Halle (Saale)",
+"plz": ""
+},
+"51.49268,11.98141": {
+"bezirk": "",
+"kreis": "Halle (Saale)",
+"land": "Sachsen-Anhalt",
+"ort": "Halle (Saale)",
+"plz": "06114"
+},
+"51.49638,7.00846": {
+"bezirk": "",
+"kreis": "Essen",
+"land": "Nordrhein-Westfalen",
+"ort": "Essen",
+"plz": ""
+},
+"51.49744,7.04752": {
+"bezirk": "",
+"kreis": "Essen",
+"land": "Nordrhein-Westfalen",
+"ort": "Essen",
+"plz": "45327"
+},
+"51.50345,10.79786": {
+"bezirk": "",
+"kreis": "Landkreis Nordhausen",
+"land": "Thüringen",
+"ort": "Nordhausen",
+"plz": "99734"
+},
+"51.51306,7.46465": {
+"bezirk": "",
+"kreis": "Dortmund",
+"land": "Nordrhein-Westfalen",
+"ort": "Dortmund",
+"plz": "44137"
+},
+"51.53299,9.93431": {
+"bezirk": "",
+"kreis": "Landkreis Göttingen",
+"land": "Niedersachsen",
+"ort": "Göttingen",
+"plz": "37083"
+},
+"51.6118,7.19972": {
+"bezirk": "",
+"kreis": "Kreis Recklinghausen",
+"land": "Nordrhein-Westfalen",
+"ort": "Recklinghausen",
+"plz": ""
+},
+"51.61231,11.06066": {
+"bezirk": "",
+"kreis": "Landkreis Harz",
+"land": "Sachsen-Anhalt",
+"ort": "Harzgerode",
+"plz": ""
+},
+"51.61364,7.19995": {
+"bezirk": "",
+"kreis": "Kreis Recklinghausen",
+"land": "Nordrhein-Westfalen",
+"ort": "Recklinghausen",
+"plz": ""
+},
+"51.61449,7.198": {
+"bezirk": "",
+"kreis": "Kreis Recklinghausen",
+"land": "Nordrhein-Westfalen",
+"ort": "Recklinghausen",
+"plz": ""
+},
+"51.62233,10.41255": {
+"bezirk": "",
+"kreis": "Landkreis Göttingen",
+"land": "Niedersachsen",
+"ort": "Bad Lauterberg im Harz",
+"plz": ""
+},
+"51.63025,7.85607": {
+"bezirk": "",
+"kreis": "Hamm",
+"land": "Nordrhein-Westfalen",
+"ort": "Hamm",
+"plz": "59069"
+},
+"51.65913,11.27813": {
+"bezirk": "",
+"kreis": "Landkreis Harz",
+"land": "Sachsen-Anhalt",
+"ort": "Pansfelde",
+"plz": "06543"
+},
+"51.65993,7.7421": {
+"bezirk": "",
+"kreis": "Hamm",
+"land": "Nordrhein-Westfalen",
+"ort": "Hamm",
+"plz": "59077"
+},
+"51.66315,7.74171": {
+"bezirk": "",
+"kreis": "Hamm",
+"land": "Nordrhein-Westfalen",
+"ort": "Hamm",
+"plz": "59077"
+},
+"51.66746,8.72073": {
+"bezirk": "",
+"kreis": "Kreis Paderborn",
+"land": "Nordrhein-Westfalen",
+"ort": "Alfen",
+"plz": ""
+},
+"51.68147,12.53747": {
+"bezirk": "",
+"kreis": "Wittenberg",
+"land": "Sachsen-Anhalt",
+"ort": "Gräfenhainichen",
+"plz": "06773"
+},
+"51.68306,7.88378": {
+"bezirk": "",
+"kreis": "Hamm",
+"land": "Nordrhein-Westfalen",
+"ort": "Hamm",
+"plz": "59071"
+},
+"51.68437,11.32975": {
+"bezirk": "",
+"kreis": "Landkreis Harz",
+"land": "Sachsen-Anhalt",
+"ort": "Wieserode",
+"plz": "06543"
+},
+"51.69389,7.73262": {
+"bezirk": "",
+"kreis": "Hamm",
+"land": "Nordrhein-Westfalen",
+"ort": "Hamm",
+"plz": "59075"
+},
+"51.69863,11.35111": {
+"bezirk": "",
+"kreis": "Landkreis Harz",
+"land": "Sachsen-Anhalt",
+"ort": "Neuplatendorf",
+"plz": "06333"
+},
+"51.7117,11.3492": {
+"bezirk": "",
+"kreis": "Landkreis Harz",
+"land": "Sachsen-Anhalt",
+"ort": "Ermsleben",
+"plz": "06463"
+},
+"51.71237,10.27774": {
+"bezirk": "",
+"kreis": "Landkreis Göttingen",
+"land": "Niedersachsen",
+"ort": "Osterode am Harz",
+"plz": "37520"
+},
+"51.7135,12.40206": {
+"bezirk": "",
+"kreis": "Wittenberg",
+"land": "Sachsen-Anhalt",
+"ort": "Gräfenhainichen",
+"plz": "06772"
+},
+"51.72778,10.2508": {
+"bezirk": "",
+"kreis": "Landkreis Göttingen",
+"land": "Niedersachsen",
+"ort": "Osterode am Harz",
+"plz": "37520"
+},
+"51.72864,10.2349": {
+"bezirk": "",
+"kreis": "Landkreis Göttingen",
+"land": "Niedersachsen",
+"ort": "Osterode am Harz",
+"plz": "37520"
+},
+"51.73157,11.34389": {
+"bezirk": "",
+"kreis": "Landkreis Harz",
+"land": "Sachsen-Anhalt",
+"ort": "Ermsleben",
+"plz": "06463"
+},
+"51.73882,6.85659": {
+"bezirk": "",
+"kreis": "Kreis Borken",
+"land": "Nordrhein-Westfalen",
+"ort": "Raesfeld",
+"plz": "46348"
+},
+"51.7487,12.41469": {
+"bezirk": "",
+"kreis": "Wittenberg",
+"land": "Sachsen-Anhalt",
+"ort": "Gräfenhainichen",
+"plz": "06773"
+},
+"51.75077,11.03849": {
+"bezirk": "",
+"kreis": "Landkreis Harz",
+"land": "Sachsen-Anhalt",
+"ort": "Thale",
+"plz": "06502"
+},
+"51.76067,14.33402": {
+"bezirk": "",
+"kreis": "Cottbus",
+"land": "Brandenburg",
+"ort": "Cottbus",
+"plz": "03044"
+},
+"51.76112,11.35331": {
+"bezirk": "",
+"kreis": "Landkreis Harz",
+"land": "Sachsen-Anhalt",
+"ort": "Reinstedt",
+"plz": ""
+},
+"51.76246,10.6623": {
+"bezirk": "",
+"kreis": "Landkreis Harz",
+"land": "Sachsen-Anhalt",
+"ort": "Wernigerode",
+"plz": "38879"
+},
+"51.79497,7.33435": {
+"bezirk": "",
+"kreis": "Kreis Coesfeld",
+"land": "Nordrhein-Westfalen",
+"ort": "Dülmen",
+"plz": ""
+},
+"51.82257,10.27753": {
+"bezirk": "",
+"kreis": "Landkreis Goslar",
+"land": "Niedersachsen",
+"ort": "Clausthal-Zellerfeld",
+"plz": "38709"
+},
+"51.82853,10.2828": {
+"bezirk": "",
+"kreis": "Landkreis Goslar",
+"land": "Niedersachsen",
+"ort": "Clausthal-Zellerfeld",
+"plz": "38709"
+},
+"51.82978,7.27748": {
+"bezirk": "",
+"kreis": "Kreis Coesfeld",
+"land": "Nordrhein-Westfalen",
+"ort": "Dülmen",
+"plz": "48249"
+},
+"51.83334,10.78445": {
+"bezirk": "",
+"kreis": "Landkreis Harz",
+"land": "Sachsen-Anhalt",
+"ort": "Wernigerode",
+"plz": "38855"
+},
+"51.83523,12.24657": {
+"bezirk": "",
+"kreis": "Dessau-Roßlau",
+"land": "Sachsen-Anhalt",
+"ort": "Dessau-Roßlau",
+"plz": ""
+},
+"51.83553,14.14745": {
+"bezirk": "",
+"kreis": "Spree-Neiße",
+"land": "Brandenburg",
+"ort": "Burg (Spreewald)",
+"plz": ""
+},
+"51.83559,12.24689": {
+"bezirk": "",
+"kreis": "Dessau-Roßlau",
+"land": "Sachsen-Anhalt",
+"ort": "Dessau-Roßlau",
+"plz": ""
+},
+"51.84486,12.4207": {
+"bezirk": "",
+"kreis": "Wittenberg",
+"land": "Sachsen-Anhalt",
+"ort": "Wörlitz",
+"plz": ""
+},
+"51.86661,12.64488": {
+"bezirk": "",
+"kreis": "Wittenberg",
+"land": "Sachsen-Anhalt",
+"ort": "Wittenberg",
+"plz": "06886"
+},
+"51.86729,13.97333": {
+"bezirk": "",
+"kreis": "Oberspreewald-Lausitz",
+"land": "Brandenburg",
+"ort": "Lübbenau/Spreewald",
+"plz": "03222"
+},
+"51.86795,13.96908": {
+"bezirk": "",
+"kreis": "Oberspreewald-Lausitz",
+"land": "Brandenburg",
+"ort": "Lübbenau/Spreewald",
+"plz": "03222"
+},
+"51.88918,10.17647": {
+"bezirk": "",
+"kreis": "Landkreis Goslar",
+"land": "Niedersachsen",
+"ort": "Seesen",
+"plz": "38723"
+},
+"51.9058,10.4288": {
+"bezirk": "",
+"kreis": "Landkreis Goslar",
+"land": "Niedersachsen",
+"ort": "Goslar",
+"plz": "38642"
+},
+"51.90929,14.11919": {
+"bezirk": "",
+"kreis": "Dahme-Spreewald",
+"land": "Brandenburg",
+"ort": "Straupitz (Spreewald)",
+"plz": ""
+},
+"51.91226,12.53827": {
+"bezirk": "",
+"kreis": "Wittenberg",
+"land": "Sachsen-Anhalt",
+"ort": "Coswig (Anhalt)",
+"plz": "06869"
+},
+"51.91571,12.53595": {
+"bezirk": "",
+"kreis": "Wittenberg",
+"land": "Sachsen-Anhalt",
+"ort": "Coswig (Anhalt)",
+"plz": "06869"
+},
+"51.91746,8.88087": {
+"bezirk": "",
+"kreis": "Kreis Lippe",
+"land": "Nordrhein-Westfalen",
+"ort": "Detmold",
+"plz": "32760"
+},
+"51.9185,12.53827": {
+"bezirk": "",
+"kreis": "Wittenberg",
+"land": "Sachsen-Anhalt",
+"ort": "Coswig (Anhalt)",
+"plz": "06869"
+},
+"51.95243,7.99062": {
+"bezirk": "",
+"kreis": "Kreis Warendorf",
+"land": "Nordrhein-Westfalen",
+"ort": "Warendorf",
+"plz": "48231"
+},
+"51.95955,10.53989": {
+"bezirk": "",
+"kreis": "Landkreis Goslar",
+"land": "Niedersachsen",
+"ort": "Goslar",
+"plz": ""
+},
+"51.96047,7.62329": {
+"bezirk": "",
+"kreis": "Münster",
+"land": "Nordrhein-Westfalen",
+"ort": "Münster",
+"plz": ""
+},
+"51.96268,7.62877": {
+"bezirk": "",
+"kreis": "Münster",
+"land": "Nordrhein-Westfalen",
+"ort": "Münster",
+"plz": "48143"
+},
+"51.96373,12.08381": {
+"bezirk": "",
+"kreis": "Anhalt-Bitterfeld",
+"land": "Sachsen-Anhalt",
+"ort": "Zerbst/Anhalt",
+"plz": ""
+},
+"51.96393,7.62293": {
+"bezirk": "",
+"kreis": "Münster",
+"land": "Nordrhein-Westfalen",
+"ort": "Münster",
+"plz": ""
+},
+"51.96424,7.62619": {
+"bezirk": "",
+"kreis": "Münster",
+"land": "Nordrhein-Westfalen",
+"ort": "Münster",
+"plz": "48143"
+},
+"51.9776,7.2913": {
+"bezirk": "",
+"kreis": "Kreis Coesfeld",
+"land": "Nordrhein-Westfalen",
+"ort": "Billerbeck",
+"plz": "48727"
+},
+"52.01602,11.74055": {
+"bezirk": "",
+"kreis": "Salzlandkreis",
+"land": "Sachsen-Anhalt",
+"ort": "Schönebeck (Elbe)",
+"plz": "39218"
+},
+"52.08375,8.74605": {
+"bezirk": "",
+"kreis": "Kreis Lippe",
+"land": "Nordrhein-Westfalen",
+"ort": "Bad Salzuflen",
+"plz": "32105"
+},
+"52.08987,11.57323": {
+"bezirk": "",
+"kreis": "Magdeburg",
+"land": "Sachsen-Anhalt",
+"ort": "Magdeburg",
+"plz": "39116"
+},
+"52.1094,11.65644": {
+"bezirk": "",
+"kreis": "Magdeburg",
+"land": "Sachsen-Anhalt",
+"ort": "Magdeburg",
+"plz": "39104"
+},
+"52.11872,11.64225": {
+"bezirk": "",
+"kreis": "Magdeburg",
+"land": "Sachsen-Anhalt",
+"ort": "Magdeburg",
+"plz": "39104"
+},
+"52.12488,11.6366": {
+"bezirk": "",
+"kreis": "Magdeburg",
+"land": "Sachsen-Anhalt",
+"ort": "Magdeburg",
+"plz": ""
+},
+"52.12541,11.63296": {
+"bezirk": "",
+"kreis": "Magdeburg",
+"land": "Sachsen-Anhalt",
+"ort": "Magdeburg",
+"plz": ""
+},
+"52.13159,11.63889": {
+"bezirk": "",
+"kreis": "Magdeburg",
+"land": "Sachsen-Anhalt",
+"ort": "Magdeburg",
+"plz": ""
+},
+"52.15563,11.18244": {
+"bezirk": "",
+"kreis": "Börde",
+"land": "Sachsen-Anhalt",
+"ort": "Ummendorf",
+"plz": "39365"
+},
+"52.1687,11.63587": {
+"bezirk": "",
+"kreis": "Magdeburg",
+"land": "Sachsen-Anhalt",
+"ort": "Magdeburg",
+"plz": ""
+},
+"52.22289,13.76609": {
+"bezirk": "",
+"kreis": "Dahme-Spreewald",
+"land": "Brandenburg",
+"ort": "Prieros",
+"plz": "15754"
+},
+"52.23411,9.8534": {
+"bezirk": "",
+"kreis": "Landkreis Hildesheim",
+"land": "Niedersachsen",
+"ort": "Sarstedt",
+"plz": "31157"
+},
+"52.2643,13.53465": {
+"bezirk": "",
+"kreis": "Dahme-Spreewald",
+"land": "Brandenburg",
+"ort": "Mittenwalde",
+"plz": "15749"
+},
+"52.29164,13.79064": {
+"bezirk": "",
+"kreis": "Dahme-Spreewald",
+"land": "Brandenburg",
+"ort": "Friedersdorf",
+"plz": "15754"
+},
+"52.30068,13.62565": {
+"bezirk": "",
+"kreis": "Dahme-Spreewald",
+"land": "Brandenburg",
+"ort": "Königs Wusterhausen",
+"plz": "15711"
+},
+"52.30116,13.26079": {
+"bezirk": "",
+"kreis": "Teltow-Fläming",
+"land": "Brandenburg",
+"ort": "Ludwigsfelde",
+"plz": "14974"
+},
+"52.37138,9.73259": {
+"bezirk": "",
+"kreis": "Region Hannover",
+"land": "Niedersachsen",
+"ort": "Hannover",
+"plz": "30159"
+},
+"52.3716,9.73545": {
+"bezirk": "",
+"kreis": "Region Hannover",
+"land": "Niedersachsen",
+"ort": "Hannover",
+"plz": "30159"
+},
+"52.37246,9.73251": {
+"bezirk": "",
+"kreis": "Region Hannover",
+"land": "Niedersachsen",
+"ort": "Hannover",
+"plz": "30159"
+},
+"52.38995,13.41023": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.39387,13.09557": {
+"bezirk": "",
+"kreis": "Potsdam",
+"land": "Brandenburg",
+"ort": "Potsdam",
+"plz": "14482"
+},
+"52.39567,13.06151": {
+"bezirk": "",
+"kreis": "Potsdam",
+"land": "Brandenburg",
+"ort": "Potsdam",
+"plz": "14467"
+},
+"52.39617,13.05641": {
+"bezirk": "",
+"kreis": "Potsdam",
+"land": "Brandenburg",
+"ort": "Potsdam",
+"plz": "14467"
+},
+"52.39946,13.04727": {
+"bezirk": "",
+"kreis": "Potsdam",
+"land": "Brandenburg",
+"ort": "Potsdam",
+"plz": ""
+},
+"52.40019,13.05311": {
+"bezirk": "",
+"kreis": "Potsdam",
+"land": "Brandenburg",
+"ort": "Potsdam",
+"plz": "14467"
+},
+"52.40055,13.05998": {
+"bezirk": "",
+"kreis": "Potsdam",
+"land": "Brandenburg",
+"ort": "Potsdam",
+"plz": "14467"
+},
+"52.403,13.06064": {
+"bezirk": "",
+"kreis": "Potsdam",
+"land": "Brandenburg",
+"ort": "Potsdam",
+"plz": "14467"
+},
+"52.40698,13.01933": {
+"bezirk": "",
+"kreis": "Potsdam",
+"land": "Brandenburg",
+"ort": "Potsdam",
+"plz": ""
+},
+"52.41154,13.05817": {
+"bezirk": "",
+"kreis": "Potsdam",
+"land": "Brandenburg",
+"ort": "Potsdam",
+"plz": ""
+},
+"52.41883,13.05898": {
+"bezirk": "",
+"kreis": "Potsdam",
+"land": "Brandenburg",
+"ort": "Potsdam",
+"plz": ""
+},
+"52.4319,10.79319": {
+"bezirk": "",
+"kreis": "Wolfsburg",
+"land": "Niedersachsen",
+"ort": "Wolfsburg",
+"plz": "38448"
+},
+"52.43395,13.25961": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.47397,13.44452": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.4776,8.09369": {
+"bezirk": "",
+"kreis": "Landkreis Vechta",
+"land": "Niedersachsen",
+"ort": "Neuenkirchen-Vörden",
+"plz": "49434"
+},
+"52.48657,13.35927": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.49885,8.64961": {
+"bezirk": "",
+"kreis": "Kreis Minden-Lübbecke",
+"land": "Nordrhein-Westfalen",
+"ort": "Rahden",
+"plz": ""
+},
+"52.49937,13.3547": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.50135,13.44948": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.50196,13.34238": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.50465,13.3362": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.50555,13.44299": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.50705,13.45631": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.50823,13.45137": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.50886,13.37547": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.51141,13.42647": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.51364,13.39286": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.51687,13.40259": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.51931,13.40727": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.51988,13.29606": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.5199,13.38615": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.52174,13.41295": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.52478,11.39553": {
+"bezirk": "",
+"kreis": "Altmarkkreis Salzwedel",
+"land": "Sachsen-Anhalt",
+"ort": "Gardelegen",
+"plz": "39638"
+},
+"52.53208,8.69351": {
+"bezirk": "",
+"kreis": "Landkreis Diepholz",
+"land": "Niedersachsen",
+"ort": "Ströhen",
+"plz": "49419"
+},
+"52.53389,13.50247": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": "10365"
+},
+"52.53717,13.20462": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.53947,13.41399": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.54082,11.97128": {
+"bezirk": "",
+"kreis": "Stendal",
+"land": "Sachsen-Anhalt",
+"ort": "Tangermünde",
+"plz": "39590"
+},
+"52.55047,8.58356": {
+"bezirk": "",
+"kreis": "Landkreis Diepholz",
+"land": "Niedersachsen",
+"ort": "Wagenfeld",
+"plz": ""
+},
+"52.56598,13.10466": {
+"bezirk": "",
+"kreis": "Havelland",
+"land": "Brandenburg",
+"ort": "Falkensee",
+"plz": "14612"
+},
+"52.5827,13.28655": {
+"bezirk": "",
+"kreis": "Berlin",
+"land": "Berlin",
+"ort": "Berlin",
+"plz": ""
+},
+"52.58296,12.03621": {
+"bezirk": "",
+"kreis": "Stendal",
+"land": "Sachsen-Anhalt",
+"ort": "Schönhausen (Elbe)",
+"plz": ""
+},
+"52.60139,13.75709": {
+"bezirk": "",
+"kreis": "Märkisch-Oderland",
+"land": "Brandenburg",
+"ort": "Altlandsberg",
+"plz": ""
+},
+"52.60513,11.85942": {
+"bezirk": "",
+"kreis": "Stendal",
+"land": "Sachsen-Anhalt",
+"ort": "Stendal",
+"plz": ""
+},
+"52.60954,8.48232": {
+"bezirk": "",
+"kreis": "Landkreis Diepholz",
+"land": "Niedersachsen",
+"ort": "Rehden",
+"plz": "49453"
+},
+"52.62059,8.79856": {
+"bezirk": "",
+"kreis": "Landkreis Diepholz",
+"land": "Niedersachsen",
+"ort": "Munterburg",
+"plz": "27245"
+},
+"52.6208,8.73143": {
+"bezirk": "",
+"kreis": "Landkreis Diepholz",
+"land": "Niedersachsen",
+"ort": "Varrel",
+"plz": ""
+},
+"52.62269,10.08112": {
+"bezirk": "",
+"kreis": "Landkreis Celle",
+"land": "Niedersachsen",
+"ort": "Celle",
+"plz": "29221"
+},
+"52.62849,8.69113": {
+"bezirk": "",
+"kreis": "Landkreis Diepholz",
+"land": "Niedersachsen",
+"ort": "Nordholz",
+"plz": "27259"
+},
+"52.6307,11.6593": {
+"bezirk": "",
+"kreis": "Stendal",
+"land": "Sachsen-Anhalt",
+"ort": "Bismark (Altmark)",
+"plz": "39628"
+},
+"52.63834,9.20563": {
+"bezirk": "",
+"kreis": "Landkreis Nienburg/Weser",
+"land": "Niedersachsen",
+"ort": "Nienburg/Weser",
+"plz": "31582"
+},
+"52.63856,9.20609": {
+"bezirk": "",
+"kreis": "Landkreis Nienburg/Weser",
+"land": "Niedersachsen",
+"ort": "Nienburg/Weser",
+"plz": "31582"
+},
+"52.64177,9.20772": {
+"bezirk": "",
+"kreis": "Landkreis Nienburg/Weser",
+"land": "Niedersachsen",
+"ort": "Nienburg/Weser",
+"plz": "31582"
+},
+"52.65054,8.42477": {
+"bezirk": "",
+"kreis": "Landkreis Diepholz",
+"land": "Niedersachsen",
+"ort": "Drebber",
+"plz": ""
+},
+"52.67466,12.0084": {
+"bezirk": "",
+"kreis": "Stendal",
+"land": "Sachsen-Anhalt",
+"ort": "Arneburg",
+"plz": "39596"
+},
+"52.74527,10.88388": {
+"bezirk": "",
+"kreis": "Altmarkkreis Salzwedel",
+"land": "Sachsen-Anhalt",
+"ort": "Abbendorf",
+"plz": "29413"
+},
+"52.7884,12.04492": {
+"bezirk": "",
+"kreis": "Stendal",
+"land": "Sachsen-Anhalt",
+"ort": "Sandau (Elbe)",
+"plz": "39524"
+},
+"52.82712,11.49799": {
+"bezirk": "",
+"kreis": "Stendal",
+"land": "Sachsen-Anhalt",
+"ort": "Altmärkische Höhe",
+"plz": "39606"
+},
+"52.85146,11.15461": {
+"bezirk": "",
+"kreis": "Altmarkkreis Salzwedel",
+"land": "Sachsen-Anhalt",
+"ort": "Salzwedel",
+"plz": "29410"
+},
+"52.89471,13.25807": {
+"bezirk": "",
+"kreis": "Oberhavel",
+"land": "Brandenburg",
+"ort": "Liebenberg",
+"plz": "16775"
+},
+"52.92277,11.70061": {
+"bezirk": "",
+"kreis": "Stendal",
+"land": "Sachsen-Anhalt",
+"ort": "Krüden",
+"plz": ""
+},
+"52.9336,11.61026": {
+"bezirk": "",
+"kreis": "Stendal",
+"land": "Sachsen-Anhalt",
+"ort": "Zehrental",
+"plz": ""
+},
+"52.94012,11.78726": {
+"bezirk": "",
+"kreis": "Stendal",
+"land": "Sachsen-Anhalt",
+"ort": "Seehausen (Altmark)",
+"plz": "39615"
+},
+"52.99221,11.58366": {
+"bezirk": "",
+"kreis": "Stendal",
+"land": "Sachsen-Anhalt",
+"ort": "Aulosen",
+"plz": ""
+},
+"53.04821,8.629": {
+"bezirk": "",
+"kreis": "",
+"land": "Niedersachsen",
+"ort": "Delmenhorst",
+"plz": ""
+},
+"53.07065,8.79733": {
+"bezirk": "",
+"kreis": "Bremen",
+"land": "Bremen",
+"ort": "Bremen",
+"plz": ""
+},
+"53.0768,8.80172": {
+"bezirk": "",
+"kreis": "Bremen",
+"land": "Bremen",
+"ort": "Bremen",
+"plz": "28195"
+},
+"53.11218,8.74943": {
+"bezirk": "",
+"kreis": "Bremen",
+"land": "Bremen",
+"ort": "Bremen",
+"plz": "28237"
+},
+"53.13796,8.21592": {
+"bezirk": "",
+"kreis": "Oldenburg",
+"land": "Niedersachsen",
+"ort": "Oldenburg",
+"plz": ""
+},
+"53.2496,8.198": {
+"bezirk": "",
+"kreis": "Landkreis Ammerland",
+"land": "Niedersachsen",
+"ort": "Rastede",
+"plz": ""
+},
+"53.25021,10.40847": {
+"bezirk": "",
+"kreis": "Landkreis Lüneburg",
+"land": "Niedersachsen",
+"ort": "Lüneburg",
+"plz": ""
+},
+"53.27292,9.39563": {
+"bezirk": "",
+"kreis": "Landkreis Rotenburg (Wümme)",
+"land": "Niedersachsen",
+"ort": "Rüspel",
+"plz": "27404"
+},
+"53.45983,9.98035": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": "21073"
+},
+"53.47625,9.6995": {
+"bezirk": "",
+"kreis": "Landkreis Stade",
+"land": "Niedersachsen",
+"ort": "Buxtehude",
+"plz": "21614"
+},
+"53.48897,10.21083": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": "21029"
+},
+"53.52344,11.59486": {
+"bezirk": "",
+"kreis": "Ludwigslust-Parchim",
+"land": "Mecklenburg-Vorpommern",
+"ort": "Tramm",
+"plz": "19089"
+},
+"53.5425,9.99804": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": ""
+},
+"53.54646,9.97739": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": ""
+},
+"53.54946,9.9637": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": "20359"
+},
+"53.54958,9.98542": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": ""
+},
+"53.55022,9.99742": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": "20095"
+},
+"53.55075,9.99309": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": "20095"
+},
+"53.55119,9.9993": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": "20095"
+},
+"53.55212,10.00327": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": "20095"
+},
+"53.55336,9.99309": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": ""
+},
+"53.55408,10.91795": {
+"bezirk": "",
+"kreis": "Ludwigslust-Parchim",
+"land": "Mecklenburg-Vorpommern",
+"ort": "Zarrentin am Schaalsee",
+"plz": "19246"
+},
+"53.55503,9.9886": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": ""
+},
+"53.55537,10.00834": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": "20099"
+},
+"53.55709,13.26149": {
+"bezirk": "",
+"kreis": "Mecklenburgische Seenplatte",
+"land": "Mecklenburg-Vorpommern",
+"ort": "Neubrandenburg",
+"plz": "17033"
+},
+"53.5642,9.96579": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": "20357"
+},
+"53.56762,9.9827": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": ""
+},
+"53.57166,10.06649": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": ""
+},
+"53.57591,9.94444": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": ""
+},
+"53.57632,9.95219": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": ""
+},
+"53.5809,9.70384": {
+"bezirk": "",
+"kreis": "Kreis Pinneberg",
+"land": "Schleswig-Holstein",
+"ort": "Wedel",
+"plz": "22880"
+},
+"53.5905,9.98649": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": ""
+},
+"53.61382,11.63976": {
+"bezirk": "",
+"kreis": "Ludwigslust-Parchim",
+"land": "Mecklenburg-Vorpommern",
+"ort": "Crivitz",
+"plz": "19089"
+},
+"53.61845,9.95077": {
+"bezirk": "",
+"kreis": "Hamburg",
+"land": "Hamburg",
+"ort": "Hamburg",
+"plz": ""
+},
+"53.62891,11.41477": {
+"bezirk": "",
+"kreis": "Schwerin",
+"land": "Mecklenburg-Vorpommern",
+"ort": "Schwerin",
+"plz": "19055"
+},
+"53.62977,14.01134": {
+"bezirk": "",
+"kreis": "Vorpommern-Greifswald",
+"land": "Mecklenburg-Vorpommern",
+"ort": "Torgelow",
+"plz": "17358"
+},
+"53.63018,10.69153": {
+"bezirk": "",
+"kreis": "Kreis Herzogtum Lauenburg",
+"land": "Schleswig-Holstein",
+"ort": "Mölln",
+"plz": "23879"
+},
+"53.65201,11.17967": {
+"bezirk": "",
+"kreis": "Nordwestmecklenburg",
+"land": "Mecklenburg-Vorpommern",
+"ort": "Lützow",
+"plz": "19209"
+},
+"53.69123,10.16543": {
+"bezirk": "",
+"kreis": "Kreis Stormarn",
+"land": "Schleswig-Holstein",
+"ort": "Ammersbek",
+"plz": "22949"
+},
+"53.69931,10.77405": {
+"bezirk": "",
+"kreis": "Kreis Herzogtum Lauenburg",
+"land": "Schleswig-Holstein",
+"ort": "Ratzeburg",
+"plz": "23909"
+},
+"53.75302,9.65286": {
+"bezirk": "",
+"kreis": "Kreis Pinneberg",
+"land": "Schleswig-Holstein",
+"ort": "Elmshorn",
+"plz": ""
+},
+"53.86477,10.68499": {
+"bezirk": "",
+"kreis": "Lübeck",
+"land": "Schleswig-Holstein",
+"ort": "Lübeck",
+"plz": "23552"
+},
+"53.86658,10.68486": {
+"bezirk": "",
+"kreis": "Lübeck",
+"land": "Schleswig-Holstein",
+"ort": "Lübeck",
+"plz": "23552"
+},
+"53.86798,10.68576": {
+"bezirk": "",
+"kreis": "Lübeck",
+"land": "Schleswig-Holstein",
+"ort": "Lübeck",
+"plz": "23552"
+},
+"53.87128,10.69012": {
+"bezirk": "",
+"kreis": "Lübeck",
+"land": "Schleswig-Holstein",
+"ort": "Lübeck",
+"plz": "23552"
+},
+"53.87153,10.68907": {
+"bezirk": "",
+"kreis": "Lübeck",
+"land": "Schleswig-Holstein",
+"ort": "Lübeck",
+"plz": "23552"
+},
+"53.9188,10.69763": {
+"bezirk": "",
+"kreis": "Kreis Ostholstein",
+"land": "Schleswig-Holstein",
+"ort": "Bad Schwartau",
+"plz": "23611"
+},
+"53.99327,10.81427": {
+"bezirk": "",
+"kreis": "Kreis Ostholstein",
+"land": "Schleswig-Holstein",
+"ort": "Timmendorfer Strand",
+"plz": ""
+},
+"54.08788,12.12178": {
+"bezirk": "",
+"kreis": "Rostock",
+"land": "Mecklenburg-Vorpommern",
+"ort": "Rostock",
+"plz": "18057"
+},
+"54.0883,12.13518": {
+"bezirk": "",
+"kreis": "Rostock",
+"land": "Mecklenburg-Vorpommern",
+"ort": "Rostock",
+"plz": ""
+},
+"54.08831,12.12867": {
+"bezirk": "",
+"kreis": "Rostock",
+"land": "Mecklenburg-Vorpommern",
+"ort": "Rostock",
+"plz": ""
+},
+"54.08865,12.14012": {
+"bezirk": "",
+"kreis": "Rostock",
+"land": "Mecklenburg-Vorpommern",
+"ort": "Rostock",
+"plz": ""
+},
+"54.0894,9.07378": {
+"bezirk": "",
+"kreis": "Kreis Dithmarschen",
+"land": "Schleswig-Holstein",
+"ort": "Meldorf",
+"plz": "25704"
+},
+"54.09057,10.33624": {
+"bezirk": "",
+"kreis": "Kreis Segeberg",
+"land": "Schleswig-Holstein",
+"ort": "Stocksee",
+"plz": ""
+},
+"54.12979,8.86037": {
+"bezirk": "",
+"kreis": "Kreis Dithmarschen",
+"land": "Schleswig-Holstein",
+"ort": "Büsum",
+"plz": "25761"
+},
+"54.1793,7.88826": {
+"bezirk": "",
+"kreis": "Kreis Pinneberg",
+"land": "Schleswig-Holstein",
+"ort": "Helgoland",
+"plz": "27498"
+},
+"54.19462,9.09289": {
+"bezirk": "",
+"kreis": "Kreis Dithmarschen",
+"land": "Schleswig-Holstein",
+"ort": "Heide",
+"plz": "25746"
+},
+"54.31942,10.13368": {
+"bezirk": "",
+"kreis": "Kiel",
+"land": "Schleswig-Holstein",
+"ort": "Kiel",
+"plz": "24103"
+},
+"54.32116,10.135": {
+"bezirk": "",
+"kreis": "Kiel",
+"land": "Schleswig-Holstein",
+"ort": "Kiel",
+"plz": "24103"
+},
+"54.32153,10.13875": {
+"bezirk": "",
+"kreis": "Kiel",
+"land": "Schleswig-Holstein",
+"ort": "Kiel",
+"plz": ""
+},
+"54.32274,10.13373": {
+"bezirk": "",
+"kreis": "Kiel",
+"land": "Schleswig-Holstein",
+"ort": "Kiel",
+"plz": "24103"
+},
+"54.33828,10.1332": {
+"bezirk": "",
+"kreis": "Kiel",
+"land": "Schleswig-Holstein",
+"ort": "Kiel",
+"plz": "24118"
+},
+"54.43936,11.19699": {
+"bezirk": "",
+"kreis": "Kreis Ostholstein",
+"land": "Schleswig-Holstein",
+"ort": "Fehmarn",
+"plz": "23769"
+},
+"54.51351,9.56922": {
+"bezirk": "",
+"kreis": "Kreis Schleswig-Flensburg",
+"land": "Schleswig-Holstein",
+"ort": "Schleswig",
+"plz": "24891"
+},
+"54.51652,9.56544": {
+"bezirk": "",
+"kreis": "Kreis Schleswig-Flensburg",
+"land": "Schleswig-Holstein",
+"ort": "Schleswig",
+"plz": "24837"
+},
+"54.68793,9.60236": {
+"bezirk": "",
+"kreis": "Kreis Schleswig-Flensburg",
+"land": "Schleswig-Holstein",
+"ort": "Mittelangeln",
+"plz": "24986"
+},
+"54.78278,9.43629": {
+"bezirk": "",
+"kreis": "Flensburg",
+"land": "Schleswig-Holstein",
+"ort": "Flensburg",
+"plz": ""
+}
+}

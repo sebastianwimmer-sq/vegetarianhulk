@@ -22,6 +22,7 @@ import quellen  # noqa: E402
 
 JAHR = 2026
 ZIEL = Path(__file__).resolve().parents[2] / 'weihnachtsmarkt' / 'daten'
+ORTE = Path(__file__).parent / 'orte.json'
 GLEICHER_MARKT_M = 150
 ABRUFE_GLEICHZEITIG = 8
 NOMINATIM = 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=14&accept-language=de&lat={lat}&lon={lon}'
@@ -108,24 +109,33 @@ def termine_von_seiten(maerkte, frisch):
 
 
 def orte(maerkte, frisch):
-    """Ort, PLZ, Landkreis, Bezirk und Bundesland je Markt (Nominatim, 1 Abruf je Sekunde)."""
+    """Ort, PLZ, Landkreis, Bezirk und Bundesland je Markt.
+
+    Ein Ort wandert nicht: was einmal nachgeschlagen ist, steht in orte.json im Repo. Nur neue
+    Koordinaten gehen an Nominatim (1 Abruf je Sekunde) – sonst schlaegt der Wochenlauf auf
+    dem GitHub-Server jedes Mal alle Orte neu nach und laeuft ins Zeitlimit (16.11.2026: 45 min).
+    """
+    bekannt = json.loads(ORTE.read_text(encoding='utf-8')) if ORTE.exists() else {}
+    neu = 0
     for m in maerkte:
         if m.get('ort') and m.get('land') and (m['land'] != 'Bayern' or m.get('bezirk')):
             continue
-        url = NOMINATIM.format(lat=round(m['lat'], 5), lon=round(m['lon'], 5))
-        from netz import _pfad
-        # Ein Ort wandert nicht: der Nachschlag bleibt in der Zwischenablage, auch beim frischen Lauf
-        war_da = _pfad(url, '.json').exists()
-        status, text = hole(url)
-        if not war_da:
+        ecke = f"{round(m['lat'], 5)},{round(m['lon'], 5)}"
+        if ecke not in bekannt:
+            status, text = hole(NOMINATIM.format(lat=round(m['lat'], 5), lon=round(m['lon'], 5)))
             time.sleep(NOMINATIM_PAUSE_S)
-        a = json.loads(text).get('address', {}) if status == '200' and text.startswith('{') else {}
-        ort = a.get('city') or a.get('town') or a.get('village') or a.get('municipality') or a.get('hamlet') or ''
-        m['ort'] = m.get('ort') or ort
-        m['plz'] = m.get('plz') or (a.get('postcode', '') if re.fullmatch(r'\d{5}', a.get('postcode', '')) else '')
-        m['kreis'] = m.get('kreis') or a.get('county', '') or (ort if a.get('city') else '')
-        m['bezirk'] = m.get('bezirk') or a.get('state_district', '')
-        m['land'] = m.get('land') or a.get('state', '') or a.get('city', '')
+            a = json.loads(text).get('address', {}) if status == '200' and text.startswith('{') else {}
+            if not a:
+                continue                       # kein Ergebnis: beim naechsten Lauf erneut versuchen
+            ort = a.get('city') or a.get('town') or a.get('village') or a.get('municipality') or a.get('hamlet') or ''
+            bekannt[ecke] = {'ort': ort, 'plz': a.get('postcode', '') if re.fullmatch(r'\d{5}', a.get('postcode', '')) else '',
+                             'kreis': a.get('county', '') or (ort if a.get('city') else ''), 'bezirk': a.get('state_district', ''),
+                             'land': a.get('state', '') or a.get('city', '')}
+            neu += 1
+        for feld, wert in bekannt[ecke].items():
+            m[feld] = m.get(feld) or wert
+    ORTE.write_text(json.dumps(bekannt, ensure_ascii=False, sort_keys=True, indent=0) + '\n', encoding='utf-8')
+    print(f'Orte: {len(bekannt)} bekannt, {neu} neu nachgeschlagen')
 
 
 def fertig(m, heute):
@@ -172,7 +182,9 @@ def main():
     orte(maerkte, frisch)
     raus = sorted((fertig(m, heute) for m in maerkte), key=lambda m: m['id'])
     raus = [m for m in raus if m.get('name') and m.get('ort')]
-    plz = quellen.plz()
+    # Postleitzahlen aendern sich selten: vorhandene Datei behalten, neu holen nur mit --plz
+    alt_plz = ZIEL / 'plz.json'
+    plz = quellen.plz() if '--plz' in sys.argv or not alt_plz.exists() else json.loads(alt_plz.read_text(encoding='utf-8'))
     stand = {
         'gebaut': heute, 'jahr': JAHR, 'maerkte': len(raus),
         'bestaetigt': sum(1 for m in raus if m['status'] == 'bestaetigt'),
@@ -186,7 +198,7 @@ def main():
     schreibe = lambda datei, wert: (ZIEL / datei).write_text(
         json.dumps(wert, ensure_ascii=False, separators=(',', ':'), sort_keys=True) + '\n', encoding='utf-8')
     schreibe('maerkte.json', raus)
-    schreibe('plz.json', {k: [round(v[0], 4), round(v[1], 4), v[2]] for k, v in sorted(plz.items())})
+    schreibe('plz.json', {k: [round(v[0], 4), round(v[1], 4), v[2]] for k, v in sorted(plz.items())})  # idempotent: gerundet bleibt gerundet
     schreibe('stand.json', stand)
     print(json.dumps(stand, ensure_ascii=False)[:400])
 
