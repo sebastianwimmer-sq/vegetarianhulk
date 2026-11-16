@@ -7,7 +7,7 @@
   var DATEN = '/weihnachtsmarkt/daten/';
   var RUECKMELDUNG = 'https://vh-forms.peaking.workers.dev/radar/rueckmeldung';
   var KONTAKT = 'info@vegetarianhulk.de';
-  var JE_SEITE = 12, TAGE_VORAUS = 28, FEUER_X = 0.51, FEUER_Y = 0.835, BILD_LAGE_X = 0.76;
+  var JE_SEITE = 12, TAGE_VORAUS = 28, AUFTAKT_ZEILEN = 6;
   var T = EN ? {
     wt: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], woche: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], mon: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     bis: ' to ', plzFalsch: 'A German postcode has five digits. Please check yours.', plzFremd: 'We don’t know this postcode. Please check the five digits.',
@@ -25,7 +25,7 @@
     ohneTermin: function (n) { return n === 1 ? '1 more market without a confirmed 2026 date' : n + ' more markets without a confirmed 2026 date'; },
     stand: function (s) { return zahl(s.maerkte) + ' markets in Germany and just across the Austrian border, ' + zahl(s.bestaetigt) + ' with a confirmed 2026 date. Last update ' + datumLang(s.gebaut) + '. Dates as stated by the sources, without guarantee. Location data © OpenStreetMap contributors. Dates: open data of the German tourism boards via the German National Tourist Board, City of Essen, and the organisers’ pages.'; },
     vorbei: 'The season is over. The radar is back in November.',
-    funkenAn: 'Pause sparks', funkenAus: 'Resume sparks',
+    funkenAn: 'Pause snow', funkenAus: 'Resume snow', laeuft: 'Open now', ab: 'from ',
     arten: { christkindl: 'Christkindlmarkt', advent: 'Advent market', wald: 'Forest, mountain, castle', mittelalter: 'Medieval', nikolaus: 'St Nicholas', kurz: 'One weekend', lang: 'All Advent' },
     danke: 'Thank you, that reached me.', sendeFehler: 'Could not send. Please try again, or write to ', pflichtText: 'Please write a few words about what was missing.',
     sterneLabel: function (n) { return n + ' of 5 cinnamon stars'; }
@@ -46,7 +46,7 @@
     ohneTermin: function (n) { return n === 1 ? '1 weiterer Markt ohne bestätigten Termin 2026' : n + ' weitere Märkte ohne bestätigten Termin 2026'; },
     stand: function (s) { return zahl(s.maerkte) + ' Märkte in Deutschland und im grenznahen Österreich, ' + zahl(s.bestaetigt) + ' mit bestätigtem Termin 2026. Stand ' + datumLang(s.gebaut) + '. Termine laut Quelle, ohne Gewähr. Ortsdaten © OpenStreetMap-Mitwirkende. Termine: offene Daten der Tourismusverbände über die Deutsche Zentrale für Tourismus, Stadt Essen und die Seiten der Veranstalter.'; },
     vorbei: 'Die Saison ist vorbei. Im November ist der Radar wieder da.',
-    funkenAn: 'Funken anhalten', funkenAus: 'Funken weiter',
+    funkenAn: 'Schnee anhalten', funkenAus: 'Schnee weiter', laeuft: 'Jetzt offen', ab: 'ab ',
     arten: { christkindl: 'Christkindlmarkt', advent: 'Adventsmarkt', wald: 'Wald, Berg und Burg', mittelalter: 'Mittelalter', nikolaus: 'Nikolaus', kurz: 'Nur ein Wochenende', lang: 'Ganze Adventszeit' },
     danke: 'Danke dir, das ist bei mir angekommen.', sendeFehler: 'Das Senden hat nicht geklappt. Versuch es nochmal oder schreib an ', pflichtText: 'Schreib bitte kurz dazu, was gefehlt hat.',
     sterneLabel: function (n) { return n + ' von 5 Zimtsternen'; }
@@ -60,7 +60,7 @@
   var $ = function (s, w) { return (w || document).querySelector(s); };
   var seite = $('.wm-seite'), form = $('#wm-form'), eingabe = $('#wm-plz'), fehler = $('.wm-fehler'), tageEl = $('.wm-tage'),
     zahlEl = $('.wm-zahl'), unterEl = $('.wm-zahl-unter'), liste = $('.wm-liste'), offenEl = $('.wm-offen'), standEl = $('.wm-stand'), artenEl = $('#wm-arten'), chipsEl = $('#wm-arten .wm-chips'),
-    arbeit = $('.wm-arbeit'), spanneEl = $('.wm-spanne'), vertrauenEl = $('.wm-vertrauen'), rueck = $('.wm-rueck');
+    arbeit = $('.wm-arbeit'), auftaktEl = $('.wm-auftakt'), aufListe = $('.wm-auf-liste'), spanneEl = $('.wm-spanne'), vertrauenEl = $('.wm-vertrauen'), rueck = $('.wm-rueck');
   if (!seite || !form) return;
   var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var daten = null, laedt = null, zustand = { plz: '', km: 25, arten: [], tag: '', gezeigt: JE_SEITE, ort: null };
@@ -210,7 +210,8 @@
       });
     }
     standEl.textContent = T.stand(daten.stand);
-    arbeit.hidden = false; rueck.hidden = false; seite.classList.add('wm-an');
+    arbeit.hidden = false; auftaktEl.hidden = true; rueck.hidden = false; seite.classList.add('wm-an');
+    if (!zustand.plz) return;                      /* Suche rund um einen angetippten Markt: nichts in die Adresse */
     var q = new URLSearchParams(); q.set('plz', zustand.plz); if (zustand.km !== 25) q.set('km', zustand.km);
     /* hinter dem #: dieser Teil der Adresse geht nie an den Server, die Postleitzahl bleibt wirklich auf dem Gerät */
     try { history.replaceState(null, '', location.pathname + '#' + q); } catch (e) { /* Adresse bleibt, Suche läuft trotzdem */ }
@@ -228,6 +229,32 @@
     }).catch(function () { fehler.textContent = T.laden; fehler.hidden = false; });
   }
   form.addEventListener('submit', function (e) { e.preventDefault(); suche(true); });
+
+  /* ── Vor der Suche: was im Südosten gerade offen ist und bald losgeht; ein Tipp sucht rund um diesen Markt ── */
+  function rundUm(m) {
+    fehler.hidden = true;
+    lade().then(function () {
+      zustand.plz = ''; zustand.ort = [m.lat, m.lon, m.ort]; zustand.gezeigt = JE_SEITE; eingabe.value = ''; zeichne(true);
+      arbeit.scrollIntoView({ behavior: ruhig ? 'auto' : 'smooth', block: 'start' });
+    }).catch(function () { fehler.textContent = T.laden; fehler.hidden = false; form.scrollIntoView({ block: 'center' }); });
+  }
+  fetch(DATEN + 'auftakt.json').then(function (a) { return a.ok ? a.json() : []; }).then(function (liste) {
+    var h = iso(heute());
+    var wahl = liste.map(function (m) { var r = (m.termine || []).filter(function (x) { return x[1] >= h; })[0]; return r ? { m: m, r: r, offen: r[0] <= h } : null; })
+      .filter(Boolean).sort(function (a, b) { return a.offen === b.offen ? (a.r[0] < b.r[0] ? -1 : a.r[0] > b.r[0] ? 1 : 0) : (a.offen ? 1 : -1); });
+    /* erst, was als Nächstes öffnet, dann, was schon läuft: so steht oben, worauf man sich freuen kann */
+    wahl = wahl.filter(function (w) { return !w.offen; }).slice(0, AUFTAKT_ZEILEN - 2).concat(wahl.filter(function (w) { return w.offen; }).slice(0, 2)).slice(0, AUFTAKT_ZEILEN);
+    if (!wahl.length || zustand.ort) return;
+    wahl.forEach(function (w) {
+      var b = el('button', 'wm-auf'), wann = el('span', 'wm-auf-wann'); b.type = 'button';
+      if (w.offen) { var jetzt = el('span', 'wm-heute'); jetzt.innerHTML = ZIMTSTERN; jetzt.append(T.laeuft); wann.append(el('i', '', T.bis.trim() + ' ' + kurz(tag(w.r[1]))), jetzt); }
+      else wann.append(T.ab + kurz(tag(w.r[0])), el('i', '', T.bis.trim() + ' ' + kurz(tag(w.r[1]))));
+      b.append(el('b', '', w.m.name), wann, el('span', '', w.m.ort));
+      b.addEventListener('click', function () { rundUm(w.m); });
+      aufListe.append(b);
+    });
+    auftaktEl.hidden = false;
+  }).catch(function () { /* ohne die Liste bleibt die Seite, wie sie ist */ });
   /* Daten schon holen, sobald jemand ins Feld tippt: am Handy lagen sonst 3 bis 8 s zwischen „Suchen“ und Treffern (17.11.2026) */
   eingabe.addEventListener('focus', function () { lade().catch(function () { /* der Fehler kommt beim Suchen mit Meldung */ }); }, { once: true });
   document.querySelectorAll('#wm-umkreis .wm-wahl').forEach(function (b) {
@@ -270,27 +297,29 @@
         .then(function (a) { if (!a.ok) throw new Error('nein'); fertig.textContent = T.danke; zeig(fertig); })
         .catch(function () { meldung.textContent = T.sendeFehler + KONTAKT; meldung.hidden = false; knopf.disabled = false; });
     }
+    /* „Markt melden“ am Ende der Seite: geht auch ohne Suche direkt zur Meldung */
+    $('.wm-melden').addEventListener('click', function () {
+      rueck.hidden = false; zeig(nein); rueck.scrollIntoView({ behavior: ruhig ? 'auto' : 'smooth', block: 'start' });
+    });
     ja.addEventListener('submit', function (e) { e.preventDefault(); sende(ja, true); });
     nein.addEventListener('submit', function (e) { e.preventDefault(); sende(nein, false); });
   })();
 
-  /* ── Szene: Funken aus der Feuerschale, Blick folgt der Maus, Halte-Knopf ── */
+  /* ── Szene: Schneefall in drei Tiefen, Blick folgt der Maus, Halte-Knopf ── */
   (function () {
     var szene = $('.wm-szene'), cv = $('canvas', szene), bild = $('img', szene), halt = $('.wm-halt'), ctx = cv.getContext('2d');
-    var funken = [], laeuft = !ruhig, sichtbar = false, raf = 0, b = 0, h = 0, fx = 0, fy = 0, zuletzt = 0;
+    var flocken = [], laeuft = !ruhig, sichtbar = false, raf = 0, b = 0, h = 0, zuletzt = 0, ANZAHL = 70;
     if (ruhig) { halt.hidden = true; return; }
-    function mass() {
-      var q = Math.min(window.devicePixelRatio || 1, 2); b = szene.clientWidth; h = szene.clientHeight; cv.width = b * q; cv.height = h * q; ctx.setTransform(q, 0, 0, q, 0, 0);
-      var s = Math.max(b + 44, h + 28); fx = (b + 44 - s) * BILD_LAGE_X - 22 + FEUER_X * s; fy = (h + 28 - s) * 0.5 - 14 + FEUER_Y * s;
-    }
-    function neu(f) { f.x = fx + (Math.random() - .5) * b * .05; f.y = fy; f.l = 1; f.z = Math.random(); f.vx = (Math.random() - .5) * 26; f.w = Math.random() * 6.3; return f; }
+    function mass() { var q = Math.min(window.devicePixelRatio || 1, 2); b = szene.clientWidth; h = szene.clientHeight; cv.width = b * q; cv.height = h * q; ctx.setTransform(q, 0, 0, q, 0, 0); }
+    /* z = Tiefe: fern klein, langsam, blass; nah groß, schnell, weich */
+    function neu(f, oben) { f.x = Math.random() * b; f.y = oben ? -8 : Math.random() * h; f.z = Math.random(); f.w = Math.random() * 6.3; return f; }
     function bildfolge(t) {
-      var dt = Math.min((t - (zuletzt || t)) / 1000, .05); zuletzt = t; ctx.clearRect(0, 0, b, h); ctx.globalCompositeOperation = 'lighter';
-      for (var i = 0; i < funken.length; i++) {
-        var f = funken[i]; f.l -= dt * (.22 + f.z * .2); f.y -= (40 + f.z * 70) * dt; f.w += dt * 3; f.x += (f.vx + Math.sin(f.w) * 14) * dt;
-        if (f.l <= 0) neu(f);
-        var r = (.8 + f.z * 1.8) * 2.4, g = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, r);
-        g.addColorStop(0, 'rgba(255,214,140,' + f.l + ')'); g.addColorStop(1, 'rgba(255,120,30,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(f.x, f.y, r, 0, 6.3); ctx.fill();
+      var dt = Math.min((t - (zuletzt || t)) / 1000, .05); zuletzt = t; ctx.clearRect(0, 0, b, h);
+      for (var i = 0; i < flocken.length; i++) {
+        var f = flocken[i]; f.y += (16 + f.z * f.z * 54) * dt; f.w += dt * (.6 + f.z); f.x += Math.sin(f.w) * (6 + f.z * 12) * dt;
+        if (f.y > h + 8) neu(f, true);
+        var r = .7 + f.z * f.z * 3.1, g = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, r * 1.6);
+        g.addColorStop(0, 'rgba(240,246,255,' + (.28 + f.z * .5) + ')'); g.addColorStop(1, 'rgba(240,246,255,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(f.x, f.y, r * 1.6, 0, 6.3); ctx.fill();
       }
       if (laeuft && sichtbar) raf = requestAnimationFrame(bildfolge);
     }
@@ -298,7 +327,7 @@
     halt.addEventListener('click', function () { laeuft = !laeuft; halt.textContent = laeuft ? T.funkenAn : T.funkenAus; los(); });
     new IntersectionObserver(function (e) {
       sichtbar = e[0].isIntersecting;
-      if (sichtbar) { mass(); if (!funken.length) for (var i = 0; i < 40; i++) { var f = neu({}); f.l = Math.random(); f.y -= (1 - f.l) * h * .4; funken.push(f); } }
+      if (sichtbar) { mass(); if (!flocken.length) for (var i = 0; i < ANZAHL; i++) flocken.push(neu({}, false)); }
       los();
     }).observe(szene);
     window.addEventListener('resize', function () { if (sichtbar) mass(); });

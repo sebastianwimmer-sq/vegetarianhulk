@@ -183,6 +183,31 @@ def fertig(m, heute):
     return {k: v for k, v in aus.items() if v not in ('', [], False)}
 
 
+AUFTAKT_LAENDER = ('Bayern', 'Salzburg', 'Oberösterreich')
+AUFTAKT_TAGE = 24
+AUFTAKT_MAX = 60
+
+
+def auftakt(raus, heute):
+    """Kleine Liste für die Seite vor der Suche: Märkte im Südosten, die offen sind oder bald öffnen.
+
+    Sebi 17.11.2026: unter dem Suchfeld war „viel leer“. Die Seite wählt daraus am Tag des Besuchs
+    die nächsten sechs; die Datei reicht deshalb bis zum nächsten Wochenlauf und etwas darüber hinaus.
+    Von Hand gepflegte Märkte (Seite des Veranstalters) stehen bei gleichem Start vorn.
+    """
+    bis = date.fromisoformat(heute).toordinal() + AUFTAKT_TAGE
+    wahl = []
+    for m in raus:
+        if m.get('status') != 'bestaetigt' or m.get('land') not in AUFTAKT_LAENDER or m.get('name_abgeleitet'):
+            continue
+        laeuft = [t for t in m['termine'] if t[1] >= heute and date.fromisoformat(t[0]).toordinal() <= bis]
+        if laeuft:
+            wahl.append((laeuft[0][0], not m['id'].startswith('hand-'), m['name'], m))
+    wahl.sort(key=lambda w: w[:3])
+    return [{'name': m['name'], 'ort': m['ort'], 'lat': m['lat'], 'lon': m['lon'], 'termine': m['termine']}
+            for _, _, _, m in wahl[:AUFTAKT_MAX]]
+
+
 def zaehle(maerkte, feld):
     """Je Wert: [bestaetigt, gesamt]."""
     aus = {}
@@ -227,6 +252,7 @@ def main():
     schreibe('maerkte.json', raus)
     schreibe('plz.json', {k: [round(v[0], 4), round(v[1], 4), v[2]] for k, v in sorted(plz.items())})  # idempotent: gerundet bleibt gerundet
     schreibe('stand.json', stand)
+    schreibe('auftakt.json', auftakt(raus, heute))
     print(json.dumps(stand, ensure_ascii=False)[:400])
 
 

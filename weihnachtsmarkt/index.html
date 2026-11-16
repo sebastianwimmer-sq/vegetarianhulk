@@ -8,12 +8,12 @@
 <title>Weihnachtsmarkt-Radar: Märkte in deiner Nähe mit Termin | VegetarianHulk</title>
 <meta name="description" content="Postleitzahl eintippen und sehen, welche Weihnachtsmärkte, Christkindlmärkte und Adventsmärkte in deinem Umkreis offen haben. Mit Termin und Quelle, für ganz Deutschland.">
 <link rel="canonical" href="https://vegetarianhulk.de/weihnachtsmarkt/">
-<meta name="theme-color" content="#1a0907">
+<meta name="theme-color" content="#0a1226">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Weihnachtsmarkt-Radar: Märkte in deiner Nähe mit Termin | VegetarianHulk">
 <meta property="og:description" content="Postleitzahl eintippen und sehen, welche Weihnachtsmärkte, Christkindlmärkte und Adventsmärkte in deinem Umkreis offen haben. Mit Termin und Quelle, für ganz Deutschland.">
 <meta property="og:url" content="https://vegetarianhulk.de/weihnachtsmarkt/">
-<meta property="og:image" content="https://vegetarianhulk.de/weihnachtsmarkt/img/christbaum.webp">
+<meta property="og:image" content="https://vegetarianhulk.de/weihnachtsmarkt/img/winternacht-quer.webp">
 <meta property="og:locale" content="de_DE">
 <meta property="og:site_name" content="VegetarianHulk">
 <meta name="twitter:card" content="summary_large_image">
@@ -24,11 +24,11 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/weihnachtsmarkt/img/christbaum.webp" as="image" fetchpriority="high">
+<link rel="preload" href="/weihnachtsmarkt/img/winternacht-hoch.webp" as="image" fetchpriority="high" media="(max-width: 899px)">
+<link rel="preload" href="/weihnachtsmarkt/img/winternacht-quer.webp" as="image" fetchpriority="high" media="(min-width: 900px)">
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
 <link rel="stylesheet" href="/v3.css?v=7afa4266">
-<link rel="stylesheet" href="/weihnachtsmarkt/radar.css?v=ebfac46d">
-<script src="/newsletter-form.js?v=432713ec" defer></script>
+<link rel="stylesheet" href="/weihnachtsmarkt/radar.css?v=a7765f1b">
 <!-- SPRACHE:KOPF -->
 <link rel="alternate" hreflang="de" href="https://vegetarianhulk.de/weihnachtsmarkt/">
 <link rel="alternate" hreflang="en" href="https://vegetarianhulk.de/en/christmas-markets/">
@@ -39,7 +39,10 @@
 <body class="wm-seite">
 <main>
   <section class="wm-szene">
-    <img src="/weihnachtsmarkt/img/christbaum.webp" alt="Christkindlmarkt bei Nacht: ein Christbaum voller Lichter, davor eine Feuerschale mit Funken, darüber ein goldener Engel" width="1500" height="1500" fetchpriority="high">
+    <picture>
+      <source media="(min-width: 900px)" srcset="/weihnachtsmarkt/img/winternacht-quer.webp" width="1920" height="1080">
+      <img src="/weihnachtsmarkt/img/winternacht-hoch.webp" alt="Verschneite Winternacht im Alpenvorland: zwischen dunklen Tannen leuchtet in der Ferne ein kleiner Christkindlmarkt warm und golden" width="1080" height="1920" fetchpriority="high">
+    </picture>
     <div class="wm-schleier"></div>
     <canvas aria-hidden="true"></canvas>
     <header class="topbar">
@@ -52,7 +55,7 @@
       <h1>Wo riecht es heute nach Glühwein?</h1>
       <p>Weihnachtsmärkte, Christkindlmärkte und Adventsmärkte in deiner Nähe, mit Termin.</p>
     </div>
-    <button class="wm-halt" type="button">Funken anhalten</button>
+    <button class="wm-halt" type="button">Schnee anhalten</button>
   </section>
 
   <div class="wrap">
@@ -65,6 +68,12 @@
       <p class="wm-fehler" role="alert" hidden></p>
     </form>
     <p class="wm-vertrauen"></p>
+
+    <section class="wm-auftakt" hidden>
+      <h2>Gerade offen und bald los</h2>
+      <p>Tipp auf einen Markt und du siehst, was drumherum offen hat.</p>
+      <div class="wm-auf-liste"></div>
+    </section>
 
     <div class="wm-arbeit" hidden>
       <div class="wm-ergebnis-kopf">
@@ -135,12 +144,12 @@
   </div>
 
   <section class="wm-tisch">
-    <img src="/weihnachtsmarkt/img/tisch.webp" alt="Holztisch im Kerzenlicht mit Glühwein, Zimtsternen, Orangen mit Nelken und Zimtstangen" width="1200" height="891" loading="lazy">
+    <img src="/weihnachtsmarkt/img/tasse.webp" alt="Dampfende Tasse Glühwein auf einem verschneiten Geländer in kalter, blauer Winternacht, daneben ein Zimtstern und eine Orangenscheibe" width="1440" height="1000" loading="lazy">
     <div class="wrap">
-      <h2>Magst du mehr von draußen?</h2>
-      <p>Im Letter schreibe ich, was ich am Berg und unterwegs erlebe. Zum Einstieg gibt es den Berg-Starter.</p>
-      <div class="wm-brief"><vh-newsletter-form></vh-newsletter-form></div>
-      <p class="wm-bild-hinweis">Die beiden Bilder auf dieser Seite sind mit KI erzeugt.</p>
+      <h2>Fehlt dein Markt?</h2>
+      <p>Schreib mir, welcher fehlt. Ich trage ihn nach.</p>
+      <button class="wm-knopf wm-melden" type="button">Markt melden</button>
+      <p class="wm-bild-hinweis">Die Bilder auf dieser Seite sind mit KI erzeugt.</p>
     </div>
   </section>
 </main>
@@ -168,7 +177,7 @@
   <a href="/kooperationen.html">Brands</a>
 </nav>
 
-<script src="/weihnachtsmarkt/radar.js?v=06e166ef" defer></script>
+<script src="/weihnachtsmarkt/radar.js?v=0a6edb4a" defer></script>
 <script src="/v3.js?v=cd38f186" defer></script>
 </body>
 </html>

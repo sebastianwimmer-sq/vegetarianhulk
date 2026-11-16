@@ -2,19 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="vh-quelle" content="/weihnachtsmarkt/@cde40f2a151c8ca9">
+<meta name="vh-quelle" content="/weihnachtsmarkt/@6337717e38db6446">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://*.challenges.cloudflare.com https://vh-forms.peaking.workers.dev; base-uri 'none'; form-action 'self'; frame-src https://challenges.cloudflare.com">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Christmas Market Radar: German markets near you, with dates | VegetarianHulk</title>
 <meta name="description" content="Type a German postcode and see which Christmas markets are open near you. With dates and sources, for all of Germany.">
 <link rel="canonical" href="https://vegetarianhulk.de/en/christmas-markets/">
-<meta name="theme-color" content="#1a0907">
+<meta name="theme-color" content="#0a1226">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Christmas Market Radar: German markets near you, with dates | VegetarianHulk">
 <meta property="og:description" content="Type a German postcode and see which Christmas markets are open near you. With dates and sources, for all of Germany.">
 <meta property="og:url" content="https://vegetarianhulk.de/en/christmas-markets/">
-<meta property="og:image" content="https://vegetarianhulk.de/weihnachtsmarkt/img/christbaum.webp">
+<meta property="og:image" content="https://vegetarianhulk.de/weihnachtsmarkt/img/winternacht-quer.webp">
 <meta property="og:locale" content="en_GB">
 <meta property="og:site_name" content="VegetarianHulk">
 <meta name="twitter:card" content="summary_large_image">
@@ -25,11 +25,11 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 <link rel="preload" href="/fonts/playfair-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/weihnachtsmarkt/img/christbaum.webp" as="image" fetchpriority="high">
+<link rel="preload" href="/weihnachtsmarkt/img/winternacht-hoch.webp" as="image" fetchpriority="high" media="(max-width: 899px)">
+<link rel="preload" href="/weihnachtsmarkt/img/winternacht-quer.webp" as="image" fetchpriority="high" media="(min-width: 900px)">
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
 <link rel="stylesheet" href="/v3.css?v=7afa4266">
-<link rel="stylesheet" href="/weihnachtsmarkt/radar.css?v=ebfac46d">
-<script src="/newsletter-form.js?v=432713ec" defer></script>
+<link rel="stylesheet" href="/weihnachtsmarkt/radar.css?v=a7765f1b">
 <!-- SPRACHE:KOPF -->
 <link rel="alternate" hreflang="de" href="https://vegetarianhulk.de/weihnachtsmarkt/">
 <link rel="alternate" hreflang="en" href="https://vegetarianhulk.de/en/christmas-markets/">
@@ -40,7 +40,10 @@
 <body class="wm-seite">
 <main>
   <section class="wm-szene">
-    <img src="/weihnachtsmarkt/img/christbaum.webp" alt="A Bavarian Christmas market at night: a tree full of lights, a fire bowl with sparks in front, a golden angel above" width="1500" height="1500" fetchpriority="high">
+    <picture>
+      <source media="(min-width: 900px)" srcset="/weihnachtsmarkt/img/winternacht-quer.webp" width="1920" height="1080">
+      <img src="/weihnachtsmarkt/img/winternacht-hoch.webp" alt="A snowy winter night in the Alpine foothills: between dark firs, a small Christmas market glows warm and golden in the distance" width="1080" height="1920" fetchpriority="high">
+    </picture>
     <div class="wm-schleier"></div>
     <canvas aria-hidden="true"></canvas>
     <header class="topbar">
@@ -53,7 +56,7 @@
       <h1>Where does it smell of mulled wine today?</h1>
       <p>Christmas markets in Germany near you, with dates.</p>
     </div>
-    <button class="wm-halt" type="button">Pause sparks</button>
+    <button class="wm-halt" type="button">Pause snow</button>
   </section>
 
   <div class="wrap">
@@ -66,6 +69,12 @@
       <p class="wm-fehler" role="alert" hidden></p>
     </form>
     <p class="wm-vertrauen"></p>
+
+    <section class="wm-auftakt" hidden>
+      <h2>Open now and opening soon</h2>
+      <p>Tap a market to see what is open around it.</p>
+      <div class="wm-auf-liste"></div>
+    </section>
 
     <div class="wm-arbeit" hidden>
       <div class="wm-ergebnis-kopf">
@@ -136,12 +145,12 @@
   </div>
 
   <section class="wm-tisch">
-    <img src="/weihnachtsmarkt/img/tisch.webp" alt="A wooden table in candlelight with mulled wine, cinnamon stars, clove-studded oranges and cinnamon sticks" width="1200" height="891" loading="lazy">
+    <img src="/weihnachtsmarkt/img/tasse.webp" alt="A steaming mug of mulled wine on a snowy railing in a cold blue winter night, with a cinnamon star and a slice of orange" width="1440" height="1000" loading="lazy">
     <div class="wrap">
-      <h2>Want more from the outdoors?</h2>
-      <p>In my letter I write about what I experience in the mountains and on the road. You get the Hike Starter to begin with.</p>
-      <div class="wm-brief"><vh-newsletter-form></vh-newsletter-form></div>
-      <p class="wm-bild-hinweis">Both images on this page are AI-generated.</p>
+      <h2>Is your market missing?</h2>
+      <p>Tell me which one. I will add it.</p>
+      <button class="wm-knopf wm-melden" type="button">Report a market</button>
+      <p class="wm-bild-hinweis">The images on this page are AI-generated.</p>
     </div>
   </section>
 </main>
@@ -169,7 +178,7 @@
   <a href="/en/brands/">Brands</a>
 </nav>
 
-<script src="/weihnachtsmarkt/radar.js?v=06e166ef" defer></script>
+<script src="/weihnachtsmarkt/radar.js?v=0a6edb4a" defer></script>
 <script src="/v3.js?v=cd38f186" defer></script>
 </body>
 </html>
