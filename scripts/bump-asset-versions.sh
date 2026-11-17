@@ -44,6 +44,7 @@ ASSETS=(
   lieblingsprodukte/products.js
   weihnachtsmarkt/radar.css
   weihnachtsmarkt/radar.js
+  weihnachtsmarkt/schirm.js
 )
 
 # Interne Verzeichnisse, deren HTML nicht angefasst wird

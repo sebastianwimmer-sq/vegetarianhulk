@@ -29,6 +29,7 @@ T = {
         tisch_alt='Dampfende Tasse Glühwein auf einem verschneiten Geländer in kalter, blauer Winternacht, daneben ein Zimtstern und eine Orangenscheibe',
         b_titel='Soll ich dir Bescheid geben?', b_text='Ich schreibe dir, wenn neue Märkte dazukommen und wenn der Radar im nächsten Advent wieder startet. Das sind ein bis zwei Mails im Jahr.',
         tisch_titel='Fehlt dein Markt?', tisch_text='Schreib mir, welcher fehlt. Ich trage ihn nach.', tisch_knopf='Markt melden',
+        schirm='Radar', schirm_label='Radarschirm', z_vor='Näherer Markt', z_weiter='Weiter entfernter Markt', z_zeige='In der Liste zeigen',
         bilder='Die Bilder auf dieser Seite sind mit KI erzeugt.',
         claim='Builder &amp; Creator. Disziplin über Hype.', legal='Rechtliches', impressum='Impressum', datenschutz='Datenschutz', recht_attr='',
         nav_label='Hauptnavigation', nav=[('/', 'Start'), ('/partner-picks/', 'P&amp;P'), ('/touren/', 'Hulk&nbsp;Hikes'), ('/newsletter', 'News'), ('/kooperationen.html', 'Brands')],
@@ -48,6 +49,7 @@ T = {
         tisch_alt='A steaming mug of mulled wine on a snowy railing in a cold blue winter night, with a cinnamon star and a slice of orange',
         b_titel='Want me to let you know?', b_text='I will write when new markets are added and when the radar starts again next Advent. That is one or two emails a year.',
         tisch_titel='Is your market missing?', tisch_text='Tell me which one. I will add it.', tisch_knopf='Report a market',
+        schirm='Radar', schirm_label='Radar screen', z_vor='Closer market', z_weiter='Market further away', z_zeige='Show in the list',
         bilder='The images on this page are AI-generated.',
         claim='Builder &amp; creator. Discipline over hype.', legal='Legal', impressum='Legal notice (German)', datenschutz='Privacy (German)', recht_attr=' hreflang="de"',
         nav_label='Main navigation', nav=[('/en/', 'Home'), ('/en/partner-picks/', 'P&amp;P'), ('/en/hikes/', 'Hulk&nbsp;Hikes'), ('/en/newsletter/', 'News'), ('/en/brands/', 'Brands')],
@@ -144,12 +146,28 @@ VORLAGE = '''<!DOCTYPE html>
           <p class="wm-gruppe-kopf"><span>{tage_label}</span><span class="wm-spanne"></span></p>
           <div class="wm-tage"></div>
         </div>
-        <div id="wm-arten" role="group" aria-label="{arten}" hidden>
-          <p class="wm-gruppe-kopf"><span>{arten}</span></p>
-          <div class="wm-chips"></div>
+        <div class="wm-reihe" hidden>
+          <button class="wm-wahl wm-umschalt" type="button" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.2"/><circle cx="10" cy="10" r="4"/><path d="M10 10 15.8 4.2"/></svg>{schirm}</button>
+          <div id="wm-arten" role="group" aria-label="{arten}" hidden>
+            <p class="wm-gruppe-kopf"><span>{arten}</span></p>
+            <div class="wm-chips"></div>
+          </div>
         </div>
       </aside>
-      <div class="wm-treffer">
+      <div class="wm-treffer" data-ansicht="liste">
+        <section class="wm-schirm" aria-label="{schirm_label}" hidden>
+          <div class="wm-scheibe"><svg viewBox="-170 -170 340 340" role="img" focusable="false"></svg></div>
+          <div class="wm-zettel">
+            <p class="wm-z-text" aria-live="polite"></p>
+            <div class="wm-z-wege">
+              <button class="wm-z-pfeil wm-z-vor" type="button" aria-label="{z_vor}"></button>
+              <span class="wm-z-zahl"></span>
+              <button class="wm-z-pfeil wm-z-weiter" type="button" aria-label="{z_weiter}"></button>
+              <button class="wm-knopf wm-knopf--leise wm-z-zeige" type="button">{z_zeige}</button>
+            </div>
+            <p class="wm-legende"></p>
+          </div>
+        </section>
         <div class="wm-liste"></div>
         <details class="wm-offen" hidden></details>
         <p class="wm-stand"></p>
@@ -227,6 +245,7 @@ VORLAGE = '''<!DOCTYPE html>
 {nav_html}
 </nav>
 
+<script src="/weihnachtsmarkt/schirm.js?v=0" defer></script>
 <script src="/weihnachtsmarkt/radar.js?v=0" defer></script>
 <script src="/v3.js?v=0" defer></script>
 </body>

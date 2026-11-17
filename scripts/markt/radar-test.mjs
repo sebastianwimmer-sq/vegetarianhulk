@@ -3,7 +3,7 @@
  *   node scripts/markt/radar-test.mjs            # prueft, Exit 1 bei Befund
  *   node scripts/markt/radar-test.mjs --bilder   # legt zusaetzlich Bildschirmfotos nach $TMPDIR/radar-bilder
  *
- * Gemessen wird, was ein Mensch sieht: Karten nach der Suche, Wirkung der Filter,
+ * Gemessen wird, was ein Mensch sieht: Karten nach der Suche, Wirkung der Filter, der Radarschirm mit seinen Lichtern,
  * Fehlermeldung bei falscher Postleitzahl, Quittung der Rueckmeldung erst nach Server-OK.
  */
 import { pruefserver } from '../pruefserver.mjs';
@@ -91,9 +91,46 @@ async function ablauf(browser, kontext, pfad, name, sprache) {
   pruef(weg && weg.height >= 44, `${name}: „Karte“ ist nur ${Math.round(weg?.height ?? 0)} px hoch`);
   if (BILDER) await s.screenshot({ path: join(BILDER, `${name}-suche.png`), fullPage: true });
 
-  // Umkreis: 10 km zeigt nie mehr als 25 km, 100 km nie weniger
   const zahl = async () => parseInt(await s.locator('.wm-tag').first().locator('span').last().innerText(), 10);
   const z25 = await zahl();
+
+  // Radarschirm: dieselben Treffer als Lichter. Breit steht er über der Tafel, schmal ersetzt er sie auf den Knopf „Radar“.
+  const schirm = () => s.evaluate(() => {
+    const r = (e) => e.getBoundingClientRect(), k = r(document.querySelector('.wm-scheibe')), mx = k.left + k.width / 2, my = k.top + k.height / 2;
+    const weit = [...document.querySelectorAll('.wm-licht .wm-s-kern')].map((e) => { const b = r(e); return Math.hypot(b.left + b.width / 2 - mx, b.top + b.height / 2 - my); });
+    return { breite: Math.round(k.width), lichter: weit.length, warm: document.querySelectorAll('.wm-licht--warm').length, aussen: weit.filter((d) => d > k.width / 2).length,
+      ohne: document.querySelectorAll('.wm-offen li').length, name: document.querySelector('.wm-z-text b')?.textContent ?? '', liste: r(document.querySelector('.wm-liste')).height > 0,
+      knopf: r(document.querySelector('.wm-umschalt')).width > 0, orte: document.querySelectorAll('.wm-s-orte text').length };
+  });
+  let sch = await schirm();
+  if (lage.breit) pruef(sch.breite >= 280 && sch.liste && !sch.knopf, `${name}: breit stehen Schirm und Tafel nicht beide da (Schirm ${sch.breite} px, Tafel ${sch.liste}, Knopf „Radar“ sichtbar ${sch.knopf})`);
+  else {
+    pruef(sch.breite === 0 && sch.liste && sch.knopf, `${name}: schmal steht vor dem Knopf „Radar“ nicht nur die Tafel da (Schirm ${sch.breite} px, Tafel ${sch.liste}, Knopf ${sch.knopf})`);
+    await s.click('.wm-umschalt'); sch = await schirm();
+    pruef(sch.breite >= 280 && !sch.liste, `${name}: nach „Radar“ steht der Schirm nicht statt der Tafel da (Schirm ${sch.breite} px, Tafel ${sch.liste})`);
+    pruef((await s.locator('.wm-umschalt').getAttribute('aria-pressed')) === 'true', `${name}: Knopf „Radar“ zeigt seinen Zustand nicht`);
+  }
+  await s.evaluate(() => document.getAnimations().forEach((a) => { if (a.effect?.getComputedTiming().iterations !== Infinity) a.finish(); }));
+  const nachFahrt = await s.evaluate(() => ({ licht: getComputedStyle(document.querySelector('.wm-licht')).opacity, strahl: getComputedStyle(document.querySelector('.wm-strahl')).opacity }));
+  pruef(nachFahrt.licht === '1' && nachFahrt.strahl === '0', `${name}: nach der Fahrt des Strahls stehen die Lichter nicht (Licht ${nachFahrt.licht}, Strahl ${nachFahrt.strahl})`);
+  pruef(sch.lichter === z25 + sch.ohne && sch.warm === z25, `${name}: Schirm zeigt ${sch.lichter} Lichter, ${sch.warm} warm; die Suche hat ${z25} mit Termin und ${sch.ohne} ohne`);
+  pruef(sch.lichter > 0 && sch.aussen === 0, `${name}: ${sch.aussen} von ${sch.lichter} Lichtern liegen außerhalb der Scheibe`);
+  const ersteKarte = await s.locator('.wm-karte h3').first().evaluate((e) => e.textContent);
+  pruef(sch.name === ersteKarte, `${name}: der Schirm beginnt nicht beim nächsten Markt der Liste („${sch.name}“ statt „${ersteKarte}“)`);
+  if (sch.lichter > 1) {
+    await s.click('.wm-z-weiter');
+    pruef((await schirm()).name !== sch.name || sch.lichter === 2, `${name}: „weiter“ wechselt den Markt auf dem Zettel nicht`);
+    // das oberste warme Licht ist der nächste Markt mit Termin: ein Tipp darauf holt ihn zurück auf den Zettel
+    const oben = s.locator('.wm-licht--warm').last();
+    await oben.locator('.wm-s-kern').click({ force: true });
+    pruef((await schirm()).name === (await oben.locator('title').evaluate((e) => e.textContent)), `${name}: Tipp auf ein Licht zeigt nicht dessen Markt`);
+  }
+  await s.click('.wm-z-zeige');
+  await s.waitForFunction(() => { const k = document.querySelector('.wm-karte.wm-gezeigt'); if (!k) return false; const r = k.getBoundingClientRect(); return r.height > 0 && r.top >= 0 && r.top < innerHeight; }, null, { timeout: 6000 })
+    .catch(() => pruef(false, `${name}: „In der Liste zeigen“ bringt die Zeile des Marktes nicht ins Bild`));
+  pruef((await s.locator('.wm-karte.wm-gezeigt h3').evaluate((e) => e.textContent).catch(() => '')) === ersteKarte, `${name}: „In der Liste zeigen“ hebt nicht den gewählten Markt hervor`);
+
+  // Umkreis: 10 km zeigt nie mehr als 25 km, 100 km nie weniger
   await s.click('#wm-umkreis [data-km="10"]'); const z10 = await zahl();
   await s.click('#wm-umkreis [data-km="100"]'); const z100 = await zahl();
   pruef(z10 <= z25 && z25 <= z100 && z100 > z10, `${name}: Umkreis wirkt nicht (10 km ${z10}, 25 km ${z25}, 100 km ${z100}; erste Angabe ${n25})`);
@@ -112,6 +149,8 @@ async function ablauf(browser, kontext, pfad, name, sprache) {
     await kugel.click();
     const sichtbar = await karten(s), mehr = await s.locator('.wm-mehr').count();
     pruef(mehr ? sichtbar === 12 : sichtbar === angabe, `${name}: Tag zeigt ${sichtbar} Karten, die Kugel sagt ${angabe}`);
+    const warmAmTag = await s.locator('.wm-licht--warm').count();
+    pruef(warmAmTag === angabe, `${name}: am gewählten Tag leuchten ${warmAmTag} Lichter warm, die Kugel sagt ${angabe}`);
     await s.locator('.wm-tag').first().click();
   } else pruef(false, `${name}: nicht gemessen – kein Tag mit offenem Markt in 100 km um ${PLZ}`);
 
@@ -148,6 +187,9 @@ try {
   await s.waitForFunction(() => document.querySelectorAll('.wm-karte').length > 0);
   pruef(await s.locator('.wm-halt').isHidden(), 'ruhig: Halte-Knopf sichtbar, obwohl nichts läuft');
   pruef((await s.locator('.wm-karte').first().evaluate((e) => getComputedStyle(e).opacity)) === '1', 'ruhig: erste Karte nicht voll sichtbar');
+  await s.click('.wm-umschalt');
+  const ruhe = await s.evaluate(() => ({ laeuft: document.querySelector('.wm-schirm').getAnimations({ subtree: true }).length, licht: getComputedStyle(document.querySelector('.wm-licht')).opacity, breite: document.querySelector('.wm-scheibe').getBoundingClientRect().width }));
+  pruef(ruhe.laeuft === 0 && ruhe.licht === '1' && ruhe.breite >= 280, `ruhig: der Schirm bewegt sich oder steht nicht da (${ruhe.laeuft} Bewegungen, Licht ${ruhe.licht}, ${Math.round(ruhe.breite)} px)`);
   await k.close();
   // Tipp auf einen Markt vor der Suche sucht rund um ihn, ohne Postleitzahl in der Adresse; „Markt melden“ öffnet die Meldung auch ohne Suche
   const k2 = await safari.newContext(devices['iPhone 15 Pro']); const t = await k2.newPage();
@@ -177,4 +219,4 @@ try {
 }
 for (const b of befunde) console.log('ROT ', b);
 if (befunde.length) { console.log(`${befunde.length} Befunde`); process.exit(1); }
-console.log('GRÜN Radar: Suche, Umkreis, Art, Tag, Rückmeldung, drei Geräte, ruhig' + (BILDER ? ` · Bilder in ${BILDER}` : ''));
+console.log('GRÜN Radar: Suche, Schirm, Umkreis, Art, Tag, Rückmeldung, drei Geräte, ruhig' + (BILDER ? ` · Bilder in ${BILDER}` : ''));
