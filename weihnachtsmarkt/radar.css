@@ -6,7 +6,7 @@
    Gebaut auf v3.css (Kopfleiste, Fuß, Navigation); alles Eigene trägt das Präfix wm-. */
 .wm-seite {
   --wm-grund: #0a1226; --wm-wein: #5a1118; --wm-wein-tief: #2e090c; --wm-zucker: #fff6e6; --wm-zucker-leise: rgba(255, 246, 230, .78);
-  --wm-gold: #f1c659; --wm-gold-text: #f6d98a; --wm-auf-gold: #2a1503; --wm-tanne: #24523c;
+  --wm-gold: #f1c659; --wm-gold-text: #f6d98a; --wm-eis: #8fb0e6; --wm-glas: #070c1c; --wm-auf-gold: #2a1503; --wm-tanne: #24523c;
   --wm-linie: rgba(249, 227, 154, .2); --wm-linie-stark: rgba(249, 227, 154, .42);
   --wm-folie: linear-gradient(115deg, #f9e39a, #c8901f 28%, #fdeeb4 52%, #b07a17 78%, #f3d57c);
   --wm-r: 14px; --wm-r-klein: 10px; --wm-ease: cubic-bezier(.22, 1, .36, 1);
@@ -19,7 +19,7 @@ html:has(.wm-seite) { background: #0a1226; }
 .wm-seite .topbar { position: absolute; left: 0; right: 0; z-index: 6; padding-inline: max(var(--wm-rand), calc((100% - var(--wm-breite)) / 2)); }
 .wm-seite footer { margin-top: 0; padding-top: 40px; background: var(--wm-grund); }
 .wm-seite [hidden] { display: none !important; }
-.wm-seite :is(.wm-knopf, .wm-wahl, .wm-halt, .wm-tag, .wm-stern, .wm-grund, .wm-auf, input, textarea, summary, a):focus-visible { outline: 3px solid #fdeeb4; outline-offset: 2px; }
+.wm-seite :is(.wm-knopf, .wm-wahl, .wm-halt, .wm-tag, .wm-stern, .wm-grund, .wm-auf, .wm-z-pfeil, input, textarea, summary, a):focus-visible { outline: 3px solid #fdeeb4; outline-offset: 2px; }
 
 /* ── Szene ── */
 .wm-szene { position: relative; height: clamp(470px, 70svh, 620px); overflow: clip; background-color: #070d1c; }
@@ -118,6 +118,61 @@ html:has(.wm-seite) { background: #0a1226; }
   box-shadow: 0 0 0 2px var(--wm-grund), 0 0 0 4px var(--wm-gold), inset 0 -6px 10px rgba(0,0,0,.35), 0 6px 12px rgba(0,0,0,.45); }
 .wm-tag[aria-pressed="true"] { color: var(--wm-zucker); }
 
+/* ── Radarschirm: ein Gerät aus kaltem Glas, warm ist nur, was er findet (gezeichnet in schirm.js) ──
+   Schmal schaltet der Knopf „Radar“ vor den Art-Filtern zwischen Liste und Schirm: so kostet er keine Höhe über der ersten Trefferzeile. */
+.wm-reihe { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.wm-umschalt { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px; padding: 0 14px 0 11px; }
+.wm-umschalt svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; }
+.wm-reihe #wm-arten { flex: 1 1 0; min-width: 0; padding-left: 8px; border-left: 1px solid var(--wm-linie); }
+.wm-reihe .wm-chips { margin-left: 0; padding-left: 2px; }
+.wm-schirm { display: grid; gap: 18px; margin-bottom: 24px; }
+.wm-scheibe { position: relative; width: min(100%, 380px); margin-inline: auto; aspect-ratio: 1; border-radius: 50%; background-color: var(--wm-glas);
+  background-image: radial-gradient(circle, rgba(143,176,230,.14), rgba(143,176,230,.03) 58%, rgba(7,12,28,0) 83%), radial-gradient(circle at 50% 0, #16244a, #070c1c 72%);
+  box-shadow: inset 0 0 0 1px rgba(143,176,230,.32), inset 0 0 0 6px rgba(7,12,28,.85), inset 0 0 0 7px rgba(143,176,230,.14), inset 0 16px 30px rgba(0,0,0,.45),
+    0 2px 3px rgba(0,0,0,.5), 0 18px 36px rgba(0,0,0,.5), 0 0 80px rgba(120,160,255,.09); }
+.wm-scheibe::after { content: ""; position: absolute; inset: 0; border-radius: 50%; pointer-events: none; background: radial-gradient(62% 40% at 32% 16%, rgba(255,255,255,.075), rgba(255,255,255,0) 70%); }
+.wm-scheibe svg { position: relative; display: block; width: 100%; height: 100%; touch-action: manipulation; font: 500 13px/1 Inter, system-ui, sans-serif; }
+.wm-scheibe text { pointer-events: none; fill: var(--wm-eis); paint-order: stroke; stroke: var(--wm-glas); stroke-width: 3px; stroke-linejoin: round; }
+.wm-s-ring { fill: none; stroke: var(--wm-eis); stroke-opacity: .22; }
+.wm-s-ring--aussen { stroke-opacity: .55; }
+.wm-s-speiche { stroke: var(--wm-eis); stroke-opacity: .1; }
+.wm-s-strich { stroke: var(--wm-eis); stroke-opacity: .4; }
+.wm-scheibe .wm-s-km { font-size: 11.5px; fill-opacity: .85; }
+.wm-scheibe .wm-s-nord { font-weight: 600; fill: var(--wm-zucker); }
+.wm-scheibe .wm-s-orte text { fill: #c9d8f4; }
+.wm-s-mitte { pointer-events: none; }
+.wm-s-mitte circle { fill: var(--wm-zucker); }
+.wm-scheibe .wm-s-mitte text { fill: var(--wm-zucker); }
+.wm-licht { cursor: pointer; }
+.wm-s-kern { fill: var(--wm-eis); fill-opacity: .78; }
+.wm-licht--warm .wm-s-kern { fill: #ffe9b0; fill-opacity: 1; }
+.wm-s-wahl { fill: none; stroke: var(--wm-zucker); stroke-width: 1.5; pointer-events: none; }
+.wm-strahl { fill: var(--wm-eis); fill-opacity: .1; opacity: 0; pointer-events: none; }
+/* einmal fahren, dann stehen: der Strahl dreht eine Runde, jedes Licht geht an, wenn er darüber streicht */
+.wm-fahrt .wm-strahl { animation: wm-fahrt 2.2s linear both; }
+.wm-fahrt .wm-licht { animation: wm-zuend .6s var(--wm-ease) calc(var(--w, 0) * 2.2s) backwards; }
+@keyframes wm-fahrt { from { transform: rotate(0deg); opacity: 1; } 88% { opacity: 1; } to { transform: rotate(360deg); opacity: 0; } }
+@keyframes wm-zuend { from { opacity: 0; } }
+.wm-zettel { display: grid; gap: 14px; padding: 18px; border-radius: 18px; background: linear-gradient(180deg, var(--wm-wein), var(--wm-wein-tief));
+  box-shadow: inset 0 0 0 1px var(--wm-linie), inset 0 1px 0 rgba(255,220,160,.16), 0 2px 3px rgba(0,0,0,.45), 0 18px 34px rgba(0,0,0,.4); }
+.wm-z-text { margin: 0; display: grid; align-content: start; gap: 3px; min-height: 6.4em; font-size: 16px; line-height: 1.4; color: var(--wm-zucker-leise); }
+.wm-z-text b { font: 700 21px/1.2 'Playfair Display', Georgia, serif; overflow-wrap: anywhere; text-wrap: balance; color: var(--wm-zucker); }
+.wm-z-text .wm-z-wann { font-weight: 600; font-size: 17px; color: var(--wm-gold-text); font-variant-numeric: tabular-nums; }
+.wm-z-wege { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.wm-z-pfeil { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: var(--wm-r-klein); cursor: pointer; background: rgba(0,0,0,.2); box-shadow: inset 0 0 0 1px var(--wm-linie-stark); transition: background .2s; }
+.wm-z-pfeil::before { content: ""; width: 9px; height: 9px; border: solid var(--wm-zucker); border-width: 0 0 2px 2px; rotate: 45deg; translate: 2px 0; }
+.wm-z-weiter::before { rotate: 225deg; translate: -2px 0; }
+.wm-z-pfeil[disabled] { opacity: .35; cursor: default; }
+@media (hover: hover) { .wm-z-pfeil:not([disabled]):hover { background: rgba(249,227,154,.14); } }
+.wm-z-zahl { min-width: 6ch; text-align: center; font-size: 15px; font-variant-numeric: tabular-nums; color: var(--wm-zucker-leise); }
+.wm-z-wege .wm-z-zeige { margin-left: auto; min-height: 44px; padding: 0 16px; font-size: 15px; }
+.wm-legende { margin: 0; display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 14px; line-height: 1.45; color: rgba(255,246,230,.7); }
+.wm-legende span::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 7px; border-radius: 50%; background: var(--wm-eis); }
+.wm-legende .wm-l-warm::before { background: #ffe9b0; box-shadow: 0 0 8px 2px rgba(241,165,58,.7); }
+@media (max-width: 899px) {
+  .wm-treffer[data-ansicht="liste"] .wm-schirm, .wm-treffer[data-ansicht="schirm"] :is(.wm-liste, .wm-offen) { display: none; }
+}
+
 /* ── Treffer: eine Tafel, Zeile je Markt ── */
 .wm-treffer { margin-top: 20px; }
 .wm-nw { white-space: nowrap; }
@@ -143,6 +198,8 @@ html:has(.wm-seite) { background: #0a1226; }
 @media (hover: hover) { .wm-wege a:hover { background: rgba(249,227,154,.14); } }
 .wm-karte .wm-quelle { margin-top: 10px; font-size: 14px; line-height: 1.45; color: rgba(255,246,230,.7); overflow-wrap: anywhere; }
 .wm-karte .wm-quelle a { color: inherit; text-decoration-color: rgba(255,246,230,.35); text-underline-offset: 3px; }
+.wm-karte.wm-gezeigt { background: rgba(249,227,154,.1); outline: none; }
+.wm-karte.wm-gezeigt:first-child { border-radius: 18px 18px 0 0; } .wm-karte.wm-gezeigt:last-child { border-radius: 0 0 18px 18px; }
 .wm-neu .wm-karte { animation: wm-rein .5s var(--wm-ease) calc(var(--i) * 45ms + 120ms) both; }
 @keyframes wm-rein { from { opacity: 0; translate: 0 8px; } }
 .wm-mehr-zeile { display: flex; justify-content: center; padding: 16px 18px 18px; }
@@ -224,7 +281,10 @@ html:has(.wm-seite) { background: #0a1226; }
   .wm-filter { grid-column: 1; grid-row: 1 / span 2; gap: 28px; margin-top: 6px; }
   #wm-umkreis .wm-gruppe-kopf, #wm-arten .wm-gruppe-kopf { position: static; width: auto; height: auto; overflow: visible; clip-path: none; white-space: normal; }
   .wm-treffer { grid-column: 2; grid-row: 2; margin-top: 20px; }
-  .wm-chips { flex-wrap: wrap; overflow: visible; margin-inline: 0; padding: 0; -webkit-mask-image: none; mask-image: none; }
+  .wm-reihe { display: contents; } .wm-umschalt { display: none; }
+  .wm-reihe #wm-arten { padding-left: 0; border-left: 0; }
+  .wm-chips, .wm-reihe .wm-chips { flex-wrap: wrap; overflow: visible; margin-inline: 0; padding: 0; -webkit-mask-image: none; mask-image: none; }
+  .wm-schirm { margin-bottom: 28px; }
   .wm-chips::after, .wm-tage::after { content: none; }
   .wm-tag .wm-leer { visibility: visible; }
   .wm-tage { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px 0; overflow: visible; margin-inline: 0; padding: 0; -webkit-mask-image: none; mask-image: none; }
@@ -259,6 +319,8 @@ html:has(.wm-seite) { background: #0a1226; }
   .wm-tisch::before { background: linear-gradient(180deg, #0a1226 0, rgba(10,18,38,0) 90px, rgba(10,18,38,0) 330px, #0a1226 438px); }
 }
 @media (min-width: 1200px) {
+  .wm-schirm { grid-template-columns: 320px minmax(0, 1fr); gap: 32px; align-items: center; }
+  .wm-scheibe { width: 320px; margin-inline: 0; }
   .wm-karte { grid-template-columns: 9.5rem minmax(0, 1fr) auto; }
   .wm-karte > .wm-k-kopf { grid-column: 2 / 4; }
   .wm-karte .wm-wege { grid-column: 3; grid-row: 2 / span 2; align-self: start; justify-content: flex-end; margin-top: 4px !important; }
@@ -270,7 +332,7 @@ html:has(.wm-seite) { background: #0a1226; }
 @media (prefers-reduced-motion: reduce) {
   .wm-szene img { translate: none; transition: none; }
   .wm-schleier { transition-duration: .2s; }
-  .wm-neu .wm-karte { animation: none; }
-  .wm-kugel, .wm-knopf, .wm-stern, .wm-offen summary::after { transition: none; }
+  .wm-neu .wm-karte, .wm-fahrt .wm-strahl, .wm-fahrt .wm-licht { animation: none; }
+  .wm-kugel, .wm-knopf, .wm-stern, .wm-z-pfeil, .wm-offen summary::after { transition: none; }
   .wm-tag:hover .wm-kugel, .wm-stern:hover { scale: 1; }
 }

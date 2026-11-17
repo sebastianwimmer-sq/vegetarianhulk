@@ -62,7 +62,7 @@
   var $ = function (s, w) { return (w || document).querySelector(s); };
   var seite = $('.wm-seite'), form = $('#wm-form'), eingabe = $('#wm-plz'), fehler = $('.wm-fehler'), tageEl = $('.wm-tage'),
     zahlEl = $('.wm-zahl'), unterEl = $('.wm-zahl-unter'), liste = $('.wm-liste'), offenEl = $('.wm-offen'), standEl = $('.wm-stand'), artenEl = $('#wm-arten'), chipsEl = $('#wm-arten .wm-chips'),
-    arbeit = $('.wm-arbeit'), auftaktEl = $('.wm-auftakt'), aufListe = $('.wm-auf-liste'), spanneEl = $('.wm-spanne'), vertrauenEl = $('.wm-vertrauen'), rueck = $('.wm-rueck');
+    arbeit = $('.wm-arbeit'), auftaktEl = $('.wm-auftakt'), aufListe = $('.wm-auf-liste'), spanneEl = $('.wm-spanne'), vertrauenEl = $('.wm-vertrauen'), rueck = $('.wm-rueck'), trefferEl = $('.wm-treffer'), reihe = $('.wm-reihe'), umschalt = $('.wm-umschalt');
   if (!seite || !form) return;
   var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var daten = null, laedt = null, zustand = { plz: '', km: 25, arten: [], tag: '', gezeigt: JE_SEITE, ort: null };
@@ -117,6 +117,21 @@
   }
   function ortsname() { return String(zustand.ort[2] || '').replace(/\s*[,(].*$/, ''); }
   function passtArt(t) { return !zustand.arten.length || zustand.arten.some(function (a) { return t.m.arten.indexOf(a) > -1; }); }
+
+  /* Radarschirm (schirm.js): dieselben Treffer als Lichter. Schmal ersetzt er auf Wunsch die Liste, breit steht er über ihr. */
+  function ansicht(a) {
+    trefferEl.setAttribute('data-ansicht', a); umschalt.setAttribute('aria-pressed', String(a === 'schirm'));
+    if (a === 'schirm' && !ruhig) schirm.fahrt();
+  }
+  function zeigeInListe(i) {
+    if (i >= zustand.gezeigt) { zustand.gezeigt = Math.ceil((i + 1) / JE_SEITE) * JE_SEITE; zeichne(false); }
+    ansicht('liste');
+    var k = liste.children[i]; if (!k || !k.classList.contains('wm-karte')) return;
+    liste.querySelectorAll('.wm-gezeigt').forEach(function (x) { x.classList.remove('wm-gezeigt'); });
+    k.classList.add('wm-gezeigt'); k.tabIndex = -1; k.focus({ preventScroll: true }); k.scrollIntoView({ behavior: ruhig ? 'auto' : 'smooth', block: 'center' });
+  }
+  var schirm = window.wmSchirm($('.wm-schirm'), { entf: entf, wann: wann, zeige: zeigeInListe });
+  umschalt.addEventListener('click', function () { ansicht(trefferEl.getAttribute('data-ansicht') === 'schirm' ? 'liste' : 'schirm'); });
 
   function karte(t, i) {
     var m = t.m, k = el('article', 'wm-karte'), kopf = el('div', 'wm-k-kopf'), zeit = el('div', 'wm-k-zeit'), h = iso(heute());
@@ -194,6 +209,9 @@
     zahlEl.textContent = !daten.maerkte.some(function (m) { return m.status === 'bestaetigt'; }) ? T.vorbei
       : zustand.tag ? (treffer.length ? T.zahlTag(kurz(tag(zustand.tag)), treffer.length) : T.keinTag(kurz(tag(zustand.tag)))) : (treffer.length ? T.zahlAlle(treffer.length, ortsname()) : T.keiner);
     unterEl.textContent = treffer.length ? T.unter(zustand.km) : ''; unterEl.hidden = !treffer.length;
+    reihe.hidden = !nah.length;
+    schirm.zeichne({ punkte: gefiltert.map(function (t) { return { m: t.m, km: t.km, liste: treffer.indexOf(t) }; }), weite: zustand.km, mitte: zustand.ort,
+      ort: ortsname(), du: !!zustand.plz, tag: zustand.tag ? kurz(tag(zustand.tag)) : '', neu: neu, ruhig: ruhig });
     liste.textContent = '';
     treffer.slice(0, zustand.gezeigt).forEach(function (t, i) { liste.append(karte(t, i)); });
     if (treffer.length > zustand.gezeigt) {

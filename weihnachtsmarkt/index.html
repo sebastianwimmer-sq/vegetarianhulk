@@ -28,7 +28,7 @@
 <link rel="preload" href="/weihnachtsmarkt/img/winternacht-quer.webp" as="image" fetchpriority="high" media="(min-width: 900px)">
 <link rel="stylesheet" href="/fonts.css?v=6dafcfa7">
 <link rel="stylesheet" href="/v3.css?v=7afa4266">
-<link rel="stylesheet" href="/weihnachtsmarkt/radar.css?v=7efdd0fc">
+<link rel="stylesheet" href="/weihnachtsmarkt/radar.css?v=0cdd6b9d">
 <script src="/newsletter-form.js?v=94ea6df2" defer></script>
 <!-- SPRACHE:KOPF -->
 <link rel="alternate" hreflang="de" href="https://vegetarianhulk.de/weihnachtsmarkt/">
@@ -95,12 +95,28 @@
           <p class="wm-gruppe-kopf"><span>Wann?</span><span class="wm-spanne"></span></p>
           <div class="wm-tage"></div>
         </div>
-        <div id="wm-arten" role="group" aria-label="Was für ein Markt?" hidden>
-          <p class="wm-gruppe-kopf"><span>Was für ein Markt?</span></p>
-          <div class="wm-chips"></div>
+        <div class="wm-reihe" hidden>
+          <button class="wm-wahl wm-umschalt" type="button" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.2"/><circle cx="10" cy="10" r="4"/><path d="M10 10 15.8 4.2"/></svg>Radar</button>
+          <div id="wm-arten" role="group" aria-label="Was für ein Markt?" hidden>
+            <p class="wm-gruppe-kopf"><span>Was für ein Markt?</span></p>
+            <div class="wm-chips"></div>
+          </div>
         </div>
       </aside>
-      <div class="wm-treffer">
+      <div class="wm-treffer" data-ansicht="liste">
+        <section class="wm-schirm" aria-label="Radarschirm" hidden>
+          <div class="wm-scheibe"><svg viewBox="-170 -170 340 340" role="img" focusable="false"></svg></div>
+          <div class="wm-zettel">
+            <p class="wm-z-text" aria-live="polite"></p>
+            <div class="wm-z-wege">
+              <button class="wm-z-pfeil wm-z-vor" type="button" aria-label="Näherer Markt"></button>
+              <span class="wm-z-zahl"></span>
+              <button class="wm-z-pfeil wm-z-weiter" type="button" aria-label="Weiter entfernter Markt"></button>
+              <button class="wm-knopf wm-knopf--leise wm-z-zeige" type="button">In der Liste zeigen</button>
+            </div>
+            <p class="wm-legende"></p>
+          </div>
+        </section>
         <div class="wm-liste"></div>
         <details class="wm-offen" hidden></details>
         <p class="wm-stand"></p>
@@ -185,7 +201,8 @@
   <a href="/kooperationen.html">Brands</a>
 </nav>
 
-<script src="/weihnachtsmarkt/radar.js?v=c8415805" defer></script>
+<script src="/weihnachtsmarkt/schirm.js?v=93cbf87f" defer></script>
+<script src="/weihnachtsmarkt/radar.js?v=5294ef1b" defer></script>
 <script src="/v3.js?v=cd38f186" defer></script>
 </body>
 </html>
