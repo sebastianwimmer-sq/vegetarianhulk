@@ -53,6 +53,45 @@ def kernworte(name):
     return {w for w in re.findall(r'[a-zäöüß]{3,}', name.lower()) if w not in ALLERWELT}
 
 
+PROGRAMM_NAME = re.compile(r'\s[-–|:]\s|\bauf (?:dem|der)\b.*markt', re.I)
+PROGRAMM_UMKREIS_M = 400
+STAMM = 5
+
+
+def programmartig(m):
+    """Eintrag der Tourismus-Datenbank, der nach Programmpunkt aussieht: ein einzelner Tag und ein Name mit Zusatz."""
+    eintag = len(m['termine']) == 1 and m['termine'][0][0] == m['termine'][0][1]
+    return m['id'].startswith('dzt-') and eintag and bool(PROGRAMM_NAME.search(m['name']))
+
+
+def _verwandt(a, b):
+    """Teilen zwei Namen einen Wortstamm (Passauer/Passau, Borkener/Borken)? Allerweltswörter zählen nicht."""
+    staemme = lambda name: {w[:STAMM] for w in kernworte(name) if len(w) >= STAMM}
+    return bool(staemme(a) & staemme(b))
+
+
+def ohne_programmpunkte(maerkte):
+    """Nimmt Programmpunkte heraus, die die Tourismus-Datenbank als eigene Veranstaltung führt.
+
+    17.11.2026: in Passau standen „Passauer Christkindlmarkt - Leo Big Band“ und „… - Rottaler State Circus“
+    als zwei Märkte in den Treffern. Als Programmpunkt gilt nur, was alle Merkmale trägt: genau ein Tag, ein
+    Name mit Zusatz („ - “, „auf dem …markt“) und im Umkreis ein mehrtägiger Markt mit verwandtem Namen, der an
+    dem Tag läuft. Ein kleiner eigener Markt („Weihnachtsmarkt - Tierheim Rote Erde“) bleibt stehen.
+    Gibt (bleiben, namen_der_entfernten) zurück; die Eingabe bleibt unverändert.
+    """
+    lang = [m for m in maerkte if m['termine'] and any(b > v for v, b in m['termine'])]
+    bleiben, weg = [], []
+    for m in maerkte:
+        if programmartig(m):
+            tag = m['termine'][0][0]
+            if any(g is not m and abs(g['lat'] - m['lat']) < 0.01 and meter(g, m) <= PROGRAMM_UMKREIS_M and _verwandt(g['name'], m['name'])
+                   and any(v <= tag <= b and b > v for v, b in g['termine']) for g in lang):
+                weg.append(m['name'])
+                continue
+        bleiben.append(m)
+    return bleiben, weg
+
+
 def gleich(a, b):
     """Derselbe Markt? Nah beieinander und im Namen verwandt – oder am selben Fleck aus zwei Quellen."""
     if abs(a['lat'] - b['lat']) > 0.002:
@@ -71,7 +110,8 @@ def zusammenfuehren(listen):
     alle = []
     for liste in listen:
         for neu in liste:
-            alt = next((m for m in alle if gleich(m, neu)), None)
+            # ein von Hand gepflegter Markt geht nie in einem Programmpunkt auf (Passau: der Markt am Dom stand als „Leo Big Band“ da)
+            alt = next((m for m in alle if gleich(m, neu) and not (neu['id'].startswith('hand-') and programmartig(m))), None)
             if alt is None:
                 alle.append(dict(neu))
                 continue
@@ -231,6 +271,8 @@ def main():
     alt_datei = ZIEL / 'maerkte.json'
     merk = gemerkt(json.loads(alt_datei.read_text(encoding='utf-8')) if alt_datei.exists() else [], heute)
     print('Veranstalterseiten:', termine_von_seiten(maerkte, frisch, merk))
+    maerkte, programm = ohne_programmpunkte(maerkte)
+    print(f'Programmpunkte entfernt: {len(programm)}', programm[:12])
     orte(maerkte, frisch)
     raus = sorted((fertig(m, heute) for m in maerkte), key=lambda m: m['id'])
     raus = [m for m in raus if m.get('name') and m.get('ort')]

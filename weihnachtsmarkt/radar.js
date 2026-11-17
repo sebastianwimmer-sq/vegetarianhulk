@@ -115,7 +115,7 @@
     return daten.maerkte.map(function (m) { return { m: m, km: km(zustand.ort, m) }; })
       .filter(function (t) { return t.km <= zustand.km; }).sort(function (a, b) { return a.km - b.km; });
   }
-  function ortsname() { return String(zustand.ort[2] || '').replace(/\s*\(.*$/, ''); }
+  function ortsname() { return String(zustand.ort[2] || '').replace(/\s*[,(].*$/, ''); }
   function passtArt(t) { return !zustand.arten.length || zustand.arten.some(function (a) { return t.m.arten.indexOf(a) > -1; }); }
 
   function karte(t, i) {
