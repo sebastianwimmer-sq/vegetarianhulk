@@ -1,6 +1,7 @@
 # Nimmt Saison-Schilder am Wegweiser (vegetarianhulk.de/links) nach ihrem letzten
 # Tag von selbst ab (Sebi 16.11.2026: das Wichteln soll sich Anfang Dezember selbst
-# archivieren). Das Datum steht am Schild selbst: <li data-bis="JJJJ-MM-TT">.
+# archivieren). Das Datum steht am Schild selbst: data-bis="JJJJ-MM-TT". Gilt auch
+# fuer das Radar-Schild an der Gabelung der Startseite (deutsch und englisch).
 # Nur in der Saison (November bis Januar), sonst liefe der Lauf das ganze Jahr leer.
 name: Saison-Schilder
 on:
@@ -27,10 +28,12 @@ jobs:
         run: TZ=Europe/Berlin python3 scripts/saison-schilder.py
       - name: Veroeffentlichen, wenn sich etwas geaendert hat
         run: |
-          if git diff --quiet -- links/index.html; then echo "keine Aenderung"; exit 0; fi
+          if git diff --quiet -- links/index.html index.html en/index.html; then echo "keine Aenderung"; exit 0; fi
+          # Die englische Startseite traegt den Stand ihrer deutschen Schwester als Stempel
+          if ! git diff --quiet -- index.html en/index.html; then node scripts/sprachen-stempel.mjs /en/; fi
           git config user.name "saison-schilder"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add links/index.html
-          git commit -m "chore(links): Saison-Schild abgenommen"
+          git add links/index.html index.html en/index.html
+          git commit -m "chore: Saison-Schild abgenommen"
           git pull --rebase origin main
           git push origin HEAD:main
