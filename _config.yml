@@ -1,0 +1,18 @@
+# vegetarianhulk.de: Auslieferungs-Regeln fuer GitHub Pages (24.11.2026)
+# Mit .nojekyll gab Pages jede Datei des Repos roh heraus (scripts/, workers/, docs/).
+# .nojekyll NICHT wieder anlegen. Dateien ohne Front-Matter reicht Jekyll byte-gleich durch.
+# CNAME nie ausschliessen. email-templates/assets bleibt: verschickte Mails laden ihre Bilder dort.
+plugins: []
+keep_files: []
+exclude:
+  - SICHERHEIT.md
+  - docs
+  - scripts
+  - workers
+  - mail-templates
+  - release
+  - touren/HUB-WORKFLOW.md
+  - assets/og/README.md
+  - email-templates/*.html
+  - email-templates/*.json
+  - node_modules
