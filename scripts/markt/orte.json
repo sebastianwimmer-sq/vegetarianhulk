@@ -1609,6 +1609,13 @@
 "ort": "Blieskastel",
 "plz": ""
 },
+"49.24057,7.63187": {
+"bezirk": "",
+"kreis": "Südwestpfalz",
+"land": "Rheinland-Pfalz",
+"ort": "Rodalben",
+"plz": "66976"
+},
 "49.2583,8.48295": {
 "bezirk": "",
 "kreis": "Landkreis Karlsruhe",
@@ -3562,6 +3569,13 @@
 "ort": "Weinböhla",
 "plz": ""
 },
+"51.16312,13.47051": {
+"bezirk": "",
+"kreis": "Meißen",
+"land": "Sachsen",
+"ort": "Meißen",
+"plz": ""
+},
 "51.16334,6.87385": {
 "bezirk": "",
 "kreis": "Düsseldorf",
@@ -3680,6 +3694,13 @@
 "land": "Nordrhein-Westfalen",
 "ort": "Neuss",
 "plz": "41462"
+},
+"51.21614,7.07689": {
+"bezirk": "",
+"kreis": "Solingen",
+"land": "Nordrhein-Westfalen",
+"ort": "Solingen",
+"plz": "42653"
 },
 "51.21623,7.62937": {
 "bezirk": "",
@@ -4269,6 +4290,13 @@
 "ort": "Göttingen",
 "plz": "37083"
 },
+"51.60841,11.11802": {
+"bezirk": "",
+"kreis": "Landkreis Harz",
+"land": "Sachsen-Anhalt",
+"ort": "Harzgerode",
+"plz": ""
+},
 "51.6118,7.19972": {
 "bezirk": "",
 "kreis": "Kreis Recklinghausen",
@@ -4367,6 +4395,13 @@
 "ort": "Hamm",
 "plz": "59075"
 },
+"51.69693,11.35092": {
+"bezirk": "",
+"kreis": "Landkreis Harz",
+"land": "Sachsen-Anhalt",
+"ort": "Neuplatendorf",
+"plz": "06333"
+},
 "51.69863,11.35111": {
 "bezirk": "",
 "kreis": "Landkreis Harz",
@@ -4394,6 +4429,13 @@
 "land": "Sachsen-Anhalt",
 "ort": "Gräfenhainichen",
 "plz": "06772"
+},
+"51.71741,11.25569": {
+"bezirk": "",
+"kreis": "Landkreis Harz",
+"land": "Sachsen-Anhalt",
+"ort": "Ballenstedt",
+"plz": "06493"
 },
 "51.72778,10.2508": {
 "bezirk": "",
@@ -4457,6 +4499,13 @@
 "land": "Sachsen-Anhalt",
 "ort": "Wernigerode",
 "plz": "38879"
+},
+"51.79204,10.95319": {
+"bezirk": "",
+"kreis": "Landkreis Harz",
+"land": "Sachsen-Anhalt",
+"ort": "Blankenburg",
+"plz": "38889"
 },
 "51.79497,7.33435": {
 "bezirk": "",
@@ -4590,6 +4639,13 @@
 "land": "Sachsen-Anhalt",
 "ort": "Coswig (Anhalt)",
 "plz": "06869"
+},
+"51.92661,10.62299": {
+"bezirk": "",
+"kreis": "Landkreis Harz",
+"land": "Sachsen-Anhalt",
+"ort": "Abbenrode",
+"plz": "38871"
 },
 "51.95243,7.99062": {
 "bezirk": "",
